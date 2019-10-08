@@ -21,9 +21,8 @@ class RegistrasiController extends Controller
      */
     public function registrasi_pembeli()
     {
-		echo "wkwkwkwk";die();
-        $pageTitle = "Beranda";
-        return view('home',compact('pageTitle'));
+        $pageTitle = "Registrasi Pembeli";
+        return view('auth.register_pembeli',compact('pageTitle'));
     }
 	
 	public function gantipass()

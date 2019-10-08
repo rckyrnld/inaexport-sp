@@ -12,6 +12,7 @@
 */
 //////////////////////////////////// START FRONTEND ////////////////////////////////////////////////////////////
 Route::get('/registrasi_pembeli','RegistrasiController@registrasi_pembeli');
+Route::post('/simpan_rpembeli','RegistrasiController@simpan_rpembeli');
 
 
 
