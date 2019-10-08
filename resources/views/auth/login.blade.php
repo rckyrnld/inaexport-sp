@@ -75,11 +75,12 @@
             </div>      
             <br>
             <button type="submit" class="btn primary">Sign in</button>
-			<div class="mb-3">        
+			<!--<div class="mb-3">        
               <label class="md-check">
                 <input type="checkbox"><i class="primary"></i> Keep me signed in
               </label>
-            </div>
+            </div> -->
+			<br>
 			<br>
           </form>
           <div class="my-4">
