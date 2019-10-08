@@ -66,6 +66,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/gantipass', 'HomeController@gantipass');
 Route::post('/updatepass','HomeController@updatepass');
 
+Route::namespace('Master')->group(function () {
+	//Master Country
+	Route::get('master-country/', 'MasterCountryController@index')->name('master.country.index');
+	Route::get('master-country/create/', 'MasterCountryController@create')->name('master.country.create');
+	Route::get('master-country/edit/{id}', 'MasterCountryController@edit')->name('master.country.edit');
+	Route::get('master-country/view/{id}', 'MasterCountryController@view')->name('master.country.view');
+	Route::post('master-country/store/{param}','MasterCountryController@store')->name('master.country.store');
+});
 
 /////////////////////////////////////////ILYAS START//////////////////////////////////////////////////////////////////////////////////
 
