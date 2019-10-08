@@ -149,7 +149,7 @@
 			      </thead>
 			      <tbody>
 			      	@foreach($user as $no => $res)
-						<?php $cekquery = DB::select("select * from pendaftaran_sc where id_user='".$res->id."'"); ?>
+						
 			      		<tr>
 			      			<td>{{$no+1}}</td>
 			      			<td>{{$res->group_name}}</td>
@@ -159,12 +159,9 @@
 			      				<div class="btn-group">
 								
 			      				<a href="{{url('/user_edit/'.$res->id)}}" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i></a>
-								<?php if(count($cekquery) == 0){ ?>
-			      				<a onclick="return confirm('Apa Anda Yakin untuk Menghapus User Ini ?')" href="{{url('/user_delete/'.$res->id)}}" class="btn btn-sm btn-danger"><i class="fa fa-trash text-white"></i></a>
-								<?php }else{ ?>
-								<a onclick="alertaja()" class="btn btn-sm btn-danger"><i class="fa fa-trash text-white"></i></a>
 								
-								<?php } ?>
+			      				<a onclick="return confirm('Apa Anda Yakin untuk Menghapus User Ini ?')" href="{{url('/user_delete/'.$res->id)}}" class="btn btn-sm btn-danger"><i class="fa fa-trash text-white"></i></a>
+								
 			      			    </div>
 			      			</center></td>
 			      		</tr>

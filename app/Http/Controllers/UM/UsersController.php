@@ -20,11 +20,11 @@ class UsersController extends Controller
     {
         $pageTitle = 'Users';
        //  $user = User::join('group','group.id_group','=','users.id_group')->orderBy('id', 'DESC')->get();
-		$user = DB::select('select a.*,a.created_at as ca,b.* from users a , "group" b where a.id_group = b.id_group order by a.id DESC');
+		$user = DB::select('select a.*,a.created_at as ca,b.* from itdp_admin_users a , "group" b where a.id_group = b.id_group order by a.id DESC');
         $url = '/user_save';
         // $group = Group::all();
 		$nb = "group";
-        $group = DB::select("select * from vms.group where group_name !='Gudang Senamo' order by id_group asc");
+        $group = DB::select("select * from public.group order by id_group asc");
         return view('UM.user.index',compact('pageTitle','user','url','group'));
     }
 
