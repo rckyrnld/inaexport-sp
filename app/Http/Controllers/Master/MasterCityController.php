@@ -33,7 +33,7 @@ class MasterCityController extends Controller
       $pageTitle = 'City';
       $page = 'create';
       $url = "/master-city/store/Create";
-      $country = MasterCountry::orderby('id')->get();
+      $country = MasterCountry::orderby('country')->get();
       return view('master.city.create',compact('url','pageTitle','page','country'));
     }
 
@@ -42,8 +42,7 @@ class MasterCityController extends Controller
       if($param == 'Create'){
         $data = MasterCity::insert([
           'id_mst_country' => $req->country,
-          'city' => $req->city,
-          'created_at' => date('Y-m-d H:i:s')
+          'city' => $req->city
         ]);
       } else {
         $pecah = explode('_', $param);
@@ -51,8 +50,7 @@ class MasterCityController extends Controller
 
         $data = MasterCity::where('id', $pecah[1])->update([
           'id_mst_country' => $req->country,
-          'city' => $req->city,
-          'updated_at' => date('Y-m-d H:i:s')
+          'city' => $req->city
         ]);
       }
 
@@ -86,7 +84,14 @@ class MasterCityController extends Controller
 
     public function destroy($id)
     {
-        //
+      $data = MasterCity::where('id', $id)->delete();
+      if($data){
+         Session::flash('success','Success Delete Data');
+         return redirect('/master-city/');
+       }else{
+         Session::flash('failed','Failed Delete Data');
+         return redirect('/master-city/');
+       }
     }
 
     public function export()

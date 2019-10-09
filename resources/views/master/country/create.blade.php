@@ -52,7 +52,8 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Kode BPS</label>
                  <div class="col-md-7">
-                     <input type="text" class="form-control integer" autocomplete="off" required name="kode_bps" placeholder="Input" {{$view}} @isset($data) value="{{ $data->kode_bps }}" @endisset>
+                     <input type="text" class="form-control integer" id="kode" autocomplete="off" required name="kode_bps" placeholder="Input" {{$view}} @isset($data) value="{{ $data->kode_bps }}" @endisset>
+                     <input type="hidden" id="kode2" @isset($data) value="{{ $data->kode_bps }}" @endisset>
                  </div>
              </div>
 
@@ -100,6 +101,25 @@
         onBeforeMask: function (value, opts) {
             return value;
         },        removeMaskOnSubmit:true
+    });
+
+    $("#kode").focus(function(){}).blur(function(){
+      var kode = $('#kode').val();
+      var kode2 = $('#kode2').val();
+      $.ajax({
+          url: "{{route('master.country.kode')}}",
+          type: 'get',
+          data: {kode:kode},
+          dataType: 'json',
+          success:function(response){
+            if(response != null) {
+              if(kode2 != kode){
+                alert('Kode Sudah Tersedia !');
+                $('#kode').val('');
+              }
+            }
+          }
+      });
     });
   });
 </script>

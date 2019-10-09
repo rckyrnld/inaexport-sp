@@ -38,7 +38,7 @@ class MasterProvinceController extends Controller
           'province_en' => $req->province_en,
           'province_in' => $req->province_in,
           'province_chn' => $req->province_chn,
-          'created_at' => date('Y-m-d H:i:s')
+          'kode_province' => $req->kode_province
         ]);
       } else {
         $pecah = explode('_', $param);
@@ -48,7 +48,7 @@ class MasterProvinceController extends Controller
           'province_en' => $req->province_en,
           'province_in' => $req->province_in,
           'province_chn' => $req->province_chn,
-          'updated_at' => date('Y-m-d H:i:s')
+          'kode_province' => $req->kode_province
         ]);
       }
 
@@ -80,7 +80,19 @@ class MasterProvinceController extends Controller
 
     public function destroy($id)
     {
-        //
+      $data = MasterProvince::where('id', $id)->delete();
+      if($data){
+         Session::flash('success','Success Delete Data');
+         return redirect('/master-province/');
+       }else{
+         Session::flash('failed','Failed Delete Data');
+         return redirect('/master-province/');
+       }
+    }
+
+    public function check(Request $req){
+      $checking = MasterProvince::where('kode_province', $req->kode)->first();
+      echo json_encode($checking);
     }
 
     public function export()
