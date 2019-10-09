@@ -41,8 +41,7 @@ class MasterPortController extends Controller
       if($param == 'Create'){
         $data = MasterPort::insert([
           'id_mst_province' => $req->province,
-          'name_port' => $req->port,
-          'created_at' => date('Y-m-d H:i:s')
+          'name_port' => $req->port
         ]);
       } else {
         $pecah = explode('_', $param);
@@ -50,8 +49,7 @@ class MasterPortController extends Controller
 
         $data = MasterPort::where('id', $pecah[1])->update([
           'id_mst_province' => $req->province,
-          'name_port' => $req->port,
-          'updated_at' => date('Y-m-d H:i:s')
+          'name_port' => $req->port
         ]);
       }
 

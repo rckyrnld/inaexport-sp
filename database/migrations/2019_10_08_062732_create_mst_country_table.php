@@ -18,7 +18,7 @@ class CreateMstCountryTable extends Migration
             $table->integer('mst_country_group_id');
             $table->integer('mst_country_region_id');
             $table->string('country');
-            $table->integer('kode_bps');
+            $table->char('kode_bps', 3);
             $table->timestamps();
         });
     }

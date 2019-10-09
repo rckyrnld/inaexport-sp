@@ -38,6 +38,10 @@
 <!-- build:js scripts/app.min.js -->
 <!-- jQuery -->
   <script src="{{url('assets')}}/libs/jquery/dist/jquery.min.js"></script>
+<!-- Select2 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+<!-- InputMask -->
   <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
 <!-- Bootstrap -->
   <script src="{{url('assets')}}/libs/popper.js/dist/umd/popper.min.js"></script>
@@ -77,6 +81,8 @@
 	$('#yahoo').DataTable({
      
     });
+
+  $('.select2').select2();
  });
  </script>
 

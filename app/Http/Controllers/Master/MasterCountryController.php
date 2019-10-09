@@ -19,8 +19,8 @@ class MasterCountryController extends Controller
 
 	  public function index(){
       $pageTitle = 'Country';
-      $country = MasterCountry::leftjoin('mst_group_country as a','a.id','=','mst_country.mst_country_group_id')
-      ->orderby('a.group_country', 'asc')
+      $country = MasterCountry::leftjoin('mst_group_country as a','mst_country.mst_country_group_id','=','a.id')
+      ->orderby('mst_country.country', 'asc')
       ->select('a.group_country','mst_country.*')
       ->get();
       return view('master.country.index',compact('pageTitle','country'));
@@ -43,8 +43,7 @@ class MasterCountryController extends Controller
           'mst_country_group_id' => $req->group,
           'mst_country_region_id' => $req->region,
           'country' => $req->country,
-          'kode_bps' => $req->kode_bps,
-          'created_at' => date('Y-m-d H:i:s')
+          'kode_bps' => $req->kode_bps
         ]);
       } else {
         $pecah = explode('_', $param);
@@ -54,8 +53,7 @@ class MasterCountryController extends Controller
           'mst_country_group_id' => $req->group,
           'mst_country_region_id' => $req->region,
           'country' => $req->country,
-          'kode_bps' => $req->kode_bps,
-          'updated_at' => date('Y-m-d H:i:s')
+          'kode_bps' => $req->kode_bps
         ]);
       }
 
@@ -99,6 +97,11 @@ class MasterCountryController extends Controller
          Session::flash('failed','Failed Delete Data');
          return redirect('/master-country/');
        }
+    }
+
+    public function check(Request $req){
+      $checking = MasterCountry::where('kode_bps', $req->kode)->first();
+      echo json_encode($checking);
     }
 
     public function export()

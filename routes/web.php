@@ -70,6 +70,7 @@ Route::namespace('Master')->group(function () {
 	//Master Country
 	Route::get('master-country/', 'MasterCountryController@index')->name('master.country.index');
 	Route::get('master-country/create/', 'MasterCountryController@create')->name('master.country.create');
+	Route::get('master-country/check-kode/', 'MasterCountryController@check')->name('master.country.kode');
 	Route::get('master-country/edit/{id}', 'MasterCountryController@edit')->name('master.country.edit');
 	Route::get('master-country/view/{id}', 'MasterCountryController@view')->name('master.country.view');
 	Route::post('master-country/store/{param}','MasterCountryController@store')->name('master.country.store');
@@ -86,6 +87,7 @@ Route::namespace('Master')->group(function () {
 	//Master Province
 	Route::get('master-province/', 'MasterProvinceController@index')->name('master.province.index');
 	Route::get('master-province/create/', 'MasterProvinceController@create')->name('master.province.create');
+	Route::get('master-province/check-kode/', 'MasterProvinceController@check')->name('master.province.kode');
 	Route::get('master-province/edit/{id}', 'MasterProvinceController@edit')->name('master.province.edit');
 	Route::get('master-province/view/{id}', 'MasterProvinceController@view')->name('master.province.view');
 	Route::post('master-province/store/{param}','MasterProvinceController@store')->name('master.province.store');
