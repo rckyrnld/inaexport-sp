@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\MasterProvince;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Exports\ProvinceExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Session;
 
 class MasterProvinceController extends Controller
@@ -79,5 +81,10 @@ class MasterProvinceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function export()
+    {
+      return Excel::download(new ProvinceExport, 'Province_Data.xlsx');
     }
 }

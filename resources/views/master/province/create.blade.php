@@ -42,7 +42,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Province (CHN)</label>
                  <div class="col-md-7">
-                     <input type="text" class="form-control" name="province_chn" autocomplete="off" required placeholder="Input" {{$view}}  @isset($data) value="{{ $data->province_chn }}" @endisset>
+                     <input type="text" class="form-control" name="province_chn" autocomplete="off" placeholder="Input" {{$view}}  @isset($data) value="{{ $data->province_chn }}" @endisset>
                  </div>
              </div>
         
@@ -67,13 +67,3 @@
 </div>
 
 @include('footer')
-<script type="text/javascript">
-  $(document).ready(function() {
-    jQuery(function ($) {
-        var $inputs = $('input[name=province_en],input[name=province_in],input[name=province_chn]');
-        $inputs.on('input', function () {
-            $inputs.not(this).prop('required', !$(this).val().length);
-        });
-    });
-  });
-</script>

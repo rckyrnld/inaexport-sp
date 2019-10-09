@@ -7,6 +7,8 @@ use App\Models\MasterPort;
 use App\Models\MasterProvince;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Exports\PortExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Session;
 
 class MasterPortController extends Controller
@@ -84,5 +86,10 @@ class MasterPortController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function export()
+    {
+      return Excel::download(new PortExport, 'Port_Data.xlsx');
     }
 }
