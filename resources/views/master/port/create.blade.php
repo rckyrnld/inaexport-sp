@@ -29,7 +29,7 @@
                      <select class="form-control" required name="province" {{$view}}>
                        <option style="display: none;" value="">Select Province</option>
                        @foreach($province as $val)
-                       <option value="{{$val->id}}" @isset($data) @if($data->id_mst_province == $val->id) selected @endif  @endisset>{{$val->keterangan}}</option>
+                       <option value="{{$val->id}}" @isset($data) @if($data->id_mst_province == $val->id) selected @endif  @endisset>{{$val->province_en}}</option>
                        @endforeach
                      </select>
                  </div>

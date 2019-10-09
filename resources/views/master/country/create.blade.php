@@ -28,7 +28,22 @@
                  <div class="col-md-7">
                      <select class="form-control" required name="group" {{$view}}>
                        <option style="display: none;" value="">Select Group</option>
-                       <option value="1" @isset($data) selected  @endisset>Dummy 1</option>
+                        @foreach($country_group as $val)
+                        <option value="{{$val->id}}" @isset($data) selected  @endisset>{{$val->group_country}}</option>
+                        @endforeach
+                     </select>
+                 </div>
+             </div>
+
+             <div class="form-group row">
+              <div class="col-md-1"></div>
+                 <label class="control-label col-md-3">Region</label>
+                 <div class="col-md-7">
+                     <select class="form-control" required name="region" {{$view}}>
+                       <option style="display: none;" value="">Select Region</option>
+                        @foreach($country_region as $val)
+                        <option value="{{$val->id}}" @isset($data) selected  @endisset>{{$val->name}}</option>
+                        @endforeach
                      </select>
                  </div>
              </div>

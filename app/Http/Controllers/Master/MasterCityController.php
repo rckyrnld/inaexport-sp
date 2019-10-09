@@ -7,6 +7,8 @@ use App\Models\MasterCity;
 use App\Models\MasterCountry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Exports\CityExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Session;
 
 class MasterCityController extends Controller
@@ -85,5 +87,10 @@ class MasterCityController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function export()
+    {
+      return Excel::download(new CityExport, 'City_Data.xlsx');
     }
 }

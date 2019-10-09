@@ -10,12 +10,12 @@
       <div class="box">
       	 <div class="box-divider m-0"></div>
       	 <div class="box-header bg-info">
-          <a id="tambah" href="{{route('master.port.create', '')}}" class="md-btn md-raised mb-2 w-sm info"><i class="fa fa-plus-circle"></i>  Add</a>
+          <a id="tambah" href="{{route('master.port.create', '')}}" class="md-btn md-raised mb-2 w-sm info"><i class="fa fa-plus-circle"></i>  Add</a>&nbsp;&nbsp;<a id="tambah" href="{{route('master.port.export')}}" class="md-btn md-raised mb-2 w-sm info" target="_blank"><i class="fa fa-print"></i>  Export</a>
       	 </div>
       	  <div class="box-body">
           	 <div class="table-responsive">
 			    <table id="example1" class="table  table-bordered table-striped" data-plugin="dataTable">
-			      <thead class="bg-info text-white">
+			      <thead class="bg-success text-white">
 			          <tr>
 			              <th>Port</th>
 			              <th>Province</th>
