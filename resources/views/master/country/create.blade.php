@@ -26,7 +26,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Group</label>
                  <div class="col-md-7">
-                     <select class="form-control" name="group" {{$view}}>
+                     <select class="form-control" required name="group" {{$view}}>
                        <option style="display: none;" value="">Select Group</option>
                        <option value="1" @isset($data) selected  @endisset>Dummy 1</option>
                      </select>
@@ -37,7 +37,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Kode BPS</label>
                  <div class="col-md-7">
-                     <input type="text" class="form-control" autocomplete="off" name="kode_bps" placeholder="Input" {{$view}} @isset($data) value="{{ $data->kode_bps }}" @endisset>
+                     <input type="text" class="form-control integer" autocomplete="off" required name="kode_bps" placeholder="Input" {{$view}} @isset($data) value="{{ $data->kode_bps }}" @endisset>
                  </div>
              </div>
 
@@ -45,7 +45,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Country</label>
                  <div class="col-md-7">
-                     <input type="text" class="form-control" name="country" placeholder="Input" {{$view}}  @isset($data) value="{{ $data->country }}" @endisset>
+                     <input type="text" class="form-control" name="country" autocomplete="off" required placeholder="Input" {{$view}}  @isset($data) value="{{ $data->country }}" @endisset>
                  </div>
              </div>
         
@@ -70,3 +70,21 @@
 </div>
 
 @include('footer')
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.integer').inputmask({
+        alias:"integer",
+        digits:0,
+        digitsOptional:false,
+        decimalProtect:false,
+        radixFocus:true,
+        autoUnmask:false,
+        allowMinus:false,
+        rightAlign:false,
+        clearMaskOnLostFocus: false,
+        onBeforeMask: function (value, opts) {
+            return value;
+        },        removeMaskOnSubmit:true
+    });
+  });
+</script>
