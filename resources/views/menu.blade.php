@@ -1,10 +1,10 @@
    <!-- Flex nav content -->
    @if(Auth::user()->id_role==1)
-   <div class="flex hide-scroll" style="padding-top:10px; background-color:  #1297b0  ; color: #ffffff">
+   <div class="flex hide-scroll" style="padding-top:15px; background-color:  black  ; color: #ffffff">
     @elseif(Auth::user()->id_role==3)
-    <div class="flex hide-scroll" style="background-color:  #1297b0  ; color: #ffffff">
+    <div class="flex hide-scroll" style="padding-top:15px; background-color:  black  ; color: #ffffff">
       @else
-      <div class="flex hide-scroll" style="background-color:  #1297b0  ; color: #ffffff">
+      <div class="flex hide-scroll" style="padding-top:15px; background-color:  black  ; color: #ffffff">
       @endif
       <div class="scroll">
         <div class="nav-border b-primary" data-nav>

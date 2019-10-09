@@ -94,17 +94,17 @@
         <div class="sidenav modal-dialog dk">
           <!-- sidenav top -->
            @if(Auth::user()->id_group==1)
-   <div class="navbar lt" style="background-color:  #2791a6 ; color: #ffffff">
+   <div class="navbar lt" style="background-color:  #1a7688 ; color: #ffffff">
     @elseif(Auth::user()->id_group==3)
-    <div class="navbar lt" style="background-color:  #2791a6  ; color: #ffffff">
+    <div class="navbar lt" style="background-color:  #1a7688  ; color: #ffffff">
       @else
-      <div class="navbar lt" style="background-color:  #2791a6  ; color: #ffffff">
+      <div class="navbar lt" style="background-color:  #1a7688  ; color: #ffffff">
       @endif
             <!-- brand -->
             <a href="../index.html" class="navbar-brand">
                
                 <img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." >
-                <span class="hidden-folded d-inline">KEMENDAG </span>
+                <span class="hidden-folded d-inline"><font size="3px">Ministry Of Trade </font></span>
             </a>
             <!-- / brand -->
           </div>

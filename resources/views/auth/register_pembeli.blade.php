@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Signin | Kementerian Perdagangan RI</title>
+  <title>Register Pembeli | Kementerian Perdagangan RI</title>
   <meta name="description" content="Responsive, Bootstrap, BS4" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,18 +54,59 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
      
     </div>
   </div>
-  <div id="content-body" style="padding-left:20px; padding-right:20px; background-color: #2791a6 ; color: #ffffff" >
+  <div id="content-body" style="padding-left:100px; padding-right:100px; background-color: #2791a6 ; color: #ffffff" >
     <div class="py-5 text-center w-100">
 	
 	
-      <div class="" style="background: rgba(15, 12, 12, 0.3); border-radius: 10px;">
-		<div class="form-group">
-                                   <label class="control-label col-md-3">Nama Menu</label>
-                                   <div class="col-md-7">
+      <div class="" style="text-color:black;padding-left:10px; padding-right:10px;background: rgba(15, 12, 12, 0.3); border-radius: 10px;">
+	  <br>
+	  <form class="form-horizontal" method="POST" action="{{ url('simpan_rpembeli') }}">
+	   {{ csrf_field() }}
+		<div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label>Email Pembeli</label>
+                                <input type="text" name="alamat" id="alamat" class="form-control" style=" color: black; ">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Username Pembeli</label>
+                                <input type="text" name="websiteutama" id="websiteutama" class="form-control" style=" color: black; ">
+                            </div>
+                        </div>
+		<div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label>Password</label>
+                                <input type="password" name="alamat" id="alamat" class="form-control" style=" color: black; ">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Konfirmasi Password</label>
+                                <input type="text" name="websiteutama" id="websiteutama" class="form-control" style=" color: black; ">
+                            </div>
+                        </div>
+		<div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label>Nama Pembeli</label>
+                                <input type="text" name="alamat" id="alamat" class="form-control" style=" color: black; ">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Alamat Pembeli</label>
+                                <input type="text" name="websiteutama" id="websiteutama" class="form-control" style=" color: black; ">
+                            </div>
+                        </div>
+						
+				<div class="form-row">
+                            <div class="form-group col-sm-6">
+                               
+                            </div>
+                            <div class="form-group col-sm-6" align="right">
+                                <button class="btn btn-primary">&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;</button>
+                            </div>
+                        </div>
+						
+		
+                                
 
-                                       <input type="text" class="form-control" name="nama_menu" placeholder="Home"   @isset($res) value="{{ $res->menu_name }}"  @endisset>
-                                   </div>
-                               </div>
+					<br>	
+		</form>
       </div>
     </div>
   </div>
