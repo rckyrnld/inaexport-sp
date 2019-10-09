@@ -68,7 +68,11 @@ Route::post('/updatepass','HomeController@updatepass');
 
 
 /////////////////////////////////////////ILYAS START//////////////////////////////////////////////////////////////////////////////////
-
+Route::get('/annual_sales','EksportirController@index')->name('annual_sales.index');
+Route::get('/tambah_annual','EksportirController@tambahannual');
+Route::post('/annual_save','EksportirController@storeannual');
+Route::get('sales_getdata','EksportirController@datanya')->name('datatables.sales');
+Route::get('/sales_edit/{id}','EksportirController@edit')->name('sales.detail');
 
 
 //////////////////////////////////////////ILYAS END////////////////////////////////////////////////////////////////////////////////
