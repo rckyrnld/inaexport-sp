@@ -27,9 +27,8 @@ class RegistrasiController extends Controller
 	
 	public function simpan_rpembeli(Request $request)
     {
-		echo "wkwkwk";die();
-        $pageTitle = "Registrasi Pembeli";
-        return view('auth.register_pembeli',compact('pageTitle'));
+		$pageTitle = "Registrasi Pembeli";
+        return view('auth.waitmail',compact('pageTitle'));
     }
 	
 	public function gantipass()
