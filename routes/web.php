@@ -73,6 +73,24 @@ Route::namespace('Master')->group(function () {
 	Route::get('master-country/edit/{id}', 'MasterCountryController@edit')->name('master.country.edit');
 	Route::get('master-country/view/{id}', 'MasterCountryController@view')->name('master.country.view');
 	Route::post('master-country/store/{param}','MasterCountryController@store')->name('master.country.store');
+	//Master City
+	Route::get('master-city/', 'MasterCityController@index')->name('master.city.index');
+	Route::get('master-city/create/', 'MasterCityController@create')->name('master.city.create');
+	Route::get('master-city/edit/{id}', 'MasterCityController@edit')->name('master.city.edit');
+	Route::get('master-city/view/{id}', 'MasterCityController@view')->name('master.city.view');
+	Route::post('master-city/store/{param}','MasterCityController@store')->name('master.city.store');
+	//Master Province
+	Route::get('master-province/', 'MasterProvinceController@index')->name('master.province.index');
+	Route::get('master-province/create/', 'MasterProvinceController@create')->name('master.province.create');
+	Route::get('master-province/edit/{id}', 'MasterProvinceController@edit')->name('master.province.edit');
+	Route::get('master-province/view/{id}', 'MasterProvinceController@view')->name('master.province.view');
+	Route::post('master-province/store/{param}','MasterProvinceController@store')->name('master.province.store');
+	//Master Port
+	Route::get('master-port/', 'MasterPortController@index')->name('master.port.index');
+	Route::get('master-port/create/', 'MasterPortController@create')->name('master.port.create');
+	Route::get('master-port/edit/{id}', 'MasterPortController@edit')->name('master.port.edit');
+	Route::get('master-port/view/{id}', 'MasterPortController@view')->name('master.port.view');
+	Route::post('master-port/store/{param}','MasterPortController@store')->name('master.port.store');
 });
 
 /////////////////////////////////////////ILYAS START//////////////////////////////////////////////////////////////////////////////////

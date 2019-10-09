@@ -10,29 +10,27 @@
       <div class="box">
       	 <div class="box-divider m-0"></div>
       	 <div class="box-header bg-info">
-          <a id="tambah" href="{{route('master.country.create', '')}}" class="md-btn md-raised mb-2 w-sm info"><i class="fa fa-plus-circle"></i>  Add</a>
+          <a id="tambah" href="{{route('master.port.create', '')}}" class="md-btn md-raised mb-2 w-sm info"><i class="fa fa-plus-circle"></i>  Add</a>
       	 </div>
       	  <div class="box-body">
           	 <div class="table-responsive">
 			    <table id="example1" class="table  table-bordered table-striped" data-plugin="dataTable">
 			      <thead class="bg-info text-white">
 			          <tr>
-			              <th>Kode BPS</th>
-			              <th>Country</th>
-			              <th>Group</th>
+			              <th>Port</th>
+			              <th>Province</th>
 			              <th width="20%">Action</th>
 			          </tr>
 			      </thead>
 			      <tbody>
-			      	@foreach($country as $no => $data)
+			      	@foreach($port as $no => $data)
 			      		<tr>
-			      			<td>{{$data->kode_bps}}</td>
-			      			<td>{{$data->country}}</td>
-			      			<td>group</td>
+			      			<td>{{$data->name_port}}</td>
+			      			<td>{{$data->province_en}}</td>
 			      			<td style="text-align: center;">
 			      				<div class="btn-group">
-			      				<a href="{{route('master.country.view', $data->id)}}" class="btn btn-sm btn-info">&nbsp;&nbsp;View&nbsp;&nbsp;</a>&nbsp;&nbsp;
-			      				<a href="{{route('master.country.edit', $data->id)}}" class="btn btn-sm btn-danger">&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
+			      				<a href="{{route('master.port.view', $data->id)}}" class="btn btn-sm btn-info">&nbsp;&nbsp;View&nbsp;&nbsp;</a>&nbsp;&nbsp;
+			      				<a href="{{route('master.port.edit', $data->id)}}" class="btn btn-sm btn-danger">&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
 			      			    </div>
 			      			</td>
 			      		</tr>
