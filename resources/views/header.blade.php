@@ -38,6 +38,7 @@
 <!-- build:js scripts/app.min.js -->
 <!-- jQuery -->
   <script src="{{url('assets')}}/libs/jquery/dist/jquery.min.js"></script>
+  <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
 <!-- Bootstrap -->
   <script src="{{url('assets')}}/libs/popper.js/dist/umd/popper.min.js"></script>
   <script src="{{url('assets')}}/libs/bootstrap/dist/js/bootstrap.min.js"></script>
