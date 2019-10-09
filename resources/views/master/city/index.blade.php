@@ -29,8 +29,8 @@
 			      			<td>{{$data->city}}</td>
 			      			<td style="text-align: center;">
 			      				<div class="btn-group">
-			      				<a href="{{route('master.city.view', $data->id)}}" class="btn btn-sm btn-info">&nbsp;&nbsp;View&nbsp;&nbsp;</a>&nbsp;&nbsp;
-			      				<a href="{{route('master.city.edit', $data->id)}}" class="btn btn-sm btn-danger">&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
+			      				<a href="{{route('master.city.edit', $data->id)}}" class="btn btn-sm btn-info">&nbsp;&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;&nbsp;</a>
+			      				<a onclick="return confirm('Apa Anda Yakin untuk Menghapus Provinsi Ini ?')" href="{{route('master.city.destroy', $data->id)}}" class="btn btn-sm btn-danger">&nbsp;&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;&nbsp;</a>
 			      			    </div>
 			      			</td>
 			      		</tr>

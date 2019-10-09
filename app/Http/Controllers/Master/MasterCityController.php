@@ -86,7 +86,14 @@ class MasterCityController extends Controller
 
     public function destroy($id)
     {
-        //
+      $data = MasterCity::where('id', $id)->delete();
+      if($data){
+         Session::flash('success','Success Delete Data');
+         return redirect('/master-city/');
+       }else{
+         Session::flash('failed','Failed Delete Data');
+         return redirect('/master-city/');
+       }
     }
 
     public function export()

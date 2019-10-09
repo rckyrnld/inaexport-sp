@@ -80,7 +80,14 @@ class MasterProvinceController extends Controller
 
     public function destroy($id)
     {
-        //
+      $data = MasterProvince::where('id', $id)->delete();
+      if($data){
+         Session::flash('success','Success Delete Data');
+         return redirect('/master-province/');
+       }else{
+         Session::flash('failed','Failed Delete Data');
+         return redirect('/master-province/');
+       }
     }
 
     public function export()

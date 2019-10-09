@@ -73,6 +73,7 @@ Route::namespace('Master')->group(function () {
 	Route::get('master-country/edit/{id}', 'MasterCountryController@edit')->name('master.country.edit');
 	Route::get('master-country/view/{id}', 'MasterCountryController@view')->name('master.country.view');
 	Route::post('master-country/store/{param}','MasterCountryController@store')->name('master.country.store');
+	Route::get('master-country/destroy/{id}', 'MasterCountryController@destroy')->name('master.country.destroy');
 	Route::get('master-country/export/', 'MasterCountryController@export')->name('master.country.export');
 	//Master City
 	Route::get('master-city/', 'MasterCityController@index')->name('master.city.index');
@@ -80,6 +81,7 @@ Route::namespace('Master')->group(function () {
 	Route::get('master-city/edit/{id}', 'MasterCityController@edit')->name('master.city.edit');
 	Route::get('master-city/view/{id}', 'MasterCityController@view')->name('master.city.view');
 	Route::post('master-city/store/{param}','MasterCityController@store')->name('master.city.store');
+	Route::get('master-city/destroy/{id}', 'MasterCityController@destroy')->name('master.city.destroy');
 	Route::get('master-city/export/', 'MasterCityController@export')->name('master.city.export');
 	//Master Province
 	Route::get('master-province/', 'MasterProvinceController@index')->name('master.province.index');
@@ -87,6 +89,7 @@ Route::namespace('Master')->group(function () {
 	Route::get('master-province/edit/{id}', 'MasterProvinceController@edit')->name('master.province.edit');
 	Route::get('master-province/view/{id}', 'MasterProvinceController@view')->name('master.province.view');
 	Route::post('master-province/store/{param}','MasterProvinceController@store')->name('master.province.store');
+	Route::get('master-province/destroy/{id}', 'MasterProvinceController@destroy')->name('master.province.destroy');
 	Route::get('master-province/export/', 'MasterProvinceController@export')->name('master.province.export');
 	//Master Port
 	Route::get('master-port/', 'MasterPortController@index')->name('master.port.index');
@@ -94,6 +97,7 @@ Route::namespace('Master')->group(function () {
 	Route::get('master-port/edit/{id}', 'MasterPortController@edit')->name('master.port.edit');
 	Route::get('master-port/view/{id}', 'MasterPortController@view')->name('master.port.view');
 	Route::post('master-port/store/{param}','MasterPortController@store')->name('master.port.store');
+	Route::get('master-port/destroy/{id}', 'MasterPortController@destroy')->name('master.port.destroy');
 	Route::get('master-port/export/', 'MasterPortController@export')->name('master.port.export');
 });
 

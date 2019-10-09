@@ -91,7 +91,14 @@ class MasterCountryController extends Controller
 
     public function destroy($id)
     {
-        //
+      $data = MasterCountry::where('id', $id)->delete();
+      if($data){
+         Session::flash('success','Success Delete Data');
+         return redirect('/master-country/');
+       }else{
+         Session::flash('failed','Failed Delete Data');
+         return redirect('/master-country/');
+       }
     }
 
     public function export()
