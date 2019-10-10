@@ -18,7 +18,7 @@
                         <br>
                         <div class="table-responsive">
 
-                            <table id="tablebrand" class="table  table-bordered table-striped">
+                            <table id="tablebrands" class="table  table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>
                                     <th>No</th>
@@ -58,7 +58,7 @@
 
 <script>
     $(function () {
-        $('#tablebrand').DataTable({
+        $('#tablebrands').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('datatables.brand') }}",

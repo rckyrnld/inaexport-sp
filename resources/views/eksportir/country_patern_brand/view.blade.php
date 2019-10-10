@@ -1,5 +1,4 @@
 @include('header')
-<title>E-Reporting | Tambah User</title>
 <div class="padding">
     <div class="row">
         <div class="col-md-12">
@@ -13,43 +12,45 @@
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Brand</label>
-                                <input type="text" name="brand" value="{{$val->merek}}" disabled id="brand" class="form-control">
-                                <input type="hidden" name="id_sales" value="{{$val->id}}">
+                                <select class="atc form-control select2" disabled required id="brand"
+                                        name="brand">
+                                    <option value="">- Pilih Brand -</option>
+                                    @foreach($brand as $sat)
+                                        <option value="{{$sat->id}}" {{($val->id_itdp_eks_product_brand == $sat->id)?'selected':''}}>{{$sat->merek}}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="form-group col-sm-6">
-                                <label>Meaning Of Brand</label>
-                                <input type="text" class="form-control" disabled value="{{$val->arti_merek}}" name="arti_brand" id="arti_brand" required>
+                                <label>Country</label>
+                                <select class="atc form-control select2" disabled required id="country"
+                                        name="country">
+                                    <option value="">- Pilih Country -</option>
+                                    @foreach($country as $sa)
+                                        <option value="{{$sa->id}}" {{($val->id_mst_country == $sa->id)?'selected':''}}>{{$sa->country}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Month</label>
-                                <input type="text" class="form-control" disabled value="{{$val->bulan_merek}}" name="bulan" id="bulan">
+                                <input type="text" value="{{$val->bulan}}" disabled class="form-control" name="bulan" id="bulan">
+
                             </div>
                             <div class="form-group col-sm-6">
                                 <label>Year</label>
-                                <input type="text" class="form-control" disabled value="{{$val->tahun_merek}}" name="year"
+                                <input type="text" class="form-control" disabled value="{{$val->tahun}}" name="year"
                                        id="year" required>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-sm-6">
-                                <label>Copyright Number</label>
-                                <input type="text" class="form-control" disabled value="{{$val->paten_merek}}" name="copyright_number" id="copyright_number">
-                            </div>
-                            <div class="form-group col-sm-6">
-
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-sm-6">
 
                             </div>
                             <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/brand')}}"
+                                <a style="color: white" href="{{url('/eksportir/country_patern_brand')}}"
                                    class="btn btn-primary"><i style="color: white"></i>
                                     Kembali
                                 </a>
