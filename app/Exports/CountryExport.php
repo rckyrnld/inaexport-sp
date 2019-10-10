@@ -17,7 +17,7 @@ class CountryExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     public function collection()
     {
         return MasterCountry::leftjoin('mst_group_country as a','a.id','=','mst_country.mst_country_group_id')
-      						  ->orderby('a.group_country', 'asc')
+      						  ->orderby('mst_country.country', 'asc')
       						  ->select('mst_country.kode_bps','mst_country.country','a.group_country')
       						  ->get();
     }

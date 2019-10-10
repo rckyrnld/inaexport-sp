@@ -42,7 +42,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Subyek</label>
                  <div class="col-md-7">
-                     <input type="text" class="form-control" name="subyek" autocomplete="off" required placeholder="Input" {{$view}}  @isset($data) value="{{ $data->message }}" @endisset>
+                     <input type="text" class="form-control" name="subyek" autocomplete="off" required placeholder="Input" {{$view}}  @isset($data) value="{{ $data->subyek }}" @endisset>
                  </div>
              </div>
 
