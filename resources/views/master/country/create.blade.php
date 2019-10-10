@@ -90,7 +90,7 @@
   $(document).ready(function() {
     $('.integer').inputmask({
         alias:"integer",
-        digits:0,
+        repeat:3,
         digitsOptional:false,
         decimalProtect:false,
         radixFocus:true,

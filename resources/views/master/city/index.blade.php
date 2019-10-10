@@ -10,7 +10,7 @@
       <div class="box">
       	 <div class="box-divider m-0"></div>
       	 <div class="box-header bg-info">
-          <a id="tambah" href="{{route('master.city.create', '')}}" class="md-btn md-raised mb-2 w-sm info"><i class="fa fa-plus-circle"></i>  Add</a>&nbsp;&nbsp;<a id="tambah" href="{{route('master.city.export')}}" class="md-btn md-raised mb-2 w-sm info" target="_blank"><i class="fa fa-print"></i>  Export</a>
+          <a id="tambah" href="{{route('master.city.create')}}" class="md-btn md-raised mb-2 w-sm info"><i class="fa fa-plus-circle"></i>  Add</a>&nbsp;&nbsp;<a id="tambah" href="{{route('master.city.export')}}" class="md-btn md-raised mb-2 w-sm info" target="_blank"><i class="fa fa-print"></i>  Export</a>
       	 </div>
       	  <div class="box-body">
           	 <div class="table-responsive">
