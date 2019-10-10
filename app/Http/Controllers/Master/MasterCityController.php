@@ -39,8 +39,16 @@ class MasterCityController extends Controller
 
     public function store(Request $req, $param)
     {
+      $id = MasterCity::orderby('id','desc')->first();
+      if($id){
+        $id = $id->id+1;
+      } else {
+        $id = 1;
+      }
+      
       if($param == 'Create'){
         $data = MasterCity::insert([
+          'id' => $id,
           'id_mst_country' => $req->country,
           'city' => $req->city
         ]);

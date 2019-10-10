@@ -33,8 +33,16 @@ class MasterProvinceController extends Controller
 
     public function store(Request $req, $param)
     {
+      $id = MasterProvince::orderby('id','desc')->first();
+      if($id){
+        $id = $id->id+1;
+      } else {
+        $id = 1;
+      }
+      
       if($param == 'Create'){
         $data = MasterProvince::insert([
+          'id' => $id,
           'province_en' => $req->province_en,
           'province_in' => $req->province_in,
           'province_chn' => $req->province_chn,

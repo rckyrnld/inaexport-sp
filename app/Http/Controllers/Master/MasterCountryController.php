@@ -38,8 +38,16 @@ class MasterCountryController extends Controller
 
     public function store(Request $req, $param)
     {
+      $id = MasterCountry::orderby('id','desc')->first();
+      if($id){
+        $id = $id->id+1;
+      } else {
+        $id = 1;
+      }
+      
       if($param == 'Create'){
         $data = MasterCountry::insert([
+          'id' => $id,
           'mst_country_group_id' => $req->group,
           'mst_country_region_id' => $req->region,
           'country' => $req->country,
