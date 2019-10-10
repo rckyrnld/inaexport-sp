@@ -1,6 +1,4 @@
 @include('header')
-{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>--}}
-<title>E-Reporting | Tambah User</title>
 <div class="padding">
     <div class="row">
         <div class="col-md-12">
@@ -8,31 +6,41 @@
                 {{ csrf_field() }}
                 <div class="box">
                     @foreach($data as $val)
-                        {{-- <div class="box-header">
-                        </div> --}}
                         <div class="box-divider m-0"></div>
                         <div class="box-body">
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
                                     <label>Year</label>
-                                    <input type="text" value="{{$val->tahun}}" name="year" id="year" class="form-control">
+                                    <input type="text" value="{{$val->tahun}}" name="year" id="year"
+                                           class="form-control">
                                     <input type="hidden" value="{{$val->id}}" name="id_sales" class="form-control">
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label>Value (USD)</label>
-                                    <input type="text" class="form-control" value="{{$val->nilai}}" name="value" id="value" required>
+                                    <input type="text" class="form-control" value="{{$val->nilai}}" name="value"
+                                           id="value" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
                                     <label>Persen (%)</label>
-                                    <input type="text" class="form-control" value="{{$val->nilai_persen}}" name="persen" id="persen">
+                                    <input type="text" class="form-control" value="{{$val->nilai_persen}}" name="persen"
+                                           id="persen">
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>Nilai Ekspor (USD)</label>
-                                    <input type="text" class="form-control" value="{{$val->nilai_ekspor}}" name="nilai_ekspor"
+                                    <input type="text" class="form-control" value="{{$val->nilai_ekspor}}"
+                                           name="nilai_ekspor"
                                            id="nilai_ekspor" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+
+                                </div>
+                                <div class="form-group col-sm-6">
+
                                 </div>
                             </div>
 
@@ -41,7 +49,11 @@
 
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <button class="btn btn-success pull-right" type="submit"><i
+                                    <a style="color: white" href="{{url('/eksportir/annual_sales')}}"
+                                       class="btn btn-primary"><i style="color: white"></i>
+                                        Kembali
+                                    </a>
+                                    <button class="btn btn-success" type="submit"><i
                                                 class="fa fa-plus-circle"></i> Update
                                     </button>
                                 </div>
