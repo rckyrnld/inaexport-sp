@@ -26,6 +26,10 @@ Route::get('/verifypenjual/{id}','RegistrasiController@verifypenjual');
 //////////////////////////////////// START BACKEND ////////////////////////////////////////////////////////////
 
 Route::get('/', 'HomeController@index');
+//Verify User
+Route::get('/verifyuser', 'VerifyuserController@index');
+Route::get('/detailverify/{id}', 'VerifyuserController@detailverify');
+Route::get('/saveverify/{id}', 'VerifyuserController@saveverify');
 
 // Group
 Route::resource('/group', 'UM\GroupController');
