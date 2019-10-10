@@ -99,6 +99,8 @@ Route::get('/tambah_annual','EksportirController@tambahannual');
 Route::post('/annual_save','EksportirController@storeannual');
 Route::get('sales_getdata','EksportirController@datanya')->name('datatables.sales');
 Route::get('/sales_edit/{id}','EksportirController@edit')->name('sales.detail');
+Route::get('/sales_view/{id}','EksportirController@view')->name('sales.view');
+Route::post('/sales_update','EksportirController@updateannual');
 
 
 //////////////////////////////////////////ILYAS END////////////////////////////////////////////////////////////////////////////////

@@ -52,13 +52,53 @@ class EksportirController extends Controller
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('sales.detail', $mjl->id) . '" class="btn btn-sm btn-info">
-                <i class="fa fa-edit text-white"></i> Sunting</a>
+                <a href="' . route('sales.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                    <i class="fa fa-search text-white"></i> View
+                </a>
+                <a href="' . route('sales.detail', $mjl->id) . '" class="btn btn-sm btn-success">
+                    <i class="fa fa-edit text-white"></i> Edit
+                </a>
+                <a href="' . route('sales.detail', $mjl->id) . '" class="btn btn-sm btn-danger">
+                    <i class="fa fa-trash text-white"></i> Delete
+                </a>
                 </center>
                 ';
             })
             ->addIndexColumn()
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    public function edit($id)
+    {
+        $pageTitle = 'Detail Sales';
+        $url = '/sales_update';
+        $data = DB::table('itdp_eks_sales')
+            ->where('id', '=', $id)
+            ->get();
+        return view('eksportir.annual_sales.edit', compact('pageTitle', 'data', 'url'));
+    }
+
+    public function view($id)
+    {
+        $pageTitle = 'Detail Sales';
+        $url = '/sales_update';
+        $data = DB::table('itdp_eks_sales')
+            ->where('id', '=', $id)
+            ->get();
+        return view('eksportir.annual_sales.view', compact('pageTitle', 'data', 'url'));
+    }
+
+    public function updateannual(Request $request)
+    {
+//        dd($request);
+        $update = DB::table('itdp_eks_sales')->where('id', $request->id_sales)
+            ->update([
+                'tahun' => $request->year,
+                'nilai' => $request->value,
+                'nilai_persen' => $request->persen,
+                'nilai_ekspor' => $request->nilai_ekspor,
+            ]);
+        return redirect('annual_sales');
     }
 }
