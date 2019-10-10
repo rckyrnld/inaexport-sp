@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Eksportir;
 
 use Illuminate\Http\Request;
 use Auth;
@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class EksportirController extends Controller
+class AnnualController extends Controller
 {
     public function index()
     {
@@ -18,20 +18,19 @@ class EksportirController extends Controller
         return view('eksportir.annual_sales.index', compact('pageTitle'));
     }
 
-    public function tambahannual()
+    public function tambah()
     {
-
 //        dd($id_user);
-        $url = '/annual_save';
+        $url = '/eksportir/annual_save';
         $pageTitle = 'Tambah Annual Sales';
         return view('eksportir.annual_sales.tambah', compact('pageTitle', 'url'));
     }
 
-    public function storeannual(Request $request)
+    public function store(Request $request)
     {
-        $id_user = Auth::user()->id;
 //        dd($request);
-        $insert = DB::table('itdp_eks_sales')->insert([
+        $id_user = Auth::user()->id;
+        DB::table('itdp_eks_sales')->insert([
             'id_itdp_profil_eks' => $id_user,
             'tahun' => $request->year,
             'nilai' => $request->value,
@@ -39,12 +38,12 @@ class EksportirController extends Controller
             'nilai_ekspor' => $request->nilai_ekspor,
             'idcompanytahun' => $id_user . $request->year,
         ]);
-        return redirect('annual_sales');
+        return redirect('eksportir/annual_sales');
     }
 
     public function datanya()
     {
-//        $dokumen = DB::table('document_type')->get();
+//        dd("masuk gan");
         $user = DB::table('itdp_eks_sales')
             ->get();
 
@@ -58,7 +57,7 @@ class EksportirController extends Controller
                 <a href="' . route('sales.detail', $mjl->id) . '" class="btn btn-sm btn-success">
                     <i class="fa fa-edit text-white"></i> Edit
                 </a>
-                <a href="' . route('sales.detail', $mjl->id) . '" class="btn btn-sm btn-danger">
+                <a href="' . route('sales.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash text-white"></i> Delete
                 </a>
                 </center>
@@ -72,7 +71,7 @@ class EksportirController extends Controller
     public function edit($id)
     {
         $pageTitle = 'Detail Sales';
-        $url = '/sales_update';
+        $url = '/eksportir/sales_update';
         $data = DB::table('itdp_eks_sales')
             ->where('id', '=', $id)
             ->get();
@@ -82,23 +81,30 @@ class EksportirController extends Controller
     public function view($id)
     {
         $pageTitle = 'Detail Sales';
-        $url = '/sales_update';
         $data = DB::table('itdp_eks_sales')
             ->where('id', '=', $id)
             ->get();
-        return view('eksportir.annual_sales.view', compact('pageTitle', 'data', 'url'));
+        return view('eksportir.annual_sales.view', compact('pageTitle', 'data'));
     }
 
-    public function updateannual(Request $request)
+    public function delete($id)
+    {
+//        dd($id);
+        DB::table('itdp_eks_sales')->where('id', $id)
+            ->delete();
+        return redirect('eksportir/annual_sales');
+    }
+
+    public function update(Request $request)
     {
 //        dd($request);
-        $update = DB::table('itdp_eks_sales')->where('id', $request->id_sales)
+        DB::table('itdp_eks_sales')->where('id', $request->id_sales)
             ->update([
                 'tahun' => $request->year,
                 'nilai' => $request->value,
                 'nilai_persen' => $request->persen,
                 'nilai_ekspor' => $request->nilai_ekspor,
             ]);
-        return redirect('annual_sales');
+        return redirect('eksportir/annual_sales');
     }
 }

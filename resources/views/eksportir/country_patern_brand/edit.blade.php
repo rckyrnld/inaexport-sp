@@ -1,67 +1,65 @@
 @include('header')
-<title>E-Reporting | Tambah User</title>
 <div class="padding">
     <div class="row">
         <div class="col-md-12">
-            {{ csrf_field() }}
-            <div class="box">
-                @foreach($data as $val)
-                    {{-- <div class="box-header">
-                    </div> --}}
-                    <div class="box-divider m-0"></div>
-                    <div class="box-body">
-                        <div class="form-row">
-                            <div class="form-group col-sm-6">
-                                <label>Year</label>
-                                <input type="text" value="{{$val->tahun}}" disabled name="year" id="year"
-                                       class="form-control">
-                                <input type="hidden" disabled value="{{$val->id}}" name="id_sales" class="form-control">
+            <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{url($url)}}">
+                {{ csrf_field() }}
+                <div class="box">
+                    @foreach($data as $val)
+                        <div class="box-divider m-0"></div>
+                        <div class="box-body">
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label>Brand</label>
+                                    <input type="text" name="brand" value="{{$val->merek}}" id="brand" class="form-control">
+                                    <input type="hidden" name="id_sales" value="{{$val->id}}">
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label>Meaning Of Brand</label>
+                                    <input type="text" class="form-control" value="{{$val->arti_merek}}" name="arti_brand" id="arti_brand" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label>Month</label>
+                                    <input type="text" class="form-control" value="{{$val->bulan_merek}}" name="bulan" id="bulan">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>Year</label>
+                                    <input type="text" class="form-control" value="{{$val->tahun_merek}}" name="year"
+                                           id="year" required>
+                                </div>
                             </div>
 
-                            <div class="form-group col-sm-6">
-                                <label>Value (USD)</label>
-                                <input type="text" class="form-control" disabled value="{{$val->nilai}}" name="value"
-                                       id="value" required>
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label>Copyright Number</label>
+                                    <input type="text" class="form-control" value="{{$val->paten_merek}}" name="copyright_number" id="copyright_number">
+                                </div>
+                                <div class="form-group col-sm-6">
+
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <a style="color: white" href="{{url('/eksportir/brand')}}"
+                                       class="btn btn-primary"><i style="color: white"></i>
+                                        Kembali
+                                    </a>
+                                    <button class="btn btn-success" type="submit"><i
+                                                class="fa fa-plus-circle"></i> Update
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-sm-6">
-                                <label>Persen (%)</label>
-                                <input type="text" class="form-control" disabled value="{{$val->nilai_persen}}"
-                                       name="persen" id="persen">
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Nilai Ekspor (USD)</label>
-                                <input type="text" class="form-control" disabled value="{{$val->nilai_ekspor}}"
-                                       name="nilai_ekspor"
-                                       id="nilai_ekspor" required>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-sm-6">
-
-                            </div>
-                            <div class="form-group col-sm-6">
-
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-sm-6">
-
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/annual_sales')}}"
-                                   class="btn btn-success pull-right"><i style="color: white"></i>
-                                    Kembali
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-            {{--            </form>--}}
+                    @endforeach
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -1,5 +1,4 @@
 @include('header')
-{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>--}}
 <title>E-Reporting | Tambah User</title>
 <div class="padding">
     <div class="row">
@@ -7,8 +6,6 @@
             <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{url($url)}}">
                 {{ csrf_field() }}
                 <div class="box">
-                    {{-- <div class="box-header">
-                    </div> --}}
                     <div class="box-divider m-0"></div>
                     <div class="box-body">
                         <div class="form-row">
@@ -39,7 +36,20 @@
 
                             </div>
                             <div class="form-group col-sm-6">
-                                <button class="btn btn-success pull-right" type="submit"><i
+
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <a style="color: white" href="{{url('/eksportir/annual_sales')}}"
+                                   class="btn btn-primary"><i style="color: white"></i>
+                                    Kembali
+                                </a>
+                                <button class="btn btn-success" type="submit"><i
                                             class="fa fa-plus-circle"></i> Simpan
                                 </button>
                             </div>
