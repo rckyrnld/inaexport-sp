@@ -24,6 +24,15 @@
           @endif
              <div class="form-group row">
               <div class="col-md-1"></div>
+                 <label class="control-label col-md-3">ID</label>
+                 <div class="col-md-7">
+                     <input type="text" id="id" class="form-control" name="kode_province" autocomplete="off" required placeholder="Input" {{$view}}  @isset($data) value="{{ $data->kode_province }}" @endisset>
+                     <input type="hidden" id="kode" @isset($data) value="{{ $data->kode_province }}" @endisset>
+                 </div>
+             </div>
+
+             <div class="form-group row">
+              <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Province (EN)</label>
                  <div class="col-md-7">
                      <input type="text" class="form-control" name="province_en" autocomplete="off" required placeholder="Input" {{$view}}  @isset($data) value="{{ $data->province_en }}" @endisset>
@@ -42,7 +51,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Province (CHN)</label>
                  <div class="col-md-7">
-                     <input type="text" class="form-control" name="province_chn" autocomplete="off" required placeholder="Input" {{$view}}  @isset($data) value="{{ $data->province_chn }}" @endisset>
+                     <input type="text" class="form-control" name="province_chn" autocomplete="off" placeholder="Input" {{$view}}  @isset($data) value="{{ $data->province_chn }}" @endisset>
                  </div>
              </div>
         
@@ -67,12 +76,25 @@
 </div>
 
 @include('footer')
+
 <script type="text/javascript">
   $(document).ready(function() {
-    jQuery(function ($) {
-        var $inputs = $('input[name=province_en],input[name=province_in],input[name=province_chn]');
-        $inputs.on('input', function () {
-            $inputs.not(this).prop('required', !$(this).val().length);
+    $("#id").focus(function(){}).blur(function(){
+      var kode = $('#id').val();
+      var kode2 = $('#kode').val();
+      $.ajax({
+            url: "{{route('master.province.kode')}}",
+            type: 'get',
+            data: {kode:kode},
+            dataType: 'json',
+            success:function(response){
+              if(response != null) {
+                if(kode2 != kode){
+                  alert('ID Sudah Tersedia !');
+                  $('#id').val('');
+                }
+              }
+            }
         });
     });
   });

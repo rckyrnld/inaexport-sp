@@ -7,6 +7,8 @@ use App\Models\MasterPort;
 use App\Models\MasterProvince;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Exports\PortExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Session;
 
 class MasterPortController extends Controller
@@ -18,7 +20,7 @@ class MasterPortController extends Controller
 
     public function index(){
       $pageTitle = 'Port';
-      $port = MasterPort::leftjoin('mst_province as a', 'a.id','=','mst_port.id_mst_province')
+      $port = MasterPort::leftjoin('mst_province as a', 'mst_port.id_mst_province','=','a.id')
       ->orderby('mst_port.name_port', 'asc')
       ->select('mst_port.*', 'a.province_en')
       ->get();
@@ -39,8 +41,7 @@ class MasterPortController extends Controller
       if($param == 'Create'){
         $data = MasterPort::insert([
           'id_mst_province' => $req->province,
-          'name_port' => $req->port,
-          'created_at' => date('Y-m-d H:i:s')
+          'name_port' => $req->port
         ]);
       } else {
         $pecah = explode('_', $param);
@@ -48,8 +49,7 @@ class MasterPortController extends Controller
 
         $data = MasterPort::where('id', $pecah[1])->update([
           'id_mst_province' => $req->province,
-          'name_port' => $req->port,
-          'updated_at' => date('Y-m-d H:i:s')
+          'name_port' => $req->port
         ]);
       }
 
@@ -83,6 +83,18 @@ class MasterPortController extends Controller
 
     public function destroy($id)
     {
-        //
+      $data = MasterPort::where('id', $id)->delete();
+      if($data){
+         Session::flash('success','Success Delete Data');
+         return redirect('/master-port/');
+       }else{
+         Session::flash('failed','Failed Delete Data');
+         return redirect('/master-port/');
+       }
+    }
+
+    public function export()
+    {
+      return Excel::download(new PortExport, 'Port_Data.xlsx');
     }
 }

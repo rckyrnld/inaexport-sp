@@ -26,10 +26,10 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Province</label>
                  <div class="col-md-7">
-                     <select class="form-control" required name="province" {{$view}}>
-                       <option style="display: none;" value="">Select Province</option>
+                     <select class="form-control select2" required name="province" {{$view}}>
+                       <option style="display: none;" value="" id="first">Select Province</option>
                        @foreach($province as $val)
-                       <option value="{{$val->id}}" @isset($data) @if($data->id_mst_province == $val->id) selected @endif  @endisset>{{$val->keterangan}}</option>
+                       <option value="{{$val->id}}" @isset($data) @if($data->id_mst_province == $val->id) selected @endif  @endisset>{{$val->province_en}}</option>
                        @endforeach
                      </select>
                  </div>
@@ -64,3 +64,10 @@
 </div>
 
 @include('footer')
+<script type="text/javascript">
+  $(function () {
+    $('.select2').on('change', function(){
+      $("#first").prop("disabled", true);
+    });
+  });
+</script>

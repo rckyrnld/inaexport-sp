@@ -15,6 +15,7 @@ class CreateMstProvinceTable extends Migration
     {
         Schema::create('mst_province', function (Blueprint $table) {
             $table->increments('id');
+            $table->char('kode_province', 3);
             $table->string('province_en')->nullable();
             $table->string('province_in')->nullable();
             $table->string('province_chn')->nullable();

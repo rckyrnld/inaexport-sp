@@ -10,12 +10,12 @@
       <div class="box">
       	 <div class="box-divider m-0"></div>
       	 <div class="box-header bg-info">
-          <a id="tambah" href="{{route('master.city.create', '')}}" class="md-btn md-raised mb-2 w-sm info"><i class="fa fa-plus-circle"></i>  Add</a>
+          <a id="tambah" href="{{route('master.city.create', '')}}" class="md-btn md-raised mb-2 w-sm info"><i class="fa fa-plus-circle"></i>  Add</a>&nbsp;&nbsp;<a id="tambah" href="{{route('master.city.export')}}" class="md-btn md-raised mb-2 w-sm info" target="_blank"><i class="fa fa-print"></i>  Export</a>
       	 </div>
       	  <div class="box-body">
           	 <div class="table-responsive">
 			    <table id="example1" class="table  table-bordered table-striped" data-plugin="dataTable">
-			      <thead class="bg-info text-white">
+			      <thead class="bg-success text-white">
 			          <tr>
 			              <th>Country</th>
 			              <th>City</th>
@@ -29,8 +29,8 @@
 			      			<td>{{$data->city}}</td>
 			      			<td style="text-align: center;">
 			      				<div class="btn-group">
-			      				<a href="{{route('master.city.view', $data->id)}}" class="btn btn-sm btn-info">&nbsp;&nbsp;View&nbsp;&nbsp;</a>&nbsp;&nbsp;
-			      				<a href="{{route('master.city.edit', $data->id)}}" class="btn btn-sm btn-danger">&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
+			      				<a href="{{route('master.city.edit', $data->id)}}" class="btn btn-sm btn-info">&nbsp;&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;&nbsp;</a>
+			      				<a onclick="return confirm('Apa Anda Yakin untuk Menghapus Provinsi Ini ?')" href="{{route('master.city.destroy', $data->id)}}" class="btn btn-sm btn-danger">&nbsp;&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;&nbsp;</a>
 			      			    </div>
 			      			</td>
 			      		</tr>

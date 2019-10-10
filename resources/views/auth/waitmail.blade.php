@@ -50,84 +50,16 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
     </div>
   </div>
   <div id="content-body" style="padding-left:100px; padding-right:100px ; color: #ffffff" >
-    <div class="py-2 w-100">
+    <div class="py-5 w-100">
 	
 	
       <div class="" style="text-color:black;padding-left:10px; padding-right:10px; border-radius: 3px;">
 	  <br>
-	  <form class="form-horizontal" method="POST" action="{{ url('simpan_rpembeli') }}">
-	   {{ csrf_field() }}
-	   <h5><center>Form Pendaftaran Pembeli</center></h5>
-	   <br><br>
-		<div class="form-row">
-							<div class="form-group col-sm-6">
-                                <label>Nama Perusahaan</label>
-                                <input type="text" name="company" id="company" class="form-control" style=" color: black; ">
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Username Pembeli</label>
-                                <input type="text" name="username" id="username" class="form-control" style=" color: black; ">
-                            </div>
-                        </div>
-		<div class="form-row">
-							
-                            <div class="form-group col-sm-6">
-                                <label>Email Pembeli</label>
-                                <input type="text" name="email" id="email" class="form-control" style=" color: black; ">
-                            </div>
-							<div class="form-group col-sm-6">
-                                <label>Telepon</label>
-                                <input type="text" name="phone" id="phone" class="form-control" style=" color: black; ">
-                            </div>
-                        </div>
-		<div class="form-row">
-                            
-                            <div class="form-group col-sm-6">
-                                <label>Fax</label>
-                                <input type="text" name="fax" id="fax" class="form-control" style=" color: black; ">
-                            </div>
-							<div class="form-group col-sm-6">
-                                <label>Website</label>
-                                <input type="text" name="website" id="website" class="form-control" style=" color: black; ">
-                            </div>
-                        </div>
-		<div class="form-row">
-                            <div class="form-group col-sm-6">
-                                <label>Password</label>
-                                <input type="password" name="password" id="password" class="form-control" style=" color: black; ">
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Konfirmasi Password</label>
-                                <input type="password" name="kpassword" id="kpassword" class="form-control" style=" color: black; ">
-                            </div>
-                        </div>
-		<div class="form-row">
-                            <div class="form-group col-sm-6">
-                                <label>Postcode</label>
-                                <input type="text" name="postcode" id="postcode" class="form-control" style=" color: black; ">
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Alamat</label>
-                                <textarea name="alamat" id="alamat" class="form-control" style=" color: black; "></textarea>
-                            </div>
-                        </div>
-		
-						
-				<div class="form-row">
-                            <div class="form-group col-sm-6">
-                               
-                            </div>
-                            <div class="form-group col-sm-6" align="right">
-                                <button class="btn btn-success" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;</font></button>
-                            </div>
-                        </div>
-						
-		
-                                
-
-					<br>	
-		</form>
-      </div>
+			<h5><center><br>
+			<img height="200px" src="{{url('assets')}}/assets/images/mail.png" alt="." ><br><br>
+			Cek Email Anda Untuk Mengaktifasi Akun Anda !
+			</center></h5>
+	 </div>
     </div>
   </div>
 </div>

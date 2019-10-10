@@ -29,11 +29,27 @@
 <body>
 
 
-<div class="d-flex flex-column flex" style="background-color:  #2791a6  ; color: #ffffff">
- 
+<div class="d-flex flex-column flex" style="background-color:  #2e899e  ; color: #ffffff">
+	<div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
+    <div class="mx-auto">
+	<table border="0" width="100%">
+	<tr>
+	<td width="30%" style="font-size:13px;padding-left:10px"><img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b></td>
+	<td width="40%"><!-- <center><span class="hidden-folded d-inline"><H5>Form Registrasi Pembeli Baru</H5></span></center> --></td>
+	<td width="30%" align="right" style="padding-right:10px">
+	<a href="{{url('registrasi_pembeli')}}"><i class="fa fa-user"></i> Daftar Pembeli</a> &nbsp;&nbsp;&nbsp;<a><i class="fa fa-user"></i> Daftar Penjual</a> &nbsp;&nbsp;&nbsp;<a href="{{url('login')}}"><i class="fa fa-sign-in"></i> Login</a>
+	</td>
+	</tr>
+	</table>
+	
+      
+       
+     
+    </div>
+  </div>
   <div id="content-body" style="background-color: #2791a6 ; color: #ffffff" >
     <div class="py-5 text-center w-100">
-	<img height="70px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><br><br>
+	<!--<img height="70px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><br><br>--><br>
 	<h4><b>INDONESIAN TRADE DIGITAL PROMOTION</b></h4><br>
       <div class="mx-auto w-xxl w-auto-xs" style="background: rgba(15, 12, 12, 0.3); border-radius: 10px;">
 	  <br>

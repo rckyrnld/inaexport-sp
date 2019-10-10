@@ -23,6 +23,12 @@ class RegistrasiController extends Controller
     {
         $pageTitle = "Registrasi Pembeli";
         return view('auth.register_pembeli',compact('pageTitle'));
+    } 
+	
+	public function simpan_rpembeli(Request $request)
+    {
+		$pageTitle = "Registrasi Pembeli";
+        return view('auth.waitmail',compact('pageTitle'));
     }
 	
 	public function gantipass()
