@@ -20,7 +20,7 @@ class DataContactUsController extends Controller
       return view('management.contact-us.index',compact('pageTitle','contactus'));
     }
 
-    public function store(Request $req, $param)
+    public function store(Request $req)
     {
       $id = DB::table('csc_contact_us')->orderby('id','desc')->first();
       if($id){
@@ -29,7 +29,7 @@ class DataContactUsController extends Controller
         $id = 1;
       }
 
-      $data = MasterCity::insert([
+      $data = DB::table('csc_contact_us')->insert([
         'id' => $id,
         'fullname' => $req->name,
         'email' => $req->email,
@@ -40,31 +40,38 @@ class DataContactUsController extends Controller
 
       if($data){
          Session::flash('success','Success');
-         return redirect('/management-contactus/');
+         return redirect('/management-contact-us/');
        }else{
          Session::flash('failed','Failed');
-         return redirect('/management-contactus/');
+         return redirect('/management-contact-us/');
        }
+    }
+
+    public function create()
+    {
+      $pageTitle = 'Data Contact Us';
+      $page = 'create';
+      $url = "/contact-us/send/";
+      return view('management.contact-us.create',compact('url','pageTitle','page'));
     }
 
     public function view($id)
     {
-      $pageTitle = "City";
+      $pageTitle = "Data Contact Us";
       $page = "view";
-      $data = MasterCity::where('id', $id)->first();
-      $country = MasterCountry::orderby('id')->get();
-      return view('management.contactus.create',compact('page','data','pageTitle','country'));
+      $data = DB::table('csc_contact_us')->where('id',$id)->first();
+      return view('management.contact-us.create',compact('page','data','pageTitle'));
     }
 
     public function destroy($id)
     {
-      $data = MasterCity::where('id', $id)->delete();
+      $data = DB::table('csc_contact_us')->where('id',$id)->delete();
       if($data){
          Session::flash('success','Success Delete Data');
-         return redirect('/management-contactus/');
+         return redirect('/management-contact-us/');
        }else{
          Session::flash('failed','Failed Delete Data');
-         return redirect('/management-contactus/');
+         return redirect('/management-contact-us/');
        }
     }
 }
