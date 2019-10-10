@@ -110,7 +110,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 
     //Annual SALES
     Route::get('/annual_sales', 'AnnualController@index')->name('annual_sales.index');
-    Route::get('/tambah_annual', 'AnnualController@tambaha');
+    Route::get('/tambah_annual', 'AnnualController@tambah');
     Route::post('/annual_save', 'AnnualController@store');
     Route::get('/sales_getdata', 'AnnualController@datanya')->name('datatables.sales');
     Route::get('/sales_edit/{id}', 'AnnualController@edit')->name('sales.detail');
