@@ -26,7 +26,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">ID</label>
                  <div class="col-md-7">
-                     <input type="text" id="id" class="form-control" name="kode_province" autocomplete="off" required placeholder="Input" {{$view}}  @isset($data) value="{{ $data->kode_province }}" @endisset>
+                     <input type="text" id="id" class="form-control integer" name="kode_province" autocomplete="off" required placeholder="Input" {{$view}}  @isset($data) value="{{ $data->kode_province }}" @endisset>
                      <input type="hidden" id="kode" @isset($data) value="{{ $data->kode_province }}" @endisset>
                  </div>
              </div>
@@ -79,6 +79,21 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+     $('.integer').inputmask({
+        alias:"integer",
+        repeat:2,
+        digitsOptional:false,
+        decimalProtect:false,
+        radixFocus:true,
+        autoUnmask:false,
+        allowMinus:false,
+        rightAlign:false,
+        clearMaskOnLostFocus: false,
+        onBeforeMask: function (value, opts) {
+            return value;
+        },        removeMaskOnSubmit:true
+    });
+
     $("#id").focus(function(){}).blur(function(){
       var kode = $('#id').val();
       var kode2 = $('#kode').val();
