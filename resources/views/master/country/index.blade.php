@@ -14,7 +14,7 @@
       	 </div>
       	  <div class="box-body">
           	 <div class="table-responsive">
-			    <table id="example1" class="table  table-bordered table-striped" data-plugin="dataTable">
+			    <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable">
 			      <thead class="bg-success text-white">
 			          <tr>
 			              <th>Kode BPS</th>
@@ -46,3 +46,10 @@
   </div>
 </div>
 @include('footer')
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#table').dataTable({
+			"order": [[ 1, "asc" ]]
+		});
+	});
+</script>

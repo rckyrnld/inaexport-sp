@@ -38,8 +38,16 @@ class MasterPortController extends Controller
 
     public function store(Request $req, $param)
     {
+      $id = MasterPort::orderby('id','desc')->first();
+      if($id){
+        $id = $id->id+1;
+      } else {
+        $id = 1;
+      }
+      
       if($param == 'Create'){
         $data = MasterPort::insert([
+          'id' => $id,
           'id_mst_province' => $req->province,
           'name_port' => $req->port
         ]);

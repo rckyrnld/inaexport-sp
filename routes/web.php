@@ -13,6 +13,13 @@
 //////////////////////////////////// START FRONTEND ////////////////////////////////////////////////////////////
 Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
 Route::post('/simpan_rpembeli', 'RegistrasiController@simpan_rpembeli');
+Route::get('/verifypembeli/{id}','RegistrasiController@verifypembeli');
+
+Route::get('/registrasi_penjual','RegistrasiController@registrasi_penjual');
+Route::post('/simpan_rpenjual','RegistrasiController@simpan_rpenjual');
+Route::get('/verifypenjual/{id}','RegistrasiController@verifypenjual');
+
+
 
 
 //////////////////////////////////// END FRONTEND ////////////////////////////////////////////////////////////
