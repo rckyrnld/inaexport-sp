@@ -114,14 +114,13 @@ Route::namespace('Master')->group(function () {
 
 Route::namespace('Management')->group(function () {
 // Angga Start
-	//Management Product
-	Route::get('management-product/', 'ProductController@index')->name('management.product.index');
-	Route::get('management-product/create/', 'ProductController@create')->name('management.product.create');
-	Route::get('management-product/edit/{id}', 'ProductController@edit')->name('management.product.edit');
-	Route::get('management-product/view/{id}', 'ProductController@view')->name('management.product.view');
-	Route::post('management-product/store/{param}','ProductController@store')->name('management.product.store');
-	Route::get('management-product/destroy/{id}', 'ProductController@destroy')->name('management.product.destroy');
-	Route::get('management-product/export/', 'ProductController@export')->name('management.product.export');
+	//Management Category Product
+	Route::get('management-category-product/', 'CategoryProductController@index')->name('management.category-product.index');
+	Route::get('management-category-product/create/', 'CategoryProductController@create')->name('management.category-product.create');
+	Route::get('management-category-product/edit/{id}', 'CategoryProductController@edit')->name('management.category-product.edit');
+	Route::get('management-category-product/view/{id}', 'CategoryProductController@view')->name('management.category-product.view');
+	Route::post('management-category-product/store/{param}','CategoryProductController@store')->name('management.category-product.store');
+	Route::get('management-category-product/destroy/{id}', 'CategoryProductController@destroy')->name('management.category-product.destroy');
 	//Management Data Contact Us
 	Route::get('management-contact-us/', 'DataContactUsController@index')->name('management.contactus.index');
 	Route::get('management-contact-us/view/{id}', 'DataContactUsController@view')->name('management.contactus.view');
