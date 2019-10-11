@@ -29,7 +29,7 @@
           	 	 <div class="col-md-12">
           	 	 	<br>
           	 		<div class="form-group row">
-				      {!!Form::label('name','Nama Instansi',['class' => 'col-sm-2 col-form-label '])!!}
+				      {!!Form::label('name','Nama',['class' => 'col-sm-2 col-form-label '])!!}
 				      <div class="col-sm-4">
 				      	{{ csrf_field() }}
 
@@ -38,6 +38,28 @@
 
 				      </div>
 					  
+				    </div>
+				  </div>
+				   <div class="col-md-12">
+          	 		<div class="form-group row">
+				      {!!Form::label('password_confirm','Tipe',['class' => 'col-sm-2 col-form-label '])!!}
+				      <div class="col-sm-4">
+				     
+				        <!--<input type="password" name="password_confirm" class="form-control" value="{{$password}}"> -->
+						<select class="form-control" name="type">
+						<option>DJPEN</option>
+						<option>ITPC</option>
+						<option>KOMJEN</option>
+						<option>KBRI</option>
+						<option>ATASE PERDAGANGAN</option>
+						<option>DINAS PERDAGANGAN</option>
+						
+						</select>
+
+
+
+				      </div>
+
 				    </div>
 				  </div>
 
@@ -125,6 +147,26 @@
       </div>
 
 
+	  <ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+  <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+  <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+    <h3>HOME</h3>
+    <p>Some content.</p>
+  </div>
+  <div id="menu1" class="tab-pane fade">
+    <h3>Menu 1</h3>
+    <p>Some content in menu 1.</p>
+  </div>
+  <div id="menu2" class="tab-pane fade">
+    <h3>Menu 2</h3>
+    <p>Some content in menu 2.</p>
+  </div>
+</div>
        <div class="box">
       	  {{-- <div class="box-header">
       	  </div> --}}
@@ -141,7 +183,7 @@
 			          <tr>
 			              <th width="50">No</th>
 			              <th>Group</th>
-			              <th>Nama Instansi</th>
+			              <th>User</th>
 			              <th><center>Tanggal Daftar</center></th>
 			              <th><center>Aksi</center></th>
 			             
