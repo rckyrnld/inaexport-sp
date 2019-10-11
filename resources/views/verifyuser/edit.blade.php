@@ -24,7 +24,7 @@
 							
 							 <div class="form-row">
                                 <div class="form-group col-sm-6">
-                                    <label><b>Verif By Mail</b></label>
+                                    <label><b>Konfirmasi Email</b></label>
                                     <input type="text" value="<?php if($val->agree == 1){ echo "Sudah";}else{ echo "Belum";};?>" name="year" id="year"
                                            class="form-control" readonly>
                                    
