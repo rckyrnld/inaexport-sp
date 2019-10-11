@@ -33,7 +33,7 @@ class MasterCityController extends Controller
       $pageTitle = 'City';
       $page = 'create';
       $url = "/master-city/store/Create";
-      $country = MasterCountry::orderby('country')->get();
+      $country = MasterCountry::orderby('country','asc')->get();
       return view('master.city.create',compact('url','pageTitle','page','country'));
     }
 
@@ -76,7 +76,7 @@ class MasterCityController extends Controller
       $pageTitle = "City";
       $page = "view";
       $data = MasterCity::where('id', $id)->first();
-      $country = MasterCountry::orderby('id')->get();
+      $country = MasterCountry::orderby('country','asc')->get();
       return view('master.city.create',compact('page','data','pageTitle','country'));
     }
 
@@ -86,7 +86,7 @@ class MasterCityController extends Controller
       $pageTitle = "City";
       $url = "/master-city/store/Update_".$id;
       $data = MasterCity::where('id', $id)->first();
-      $country = MasterCountry::orderby('id')->get();
+      $country = MasterCountry::orderby('country','asc')->get();
       return view('master.city.create',compact('url','data','pageTitle','page','country'));
     }
 

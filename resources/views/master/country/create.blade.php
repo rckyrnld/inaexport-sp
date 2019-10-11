@@ -29,7 +29,7 @@
                      <select class="form-control" required name="group" {{$view}}>
                        <option style="display: none;" value="">Select Group</option>
                         @foreach($country_group as $val)
-                        <option value="{{$val->id}}" @isset($data) selected  @endisset>{{$val->group_country}}</option>
+                        <option value="{{$val->id}}" @isset($data) @if($data->mst_country_group_id == $val->id) selected @endif  @endisset>{{$val->group_country}}</option>
                         @endforeach
                      </select>
                  </div>
@@ -42,7 +42,7 @@
                      <select class="form-control" required name="region" {{$view}}>
                        <option style="display: none;" value="">Select Region</option>
                         @foreach($country_region as $val)
-                        <option value="{{$val->id}}" @isset($data) selected  @endisset>{{$val->name}}</option>
+                        <option value="{{$val->id}}" @isset($data) @if($data->mst_country_region_id == $val->id) selected @endif @endisset>{{$val->name}}</option>
                         @endforeach
                      </select>
                  </div>

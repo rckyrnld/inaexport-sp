@@ -32,7 +32,7 @@ class MasterPortController extends Controller
       $pageTitle = 'Port';
       $page = 'create';
       $url = "/master-port/store/Create";
-      $province = MasterProvince::orderby('id')->get();
+      $province = MasterProvince::orderby('province_en','asc')->get();
       return view('master.port.create',compact('url','pageTitle','page','province'));
     }
 
@@ -75,7 +75,7 @@ class MasterPortController extends Controller
       $pageTitle = "Port";
       $page = "view";
       $data = MasterPort::where('id', $id)->first();
-      $province = MasterProvince::orderby('id')->get();
+      $province = MasterProvince::orderby('province_en','asc')->get();
       return view('master.port.create',compact('page','data','pageTitle','province'));
     }
 
@@ -85,7 +85,7 @@ class MasterPortController extends Controller
       $pageTitle = "Port";
       $url = "/master-port/store/Update_".$id;
       $data = MasterPort::where('id', $id)->first();
-      $province = MasterProvince::orderby('id')->get();
+      $province = MasterProvince::orderby('province_en','asc')->get();
       return view('master.port.create',compact('url','data','pageTitle','page','province'));
     }
 
