@@ -29,7 +29,7 @@
                                         <center>Role</center>
                                     </th>
                                     <th>
-                                        <center>Verify By Email</center>
+                                        <center>Konfirmasi Email</center>
                                     </th>
 									<th>
                                         <center>Verify By Admin</center>
