@@ -103,6 +103,7 @@ Route::namespace('Master')->group(function () {
 	//Master Port
 	Route::get('master-port/', 'MasterPortController@index')->name('master.port.index');
 	Route::get('master-port/create/', 'MasterPortController@create')->name('master.port.create');
+	Route::get('master-port/check-kode/', 'MasterPortController@check')->name('master.port.kode');
 	Route::get('master-port/edit/{id}', 'MasterPortController@edit')->name('master.port.edit');
 	Route::get('master-port/view/{id}', 'MasterPortController@view')->name('master.port.view');
 	Route::post('master-port/store/{param}','MasterPortController@store')->name('master.port.store');
