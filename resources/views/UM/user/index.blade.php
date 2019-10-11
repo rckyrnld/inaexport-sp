@@ -46,11 +46,14 @@
 				      <div class="col-sm-4">
 				     
 				        <!--<input type="password" name="password_confirm" class="form-control" value="{{$password}}"> -->
-						<select name="type">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
+						<select class="form-control" name="type">
+						<option>DJPEN</option>
+						<option>ITPC</option>
+						<option>KOMJEN</option>
+						<option>KBRI</option>
+						<option>ATASE PERDAGANGAN</option>
+						<option>DINAS PERDAGANGAN</option>
+						
 						</select>
 
 
