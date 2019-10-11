@@ -157,21 +157,21 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/country_patern_brand', 'CountryPaternBrandController@index')->name('country_patern_brand.index');
     Route::get('/tambah_country_patern_brand', 'CountryPaternBrandController@tambah');
     Route::post('/country_patern_brand_save', 'CountryPaternBrandController@store');
-    Route::get('/brand_getdata', 'CountryPaternBrandController@datanya')->name('datatables.country_patern_brand');
-    Route::get('/brand_edit/{id}', 'CountryPaternBrandController@edit')->name('country_patern_brand.detail');
-    Route::get('/brand_view/{id}', 'CountryPaternBrandController@view')->name('country_patern_brand.view');
-    Route::get('/brand_delete/{id}', 'CountryPaternBrandController@delete')->name('country_patern_brand.delete');
-    Route::post('/brand_update', 'CountryPaternBrandController@update');
+    Route::get('/country_patern_brand_getdata', 'CountryPaternBrandController@datanya')->name('datatables.country_patern_brand');
+    Route::get('/country_patern_brand_edit/{id}', 'CountryPaternBrandController@edit')->name('country_patern_brand.detail');
+    Route::get('/country_patern_brand_view/{id}', 'CountryPaternBrandController@view')->name('country_patern_brand.view');
+    Route::get('/country_patern_brand_delete/{id}', 'CountryPaternBrandController@delete')->name('country_patern_brand.delete');
+    Route::post('/country_patern_brand_update', 'CountryPaternBrandController@update');
 
     //production capacity
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::get('/product_capacity', 'ProcapController@index')->name('brand.index');
+    Route::get('/tambah_procap', 'ProcapController@tambah');
+    Route::post('/procap_save', 'ProcapController@store');
+    Route::get('/procap_getdata', 'ProcapController@datanya')->name('datatables.procap');
+    Route::get('/procap_edit/{id}', 'ProcapController@edit')->name('procap.detail');
+    Route::get('/procap_view/{id}', 'ProcapController@view')->name('procap.view');
+    Route::get('/procap_delete/{id}', 'ProcapController@delete')->name('procap.delete');
+    Route::post('/procap_update', 'ProcapController@update');
 
     //contact
 //    Route::get('/brand', 'BrandController@index')->name('brand.index');

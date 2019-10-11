@@ -45,6 +45,7 @@ class AnnualController extends Controller
     {
 //        dd("masuk gan");
         $user = DB::table('itdp_eks_sales')
+            ->where('id_itdp_profil_eks', '=', Auth::user()->id)
             ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
