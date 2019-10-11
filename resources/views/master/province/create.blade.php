@@ -26,8 +26,8 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">ID</label>
                  <div class="col-md-7">
-                     <input type="text" id="id" class="form-control integer" name="kode_province" autocomplete="off" required placeholder="Input" {{$view}}  @isset($data) value="{{ $data->kode_province }}" @endisset>
-                     <input type="hidden" id="kode" @isset($data) value="{{ $data->kode_province }}" @endisset>
+                     <input type="text" id="id" class="form-control integer" name="kode_province" autocomplete="off" required placeholder="Input" {{$view}}  @isset($data) value="{{ $data->id }}" @endisset>
+                     <input type="hidden" id="kode" @isset($data) value="{{ $data->id }}" @endisset>
                  </div>
              </div>
 

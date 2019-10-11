@@ -17,13 +17,14 @@ class ProvinceExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     public function collection()
     {
         return MasterProvince::orderby('province_en', 'asc')
-        					->select('province_en','province_in','province_chn')
+        					->select('id','province_en','province_in','province_chn')
         					->get();
     }
 
     public function headings(): array
     {
         return [
+            'ID',
         	'Province (EN)',
         	'Province (IN)',
         	'Province (CHN)'
