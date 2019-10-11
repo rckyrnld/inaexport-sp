@@ -24,6 +24,15 @@
           @endif
              <div class="form-group row">
               <div class="col-md-1"></div>
+                 <label class="control-label col-md-3">ID</label>
+                 <div class="col-md-7">
+                     <input type="text" class="form-control integer" id="kode_port" name="id" autocomplete="off" required placeholder="Input" {{$view}}  @isset($data) value="{{ $data->id }}" @endisset>
+                     <input type="hidden" id="kode2" @isset($data) value="{{ $data->id }}" @endisset>
+                 </div>
+             </div>
+
+             <div class="form-group row">
+              <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Province</label>
                  <div class="col-md-7">
                      <select class="form-control select2" required name="province" {{$view}}>
@@ -66,8 +75,44 @@
 @include('footer')
 <script type="text/javascript">
   $(function () {
+
     $('.select2').on('change', function(){
       $("#first").prop("disabled", true);
     });
+
+    $('.integer').inputmask({
+        alias:"integer",
+        repeat:3,
+        digitsOptional:false,
+        decimalProtect:false,
+        radixFocus:true,
+        autoUnmask:false,
+        allowMinus:false,
+        rightAlign:false,
+        clearMaskOnLostFocus: false,
+        onBeforeMask: function (value, opts) {
+            return value;
+        },        removeMaskOnSubmit:true
+    });
+
+    $("#kode_port").focus(function(){}).blur(function(){
+      var kode = $('#kode_port').val();
+      var kode2 = $('#kode2').val();
+      $.ajax({
+          url: "{{route('master.port.kode')}}",
+          type: 'get',
+          data: {kode:kode},
+          dataType: 'json',
+          success:function(response){
+            if(response != null) {
+              if(kode2 != kode){
+                alert('ID Sudah Tersedia !');
+                $('#kode_port').val('');
+              }
+            }
+          }
+      });
+    });
+
   });
 </script>

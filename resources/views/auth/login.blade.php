@@ -24,6 +24,39 @@
   <link rel="stylesheet" href="{{url('assets')}}/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
   <link rel="stylesheet" href="{{url('assets')}}/assets/css/app.css" type="text/css" />
   <link rel="stylesheet" href="{{url('assets')}}/assets/css/style.css" type="text/css" />
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+.nav-tabs {
+    border-bottom: 2px solid #ddd;
+}
+.nav-tabs>li {
+    float: left;
+    margin-bottom: -1px;
+}
+.nav>li {
+    position: relative;
+    display: block;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    background-color: #5cb85c;
+    color: white;
+    background-image: linear-gradient(to bottom right, #51d0a8,#065784);
+    
+}
+.nav-tabs>li>a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+}
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}  
+</style>
   <!-- endbuild -->
 </head>
 <body>
@@ -36,8 +69,8 @@
 	<tr>
 	<td width="30%" style="font-size:13px;padding-left:10px"><img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b></td>
 	<td width="40%"><!-- <center><span class="hidden-folded d-inline"><H5>Form Registrasi Pembeli Baru</H5></span></center> --></td>
-	<td width="30%" align="right" style="padding-right:10px">
-	<a href="{{url('registrasi_pembeli')}}"><i class="fa fa-user"></i> Daftar Pembeli</a> &nbsp;&nbsp;&nbsp;<a href="{{url('registrasi_penjual')}}"><i class="fa fa-user"></i> Daftar Penjual</a> &nbsp;&nbsp;&nbsp;<a href="{{url('login')}}"><i class="fa fa-sign-in"></i> Login</a>
+	<td width="30%" align="right" style="padding-right:10px;">
+	<a href="{{url('registrasi_pembeli')}}"><font color="white"><i class="fa fa-user"></i> Daftar Pembeli</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('registrasi_penjual')}}"><font color="white"><i class="fa fa-user"></i> Daftar Penjual</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> Login</font></a>
 	</td>
 	</tr>
 	</table>
@@ -51,26 +84,55 @@
     <div class="py-5 text-center w-100">
 	<!--<img height="70px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><br><br>--><br>
 	<h4><b>INDONESIAN TRADE DIGITAL PROMOTION</b></h4><br>
-      <div class="mx-auto w-xxl w-auto-xs" style="background: rgba(15, 12, 12, 0.3); border-radius: 10px;">
+      <div class="mx-auto" style="width:450px;background: rgba(15, 12, 12, 0.3); border-radius: 10px;">
 	  <br>
-	  <h5>LOGIN</h5>
-	  
-	  <br>
-        <div class="px-3">
-         {{--  <div>
-            <a href="#" class="btn btn-block indigo text-white mb-2">
-              <i class="fa fa-facebook float-left"></i>
-              Sign in with Facebook
-            </a>
-            <a href="#" class="btn btn-block red text-white">
-              <i class="fa fa-google-plus float-left"></i>
-              Sign in with Google+
-            </a>
-          </div> --}}
-          {{-- <div class="my-3 text-sm">
-            OR
-          </div> --}}
-          <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+	  <!-- <h5>LOGIN</h5> -->
+	  <div class="wrap-login100" style="padding-left : 30px; padding-right : 30px;">
+       <br>
+        <ul class="nav nav-tabs" style="width:100%;text-align:center;">
+          <li class="active" style="width:50%;"><a data-toggle="tab" href="#menu1"><p style=""><font color="white">Administrator</font></p></a></li>
+          <li style="width:50%;"><a data-toggle="tab" href="#menu2"><p style=""><font color="white">Eksportir / Importir</font></p></a></li>
+        </ul>
+		<br>
+        <div class="tab-content" style="padding-left:20px; padding-right:20px;">
+          <div id="menu1" class="tab-pane fade in active">
+		  
+             <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+           {{ csrf_field() }}
+		   
+             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+               <input id="email" type="email" placeholder="Email" class="form-control" name="email" style="color: #000000" value="{{ old('email') }}" required autofocus>
+
+                @if ($errors->has('email'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
+            </div>
+            <div class="form-group">
+              <input id="password" type="password" class="form-control" name="password" placeholder="password" required style="color: #000000">
+
+                  @if ($errors->has('password'))
+                      <span class="help-block">
+                          <strong>{{ $errors->first('password') }}</strong>
+                      </span>
+                  @endif
+            </div>      
+            <br>
+            <button type="submit" class="btn primary">Sign in</button>
+			<!--<div class="mb-3">        
+              <label class="md-check">
+                <input type="checkbox"><i class="primary"></i> Keep me signed in
+              </label>
+            </div> -->
+			<br>
+			<br>
+          </form>
+            
+          </div>
+		  
+		  <div id="menu2" class="tab-pane">
+             <form class="form-horizontal" method="POST" action="{{ route('login') }}">
            {{ csrf_field() }}
              <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                <input id="email" type="email" placeholder="Email" class="form-control" name="email" style="color: #000000" value="{{ old('email') }}" required autofocus>
@@ -100,6 +162,31 @@
 			<br>
 			<br>
           </form>
+            
+          </div>
+		  
+         </div>
+
+      </div>
+	  
+	  <br>
+	  
+        <div class="px-3">
+         {{--  <div>
+            <a href="#" class="btn btn-block indigo text-white mb-2">
+              <i class="fa fa-facebook float-left"></i>
+              Sign in with Facebook
+            </a>
+            <a href="#" class="btn btn-block red text-white">
+              <i class="fa fa-google-plus float-left"></i>
+              Sign in with Google+
+            </a>
+          </div> --}}
+          {{-- <div class="my-3 text-sm">
+            OR
+          </div> --}}
+         
+		  
           <div class="my-4">
            <!-- <a href="{{ route('password.request') }}" class="text-primary _600">Forgot password?</a> -->
           </div>
@@ -108,6 +195,7 @@
             <a href="{{url('register')}}" class="text-primary _600">Sign up</a> -->
           </div>
         </div>
+		
       </div>
     </div>
   </div>
@@ -269,6 +357,9 @@
   <script src="{{url('assets')}}/html/scripts/theme.js"></script>
   <script src="{{url('assets')}}/html/scripts/ajax.js"></script>
   <script src="{{url('assets')}}/html/scripts/app.js"></script>
+  <script>
+  
+  </script>
 <!-- endbuild -->
 </body>
 </html>

@@ -14,7 +14,7 @@ class CreateMstPortTable extends Migration
     public function up()
     {
         Schema::create('mst_port', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('id')->primary();
             $table->string('name_port');
             $table->integer('id_mst_province');
             $table->timestamps();

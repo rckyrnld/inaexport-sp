@@ -32,22 +32,15 @@ class MasterPortController extends Controller
       $pageTitle = 'Port';
       $page = 'create';
       $url = "/master-port/store/Create";
-      $province = MasterProvince::orderby('id')->get();
+      $province = MasterProvince::orderby('province_en','asc')->get();
       return view('master.port.create',compact('url','pageTitle','page','province'));
     }
 
     public function store(Request $req, $param)
-    {
-      $id = MasterPort::orderby('id','desc')->first();
-      if($id){
-        $id = $id->id+1;
-      } else {
-        $id = 1;
-      }
-      
+    { 
       if($param == 'Create'){
         $data = MasterPort::insert([
-          'id' => $id,
+          'id' => $req->id,
           'id_mst_province' => $req->province,
           'name_port' => $req->port
         ]);
@@ -56,6 +49,7 @@ class MasterPortController extends Controller
         $param = $pecah[0];
 
         $data = MasterPort::where('id', $pecah[1])->update([
+          'id' => $req->id,
           'id_mst_province' => $req->province,
           'name_port' => $req->port
         ]);
@@ -75,7 +69,7 @@ class MasterPortController extends Controller
       $pageTitle = "Port";
       $page = "view";
       $data = MasterPort::where('id', $id)->first();
-      $province = MasterProvince::orderby('id')->get();
+      $province = MasterProvince::orderby('province_en','asc')->get();
       return view('master.port.create',compact('page','data','pageTitle','province'));
     }
 
@@ -85,7 +79,7 @@ class MasterPortController extends Controller
       $pageTitle = "Port";
       $url = "/master-port/store/Update_".$id;
       $data = MasterPort::where('id', $id)->first();
-      $province = MasterProvince::orderby('id')->get();
+      $province = MasterProvince::orderby('province_en','asc')->get();
       return view('master.port.create',compact('url','data','pageTitle','page','province'));
     }
 
@@ -99,6 +93,11 @@ class MasterPortController extends Controller
          Session::flash('failed','Failed Delete Data');
          return redirect('/master-port/');
        }
+    }
+
+    public function check(Request $req){
+      $checking = MasterPort::where('id', $req->kode)->first();
+      echo json_encode($checking);
     }
 
     public function export()

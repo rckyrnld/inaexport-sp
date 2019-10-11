@@ -15,14 +15,15 @@ class GroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+	/*
      public function __construct()
     {
         $this->middleware('bauth');
-    }
+    } */
 
     public function index()
     {
+		// echo "a";die();
         $pageTitle = 'Group';
         $label = 'Create Group Name';
         $group = DB::table('group')->get();
