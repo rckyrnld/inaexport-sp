@@ -174,18 +174,18 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::post('/procap_update', 'ProcapController@update');
 
     //contact
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::get('/contact', 'ContactController@index')->name('contact.index');
+    Route::get('/tambah_contact', 'ContactController@tambah');
+    Route::post('/contact_save', 'ContactController@store');
+    Route::get('/contact_getdata', 'ContactController@datanya')->name('datatables.contact');
+    Route::get('/contact_edit/{id}', 'ContactController@edit')->name('contact.detail');
+    Route::get('/contact_view/{id}', 'ContactController@view')->name('contact.view');
+    Route::get('/brand_delete/{id}', 'ContactController@delete')->name('contact.delete');
+    Route::post('/contact_update', 'ContactController@update');
 
     //export destination
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
+    Route::get('/export_destination', 'ExsdesController@index')->name('exportdes.index');
+    Route::get('/tambah_export_destination', 'ExsdesController@tambah');
 //    Route::post('/brand_save', 'BrandController@store');
 //    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
 //    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
