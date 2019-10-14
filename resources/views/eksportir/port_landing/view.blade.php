@@ -11,12 +11,12 @@
                     <div class="box-body">
                         <div class="form-row">
                             <div class="form-group col-sm-6">
-                                <label>Country</label>
-                                <select class="atc form-control select2" disabled required id="country"
-                                        name="country">
-                                    <option value="">- Pilih Country -</option>
-                                    @foreach($country as $sa)
-                                        <option value="{{$sa->id}}" {{($val->id_mst_country == $sa->id)?'selected':''}}>{{$sa->country}}</option>
+                                <label>Port</label>
+                                <select class="atc form-control select2" disabled required id="port"
+                                        name="port">
+                                    <option value="">- Pilih Port -</option>
+                                    @foreach($port as $sa)
+                                        <option value="{{$sa->id}}" {{($val->id_mst_port == $sa->id)?'selected':''}}>{{$sa->name_port}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -25,25 +25,13 @@
 
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-sm-6">
-                                <label>Ratio Export</label>
-                                <input type="text" value="{{$val->rasio_persen}}" class="form-control" disabled name="ratio_export" id="ratio_export">
-
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Year</label>
-                                <input type="text" class="form-control" disabled value="{{$val->tahun}}" name="year"
-                                       id="year" required>
-                            </div>
-                        </div>
 
                         <div class="form-row">
                             <div class="form-group col-sm-6">
 
                             </div>
                             <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/export_destination')}}"
+                                <a style="color: white" href="{{url('/eksportir/portland')}}"
                                    class="btn btn-primary"><i style="color: white"></i>
                                     Back
                                 </a>

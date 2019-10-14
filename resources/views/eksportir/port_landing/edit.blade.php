@@ -2,58 +2,47 @@
 <div class="padding">
     <div class="row">
         <div class="col-md-12">
-            {{ csrf_field() }}
-            <div class="box">
-                @foreach($data as $val)
-                    {{-- <div class="box-header">
-                    </div> --}}
-                    <div class="box-divider m-0"></div>
-                    <div class="box-body">
-                        <div class="form-row">
-                            <div class="form-group col-sm-6">
-                                <label>Country</label>
-                                <select class="atc form-control select2" disabled required id="country"
-                                        name="country">
-                                    <option value="">- Pilih Country -</option>
-                                    @foreach($country as $sa)
-                                        <option value="{{$sa->id}}" {{($val->id_mst_country == $sa->id)?'selected':''}}>{{$sa->country}}</option>
-                                    @endforeach
-                                </select>
+            <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{url($url)}}">
+                {{ csrf_field() }}
+                <div class="box">
+                    @foreach($data as $val)
+                        <div class="box-divider m-0"></div>
+                        <div class="box-body">
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label>Port</label>
+                                    <select class="atc form-control select2" required id="port"
+                                            name="port">
+                                        <option value="">- Pilih Port -</option>
+                                        @foreach($port as $sa)
+                                            <option value="{{$sa->id}}" {{($val->id_mst_port == $sa->id)?'selected':''}}>{{$sa->name_port}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <input type="hidden" value="{{$val->id}}" class="form-control" name="id_sales" id="id_sales">
+                                </div>
                             </div>
 
-                            <div class="form-group col-sm-6">
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
 
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-sm-6">
-                                <label>Ratio Export</label>
-                                <input type="text" value="{{$val->rasio_persen}}" class="form-control" disabled name="ratio_export" id="ratio_export">
-
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Year</label>
-                                <input type="text" class="form-control" disabled value="{{$val->tahun}}" name="year"
-                                       id="year" required>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-sm-6">
-
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/export_destination')}}"
-                                   class="btn btn-primary"><i style="color: white"></i>
-                                    Back
-                                </a>
-
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <a style="color: white" href="{{url('/eksportir/export_destination')}}"
+                                       class="btn btn-primary"><i style="color: white"></i>
+                                        Back
+                                    </a>
+                                    <button class="btn btn-success" type="submit"><i
+                                                class="fa fa-plus-circle"></i> Update
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
-            {{--            </form>--}}
+                    @endforeach
+                </div>
+            </form>
         </div>
     </div>
 </div>

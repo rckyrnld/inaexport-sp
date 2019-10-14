@@ -21,48 +21,47 @@ class ExsdesController extends Controller
     public function tambah()
     {
 //        dd($id_user);
-        $brand = DB::table('itdp_eks_product_brand')->get();
+//        $brand = DB::table('itdp_eks_product_brand')->get();
         $country = DB::table('mst_country')->get();
-        $url = '/eksportir/country_patern_brand_save';
-        $pageTitle = 'Tambah country patern brand';
-        return view('eksportir.country_patern_brand.tambah', compact('country', 'pageTitle', 'url', 'brand'));
+        $url = '/eksportir/exdes_save';
+        $pageTitle = 'Add Export Destination';
+        return view('eksportir.export_destination.tambah', compact('country', 'pageTitle', 'url'));
     }
 
     public function store(Request $request)
     {
 //        dd($request);
         $id_user = Auth::user()->id;
-        DB::table('itdp_eks_country_patents')->insert([
+        DB::table('itdp_eks_destination')->insert([
             'id_itdp_profil_eks' => $id_user,
-            'id_itdp_eks_product_brand' => $request->brand,
             'id_mst_country' => $request->country,
-            'bulan' => $request->bulan,
+            'rasio_persen' => $request->ratio_export,
             'tahun' => $request->year,
+            'comtahuncountry' => $id_user.$request->tahun.$request->country,
         ]);
-        return redirect('eksportir/country_patern_brand');
+        return redirect('eksportir/export_destination');
     }
 
     public function datanya()
     {
 //        dd("masuk gan");
-        $user = DB::table('itdp_eks_country_patents')
-            ->select('itdp_eks_country_patents.id', 'itdp_eks_country_patents.bulan', 'itdp_eks_country_patents.tahun', 'mst_country.country', 'itdp_eks_product_brand.merek')
-            ->join('mst_country', 'mst_country.id', '=', 'itdp_eks_country_patents.id_mst_country')
-            ->join('itdp_eks_product_brand', 'itdp_eks_product_brand.id', '=', 'itdp_eks_country_patents.id_itdp_eks_product_brand')
-            ->where('itdp_eks_country_patents.id_itdp_profil_eks', '=', Auth::user()->id)
+        $user = DB::table('itdp_eks_destination')
+            ->select('itdp_eks_destination.id', 'itdp_eks_destination.rasio_persen', 'itdp_eks_destination.tahun', 'mst_country.country')
+            ->join('mst_country', 'mst_country.id', '=', 'itdp_eks_destination.id_mst_country')
+            ->where('itdp_eks_destination.id_itdp_profil_eks', '=', Auth::user()->id)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('country_patern_brand.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                <a href="' . route('exdes.view', $mjl->id) . '" class="btn btn-sm btn-info">
                     <i class="fa fa-search text-white"></i> View
                 </a>
-                <a href="' . route('country_patern_brand.detail', $mjl->id) . '" class="btn btn-sm btn-success">
+                <a href="' . route('exdes.detail', $mjl->id) . '" class="btn btn-sm btn-success">
                     <i class="fa fa-edit text-white"></i> Edit
                 </a>
-                <a href="' . route('country_patern_brand.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
+                <a href="' . route('exdes.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash text-white"></i> Delete
                 </a>
                 </center>
@@ -75,47 +74,47 @@ class ExsdesController extends Controller
 
     public function edit($id)
     {
-        $pageTitle = 'Detail Country Patern Brand';
-        $url = '/eksportir/country_patern_brand_update';
-        $brand = DB::table('itdp_eks_product_brand')->get();
+        $pageTitle = 'Detail Export Destination';
+        $url = '/eksportir/exdes_update';
         $country = DB::table('mst_country')->get();
-        $data = DB::table('itdp_eks_country_patents')
+        $data = DB::table('itdp_eks_destination')
             ->where('id', '=', $id)
             ->get();
-        return view('eksportir.country_patern_brand.edit', compact('pageTitle', 'data', 'url', 'brand', 'country'));
+        return view('eksportir.export_destination.edit', compact('pageTitle', 'data', 'url', 'brand', 'country'));
     }
 
     public function view($id)
     {
 //        dd($id);
-        $pageTitle = 'Detail Country Patern Brand';
-        $data = DB::table('itdp_eks_country_patents')
+        $pageTitle = 'Detail Export Destination';
+        $data = DB::table('itdp_eks_destination')
             ->where('id', '=', $id)
             ->get();
-        $brand = DB::table('itdp_eks_product_brand')->get();
+//        $brand = DB::table('itdp_eks_product_brand')->get();
         $country = DB::table('mst_country')->get();
 //        dd($data);
-        return view('eksportir.country_patern_brand.view', compact('pageTitle', 'data', 'brand', 'country'));
+        return view('eksportir.export_destination.view', compact('pageTitle', 'data', 'country'));
     }
 
     public function delete($id)
     {
 //        dd($id);
-        DB::table('itdp_eks_country_patents')->where('id', $id)
+        DB::table('itdp_eks_destination')->where('id', $id)
             ->delete();
-        return redirect('eksportir/country_patern_brand');
+        return redirect('eksportir/export_destination');
     }
 
     public function update(Request $request)
     {
 //        dd($request);
-        DB::table('itdp_eks_country_patents')->where('id', $request->id_sales)
+        $id_user = Auth::user()->id;
+        DB::table('itdp_eks_destination')->where('id', $request->id_sales)
             ->update([
-                'id_itdp_eks_product_brand' => $request->brand,
                 'id_mst_country' => $request->country,
-                'bulan' => $request->bulan,
+                'rasio_persen' => $request->ratio_export,
                 'tahun' => $request->year,
+                'comtahuncountry' => $id_user.$request->tahun.$request->country,
             ]);
-        return redirect('eksportir/country_patern_brand');
+        return redirect('eksportir/export_destination');
     }
 }

@@ -10,17 +10,6 @@
                         <div class="box-body">
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-                                    <label>Brand</label>
-                                    <select class="atc form-control select2" required id="brand"
-                                            name="brand">
-                                        <option value="">- Pilih Brand -</option>
-                                        @foreach($brand as $sat)
-                                            <option value="{{$sat->id}}" {{($val->id_itdp_eks_product_brand == $sat->id)?'selected':''}}>{{$sat->merek}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group col-sm-6">
                                     <label>Country</label>
                                     <select class="atc form-control select2" required id="country"
                                             name="country">
@@ -30,11 +19,15 @@
                                         @endforeach
                                     </select>
                                 </div>
+
+                                <div class="form-group col-sm-6">
+
+                                </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-                                    <label>Month</label>
-                                    <input type="text" value="{{$val->bulan}}" class="form-control" name="bulan" id="bulan">
+                                    <label>Ratio Export</label>
+                                    <input type="text" value="{{$val->rasio_persen}}" class="form-control" name="ratio_export" id="ratio_export">
                                     <input type="hidden" value="{{$val->id}}" class="form-control" name="id_sales" id="id_sales">
                                 </div>
                                 <div class="form-group col-sm-6">
@@ -49,9 +42,9 @@
 
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <a style="color: white" href="{{url('/eksportir/country_patern_brand')}}"
+                                    <a style="color: white" href="{{url('/eksportir/export_destination')}}"
                                        class="btn btn-primary"><i style="color: white"></i>
-                                        Kembali
+                                        Back
                                     </a>
                                     <button class="btn btn-success" type="submit"><i
                                                 class="fa fa-plus-circle"></i> Update
