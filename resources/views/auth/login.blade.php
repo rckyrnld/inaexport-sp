@@ -56,6 +56,10 @@
     display: block;
     padding: 10px 15px;
 }  
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color: transparent!important;
+}
 </style>
   <!-- endbuild -->
 </head>
@@ -70,7 +74,7 @@
 	<td width="30%" style="font-size:13px;padding-left:10px"><img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b></td>
 	<td width="40%"><!-- <center><span class="hidden-folded d-inline"><H5>Form Registrasi Pembeli Baru</H5></span></center> --></td>
 	<td width="30%" align="right" style="padding-right:10px;">
-	<a href="{{url('registrasi_pembeli')}}"><font color="white"><i class="fa fa-user"></i> Daftar Pembeli</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('registrasi_penjual')}}"><font color="white"><i class="fa fa-user"></i> Daftar Penjual</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> Login</font></a>
+	<a href="{{url('registrasi_pembeli')}}"><font color="white"><i class="fa fa-user"></i> Register Importir</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('registrasi_penjual')}}"><font color="white"><i class="fa fa-user"></i> Register Eksportir</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> Login</font></a>
 	</td>
 	</tr>
 	</table>
@@ -132,7 +136,7 @@
           </div>
 		  
 		  <div id="menu2" class="tab-pane">
-             <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+             <form class="form-horizontal" method="POST" action="{{ url('login2') }}">
            {{ csrf_field() }}
              <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                <input id="email" type="email" placeholder="Email" class="form-control" name="email" style="color: #000000" value="{{ old('email') }}" required autofocus>

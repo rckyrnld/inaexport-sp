@@ -38,8 +38,8 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
 	<tr>
 	<td width="30%" style="font-size:13px;padding-left:10px"><img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b></td>
 	<td width="40%"><!-- <center><span class="hidden-folded d-inline"><H5>Form Registrasi Pembeli Baru</H5></span></center> --></td>
-	<td width="30%" align="right" style="padding-right:10px">
-	<a href="{{url('registrasi_pembeli')}}"><i class="fa fa-user"></i> Daftar Pembeli</a> &nbsp;&nbsp;&nbsp;<a href="{{url('registrasi_penjual')}}"><i class="fa fa-user"></i> Daftar Penjual</a> &nbsp;&nbsp;&nbsp;<a href="{{url('login')}}"><i class="fa fa-sign-in"></i> Login</a>
+	<td width="30%" align="right" style="padding-right:10px;">
+	<a href="{{url('registrasi_pembeli')}}"><font color="white"><i class="fa fa-user"></i> Register Importir</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('registrasi_penjual')}}"><font color="white"><i class="fa fa-user"></i> Register Eksportir</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> Login</font></a>
 	</td>
 	</tr>
 	</table>
@@ -61,7 +61,7 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
 	   <br><br>
 		<div class="form-row">
 							<div class="form-group col-sm-6">
-                                <label>No NPWP</label>
+                                <label>NPWP</label>
                                 <input type="text" name="npwp" id="npwp" class="form-control" style=" color: black; ">
                             </div>
                             <div class="form-group col-sm-6">
@@ -71,22 +71,22 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
                         </div>
 						<div class="form-row">
 							<div class="form-group col-sm-6">
-                                <label>Nama Perusahaan</label>
+                                <label>Company</label>
                                 <input type="text" name="company" id="company" class="form-control" style=" color: black; ">
                             </div>
                             <div class="form-group col-sm-6">
-                                <label>Username Pembeli</label>
+                                <label>Username</label>
                                 <input type="text" name="username" id="username" class="form-control" style=" color: black; ">
                             </div>
                         </div>
 		<div class="form-row">
 							
                             <div class="form-group col-sm-6">
-                                <label>Email Pembeli</label>
+                                <label>Email</label>
                                 <input type="text" name="email" id="email" class="form-control" style=" color: black; ">
                             </div>
 							<div class="form-group col-sm-6">
-                                <label>Telepon</label>
+                                <label>Phone</label>
                                 <input type="text" name="phone" id="phone" class="form-control" style=" color: black; ">
                             </div>
                         </div>
@@ -107,7 +107,7 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
                                 <input type="password" name="password" id="password" class="form-control" style=" color: black; ">
                             </div>
                             <div class="form-group col-sm-6">
-                                <label>Konfirmasi Password</label>
+                                <label>Re-Password</label>
                                 <input type="password" name="kpassword" id="kpassword" class="form-control" style=" color: black; ">
                             </div>
                         </div>
@@ -117,7 +117,7 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
                                 <input type="text" name="postcode" id="postcode" class="form-control" style=" color: black; ">
                             </div>
                             <div class="form-group col-sm-6">
-                                <label>Alamat</label>
+                                <label>Address</label>
                                 <textarea name="alamat" id="alamat" class="form-control" style=" color: black; "></textarea>
                             </div>
                         </div>
