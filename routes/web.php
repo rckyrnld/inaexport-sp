@@ -19,6 +19,8 @@ Route::get('/registrasi_penjual','RegistrasiController@registrasi_penjual');
 Route::post('/simpan_rpenjual','RegistrasiController@simpan_rpenjual');
 Route::get('/verifypenjual/{id}','RegistrasiController@verifypenjual');
 
+Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');;
+
 
 
 

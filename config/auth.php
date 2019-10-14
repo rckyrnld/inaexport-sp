@@ -45,6 +45,10 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+		'eksmp' => [
+            'driver' => 'session',
+            'provider' => 'eksmps',
+        ],
     ],
 
     /*
@@ -69,7 +73,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-
+		'eksmps' => [
+            'driver' => 'eloquent',
+            'model' => App\Eksmp::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -95,6 +102,11 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
+            'expire' => 60,
+        ],
+		'eksmps' => [
+            'provider' => 'eksmps',
+            'table' => 'password_reset',
             'expire' => 60,
         ],
     ],
