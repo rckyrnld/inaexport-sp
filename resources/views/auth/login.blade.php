@@ -92,6 +92,16 @@
 	  <br>
 	  <!-- <h5>LOGIN</h5> -->
 	  <div class="wrap-login100" style="padding-left : 30px; padding-right : 30px;">
+	  @if (isset($errors) && count($errors))
+     
+            There were {{count($errors->all())}} Error(s)
+                        <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }} </li>
+                    @endforeach
+                </ul>
+                
+        @endif
        <br>
         <ul class="nav nav-tabs" style="width:100%;text-align:center;">
           <li class="active" style="width:50%;"><a data-toggle="tab" href="#menu1"><p style=""><font color="white">Administrator</font></p></a></li>
@@ -136,10 +146,10 @@
           </div>
 		  
 		  <div id="menu2" class="tab-pane">
-             <form class="form-horizontal" method="POST" action="{{ url('login2') }}">
+             <form class="form-horizontal" method="POST" action="{{ route('loginei.login') }}">
            {{ csrf_field() }}
              <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-               <input id="email" type="email" placeholder="Email" class="form-control" name="email" style="color: #000000" value="{{ old('email') }}" required autofocus>
+               <input type="email" placeholder="Email" class="form-control" name="email2" style="color: #000000" value="{{ old('email') }}" required autofocus>
 
                 @if ($errors->has('email'))
                     <span class="help-block">
@@ -148,7 +158,7 @@
                 @endif
             </div>
             <div class="form-group">
-              <input id="password" type="password" class="form-control" name="password" placeholder="password" required style="color: #000000">
+              <input type="password" class="form-control" name="password2" placeholder="password" required style="color: #000000">
 
                   @if ($errors->has('password'))
                       <span class="help-block">

@@ -1,10 +1,6 @@
-     @if(Auth::user()->id_group==1)
-   <div class="content-header white  box-shadow-0" id="content-header" style="background-color:  #1a7688  ; color: #ffffff">
-    @elseif(Auth::user()->id_group==3)
-    <div class="content-header white  box-shadow-0" id="content-header" style="background-color:  #1a7688  ; color: #ffffff">
-      @else
+   
       <div class="content-header white  box-shadow-0" id="content-header" style="background-color:  #1a7688  ; color: #ffffff">
-      @endif
+     
   
             <div class="navbar navbar-expand-lg">
               <!-- btn to toggle sidenav on small screen -->
@@ -24,7 +20,14 @@
                       <!-- <img src="{{url('assets')}}/assets/images/logo.png" alt="..."> -->
                     </span>
                     <span class="dropdown-toggle  mx-2 d-none l-h-1x d-lg-block">
-                      <span>{{ Auth::user()->name }}</span>
+                      <span>
+					  <?php if(empty(Auth::user()->name)){ 
+					  echo Auth::guard('eksmp')->user()->username;
+					  }else{ ?>
+					  {{ Auth::user()->name }}
+					  <?php } ?>
+					  
+					  </span>
                     </span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right w pt-0 mt-2 animate fadeIn">
@@ -48,13 +51,20 @@
                         </a>
                       </div>
                     </div> -->
-					
-                    <a style="padding-top:10px;"class="dropdown-item" href="{{ url('gantipass') }}">
-                      Ganti Password
+					 <?php if(empty(Auth::user()->id_group)){  ?>
+					  <a style="padding-top:10px;"class="dropdown-item" href="{{ url('profil') }}">
+                     <b> Profil <?php if(Auth::guard('eksmp')->user()->id_role == 2){ echo " Eksportir"; }else if(Auth::guard('eksmp')->user()->id_role == 3){ echo " Importir"; } ?></b>
+                    </a>
+					 <?php  }else{ ?>
+					 
+					  <?php } ?>
+                   
+					<a style="padding-top:10px;"class="dropdown-item" href="{{ url('gantipass') }}">
+                     <b> Ganti Password </b>
                     </a>
 					<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                      Log Out
-                    </a>
+                      <b >Log Out </b>
+                     </a>
 					
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}

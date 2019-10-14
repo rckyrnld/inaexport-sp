@@ -99,13 +99,9 @@
     <div id="aside" class="app-aside fade box-shadow-x nav-expand white" aria-hidden="true">
         <div class="sidenav modal-dialog dk">
           <!-- sidenav top -->
-           @if(Auth::user()->id_group==1)
+          
    <div class="navbar lt" style="background-color:  #1a7688 ; color: #ffffff">
-    @elseif(Auth::user()->id_group==3)
-    <div class="navbar lt" style="background-color:  #1a7688  ; color: #ffffff">
-      @else
-      <div class="navbar lt" style="background-color:  #1a7688  ; color: #ffffff">
-      @endif
+    
             <!-- brand -->
             <a href="../index.html" class="navbar-brand">
                

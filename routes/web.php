@@ -19,6 +19,8 @@ Route::get('/registrasi_penjual','RegistrasiController@registrasi_penjual');
 Route::post('/simpan_rpenjual','RegistrasiController@simpan_rpenjual');
 Route::get('/verifypenjual/{id}','RegistrasiController@verifypenjual');
 
+Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');;
+
 
 
 
@@ -119,6 +121,7 @@ Route::namespace('Management')->group(function () {
 	Route::get('management-category-product/create/', 'CategoryProductController@create')->name('management.category-product.create');
 	Route::get('management-category-product/edit/{id}', 'CategoryProductController@edit')->name('management.category-product.edit');
 	Route::get('management-category-product/view/{id}', 'CategoryProductController@view')->name('management.category-product.view');
+	Route::get('management-category-product/level_2/', 'CategoryProductController@level_2')->name('management.category-product.level2');
 	Route::post('management-category-product/store/{param}','CategoryProductController@store')->name('management.category-product.store');
 	Route::get('management-category-product/destroy/{id}', 'CategoryProductController@destroy')->name('management.category-product.destroy');
 	//Management Data Contact Us
