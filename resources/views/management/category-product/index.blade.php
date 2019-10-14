@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="box-body bg-light">
-                	<a id="tambah" href="{{route('management.product.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
+                	<a id="tambah" href="{{route('management.category-product.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
                     <div class="col-md-14"><br>
 		          	 <div class="table-responsive">
 					    <table id="example1" class="table  table-bordered table-striped" data-plugin="dataTable">
@@ -33,14 +33,15 @@
 					      <tbody>
 					      	@foreach($product as $no => $data)
 					      		<tr>
+					      			<td>{{$no+1}}</td>
 					      			<td>{{$data->nama_kategori_en}}</td>
 					      			<td>{{$data->nama_kategori_in}}</td>
 					      			<td>{{$data->nama_kategori_chn}}</td>
 					      			<td style="text-align: center;">
 					      				<div class="btn-group">
-					      				<a href="{{route('management.product.view', $data->id)}}" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-					      				<a href="{{route('management.product.edit', $data->id)}}" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
-					      				<a onclick="return confirm('Apa Anda Yakin untuk Menghapus Data Ini ?')" href="{{route('management.product.destroy', $data->id)}}" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+					      				<a href="{{route('management.category-product.view', $data->id)}}" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+					      				<a href="{{route('management.category-product.edit', $data->id)}}" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
+					      				<a onclick="return confirm('Apa Anda Yakin untuk Menghapus Data Ini ?')" href="{{route('management.category-product.destroy', $data->id)}}" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
 					      			    </div>
 					      			</td>
 					      		</tr>

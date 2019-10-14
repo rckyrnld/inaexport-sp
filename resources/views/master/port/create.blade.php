@@ -21,7 +21,7 @@
           <div class="col-md-12">
           @if($page != 'view')
         	 {!! Form::open(['url' => $url, 'class' => 'form-horizontal', 'files' => true]) !!}
-          @endif
+          @endif<br>
              <div class="form-group row">
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">ID</label>
