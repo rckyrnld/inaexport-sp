@@ -4,7 +4,8 @@ namespace App\Helpers;
 use Illuminate\Support\Facades\DB;
 use Auth;
 class Permissions {
-    public static function get() {
+    public static function get() { 
+	
 		if(empty(Auth::user()->id_group)){
 			$id_group = Auth::guard('eksmp')->user()->id_role; 
 		}else{

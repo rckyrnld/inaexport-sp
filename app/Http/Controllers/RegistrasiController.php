@@ -44,8 +44,8 @@ class RegistrasiController extends Controller
 			$id1 = $rt->maxid;
 		}
 		$insert2 = DB::select("
-			insert into itdp_company_users (id_profil,type,username,password,email,status,id_role) values
-			('".$id1."','3','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','3')
+			insert into itdp_company_users (id_profil,username,password,email,status,id_role,type) values
+			('".$id1."','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','3','Dalam Negeri')
 		");
 		$ambilmaxid2 = DB::select("select max(id) as maxid2 from itdp_company_users");
 		foreach($ambilmaxid2 as $rt2){
@@ -66,8 +66,8 @@ class RegistrasiController extends Controller
 	public function simpan_rpenjual(Request $request)
     {
 		$insert1 = DB::select("
-			insert into itdp_profil_eks (npwp,company,addres,postcode,phone,fax,email,website,created,status) values
-			('".$request->npwp."','".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
+			insert into itdp_profil_eks (company,addres,postcode,phone,fax,email,website,created,status) values
+			('".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
 			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1')
 		");
 		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_eks");

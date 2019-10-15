@@ -19,7 +19,7 @@ Route::get('/registrasi_penjual','RegistrasiController@registrasi_penjual');
 Route::post('/simpan_rpenjual','RegistrasiController@simpan_rpenjual');
 Route::get('/verifypenjual/{id}','RegistrasiController@verifypenjual');
 
-Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');;
+Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');
 
 
 
@@ -32,6 +32,8 @@ Route::get('/', 'HomeController@index');
 Route::get('/verifyuser', 'VerifyuserController@index');
 Route::get('/detailverify/{id}', 'VerifyuserController@detailverify');
 Route::get('/saveverify/{id}', 'VerifyuserController@saveverify');
+Route::get('/profil/{id}/{id2}', 'VerifyuserController@profil');
+Route::post('/simpan_profil','VerifyuserController@simpan_profil');
 
 // Group
 Route::resource('/group', 'UM\GroupController');

@@ -14,6 +14,27 @@
                 <!-- Notification -->
              
                 <!-- User dropdown menu -->
+				<li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-warning">10</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">You have 10 notifications</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                    </a>
+                  </li>
+                  
+                </ul>
+              </li>
+              <li class="footer"><a href="#">View all</a></li>
+            </ul>
+          </li>
                 <li class="dropdown d-flex align-items-center">
                   <a href="#" data-toggle="dropdown" class="d-flex align-items-center">
                     <span class="avatar w-32">
@@ -52,7 +73,7 @@
                       </div>
                     </div> -->
 					 <?php if(empty(Auth::user()->id_group)){  ?>
-					  <a style="padding-top:10px;"class="dropdown-item" href="{{ url('profil') }}">
+					  <a style="padding-top:10px;"class="dropdown-item" href="{{ url('profil/'.Auth::guard('eksmp')->user()->id_role.'/'.Auth::guard('eksmp')->user()->id) }}">
                      <b> Profil <?php if(Auth::guard('eksmp')->user()->id_role == 2){ echo " Eksportir"; }else if(Auth::guard('eksmp')->user()->id_role == 3){ echo " Importir"; } ?></b>
                     </a>
 					 <?php  }else{ ?>
