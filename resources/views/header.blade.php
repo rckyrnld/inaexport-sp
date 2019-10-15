@@ -26,6 +26,7 @@
 
 -->
 
+  <!-- <link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/dist/css/AdminLTE.min.css" type="text/css" /> -->
   <link rel="stylesheet" href="{{url('assets')}}/libs/font-awesome/css/font-awesome.min.css" type="text/css" />
 
   <!-- build:css ../assets/css/app.min.css -->
@@ -89,7 +90,7 @@
 
 </head>
 <body>
-
+<?php date_default_timezone_set('Asia/Jakarta'); ?>
 
 <div class="app" id="app">
 

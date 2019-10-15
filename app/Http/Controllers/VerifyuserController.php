@@ -14,7 +14,7 @@ class VerifyuserController extends Controller
     {
 //        dd("mantap");die();
         $pageTitle = "Eksportir";
-		$data = DB::select("select a.*,a.id as ida,b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
+		$data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
         return view('verifyuser.index', compact('pageTitle','data'));
     }
 
@@ -22,7 +22,7 @@ class VerifyuserController extends Controller
     {
 //        dd("mantap");die();
         $pageTitle = "Importir";
-		$data = DB::select("select a.*,a.id as ida,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
+		$data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
         return view('verifyuser.index2', compact('pageTitle','data'));
     }
 

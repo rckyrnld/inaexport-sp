@@ -57,9 +57,9 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
 	  <br>
 	  <form class="form-horizontal" method="POST" action="{{ url('simpan_rpenjual') }}">
 	   {{ csrf_field() }}
-	   <h5><center>Form Pendaftaran Penjual</center></h5>
+	   <h5><center>Form Register Eksportir</center></h5>
 	   <br><br>
-		<div class="form-row">
+		<!-- <div class="form-row">
 							<div class="form-group col-sm-6">
                                 <label>NPWP</label>
                                 <input type="text" name="npwp" id="npwp" class="form-control" style=" color: black; ">
@@ -68,7 +68,7 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
                                 <label>Nama Pemilik NPWP</label>
                                 <input type="text" name="namanpwp" id="namanpwp" class="form-control" style=" color: black; " readonly>
                             </div>
-                        </div>
+                        </div> -->
 						<div class="form-row">
 							<div class="form-group col-sm-6">
                                 <label>Company</label>

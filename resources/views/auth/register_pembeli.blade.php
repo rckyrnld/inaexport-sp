@@ -57,7 +57,7 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
 	  <br>
 	  <form class="form-horizontal" method="POST" action="{{ url('simpan_rpembeli') }}">
 	   {{ csrf_field() }}
-	   <h5><center>Form Pendaftaran Pembeli</center></h5>
+	   <h5><center>Form Register Importir</center></h5>
 	   <br><br>
 		<div class="form-row">
 							<div class="form-group col-sm-6">

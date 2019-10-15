@@ -166,7 +166,7 @@ body {font-family: Arial;}
 			$qc = DB::select("select city from mst_city order by city asc");
 			foreach($qc as $cq){
 			?>
-				<option value="<?php echo $cq->city; ?>"><?php echo $cq->city; ?></option>
+				<option <?php if($cq->city == $ryu->city){ echo "selected"; } ?> value="<?php echo $cq->city; ?>"><?php echo $cq->city; ?></option>
 				
 			<?php } ?>
 			</select>
@@ -183,7 +183,7 @@ body {font-family: Arial;}
 			$qc = DB::select("select id,province_en from mst_province order by province_en asc");
 			foreach($qc as $cq){
 			?>
-				<option value="<?php echo $cq->id; ?>"><?php echo $cq->province_en; ?></option>
+				<option <?php if($cq->id == $ryu->id_mst_province){ echo "selected"; } ?> value="<?php echo $cq->id; ?>"><?php echo $cq->province_en; ?></option>
 				
 			<?php } ?>
 			</select>
