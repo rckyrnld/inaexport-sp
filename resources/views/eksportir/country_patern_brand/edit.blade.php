@@ -51,7 +51,7 @@
                                 <div class="form-group col-sm-6">
                                     <a style="color: white" href="{{url('/eksportir/country_patern_brand')}}"
                                        class="btn btn-primary"><i style="color: white"></i>
-                                        Kembali
+                                        Back
                                     </a>
                                     <button class="btn btn-success" type="submit"><i
                                                 class="fa fa-plus-circle"></i> Update

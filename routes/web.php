@@ -191,22 +191,22 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     //export destination
     Route::get('/export_destination', 'ExsdesController@index')->name('exportdes.index');
     Route::get('/tambah_export_destination', 'ExsdesController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::post('/exdes_save', 'ExsdesController@store');
+    Route::get('/exdes_getdata', 'ExsdesController@datanya')->name('datatables.exdes');
+    Route::get('/exdes_edit/{id}', 'ExsdesController@edit')->name('exdes.detail');
+    Route::get('/exdes_view/{id}', 'ExsdesController@view')->name('exdes.view');
+    Route::get('/exdes_delete/{id}', 'ExsdesController@delete')->name('exdes.delete');
+    Route::post('/exdes_update', 'ExsdesController@update');
 
     //port landing
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::get('/portland', 'PortlandController@index')->name('portland.index');
+    Route::get('/tambah_portland', 'PortlandController@tambah');
+    Route::post('/portland_save', 'PortlandController@store');
+    Route::get('/portland_getdata', 'PortlandController@datanya')->name('datatables.portland');
+    Route::get('/portland_edit/{id}', 'PortlandController@edit')->name('portland.detail');
+    Route::get('/portland_view/{id}', 'PortlandController@view')->name('portland.view');
+    Route::get('/portland_delete/{id}', 'PortlandController@delete')->name('portland.delete');
+    Route::post('/portland_update', 'PortlandController@update');
 
     //exhibition
 //    Route::get('/brand', 'BrandController@index')->name('brand.index');

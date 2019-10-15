@@ -6,14 +6,14 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Data Export Destination</h5>
+                    <h5><i></i> Data Port Of Landing</h5>
                 </div>
 
                 <div class="box-body bg-light">
-                    <a class="btn" href="{{url('/eksportir/tambah_export_destination')}}"
+                    <a class="btn" href="{{url('/eksportir/tambah_portland')}}"
                        style="background-color: #1089ff; color: white;"><i
                                 class="fa fa-plus-circle"></i>
-                        Tambah</a>
+                        Add</a>
                     <div class="col-md-14">
                         <br>
                         <div class="table-responsive">
@@ -23,13 +23,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Year</center>
-                                    </th>
-                                    <th>
-                                        <center>Country</center>
-                                    </th>
-                                    <th>
-                                        <center>Ratio Export</center>
+                                        <center>Port</center>
                                     </th>
                                     <th>
                                         <center>Action</center>
@@ -55,12 +49,10 @@
         $('#tableexdes').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('datatables.exdes') }}",
+            ajax: "{{ route('datatables.portland') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'tahun', name: 'tahun'},
-                {data: 'country', name: 'country'},
-                {data: 'rasio_persen', name: 'rasio_persen'},
+                {data: 'name_port', name: 'name_port'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
