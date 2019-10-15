@@ -24,8 +24,9 @@ class UsersController extends Controller
         $url = '/user_save';
         // $group = Group::all();
 		$nb = "group";
+		$data = DB::select("select a.* from itdp_company_users a order by a.id desc ");
         $group = DB::select("select * from public.group where id_group!='2' and id_group!='3' order by id_group asc");
-        return view('UM.user.index',compact('pageTitle','user','url','group'));
+        return view('UM.user.index',compact('pageTitle','user','url','group','data'));
     }
 
     /**

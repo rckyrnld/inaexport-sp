@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Management Eksportir</h5>
+                    <h5><i></i> Management Importir</h5>
                 </div>
 
                 <div class="box-body bg-light">
@@ -63,10 +63,10 @@
 									<td><center><?php if($row->status == 1){ echo "<font color='green'>Sudah di Verifikasi</font>";}else{ echo "<font color='red'>Belum di Verifikasi</font>";};?></center></td>
 									<td><center>
 									<?php if($row->status == 1){ ?>
-									<a href="{{url('profil/'.$row->id_role.'/'.$row->ida)}}" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>
+									<a href="{{url('profil2/'.$row->id_role.'/'.$row->ida)}}" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>
 									
 									<?php }else{ ?>
-									<a href="{{url('profil/'.$row->id_role.'/'.$row->ida)}}" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verifikasi</a>
+									<a href="{{url('profil2/'.$row->id_role.'/'.$row->ida)}}" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verifikasi</a>
 									<?php } ?>
 									</center></td>
 								</tr>

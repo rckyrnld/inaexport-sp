@@ -1,4 +1,28 @@
-   
+<style> 
+.navbar-custom-menu>.navbar-nav>li {
+    position: relative;
+}
+.skin-blue .main-header .navbar .nav>li>a {
+    color: #fff;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.main-header .navbar .nav>li>a>.label {
+    position: absolute;
+    top: 9px;
+    right: 7px;
+    text-align: center;
+    font-size: 9px;
+    padding: 2px 3px;
+    line-height: .9;
+}
+</style> 
       <div class="content-header white  box-shadow-0" id="content-header" style="background-color:  #1a7688  ; color: #ffffff">
      
   
@@ -20,9 +44,9 @@
               <span class="label label-warning">10</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
+              <!--<li class="header">You have 10 notifications</li>
               <li>
-                <!-- inner menu: contains the actual data -->
+              
                 <ul class="menu">
                   <li>
                     <a href="#">
@@ -31,7 +55,7 @@
                   </li>
                   
                 </ul>
-              </li>
+              </li>-->	
               <li class="footer"><a href="#">View all</a></li>
             </ul>
           </li>

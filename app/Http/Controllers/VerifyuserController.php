@@ -13,9 +13,17 @@ class VerifyuserController extends Controller
     public function index()
     {
 //        dd("mantap");die();
-        $pageTitle = "Verifikasi User";
-		$data = DB::select("select a.* from itdp_company_users a order by a.id desc ");
+        $pageTitle = "Eksportir";
+		$data = DB::select("select a.*,a.id as ida,b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
         return view('verifyuser.index', compact('pageTitle','data'));
+    }
+
+	 public function index2()
+    {
+//        dd("mantap");die();
+        $pageTitle = "Importir";
+		$data = DB::select("select a.*,a.id as ida,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
+        return view('verifyuser.index2', compact('pageTitle','data'));
     }
 
    
@@ -40,7 +48,7 @@ class VerifyuserController extends Controller
 		if($id == 2){
 			$pageTitle = "Profil Eksportir";
 			$tx = "Eksportir";
-		}else if($id == 2){
+		}else if($id == 3){
 			$pageTitle = "Profil Importir";
 			$tx = "Importir";
 		}else{
@@ -52,6 +60,23 @@ class VerifyuserController extends Controller
 		return view('verifyuser.profil', compact('pageTitle','tx','ida','idb'));
 	}
 	
+	public function profil2($id,$id2)
+    {
+		if($id == 2){
+			$pageTitle = "Profil Eksportir";
+			$tx = "Eksportir";
+		}else if($id == 3){
+			$pageTitle = "Profil Importir";
+			$tx = "Importir";
+		}else{
+			$pageTitle = "Profil ";
+			$tx ="";
+		}
+		$ida = $id;
+		$idb = $id2;
+		return view('verifyuser.profil2', compact('pageTitle','tx','ida','idb'));
+	}
+	
 	public function simpan_profil(Request $request)
     {
 		$id_role = $request->id_role;
@@ -59,9 +84,9 @@ class VerifyuserController extends Controller
 		$id_user_b = $request->idu;
 		//UPDATE TAB 1
 		if($request->password == null ){
-		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', email='".$request->email."' where id='".$request->id_user."' ");
+		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', email='".$request->email."', status='".$request->staim."' where id='".$request->id_user."' ");
 		}else{
-		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', password='".bcrypt($request->password)."', email='".$request->email."' where id='".$request->id_user."' ");
+		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->staim."', email='".$request->email."' where id='".$request->id_user."' ");
 			
 		}
 		//UPDATE TAB 2
@@ -86,6 +111,40 @@ class VerifyuserController extends Controller
 			}
 		}
 		return redirect('profil/'.$id_role.'/'.$id_user);
+		
+	
+	}
+	
+	public function simpan_profil2(Request $request)
+    {
+		$id_role = $request->id_role;
+		$id_user = $request->id_user;
+		$id_user_b = $request->idu;
+		if(empty($request->file('foto_profil'))){
+			$file = "";
+		}else{
+			$file = $request->file('foto_profil')->getClientOriginalName();
+			$destinationPath = public_path() . "/image/fotoprofil";
+			$request->file('foto_profil')->move($destinationPath, $file);
+			$updatetab12 = DB::select("update itdp_company_users set foto_profil='".$file."'  where id='".$request->id_user."' ");
+			$updatetab22 = DB::select("update itdp_profil_imp set logo='".$file."' where id='".$id_user_b."'");
+		}
+		
+		//UPDATE TAB 1
+		if($request->password == null ){
+		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', email='".$request->email."', status='".$request->staim."'  where id='".$request->id_user."' ");
+		}else{
+		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->staim."' ,  email='".$request->email."' where id='".$request->id_user."' ");
+			
+		}
+		//UPDATE TAB 2
+		$updatetab2 = DB::select("update itdp_profil_imp set company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
+		, id_mst_province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."' , status='".$request->staim."'
+		where id='".$id_user_b."'");
+		
+		
+		
+		return redirect('profil2/'.$id_role.'/'.$id_user);
 		
 	
 	}

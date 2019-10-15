@@ -33,10 +33,13 @@ Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');
 Route::get('/login', 'HomeController@index');
 //Verify User
 Route::get('/verifyuser', 'VerifyuserController@index');
+Route::get('/verifyimportir', 'VerifyuserController@index2');
 Route::get('/detailverify/{id}', 'VerifyuserController@detailverify');
 Route::get('/saveverify/{id}', 'VerifyuserController@saveverify');
 Route::get('/profil/{id}/{id2}', 'VerifyuserController@profil');
+Route::get('/profil2/{id}/{id2}', 'VerifyuserController@profil2');
 Route::post('/simpan_profil','VerifyuserController@simpan_profil');
+Route::post('/simpan_profil2','VerifyuserController@simpan_profil2');
 
 // Group
 Route::resource('/group', 'UM\GroupController');
