@@ -11,6 +11,9 @@
 |
 */
 //////////////////////////////////// START FRONTEND ////////////////////////////////////////////////////////////
+Route::get('/', function () {
+    return redirect('/login');
+});
 Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
 Route::post('/simpan_rpembeli', 'RegistrasiController@simpan_rpembeli');
 Route::get('/verifypembeli/{id}','RegistrasiController@verifypembeli');
@@ -27,7 +30,7 @@ Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');
 //////////////////////////////////// END FRONTEND ////////////////////////////////////////////////////////////
 //////////////////////////////////// START BACKEND ////////////////////////////////////////////////////////////
 
-Route::get('/', 'HomeController@index');
+Route::get('/login', 'HomeController@index');
 //Verify User
 Route::get('/verifyuser', 'VerifyuserController@index');
 Route::get('/detailverify/{id}', 'VerifyuserController@detailverify');
