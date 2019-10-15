@@ -207,8 +207,8 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::post('/portland_update', 'PortlandController@update');
 
     //exhibition
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
+    Route::get('/exhibition', 'ExhibitionController@index')->name('exhibition.index');
+    Route::get('/tambah_exhibition', 'ExhibitionController@tambah');
 //    Route::post('/brand_save', 'BrandController@store');
 //    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
 //    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
@@ -217,13 +217,13 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 //    Route::post('/brand_update', 'BrandController@update');
 
     //capacity utilization
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
+    Route::get('/capulti', 'CapultiController@index')->name('capulti.index');
+    Route::get('/tambah_capulti', 'CapultiController@tambah');
+    Route::post('/capulti_save', 'CapultiController@store');
+    Route::get('/capulti_getdata', 'CapultiController@datanya')->name('datatables.capulti');
+    Route::get('/capulti_edit/{id}', 'BrandController@edit')->name('capulti.detail');
+    Route::get('/capulti_view/{id}', 'BrandController@view')->name('capulti.view');
+    Route::get('/capulti_delete/{id}', 'BrandController@delete')->name('capulti.delete');
 //    Route::post('/brand_update', 'BrandController@update');
 
     //raw material
