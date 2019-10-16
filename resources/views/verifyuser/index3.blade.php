@@ -14,7 +14,7 @@
                     <div class="col-md-14">
                         <br>
                         <div class="table-responsive">
-
+						<a href="{{ url('tambahperwakilan') }}" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Perwakilan</a><br><br>
                            <table id="example2" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>
@@ -31,6 +31,9 @@
 									<th>
                                         <center>Jenis</center>
                                     </th>
+									<th>
+                                        <center>Type</center>
+                                    </th>
 									
                                     <th width="10%">
                                         <center>Action</center>
@@ -45,7 +48,9 @@
 									<td><center><?php echo $row->email;?></center></td>
 									<td><center><?php echo $row->website;?></center></td>
 									
+									
 									<td><center><?php if($row->id_admin_ln == null || $row->id_admin_ln == 0){ echo "Dalam Negeri"; }else{ echo "Luar Negeri"; }?></center></td>
+									<td><center><?php echo $row->type;?></center></td>
 									<td><center>
 									<a class="btn btn-danger" href="{{ url('hapusperwakilan/'.$row->id) }}">Hapus</a>
 									</center></td>

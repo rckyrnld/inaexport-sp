@@ -35,6 +35,7 @@ Route::get('/login', 'HomeController@index');
 Route::get('/verifyuser', 'VerifyuserController@index');
 Route::get('/verifyimportir', 'VerifyuserController@index2');
 Route::get('/profilperwakilan', 'VerifyuserController@index3');
+Route::get('/tambahperwakilan', 'VerifyuserController@tambahperwakilan');
 Route::get('/detailverify/{id}', 'VerifyuserController@detailverify');
 Route::get('/hapusperwakilan/{id}', 'VerifyuserController@hapusperwakilan');
 Route::get('/saveverify/{id}', 'VerifyuserController@saveverify');

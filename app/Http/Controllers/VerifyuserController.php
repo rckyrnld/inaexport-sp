@@ -26,6 +26,12 @@ class VerifyuserController extends Controller
         return view('verifyuser.index2', compact('pageTitle','data'));
     }
 	
+	public function tambahperwakilan()
+    {
+		$pageTitle = "Tambah Perwakilan";
+		return view('verifyuser.tambahperwakilan', compact('pageTitle'));
+	}
+	
 	public function index3()
     {
 //        dd("mantap");die();
