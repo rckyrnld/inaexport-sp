@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Session;
 use Auth;
 
-class AdminResearchController extends Controller
+class PerwakilanResearchController extends Controller
 {
 
 	public function __construct(){
@@ -17,12 +17,13 @@ class AdminResearchController extends Controller
 
 	  public function index(){
       $pageTitle = 'Research Corner';
-      return view('research-corner.admin.index',compact('pageTitle'));
+      return view('research-corner.perwakilan.index',compact('pageTitle'));
     }
 
     public function getData()
     {
-      $research = DB::table('csc_research_corner')->orderby('publish_date', 'asc')->get();
+      $id_user = Auth::user()->id;
+      $research = DB::table('csc_research_corner')->where('created_by', $id_user)->orderby('publish_date', 'asc')->get();
 
       return \Yajra\DataTables\DataTables::of($research)
           ->addIndexColumn()
@@ -39,13 +40,13 @@ class AdminResearchController extends Controller
               ->first();
               if($research){
                 return '<center>
-                  <a href="'.route("admin.research-corner.view", $data->id).'" id="button" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-                  <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route("admin.research-corner.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+                  <a href="'.route("perwakilan.research-corner.view", $data->id).'" id="button" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+                  <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route("perwakilan.research-corner.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
                   </center>';
               } else {
                 return '<center>
                   <button onclick="broadcast(\''.$data->title_en.'||'.$data->id.'\')" id="button" class="btn btn-sm btn-warning text-white">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Broadcast&nbsp;</button>&nbsp;&nbsp;
-                  <a href="'.route("admin.research-corner.edit", $data->id).'" id="button" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>
+                  <a href="'.route("perwakilan.research-corner.edit", $data->id).'" id="button" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>
                   </center>';
               }
           })
@@ -74,11 +75,11 @@ class AdminResearchController extends Controller
     {
       $pageTitle = 'Research Corner';
       $page = 'create';
-      $url = "/admin/research-corner/store/Create";
+      $url = "/perwakilan/research-corner/store/Create";
       // $type = DB::table('mst_country')->orderby('country', 'asc')->get();
       $country = DB::table('mst_country')->orderby('country', 'asc')->get();
       $hscode = DB::table('mst_hscodes')->orderby('desc_eng', 'asc')->get();
-      return view('research-corner.admin.create',compact('url','pageTitle','page','country','hscode'));
+      return view('research-corner.perwakilan.create',compact('url','pageTitle','page','country','hscode'));
     }
 
     public function store(Request $req, $param)
@@ -123,10 +124,10 @@ class AdminResearchController extends Controller
 
       if($data){
          Session::flash('success','Success '.$param.' Data');
-         return redirect('admin/research-corner/');
+         return redirect('perwakilan/research-corner/');
        }else{
          Session::flash('failed','Failed '.$param.' Data');
-         return redirect('admin/research-corner/');
+         return redirect('perwakilan/research-corner/');
        }
     }
 
@@ -147,10 +148,10 @@ class AdminResearchController extends Controller
 
       if($data){
          Session::flash('success','Success Broadcast Data');
-         return redirect('admin/research-corner/');
+         return redirect('perwakilan/research-corner/');
        }else{
          Session::flash('failed','Failed Broadcast Data');
-         return redirect('admin/research-corner/');
+         return redirect('perwakilan/research-corner/');
        }
     }
 
@@ -162,19 +163,19 @@ class AdminResearchController extends Controller
       // $type = DB::table('mst_country')->orderby('country', 'asc')->get();
       $country = DB::table('mst_country')->orderby('country', 'asc')->get();
       $hscode = DB::table('mst_hscodes')->orderby('desc_eng', 'asc')->get();
-      return view('research-corner.admin.create',compact('page','data','pageTitle','country','hscode'));
+      return view('research-corner.perwakilan.create',compact('page','data','pageTitle','country','hscode'));
     }
 
     public function edit($id)
     {
       $page = "edit";
       $pageTitle = "Research Corner";
-      $url = "/admin/research-corner/store/Update_".$id;
+      $url = "/perwakilan/research-corner/store/Update_".$id;
       $data = DB::table('csc_research_corner')->where('id', $id)->first();
       // $type = DB::table('mst_country')->orderby('country', 'asc')->get();
       $country = DB::table('mst_country')->orderby('country', 'asc')->get();
       $hscode = DB::table('mst_hscodes')->orderby('desc_eng', 'asc')->get();
-      return view('research-corner.admin.create',compact('url','data','pageTitle','page','hscode','country'));
+      return view('research-corner.perwakilan.create',compact('url','data','pageTitle','page','country','hscode'));
     }
 
     public function destroy($id)
@@ -182,10 +183,10 @@ class AdminResearchController extends Controller
       $data = DB::table('csc_research_corner')->where('id', $id)->delete();
       if($data){
          Session::flash('success','Success Delete Data');
-         return redirect('admin/research-corner/');
+         return redirect('perwakilan/research-corner/');
        }else{
          Session::flash('failed','Failed Delete Data');
-         return redirect('admin/research-corner/');
+         return redirect('perwakilan/research-corner/');
        }
     }
 }

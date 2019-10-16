@@ -166,6 +166,19 @@ Route::namespace('ResearchCorner')->group(function () {
 			Route::post('/broadcast/', 'AdminResearchController@broadcast')->name('broadcast');
 	    });
     });
+    Route::prefix('perwakilan/research-corner')->group(function () {
+		Route::name('perwakilan.research-corner.')->group(function () {
+			Route::get('/', 'PerwakilanResearchController@index')->name('index');
+			Route::get('/getData/', 'PerwakilanResearchController@getData')->name('getData');
+			Route::get('/getDataDownload/{id}', 'PerwakilanResearchController@getDataDownload')->name('getDataDownload');
+			Route::get('/create/', 'PerwakilanResearchController@create')->name('create');
+			Route::post('/store/{param}', 'PerwakilanResearchController@store')->name('store');
+			Route::get('/edit/{id}', 'PerwakilanResearchController@edit')->name('edit');
+			Route::get('/view/{id}', 'PerwakilanResearchController@view')->name('view');
+			Route::get('/destroy/{id}', 'PerwakilanResearchController@destroy')->name('destroy');
+			Route::post('/broadcast/', 'PerwakilanResearchController@broadcast')->name('broadcast');
+	    });
+    });
 // Angga End
 });
 

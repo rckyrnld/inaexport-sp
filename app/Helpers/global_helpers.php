@@ -21,3 +21,19 @@ if (! function_exists('getTanggalIndo')) {
         return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
     }
 }
+
+if (! function_exists('rc_country')) {
+    function rc_country($id){
+        $data = DB::table('mst_country')->where('id', $id)->first();
+
+        return $data->country;
+    }
+}
+
+if (! function_exists('rc_hscodes')) {
+    function rc_hscodes($id){
+        $data = DB::table('mst_hscodes')->where('id', $id)->first();
+
+        return $data->desc_eng;
+    }
+}

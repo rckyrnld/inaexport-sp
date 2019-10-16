@@ -23,7 +23,7 @@
       	 <div class="box-divider m-0"></div>
       	 <div class="box-header bg-info">
       	 	<h4 class="text-white">@if($page == 'view') View @else Form @endif Research Corner
-          @if($page == 'view')<a href="{{route('admin.research-corner.index')}}" style="float: right;" class="btn btn-danger button_form"> Back</a><br><br>@endif</h4>
+          @if($page == 'view')<a href="{{route('perwakilan.research-corner.index')}}" style="float: right;" class="btn btn-danger button_form"> Back</a><br><br>@endif</h4>
          </div>
       	 <div class="box-body">
           <div class="col-md-12">
@@ -135,7 +135,7 @@
              <div class="form-group row">
                 <div class="col-md-11">
                   <div align="right">
-                    <a href="{{route('admin.research-corner.index')}}" class="btn btn-danger button_form">@if($page != 'view') Cancel @else Back @endif</a>
+                    <a href="{{route('perwakilan.research-corner.index')}}" class="btn btn-danger button_form">@if($page != 'view') Cancel @else Back @endif</a>
                     @if($page != 'view')
                     <button class="btn btn-primary button_form" type="submit">Save</button>
                     @endif
@@ -160,7 +160,7 @@
       $('#table').dataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('admin.research-corner.getDataDownload', $id)}}",
+          ajax: "{{ route('perwakilan.research-corner.getDataDownload', $id)}}",
           columns: [
               {data: 'DT_RowIndex', name: 'DT_RowIndex'},
               {data: 'company', name: 'company'},
