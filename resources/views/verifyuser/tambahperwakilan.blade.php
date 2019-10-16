@@ -43,7 +43,7 @@
 				    <div class="col-sm-4">
 						<select class="form-control" name="country">
 						<!-- <option>DJPEN</option> -->
-						<option value="">-- Pilih Country --</option>
+						<option value="0">-- Pilih Country --</option>
 						<?php $mst = DB::select("select * from mst_country order by country asc"); 
 						foreach($mst as $cu){
 						?>
