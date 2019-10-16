@@ -29,21 +29,6 @@
 					              <th width="20%">Action</th>
 					          </tr>
 					      </thead>
-					      <tbody>
-					      	@foreach($port as $no => $data)
-					      		<tr>
-					      			<td>{{$data->name_port}}</td>
-			      					<td>{{$data->province_en}}</td>
-					      			<td style="text-align: center;">
-					      				<div class="btn-group">
-					      				<a href="{{route('master.port.view', $data->id)}}" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-					      				<a href="{{route('master.port.edit', $data->id)}}" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
-					      				<a onclick="return confirm('Apa Anda Yakin untuk Menghapus Port Ini ?')" href="{{route('master.port.destroy', $data->id)}}" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
-					      			    </div>
-					      			</td>
-					      		</tr>
-					      	@endforeach
-					      </tbody>
 					    </table>
 					  </div>
       	  			</div>
@@ -54,9 +39,16 @@
 </div>
 @include('footer')
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#table').dataTable({
-			"order": [[ 1, "asc" ]]
-		});
-	});
+	$(function () {
+        $('#table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('master.port.getData') }}",
+            columns: [
+                {data: 'name_port', name: 'name_port'},
+                {data: 'province_en', name: 'province_en'},
+                {data: 'action', name: 'action', orderable: false, searchable: false}
+            ]
+        });
+    });
 </script>

@@ -30,22 +30,6 @@
 					              <th width="20%">Action</th>
 					          </tr>
 					      </thead>
-					      <tbody>
-					      	@foreach($country as $no => $data)
-					      		<tr>
-					      			<td>{{$data->kode_bps}}</td>
-					      			<td>{{$data->country}}</td>
-					      			<td>{{$data->group_country}}</td>
-					      			<td style="text-align: center;">
-					      				<div class="btn-group">
-					      				<a href="{{route('master.country.view', $data->id)}}" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-					      				<a href="{{route('master.country.edit', $data->id)}}" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
-					      				<a onclick="return confirm('Apa Anda Yakin untuk Menghapus Negara Ini ?')" href="{{route('master.country.destroy', $data->id)}}" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
-					      			    </div>
-					      			</td>
-					      		</tr>
-					      	@endforeach
-					      </tbody>
 					    </table>
 					  </div>
       	  			</div>
@@ -56,9 +40,18 @@
 </div>
 @include('footer')
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#table').dataTable({
-			"order": [[ 1, "asc" ]]
-		});
-	});
+	$(function () {
+        $('#table').DataTable({
+        	"order": [[ 1, "asc" ]],
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('master.country.getData') }}",
+            columns: [
+                {data: 'kode_bps', name: 'kode_bps'},
+                {data: 'country', name: 'country'},
+                {data: 'group_country', name: 'group_country'},
+                {data: 'action', name: 'action', orderable: false, searchable: false}
+            ]
+        });
+    });
 </script>

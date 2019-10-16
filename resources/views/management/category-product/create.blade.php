@@ -63,6 +63,10 @@
                    <label class="control-label col-md-3">Sub Hierarchy</label>
                    <div class="col-md-7">
                        <select class="form-control select2" style="width: 100%" id="level_2" name="level_2" {{$view}}>
+                         <option value="" @isset($data) @if($data->level_2 == '') selected @endif @endisset>- Main Category -</option>
+                         @foreach($level_1 as $val)
+                         <option value="{{$val->id}}" @isset($data) @if($data->level_2 == $val->id) selected @endif  @endisset>{{$val->nama_kategori_en}}</option>
+                         @endforeach
                        </select>
                    </div>
                </div>
@@ -127,48 +131,48 @@
 
 @include('footer')
 <script type="text/javascript">
-  $(function () {
-    var level2 = "{{$level2}}";
-    var update = "{{$id_data}}";
+  // $(function () {
+  //   var level2 = "{{$level2}}";
+  //   var update = "{{$id_data}}";
     
-    if(level2 == '|-|'){
-      $('#input_level_2').css('display','none');
-    } else {
-      var id = "{{$level1}}";
-       $.ajax({
-          url: "{{route('management.category-product.level2')}}",
-          type: 'get',
-          data: {
-            id:id,
-            except:update
-          },
-          dataType: 'json',
-          success:function(response){
-            $('#level_2').append(response);
-            $('#level_2').val(level2);
-            $('#level_2').trigger('change');
-          }
-        });
-    }
+  //   if(level2 == '|-|'){
+  //     $('#input_level_2').css('display','none');
+  //   } else {
+  //     var id = "{{$level1}}";
+  //      $.ajax({
+  //         url: "{{route('management.category-product.level2')}}",
+  //         type: 'get',
+  //         data: {
+  //           id:id,
+  //           except:update
+  //         },
+  //         dataType: 'json',
+  //         success:function(response){
+  //           $('#level_2').append(response);
+  //           $('#level_2').val(level2);
+  //           $('#level_2').trigger('change');
+  //         }
+  //       });
+  //   }
 
-    $('#level_1').on('change', function(){
-      var data = this.value;
-      $('#level_2').empty().trigger("change");;
-      $("#first").prop("disabled", true);
-      if(data != ''){
-        $.ajax({
-            url: "{{route('management.category-product.level2')}}",
-            type: 'get',
-            data: {id:data,except:update},
-            dataType: 'json',
-            success:function(response){
-              $('#level_2').append(response);
-            }
-        });
-        $('#input_level_2').show('fast');
-      } else {
-        $('#input_level_2').hide('fast');
-      }
-    });
-  });
+  //   $('#level_1').on('change', function(){
+  //     var data = this.value;
+  //     $('#level_2').empty().trigger("change");;
+  //     $("#first").prop("disabled", true);
+  //     if(data != ''){
+  //       $.ajax({
+  //           url: "{{route('management.category-product.level2')}}",
+  //           type: 'get',
+  //           data: {id:data,except:update},
+  //           dataType: 'json',
+  //           success:function(response){
+  //             $('#level_2').append(response);
+  //           }
+  //       });
+  //       $('#input_level_2').show('fast');
+  //     } else {
+  //       $('#input_level_2').hide('fast');
+  //     }
+  //   });
+  // });
 </script>

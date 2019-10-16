@@ -19,11 +19,30 @@ class MasterCountryController extends Controller
 
 	  public function index(){
       $pageTitle = 'Country';
+      return view('master.country.index',compact('pageTitle'));
+    }
+
+    public function getData()
+    {
       $country = MasterCountry::leftjoin('mst_group_country as a','mst_country.mst_country_group_id','=','a.id')
-      ->orderby('mst_country.country', 'asc')
-      ->select('a.group_country','mst_country.*')
-      ->get();
-      return view('master.country.index',compact('pageTitle','country'));
+              ->orderby('mst_country.country', 'asc')
+              ->select('a.group_country','mst_country.*')
+              ->get();
+
+      return \Yajra\DataTables\DataTables::of($country)
+          ->addColumn('action', function ($data) {
+              return '
+              <center>
+              <div class="btn-group">
+                <a href="'.route('master.country.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+                <a href="'.route('master.country.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
+                <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route('master.country.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+              </div>
+              </center>
+              ';
+          })
+          ->rawColumns(['action'])
+          ->make(true);
     }
 
     public function create()

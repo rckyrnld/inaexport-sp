@@ -20,6 +20,26 @@ class DataContactUsController extends Controller
       return view('management.contact-us.index',compact('pageTitle','contactus'));
     }
 
+    public function getData()
+    {
+      $contactus = DB::table('csc_contact_us')->orderby('id','asc')->get();
+
+      return \Yajra\DataTables\DataTables::of($contactus)
+          ->addIndexColumn()
+          ->addColumn('action', function ($data) {
+              return '
+              <center>
+              <div class="btn-group">
+                <a href="'.route('management.contactus.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+                <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route('management.contactus.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+              </div>
+              </center>
+              ';
+          })
+          ->rawColumns(['action'])
+          ->make(true);
+    }
+
     public function store(Request $req)
     {
       $id = DB::table('csc_contact_us')->orderby('id','desc')->first();

@@ -20,12 +20,33 @@ class CategoryProductController extends Controller
       return view('management.category-product.index',compact('pageTitle','product'));
     }
 
+    public function getData()
+    {
+      $product = DB::table('csc_product')->orderby('nama_kategori_en', 'asc')->get();
+
+      return \Yajra\DataTables\DataTables::of($product)
+          ->addIndexColumn()
+          ->addColumn('action', function ($data) {
+              return '
+              <center>
+              <div class="btn-group">
+                <a href="'.route('management.category-product.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+                <a href="'.route('management.category-product.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
+                <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route('management.category-product.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+              </div>
+              </center>
+              ';
+          })
+          ->rawColumns(['action'])
+          ->make(true);
+    }
+
     public function create()
     {
       $pageTitle = 'Category Product';
       $page = 'create';
       $url = "/management-category-product/store/Create";
-      $level_1 = DB::table('csc_product')->where('level_1', null)->where('level_2', null)->orderby('nama_kategori_en', 'asc')->get();
+      $level_1 = DB::table('csc_product')->orderby('nama_kategori_en', 'asc')->get();
       return view('management.category-product.create',compact('url','pageTitle','page','level_1'));
     }
 
@@ -72,7 +93,7 @@ class CategoryProductController extends Controller
       $pageTitle = "Category Product";
       $page = "view";
       $data = DB::table('csc_product')->where('id', $id)->first();
-      $level_1 = DB::table('csc_product')->where('level_1', null)->where('level_2', null)->orderby('nama_kategori_en', 'asc')->get();
+      $level_1 = DB::table('csc_product')->orderby('nama_kategori_en', 'asc')->get();
       return view('management.category-product.create',compact('page','data','pageTitle','level_1'));
     }
 
@@ -82,7 +103,7 @@ class CategoryProductController extends Controller
       $pageTitle = "Category Product";
       $url = "/management-category-product/store/Update_".$id;
       $data = DB::table('csc_product')->where('id', $id)->first();
-      $level_1 = DB::table('csc_product')->where('level_1', null)->where('level_2', null)->orderby('nama_kategori_en', 'asc')->get();
+      $level_1 = DB::table('csc_product')->orderby('nama_kategori_en', 'asc')->get();
       return view('management.category-product.create',compact('url','data','pageTitle','page','level_1'));
     }
 
@@ -98,17 +119,17 @@ class CategoryProductController extends Controller
        }
     }
 
-    public function level_2(Request $req){
-      $checking = DB::table('csc_product')->where('level_1', $req->id)
-                ->whereNotIn('id', [$req->except])
-                ->orderby('nama_kategori_en', 'asc')->get();
+    // public function level_2(Request $req){
+    //   $checking = DB::table('csc_product')
+    //             ->whereNotIn('id', [$req->except])
+    //             ->orderby('nama_kategori_en', 'asc')->get();
       
-      $data = '<option value="">Main Sub Hierarchy</option>';
-      if($checking){
-        foreach ($checking as $val) {
-          $data .= '<option value="'.$val->id.'">'.$val->nama_kategori_en.'</option>';
-        }
-      }
-      echo json_encode($data);
-    }
+    //   $data = '<option value="">Main Sub Hierarchy</option>';
+    //   if($checking){
+    //     foreach ($checking as $val) {
+    //       $data .= '<option value="'.$val->id.'">'.$val->nama_kategori_en.'</option>';
+    //     }
+    //   }
+    //   echo json_encode($data);
+    // }
 }
