@@ -25,8 +25,20 @@ class VerifyuserController extends Controller
 		$data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
         return view('verifyuser.index2', compact('pageTitle','data'));
     }
+	
+	public function index3()
+    {
+//        dd("mantap");die();
+        $pageTitle = "Perwakilan";
+		$data = DB::select("select * from itdp_admin_users where id_group='4' order by id desc ");
+        return view('verifyuser.index3', compact('pageTitle','data'));
+    }
 
-   
+	public function hapusperwakilan($id)
+    {
+		$delete = DB::select("delete from itdp_admin_users where id='".$id."'");
+		return redirect('profilperwakilan');
+	}
 
     public function detailverify($id)
     {
