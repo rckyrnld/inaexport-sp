@@ -22,6 +22,14 @@ if (! function_exists('getTanggalIndo')) {
     }
 }
 
+if (! function_exists('rc_type')) {
+    function rc_type($id){
+        $data = DB::table('csc_research_type')->where('id', $id)->first();
+
+        return $data->nama_en;
+    }
+}
+
 if (! function_exists('rc_country')) {
     function rc_country($id){
         $data = DB::table('mst_country')->where('id', $id)->first();

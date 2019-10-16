@@ -139,7 +139,7 @@
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'title_en', name: 'title_en'},
-                {data: 'id_csc_research_type', name: 'id_csc_research_type'},
+                {data: 'type', name: 'type'},
                 {data: 'country', name: 'country'},
                 {data: 'download', name: 'download'},
                 {data: 'date', name: 'date'},

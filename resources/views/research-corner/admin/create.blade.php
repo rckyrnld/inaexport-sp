@@ -50,10 +50,16 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Type</label>
                  <div class="col-md-7">
+                  @if($page == 'view')
+                    <input type="text" class="form-control" readonly value="{{rc_type($data->id_csc_research_type)}}">
+                  @else
                      <select class="form-control" id="type" required name="type" {{$view}}>
                        <option></option>
-                       <option value="1">Dummy</option>
+                       @foreach($type as $val)
+                       <option value="{{$val->id}}" @isset($data) @if($data->id_csc_research_type == $val->id) selected @endif @endisset>{{$val->nama_en}}</option>
+                       @endforeach
                      </select>
+                  @endif
                  </div>
              </div>
 
