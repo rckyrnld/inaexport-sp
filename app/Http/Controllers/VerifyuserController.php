@@ -95,6 +95,30 @@ class VerifyuserController extends Controller
 		return view('verifyuser.profil2', compact('pageTitle','tx','ida','idb'));
 	}
 	
+	public function simpanperwakilan(Request $request)
+	{
+		if($request->type == "DINAS PERDAGANGAN"){
+			
+		}else{
+			$insert1 = DB::select("
+			insert into itdp_admin_ln (nama,id_country,email,web,telp,kepala,username,password,status) values
+			('".$request->pejabat."','".$request->country."','".$request->email."','".$request->web."','".$request->phone."'
+			,'".$request->username."','".$request->username."','".bcrypt($request->password)."','".$request->status."')
+			");
+			$ambilmaxid = DB::select("select max(id) as maxid from itdp_admin_ln");
+			foreach($ambilmaxid as $rt){
+				$id1 = $rt->maxid;
+			}
+			$insert2 = DB::select("
+			insert into itdp_admin_users (name,email,password,password_real,id_group,created_at,id_admin_ln,type,website) values
+			('".$request->username."','".$request->email."','".bcrypt($request->password)."','-','4'
+			,'".Date('Y-m-d H:m:s')."','".$id1."','".$request->type."','".$request->web."')
+			");
+			
+		}
+		
+		return redirect('profilperwakilan');
+	}
 	public function simpan_profil(Request $request)
     {
 		$id_role = $request->id_role;

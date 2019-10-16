@@ -44,6 +44,12 @@
 						<select class="form-control" name="country">
 						<!-- <option>DJPEN</option> -->
 						<option value="">-- Pilih Country --</option>
+						<?php $mst = DB::select("select * from mst_country order by country asc"); 
+						foreach($mst as $cu){
+						?>
+						<option value="<?php echo $cu->id; ?>"><?php echo $cu->country; ?></option>
+						<?php } ?>
+						
 						</select>
 					</div>
 					</div>
@@ -69,6 +75,14 @@
 				      {!!Form::label('password_confirm','Pejabat',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
 						<input type="text" class="form-control" name="pejabat">
+					</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+          	 		<div class="form-group row">
+				      {!!Form::label('password_confirm','Website',['class' => 'col-sm-2 col-form-label '])!!}
+				    <div class="col-sm-4">
+						<input type="text" class="form-control" name="web">
 					</div>
 					</div>
 				</div>
@@ -100,8 +114,9 @@
 					</div>
 					</div>
 				</div>
+				
 				<div align="left">
-				<input class="btn btn-primary" id="halox" type="submit" value=" Simpan">
+				<input class="btn btn-primary" type="submit" value=" Simpan">
 				</div>
 				{{Form::close()}}
           	 	
