@@ -9,7 +9,9 @@
 <?php 
   if($page == 'view'){
     $view = 'disabled';
+    $id = $data->id;
   } else {
+    $id = '';
     $view = '';
   }
 ?>
@@ -147,7 +149,7 @@
       $('#table').dataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('admin.research-corner.getDataDownload', $data->id) }}",
+          ajax: "{{ route('admin.research-corner.getDataDownload', $id)}}",
           columns: [
               {data: 'DT_RowIndex', name: 'DT_RowIndex'},
               {data: 'company', name: 'company'},

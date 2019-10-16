@@ -9,10 +9,11 @@
     $id_data = '0';
   } else {
     $id_data = $data->id;
-    if($data->level_1 != ''){
+    if($data->level_1 != '0'){
       $level1 = $data->level_1;
-      if($data->level_2 != ''){
-        $level2 = $data->level_2;
+      if($data->level_2 != '0'){
+        $level1 = $data->level_2;
+        $level2 = $data->level_1;
       } else {
         $level2 = '';
       }
@@ -24,7 +25,7 @@
 
   if($page == 'view'){
     $view = 'disabled';
-    if($data->level_2 == ''){
+    if($data->level_2 == '0'){
       $level2 = '|-|';
     }
   } else {
@@ -49,9 +50,16 @@
                  <label class="control-label col-md-3">Hierarchy</label>
                  <div class="col-md-7">
                      <select class="form-control select2" style="width: 100%" id="level_1" name="level_1" {{$view}}>
-                       <option value="" @isset($data) @if($data->level_1 == '') selected @endif @endisset>- Main Category -</option>
+                       <option value="0" @isset($data) @if($data->level_1 == '0') selected @endif @endisset>- Main Category -</option>
                        @foreach($level_1 as $val)
-                       <option value="{{$val->id}}" @isset($data) @if($data->level_1 == $val->id) selected @endif  @endisset>{{$val->nama_kategori_en}}</option>
+                       <option value="{{$val->id}}" 
+                        @isset($data) 
+                          @if($data->level_2 == 0)
+                            @if($data->level_1 == $val->id) selected @endif  
+                          @else
+                            @if($data->level_2 == $val->id) selected @endif  
+                          @endif
+                        @endisset>{{$val->nama_kategori_en}}</option>
                        @endforeach
                      </select>
                  </div>
@@ -63,10 +71,6 @@
                    <label class="control-label col-md-3">Sub Hierarchy</label>
                    <div class="col-md-7">
                        <select class="form-control select2" style="width: 100%" id="level_2" name="level_2" {{$view}}>
-                         <option value="" @isset($data) @if($data->level_2 == '') selected @endif @endisset>- Main Category -</option>
-                         @foreach($level_1 as $val)
-                         <option value="{{$val->id}}" @isset($data) @if($data->level_2 == $val->id) selected @endif  @endisset>{{$val->nama_kategori_en}}</option>
-                         @endforeach
                        </select>
                    </div>
                </div>
@@ -131,48 +135,48 @@
 
 @include('footer')
 <script type="text/javascript">
-  // $(function () {
-  //   var level2 = "{{$level2}}";
-  //   var update = "{{$id_data}}";
-    
-  //   if(level2 == '|-|'){
-  //     $('#input_level_2').css('display','none');
-  //   } else {
-  //     var id = "{{$level1}}";
-  //      $.ajax({
-  //         url: "{{route('management.category-product.level2')}}",
-  //         type: 'get',
-  //         data: {
-  //           id:id,
-  //           except:update
-  //         },
-  //         dataType: 'json',
-  //         success:function(response){
-  //           $('#level_2').append(response);
-  //           $('#level_2').val(level2);
-  //           $('#level_2').trigger('change');
-  //         }
-  //       });
-  //   }
+  $(function () {
+    var level2 = "{{$level2}}";
+    var update = "{{$id_data}}";
 
-  //   $('#level_1').on('change', function(){
-  //     var data = this.value;
-  //     $('#level_2').empty().trigger("change");;
-  //     $("#first").prop("disabled", true);
-  //     if(data != ''){
-  //       $.ajax({
-  //           url: "{{route('management.category-product.level2')}}",
-  //           type: 'get',
-  //           data: {id:data,except:update},
-  //           dataType: 'json',
-  //           success:function(response){
-  //             $('#level_2').append(response);
-  //           }
-  //       });
-  //       $('#input_level_2').show('fast');
-  //     } else {
-  //       $('#input_level_2').hide('fast');
-  //     }
-  //   });
-  // });
+    if(level2 == '|-|'){
+      $('#input_level_2').css('display','none');
+    } else {
+      var id = "{{$level1}}";
+       $.ajax({
+          url: "{{route('management.category-product.level2')}}",
+          type: 'get',
+          data: {
+            id:id,
+            except:update
+          },
+          dataType: 'json',
+          success:function(response){
+            $('#level_2').append(response);
+            $('#level_2').val(level2);
+            $('#level_2').trigger('change');
+          }
+        });
+    }
+
+    $('#level_1').on('change', function(){
+      var data = this.value;
+      $('#level_2').empty().trigger("change");;
+      $("#first").prop("disabled", true);
+      if(data != ''){
+        $.ajax({
+            url: "{{route('management.category-product.level2')}}",
+            type: 'get',
+            data: {id:data,except:update},
+            dataType: 'json',
+            success:function(response){
+              $('#level_2').append(response);
+            }
+        });
+        $('#input_level_2').show('fast');
+      } else {
+        $('#input_level_2').hide('fast');
+      }
+    });
+  });
 </script>

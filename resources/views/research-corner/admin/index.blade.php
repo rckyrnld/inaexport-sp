@@ -50,7 +50,7 @@
                 	<a id="tambah" href="{{route('admin.research-corner.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
                     <div class="col-md-14"><br>
 		          	 <div class="table-responsive">
-					    <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable">
+					    <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable" style="text-align: center;">
 					      <thead class="text-white" style="background-color: #1089ff;">
 					          <tr>
 					              <th width="7%">No</th>
@@ -140,7 +140,7 @@
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'title_en', name: 'title_en'},
                 {data: 'id_csc_research_type', name: 'id_csc_research_type'},
-                {data: 'id_mst_country', name: 'id_mst_country'},
+                {data: 'country', name: 'country'},
                 {data: 'download', name: 'download'},
                 {data: 'date', name: 'date'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}

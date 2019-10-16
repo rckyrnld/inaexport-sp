@@ -17,16 +17,19 @@ class AdminResearchController extends Controller
 
 	  public function index(){
       $pageTitle = 'Research Corner';
-      $research = DB::table('csc_research_corner')->orderby('title_en', 'asc')->get();
-      return view('research-corner.admin.index',compact('pageTitle','research'));
+      return view('research-corner.admin.index',compact('pageTitle'));
     }
 
     public function getData()
     {
-      $research = DB::table('csc_research_corner')->orderby('title_en', 'asc')->get();
+      $research = DB::table('csc_research_corner')->orderby('publish_date', 'asc')->get();
 
       return \Yajra\DataTables\DataTables::of($research)
           ->addIndexColumn()
+          ->addColumn('country', function ($value) {
+            $data =  DB::table('mst_country')->where('id', $value->id_mst_country)->first();
+            return $data->country;
+          })
           ->addColumn('date', function ($data) {
             return getTanggalIndo(date('Y-m-d', strtotime($data->publish_date))).' ( '.date('H:i', strtotime($data->publish_date)).' )';
           })
