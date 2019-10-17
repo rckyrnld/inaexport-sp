@@ -19,5 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', ['namespace' => 'App\Http\Controllers\Api'], function ($api){
-    $api->get('importirs', 'RekapAnggotaController@index');
+    $api->get('RekapAnggota', 'RekapAnggotaController@index');
 });
