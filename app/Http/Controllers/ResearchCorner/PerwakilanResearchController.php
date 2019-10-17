@@ -137,8 +137,11 @@ class PerwakilanResearchController extends Controller
 
     public function broadcast(Request $req)
     {
+      $id_user = Auth::user()->id;
+      $array = array();
 
       for($i = 0; $i<count($req->categori); $i++){
+        $var = $req->categori[$i];
         $id = DB::table('csc_broadcast_research_corner')->orderby('id','desc')->first();
         if($id){ $id = $id->id+1; } else { $id = 1; }
 
@@ -147,6 +150,37 @@ class PerwakilanResearchController extends Controller
           'id_research_corner' => $req->research,
           'id_categori_product' => $req->categori[$i],
           'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        $perusahaan = DB::table('csc_product_single')->where('id_itdp_company_user', '!=', null)
+              ->where(function ($query) use ($var) {
+                      $query->where('id_csc_product', $var)
+                            ->orWhere('id_csc_product_level1', $var)
+                            ->orWhere('id_csc_product_level2', $var);
+                  })
+              ->select('id_itdp_company_user')->distinct('id_itdp_company_user')->get();
+        foreach ($perusahaan as $key) {
+          if (!in_array($key->id_itdp_company_user, $array)){
+            array_push($array, $key->id_itdp_company_user);
+          }
+        }
+      }
+      sort($array);
+      for ($user=0; $user < count($array) ; $user++) { 
+        $pengirim = DB::table('itdp_admin_users')->where('id',$id_user)->first();
+        $account_penerima = DB::table('itdp_company_users')->where('id',$array[$user])->first();
+        $profile_penerima = DB::table('itdp_profil_eks')->where('id',$account_penerima->id_profil)->first();
+
+        $notif = DB::table('notif')->insert([
+            'dari_nama' => $pengirim->name,
+            'dari_id' => $pengirim->id,
+            'untuk_nama' => $profile_penerima->company,
+            'untuk_id' => $array[$user],
+            'keterangan' => 'New Broadcast from '.$pengirim->name.' with Title  "'.$req->title_en.'"',
+            'url_terkait' => 'research-corner/read',
+            'status_baca' => 0,
+            'waktu' => date('Y-m-d H:i:s'),
+            'id_terkait' => $req->research,
         ]);
       }
 

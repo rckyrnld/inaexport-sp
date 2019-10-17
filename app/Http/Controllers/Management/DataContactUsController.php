@@ -58,6 +58,17 @@ class DataContactUsController extends Controller
         'date_created' => date('Y-m-d H:i:s')
       ]);
 
+      $notif = DB::table('notif')->insert([
+            'dari_nama' => $req->name,
+            'untuk_nama' => 'Super Admin',
+            'untuk_id' => '1',
+            'keterangan' => 'New Message from Visitor with Title  "'.$req->subyek.'"',
+            'url_terkait' => 'management-contact-us/view',
+            'status_baca' => 0,
+            'waktu' => date('Y-m-d H:i:s'),
+            'id_terkait' => $id,
+        ]);
+
       if($data){
          Session::flash('success','Success');
          return redirect('/management-contact-us/');
