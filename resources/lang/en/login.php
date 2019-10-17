@@ -5,6 +5,9 @@ return [
     "a1" => "Administrator",
     "a2" => "Exporter / Importer",
     "btn" => "Sign In",
+    "lbl1" => "Exporter Registration",
+    "lbl2" => "Importer Registration",
+    "lbl3" => "Sign In",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
