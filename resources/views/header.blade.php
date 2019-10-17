@@ -69,14 +69,16 @@
 
 <script src="{{url('assets')}}/html/scripts/plugins/datatable.js" ></script>
 
+<script src="{{ url('/') }}/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+
 <script type="text/javascript">
   $(function () {
    $('#example1').DataTable({
-     
+     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     });
 	
 	$('#example2').DataTable({
-     "lengthMenu": [[-1, 25, 50, 10], ["All",10, 25, 50 ]]
+     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     });
 	
 	$('#yahoo').DataTable({

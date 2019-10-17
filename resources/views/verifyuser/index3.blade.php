@@ -52,7 +52,7 @@
 									<td><center><?php if($row->id_admin_ln == null || $row->id_admin_ln == 0){ echo "Dalam Negeri"; }else{ echo "Luar Negeri"; }?></center></td>
 									<td><center><?php echo $row->type;?></center></td>
 									<td><center>
-									<a class="btn btn-danger" href="{{ url('hapusperwakilan/'.$row->id) }}">Hapus</a>
+									<a class="btn btn-danger" href="{{ url('hapusperwakilan/'.$row->id) }}"><i class="fa fa-trash"></i> Hapus</a>
 									</center></td>
 								</tr> 
 								<?php $i++; } ?>

@@ -71,3 +71,10 @@ if (! function_exists('rc_hscodes')) {
         return $data->desc_eng;
     }
 }
+
+if (! function_exists('getNameCategoryProduct')) {
+    function getNameCategoryProduct($id){
+        $data = DB::table('csc_product')->where('id', $id)->first();
+        return $data->nama_kategori_en;
+    }
+}
