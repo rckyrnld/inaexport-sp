@@ -320,11 +320,24 @@ body {font-family: Arial;}
 			<label><b>Status Ekportir</b></label>
 		</div>
 		<div class="form-group col-sm-4">
+		<?php if(empty(Auth::user()->name)){
+			if($rhj->status==1){ echo "Verified"; }else if($rhj->status==2){ echo "Not Verified"; }else{ echo "-"; }
+		?>
+			<input type="hidden" name="staim" value="<?php echo $rhj->status; ?>">
+		<?php 
+		}else{ ?>
+			<select class="form-control" name="staim">
+			<option <?php if($rhj->status == 0){ echo "selected"; } ?> value="0">-- Pilih Status --</option>
+			<option <?php if($rhj->status == 1){ echo "selected"; } ?> value="1">Verified</option>
+			<option <?php if($rhj->status == 2){ echo "selected"; } ?> value="2">Not Verified</option>
+			</select>
+		<?php } ?>
+		<!--
 			<select class="form-control" name="staim">
 			<option <?php if($ryu->status == 0){ echo "selected"; } ?> value="0">-- Pilih Status --</option>
 			<option <?php if($ryu->status == 1){ echo "selected"; } ?> value="1">Verified</option>
-			<option <?php if($ryu->status == 0){ echo "selected"; } ?> value="0">Not Verified</option>
-			</select>
+			<option <?php if($ryu->status == 2){ echo "selected"; } ?> value="0">Not Verified</option>
+			</select> -->
 		</div>
 		
 		
