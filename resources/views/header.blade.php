@@ -69,6 +69,8 @@
 
 <script src="{{url('assets')}}/html/scripts/plugins/datatable.js" ></script>
 
+<script src="{{ url('/') }}/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+
 <script type="text/javascript">
   $(function () {
    $('#example1').DataTable({
