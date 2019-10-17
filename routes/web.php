@@ -11,10 +11,22 @@
 |
 */
 //////////////////////////////////// START FRONTEND ////////////////////////////////////////////////////////////
+Route::get('locale/{locale}', function ($locale){
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
 Route::get('/', function () {
     return redirect('/login');
 });
+Route::get('switch/{locale}', function ($locale) { 
+    App::setLocale($locale); 
+});
 Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
+
+/* Route::get('/registrasi_pembeli/{locale}', function ($locale) {
+    App::setLocale($locale);
+    return view('auth.register_pembeli');
+}); */
 Route::post('/simpan_rpembeli', 'RegistrasiController@simpan_rpembeli');
 Route::get('/verifypembeli/{id}','RegistrasiController@verifypembeli');
 
