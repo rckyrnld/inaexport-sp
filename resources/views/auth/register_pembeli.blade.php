@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
   <meta charset="utf-8" />
-  <title>Register Pembeli</title>
+  <title>@lang("register.title")</title>
   <meta name="description" content="Responsive, Bootstrap, BS4" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,9 +27,7 @@
   <!-- endbuild -->
 </head>
 <body style="font-family: "Times New Roman", Times, serif;">
-<style>
-select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.com/entries/icons/original/000/015/163/narutoooh.jpg');   }
-</style>
+
 
 <div class="d-flex flex-column flex" style="background-color:  #2e899e  ; color: #ffffff">
  <div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
@@ -37,9 +35,15 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
 	<table border="0" width="100%">
 	<tr>
 	<td width="30%" style="font-size:13px;padding-left:10px"><img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b></td>
-	<td width="40%"><!-- <center><span class="hidden-folded d-inline"><H5>Form Registrasi Pembeli Baru</H5></span></center> --></td>
-	<td width="30%" align="right" style="padding-right:10px;">
-	<a href="{{url('registrasi_pembeli')}}"><font color="white"><i class="fa fa-user"></i> Register Importir</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('registrasi_penjual')}}"><font color="white"><i class="fa fa-user"></i> Register Eksportir</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> Login</font></a>
+	<td width="30%"><!-- <center><span class="hidden-folded d-inline"><H5>Form Registrasi Pembeli Baru</H5></span></center> --></td>
+	<td width="40%" align="right" style="padding-right:10px;">
+	<a href="{{url('registrasi_pembeli')}}"><font color="white"><i class="fa fa-user"></i> @lang("login.lbl2")</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('registrasi_penjual')}}"><font color="white"><i class="fa fa-user"></i> @lang("login.lbl1")</font></a> &nbsp;&nbsp;&nbsp;
+	<a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
+	<a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
+	<a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
+	<a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> @lang("login.lbl3")</font></a>
+	
+	
 	</td>
 	</tr>
 	</table>
@@ -57,57 +61,57 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
 	  <br>
 	  <form class="form-horizontal" method="POST" action="{{ url('simpan_rpembeli') }}">
 	   {{ csrf_field() }}
-	   <h5><center>Form Register Importir</center></h5>
+	   <h5><center>@lang("register.title")</center></h5>
 	   <br><br>
 		<div class="form-row">
 							<div class="form-group col-sm-6">
-                                <label>Company</label>
-                                <input type="text" name="company" id="company" class="form-control" style=" color: black; ">
+                                <label>@lang("register.forms.company") </label>
+                                <input type="text" name="company" id="company" class="form-control" style=" color: black; " required>
                             </div>
                             <div class="form-group col-sm-6">
-                                <label>Username</label>
-                                <input type="text" name="username" id="username" class="form-control" style=" color: black; ">
+                                <label>@lang("register.forms.username")</label>
+                                <input type="text" name="username" id="username" class="form-control" style=" color: black; " required>
                             </div>
                         </div>
 		<div class="form-row">
 							
                             <div class="form-group col-sm-6">
-                                <label>Email</label>
-                                <input type="text" name="email" id="email" class="form-control" style=" color: black; ">
+                                <label>@lang("register.forms.email")</label>
+                                <input type="text" name="email" id="email" class="form-control" style=" color: black; " required>
                             </div>
 							<div class="form-group col-sm-6">
-                                <label>Phone</label>
+                                <label>@lang("register.forms.phone")</label>
                                 <input type="text" name="phone" id="phone" class="form-control" style=" color: black; ">
                             </div>
                         </div>
 		<div class="form-row">
                             
                             <div class="form-group col-sm-6">
-                                <label>Fax</label>
+                                <label>@lang("register.forms.fax")</label>
                                 <input type="text" name="fax" id="fax" class="form-control" style=" color: black; ">
                             </div>
 							<div class="form-group col-sm-6">
-                                <label>Website</label>
+                                <label>@lang("register.forms.website")</label>
                                 <input type="text" name="website" id="website" class="form-control" style=" color: black; ">
                             </div>
                         </div>
 		<div class="form-row">
                             <div class="form-group col-sm-6">
-                                <label>Password</label>
-                                <input type="password" name="password" id="password" class="form-control" style=" color: black; ">
+                                <label>@lang("register.forms.password")</label>
+                                <input type="password" name="password" id="password" class="form-control" style=" color: black; " required>
                             </div>
                             <div class="form-group col-sm-6">
-                                <label>Re-Password</label>
+                                <label>@lang("register.forms.re-password")</label>
                                 <input type="password" name="kpassword" id="kpassword" class="form-control" style=" color: black; ">
                             </div>
                         </div>
 		<div class="form-row">
                             <div class="form-group col-sm-6">
-                                <label>Postcode</label>
+                                <label>@lang("register.forms.postcode")</label>
                                 <input type="text" name="postcode" id="postcode" class="form-control" style=" color: black; ">
                             </div>
                             <div class="form-group col-sm-6">
-                                <label>Address</label>
+                                <label>@lang("register.forms.address")</label>
                                 <textarea name="alamat" id="alamat" class="form-control" style=" color: black; "></textarea>
                             </div>
                         </div>
@@ -118,7 +122,7 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
                                
                             </div>
                             <div class="form-group col-sm-6" align="right">
-                                <button class="btn btn-success" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;</font></button>
+                                <button class="btn btn-success" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></button>
                             </div>
                         </div>
 						

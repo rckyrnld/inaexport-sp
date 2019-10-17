@@ -26,6 +26,12 @@ class RegistrasiController extends Controller
         return view('auth.register_pembeli',compact('pageTitle'));
     } 
 	
+	public function set($lang) {
+    session(['applocale' => $lang]);
+
+        return back();
+    }
+	
 	public function registrasi_penjual()
     {
         $pageTitle = "Registrasi Penjual";

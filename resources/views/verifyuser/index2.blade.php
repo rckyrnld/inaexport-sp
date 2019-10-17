@@ -60,13 +60,13 @@
 									<td><center><?php echo $row->phone;?></center></td>
 									<td><center><?php echo $row->fax;?></center></td>
 									<td><center><?php if($row->agree == 1){ echo "<font color='green'>Sudah</font>";}else{ echo "<font color='red'>Belum</font>";};?></center></td>
-									<td><center><?php if($row->status_a == 1){ echo "<font color='green'>Sudah di Verifikasi</font>";}else{ echo "<font color='red'>Belum di Verifikasi</font>";};?></center></td>
+									<td><center><?php if($row->status_a == 1){ echo "<font color='green'>Verified</font>";} else if($row->status_a == 2){ echo "<font color='red'>Not Verified</font>";}else{ echo "<font color='orange'>Wait Administrator</font>";};?></center></td>
 									<td><center>
-									<?php if($row->status_a == 1){ ?>
+									<?php if($row->status_a == 1 || $row->status_a == 2){ ?>
 									<a href="{{url('profil2/'.$row->id_role.'/'.$row->ida)}}" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>
 									
 									<?php }else{ ?>
-									<a href="{{url('profil2/'.$row->id_role.'/'.$row->ida)}}" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verifikasi</a>
+									<a href="{{url('profil2/'.$row->id_role.'/'.$row->ida)}}" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verify</a>
 									<?php } ?>
 									</center></td>
 								</tr>

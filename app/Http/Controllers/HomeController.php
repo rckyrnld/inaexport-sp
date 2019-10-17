@@ -29,6 +29,8 @@ class HomeController extends Controller
         return view('home',compact('pageTitle'));
     }
 	
+	
+	
 	public function gantipass()
     {
 		$idx = Auth::user()->id;
