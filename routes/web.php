@@ -337,6 +337,18 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 //    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
 //    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
 //    Route::post('/brand_update', 'BrandController@update');
+
+    //Meidi
+    //Product
+    Route::get('/product', 'EksProductController@index')->name('eksproduct.index');
+    Route::get('/product_getdata', 'EksProductController@datanya')->name('datatables.eksproduct');
+    Route::get('/getsub/', 'EksProductController@getSub')->name('eksproduct.getSub');
+    Route::get('/tambah_product', 'EksProductController@tambah');
+    Route::post('/product_save', 'EksProductController@store');
+    Route::get('/product_view/{id}', 'EksProductController@view')->name('eksproduct.view');
+    Route::get('/product_edit/{id}', 'EksProductController@edit')->name('eksproduct.detail');
+    Route::post('/product_update', 'EksProductController@update');
+    Route::get('/product_delete/{id}', 'EksProductController@delete')->name('eksproduct.delete');
 });
 
 //////////////////////////////////////////ILYAS END////////////////////////////////////////////////////////////////////////////////

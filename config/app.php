@@ -184,6 +184,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
           Barryvdh\DomPDF\ServiceProvider::class,
           Eusebiu\LaravelSparkCamera\CameraServiceProvider::class,
+          Unisharp\Ckeditor\ServiceProvider::class,
 
     ],
 
