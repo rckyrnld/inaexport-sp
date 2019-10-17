@@ -102,6 +102,7 @@ Route::namespace('Master')->group(function () {
 // Angga Start
 	//Master Country
 	Route::get('master-country/', 'MasterCountryController@index')->name('master.country.index');
+	Route::get('master-country/getData/', 'MasterCountryController@getData')->name('master.country.getData');
 	Route::get('master-country/create/', 'MasterCountryController@create')->name('master.country.create');
 	Route::get('master-country/check-kode/', 'MasterCountryController@check')->name('master.country.kode');
 	Route::get('master-country/edit/{id}', 'MasterCountryController@edit')->name('master.country.edit');
@@ -111,6 +112,7 @@ Route::namespace('Master')->group(function () {
 	Route::get('master-country/export/', 'MasterCountryController@export')->name('master.country.export');
 	//Master City
 	Route::get('master-city/', 'MasterCityController@index')->name('master.city.index');
+	Route::get('master-city/getData/', 'MasterCityController@getData')->name('master.city.getData');
 	Route::get('master-city/create/', 'MasterCityController@create')->name('master.city.create');
 	Route::get('master-city/edit/{id}', 'MasterCityController@edit')->name('master.city.edit');
 	Route::get('master-city/view/{id}', 'MasterCityController@view')->name('master.city.view');
@@ -119,6 +121,7 @@ Route::namespace('Master')->group(function () {
 	Route::get('master-city/export/', 'MasterCityController@export')->name('master.city.export');
 	//Master Province
 	Route::get('master-province/', 'MasterProvinceController@index')->name('master.province.index');
+	Route::get('master-province/getData/', 'MasterProvinceController@getData')->name('master.province.getData');
 	Route::get('master-province/create/', 'MasterProvinceController@create')->name('master.province.create');
 	Route::get('master-province/check-kode/', 'MasterProvinceController@check')->name('master.province.kode');
 	Route::get('master-province/edit/{id}', 'MasterProvinceController@edit')->name('master.province.edit');
@@ -128,6 +131,7 @@ Route::namespace('Master')->group(function () {
 	Route::get('master-province/export/', 'MasterProvinceController@export')->name('master.province.export');
 	//Master Port
 	Route::get('master-port/', 'MasterPortController@index')->name('master.port.index');
+	Route::get('master-port/getData/', 'MasterPortController@getData')->name('master.port.getData');
 	Route::get('master-port/create/', 'MasterPortController@create')->name('master.port.create');
 	Route::get('master-port/check-kode/', 'MasterPortController@check')->name('master.port.kode');
 	Route::get('master-port/edit/{id}', 'MasterPortController@edit')->name('master.port.edit');
@@ -142,6 +146,7 @@ Route::namespace('Management')->group(function () {
 // Angga Start
 	//Management Category Product
 	Route::get('management-category-product/', 'CategoryProductController@index')->name('management.category-product.index');
+	Route::get('management-category-product/getData/', 'CategoryProductController@getData')->name('management.category-product.getData');
 	Route::get('management-category-product/create/', 'CategoryProductController@create')->name('management.category-product.create');
 	Route::get('management-category-product/edit/{id}', 'CategoryProductController@edit')->name('management.category-product.edit');
 	Route::get('management-category-product/view/{id}', 'CategoryProductController@view')->name('management.category-product.view');
@@ -150,12 +155,45 @@ Route::namespace('Management')->group(function () {
 	Route::get('management-category-product/destroy/{id}', 'CategoryProductController@destroy')->name('management.category-product.destroy');
 	//Management Data Contact Us
 	Route::get('management-contact-us/', 'DataContactUsController@index')->name('management.contactus.index');
+	Route::get('management-contact-us/getData/', 'DataContactUsController@getData')->name('management.contactus.getData');
 	Route::get('management-contact-us/view/{id}', 'DataContactUsController@view')->name('management.contactus.view');
 	Route::get('management-contact-us/create/', 'DataContactUsController@create')->name('management.contactus.create');
 	Route::get('management-contact-us/destroy/{id}', 'DataContactUsController@destroy')->name('management.contactus.destroy');
 	Route::post('contact-us/send/','DataContactUsController@store')->name('management.contactus.store');
 // Angga End
 });
+
+Route::namespace('ResearchCorner')->group(function () {
+// Angga Start
+	Route::prefix('admin/research-corner')->group(function () {
+		Route::name('admin.research-corner.')->group(function () {
+			Route::get('/', 'AdminResearchController@index')->name('index');
+			Route::get('/getData/', 'AdminResearchController@getData')->name('getData');
+			Route::get('/getDataDownload/{id}', 'AdminResearchController@getDataDownload')->name('getDataDownload');
+			Route::get('/create/', 'AdminResearchController@create')->name('create');
+			Route::post('/store/{param}', 'AdminResearchController@store')->name('store');
+			Route::get('/edit/{id}', 'AdminResearchController@edit')->name('edit');
+			Route::get('/view/{id}', 'AdminResearchController@view')->name('view');
+			Route::get('/destroy/{id}', 'AdminResearchController@destroy')->name('destroy');
+			Route::post('/broadcast/', 'AdminResearchController@broadcast')->name('broadcast');
+	    });
+    });
+    Route::prefix('perwakilan/research-corner')->group(function () {
+		Route::name('perwakilan.research-corner.')->group(function () {
+			Route::get('/', 'PerwakilanResearchController@index')->name('index');
+			Route::get('/getData/', 'PerwakilanResearchController@getData')->name('getData');
+			Route::get('/getDataDownload/{id}', 'PerwakilanResearchController@getDataDownload')->name('getDataDownload');
+			Route::get('/create/', 'PerwakilanResearchController@create')->name('create');
+			Route::post('/store/{param}', 'PerwakilanResearchController@store')->name('store');
+			Route::get('/edit/{id}', 'PerwakilanResearchController@edit')->name('edit');
+			Route::get('/view/{id}', 'PerwakilanResearchController@view')->name('view');
+			Route::get('/destroy/{id}', 'PerwakilanResearchController@destroy')->name('destroy');
+			Route::post('/broadcast/', 'PerwakilanResearchController@broadcast')->name('broadcast');
+	    });
+    });
+// Angga End
+});
+
 
 /////////////////////////////////////////ILYAS START//////////////////////////////////////////////////////////////////////////////////
 Route::namespace('Eksportir')->prefix('eksportir')->group(function () {

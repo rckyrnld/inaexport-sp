@@ -14,7 +14,7 @@ class CreateCscProductTable extends Migration
     public function up()
     {
         Schema::create('csc_product', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->increments('id');
             $table->integer('level_1')->nullable();
             $table->integer('level_2')->nullable();
             $table->string('nama_kategori_en');

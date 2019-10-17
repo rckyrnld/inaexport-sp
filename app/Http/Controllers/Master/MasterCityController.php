@@ -20,12 +20,31 @@ class MasterCityController extends Controller
 
 	  public function index(){
       $pageTitle = 'City';
+      return view('master.city.index',compact('pageTitle'));
+    }
+
+    public function getData()
+    {
       $city = MasterCity::leftjoin('mst_country as a', 'a.id','=','mst_city.id_mst_country')
-      ->orderby('a.country', 'asc')
-      ->orderby('mst_city.city', 'asc')
-      ->select('mst_city.*', 'a.country')
-      ->get();
-      return view('master.city.index',compact('pageTitle','city'));
+            ->orderby('a.country', 'asc')
+            ->orderby('mst_city.city', 'asc')
+            ->select('mst_city.*', 'a.country')
+            ->get();
+
+      return \Yajra\DataTables\DataTables::of($city)
+          ->addColumn('action', function ($data) {
+              return '
+              <center>
+              <div class="btn-group">
+                <a href="'.route('master.city.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+                <a href="'.route('master.city.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
+                <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Kota Ini ?\')" href="'.route('master.city.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+              </div>
+              </center>
+              ';
+          })
+          ->rawColumns(['action'])
+          ->make(true);
     }
 
     public function create()

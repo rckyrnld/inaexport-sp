@@ -21,7 +21,7 @@
 
                     <div class="col-md-14"><br>
 		          	 <div class="table-responsive">
-					    <table id="example1" class="table  table-bordered table-striped" data-plugin="dataTable">
+					    <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable">
 					      <thead class="text-white" style="background-color: #1089ff;">
 					          <tr>
 					              <th>Country</th>
@@ -29,21 +29,6 @@
 					              <th width="20%">Action</th>
 					          </tr>
 					      </thead>
-					      <tbody>
-					      	@foreach($city as $no => $data)
-					      		<tr>
-					      			<td>{{$data->country}}</td>
-					      			<td>{{$data->city}}</td>
-					      			<td style="text-align: center;">
-					      				<div class="btn-group">
-					      				<a href="{{route('master.city.view', $data->id)}}" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-					      				<a href="{{route('master.city.edit', $data->id)}}" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
-					      				<a onclick="return confirm('Apa Anda Yakin untuk Menghapus Kota Ini ?')" href="{{route('master.city.destroy', $data->id)}}" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
-					      			    </div>
-					      			</td>
-					      		</tr>
-					      	@endforeach
-					      </tbody>
 					    </table>
 					  </div>
       	  			</div>
@@ -53,3 +38,17 @@
     </div>
 </div>
 @include('footer')
+<script type="text/javascript">
+	$(function () {
+        $('#table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('master.city.getData') }}",
+            columns: [
+                {data: 'country', name: 'country'},
+                {data: 'city', name: 'city'},
+                {data: 'action', name: 'action', orderable: false, searchable: false}
+            ]
+        });
+    });
+</script>

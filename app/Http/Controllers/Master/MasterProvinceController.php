@@ -19,8 +19,27 @@ class MasterProvinceController extends Controller
 
 	  public function index(){
       $pageTitle = 'Province';
+      return view('master.province.index',compact('pageTitle'));
+    }
+
+    public function getData()
+    {
       $province = MasterProvince::orderby('province_en', 'asc')->get();
-      return view('master.province.index',compact('pageTitle','province'));
+
+      return \Yajra\DataTables\DataTables::of($province)
+          ->addColumn('action', function ($data) {
+              return '
+              <center>
+              <div class="btn-group">
+                <a href="'.route('master.province.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+                <a href="'.route('master.province.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
+                <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route('master.province.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+              </div>
+              </center>
+              ';
+          })
+          ->rawColumns(['action'])
+          ->make(true);
     }
 
     public function create()
