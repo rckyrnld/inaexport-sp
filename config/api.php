@@ -230,4 +230,10 @@ return [
 
     ],
 
+    // 'auth' => [
+    //     'basic' => function ($app) {
+    //          return new Dingo\Api\Auth\Provider\Basic($app['auth']);
+    //     }
+    // ],
+
 ];
