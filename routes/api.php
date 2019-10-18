@@ -18,15 +18,29 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 $api = app('Dingo\Api\Routing\Router');
+
 $api->version('v1', function ($api){
-    // $api->group(['prefix' => 'auth'], function ($api) {
-        $api->get('getRekapAnggota', 'App\Http\Controllers\Api\VerifikasiAnggotaController@index');
-    //Anggota Importir
-        $api->get('getDetailVerifikasiImportir/{id}', 'App\Http\Controllers\Api\VerifikasiAnggotaController@detailVerifikasiImportir');
-        $api->post('submitVerifikasiImportir', 'App\Http\Controllers\Api\VerifikasiAnggotaController@submitVerifikasiImportir');
-    //Anggota Eksportir
-        $api->get('getDetailVerifikasiEksportir/{id}', 'App\Http\Controllers\Api\VerifikasiAnggotaController@detailVerifikasiEksportir');
-        $api->post('submitVerifikasiEksportir', 'App\Http\Controllers\Api\VerifikasiAnggotaController@submitVerifikasiEksportir');
-    
-        // });
+        /*API Auth*/
+            $api->post('login', 'App\Http\Controllers\Api\Auth\LoginController@login');
+            $api->post('register', 'App\Http\Controllers\Api\Auth\RegisterController@register');
+        /*API Auth*/ 
+        /*************************************************************************************************************/
+        $api->group(['middleware' => 'api.auth'], function ($api) {
+        /*API Management*/
+                $api->get('getRekapAnggota', 'App\Http\Controllers\Api\ManagementController@getRekapAnggota');
+            /*Anggota Importir*/
+                $api->get('getDetailVerifikasiImportir/{id}', 'App\Http\Controllers\Api\ManagementController@detailVerifikasiImportir');
+                $api->post('submitVerifikasiImportir', 'App\Http\Controllers\Api\ManagementController@submitVerifikasiImportir');
+            /*Anggota Importir*/
+
+            /*Anggota Eksportir*/
+                $api->get('getDetailVerifikasiEksportir/{id}', 'App\Http\Controllers\Api\ManagementController@detailVerifikasiEksportir');
+                $api->post('submitVerifikasiEksportir', 'App\Http\Controllers\Api\ManagementController@submitVerifikasiEksportir');
+            /*Anggota Eksportir*/
+
+            /*Contact Us*/
+                $api->post('contactUs', 'App\Http\Controllers\Api\ManagementController@contactUs');
+            /*Contact Us*/
+        /*API Management*/
+        });
 });

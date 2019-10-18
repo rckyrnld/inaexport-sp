@@ -15,6 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
+        // 'guard' => 'api', //diganti yudha
         'passwords' => 'users',
     ],
 
@@ -42,7 +43,8 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            // 'driver' => 'token',
+            'driver' => 'jwt', //diganti yudha
             'provider' => 'users',
         ],
 		'eksmp' => [
@@ -110,5 +112,6 @@ return [
             'expire' => 60,
         ],
     ],
+    
 
 ];
