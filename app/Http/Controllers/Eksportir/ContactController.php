@@ -29,7 +29,7 @@ class ContactController extends Controller
     public function store(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id;
         DB::table('itdp_contact_eks')->insert([
             'id_itdp_profil_eks' => $id_user,
             'name' => $request->name,
@@ -43,7 +43,7 @@ class ContactController extends Controller
     {
 //        dd("masuk gan");
         $user = DB::table('itdp_contact_eks')
-            ->where('id_itdp_profil_eks', '=', Auth::user()->id)
+            ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)

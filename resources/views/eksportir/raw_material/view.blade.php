@@ -12,8 +12,8 @@
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Year</label>
-                                <select class="atc form-control select2" disabled required id="port"
-                                        name="port">
+                                <select disabled class="atc form-control select2" required id="year"
+                                        name="year">
                                     <option value="">- Select Years -</option>
                                     @foreach($years as $sa)
                                         <option value="{{$sa}}" {{($val->tahun == $sa)?'selected':''}}>{{$sa}}</option>
@@ -22,24 +22,38 @@
                             </div>
 
                             <div class="form-group col-sm-6">
-                                <label>Used Capacity</label>
-                                <input disabled type="text"
+                                <label>Domestic</label>
+                                <input disabled type="text" value="{{$val->lokal_persen}}"
                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                       class="form-control" value="{{$val->kapasitas_terpakai_persen}}"
-                                       name="used_capacity">
+                                       class="form-control" name="domestic">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label>Overseas</label>
+                                <input disabled type="text" value="{{$val->impor_persen}}"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" name="overseas">
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label>Value From Domestic</label>
+                                <input disabled type="text" value="{{$val->nilai_impor}}"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" name="valuefromdomestic">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-sm-6">
-
+                                <input type="hidden" value="{{$val->id}}" class="form-control" name="id_sales"
+                                       id="id_sales">
                             </div>
                             <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/capulti')}}"
+                                <a style="color: white" href="{{url('/eksportir/rawmaterial')}}"
                                    class="btn btn-primary"><i style="color: white"></i>
                                     Back
                                 </a>
-
                             </div>
                         </div>
                     </div>

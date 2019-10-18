@@ -188,7 +188,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/contact_getdata', 'ContactController@datanya')->name('datatables.contact');
     Route::get('/contact_edit/{id}', 'ContactController@edit')->name('contact.detail');
     Route::get('/contact_view/{id}', 'ContactController@view')->name('contact.view');
-    Route::get('/brand_delete/{id}', 'ContactController@delete')->name('contact.delete');
+    Route::get('/contact_delete/{id}', 'ContactController@delete')->name('contact.delete');
     Route::post('/contact_update', 'ContactController@update');
 
     //export destination
@@ -226,30 +226,30 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/tambah_capulti', 'CapultiController@tambah');
     Route::post('/capulti_save', 'CapultiController@store');
     Route::get('/capulti_getdata', 'CapultiController@datanya')->name('datatables.capulti');
-    Route::get('/capulti_edit/{id}', 'BrandController@edit')->name('capulti.detail');
-    Route::get('/capulti_view/{id}', 'BrandController@view')->name('capulti.view');
-    Route::get('/capulti_delete/{id}', 'BrandController@delete')->name('capulti.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::get('/capulti_edit/{id}', 'CapultiController@edit')->name('capulti.detail');
+    Route::get('/capulti_view/{id}', 'CapultiController@view')->name('capulti.view');
+    Route::get('/capulti_delete/{id}', 'CapultiController@delete')->name('capulti.delete');
+    Route::post('/capulti_update', 'CapultiController@update');
 
     //raw material
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::get('/rawmaterial', 'RawmaterialController@index')->name('rawmaterial.index');
+    Route::get('/tambah_rawmaterial', 'RawmaterialController@tambah');
+    Route::post('/rawmaterial_save', 'RawmaterialController@store');
+    Route::get('/rawmaterial_getdata', 'RawmaterialController@datanya')->name('datatables.rawmaterial');
+    Route::get('/rawmaterial_edit/{id}', 'RawmaterialController@edit')->name('rawmaterial.detail');
+    Route::get('/rawmaterial_view/{id}', 'RawmaterialController@view')->name('rawmaterial.view');
+    Route::get('/rawmaterial_delete/{id}', 'RawmaterialController@delete')->name('rawmaterial.delete');
+    Route::post('/rawmaterial_update', 'RawmaterialController@update');
 
     //labor
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::get('/labor', 'LaborController@index')->name('brand.index');
+    Route::get('/tambah_labor', 'LaborController@tambah');
+    Route::post('/labor_save', 'LaborController@store');
+    Route::get('/labor_getdata', 'LaborController@datanya')->name('datatables.labor');
+    Route::get('/labor_edit/{id}', 'LaborController@edit')->name('labor.detail');
+    Route::get('/labor_view/{id}', 'LaborController@view')->name('labor.view');
+    Route::get('/labor_delete/{id}', 'LaborController@delete')->name('labor.delete');
+    Route::post('/labor_update', 'LaborController@update');
 
     //consultan
 //    Route::get('/brand', 'BrandController@index')->name('brand.index');
@@ -262,9 +262,9 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 //    Route::post('/brand_update', 'BrandController@update');
 
     //training
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
+    Route::get('/training', 'TrainingController@index')->name('training.index');
+    Route::get('/tambah_training', 'TrainingController@tambah');
+    Route::post('/training_save', 'TrainingController@store');
 //    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
 //    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
 //    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');

@@ -31,7 +31,7 @@ class PortlandController extends Controller
     public function store(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id;
         DB::table('itdp_eks_port')->insert([
             'id_itdp_profil_eks' => $id_user,
             'id_mst_port' => $request->port,
@@ -46,7 +46,7 @@ class PortlandController extends Controller
         $user = DB::table('itdp_eks_port')
             ->select('itdp_eks_port.id','mst_port.name_port')
             ->join('mst_port', 'mst_port.id', '=', 'itdp_eks_port.id_mst_port')
-            ->where('itdp_eks_port.id_itdp_profil_eks', '=', Auth::user()->id)
+            ->where('itdp_eks_port.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
@@ -105,7 +105,7 @@ class PortlandController extends Controller
     public function update(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id;
         DB::table('itdp_eks_port')->where('id', $request->id_sales)
             ->update([
                 'id_itdp_profil_eks' => $id_user,

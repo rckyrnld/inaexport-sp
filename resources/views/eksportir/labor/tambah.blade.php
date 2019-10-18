@@ -1,5 +1,4 @@
 @include('header')
-<title>E-Reporting | Tambah User</title>
 <div class="padding">
     <div class="row">
         <div class="col-md-12">
@@ -21,10 +20,22 @@
                             </div>
 
                             <div class="form-group col-sm-6">
-                                <label>Used Capacity</label>
+                                <label>Local Employee</label>
                                 <input type="text"
                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                       class="form-control" name="used_capacity">
+                                       class="form-control" name="local_employee">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label>Foreign Worker</label>
+                                <input type="text"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" name="foreign_worker">
+                            </div>
+
+                            <div class="form-group col-sm-6">
+
                             </div>
                         </div>
 
@@ -33,7 +44,7 @@
 
                             </div>
                             <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/capulti')}}"
+                                <a style="color: white" href="{{url('/eksportir/labor')}}"
                                    class="btn btn-primary"><i style="color: white"></i>
                                     Back
                                 </a>
