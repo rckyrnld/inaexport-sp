@@ -86,7 +86,7 @@
                 {data: 'raw_material_en', name: 'raw_material_en'},
                 {data: 'capacity', name: 'capacity'},
                 {data: 'price_usd', name: 'price_usd'},
-                {data: 'product_description_en', name: 'product_description_en'},
+                {data: 'product_description', name: 'product_description'},
                 {data: 'status', name: 'status'},
                 {data: 'information', name: 'information'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}

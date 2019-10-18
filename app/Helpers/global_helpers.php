@@ -73,8 +73,9 @@ if (! function_exists('rc_hscodes')) {
 }
 
 if (! function_exists('getNameCategoryProduct')) {
-    function getNameCategoryProduct($id){
+    function getNameCategoryProduct($id, $jns){
         $data = DB::table('csc_product')->where('id', $id)->first();
-        return $data->nama_kategori_en;
+        $name = 'nama_kategori_'.$jns;
+        return $data->$name;
     }
 }

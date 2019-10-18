@@ -358,7 +358,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::post('/product_save', 'EksProductController@store');
     Route::get('/product_view/{id}', 'EksProductController@view')->name('eksproduct.view');
     Route::get('/product_edit/{id}', 'EksProductController@edit')->name('eksproduct.detail');
-    Route::post('/product_update', 'EksProductController@update');
+    Route::post('/product_update/{id}', 'EksProductController@update');
     Route::get('/product_delete/{id}', 'EksProductController@delete')->name('eksproduct.delete');
 });
 
