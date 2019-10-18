@@ -9,10 +9,11 @@
     $id_data = '0';
   } else {
     $id_data = $data->id;
-    if($data->level_1 != ''){
+    if($data->level_1 != '0'){
       $level1 = $data->level_1;
-      if($data->level_2 != ''){
-        $level2 = $data->level_2;
+      if($data->level_2 != '0'){
+        $level1 = $data->level_2;
+        $level2 = $data->level_1;
       } else {
         $level2 = '';
       }
@@ -24,7 +25,7 @@
 
   if($page == 'view'){
     $view = 'disabled';
-    if($data->level_2 == ''){
+    if($data->level_2 == '0'){
       $level2 = '|-|';
     }
   } else {
@@ -49,9 +50,16 @@
                  <label class="control-label col-md-3">Hierarchy</label>
                  <div class="col-md-7">
                      <select class="form-control select2" style="width: 100%" id="level_1" name="level_1" {{$view}}>
-                       <option value="" @isset($data) @if($data->level_1 == '') selected @endif @endisset>- Main Category -</option>
+                       <option value="0" @isset($data) @if($data->level_1 == '0') selected @endif @endisset>- Main Category -</option>
                        @foreach($level_1 as $val)
-                       <option value="{{$val->id}}" @isset($data) @if($data->level_1 == $val->id) selected @endif  @endisset>{{$val->nama_kategori_en}}</option>
+                       <option value="{{$val->id}}" 
+                        @isset($data) 
+                          @if($data->level_2 == 0)
+                            @if($data->level_1 == $val->id) selected @endif  
+                          @else
+                            @if($data->level_2 == $val->id) selected @endif  
+                          @endif
+                        @endisset>{{$val->nama_kategori_en}}</option>
                        @endforeach
                      </select>
                  </div>
@@ -130,7 +138,7 @@
   $(function () {
     var level2 = "{{$level2}}";
     var update = "{{$id_data}}";
-    
+
     if(level2 == '|-|'){
       $('#input_level_2').css('display','none');
     } else {

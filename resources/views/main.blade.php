@@ -1,4 +1,18 @@
-   
+<style> 
+.main-header .navbar .nav>li>a>.label {
+    position: absolute;
+    top: 9px;
+    right: 7px;
+    text-align: center;
+    font-size: 9px;
+    padding: 2px 3px;
+    line-height: .9;
+}
+
+.bg-yellow, .callout.callout-warning, .alert-warning, .label-warning, .modal-warning .modal-body {
+    background-color: #f39c12 !important;
+}
+</style> 
       <div class="content-header white  box-shadow-0" id="content-header" style="background-color:  #1a7688  ; color: #ffffff">
      
   
@@ -10,31 +24,37 @@
               <!-- Page title -->
               <div class="navbar-text nav-title flex" id="pageTitle" style="font-size:18px;">{{$pageTitle}}</div>
             
+		  
               <ul class="nav flex-row order-lg-2">
-                <!-- Notification -->
-             
-                <!-- User dropdown menu -->
-				<li class="dropdown notifications-menu">
+                <li class="dropdown notifications-menu d-flex align-items-center">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
+			  <?php $querynotif = DB::select("select * from notif where status_baca='0' order by id_notif desc limit 5"); ?>
+              <span class="label label-warning" style="position: absolute!important;
+    
+    right: 7px!important;
+    text-align: center!important;
+    font-size: 9px!important;
+    padding: 2px 3px!important;
+    line-height: .9!important;"><?php if(count($querynotif) == 0){ echo ""; }else{ echo count($querynotif); } ?></span>
             </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li>
-                  
-                </ul>
+            <ul class="dropdown-menu dropdown-menu-right w pt-0 mt-2 animate fadeIn" style="width:300px!important; padding-left:10px;padding-right:10px;">
+              <li style="font-size:13px; border:2px;"><br>
+			  <?php 
+			  
+			  foreach($querynotif as $ar){
+			  ?>
+			  <a href="{{url($ar->url_terkait.'/'.$ar->id_terkait)}}">
+              <?php echo $ar->keterangan; ?><br>
+			  <b><?php echo $ar->waktu; ?></b>
+			  </a>
+			  <hr>
+			  <?php } ?>
               </li>
-              <li class="footer"><a href="#">View all</a></li>
+              <li><center><a href="{{ url('show_all_notif') }}">View all</a></center></li>
             </ul>
           </li>
+				
                 <li class="dropdown d-flex align-items-center">
                   <a href="#" data-toggle="dropdown" class="d-flex align-items-center">
                     <span class="avatar w-32">
@@ -52,6 +72,7 @@
                     </span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right w pt-0 mt-2 animate fadeIn">
+				  
                    <!--  <div class="row no-gutters b-b mb-2">
                       <div class="col-4 b-r">
                         <a href="app.user.html" class="py-2 pt-3 d-block text-center">
@@ -72,17 +93,23 @@
                         </a>
                       </div>
                     </div> -->
-					 <?php if(empty(Auth::user()->id_group)){  ?>
+					 <?php if(empty(Auth::user()->id_group)){  
+					 if(Auth::guard('eksmp')->user()->id_role == 2){
+					 ?>
 					  <a style="padding-top:10px;"class="dropdown-item" href="{{ url('profil/'.Auth::guard('eksmp')->user()->id_role.'/'.Auth::guard('eksmp')->user()->id) }}">
                      <b> Profil <?php if(Auth::guard('eksmp')->user()->id_role == 2){ echo " Eksportir"; }else if(Auth::guard('eksmp')->user()->id_role == 3){ echo " Importir"; } ?></b>
                     </a>
-					 <?php  }else{ ?>
+					 <?php } else { ?> 
+					 <a style="padding-top:10px;"class="dropdown-item" href="{{ url('profil2/'.Auth::guard('eksmp')->user()->id_role.'/'.Auth::guard('eksmp')->user()->id) }}">
+                     <b> Profil <?php if(Auth::guard('eksmp')->user()->id_role == 2){ echo " Eksportir"; }else if(Auth::guard('eksmp')->user()->id_role == 3){ echo " Importir"; } ?></b>
+                    </a>
+					 <?php } }else{ ?>
 					 
 					  <?php } ?>
                    
-					<a style="padding-top:10px;"class="dropdown-item" href="{{ url('gantipass') }}">
+					<!-- <a style="padding-top:10px;"class="dropdown-item" href="{{ url('gantipass') }}">
                      <b> Ganti Password </b>
-                    </a>
+                    </a> -->
 					<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                       <b >Log Out </b>
                      </a>

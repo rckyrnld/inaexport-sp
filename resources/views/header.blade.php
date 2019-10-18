@@ -26,6 +26,7 @@
 
 -->
 
+  <!-- <link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/dist/css/AdminLTE.min.css" type="text/css" /> -->
   <link rel="stylesheet" href="{{url('assets')}}/libs/font-awesome/css/font-awesome.min.css" type="text/css" />
 
   <!-- build:css ../assets/css/app.min.css -->
@@ -68,14 +69,16 @@
 
 <script src="{{url('assets')}}/html/scripts/plugins/datatable.js" ></script>
 
+<script src="{{ url('/') }}/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+
 <script type="text/javascript">
   $(function () {
    $('#example1').DataTable({
-     
+     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     });
 	
 	$('#example2').DataTable({
-     "lengthMenu": [[-1, 25, 50, 10], ["All",10, 25, 50 ]]
+     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     });
 	
 	$('#yahoo').DataTable({
@@ -89,7 +92,7 @@
 
 </head>
 <body>
-
+<?php date_default_timezone_set('Asia/Jakarta'); ?>
 
 <div class="app" id="app">
 

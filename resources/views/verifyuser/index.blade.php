@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Verifikasi User</h5>
+                    <h5><i></i> Management Eksportir</h5>
                 </div>
 
                 <div class="box-body bg-light">
@@ -15,18 +15,24 @@
                         <br>
                         <div class="table-responsive">
 
-                            <table id="example1" class="table table-bordered table-striped">
+                           <table id="example2" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Username</center>
+                                        <center>Company</center>
                                     </th>
                                     <th>
-                                        <center>Email</center>
+                                        <center>Address</center>
                                     </th>
                                     <th>
-                                        <center>Role</center>
+                                        <center>Zip Code</center>
+                                    </th>
+									<th>
+                                        <center>Telepon</center>
+                                    </th>
+									<th>
+                                        <center>Fax</center>
                                     </th>
                                     <th>
                                         <center>Konfirmasi Email</center>
@@ -43,22 +49,24 @@
 								<?php $i=1; foreach($data as $row){ ?>
 								<tr>
 									<td><?php echo $i;?></td>
-									<td><center><?php echo $row->username;?></center></td>
-									<td><center><?php echo $row->email;?></center></td>
-									<td><center>
-									<?php 
+									<td><center><?php echo $row->company;?></center></td>
+									<td><center><?php echo $row->addres;?></center></td>
+									<td><center><?php echo $row->postcode;?>
+									<?php /*
 									$cari1 = DB::select("select * from public.group where id_group='".$row->id_role."'");
 									foreach($cari1 as $cr1){ echo $cr1->group_name; }
-									?>
+									*/ ?>
 									</center></td>
+									<td><center><?php echo $row->phone;?></center></td>
+									<td><center><?php echo $row->fax;?></center></td>
 									<td><center><?php if($row->agree == 1){ echo "<font color='green'>Sudah</font>";}else{ echo "<font color='red'>Belum</font>";};?></center></td>
-									<td><center><?php if($row->status == 1){ echo "<font color='green'>Sudah di Verifikasi</font>";}else{ echo "<font color='red'>Belum di Verifikasi</font>";};?></center></td>
+									<td><center><?php if($row->status_a == 1){ echo "<font color='green'>Verified</font>";} else if($row->status_a == 2){ echo "<font color='red'>Not Verified</font>";}else{ echo "<font color='orange'>Wait Administrator</font>";};?></center></td>
 									<td><center>
-									<?php if($row->status == 1){ ?>
-									<a href="{{url('detailverify/'.$row->id)}}" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>
+									<?php if($row->status_a == 1 || $row->status_a == 2){ ?>
+									<a href="{{url('profil/'.$row->id_role.'/'.$row->ida)}}" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>
 									
 									<?php }else{ ?>
-									<a href="{{url('detailverify/'.$row->id)}}" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verifikasi</a>
+									<a href="{{url('profil/'.$row->id_role.'/'.$row->ida)}}" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verify</a>
 									<?php } ?>
 									</center></td>
 								</tr>

@@ -20,6 +20,26 @@ class DataContactUsController extends Controller
       return view('management.contact-us.index',compact('pageTitle','contactus'));
     }
 
+    public function getData()
+    {
+      $contactus = DB::table('csc_contact_us')->orderby('id','asc')->get();
+
+      return \Yajra\DataTables\DataTables::of($contactus)
+          ->addIndexColumn()
+          ->addColumn('action', function ($data) {
+              return '
+              <center>
+              <div class="btn-group">
+                <a href="'.route('management.contactus.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+                <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route('management.contactus.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+              </div>
+              </center>
+              ';
+          })
+          ->rawColumns(['action'])
+          ->make(true);
+    }
+
     public function store(Request $req)
     {
       $id = DB::table('csc_contact_us')->orderby('id','desc')->first();
@@ -37,6 +57,17 @@ class DataContactUsController extends Controller
         'message' => $req->message,
         'date_created' => date('Y-m-d H:i:s')
       ]);
+
+      $notif = DB::table('notif')->insert([
+            'dari_nama' => $req->name,
+            'untuk_nama' => 'Super Admin',
+            'untuk_id' => '1',
+            'keterangan' => 'New Message from Visitor with Title  "'.$req->subyek.'"',
+            'url_terkait' => 'management-contact-us/view',
+            'status_baca' => 0,
+            'waktu' => date('Y-m-d H:i:s'),
+            'id_terkait' => $id,
+        ]);
 
       if($data){
          Session::flash('success','Success');

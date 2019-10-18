@@ -68,13 +68,17 @@ body {font-family: Arial;}
 <input type="hidden" name="id_user" value="<?php echo $idb; ?>">
 <div id="London" class="tabcontent" style="display:block;">
    <div class="box-body">
+   <?php 
+   $ca = DB::select("select * from itdp_company_users where id='$idb' limit 1");
+   foreach($ca as $rhj){
+   ?>
                             <div class="form-row">
                                 <div class="form-group col-sm-2">
                                     <label><b>Username</b></label>
                                    
                                 </div>
 								<div class="form-group col-sm-4">
-                                    <input type="text" value="<?php echo Auth::guard('eksmp')->user()->username; ?>" name="username" id="username"
+                                    <input type="text" value="<?php echo $rhj->username; ?>" name="username" id="username"
                                            class="form-control" >
                                    
                                 </div>
@@ -87,7 +91,7 @@ body {font-family: Arial;}
                                    
                                 </div>
 								<div class="form-group col-sm-4">
-                                    <input type="text" value="<?php echo Auth::guard('eksmp')->user()->email; ?>" name="email" id="email"
+                                    <input type="text" value="<?php echo $rhj->email; ?>" name="email" id="email"
                                            class="form-control" >
                                    
                                 </div>
@@ -120,6 +124,7 @@ body {font-family: Arial;}
 
                                
                             </div>
+   <?php } ?>
 	</div>
 </div>
 
@@ -161,7 +166,7 @@ body {font-family: Arial;}
 			$qc = DB::select("select city from mst_city order by city asc");
 			foreach($qc as $cq){
 			?>
-				<option value="<?php echo $cq->city; ?>"><?php echo $cq->city; ?></option>
+				<option <?php if($cq->city == $ryu->city){ echo "selected"; } ?> value="<?php echo $cq->city; ?>"><?php echo $cq->city; ?></option>
 				
 			<?php } ?>
 			</select>
@@ -178,7 +183,7 @@ body {font-family: Arial;}
 			$qc = DB::select("select id,province_en from mst_province order by province_en asc");
 			foreach($qc as $cq){
 			?>
-				<option value="<?php echo $cq->id; ?>"><?php echo $cq->province_en; ?></option>
+				<option <?php if($cq->id == $ryu->id_mst_province){ echo "selected"; } ?> value="<?php echo $cq->id; ?>"><?php echo $cq->province_en; ?></option>
 				
 			<?php } ?>
 			</select>
@@ -304,7 +309,7 @@ body {font-family: Arial;}
 			<?php if($ryu->doc == null){
 				echo "";
 			}else {
-			echo "<span>File Sebelumnya : ".$ryu->doc."</span>";
+			echo "<span>File Sebelumnya : <a>".$ryu->doc."</b></span>";
 			} ?>
 		</div>
 		
@@ -312,13 +317,27 @@ body {font-family: Arial;}
 	</div>
 	<div class="form-row">
 		<div class="form-group col-sm-3">
-			<label><b>Status Importir</b></label>
+			<label><b>Status Ekportir</b></label>
 		</div>
 		<div class="form-group col-sm-4">
+		<?php if(empty(Auth::user()->name)){
+			if($rhj->status==1){ echo "Verified"; }else if($rhj->status==2){ echo "Not Verified"; }else{ echo "-"; }
+		?>
+			<input type="hidden" name="staim" value="<?php echo $rhj->status; ?>">
+		<?php 
+		}else{ ?>
 			<select class="form-control" name="staim">
-			<option <?php if($ryu->status == 1){ echo "selected"; } ?> value="1">Verified</option>
-			<option <?php if($ryu->status == 0){ echo "selected"; } ?> value="0">Not Verified</option>
+			<option <?php if($rhj->status == 0){ echo "selected"; } ?> value="0">-- Pilih Status --</option>
+			<option <?php if($rhj->status == 1){ echo "selected"; } ?> value="1">Verified</option>
+			<option <?php if($rhj->status == 2){ echo "selected"; } ?> value="2">Not Verified</option>
 			</select>
+		<?php } ?>
+		<!--
+			<select class="form-control" name="staim">
+			<option <?php if($ryu->status == 0){ echo "selected"; } ?> value="0">-- Pilih Status --</option>
+			<option <?php if($ryu->status == 1){ echo "selected"; } ?> value="1">Verified</option>
+			<option <?php if($ryu->status == 2){ echo "selected"; } ?> value="0">Not Verified</option>
+			</select> -->
 		</div>
 		
 		
@@ -328,7 +347,10 @@ body {font-family: Arial;}
 </div>
 <br>
 <div align="right">
-<button class="btn btn-md btn-primary">Save</button>
+<?php if(empty(Auth::user()->name)){ }else{ ?>
+<a href="{{ url('verifyuser') }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Kembali</a>
+<?php } ?>
+<button class="btn btn-md btn-primary"><i class="fa fa-save"></i> Save</button>
 </div>
 </form>
 <script>

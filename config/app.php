@@ -79,6 +79,7 @@ return [
     */
 
     'locale' => 'en',
+	'locales' => ['en', 'in', 'ch'],
 
     /*
     |--------------------------------------------------------------------------
@@ -164,6 +165,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Dingo\Api\Provider\LaravelServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -182,6 +184,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
           Barryvdh\DomPDF\ServiceProvider::class,
           Eusebiu\LaravelSparkCamera\CameraServiceProvider::class,
+          Unisharp\Ckeditor\ServiceProvider::class,
 
     ],
 

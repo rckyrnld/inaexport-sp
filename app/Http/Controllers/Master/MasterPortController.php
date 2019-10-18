@@ -20,11 +20,38 @@ class MasterPortController extends Controller
 
     public function index(){
       $pageTitle = 'Port';
+      return view('master.port.index',compact('pageTitle'));
+    }
+
+    public function getData()
+    {
       $port = MasterPort::leftjoin('mst_province as a', 'mst_port.id_mst_province','=','a.id')
-      ->orderby('mst_port.name_port', 'asc')
-      ->select('mst_port.*', 'a.province_en')
-      ->get();
-      return view('master.port.index',compact('pageTitle','port'));
+            ->orderby('mst_port.name_port', 'asc')
+            ->select('mst_port.*')
+            ->get();
+
+      return \Yajra\DataTables\DataTables::of($port)
+          ->addColumn('province_en', function ($port) {
+              $data = MasterProvince::where('id', $port->id_mst_province)->first();
+              if($data){
+                return $data->province_en;
+              } else {
+                return 'PROVINCE NOT FOUND';
+              }
+          })
+          ->addColumn('action', function ($data) {
+              return '
+              <center>
+              <div class="btn-group">
+                <a href="'.route('master.port.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+                <a href="'.route('master.port.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
+                <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route('master.port.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+              </div>
+              </center>
+              ';
+          })
+          ->rawColumns(['action'])
+          ->make(true);
     }
 
     public function create()

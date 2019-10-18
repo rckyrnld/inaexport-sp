@@ -26,6 +26,12 @@ class RegistrasiController extends Controller
         return view('auth.register_pembeli',compact('pageTitle'));
     } 
 	
+	public function set($lang) {
+    session(['applocale' => $lang]);
+
+        return back();
+    }
+	
 	public function registrasi_penjual()
     {
         $pageTitle = "Registrasi Penjual";
@@ -51,6 +57,12 @@ class RegistrasiController extends Controller
 		foreach($ambilmaxid2 as $rt2){
 			$id2 = $rt2->maxid2;
 		}
+		// notif 
+		$id_terkait = "3/".$id2;
+		$ket = "User baru Importir dengan nama ".$request->company;
+		$insert3 = DB::select("insert into notif (dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+			('".$request->company."','".$id1."','Super Admin','1','".$ket."','profil2','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+		");
 		
 			
 			$data = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => $request->email];
@@ -76,12 +88,19 @@ class RegistrasiController extends Controller
 		}
 		$insert2 = DB::select("
 			insert into itdp_company_users (id_profil,type,username,password,email,status,id_role) values
-			('".$id1."','3','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','2')
+			('".$id1."','Luar Negeri','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','2')
 		");
 		$ambilmaxid2 = DB::select("select max(id) as maxid2 from itdp_company_users");
 		foreach($ambilmaxid2 as $rt2){
 			$id2 = $rt2->maxid2;
 		}
+		
+		// notif 
+		$id_terkait = "2/".$id2;
+		$ket = "User baru Eksportir dengan nama ".$request->company;
+		$insert3 = DB::select("insert into notif (dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+			('".$request->company."','".$id1."','Super Admin','1','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+		");
 		
 			
 			$data = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => $request->email];
