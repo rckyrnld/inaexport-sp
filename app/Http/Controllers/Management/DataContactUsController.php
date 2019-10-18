@@ -91,6 +91,7 @@ class DataContactUsController extends Controller
       $pageTitle = "Data Contact Us";
       $page = "view";
       $data = DB::table('csc_contact_us')->where('id',$id)->first();
+      $read_notif = DB::table('notif')->where('id_terkait',$id)->update(['status_baca' => 1]);
       return view('management.contact-us.create',compact('page','data','pageTitle'));
     }
 

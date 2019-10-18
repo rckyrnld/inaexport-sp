@@ -191,6 +191,14 @@ Route::namespace('ResearchCorner')->group(function () {
 			Route::post('/broadcast/', 'PerwakilanResearchController@broadcast')->name('broadcast');
 	    });
     });
+    Route::prefix('research-corner')->group(function () {
+		Route::name('research-corner.')->group(function () {
+			Route::get('/list/', 'ResearchCornerController@index')->name('index');
+			Route::get('/getData/', 'ResearchCornerController@getData')->name('getData');
+			Route::get('/read/{id}', 'ResearchCornerController@read')->name('view');
+			Route::get('/download/', 'ResearchCornerController@download')->name('download');
+	    });
+    });
 // Angga End
 });
 
