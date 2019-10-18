@@ -195,6 +195,17 @@ Route::namespace('ResearchCorner')->group(function () {
 });
 
 
+
+/**
+ * Createdby Intan Kamelia
+ */
+Route::namespace('Event')->prefix('event')->group(function () {
+		Route::get('/', 'EventController@index');
+		Route::get('/create', 'EventController@create');
+		Route::get('/save', 'EventController@store');
+});
+
+
 /////////////////////////////////////////ILYAS START//////////////////////////////////////////////////////////////////////////////////
 Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 
