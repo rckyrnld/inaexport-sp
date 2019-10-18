@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ResearchCorner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Session;
 use Auth;
 
@@ -92,10 +93,11 @@ class PerwakilanResearchController extends Controller
       $id = DB::table('csc_research_corner')->orderby('id','desc')->first();
       if($id){ $id = $id->id+1; } else { $id = 1; }
             
-      $destination=public_path().'\uploads\Research Corner\File';
+      $destination= 'uploads\Research Corner\File\\';
       if($req->hasFile('file')){ 
+        $file = $req->file('file');
         $nama_file = time().'_Research '.$req->title_en.'_'.$req->file('file')->getClientOriginalName();
-        $req->file('file')->move($destination, $nama_file);
+        Storage::disk('uploads')->putFileAs($destination, $file, $nama_file);
       } else { $nama_file = $req->lastest_file; }
 
       if($param == 'Create'){
