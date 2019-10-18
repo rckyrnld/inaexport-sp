@@ -79,3 +79,21 @@ if (! function_exists('getNameCategoryProduct')) {
         return $data->$name;
     }
 }
+
+if (! function_exists('getNameCompany')) {
+    function getNameCompany($id){
+        $name = "";
+        if($id != NULL){
+            $companynya = DB::table('itdp_company_users')
+                ->where('id', $id)
+                ->first();
+            if($companynya){
+                $profiles = DB::table('itdp_profil_eks')->where('id', $companynya->id_profil)->first();
+                if($profiles){
+                    $name = $profiles->company;
+                }
+            }
+        }
+        return $name;
+    }
+}

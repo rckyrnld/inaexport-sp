@@ -23,6 +23,9 @@
                                 <tr>
                                     <th>No</th>
                                     <th>
+                                        <center>Company Name</center>
+                                    </th>
+                                    <th>
                                         <center>Code</center>
                                     </th>
                                     <th>
@@ -79,6 +82,7 @@
             ajax: "{{ route('datatables.eksproduct') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'company_name', name: 'company_name'},
                 {data: 'code_en', name: 'code_en'},
                 {data: 'prodname_en', name: 'prodname_en'},
                 {data: 'color_en', name: 'color_en'},

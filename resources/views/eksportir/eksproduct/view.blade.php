@@ -48,6 +48,18 @@
                                         <center><label for="lbl"><b>China</b></label></center>
                                     </div>
                                 </div>
+                                @if($jenis == 'admin')
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label for="lbl"><b>Company Name</b></label>
+                                    </div>
+                                    <div class="col-md-3" >
+                                        <input type="text" class="form-control" name="compname" id="compname" autocomplete="off" value="{{getNameCompany($data->id_itdp_company_user)}}" style="text-transform: uppercase; font-weight: bold;" readonly>
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3"></div>
+                                </div><br>
+                                @endif
                                 <div class="row">
                                     <label for="code" class="col-md-3"><b>Code</b></label>
                                     <div class="col-md-3">
