@@ -8,34 +8,15 @@
 	#export { background-color: #28bd4a; color: white; white-space: pre;}
 	#export:hover {background-color: #08b32e}
 	input:read-only{background-color: white !important}
-	.modal-lg{
-		width: 700px;
-	}
-	.modal-header {
-      background-color: #84afd4;
-      color: white;
-      font-size: 20px;
-      text-align: center;
-    }
-
-    .modal-body{
-    	height: 300px;
-    }
-
-    .modal-content {
-      border-bottom-left-radius: 20px; 
-      border-bottom-right-radius: 20px; 
-      border-top-left-radius: 20px; 
-      border-top-right-radius: 20px; 
-      overflow: hidden; 
-    }
-
-    .modal-footer {
-      background-color: #84afd4;
-      color: white;
-      font-size: 20px;
-      text-align: center;
-    }
+  /*CSS MODAL*/
+  .modal-lg{ width: 700px; }
+  .modal-header { background-color: #84afd4; color: white; font-size: 20px; text-align: center;}
+  .modal-body{ height: 300px; }
+  .modal-content { border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; overflow: hidden;}
+  .modal-footer { background-color: #84afd4; color: white; font-size: 20px; text-align: center;}
+  /*CSS OPTION*/
+  .optionGroup { font-weight: bold; font-style: italic; }
+  .optionChild { padding-left: 15px; }
 </style>
 <div class="padding">
     <div class="row">
@@ -90,20 +71,16 @@
                 </div>
                 <div class="modal-body">
                 	{!! Form::open(['url' => route('perwakilan.research-corner.broadcast'), 'class' => 'form-horizontal', 'files' => true]) !!}
-                	
                 		<input type="hidden" name="research" id="research">
                 		<table width="100%" style="font-size: 15px;">
 						    <tr>
 						      <td width="30%" style="padding-left: 20px; padding-top: 33px; ">Title Research Corner</td>
-						      <td width="70%" style="padding-top: 40px;" colspan="2"><input type="text" readonly id="title_en" class="form-control" style="width: 90% !important;"></td>
+						      <td width="70%" style="padding-top: 40px;" colspan="2"><input type="text" readonly id="title_en" name="title_en" class="form-control" style="width: 90% !important;"></td>
 						    </tr>
 						    <tr>
 						      <td width="30%" style="padding-left: 20px; padding-top: 13px;">Categori Product</td>
 						      <td width="70%" style="padding-top: 20px;" colspan="2">
-						      	<select class="form-control" id="categori" style="width: 90% !important;" width="90%" name="categori[]" multiple="multiple" required>
-						      		<option value="1">tes</option>
-						      		<option value="2">tes2</option>
-						      		<option value="3">tes3</option>
+						      	<select class="form-control" id="categori" style="width: 90% !important;" width="90%" name="categori[]" multiple="multiple" required>{{optionCategory()}}
 						      	</select>
 						      </td>
 						    </tr>
@@ -147,8 +124,18 @@
             ]
         });
 
-		$('#categori').select2();
-	});
+		$('#categori').select2({
+      sorter: function(data) {
+        return data.sort(function(a, b) {
+            return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+        });
+    }
+    }).on("select2:select", function (e) { 
+      $('.select2-selection__rendered li.select2-selection__choice').sort(function(a, b) {
+          return $(a).text() < $(b).text() ? -1 : $(a).text() > $(b).text() ? 1 : 0;
+        }).prependTo('.select2-selection__rendered');
+    });
+  });
 
 	function broadcast(id) {
 		$('#categori').val('');

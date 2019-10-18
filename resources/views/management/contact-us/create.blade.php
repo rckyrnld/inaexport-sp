@@ -15,13 +15,14 @@
       <div class="box">
       	 <div class="box-divider m-0"></div>
       	 <div class="box-header bg-info">
-      	 	<h4 class="text-white">Form </h4>
+      	 	<h4 class="text-white">Message
+          <a href="{{route('management.contactus.index')}}" style="float: right;" class="btn btn-danger button_form"> Back</a><br><br></h4> </h4>
       	 </div>
       	 <div class="box-body">
           <div class="col-md-12">
           @if($page != 'view')
         	 {!! Form::open(['url' => $url, 'class' => 'form-horizontal', 'files' => true]) !!}
-          @endif
+          @endif<br>
              <div class="form-group row">
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Full Name</label>
@@ -50,7 +51,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Messages</label>
                  <div class="col-md-7">
-                     <textarea class="form-control" name="message" {{$view}}>@isset($data){{ $data->message }}@endisset</textarea>
+                     <textarea class="form-control" name="message" style="overflow-y: auto;" {{$view}}>@isset($data){{ $data->message }}@endisset</textarea>
                  </div>
              </div>
         
@@ -59,8 +60,8 @@
                   <div align="right">
                     @if($page != 'view')
                     <button class="btn btn-primary button_form" type="submit">Submit</button>
-                    @endif
                     <a href="{{route('management.contactus.index')}}" class="btn btn-danger button_form">@if($page != 'view') Cancel @else Back @endif</a>
+                    @endif
                   </div>
                 </div>
              </div>

@@ -46,7 +46,7 @@ class CategoryProductController extends Controller
       $pageTitle = 'Category Product';
       $page = 'create';
       $url = "/management-category-product/store/Create";
-      $level_1 = DB::table('csc_product')->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
+      $level_1 = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
       return view('management.category-product.create',compact('url','pageTitle','page','level_1'));
     }
 
@@ -100,7 +100,7 @@ class CategoryProductController extends Controller
       $pageTitle = "Category Product";
       $page = "view";
       $data = DB::table('csc_product')->where('id', $id)->first();
-      $level_1 = DB::table('csc_product')->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
+      $level_1 = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
       return view('management.category-product.create',compact('page','data','pageTitle','level_1'));
     }
 
@@ -110,7 +110,7 @@ class CategoryProductController extends Controller
       $pageTitle = "Category Product";
       $url = "/management-category-product/store/Update_".$id;
       $data = DB::table('csc_product')->where('id', $id)->first();
-      $level_1 = DB::table('csc_product')->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
+      $level_1 = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
       return view('management.category-product.create',compact('url','data','pageTitle','page','level_1'));
     }
 

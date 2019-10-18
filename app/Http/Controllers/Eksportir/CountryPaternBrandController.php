@@ -31,7 +31,7 @@ class CountryPaternBrandController extends Controller
     public function store(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id;
         DB::table('itdp_eks_country_patents')->insert([
             'id_itdp_profil_eks' => $id_user,
             'id_itdp_eks_product_brand' => $request->brand,
@@ -49,7 +49,7 @@ class CountryPaternBrandController extends Controller
             ->select('itdp_eks_country_patents.id', 'itdp_eks_country_patents.bulan', 'itdp_eks_country_patents.tahun', 'mst_country.country', 'itdp_eks_product_brand.merek')
             ->join('mst_country', 'mst_country.id', '=', 'itdp_eks_country_patents.id_mst_country')
             ->join('itdp_eks_product_brand', 'itdp_eks_product_brand.id', '=', 'itdp_eks_country_patents.id_itdp_eks_product_brand')
-            ->where('itdp_eks_country_patents.id_itdp_profil_eks', '=', Auth::user()->id)
+            ->where('itdp_eks_country_patents.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)

@@ -31,7 +31,7 @@ class ExsdesController extends Controller
     public function store(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id;
         DB::table('itdp_eks_destination')->insert([
             'id_itdp_profil_eks' => $id_user,
             'id_mst_country' => $request->country,
@@ -48,7 +48,7 @@ class ExsdesController extends Controller
         $user = DB::table('itdp_eks_destination')
             ->select('itdp_eks_destination.id', 'itdp_eks_destination.rasio_persen', 'itdp_eks_destination.tahun', 'mst_country.country')
             ->join('mst_country', 'mst_country.id', '=', 'itdp_eks_destination.id_mst_country')
-            ->where('itdp_eks_destination.id_itdp_profil_eks', '=', Auth::user()->id)
+            ->where('itdp_eks_destination.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
@@ -107,7 +107,7 @@ class ExsdesController extends Controller
     public function update(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id;
         DB::table('itdp_eks_destination')->where('id', $request->id_sales)
             ->update([
                 'id_mst_country' => $request->country,

@@ -10,18 +10,24 @@
                         <div class="box-body">
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-                                    <label>Port</label>
-                                    <select class="atc form-control select2" required id="port"
-                                            name="port">
-                                        <option value="">- Pilih Port -</option>
-                                        @foreach($port as $sa)
-                                            <option value="{{$sa->id}}" {{($val->id_mst_port == $sa->id)?'selected':''}}>{{$sa->name_port}}</option>
+                                    <label>Year</label>
+                                    <select class="atc form-control select2" required id="year"
+                                            name="year">
+                                        <option value="">- Select Years -</option>
+                                        @foreach($years as $sa)
+                                            <option value="{{$sa}}" {{($val->tahun == $sa)?'selected':''}}>{{$sa}}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
                                 <div class="form-group col-sm-6">
-                                    <input type="hidden" value="{{$val->id}}" class="form-control" name="id_sales" id="id_sales">
+                                    <label>Used Capacity</label>
+                                    <input type="text"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                           class="form-control" value="{{$val->kapasitas_terpakai_persen}}"
+                                           name="used_capacity">
+                                    <input type="hidden" value="{{$val->id}}" class="form-control" name="id_sales"
+                                           id="id_sales">
                                 </div>
                             </div>
 
@@ -30,7 +36,7 @@
 
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <a style="color: white" href="{{url('/eksportir/export_destination')}}"
+                                    <a style="color: white" href="{{url('/eksportir/capulti')}}"
                                        class="btn btn-primary"><i style="color: white"></i>
                                         Back
                                     </a>

@@ -71,12 +71,11 @@
                 </div>
                 <div class="modal-body">
                 	{!! Form::open(['url' => route('admin.research-corner.broadcast'), 'class' => 'form-horizontal', 'files' => true]) !!}
-                	
                 		<input type="hidden" name="research" id="research">
                 		<table width="100%" style="font-size: 15px;">
 						    <tr>
 						      <td width="30%" style="padding-left: 20px; padding-top: 33px; ">Title Research Corner</td>
-						      <td width="70%" style="padding-top: 40px;" colspan="2"><input type="text" readonly id="title_en" class="form-control" style="width: 90% !important;"></td>
+						      <td width="70%" style="padding-top: 40px;" colspan="2"><input type="text" readonly id="title_en" name="title_en" class="form-control" style="width: 90% !important;"></td>
 						    </tr>
 						    <tr>
 						      <td width="30%" style="padding-left: 20px; padding-top: 13px;">Categori Product</td>

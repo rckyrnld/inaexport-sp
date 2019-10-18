@@ -12,6 +12,8 @@ class AnnualController extends Controller
 {
     public function index()
     {
+//        $id_user = Auth::guard('eksmp')->user()->id;
+//        dd($id_user);
 //        dd("mantap");die();
         $pageTitle = "Annual Sales";
 
@@ -29,7 +31,7 @@ class AnnualController extends Controller
     public function store(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id;
         DB::table('itdp_eks_sales')->insert([
             'id_itdp_profil_eks' => $id_user,
             'tahun' => $request->year,
@@ -45,8 +47,9 @@ class AnnualController extends Controller
     {
 //        dd("masuk gan");
         $user = DB::table('itdp_eks_sales')
-            ->where('id_itdp_profil_eks', '=', Auth::user()->id)
-            ->get();
+            ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
+        ->
+        get();
 
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {
