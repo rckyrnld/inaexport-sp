@@ -36,11 +36,11 @@ $api->version('v1', function ($api){
             /*Anggota Eksportir*/
                 $api->get('getDetailVerifikasiEksportir/{id}', 'App\Http\Controllers\Api\ManagementController@detailVerifikasiEksportir');
                 $api->post('submitVerifikasiEksportir', 'App\Http\Controllers\Api\ManagementController@submitVerifikasiEksportir');
-            /*Anggota Eksportir*/
-
-            /*Contact Us*/
-                $api->post('contactUs', 'App\Http\Controllers\Api\ManagementController@contactUs');
-            /*Contact Us*/
-        /*API Management*/
+            /*Anggota Eksportir*/   
         });
+               /*Contact Us*/
+               $api->post('contactUs', 'App\Http\Controllers\Api\ManagementNoAuthController@contactUs');
+               /*Contact Us*/
+                 
+        /*API Management*/
 });
