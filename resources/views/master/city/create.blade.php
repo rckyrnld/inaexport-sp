@@ -65,7 +65,7 @@
 
 @include('footer')
 <script type="text/javascript">
-  $(function () {
+  $(document).ready(function () {
     $('.select2').on('change', function(){
       $("#first").prop("disabled", true);
     });

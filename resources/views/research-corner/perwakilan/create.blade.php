@@ -159,7 +159,7 @@
 
 @include('footer')
 <script type="text/javascript">
-  $(function () {
+  $(document).ready(function () {
     var page = "{{$page}}";
     
     if(page == 'view'){

@@ -102,7 +102,7 @@
     </div>
 @include('footer')
 <script type="text/javascript">
-	$(function() {
+	$(document).ready(function() {
 		$('#table').DataTable({
             processing: true,
             serverSide: true,

@@ -92,7 +92,7 @@
 
 @include('footer')
 <script type="text/javascript">
-  $(function () {
+  $(document).ready(function () {
     $('#download').on('click', function(e) {
       e.preventDefault(); 
       $.ajax({

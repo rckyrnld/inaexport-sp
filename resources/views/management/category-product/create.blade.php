@@ -135,7 +135,7 @@
 
 @include('footer')
 <script type="text/javascript">
-  $(function () {
+  $(document).ready(function () {
     var level2 = "{{$level2}}";
     var update = "{{$id_data}}";
 
