@@ -141,6 +141,7 @@ class PerwakilanResearchController extends Controller
     {
       $id_user = Auth::user()->id;
       $array = array();
+      $date = date('Y-m-d H:i:s');
 
       for($i = 0; $i<count($req->categori); $i++){
         $var = $req->categori[$i];
@@ -151,7 +152,7 @@ class PerwakilanResearchController extends Controller
           'id' => $id,
           'id_research_corner' => $req->research,
           'id_categori_product' => $req->categori[$i],
-          'created_at' => date('Y-m-d H:i:s')
+          'created_at' => $date
         ]);
 
         $perusahaan = DB::table('csc_product_single')->where('id_itdp_company_user', '!=', null)
@@ -181,7 +182,7 @@ class PerwakilanResearchController extends Controller
             'keterangan' => 'New Broadcast from '.$pengirim->name.' with Title  "'.$req->title_en.'"',
             'url_terkait' => 'research-corner/read',
             'status_baca' => 0,
-            'waktu' => date('Y-m-d H:i:s'),
+            'waktu' => $date,
             'id_terkait' => $req->research,
         ]);
       }
