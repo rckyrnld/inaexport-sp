@@ -23,6 +23,8 @@ $api->version('v1', function ($api){
         /*API Auth*/
             $api->post('login', 'App\Http\Controllers\Api\Auth\LoginController@login');
             $api->post('register', 'App\Http\Controllers\Api\Auth\RegisterController@register');
+            $api->post('logout', 'App\Http\Controllers\Api\Auth\LoginController@logout');            
+
         /*API Auth*/ 
         /*************************************************************************************************************/
         $api->group(['middleware' => 'api.auth'], function ($api) {
@@ -36,11 +38,16 @@ $api->version('v1', function ($api){
             /*Anggota Eksportir*/
                 $api->get('getDetailVerifikasiEksportir/{id}', 'App\Http\Controllers\Api\ManagementController@detailVerifikasiEksportir');
                 $api->post('submitVerifikasiEksportir', 'App\Http\Controllers\Api\ManagementController@submitVerifikasiEksportir');
-            /*Anggota Eksportir*/   
+            /*Anggota Eksportir*/  
+            
+            /*Management Product*/
+                $api->post('getProdukList', 'App\Http\Controllers\Api\ProductController@findProductById');
+            /*Management Product*/
+
         });
-               /*Contact Us*/
-               $api->post('contactUs', 'App\Http\Controllers\Api\ManagementNoAuthController@contactUs');
-               /*Contact Us*/
+            /*Contact Us*/
+            $api->post('contactUs', 'App\Http\Controllers\Api\ManagementNoAuthController@contactUs');
+            /*Contact Us*/
                  
         /*API Management*/
 });
