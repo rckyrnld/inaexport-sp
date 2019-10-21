@@ -20,6 +20,13 @@ class ResearchCornerController extends Controller
       return view('research-corner.eksportir.index',compact('pageTitle'));
     }
 
+    // Data Broadcast FrontEnd
+    // $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
+    //   ->orderby('b.publish_date', 'asc')
+    //   ->distinct('a.id_research_corner')
+    //   ->select('b.*')
+    //   ->get();
+
     public function getData()
     {
       $array = array();
@@ -48,6 +55,7 @@ class ResearchCornerController extends Controller
       $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
       ->whereIn('a.id_categori_product', $array)
       ->orderby('b.publish_date', 'asc')
+      ->distinct('a.id_research_corner')
       ->select('b.*')
       ->get();
 
