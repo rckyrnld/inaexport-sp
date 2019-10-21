@@ -60,8 +60,8 @@ class RegistrasiController extends Controller
 		// notif 
 		$id_terkait = "3/".$id2;
 		$ket = "User baru Importir dengan nama ".$request->company;
-		$insert3 = DB::select("insert into notif (dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('".$request->company."','".$id1."','Super Admin','1','".$ket."','profil2','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil2','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 		");
 		
 			
@@ -98,8 +98,8 @@ class RegistrasiController extends Controller
 		// notif 
 		$id_terkait = "2/".$id2;
 		$ket = "User baru Eksportir dengan nama ".$request->company;
-		$insert3 = DB::select("insert into notif (dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('".$request->company."','".$id1."','Super Admin','1','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 		");
 		
 			

@@ -118,9 +118,9 @@ class VerifyuserController extends Controller
             ->addColumn('action', function ($pesan) {
            
                 if($pesan->status_a == 1 || $pesan->status_a == 2){ 
-				return '<a href="'.url('profil2/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>';
+				return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>';
 				}else{
-				return '<a href="'.url('profil2/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verify</a>';
+				return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verify</a>';
 				}
                
                 
@@ -275,6 +275,15 @@ class VerifyuserController extends Controller
 		$id_role = $request->id_role;
 		$id_user = $request->id_user;
 		$id_user_b = $request->idu;
+		
+		if(empty($request->file('doc'))){
+			$file = "";
+		}else{
+			$file = $request->file('doc')->getClientOriginalName();
+			$destinationPath = public_path() . "/eksportir";
+			$request->file('doc')->move($destinationPath, $file);
+			$updatetabd = DB::select("update itdp_profil_eks set doc='".$file."' where id='".$id_user_b."'");
+		}
 		//UPDATE TAB 1
 		if($request->password == null ){
 		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', email='".$request->email."', status='".$request->staim."' where id='".$request->id_user."' ");
@@ -298,7 +307,7 @@ class VerifyuserController extends Controller
 			if($request->npwp == null){
 				
 			}else{
-				$updatetab2 = DB::select("update itdp_profil_eks set npwp='".$request->npwp."', tdp='".$request->tanda_daftar."', siup='".$request->siup."' , doc='1.jpg' 
+				$updatetab2 = DB::select("update itdp_profil_eks set npwp='".$request->npwp."', tdp='".$request->tanda_daftar."', siup='".$request->siup."' 
 				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$request->staim."' 
 				where id='".$id_user_b."'");
 			}
