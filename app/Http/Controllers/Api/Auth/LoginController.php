@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\User;
+use App\Http\Controllers\Api\Model\EksmpApi;
+use App\Http\Controllers\Api\Model\UserApi;
+
+
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -17,15 +20,25 @@ class LoginController extends Controller
     use Helpers;
 
     public function login(Request $request){
+        $idRole = $request->id_role;
+        if($idRole != null){
 
-        $user = User::where('email', $request->email)->orWhere('name', $request->email)->first();
+            if($idRole == "1" || $idRole == "4"){
+                $user = UserApi::where('email', $request->email)->orWhere('name', $request->email)->first();
+            }else{
+                $user = EksmpApi::where('email', $request->email)->orWhere('username', $request->email)->first();
+            }
 
-        if($user && Hash::check($request->get('password'), $user->password)){
-            $token = JWTAuth::fromUser($user);
-            return $this->sendLoginResponse($request, $token);
+            if($user && Hash::check($request->password, $user->password)){
+                $token = JWTAuth::fromUser($user);
+                return $this->sendLoginResponse($request, $token);
+            }else{
+                return $this->sendFailedLoginResponse($request);
+            }
+        }else{
+            dd("masuk sini");
+            return $this->sendFailedLoginResponse($request);
         }
-
-        return $this->sendFailedLoginResponse($request);
     }
 
     public function sendLoginResponse(Request $request, $token){
@@ -47,6 +60,6 @@ class LoginController extends Controller
     }
 
     public function logout(){
-        $this->guard()->logout();
+        $this->guard('api')->logout();
     }
  }

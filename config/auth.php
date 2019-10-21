@@ -45,7 +45,7 @@ return [
         'api' => [
             // 'driver' => 'token',
             'driver' => 'jwt', //diganti yudha
-            'provider' => 'users',
+            'provider' => 'user',
         ],
 		'eksmp' => [
             'driver' => 'session',

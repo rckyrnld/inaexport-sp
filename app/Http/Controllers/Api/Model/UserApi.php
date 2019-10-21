@@ -1,11 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Http\Controllers\Api\Model;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class UserApi extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
