@@ -18,8 +18,8 @@ Route::get('locale/{locale}', function ($locale){
 Route::get('/', function () {
     return redirect('/login');
 });
-Route::get('switch/{locale}', function ($locale) { 
-    App::setLocale($locale); 
+Route::get('switch/{locale}', function ($locale) {
+    App::setLocale($locale);
 });
 Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
 
@@ -374,3 +374,27 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 });
 
 //////////////////////////////////////////ILYAS END////////////////////////////////////////////////////////////////////////////////
+
+//YOSS---------------------------------------------
+
+//Ticketing Support
+Route::namespace('TicketingSupport')->group(function () {
+  Route::get('/ticketing', 'TicketingSupportController@index')->name('ticket_support.index');
+  Route::get('/ticketing/create', 'TicketingSupportController@create')->name('ticket_support.create');
+  Route::get('/ticketing/getData', 'TicketingSupportController@getData')->name('ticket_support.getData');
+  Route::post('/ticketing/store', 'TicketingSupportController@store')->name('ticket_support.store');
+  Route::get('/ticketing/chatview/{id}', 'TicketingSupportController@vchat')->name('ticket_support.vchat');
+  Route::post('/ticketing/sendchat', 'TicketingSupportController@sendchat')->name('ticket_support.sendchat');
+  Route::get('ticketing/view/{id}', 'TicketingSupportController@view')->name('ticket_support.view');
+  Route::get('ticketing/delete/{id}', 'TicketingSupportController@destroy')->name('ticket_support.delete');
+  //Admin
+  Route::get('admin/ticketing', 'TicketingSupportControllerAdmin@index')->name('ticket_support.index.admin');
+  Route::get('admin/ticketing/getData', 'TicketingSupportControllerAdmin@getData')->name('ticket_support.getData.admin');
+  Route::get('admin/ticketing/chatview/{id}', 'TicketingSupportControllerAdmin@vchat')->name('ticket_support.vchat.admin');
+  Route::get('admin/ticketing/view/{id}', 'TicketingSupportControllerAdmin@view')->name('ticket_support.view.admin');
+  Route::post('admin/ticketing/sendchat', 'TicketingSupportControllerAdmin@sendchat')->name('ticket_support.sendchat.admin');
+  Route::get('admin/ticketing/delete/{id}', 'TicketingSupportControllerAdmin@destroy')->name('ticket_support.delete.admin');
+  Route::post('admin/ticketing/change', 'TicketingSupportControllerAdmin@change')->name('ticket_support.delete.change');
+});
+
+//END YOSS ------------------------------------------
