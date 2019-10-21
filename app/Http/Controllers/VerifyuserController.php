@@ -81,7 +81,7 @@ class VerifyuserController extends Controller
 	
 	public function geteksportir()
     {
-      $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='2' order by a.id desc ");
+      $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
       return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
 				 return $pesan->company;
