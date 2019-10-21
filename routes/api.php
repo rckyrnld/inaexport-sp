@@ -42,6 +42,10 @@ $api->version('v1', function ($api){
             
             /*Management Product*/
                 $api->post('getProdukList', 'App\Http\Controllers\Api\ProductController@findProductById');
+                $api->post('insertProduk', 'App\Http\Controllers\Api\ProductController@insertProduct');
+                $api->post('updateProduk', 'App\Http\Controllers\Api\ProductController@updateProduct');                
+                $api->post('deleteProduk', 'App\Http\Controllers\Api\ProductController@deleteProduct');
+
             /*Management Product*/
 
         });

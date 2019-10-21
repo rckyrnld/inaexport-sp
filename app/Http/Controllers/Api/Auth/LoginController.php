@@ -31,24 +31,27 @@ class LoginController extends Controller
 
             if($user && Hash::check($request->password, $user->password)){
                 $token = JWTAuth::fromUser($user);
-                return $this->sendLoginResponse($request, $token);
+                return $this->sendLoginResponse($request, $token, $user->id, $idRole, $idRole !='1'|| $idRole != '4' ? $user->id_profil: null);
             }else{
                 return $this->sendFailedLoginResponse($request);
             }
         }else{
-            dd("masuk sini");
+            // dd("masuk sini");
             return $this->sendFailedLoginResponse($request);
         }
     }
 
-    public function sendLoginResponse(Request $request, $token){
+    public function sendLoginResponse(Request $request, $token, $id, $idRole, $idProfil){
         $this->clearLoginAttempts($request);
 
-        return $this->authenticated($token);
+        return $this->authenticated($token, $id, $idRole, $idProfil);
     }
 
-    public function authenticated($token){
+    public function authenticated($token, $id, $idRole, $idProfil){
         return $this->response->array([
+            'id_user' => $id,
+            'id_role' => $idRole,
+            'id_profil' => $idProfil,
             'token' => $token,
             'status_code' => 200,
             'message' => 'User Authenticated'
