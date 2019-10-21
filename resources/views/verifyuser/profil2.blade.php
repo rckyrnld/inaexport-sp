@@ -247,7 +247,7 @@ body {font-family: Arial;}
 			<input type="hidden" name="staim" value="<?php echo $rhj->status; ?>">
 		<?php 
 		}else{ ?>
-			<select class="form-control" name="staim">
+			<select class="form-control" id="staim" name="staim" onchange="nv()">
 			<option <?php if($rhj->status == 0){ echo "selected"; } ?> value="0">-- Pilih Status --</option>
 			<option <?php if($rhj->status == 1){ echo "selected"; } ?> value="1">Verified</option>
 			<option <?php if($rhj->status == 2){ echo "selected"; } ?> value="2">Not Verified</option>
@@ -257,6 +257,9 @@ body {font-family: Arial;}
 		
 		
 	</div>
+<div id="sh1">
+</div><div id="sh2">
+</div>
 <?php } ?>
 </div>
 
@@ -273,7 +276,23 @@ body {font-family: Arial;}
 <button class="btn btn-md btn-primary"><i class="fa fa-save"></i> Save</button>
 </div>
 </form>
+<?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script>
+function nv(){
+	var a = $('#staim').val();
+	if(a == 2){
+		$('#sh1').html('<div class="form-row"><div class="form-group col-sm-4"><label><b>Alasan Reject</b></label></div><div class="form-group col-sm-8"><select onchange="ketv()" id="template_reject" name="template_reject" class="form-control"><option value="">-- Pilih Alasan Reject --</option><?php foreach($quertreject as $qr){ ?><option value="<?php echo $qr->id;?>"><?php echo $qr->nama_template;?></option><?php } ?></select></div></div>')
+	}else{
+		$('#sh1').html(' ');
+		$('#sh2').html(' ');
+	}
+}
+function ketv(){
+	var a = $('#template_reject').val();
+	if(a == 1){
+		$('#sh2').html('<div class="form-row"><div class="form-group col-sm-4"><label><b>Keterangan Reject</b></label></div><div class="form-group col-sm-8"><textarea class="form-control" id="txtreject" name="txtreject"></textarea></div></div>')
+	}
+}
 $(document).ready(function () {
         $('.select2').select2();
 });

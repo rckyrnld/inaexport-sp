@@ -45,8 +45,11 @@ Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');
 Route::get('/login', 'HomeController@index');
 //Verify User
 Route::get('/verifyuser', 'VerifyuserController@index');
+Route::get('/geteksportir', 'VerifyuserController@geteksportir');
 Route::get('/verifyimportir', 'VerifyuserController@index2');
+Route::get('/getimportir', 'VerifyuserController@getimportir');
 Route::get('/profilperwakilan', 'VerifyuserController@index3');
+Route::get('/getpw', 'VerifyuserController@getpw');
 Route::get('/tambahperwakilan', 'VerifyuserController@tambahperwakilan');
 Route::get('/detailverify/{id}', 'VerifyuserController@detailverify');
 Route::get('/hapusperwakilan/{id}', 'VerifyuserController@hapusperwakilan');

@@ -5,8 +5,10 @@
 <?php 
   if($page == 'view'){
     $view = 'disabled';
+    $height = 22 * ( substr_count( $data->message, "\n" ) + 1 );
   } else {
     $view = '';
+    $height = 50;
   }
 ?>
 <div class="padding">
@@ -51,7 +53,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Messages</label>
                  <div class="col-md-7">
-                     <textarea class="form-control" name="message" style="overflow-y: auto;" {{$view}}>@isset($data){{ $data->message }}@endisset</textarea>
+                     <textarea class="form-control" name="message" style="height: {{$height}}px" {{$view}}>@isset($data){{ $data->message }}@endisset</textarea>
                  </div>
              </div>
         
