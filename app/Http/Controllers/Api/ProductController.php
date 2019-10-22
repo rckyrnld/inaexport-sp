@@ -16,7 +16,7 @@ class ProductController extends Controller
         $this->middleware('api.auth');
 	}
 
-    public function findProductById(Request $request)
+    public function findProductById($id_user)
     {
         // dd($this->middleware('api.auth'));
         	$dataProduk = DB::table('csc_product_single')
