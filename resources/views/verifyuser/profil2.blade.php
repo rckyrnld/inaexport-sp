@@ -154,7 +154,8 @@ body {font-family: Arial;}
 			<label><b>City</b></label>
 		</div>
 		<div class="form-group col-sm-8">
-			<select name="city" id="city" class="form-control select2" >
+			<input type="text" value="<?php echo $ryu->city; ?>" name="city" id="city" class="form-control" >
+			<!-- <select name="city" id="city" class="form-control select2" >
 			<?php
 			$qc = DB::select("select city from mst_city order by city asc");
 			foreach($qc as $cq){
@@ -162,21 +163,21 @@ body {font-family: Arial;}
 				<option <?php if($cq->city == $ryu->city){ echo "selected"; } ?> value="<?php echo $cq->city; ?>"><?php echo $cq->city; ?></option>
 				
 			<?php } ?>
-			</select>
+			</select> -->
 		</div>
 	</div>
 	
 	<div class="form-row">
 		<div class="form-group col-sm-4">
-			<label><b>Province</b></label>
+			<label><b>Country</b></label>
 		</div>
 		<div class="form-group col-sm-8">
 			<select name="province" id="province" class="form-control select2" >
 			<?php
-			$qc = DB::select("select id,province_en from mst_province order by province_en asc");
+			$qc = DB::select("select id,country from mst_country order by country asc");
 			foreach($qc as $cq){
 			?>
-				<option <?php if($cq->id == $ryu->id_mst_province){ echo "selected"; } ?> value="<?php echo $cq->id; ?>"><?php echo $cq->province_en; ?></option>
+				<option <?php if($cq->id == $ryu->id_mst_province){ echo "selected"; } ?> value="<?php echo $cq->id; ?>"><?php echo $cq->country; ?></option>
 				
 			<?php } ?>
 			</select>

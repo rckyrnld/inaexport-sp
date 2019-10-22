@@ -61,7 +61,7 @@ body {font-family: Arial;}
   <button class="tablinks" onclick="openCity(event, 'Paris')"><font size="3px">Profil Company</font></button>
   <?php if($ida == 2){ ?><button class="tablinks" onclick="openCity(event, 'Tokyo')"><font size="3px">Document</font></button> <?php } ?>
 </div>
-<form class="form-horizontal" method="POST" action="{{ url('simpan_profil') }}">
+<form class="form-horizontal" method="POST" action="{{ url('simpan_profil') }}" enctype="multipart/form-data">
            {{ csrf_field() }}
 
 <input type="hidden" name="id_role" value="<?php echo $ida; ?>">
@@ -161,15 +161,8 @@ body {font-family: Arial;}
 			<label><b>City</b></label>
 		</div>
 		<div class="form-group col-sm-4">
-			<select name="city" id="city" class="form-control select2" >
-			<?php
-			$qc = DB::select("select city from mst_city order by city asc");
-			foreach($qc as $cq){
-			?>
-				<option <?php if($cq->city == $ryu->city){ echo "selected"; } ?> value="<?php echo $cq->city; ?>"><?php echo $cq->city; ?></option>
-				
-			<?php } ?>
-			</select>
+			<textarea name="city" id="city" class="form-control" ><?php echo $ryu->city; ?></textarea>
+			
 		</div>
 	</div>
 	
@@ -234,10 +227,11 @@ body {font-family: Arial;}
 		</div>
 		<div class="form-group col-sm-4">
 			<input type="text" value="<?php echo $ryu->npwp; ?>" name="npwp" id="npwp" class="form-control" >
+			
 		</div>
 		
 		<div class="form-group col-sm-4">
-			<input type="text" readonly value="" placeholder="Name of NPWP" name="nanpwp" id="nanpwp" class="form-control" >
+			<font color="red">Not Valid</font><!-- <input type="text" readonly value="" placeholder="Name of NPWP" name="nanpwp" id="nanpwp" class="form-control" > -->
 		</div>
 	</div>
 	<div class="form-row">
@@ -302,15 +296,27 @@ body {font-family: Arial;}
 	</div>
 	<div class="form-row">
 		<div class="form-group col-sm-3">
-			<label><b>Document</b></label>
+			<label><b>
+			<?php 
+			  if(empty(Auth::user()->name)){ echo "Document"; }else{ echo "File Upload dari Eksportir"; } ?>
+			</b></label>
 		</div>
 		<div class="form-group col-sm-4">
+		 <?php 
+			  if(empty(Auth::user()->name)){  ?>
 			<input type="file" value="" name="doc" id="doc" class="form-control" >
 			<?php if($ryu->doc == null){
 				echo "";
-			}else {
-			echo "<span>File Sebelumnya : <a>".$ryu->doc."</b></span>";
-			} ?>
+			}else { ?>
+			<span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->doc)}}"><?php echo $ryu->doc; ?></b></span>
+			<?php } ?>
+			  <?php } else{ ?>
+			  <span><?php if(empty($ryu->doc) || $ryu->doc == null){ echo "<font color='red'>Belum di upload oleh Eksportir</font>"; }else{ ?>
+			  
+			  <a href="{{ asset('eksportir/'.$ryu->doc)}}"><?php echo $ryu->doc; ?></a>
+			  <?php } ?>
+			  </span>
+			  <?php } ?>
 		</div>
 		
 		
