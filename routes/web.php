@@ -25,6 +25,8 @@ Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
 
 Route::namespace('FrontEnd')->group(function () {
 	Route::get('/front_end', 'FrontController@index');
+	Route::get('/front_end/all_product', 'FrontController@all_product');
+	Route::get('/front_end/product/{id}', 'FrontController@product_category');
 });
 
 /* Route::get('/registrasi_pembeli/{locale}', function ($locale) {

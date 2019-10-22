@@ -20,7 +20,7 @@ class FrontController extends Controller
     {
         //Data Product
         $product = DB::table('csc_product_single')
-            ->orderBy('id', 'desc')
+            ->inRandomOrder()
             ->limit(10)
             ->get();
 
@@ -34,21 +34,40 @@ class FrontController extends Controller
         return view('frontend.index', compact('product', 'research'));
     }
 
-    public function view_($id)
+    public function all_product()
     {
-        if(Auth::guard('eksmp')->user()){
-            $jenis = "eksportir";
-        }else{
-            $jenis = "admin";
-        }
-        $pageTitle = 'Detail Product';
+
+        $catprod = DB::table('csc_product')
+            ->where('level_1', 0)
+            ->where('level_2', 0)
+            ->orderBy('nama_kategori_en', 'ASC')
+            ->get();
+        //Data Product
+        $product = DB::table('csc_product_single')
+            ->inRandomOrder()
+            ->limit(10)
+            ->get();
+
+        return view('frontend.product.all_product', compact('product', 'catprod'));
+    }
+
+    public function product_category($id)
+    {
+        $categorynya = DB::table('csc_product')->where('id', $id)->first();
+        $prodcategory = DB::table('csc_product_single')->where('id_csc_product', $id)->orderby('prodname_en', 'asc')->get();
+        // dd($prodcategory);
+        return view('frontend.product.product_category', compact('categorynya', 'prodcategory'));
+    }
+
+    public function view_product($id)
+    {
         $data = DB::table('csc_product_single')
             ->where('id', '=', $id)
             ->first();
         $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
         $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
         $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
-        return view('eksportir.eksproduct.view', compact('pageTitle', 'data', 'catprod', 'catprod2', 'catprod3', 'jenis'));
+        return view('eksportir.viewproduct', compact('data', 'catprod', 'catprod2', 'catprod3'));
     }
 
     public function getSub(Request $request)

@@ -35,7 +35,6 @@ class CreateCscProductSingleTable extends Migration
             $table->string('raw_material_chn')->nullable();
             $table->string('capacity')->nullable();
             $table->string('price_usd')->nullable();
-            $table->string('image_utama')->nullable();
             $table->string('image_1')->nullable();
             $table->string('image_2')->nullable();
             $table->string('image_3')->nullable();

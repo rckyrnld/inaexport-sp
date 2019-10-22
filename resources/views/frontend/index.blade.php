@@ -1,113 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-  <meta charset="utf-8" />
-  <title>@lang("frontend.title")</title>
-  <meta name="description" content="Responsive, Bootstrap, BS4" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-  <!-- for ios 7 style, multi-resolution icon of 152x152 -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
-  <link rel="apple-touch-icon" href="../assets/images/logo.svg">
-  <meta name="apple-mobile-web-app-title" content="Flatkit">
-  <!-- for Chrome on Android, multi-resolution icon of 196x196 -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="shortcut icon" sizes="196x196" href="../assets/images/logo.svg">
-  
-  <!-- style -->
-  <!--
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
-<script src="custom_tags_input.js"></script>
-
--->
-
-  <!-- <link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/dist/css/AdminLTE.min.css" type="text/css" /> -->
-  <link rel="stylesheet" href="{{url('assets')}}/libs/font-awesome/css/font-awesome.min.css" type="text/css" />
-
-  <!-- build:css ../assets/css/app.min.css -->
-  <link rel="stylesheet" href="{{url('assets')}}/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
-  <link rel="stylesheet" href="{{url('assets')}}/assets/css/app.css" type="text/css" />
-  <link rel="stylesheet" href="{{url('assets')}}/assets/css/style.css" type="text/css" />
-  <!-- endbuild -->
-<link rel="stylesheet" href="{{url('assets')}}/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" type="text/css" />
-
-<!-- build:js scripts/app.min.js -->
-<!-- jQuery -->
-  <script src="{{url('assets')}}/libs/jquery/dist/jquery.min.js"></script>
-<!-- Select2 -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-<!-- InputMask -->
-  <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
-<!-- Bootstrap -->
-  <script src="{{url('assets')}}/libs/popper.js/dist/umd/popper.min.js"></script>
-  <script src="{{url('assets')}}/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- core -->
-  <script src="{{url('assets')}}/libs/pace-progress/pace.min.js"></script>
-  <script src="{{url('assets')}}/libs/pjax/pjax.js"></script>
-
-   <script src="{{url('assets')}}/libs/datatables/media/js/jquery.dataTables.min.js"></script>
-
-  <script src="{{url('assets')}}/html/scripts/lazyload.config.js"></script>
-  <script src="{{url('assets')}}/html/scripts/lazyload.js"></script>
-  <script src="{{url('assets')}}/html/scripts/plugin.js"></script>
-  <script src="{{url('assets')}}/html/scripts/nav.js"></script>
-  <script src="{{url('assets')}}/html/scripts/scrollto.js"></script>
-  <script src="{{url('assets')}}/html/scripts/toggleclass.js"></script>
-  <script src="{{url('assets')}}/html/scripts/theme.js"></script>
-  <script src="{{url('assets')}}/html/scripts/ajax.js"></script>
-  <script src="{{url('assets')}}/html/scripts/app.js"></script>
-
-  
-<script src="{{url('assets')}}/libs/datatables/media/js/jquery.dataTables.min.js" ></script>
-<script src="{{url('assets')}}/libs/datatables.net-bs4/js/dataTables.bootstrap4.js" ></script>
-
-<script src="{{url('assets')}}/html/scripts/plugins/datatable.js" ></script>
-
-<script src="{{ url('/') }}/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
-<style>
-.nav-tabs {
-    border-bottom: 2px solid #ddd;
-}
-.nav-tabs>li {
-    float: left;
-    margin-bottom: -1px;
-}
-.nav>li {
-    position: relative;
-    display: block;
-}
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
-    background-color: #5cb85c;
-    color: white;
-    background-image: linear-gradient(to bottom right, #51d0a8,#065784);
-    
-}
-.nav-tabs>li>a {
-    margin-right: 2px;
-    line-height: 1.42857143;
-    border: 1px solid transparent;
-    border-radius: 4px 4px 0 0;
-}
-.nav>li>a {
-    position: relative;
-    display: block;
-    padding: 10px 15px;
-}  
-.nav>li>a:focus, .nav>li>a:hover {
-    text-decoration: none;
-    background-color: transparent!important;
-}
-</style>
-  <!-- endbuild -->
-</head>
-<body>
-
+@include('frontend.layout.header')
 
 <div class="d-flex flex-column flex" style="">
 	<div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
@@ -132,7 +23,12 @@
       <center>
       <table class="table" style="width: 90%; padding: 20px;">
         <thead>
-          <th colspan="5"><h5><b>@lang("frontend.namaprod")</b></h5></th>
+          <th colspan="5">
+            <h5><b>@lang("frontend.prodtitle")</b></h5>
+            <div style="float: right; margin-top: -30px;">
+              <a href="{{ url('front_end/all_product') }}" class="btn btn-default btn-sm">@lang("frontend.moreproduct")</a>
+            </div>
+          </th>
         </thead>
         <tbody>
           <?php
@@ -153,8 +49,12 @@
                 }else{
                   $nameprod = $p->prodname_en;
                 }
+
+                if($nameprod == NULL){
+                  $nameprod = $p->prodname_en;
+                }
               ?>
-              <a type="button" class="btn btn-default" style="width: 220px; background: white; height: 250px; max-height: 250px; max-width: 100%; padding: 10px;">
+              <a type="button" class="btn btn-default" style="width: 220px; background: white; height: 250px; max-height: 250px; max-width: 100%; padding: 10px;" title="{{$nameprod}}">
                 <?php
                   $img = "";
                   if($p->image_1 != NULL){
@@ -166,40 +66,35 @@
                   }else if($p->image_4 != NULL){
                     $img = $p->image_4;
                   }
-                ?>
-                @if($img == "")
-                  <img src="{{url('/')}}/image/noimage.jpg" style="width: 200px; height: 200px;">
-                @else
-                  <?php
-                      $image = 'uploads/Eksportir_Product/Image/'.$p->id.'/'.$img; 
-                  ?>
-                  <?php
+
+                  if($img == ""){
+                    $isimg = '/image/noimage.jpg';
+                  }else{
+                    $image = 'uploads/Eksportir_Product/Image/'.$p->id.'/'.$img; 
                     if(file_exists($image)) {
-                  ?>
-                    <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$p->id}}/{{$img}}" style="width: 200px; height: 200px;">
-                  <?php
+                      $isimg = '/uploads/Eksportir_Product/Image/'.$p->id.'/'.$img;
                     }else {
-                  ?>
-                    <img src="{{url('/')}}/image/noimage.jpg" style="width: 200px; height: 200px;">
-                  <?php
+                      $isimg = '/image/noimage.jpg';
                     }  
-                  ?>
-                @endif
+                  }
+                ?>
+                <img src="{{url('/')}}{{$isimg}}" style="width: 200px; height: 200px;">
+                <?php
+                  $num_char = 25;
+                  $text = $nameprod;
+                  if(strlen($text) > 25){
+                      $cut_text = substr($text, 0, $num_char);
+                      if ($text{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                          $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                          $cut_text = substr($text, 0, $new_pos);
+                      }
+                      $nameprodnya =  $cut_text . '...';
+                  }else{
+                      $nameprodnya =  $text;
+                  }
+                ?>
                 <br><b>
-                  <?php
-                    $num_char = 25;
-                    $text = $nameprod;
-                    if(strlen($text) > 25){
-                        $cut_text = substr($text, 0, $num_char);
-                        if ($text{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                            $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                            $cut_text = substr($text, 0, $new_pos);
-                        }
-                        echo $cut_text . '...';
-                    }else{
-                        echo $text;
-                    }
-                  ?>
+                  {{$nameprodnya}}
                 </b>
               </a>
             </td>
@@ -379,28 +274,4 @@
 </div>
 <!-- ############ SWITHCHER END-->
 
-<!-- build:js scripts/app.min.js -->
-<!-- jQuery -->
-  <script src="{{url('assets')}}/libs/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap -->
-  <script src="{{url('assets')}}/libs/popper.js/dist/umd/popper.min.js"></script>
-  <script src="{{url('assets')}}/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- core -->
-  <script src="{{url('assets')}}/libs/pace-progress/pace.min.js"></script>
-  <script src="{{url('assets')}}/libs/pjax/pjax.js"></script>
-
-  <script src="{{url('assets')}}/html/scripts/lazyload.config.js"></script>
-  <script src="{{url('assets')}}/html/scripts/lazyload.js"></script>
-  <script src="{{url('assets')}}/html/scripts/plugin.js"></script>
-  <script src="{{url('assets')}}/html/scripts/nav.js"></script>
-  <script src="{{url('assets')}}/html/scripts/scrollto.js"></script>
-  <script src="{{url('assets')}}/html/scripts/toggleclass.js"></script>
-  <script src="{{url('assets')}}/html/scripts/theme.js"></script>
-  <script src="{{url('assets')}}/html/scripts/ajax.js"></script>
-  <script src="{{url('assets')}}/html/scripts/app.js"></script>
-  <script>
-  
-  </script>
-<!-- endbuild -->
-</body>
-</html>
+@include('frontend.layout.footer')
