@@ -97,3 +97,35 @@ if (! function_exists('getNameCompany')) {
         return $name;
     }
 }
+
+if (! function_exists('getEventComodity')) {
+    function getEventComodity($id){
+        $data = DB::table('event_comodity')->where('id', $id)->first();
+        return $data->comodity_en;
+    }
+}
+
+if (! function_exists('getEventPlace')) {
+    function getEventPlace($id){
+        $data = DB::table('event_place')->where('id', $id)->first();
+        return $data->name_en;
+    }
+}
+
+if (! function_exists('getEventStatus')) {
+    function getEventStatus($id){
+        $data = DB::table('event_detail')->where('id', $id)->first();
+        return $data->status_en;
+    }
+}
+
+if (! function_exists('getKatagori')) {
+    function getKatagori($id){
+        $data = DB::table('event_detail_kategori')->where('id_event_detail', $id)->get();
+        foreach ($data as $key => $value) {
+          $nama = DB::table('csc_product')->where('id', $value->id_prod_cat)->first();
+          echo '<br> -'.$nama->nama_kategori_en;
+          
+        }
+    }
+}

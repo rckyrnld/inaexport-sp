@@ -221,7 +221,15 @@ Route::namespace('ResearchCorner')->group(function () {
 Route::namespace('Event')->prefix('event')->group(function () {
 		Route::get('/', 'EventController@index');
 		Route::get('/create', 'EventController@create');
-		Route::get('/save', 'EventController@store');
+		Route::post('/store', 'EventController@store');
+		Route::get('/edit/{id}', 'EventController@edit');
+		Route::post('/update/{id}', 'EventController@update');
+		Route::get('/delete/{id}', 'EventController@delete');
+		Route::get('/show_company/{id}', 'EventController@show_company');
+		Route::get('/show/read/{id}', 'EventController@show');
+		Route::get('/show_detail/{id}', 'EventController@show_detail');
+		Route::any('/search', 'EventController@search');
+
 });
 
 
