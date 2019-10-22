@@ -125,7 +125,21 @@ if (! function_exists('getKatagori')) {
         foreach ($data as $key => $value) {
           $nama = DB::table('csc_product')->where('id', $value->id_prod_cat)->first();
           echo '<br> -'.$nama->nama_kategori_en;
-          
+
+        }
+    }
+}
+
+if (! function_exists('checkJoin')) {
+    function checkJoin($id_training_admin, $id_profil_eks){
+        $data = DB::table('training_join')
+          ->where('id_training_admin', $id_training_admin)
+          ->where('id_profil_eks', $id_profil_eks)
+          ->first();
+        if($data){
+          return 1;
+        }else{
+          return 0;
         }
     }
 }
