@@ -23,14 +23,6 @@ class FrontController extends Controller
             ->inRandomOrder()
             ->limit(10)
             ->get();
-
-        // Data Broadcast FrontEnd
-        $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
-            ->orderby('a.created_at', 'desc')
-            ->distinct('a.id_research_corner', 'a.created_at')
-            ->select('b.*', 'a.id_research_corner', 'a.created_at')
-            ->limit(10)
-            ->get();
         return view('frontend.index', compact('product', 'research'));
     }
 
@@ -57,6 +49,18 @@ class FrontController extends Controller
         $prodcategory = DB::table('csc_product_single')->where('id_csc_product', $id)->orderby('prodname_en', 'asc')->get();
         // dd($prodcategory);
         return view('frontend.product.product_category', compact('categorynya', 'prodcategory'));
+    }
+
+    public function research_corner(){
+        // Data Broadcast FrontEnd
+        $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
+            ->orderby('a.created_at', 'desc')
+            ->distinct('a.id_research_corner', 'a.created_at')
+            ->select('b.*', 'a.id_research_corner', 'a.created_at')
+            ->limit(10)
+            ->get();
+
+        return view('frontend.research-corner', compact('product', 'research'));
     }
 
     public function view_product($id)

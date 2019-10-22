@@ -26,6 +26,7 @@ Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
 Route::namespace('FrontEnd')->group(function () {
 	Route::get('/front_end', 'FrontController@index');
 	Route::get('/front_end/all_product', 'FrontController@all_product');
+	Route::get('/front_end/research-corner', 'FrontController@research_corner');
 	Route::get('/front_end/product/{id}', 'FrontController@product_category');
 });
 
@@ -206,6 +207,7 @@ Route::namespace('ResearchCorner')->group(function () {
 			Route::get('/getData/', 'ResearchCornerController@getData')->name('getData');
 			Route::get('/read/{id}', 'ResearchCornerController@read')->name('view');
 			Route::get('/download/', 'ResearchCornerController@download')->name('download');
+			Route::get('/download-front/', 'ResearchCornerController@download_front')->name('download-front');
 	    });
     });
 // Angga End
