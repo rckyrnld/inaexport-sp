@@ -41,7 +41,9 @@ $api->version('v1', function ($api){
             /*Anggota Eksportir*/  
             
             /*Management Product*/
-                $api->get('getProdukList/{id_user}', 'App\Http\Controllers\Api\ProductController@findProductById');
+                $api->get('getProdukList/{id_user}', 'App\Http\Controllers\Api\ProductController@findProductById');                
+                $api->get('browseProduk', 'App\Http\Controllers\Api\ProductController@browseProduct');
+
                 $api->post('insertProduk', 'App\Http\Controllers\Api\ProductController@insertProduct');
                 $api->post('updateProduk', 'App\Http\Controllers\Api\ProductController@updateProduct');                
                 $api->post('deleteProduk', 'App\Http\Controllers\Api\ProductController@deleteProduct');
