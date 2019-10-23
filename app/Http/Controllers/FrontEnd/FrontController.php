@@ -23,7 +23,7 @@ class FrontController extends Controller
             ->inRandomOrder()
             ->limit(10)
             ->get();
-        return view('frontend.index', compact('product', 'research'));
+        return view('frontend.index', compact('product'));
     }
 
     public function all_product()
