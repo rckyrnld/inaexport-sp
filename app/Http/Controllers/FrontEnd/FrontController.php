@@ -60,7 +60,7 @@ class FrontController extends Controller
             ->limit(10)
             ->get();
 
-        return view('frontend.research-corner', compact('product', 'research'));
+        return view('frontend.research-corner', compact('research'));
     }
 
     public function view_product($id)
@@ -104,7 +104,7 @@ class FrontController extends Controller
     }
 
     public function Event(){
-        $e_detail = DB::table('event_detail')->orderby('id', 'asc')->paginate(8);
+        $e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(8);
         return view('frontend.event.index', compact('e_detail'));
     }
 
@@ -120,7 +120,7 @@ class FrontController extends Controller
                 return view('frontend.event.index', compact('e_detail'))->withMessage('No Details found. Try to search again !');
             }
         }else{
-            return redirect('/event');
+            return redirect('/front_end/event');
         }
     }
 

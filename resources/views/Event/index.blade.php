@@ -40,7 +40,7 @@
                     <a class="btn" href="{{url('event/create')}}"
                        style="background-color: #1089ff; color: white;"><i class="fa fa-plus-circle"></i>&nbsp; Add</a>
                     <div class="col-md-3" style="float: right;">
-                        <form action="{{url('')}}/event/search" method="POST" role="search">
+                        <form action="{{url('/')}}/event/search" method="POST" role="search">
                             {{ csrf_field() }}
                             <div class="input-group">
                                 <input type="text" class="form-control" name="q"
@@ -86,7 +86,7 @@
                                                         @endif 
                                                     </div>   
                                                </div>
-                                               <table style="margin-left:28px;" class="tbl_">
+                                               <table style="margin-left:28px;margin-top: 0.5cm" class="tbl_">
                                                     <tr><td>{{$ed->event_name_en}}</td></tr>
                                                     <tr><td><b>Start Date - End Date</b></td></tr>
                                                     <tr><td>{{getTanggalIndo($ed->start_date)}} - {{getTanggalIndo($ed->end_date)}}</td></tr>

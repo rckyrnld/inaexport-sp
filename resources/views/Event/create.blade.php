@@ -83,10 +83,10 @@
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Type</b></label>
                                         <div class="col-md-3">
-                                            <select class="form-control" name="eventype_en" id="eventype_en" required>
+                                            <select class="form-control" name="eventype_en" id="eventype_en" required onchange="EventType(this)">
                                                 <option value="" style="display: none;">- Pilih Event Type -</option>
                                                 <option value="Fair" @if($page!=='add') @if($e_detail->event_type_en == 'Fair') selected @endif @endif>Fair</option>
-                                                <option value="Spesial" @if($page!=='add') @if($e_detail->event_type_en == 'Spesial') selected @endif @endif>Spesial</option>
+                                                <option value="Spesial" @if($page!=='add') @if($e_detail->event_type_en == 'Spesial') selected @endif @endif>Special</option>
                                                 <option value="General" @if($page!=='add') @if($e_detail->event_type_en == 'General') selected @endif @endif>General</option>
                                             </select>
                                         </div>
@@ -100,7 +100,7 @@
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Organizer</b></label>
                                         <div class="col-md-3">
-                                            <select class="form-control" name="eventorgnzr_en" id="eventorgnzr_en" required>
+                                            <select class="form-control" name="eventorgnzr_en" id="eventorgnzr_en" required onchange="EventOrg(this)">
                                                 <option value="" style="display: none;">- Pilih Event Organizer -</option>
                                                 @foreach($e_organizer as $eo)
                                                     <option value="{{$eo->id}}" @if($page!=='add') @if($e_detail->id_event_organizer == $eo->id) selected @endif @endif >{{$eo->name_en}}</option>
@@ -108,10 +108,10 @@
                                             </select>
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="eventorgnzr_in" id="eventorgnzr_in" autocomplete="off" @if($page!=='add') value="gatau" @endif>
+                                            <input type="text" class="form-control" name="eventorgnzr_in" id="eventorgnzr_in" autocomplete="off" @if($page!=='add') value="{{EvenOrgZ($e_detail->id_event_organizer, 'in')}}" @endif>
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="eventorgnzr_chn" id="eventorgnzr_chn" autocomplete="off" @if($page!=='add') value="gatau" @endif>
+                                            <input type="text" class="form-control" name="eventorgnzr_chn" id="eventorgnzr_chn" autocomplete="off" @if($page!=='add') value="{{EvenOrgZ($e_detail->id_event_organizer, 'chn')}}" @endif>
                                         </div>
                                     </div><br>
                                     <div class="row">
@@ -129,7 +129,7 @@
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Place</b></label>
                                         <div class="col-md-3">
-                                            <select class="form-control" name="eventplace_en" id="eventplace_en" required>
+                                            <select class="form-control" name="eventplace_en" id="eventplace_en" required onchange="EventPlace(this)">
                                                 <option value="" style="display: none;">- Pilih Event -</option>
                                                 @foreach($e_palce as $ep)
                                                     <option value="{{$ep->id}}" @if($page!=='add') @if($e_detail->id_event_place == $ep->id) selected @endif @endif>{{$ep->name_en}}</option>
@@ -137,10 +137,10 @@
                                             </select>
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="eventplace_in" id="eventplace_in" autocomplete="off" @if($page!=='add') value="gatau2" @endif>
+                                            <input type="text" class="form-control" name="eventplace_in" id="eventplace_in" autocomplete="off" @if($page!=='add') value="{{EventPlaceZ($e_detail->id_event_place, 'in')}}" @endif>
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="eventplace_chn" id="eventplace_chn" autocomplete="off" @if($page!=='add') value="gatau2" @endif>
+                                            <input type="text" class="form-control" name="eventplace_chn" id="eventplace_chn" autocomplete="off" @if($page!=='add') value="{{EventPlaceZ($e_detail->id_event_place, 'chn')}}" @endif>
                                         </div>
                                     </div><br>
                                     <div class="row">
@@ -241,11 +241,11 @@
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Jenis</b></label>
                                         <div class="col-md-3">
-                                            <select class="form-control" name="jenis_en" id="jenis_en" required>
+                                            <select class="form-control" name="jenis_en" id="jenis_en" required onchange="Jenis(this)">
                                                 <option value="" style="display: none;">- Pilih Jenis -</option>
                                                 <option value="To Be Confirm" @if($page!=='add') @if($e_detail->jenis_en == 'To Be Confirm') selected @endif @endif>To Be Confirm</option>
-                                                <option value="Aktif" @if($page!=='add') @if($e_detail->jenis_en == 'Aktif') selected @endif @endif>Aktif</option>
-                                                <option value="Mandiri" @if($page!=='add') @if($e_detail->jenis_en == 'Mandiri') selected @endif @endif>Mandiri</option>
+                                                <option value="Aktif" @if($page!=='add') @if($e_detail->jenis_en == 'Aktif') selected @endif @endif>Active</option>
+                                                <option value="Mandiri" @if($page!=='add') @if($e_detail->jenis_en == 'Mandiri') selected @endif @endif>Independent</option>
                                             </select>
                                         </div>
                                         <div class="col-md-3">
@@ -284,7 +284,7 @@
                                         <label for="code" class="col-md-3"><b>Category Product</b></label>
                                         <div class="col-md-3">
                                             <select class="form-control" name="id_prod_cat[]" id="id_prod_cat" style="width:100%" multiple="multiple" required>
-                                                {{optionCategory()}}
+                                                @if($page!='add') {{optionCategoryZ($e_detail->id)}} @else {{optionCategory()}} @endif
                                             </select>   
                                         </div>
                                         <div class="col-md-3"></div>
@@ -323,6 +323,63 @@
         </div>
     </div>
     <script type="text/javascript">
+        csrf_token = '{{ csrf_token() }}';
+
+        function EventType(obj){
+            $('#eventype_in').val('');
+            $('#eventype_chn').val('');
+            val = $(obj).val();
+            if (val=='Fair') {
+                $('#eventype_in').val('Pameran');
+                $('#eventype_chn').val('公平');
+            }else if(val=='Spesial'){
+                $('#eventype_in').val('Spesial');
+                $('#eventype_chn').val('特别的');
+            }else{
+                $('#eventype_in').val('Umum');
+                $('#eventype_chn').val('一般');
+            }
+        }
+
+        function EventOrg(obj){
+            val = $(obj).val();
+            $('#eventorgnzr_in').val('');
+            $('#eventorgnzr_chn').val('');
+            $.post("{{ url('/') }}/event/getEventOrg", {'_token':csrf_token, 'id':val}, function(response){
+                res = JSON.parse(response);
+                $('#eventorgnzr_in').val(res.name_in);
+                $('#eventorgnzr_chn').val(res.name_chn);
+            });
+
+        }
+
+        function EventPlace(obj){
+            val = $(obj).val();
+            $('#eventplace_in').val();
+            $('#eventplace_chn').val();
+            $.post("{{url('/')}}/event/getEventPlace", {'_token':csrf_token, 'id':val}, function(response){
+                res=JSON.parse(response);
+                $('#eventplace_in').val(res.name_in);
+                $('#eventplace_chn').val(res.name_chn);
+            });
+        }
+
+        function Jenis(obj){
+            val = $(obj).val();
+            $('#jenis_in').val('');
+            $('#jenis_chn').val('');
+
+            if (val=='To Be Confirm') {
+                $('#jenis_in').val('Menjadi Konfirmasi');
+                $('#jenis_chn').val('要确认');
+            }else if(val=='Aktif'){
+                $('#jenis_in').val('Aktif');
+                $('#jenis_chn').val('活跃的');
+            }else{
+                $('#jenis_in').val('Mandiri');
+                $('#jenis_chn').val('曼迪里');
+            }
+        }
         $(document).ready(function () {
             $("#img_1").click(function() {
                 $("input[id='image_1']").click();
@@ -358,20 +415,20 @@
             });
         });
 
-    function handleFileSelect(evt){
-        var files = evt.target.files; // FileList object
-        var idfile = evt.target.id; // FileList object
+        function handleFileSelect(evt){
+            var files = evt.target.files; // FileList object
+            var idfile = evt.target.id; // FileList object
 
-        // FileReader support
-        if (FileReader && files && files.length) {
-            var fr = new FileReader();
-            fr.onload = function () {
-                document.getElementById(idfile+"_ambil").src = fr.result;
-                document.getElementById(idfile+"_ambil").style.width = "100%";
-                document.getElementById(idfile+"_ambil").style.height = "100%";
+            // FileReader support
+            if (FileReader && files && files.length) {
+                var fr = new FileReader();
+                fr.onload = function () {
+                    document.getElementById(idfile+"_ambil").src = fr.result;
+                    document.getElementById(idfile+"_ambil").style.width = "100%";
+                    document.getElementById(idfile+"_ambil").style.height = "100%";
+                }
+                fr.readAsDataURL(files[0]);
             }
-            fr.readAsDataURL(files[0]);
         }
-    }
     </script>
 @include('footer')

@@ -32,5 +32,10 @@ return [
     "tipe_rc" => "种类",
     "negara_rc" => "国家",
     "publish_rc" => "发布日期",
-    "terbaru" => "10 Latest"
+    "terbaru" => "10 Latest",
+    "jdl_event" => "活动清单",
+    "cari"  => "寻找",
+    "t_date"    => '开始日期 - 结束日期', 
+    "t_Comodity"    => "大宗商品",
+    "t_join"    => "加入"
 ];
