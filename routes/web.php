@@ -37,6 +37,11 @@ Route::namespace('FrontEnd')->group(function () {
 	Route::any('/front_end/event/search', 'FrontController@search_event');
 	Route::get('/front_end/join_event/{id}', 'FrontController@join_event');
 
+  //YOSS
+  //Front End TrainingController
+  Route::get('/front_end/training', 'FrontController@indexTraining');
+  Route::get('frontend/training/search', 'FrontController@indexTrainingSearch');
+  //End Training Frontend
 
 });
 
@@ -442,6 +447,7 @@ Route::namespace('Training')->group(function () {
   Route::get('training/getData', 'TrainingControllerEksportir@getData')->name('training.getData');
   Route::get('training/view', 'TrainingControllerEksportir@view')->name('training.view');
   Route::post('training/join', 'TrainingControllerEksportir@join')->name('training.join');
+  Route::get('training/search', 'TrainingControllerEksportir@search')->name('training.search');
 });
 
 //END YOSS ------------------------------------------

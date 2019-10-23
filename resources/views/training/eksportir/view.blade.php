@@ -29,7 +29,6 @@
                     <th>Topic</th>
                     <th>Location</th>
                     <th>Status</th>
-                    <th width="20%">Action</th>
                   </tr>
                 </thead>
               </table>
@@ -53,8 +52,7 @@
               {data: 'duration', name: 'duration'},
               {data: 'topic_in', name: 'topic_in'},
 							{data: 'location_in', name: 'location_in'},
-              {data: 'status', name: 'status'},
-              {data: 'action', name: 'action', orderable: false, searchable: false}
+              {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
     });

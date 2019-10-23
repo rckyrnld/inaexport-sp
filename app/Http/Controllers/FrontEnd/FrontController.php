@@ -131,4 +131,24 @@ class FrontController extends Controller
         $detail = DB::table('event_detail')->where('id', $id)->first();
         return view('frontend.event.join_event', compact('detail'));
     }
+
+    //Front End Training
+    public function indexTraining(){
+      $pageTitle = 'Training';
+			$data = DB::table('training_admin')->where('status', 1)->paginate(10);
+      return view('training.frontend.index',compact('data','pageTitle'));
+    }
+
+    public function indexTrainingSearch(Request $request){
+			$cari = $request->cari;
+
+			$data = DB::table('training_admin')
+			->where('training_in','like',"%".$cari."%")
+			->paginate(10);
+
+			$pageTitle = 'Training';
+
+			return view('training.frontend.index',compact('data','pageTitle'));
+		}
+    //End Training Front End
 }
