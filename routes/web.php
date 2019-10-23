@@ -27,6 +27,7 @@ Route::namespace('FrontEnd')->group(function () {
 	Route::get('/front_end', 'FrontController@index');
 });
 
+Route::get('/br_importir', 'BRFrontController@br_importir');
 /* Route::get('/registrasi_pembeli/{locale}', function ($locale) {
     App::setLocale($locale);
     return view('auth.register_pembeli');
@@ -99,6 +100,13 @@ Route::get('/permission_edit/{id}', 'UM\PermissionsController@edit');
 Route::post('/permission_update/{id}', 'UM\PermissionsController@update');
 Route::get('/permission_delete/{id}', 'UM\PermissionsController@destroy');
 
+//buy request 
+Route::resource('/br_list', 'BuyingRequestController');
+Route::get('/getcsc', 'BuyingRequestController@getcsc');
+Route::get('/br_add', 'BuyingRequestController@add');
+Route::get('/ambilt2/{id}', 'BuyingRequestController@ambilt2');
+Route::get('/ambilt3/{id}', 'BuyingRequestController@ambilt3');
+Route::post('/br_save', 'BuyingRequestController@br_save');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
