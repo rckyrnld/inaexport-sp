@@ -6,32 +6,43 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Dingo\Api\Routing\Helpers;
+use Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 class ProductController extends Controller
 {
 	use Helpers;
 
+    // use AuthenticatesUsers;  
     public function __construct()
     {
-        $this->middleware('api.auth');
+		$this->user = JWTAuth::parseToken()->authenticate();
 	}
 
-    public function findProductById($id_user)
+    public function findProductById(Request $request)
     {
-        // dd($this->middleware('api.auth'));
+		// dd($this->middleware('api.auth'));
+		// dd(Auth::guard('userApi')->user());
+		//  if(Auth::guard('userApi')->user()){
         	$dataProduk = DB::table('csc_product_single')
             ->where('id_itdp_company_user', '=', $request->id_user)
             ->orderBy('product_description_en', 'ASC')
             ->get();
 	   
-		if(count($dataProduk) > 0){
-			$res['message'] = "Success";
-			$res['data'] = $dataProduk;
-        	return response($res);
-		}else{
-			$res['message'] = "Failed";
-			return response($res);
-		}
+			if(count($dataProduk) > 0){
+				$res['message'] = "Success";
+				$res['data'] = $dataProduk;
+				return response($res);
+			}else{
+				$res['message'] = "Failed";
+				return response($res);
+			}
+		// }else{
+		// 	$res['message'] = "Failed";
+		// 	return response($res);
+		// }
 	}
 
 	public function browseProduct(){

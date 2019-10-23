@@ -230,8 +230,8 @@ return [
 
     ],
 
-    'auth' => [
-        'jwt' => Dingo\Api\Auth\Provider\JWT::class
-    ],
+    // 'auth' => [
+    //     'jwt' => Dingo\Api\Auth\Provider\JWT::class
+    // ],
 
 ];

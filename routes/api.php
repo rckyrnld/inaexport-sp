@@ -13,46 +13,53 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:userApis')->get('/userApi', function (Request $request) {
+//     return $request->user();
+// });
+// Route::middleware('auth:adminApis')->get('/adminApi', function (Request $request) {
+//     return $request->user();
+// });
 
-$api = app('Dingo\Api\Routing\Router');
+// $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', function ($api){
+// $api->version('v1', function ($api){
         /*API Auth*/
-            $api->post('login', 'App\Http\Controllers\Api\Auth\LoginController@login');
-            $api->post('register', 'App\Http\Controllers\Api\Auth\RegisterController@register');
-            $api->post('logout', 'App\Http\Controllers\Api\Auth\LoginController@logout');            
-
+        Route::group(['middleware' => ['api']], function () {
+            Route::post('admin-login', 'Api\Auth\Admin\LoginController@login');
+            Route::post('user-login', 'Api\Auth\User\LoginController@login');
+        }); 
         /*API Auth*/ 
         /*************************************************************************************************************/
-        $api->group(['middleware' => 'api.auth'], function ($api) {
-        /*API Management*/
-                $api->get('getRekapAnggota', 'App\Http\Controllers\Api\ManagementController@getRekapAnggota');
-            /*Anggota Importir*/
-                $api->get('getDetailVerifikasiImportir/{id}', 'App\Http\Controllers\Api\ManagementController@detailVerifikasiImportir');
-                $api->post('submitVerifikasiImportir', 'App\Http\Controllers\Api\ManagementController@submitVerifikasiImportir');
-            /*Anggota Importir*/
+        Route::group(['middleware' => ['api', 'manage_token:admin_api,1|4']], function () {
+            Route::get('getRekapAnggota', 'Api\Admin\ManagementController@getRekapAnggota');
+        }); 
+     
+        // Route::group(['middleware' => 'auth.jwt'], function () { 
+        //   /*API Management*/
+        //         Route::get('getRekapAnggota', 'App\Http\Api\Controllers\ManagementController@getRekapAnggota');
+        //     /*Anggota Importir*/
+        //         Route::get('getDetailVerifikasiImportir', 'App\Http\Api\Controllers\ManagementController@detailVerifikasiImportir');
+        //         Route::post('submitVerifikasiImportir', 'App\Http\Api\Controllers\ManagementController@submitVerifikasiImportir');
+        //     /*Anggota Importir*/
 
-            /*Anggota Eksportir*/
-                $api->get('getDetailVerifikasiEksportir/{id}', 'App\Http\Controllers\Api\ManagementController@detailVerifikasiEksportir');
-                $api->post('submitVerifikasiEksportir', 'App\Http\Controllers\Api\ManagementController@submitVerifikasiEksportir');
-            /*Anggota Eksportir*/  
+        //     /*Anggota Eksportir*/
+        //         Route::get('getDetailVerifikasiEksportir', 'App\Http\Api\Controllers\ManagementController@detailVerifikasiEksportir');
+        //         Route::post('submitVerifikasiEksportir', 'App\Http\Api\Controllers\ManagementController@submitVerifikasiEksportir');
+        //     /*Anggota Eksportir*/  
             
-            /*Management Product*/
-                $api->get('getProdukList/{id_user}', 'App\Http\Controllers\Api\ProductController@findProductById');                
-                $api->get('browseProduk', 'App\Http\Controllers\Api\ProductController@browseProduct');
+        //     /*Management Product*/
+        //         Route::get('getProdukList', 'App\Http\Api\Controllers\ProductController@findProductById');                
+        //         Route::get('browseProduk', 'App\Http\Api\Controllers\ProductController@browseProduct');
 
-                $api->post('insertProduk', 'App\Http\Controllers\Api\ProductController@insertProduct');
-                $api->post('updateProduk', 'App\Http\Controllers\Api\ProductController@updateProduct');                
-                $api->post('deleteProduk', 'App\Http\Controllers\Api\ProductController@deleteProduct');
-            /*Management Product*/
+        //         Route::post('insertProduk', 'App\Http\Api\Controllers\ProductController@insertProduct');
+        //         Route::post('updateProduk', 'App\Http\Api\Controllers\ProductController@updateProduct');                
+        //         Route::post('deleteProduk', 'App\Http\Api\Controllers\ProductController@deleteProduct');
+        //     /*Management Product*/
 
-        });
+        // });
             /*Contact Us*/
-            $api->post('contactUs', 'App\Http\Controllers\Api\ManagementNoAuthController@contactUs');
+            Route::post('contactUs', 'App\Http\Api\Controllers\ManagementNoAuthController@contactUs');
             /*Contact Us*/
                  
         /*API Management*/
-});
+// });

@@ -1,24 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Models\Api\AdminApi;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use Dingo\Api\Routing\Helpers;
-use App\Models\ContactUs;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class ManagementController extends Controller
 {
-	use Helpers;
 
     public function __construct()
     {
-        $this->middleware('api.auth');
-		}
+       auth()->shouldUse('admin_api');
+	}
 
     public function getRekapAnggota(){
-
+		// dd(auth()->authenticate());
 		$eksportirs = DB::select(
 			"select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a LEFT JOIN
 			itdp_profil_eks b ON a.id_profil = b.id where a.id_role='2' order by a.id desc ");
@@ -36,10 +39,10 @@ class ManagementController extends Controller
 		}
 	}
 
-    public function detailVerifikasiImportir($id){
-		$companyUsers = DB::select("select * from itdp_company_users where id='$id' limit 1");
+    public function detailVerifikasiImportir(Request $request){
+		$companyUsers = DB::select("select * from itdp_company_users where id='$request->id' limit 1");
 	
-		$detailCompanyUsers = DB::select("select b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='$id' limit 1");
+		$detailCompanyUsers = DB::select("select b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='$request->id' limit 1");
 		
 		if((count($companyUsers) > 0) && (count($detailCompanyUsers) > 0)){
 			$res['message'] = "Success";
@@ -52,10 +55,10 @@ class ManagementController extends Controller
 		}
 	}
 	
-	public function detailVerifikasiEksportir($id){
-		$companyUsers = DB::select("select * from itdp_company_users where id='$id' limit 1");
+	public function detailVerifikasiEksportir(Request $request){
+		$companyUsers = DB::select("select * from itdp_company_users where id='$request->id' limit 1");
 	
-		$detailCompanyUsers = DB::select("select b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='$id' limit 1");
+		$detailCompanyUsers = DB::select("select b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='$request->id' limit 1");
 		
 		if((count($companyUsers) > 0) && (count($detailCompanyUsers) > 0)){
 			$res['message'] = "Success";
