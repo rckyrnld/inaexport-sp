@@ -147,19 +147,15 @@ if (! function_exists('checkJoin')) {
 if (! function_exists('getProductAttr')) {
     function getProductAttr($id, $col, $lang){
         $data = DB::table('csc_product_single')->where('id', $id)->first();
+        $isi = NULL;
         if($lang != ""){
           $dt = $col.'_'.$lang;
           if($data->$dt != NULL){
             $isi = $data->$dt;
-          }else{
-            $in = $col.'_en';
-            $isi = $data->$in;
           }
         }else{
           if($data->$col != NULL){
             $isi = $data->$col;
-          }else{
-            $isi = NULL;
           }
         }
 
@@ -189,10 +185,12 @@ if (! function_exists('getCompanyName')) {
 if (! function_exists('getCategoryName')) {
     function getCategoryName($id, $loc){
         $nama = "-";
-        $col = "nama_kategori_".$loc;
-        $data = DB::table('csc_product')->where('id', $id)->first();
-        if($data->$col != NULL){
-          $nama = $data->$col;
+        if($id != NULL){
+          $col = "nama_kategori_".$loc;
+          $data = DB::table('csc_product')->where('id', $id)->first();
+          if($data->$col != NULL){
+            $nama = $data->$col;
+          }
         }
 
         return $nama;
