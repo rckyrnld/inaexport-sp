@@ -27,6 +27,15 @@ Route::namespace('FrontEnd')->group(function () {
 	Route::get('/front_end', 'FrontController@index');
 	Route::get('/front_end/all_product', 'FrontController@all_product');
 	Route::get('/front_end/product/{id}', 'FrontController@product_category');
+
+	/**
+	 * Createdby Intan Kamelia
+	*/
+	Route::get('/front_end/event', 'FrontController@Event');
+	Route::any('/front_end/event/search', 'FrontController@search_event');
+	Route::get('/front_end/join_event/{id}', 'FrontController@join_event');
+
+
 });
 
 /* Route::get('/registrasi_pembeli/{locale}', function ($locale) {
@@ -227,6 +236,7 @@ Route::namespace('Event')->prefix('event')->group(function () {
 		Route::get('/show/read/{id}', 'EventController@show');
 		Route::get('/show_detail/{id}', 'EventController@show_detail');
 		Route::any('/search', 'EventController@search');
+		Route::any('/search_eksportir', 'EventController@search_eksportir');
 
 });
 
