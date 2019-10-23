@@ -355,7 +355,7 @@ Dropdown menu
 Form 
 */
 .form-control {
-  border-color: rgba(120, 130, 140, 0.2);
+  border-color: rgba(120, 130, 140, 0.5);
   border-radius: 0.25rem;
   color: inherit; }
   .form-control:focus {

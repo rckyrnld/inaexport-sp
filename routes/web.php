@@ -27,7 +27,8 @@ Route::namespace('FrontEnd')->group(function () {
 	Route::get('/front_end', 'FrontController@index');
 	Route::get('/front_end/all_product', 'FrontController@all_product');
 	Route::get('/front_end/research-corner', 'FrontController@research_corner');
-	Route::get('/front_end/product/{id}', 'FrontController@product_category');
+	Route::get('/front_end/category_product/{id}', 'FrontController@product_category');
+	Route::get('/front_end/product/{id}', 'FrontController@view_product');
 
 	/**
 	 * Createdby Intan Kamelia
@@ -36,9 +37,15 @@ Route::namespace('FrontEnd')->group(function () {
 	Route::any('/front_end/event/search', 'FrontController@search_event');
 	Route::get('/front_end/join_event/{id}', 'FrontController@join_event');
 
+  //YOSS
+  //Front End TrainingController
+  Route::get('/front_end/training', 'FrontController@indexTraining');
+  Route::get('frontend/training/search', 'FrontController@indexTrainingSearch');
+  //End Training Frontend
 
 });
 
+Route::get('/br_importir', 'BRFrontController@br_importir');
 /* Route::get('/registrasi_pembeli/{locale}', function ($locale) {
     App::setLocale($locale);
     return view('auth.register_pembeli');
@@ -111,6 +118,13 @@ Route::get('/permission_edit/{id}', 'UM\PermissionsController@edit');
 Route::post('/permission_update/{id}', 'UM\PermissionsController@update');
 Route::get('/permission_delete/{id}', 'UM\PermissionsController@destroy');
 
+//buy request 
+Route::resource('/br_list', 'BuyingRequestController');
+Route::get('/getcsc', 'BuyingRequestController@getcsc');
+Route::get('/br_add', 'BuyingRequestController@add');
+Route::get('/ambilt2/{id}', 'BuyingRequestController@ambilt2');
+Route::get('/ambilt3/{id}', 'BuyingRequestController@ambilt3');
+Route::post('/br_save', 'BuyingRequestController@br_save');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
@@ -441,6 +455,7 @@ Route::namespace('Training')->group(function () {
   Route::get('training/getData', 'TrainingControllerEksportir@getData')->name('training.getData');
   Route::get('training/view', 'TrainingControllerEksportir@view')->name('training.view');
   Route::post('training/join', 'TrainingControllerEksportir@join')->name('training.join');
+  Route::get('training/search', 'TrainingControllerEksportir@search')->name('training.search');
 });
 
 //END YOSS ------------------------------------------

@@ -19,7 +19,7 @@ class TrainingControllerEksportir extends Controller
 
 	  public function index(){
       $pageTitle = 'Training';
-			$data = DB::table('training_admin')->where('status', 1)->get();
+			$data = DB::table('training_admin')->where('status', 1)->paginate(10);
 			$id_user = Auth::guard('eksmp')->user()->id;
 			$id = DB::table('itdp_company_users as icu')
 			->selectRaw('ipe.id')
@@ -54,17 +54,18 @@ class TrainingControllerEksportir extends Controller
 		}
 
     public function getData(){
+			$id = DB::table('itdp_company_users as icu')
+			->selectRaw('ipe.id')
+			->leftJoin('itdp_profil_eks as ipe','icu.id_profil','=','ipe.id')
+			->where('icu.id', Auth::guard('eksmp')->user()->id)
+			->first();
 
-      $tick = DB::table('training_admin as ts')->get();
-
+      $tick = DB::table('training_join as tj')
+			->selectRaw('tj.*,ta.start_date,ta.duration,ta.topic_in,ta.location_in,ta.training_in')
+			->leftJoin('training_admin as ta','ta.id','=','tj.id_training_admin')
+			->where('tj.id_profil_eks',$id->id)
+			->get();
       return \Yajra\DataTables\DataTables::of($tick)
-					->addColumn('status', function($data){
-						if ($data->status == 0){
-							return 'Not Published';
-						}else if ($data->status == 1){
-							return 'Published';
-						}
-					})
           ->addColumn('start_date', function($data){
 					   $date = date("Y-m-d", strtotime($data->start_date));
              return $date;
@@ -77,8 +78,7 @@ class TrainingControllerEksportir extends Controller
 							return '
               <center>
               <div class="btn-group">
-                <a onclick="return confirm(\'Are you sure to publish this training information ?\')" href="'.route('training.publish.admin', $data->id).'" class="btn btn-sm btn-primary">&nbsp;<i class="fa fa-file text-white"></i>&nbsp;Publish&nbsp;</a>&nbsp;&nbsp;
-                <a href="'.route('training.edit.admin', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
+                <button class="btn btn-danger"><span class="fa fa-close"></span> Not Verified</button>
               </div>
               </center>
               ';
@@ -86,8 +86,7 @@ class TrainingControllerEksportir extends Controller
 							return '
               <center>
               <div class="btn-group">
-								<a href="'.route('training.view.admin', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-                <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route('training.destroy.admin', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+								<button class="btn btn-success"><span class="fa fa-check"></span> Already verified</button>
               </div>
               </center>
               ';
@@ -100,6 +99,25 @@ class TrainingControllerEksportir extends Controller
 		public function view(){
 			$pageTitle = 'Training';
 			return view('training.eksportir.view', compact('pageTitle'));
+		}
+
+		public function search(Request $request){
+			$cari = $request->cari;
+
+			$data = DB::table('training_admin')
+			->where('training_in','like',"%".$cari."%")
+			->paginate(10);
+
+			$pageTitle = 'Training';
+
+			$id_user = Auth::guard('eksmp')->user()->id;
+			$id = DB::table('itdp_company_users as icu')
+			->selectRaw('ipe.id')
+			->leftJoin('itdp_profil_eks as ipe','icu.id_profil','=','ipe.id')
+			->where('icu.id', $id_user)
+			->first();
+
+			return view('training.eksportir.index', compact('pageTitle','data','id'));
 		}
 
 }

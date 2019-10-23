@@ -17,7 +17,22 @@
         </div>
         <div class="box-body bg-light">
           <h4> View All Eksportir Training</h4><hr>
-          <a href="{{route('training.view')}}" class="btn btn-info">View Training Will You Join</a><br>
+          <form action="{{route('training.search')}}" method="get">
+            <div class="row">
+              <div class="col-md-4">
+                <a href="{{route('training.view')}}" class="btn btn-info">View Training Will You Join</a><br>
+              </div>
+              <div class="col-md-4"></div>
+              <div class="col-md-3">
+                <input type="text" class="form-control" name="cari" placeholder="search data" value="{{ old('cari') }}" autocomplete="off">
+              </div>
+              <div class="col-md-1">
+                <button type="submit" class="btn btn-primary" name="button">
+                  <span class="fa fa-search"></span>
+                </button>
+              </div>
+            </div>
+          </form>
           <div class="col-md-14"><br>
             @foreach($data as $num => $val)
               <div class="box">
@@ -30,7 +45,7 @@
                   </div><br>
                   <div class="row">
                     <div class="col-md-2">
-                      <b>Lokasi</b>
+                      <b>Location</b>
                     </div>
                     <div class="col-md-4">
                       : {{$val->location_in}}
@@ -61,7 +76,7 @@
                         <button type="submit" name="button" class="btn btn-primary btn-sm"> Join Now</button>
                       </form>
                       @else
-                        <button class="btn btn-success btn-sm"> Sudah Join</button>
+                        <button class="btn btn-success btn-sm"> Already Join</button>
                       @endif
                     </div>
                   </div><br>
@@ -69,6 +84,7 @@
               </div>
             @endforeach
           </div>
+          {{ $data->render("pagination::bootstrap-4") }}
         </div>
       </div>
     </div>

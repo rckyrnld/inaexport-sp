@@ -33,6 +33,19 @@ class ProductController extends Controller
 			return response($res);
 		}
 	}
+
+	public function browseProduct(){
+		$dataProduk = DB::table('csc_product_single').where('status', '=', 1)->orderBy('product_description_en', 'ASC')
+			->get();
+		if(count($dataProduk) > 0){
+			$res['message'] = "Success";
+			$res['data'] = $dataProduk;
+        	return response($res);
+		}else{
+			$res['message'] = "Failed";
+			return response($res);
+		}
+	}
 	
 	public function insertProduct(Request $request){
 		   if($request->id_role != "1" || $request->id_role != "4"){

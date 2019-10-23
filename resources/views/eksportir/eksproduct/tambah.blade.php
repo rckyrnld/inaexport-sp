@@ -203,7 +203,7 @@
                                     <div class="row">
                                         <label for="code" class="col-md-2"><b>Price (USD)</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control integer" name="price_usd" id="price_usd" autocomplete="off" value="0">
+                                            <input type="text" class="form-control" name="price_usd" id="price_usd" autocomplete="off">
                                         </div>
                                         <div class="col-md-3">
                                         </div>
@@ -417,24 +417,6 @@
 
         });
 
-        $('#price_usd').inputmask({
-            alias:"integer",
-            repeat:12,
-            digitsOptional:false,
-            decimalProtect:false,
-            radixFocus:true,
-            autoUnmask:false,
-            allowMinus:false,
-            clearMaskOnLostFocus: false,
-            groupSeparator:".",
-            placeholder: '0',
-            radixPoint:",",
-            autoGroup:true,
-            onBeforeMask: function (value, opts) {
-                return value;
-            },
-            removeMaskOnSubmit:true
-        });
     })
 
     function nextTab(now, next) {

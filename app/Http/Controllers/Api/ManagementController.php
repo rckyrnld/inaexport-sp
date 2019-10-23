@@ -36,8 +36,8 @@ class ManagementController extends Controller
 		}
 	}
 
-    public function detailVerifikasiImportir(Request $request){
-		$companyUsers = DB::select("select * from itdp_company_users where id='$request->id' limit 1");
+    public function detailVerifikasiImportir($id){
+		$companyUsers = DB::select("select * from itdp_company_users where id='$id' limit 1");
 	
 		$detailCompanyUsers = DB::select("select b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='$id' limit 1");
 		
@@ -52,8 +52,8 @@ class ManagementController extends Controller
 		}
 	}
 	
-	public function detailVerifikasiEksportir(Request $request){
-		$companyUsers = DB::select("select * from itdp_company_users where id='$request->id' limit 1");
+	public function detailVerifikasiEksportir($id){
+		$companyUsers = DB::select("select * from itdp_company_users where id='$id' limit 1");
 	
 		$detailCompanyUsers = DB::select("select b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='$id' limit 1");
 		

@@ -2,7 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
   <meta charset="utf-8" />
-  <title>Register Pembeli</title>
+  <title><?php echo $pageTitle; ?></title>
   <meta name="description" content="Responsive, Bootstrap, BS4" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,12 +24,15 @@
   <link rel="stylesheet" href="{{url('assets')}}/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
   <link rel="stylesheet" href="{{url('assets')}}/assets/css/app.css" type="text/css" />
   <link rel="stylesheet" href="{{url('assets')}}/assets/css/style.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('assets')}}/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" type="text/css" />
+   <script src="{{url('assets')}}/libs/datatables/media/js/jquery.dataTables.min.js" ></script>
+<script src="{{url('assets')}}/libs/datatables.net-bs4/js/dataTables.bootstrap4.js" ></script>
+
+<script src="{{url('assets')}}/html/scripts/plugins/datatable.js" ></script>
   <!-- endbuild -->
 </head>
 <body style="font-family: "Times New Roman", Times, serif;">
-<style>
-select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.com/entries/icons/original/000/015/163/narutoooh.jpg');   }
-</style>
+
 
 <div class="d-flex flex-column flex" style="background-color:  #2e899e  ; color: #ffffff">
  <div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
@@ -43,7 +46,17 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
 	<a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
 	<a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
 	<a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
-	<a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> @lang("login.lbl3")</font></a>
+	<a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> 
+	<?php if(empty(Auth::user()->name) && empty(Auth::guard('eksmp')->user()->username)){ ?>
+		@lang("login.lbl3")
+	<?php }else if(empty(Auth::user()->name) && !empty(Auth::guard('eksmp')->user()->username)){	
+		echo Auth::guard('eksmp')->user()->username;
+	}else if(empty(!Auth::user()->name) && empty(Auth::guard('eksmp')->user()->username)){?>
+		{{ Auth::user()->name }}
+	<?php } ?>
+	
+	
+	</font></a>
 	
 	
 	</td>
@@ -56,20 +69,94 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
     </div>
   </div>
   <div id="content-body" style="padding-left:100px; padding-right:100px ; color: #ffffff" >
-    <div class="py-5 w-100">
+    <div class="py-2 w-100">
 	
 	
       <div class="" style="text-color:black;padding-left:10px; padding-right:10px; border-radius: 3px;">
 	  <br>
-			<h5><center><br>
-			<img height="200px" src="{{url('assets')}}/assets/images/mail.png" alt="." ><br><br>
-			Cek Email Anda Untuk Mengaktifasi Akun Anda !
-			</center></h5>
-	 </div>
+	  <form class="form-horizontal" method="POST" action="{{ url('simpan_rpembeli') }}">
+	   {{ csrf_field() }}
+	   <h5><center>List <?php echo $pageTitle; ?></center></h5>
+	   <br><br>
+		 <table id="example1" class="table table-bordered table-striped">
+                                <thead class="text-white" style="background-color: #1089ff;">
+                                <tr>
+                                    <th>No</th>
+                                    <th>
+                                        <center>Product Name</center>
+                                    </th>
+                                    <th>
+                                        <center>Duration</center>
+                                    </th>
+                                    <th>
+                                        <center>Date</center>
+                                    </th>
+									<th>
+                                        <center>Category</center>
+                                    </th>
+									<th>
+                                        <center>Specification</center>
+                                    </th>
+                                    <th>
+                                        <center>Status</center>
+                                    </th>
+									<th width="10%">
+                                        <center>Action</center>
+                                    </th>
+                                </tr>
+                                </thead>
+								<tbody>
+								
+								</tbody>
+
+                            </table>
+					<br>	
+		</form>
+      </div>
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  $(function () {
+   $('#example1').DataTable({
+     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    });
+	
+	$('#example2').DataTable({
+     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    });
+	
+	$('#yahoo').DataTable({
+     
+    });
 
+  $('.select2').select2();
+ });
+ </script>
+<script type="text/javascript">
+    $(function () {
+        $('#users-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('getcsc') }}",
+            columns: [
+                {data: 'row', name: 'row'},
+                {data: 'f1', name: 'f1'},
+                {data: 'f2', name: 'f2'},
+                {data: 'f3', name: 'f3'},
+                {data: 'f4', name: 'f4'},
+                {
+					data: 'f6', name: 'f6', orderable: false, searchable: false
+				},
+				{
+					data: 'f7', name: 'f7', orderable: false, searchable: false
+				},
+                {
+                    data: 'action', name: 'action', orderable: false, searchable: false
+                }]
+        });
+    });
+</script>
 
 <!-- ############ SWITHCHER START-->
 <div id="setting">

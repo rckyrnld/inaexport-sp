@@ -150,3 +150,56 @@ if (! function_exists('checkJoin')) {
         }
     }
 }
+
+if (! function_exists('getProductAttr')) {
+    function getProductAttr($id, $col, $lang){
+        $data = DB::table('csc_product_single')->where('id', $id)->first();
+        $isi = NULL;
+        if($lang != ""){
+          $dt = $col.'_'.$lang;
+          if($data->$dt != NULL){
+            $isi = $data->$dt;
+          }
+        }else{
+          if($data->$col != NULL){
+            $isi = $data->$col;
+          }
+        }
+
+        if($isi == NULL){
+          $isi = "-";
+        }
+
+        return $isi;
+    }
+}
+
+if (! function_exists('getCompanyName')) {
+    function getCompanyName($id){
+        $nama = "-";
+        $data = DB::table('itdp_company_users')->where('id', $id)->first();
+        if($data->id_profil != NULL){
+          $profil = DB::table('itdp_profil_eks')->where('id', $data->id_profil)->first();
+          if($profil){
+            $nama = $profil->company;
+          }
+        }
+
+        return $nama;
+    }
+}
+
+if (! function_exists('getCategoryName')) {
+    function getCategoryName($id, $loc){
+        $nama = "-";
+        if($id != NULL){
+          $col = "nama_kategori_".$loc;
+          $data = DB::table('csc_product')->where('id', $id)->first();
+          if($data->$col != NULL){
+            $nama = $data->$col;
+          }
+        }
+
+        return $nama;
+    }
+}
