@@ -27,7 +27,8 @@ Route::namespace('FrontEnd')->group(function () {
 	Route::get('/front_end', 'FrontController@index');
 	Route::get('/front_end/all_product', 'FrontController@all_product');
 	Route::get('/front_end/research-corner', 'FrontController@research_corner');
-	Route::get('/front_end/product/{id}', 'FrontController@product_category');
+	Route::get('/front_end/category_product/{id}', 'FrontController@product_category');
+	Route::get('/front_end/product/{id}', 'FrontController@view_product');
 
 	/**
 	 * Createdby Intan Kamelia

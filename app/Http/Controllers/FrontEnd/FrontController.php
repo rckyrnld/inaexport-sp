@@ -28,7 +28,7 @@ class FrontController extends Controller
 
     public function all_product()
     {
-
+        //List Category Product
         $catprod = DB::table('csc_product')
             ->where('level_1', 0)
             ->where('level_2', 0)
@@ -45,10 +45,24 @@ class FrontController extends Controller
 
     public function product_category($id)
     {
-        $categorynya = DB::table('csc_product')->where('id', $id)->first();
-        $prodcategory = DB::table('csc_product_single')->where('id_csc_product', $id)->orderby('prodname_en', 'asc')->get();
-        // dd($prodcategory);
-        return view('frontend.product.product_category', compact('categorynya', 'prodcategory'));
+        //Category Product
+        $catdata = DB::table('csc_product')->where('id', $id)->first();
+        //Product dengan Category yang dipilih
+        $prodcategory = DB::table('csc_product_single')->where('id_csc_product', $id)->orderby('prodname_en', 'asc')->paginate(20);
+        return view('frontend.product.product_category', compact('catdata', 'prodcategory'));
+    }
+
+    public function view_product($id)
+    {
+        //Product
+        $data = DB::table('csc_product_single')
+            ->where('id', '=', $id)
+            ->first();
+        //Category Per Level
+        $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
+        $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
+        $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
+        return view('frontend.product.view_product', compact('data', 'catprod', 'catprod2', 'catprod3'));
     }
 
     public function research_corner(){
@@ -61,17 +75,6 @@ class FrontController extends Controller
             ->get();
 
         return view('frontend.research-corner', compact('product', 'research'));
-    }
-
-    public function view_product($id)
-    {
-        $data = DB::table('csc_product_single')
-            ->where('id', '=', $id)
-            ->first();
-        $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
-        $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
-        $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
-        return view('eksportir.viewproduct', compact('data', 'catprod', 'catprod2', 'catprod3'));
     }
 
     public function getSub(Request $request)

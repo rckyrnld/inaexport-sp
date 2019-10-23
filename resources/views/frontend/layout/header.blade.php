@@ -112,6 +112,21 @@
     border: 1px solid #DDD;
     border-left: 3px solid #ff0000;
 }
+
+li.active{
+  padding: .5rem .75rem;
+  border: 1px solid rgba(120, 130, 140, 0.13);
+  background: #c8e1fa;
+}
+
+li:hover{
+  background: rgba(120, 130, 140, 0.13);
+}
+
+li.disabled{
+  padding: .5rem .75rem;
+  border: 1px solid rgba(120, 130, 140, 0.13);
+}
 </style>
   <!-- endbuild -->
 </head>
