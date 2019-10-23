@@ -23,10 +23,17 @@ if (! function_exists('getTanggalIndo')) {
 }
 
 if (! function_exists('rc_type')) {
-    function rc_type($id){
+    function rc_type($id, $lang){
         $data = DB::table('csc_research_type')->where('id', $id)->first();
-
-        return $data->nama_en;
+        if($lang == 'in'){
+          if($data->nama_in != null || $data->nama_in != ''){
+            return $data->nama_in;
+          } else {
+            return $data->nama_en;
+          }
+        } else {
+          return $data->nama_en;
+        }
     }
 }
 

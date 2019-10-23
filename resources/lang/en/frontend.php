@@ -26,11 +26,5 @@ return [
     "prodtitle" => "Membership's Product",
     "moreproduct" => "More Product",
     "categorytitle" => "Category List", 
-    "hotlisttitle" => "Hot List",
-    "direktorat" => "Directorate General for National Export Development, Ministry of Trade",
-    "judul_rc" => "TITLE",
-    "tipe_rc" => "TYPE",
-    "negara_rc" => "COUNTRY",
-    "publish_rc" => "PUBLISH DATE",
-    "terbaru" => "10 Latest"
+    "hotlisttitle" => "Hot List"
 ];

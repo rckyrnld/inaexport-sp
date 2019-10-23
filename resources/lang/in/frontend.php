@@ -26,11 +26,5 @@ return [
     "prodtitle" => "Produk Keanggotaan",
     "moreproduct" => "Product Lainnya",
     "categorytitle" => "Daftar Kategori",
-    "hotlisttitle" => "Hot List",
-    "direktorat" => "Direktorat Jenderal Pengembangan Ekspor Nasional, Kementerian Perdagangan",
-    "judul_rc" => "JUDUL",
-    "tipe_rc" => "TIPE",
-    "negara_rc" => "NEGARA",
-    "publish_rc" => "TANGGAL PUBLIKASI",
-    "terbaru" => "10 Terbaru"
+    "hotlisttitle" => "Hot List"
 ];

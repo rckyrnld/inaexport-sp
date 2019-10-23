@@ -51,7 +51,7 @@
                  <label class="control-label col-md-3">Type</label>
                  <div class="col-md-7">
                   @if($page == 'view')
-                    <input type="text" class="form-control" readonly value="{{rc_type($data->id_csc_research_type)}}">
+                    <input type="text" class="form-control" readonly value="{{rc_type($data->id_csc_research_type, 'en')}}">
                   @else
                      <select class="form-control" id="type" required name="type" {{$view}}>
                        <option></option>
@@ -127,7 +127,7 @@
                     <thead class="text-white" style="background-color: #1089ff;">
                       <tr>
                         <th width="8%">No</th>
-                        <th>Company / Eksportir</th>
+                        <th>Company</th>
                         <th>Download Date</th>
                       </tr>
                     </thead>

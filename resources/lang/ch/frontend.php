@@ -26,11 +26,5 @@ return [
     "prodtitle" => "会员产品",
     "moreproduct" => "更多产品",
     "categorytitle" => "类别清单",
-    "hotlisttitle" => "热门名单",
-    "direktorat" => "贸易部国家出口发展总局",
-    "judul_rc" => "标题",
-    "tipe_rc" => "种类",
-    "negara_rc" => "国家",
-    "publish_rc" => "发布日期",
-    "terbaru" => "10 Latest"
+    "hotlisttitle" => "热门名单"
 ];
