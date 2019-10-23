@@ -67,6 +67,7 @@ class DataContactUsController extends Controller
             'status_baca' => 0,
             'waktu' => date('Y-m-d H:i:s'),
             'id_terkait' => $id,
+            'to_role' => '1',
         ]);
 
       if($data){

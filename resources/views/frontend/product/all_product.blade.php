@@ -1,39 +1,76 @@
 @include('frontend.layout.header')
 
 <div class="d-flex flex-column flex" style="">
-	<div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
+  <div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
     <div class="mx-auto">
-    	<table border="0" width="100%">
-      	<tr>
-      	<td width="30%" style="font-size:13px;padding-left:10px"><img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b></td>
-      	<td width="30%"></td>
-      	<td width="40%" align="right" style="padding-right:10px;">
-        	<a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
-        	<a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
-        	<a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
-        	<a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")</font></a>
-      	</td>
-      	</tr>
-    	</table>
+      <table border="0" width="100%">
+        <tr>
+        <td width="30%" style="font-size:13px;padding-left:10px"><img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b></td>
+        <td width="30%"></td>
+        <td width="40%" align="right" style="padding-right:10px;">
+          <a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
+          <a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
+          <a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
+          <a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")</font></a>
+        </td>
+        </tr>
+      </table>
     </div>
   </div>
   <div id="content-body">
     <div class="py-5 text-center w-100">
-      <h4><b>@lang("frontend.title2")</b></h4><br>
       <center>
-      <table class="table" style="width: 90%; padding: 20px;">
-        <thead>
-          <th colspan="5">
-            <h5><b>@lang("frontend.prodtitle")</b></h5>
-            <div style="float: right; margin-top: -30px;">
-              <a href="{{ url('front_end/all_product') }}" class="btn btn-default btn-sm">@lang("frontend.moreproduct")</a>
-            </div>
-          </th>
-        </thead>
+      <h4><b>@lang("frontend.title2")</b></h4><br>
+      <h5 style="float: left; margin-left: 1%;"><b><i class="fa fa-list"></i> @lang("frontend.categorytitle")</b></h5><br>
+      <hr>
+      <?php
+        $cl = 0;
+        $loc = app()->getLocale();
+      ?>
+      <div class="bagcat" style="width: 97%;">
+        @foreach($catprod as $c)
+          @if($cl < 3)
+            @if($cl == 0)
+              <div class="row">
+                <div class="col-lg-2"></div>
+            @endif
+                <div class="col-lg-3">
+                  <?php
+                    $catprodname = "";
+                    if($loc == "ch"){
+                      $catprodname = $c->nama_kategori_chn;
+                    }elseif($loc == "in"){
+                      $catprodname = $c->nama_kategori_in;
+                    }else{
+                      $catprodname = $c->nama_kategori_en;
+                    }
+
+                    if($catprodname == NULL){
+                      $catprodname = $c->nama_kategori_en;
+                    }
+
+                    $urlprodcat = url('/front_end/category_product/').'/'.$c->id;
+                  ?>
+                  <div class="col-lg-12 cat">
+                    <a href="{{$urlprodcat}}">
+                      {{$catprodname}}
+                    </a>
+                  </div>
+                </div>
+            @if($cl == 2)
+                <!-- <div class="col-lg-1"></div> -->
+              </div>
+            @endif
+            <?php if($cl == 2){ $cl = 0; }else{ $cl++; } ?>
+          @endif
+        @endforeach
+      </div><br>
+      <h5 style="float: left; margin-left: 1%;"><b><i class="fa fa-fire"></i> @lang("frontend.hotlisttitle")</b></h5><br>
+      <hr>
+      <table class="" style="width: 90%; padding: 20px;">
         <tbody>
           <?php
           $co = 0;
-          $loc = app()->getLocale();
         ?>
         @foreach($product as $p)
           @if($co < 5)
@@ -122,7 +159,7 @@
             OR
           </div> --}}
          
-		  
+      
           <div class="my-4">
            <!-- <a href="{{ route('password.request') }}" class="text-primary _600">Forgot password?</a> -->
           </div>
@@ -131,7 +168,7 @@
             <a href="{{url('register')}}" class="text-primary _600">Sign up</a> -->
           </div>
         </div>
-		
+    
       </div>
     </div>
   </div>

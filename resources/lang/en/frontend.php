@@ -32,5 +32,10 @@ return [
     "tipe_rc" => "TYPE",
     "negara_rc" => "COUNTRY",
     "publish_rc" => "PUBLISH DATE",
-    "terbaru" => "10 Latest"
+    "terbaru" => "10 Latest",
+    "jdl_event" => "List Event",
+    "cari"  => "Search",
+    "t_date"    => "Start Date - End Date", 
+    "t_Comodity"    => "Comodity",
+    "t_join"        => "Join"
 ];

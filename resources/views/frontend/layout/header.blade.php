@@ -16,6 +16,12 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="shortcut icon" sizes="196x196" href="../assets/images/logo.svg">
   
+   <!-- corousel -->
+  <link rel="stylesheet" href="{{url('/')}}/css/w3.css">
+  <style>
+    .mySlides {display:none;}
+  </style>
+  
   <!-- style -->
   <!--
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -111,6 +117,21 @@
     background-color: #F7F7F7;
     border: 1px solid #DDD;
     border-left: 3px solid #ff0000;
+}
+
+li.active{
+  padding: .5rem .75rem;
+  border: 1px solid rgba(120, 130, 140, 0.13);
+  background: #c8e1fa;
+}
+
+li:hover{
+  background: rgba(120, 130, 140, 0.13);
+}
+
+li.disabled{
+  padding: .5rem .75rem;
+  border: 1px solid rgba(120, 130, 140, 0.13);
 }
 </style>
   <!-- endbuild -->
