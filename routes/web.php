@@ -26,6 +26,7 @@ Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
 Route::namespace('FrontEnd')->group(function () {
 	Route::get('/front_end', 'FrontController@index');
 	Route::get('/front_end/all_product', 'FrontController@all_product');
+	Route::get('/front_end/research-corner', 'FrontController@research_corner');
 	Route::get('/front_end/product/{id}', 'FrontController@product_category');
 
 	/**
@@ -215,6 +216,7 @@ Route::namespace('ResearchCorner')->group(function () {
 			Route::get('/getData/', 'ResearchCornerController@getData')->name('getData');
 			Route::get('/read/{id}', 'ResearchCornerController@read')->name('view');
 			Route::get('/download/', 'ResearchCornerController@download')->name('download');
+			Route::get('/download-front/', 'ResearchCornerController@download_front')->name('download-front');
 	    });
     });
 // Angga End
@@ -403,6 +405,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 
 //Ticketing Support
 Route::namespace('TicketingSupport')->group(function () {
+  //Eksportir
   Route::get('/ticketing', 'TicketingSupportController@index')->name('ticket_support.index');
   Route::get('/ticketing/create', 'TicketingSupportController@create')->name('ticket_support.create');
   Route::get('/ticketing/getData', 'TicketingSupportController@getData')->name('ticket_support.getData');
@@ -419,6 +422,26 @@ Route::namespace('TicketingSupport')->group(function () {
   Route::post('admin/ticketing/sendchat', 'TicketingSupportControllerAdmin@sendchat')->name('ticket_support.sendchat.admin');
   Route::get('admin/ticketing/delete/{id}', 'TicketingSupportControllerAdmin@destroy')->name('ticket_support.delete.admin');
   Route::post('admin/ticketing/change', 'TicketingSupportControllerAdmin@change')->name('ticket_support.delete.change');
+});
+
+//Training
+Route::namespace('Training')->group(function () {
+  //Admin
+  Route::get('admin/training', 'TrainingControllerAdmin@index')->name('training.index.admin');
+  Route::get('admin/training/getData', 'TrainingControllerAdmin@getData')->name('training.getData.admin');
+  Route::get('admin/training/create', 'TrainingControllerAdmin@create')->name('training.create.admin');
+  Route::post('admin/training/store', 'TrainingControllerAdmin@store')->name('training.store.admin');
+  Route::post('admin/training/update/{id}', 'TrainingControllerAdmin@update')->name('training.update.admin');
+  Route::get('admin/training/publish/{id}', 'TrainingControllerAdmin@publish')->name('training.publish.admin');
+  Route::get('admin/training/edit/{id}', 'TrainingControllerAdmin@edit')->name('training.edit.admin');
+  Route::get('admin/training/view/{id}', 'TrainingControllerAdmin@view')->name('training.view.admin');
+  Route::get('admin/training/destroy/{id}', 'TrainingControllerAdmin@destroy')->name('training.destroy.admin');
+  Route::get('admin/training/verifed/{id}/{id_tr}/{id_profil}', 'TrainingControllerAdmin@verifed')->name('training.verifed.admin');
+  //Eksportir
+  Route::get('training', 'TrainingControllerEksportir@index')->name('training.index');
+  Route::get('training/getData', 'TrainingControllerEksportir@getData')->name('training.getData');
+  Route::get('training/view', 'TrainingControllerEksportir@view')->name('training.view');
+  Route::post('training/join', 'TrainingControllerEksportir@join')->name('training.join');
 });
 
 //END YOSS ------------------------------------------
