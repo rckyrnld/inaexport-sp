@@ -24,7 +24,7 @@ class PerwakilanResearchController extends Controller
     public function getData()
     {
       $id_user = Auth::user()->id;
-      $research = DB::table('csc_research_corner')->where('created_by', $id_user)->orderby('publish_date', 'asc')->get();
+      $research = DB::table('csc_research_corner')->where('created_by', $id_user)->orderby('publish_date', 'desc')->get();
 
       return \Yajra\DataTables\DataTables::of($research)
           ->addIndexColumn()
@@ -68,7 +68,11 @@ class PerwakilanResearchController extends Controller
           ->addIndexColumn()
           ->addColumn('company', function ($var) {
             $data = DB::table('itdp_profil_eks')->where('id', $var->id_itdp_profil_eks)->first();
-            return $data->company;
+            if($data){
+              return $data->company;
+            } else {
+              return 'Profile '.$var->id_itdp_profil_eks.' Not Found';
+            }
           })
           ->addColumn('download_date', function ($data) {
             return getTanggalIndo(date('Y-m-d', strtotime($data->waktu))).' ( '.date('H:i', strtotime($data->waktu)).' )';

@@ -20,10 +20,52 @@ class FrontController extends Controller
     {
         //Data Product
         $product = DB::table('csc_product_single')
-            ->orderBy('id', 'desc')
+            ->inRandomOrder()
+            ->limit(10)
+            ->get();
+        return view('frontend.index', compact('product'));
+    }
+
+    public function all_product()
+    {
+        //List Category Product
+        $catprod = DB::table('csc_product')
+            ->where('level_1', 0)
+            ->where('level_2', 0)
+            ->orderBy('nama_kategori_en', 'ASC')
+            ->get();
+        //Data Product
+        $product = DB::table('csc_product_single')
+            ->inRandomOrder()
             ->limit(10)
             ->get();
 
+        return view('frontend.product.all_product', compact('product', 'catprod'));
+    }
+
+    public function product_category($id)
+    {
+        //Category Product
+        $catdata = DB::table('csc_product')->where('id', $id)->first();
+        //Product dengan Category yang dipilih
+        $prodcategory = DB::table('csc_product_single')->where('id_csc_product', $id)->orderby('prodname_en', 'asc')->paginate(20);
+        return view('frontend.product.product_category', compact('catdata', 'prodcategory'));
+    }
+
+    public function view_product($id)
+    {
+        //Product
+        $data = DB::table('csc_product_single')
+            ->where('id', '=', $id)
+            ->first();
+        //Category Per Level
+        $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
+        $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
+        $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
+        return view('frontend.product.view_product', compact('data', 'catprod', 'catprod2', 'catprod3'));
+    }
+
+    public function research_corner(){
         // Data Broadcast FrontEnd
         $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
             ->orderby('a.created_at', 'desc')
@@ -31,24 +73,8 @@ class FrontController extends Controller
             ->select('b.*', 'a.id_research_corner', 'a.created_at')
             ->limit(10)
             ->get();
-        return view('frontend.index', compact('product', 'research'));
-    }
 
-    public function view_($id)
-    {
-        if(Auth::guard('eksmp')->user()){
-            $jenis = "eksportir";
-        }else{
-            $jenis = "admin";
-        }
-        $pageTitle = 'Detail Product';
-        $data = DB::table('csc_product_single')
-            ->where('id', '=', $id)
-            ->first();
-        $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
-        $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
-        $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
-        return view('eksportir.eksproduct.view', compact('pageTitle', 'data', 'catprod', 'catprod2', 'catprod3', 'jenis'));
+        return view('frontend.research-corner', compact('product', 'research'));
     }
 
     public function getSub(Request $request)
@@ -79,4 +105,50 @@ class FrontController extends Controller
         }
         return $result;
     }
+
+    public function Event(){
+        $e_detail = DB::table('event_detail')->orderby('id', 'asc')->paginate(8);
+        return view('frontend.event.index', compact('e_detail'));
+    }
+
+    public function search_event(Request $req){
+        $eq = $req->eq;
+        if ($eq!="") {
+            $e_detail = DB::table('event_detail')->where('event_name_en', 'LIKE', '%'.$eq.'%')->orderby('id', 'asc')->paginate(8)->setPath( '' );
+            $pagination = $e_detail->appends(array('eq' => $req->eq));
+            $e_detail->appends($req->only('eq'));
+            if (count($e_detail) > 0) {
+                return view('frontend.event.index', compact('e_detail'));
+            }else{
+                return view('frontend.event.index', compact('e_detail'))->withMessage('No Details found. Try to search again !');
+            }
+        }else{
+            return redirect('/event');
+        }
+    }
+
+    public function join_event($id){
+        $detail = DB::table('event_detail')->where('id', $id)->first();
+        return view('frontend.event.join_event', compact('detail'));
+    }
+
+    //Front End Training
+    public function indexTraining(){
+      $pageTitle = 'Training';
+			$data = DB::table('training_admin')->where('status', 1)->paginate(10);
+      return view('training.frontend.index',compact('data','pageTitle'));
+    }
+
+    public function indexTrainingSearch(Request $request){
+			$cari = $request->cari;
+
+			$data = DB::table('training_admin')
+			->where('training_in','like',"%".$cari."%")
+			->paginate(10);
+
+			$pageTitle = 'Training';
+
+			return view('training.frontend.index',compact('data','pageTitle'));
+		}
+    //End Training Front End
 }

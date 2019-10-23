@@ -25,6 +25,24 @@ Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
 
 Route::namespace('FrontEnd')->group(function () {
 	Route::get('/front_end', 'FrontController@index');
+	Route::get('/front_end/all_product', 'FrontController@all_product');
+	Route::get('/front_end/research-corner', 'FrontController@research_corner');
+	Route::get('/front_end/category_product/{id}', 'FrontController@product_category');
+	Route::get('/front_end/product/{id}', 'FrontController@view_product');
+
+	/**
+	 * Createdby Intan Kamelia
+	*/
+	Route::get('/front_end/event', 'FrontController@Event');
+	Route::any('/front_end/event/search', 'FrontController@search_event');
+	Route::get('/front_end/join_event/{id}', 'FrontController@join_event');
+
+  //YOSS
+  //Front End TrainingController
+  Route::get('/front_end/training', 'FrontController@indexTraining');
+  Route::get('frontend/training/search', 'FrontController@indexTrainingSearch');
+  //End Training Frontend
+
 });
 
 Route::get('/br_importir', 'BRFrontController@br_importir');
@@ -225,7 +243,16 @@ Route::namespace('ResearchCorner')->group(function () {
 Route::namespace('Event')->prefix('event')->group(function () {
 		Route::get('/', 'EventController@index');
 		Route::get('/create', 'EventController@create');
-		Route::get('/save', 'EventController@store');
+		Route::post('/store', 'EventController@store');
+		Route::get('/edit/{id}', 'EventController@edit');
+		Route::post('/update/{id}', 'EventController@update');
+		Route::get('/delete/{id}', 'EventController@delete');
+		Route::get('/show_company/{id}', 'EventController@show_company');
+		Route::get('/show/read/{id}', 'EventController@show');
+		Route::get('/show_detail/{id}', 'EventController@show_detail');
+		Route::any('/search', 'EventController@search');
+		Route::any('/search_eksportir', 'EventController@search_eksportir');
+
 });
 
 
@@ -391,6 +418,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 
 //Ticketing Support
 Route::namespace('TicketingSupport')->group(function () {
+  //Eksportir
   Route::get('/ticketing', 'TicketingSupportController@index')->name('ticket_support.index');
   Route::get('/ticketing/create', 'TicketingSupportController@create')->name('ticket_support.create');
   Route::get('/ticketing/getData', 'TicketingSupportController@getData')->name('ticket_support.getData');
@@ -407,6 +435,27 @@ Route::namespace('TicketingSupport')->group(function () {
   Route::post('admin/ticketing/sendchat', 'TicketingSupportControllerAdmin@sendchat')->name('ticket_support.sendchat.admin');
   Route::get('admin/ticketing/delete/{id}', 'TicketingSupportControllerAdmin@destroy')->name('ticket_support.delete.admin');
   Route::post('admin/ticketing/change', 'TicketingSupportControllerAdmin@change')->name('ticket_support.delete.change');
+});
+
+//Training
+Route::namespace('Training')->group(function () {
+  //Admin
+  Route::get('admin/training', 'TrainingControllerAdmin@index')->name('training.index.admin');
+  Route::get('admin/training/getData', 'TrainingControllerAdmin@getData')->name('training.getData.admin');
+  Route::get('admin/training/create', 'TrainingControllerAdmin@create')->name('training.create.admin');
+  Route::post('admin/training/store', 'TrainingControllerAdmin@store')->name('training.store.admin');
+  Route::post('admin/training/update/{id}', 'TrainingControllerAdmin@update')->name('training.update.admin');
+  Route::get('admin/training/publish/{id}', 'TrainingControllerAdmin@publish')->name('training.publish.admin');
+  Route::get('admin/training/edit/{id}', 'TrainingControllerAdmin@edit')->name('training.edit.admin');
+  Route::get('admin/training/view/{id}', 'TrainingControllerAdmin@view')->name('training.view.admin');
+  Route::get('admin/training/destroy/{id}', 'TrainingControllerAdmin@destroy')->name('training.destroy.admin');
+  Route::get('admin/training/verifed/{id}/{id_tr}/{id_profil}', 'TrainingControllerAdmin@verifed')->name('training.verifed.admin');
+  //Eksportir
+  Route::get('training', 'TrainingControllerEksportir@index')->name('training.index');
+  Route::get('training/getData', 'TrainingControllerEksportir@getData')->name('training.getData');
+  Route::get('training/view', 'TrainingControllerEksportir@view')->name('training.view');
+  Route::post('training/join', 'TrainingControllerEksportir@join')->name('training.join');
+  Route::get('training/search', 'TrainingControllerEksportir@search')->name('training.search');
 });
 
 //END YOSS ------------------------------------------

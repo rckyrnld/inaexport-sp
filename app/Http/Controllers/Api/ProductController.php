@@ -16,7 +16,7 @@ class ProductController extends Controller
         $this->middleware('api.auth');
 	}
 
-    public function findProductById(Request $request)
+    public function findProductById($id_user)
     {
         // dd($this->middleware('api.auth'));
         	$dataProduk = DB::table('csc_product_single')
@@ -24,6 +24,19 @@ class ProductController extends Controller
             ->orderBy('product_description_en', 'ASC')
             ->get();
 	   
+		if(count($dataProduk) > 0){
+			$res['message'] = "Success";
+			$res['data'] = $dataProduk;
+        	return response($res);
+		}else{
+			$res['message'] = "Failed";
+			return response($res);
+		}
+	}
+
+	public function browseProduct(){
+		$dataProduk = DB::table('csc_product_single').where('status', '=', 1)->orderBy('product_description_en', 'ASC')
+			->get();
 		if(count($dataProduk) > 0){
 			$res['message'] = "Success";
 			$res['data'] = $dataProduk;

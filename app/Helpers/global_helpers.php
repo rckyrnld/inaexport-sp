@@ -97,3 +97,102 @@ if (! function_exists('getNameCompany')) {
         return $name;
     }
 }
+
+if (! function_exists('getEventComodity')) {
+    function getEventComodity($id){
+        $data = DB::table('event_comodity')->where('id', $id)->first();
+        return $data->comodity_en;
+    }
+}
+
+if (! function_exists('getEventPlace')) {
+    function getEventPlace($id){
+        $data = DB::table('event_place')->where('id', $id)->first();
+        return $data->name_en;
+    }
+}
+
+if (! function_exists('getEventStatus')) {
+    function getEventStatus($id){
+        $data = DB::table('event_detail')->where('id', $id)->first();
+        return $data->status_en;
+    }
+}
+
+if (! function_exists('getKatagori')) {
+    function getKatagori($id){
+        $data = DB::table('event_detail_kategori')->where('id_event_detail', $id)->get();
+        foreach ($data as $key => $value) {
+          $nama = DB::table('csc_product')->where('id', $value->id_prod_cat)->first();
+          echo '<br> -'.$nama->nama_kategori_en;
+
+        }
+    }
+}
+
+if (! function_exists('checkJoin')) {
+    function checkJoin($id_training_admin, $id_profil_eks){
+        $data = DB::table('training_join')
+          ->where('id_training_admin', $id_training_admin)
+          ->where('id_profil_eks', $id_profil_eks)
+          ->first();
+        if($data){
+          return 1;
+        }else{
+          return 0;
+        }
+    }
+}
+
+if (! function_exists('getProductAttr')) {
+    function getProductAttr($id, $col, $lang){
+        $data = DB::table('csc_product_single')->where('id', $id)->first();
+        $isi = NULL;
+        if($lang != ""){
+          $dt = $col.'_'.$lang;
+          if($data->$dt != NULL){
+            $isi = $data->$dt;
+          }
+        }else{
+          if($data->$col != NULL){
+            $isi = $data->$col;
+          }
+        }
+
+        if($isi == NULL){
+          $isi = "-";
+        }
+
+        return $isi;
+    }
+}
+
+if (! function_exists('getCompanyName')) {
+    function getCompanyName($id){
+        $nama = "-";
+        $data = DB::table('itdp_company_users')->where('id', $id)->first();
+        if($data->id_profil != NULL){
+          $profil = DB::table('itdp_profil_eks')->where('id', $data->id_profil)->first();
+          if($profil){
+            $nama = $profil->company;
+          }
+        }
+
+        return $nama;
+    }
+}
+
+if (! function_exists('getCategoryName')) {
+    function getCategoryName($id, $loc){
+        $nama = "-";
+        if($id != NULL){
+          $col = "nama_kategori_".$loc;
+          $data = DB::table('csc_product')->where('id', $id)->first();
+          if($data->$col != NULL){
+            $nama = $data->$col;
+          }
+        }
+
+        return $nama;
+    }
+}

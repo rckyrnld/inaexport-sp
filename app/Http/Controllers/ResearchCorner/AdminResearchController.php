@@ -23,7 +23,7 @@ class AdminResearchController extends Controller
 
     public function getData()
     {
-      $research = DB::table('csc_research_corner')->orderby('publish_date', 'asc')->get();
+      $research = DB::table('csc_research_corner')->orderby('publish_date', 'desc')->get();
 
       return \Yajra\DataTables\DataTables::of($research)
           ->addIndexColumn()
@@ -67,7 +67,11 @@ class AdminResearchController extends Controller
           ->addIndexColumn()
           ->addColumn('company', function ($var) {
             $data = DB::table('itdp_profil_eks')->where('id', $var->id_itdp_profil_eks)->first();
-            return $data->company;
+            if($data){
+              return $data->company;
+            } else {
+              return 'Profile '.$var->id_itdp_profil_eks.' Not Found';
+            }
           })
           ->addColumn('download_date', function ($data) {
             return getTanggalIndo(date('Y-m-d', strtotime($data->waktu))).' ( '.date('H:i', strtotime($data->waktu)).' )';

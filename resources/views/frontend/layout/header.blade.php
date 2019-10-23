@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
   <meta charset="utf-8" />
-  <title>{{$pageTitle}}</title>
+  <title>@lang("frontend.title")</title>
   <meta name="description" content="Responsive, Bootstrap, BS4" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,12 +16,6 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="shortcut icon" sizes="196x196" href="../assets/images/logo.svg">
   
-
-  <!-- corousel -->
-  <link rel="stylesheet" href="{{url('/')}}/css/w3.css">
-  <style>
-    .mySlides {display:none;}
-  </style>
   <!-- style -->
   <!--
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -76,108 +70,64 @@
 <script src="{{url('assets')}}/html/scripts/plugins/datatable.js" ></script>
 
 <script src="{{ url('/') }}/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+<style>
+.nav-tabs {
+    border-bottom: 2px solid #ddd;
+}
+.nav-tabs>li {
+    float: left;
+    margin-bottom: -1px;
+}
+.nav>li {
+    position: relative;
+    display: block;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    background-color: #5cb85c;
+    color: white;
+    background-image: linear-gradient(to bottom right, #51d0a8,#065784);
+    
+}
+.nav-tabs>li>a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+}
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}  
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color: transparent!important;
+}
 
-<script type="text/javascript">
-  $(function () {
-   $('#example1').DataTable({
-     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-    });
-	
-	$('#example2').DataTable({
-     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-    });
-	
-	$('#yahoo').DataTable({
-     
-    });
+.cat {
+    text-align: left;
+    margin: 2px auto;
+    line-height: 40px;
+    background-color: #F7F7F7;
+    border: 1px solid #DDD;
+    border-left: 3px solid #ff0000;
+}
 
-  $('.select2').select2();
- });
- </script>
+li.active{
+  padding: .5rem .75rem;
+  border: 1px solid rgba(120, 130, 140, 0.13);
+  background: #c8e1fa;
+}
 
+li:hover{
+  background: rgba(120, 130, 140, 0.13);
+}
 
+li.disabled{
+  padding: .5rem .75rem;
+  border: 1px solid rgba(120, 130, 140, 0.13);
+}
+</style>
+  <!-- endbuild -->
 </head>
 <body>
-<?php date_default_timezone_set('Asia/Jakarta'); ?>
-
-<div class="app" id="app">
-
-<!-- ############ LAYOUT START-->
-
-    <!-- ############ Aside START-->
-    <div id="aside" class="app-aside fade box-shadow-x nav-expand white" aria-hidden="true">
-        <div class="sidenav modal-dialog dk">
-          <!-- sidenav top -->
-          
-   <div class="navbar lt" style="background-color:  #1a7688 ; color: #ffffff">
-    
-            <!-- brand -->
-            <a href="../index.html" class="navbar-brand">
-               
-                <img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." >
-                <span class="hidden-folded d-inline"><font size="3px">Ministry Of Trade </font></span>
-            </a>
-            <!-- / brand -->
-          </div>
-
-
-           @include('menu')
-
-          <!-- sidenav bottom -->
-          <div class="no-shrink lt" style="background-color:  #2791a6  ; color: #ffffff">
-            <div class="nav-fold">
-              
-                <div class="dropdown-menu  w pt-0 mt-2 animate fadeIn">
-                  <div class="row no-gutters b-b mb-2">
-                    <div class="col-4 b-r">
-                      <a href="app.user.html" class="py-2 pt-3 d-block text-center">
-                        <i class="fa text-md fa-phone-square text-muted"></i>
-                        <small class="d-block">Call</small>
-                      </a>
-                    </div>
-                    <div class="col-4 b-r">
-                      <a href="app.message.html" class="py-2 pt-3 d-block text-center">
-                        <i class="fa text-md fa-comment text-muted"></i>
-                        <small class="d-block">Chat</small>
-                      </a>
-                    </div>
-                    <div class="col-4">
-                      <a href="app.inbox.html" class="py-2 pt-3 d-block text-center">
-                        <i class="fa text-md fa-envelope text-muted"></i>
-                        <small class="d-block">Email</small>
-                      </a>
-                    </div>
-                  </div>
-                  <a class="dropdown-item" href="profile.html">
-                    <span>Profile</span>
-                  </a>
-                  <a class="dropdown-item" href="setting.html">
-                    <span>Settings</span>
-                  </a>
-                  <a class="dropdown-item" href="app.inbox.html">
-                    <span class="float-right"><span class="badge info">6</span></span>
-                    <span>Inbox</span>
-                  </a>
-                  <a class="dropdown-item" href="app.message.html">
-                    <span>Message</span>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="docs.html">
-                    Need help?
-                  </a>
-                  <a class="dropdown-item" href="signin.html">Sign out</a>
-                </div>
-              
-            </div>
-          </div>
-        </div>
-    </div>
-
-     <!-- ############ Aside END-->
-
-    <!-- ############ Content START-->
-    <div id="content" class="app-content box-shadow-0" role="main">
-
-
-
-    @include('main')
