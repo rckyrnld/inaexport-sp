@@ -46,7 +46,7 @@ class ResearchCornerController extends Controller
         }
       }
 
-      $tambahan = DB::table('csc_additional_research_corner')->where('id_itdp_profil_eks', $id_profil)->get();
+      $tambahan = DB::table('csc_download_research_corner')->where('id_itdp_profil_eks', $id_profil)->get();
       foreach ($tambahan as $key) {
         if (!in_array($key->id_research_corner, $array_research)){
             array_push($array_research, $key->id_research_corner);
@@ -56,7 +56,7 @@ class ResearchCornerController extends Controller
       $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
       ->whereIn('a.id_categori_product', $array_kategori)
       ->orWhereIn('a.id_research_corner', $array_research)
-      ->orderby('b.publish_date', 'asc')
+      ->orderby('b.publish_date', 'desc')
       ->distinct('a.id_research_corner')
       ->select('b.*')
       ->get();
@@ -99,38 +99,6 @@ class ResearchCornerController extends Controller
     {
       $id_profil = Auth::guard('eksmp')->user()->id_profil;
       $id_user = Auth::guard('eksmp')->user()->id;
-      $checking = DB::table('csc_download_research_corner')->where('id_itdp_profil_eks', $id_profil)->where('id_research_corner', $req->id)->first();
-      if($checking){
-        $hasil = 'positif';
-      } else {
-        $id = DB::table('csc_download_research_corner')->orderby('id', 'desc')->first();
-        if($id){ $id = $id->id+1; }else{ $id=1; }
-        $before = DB::table('csc_research_corner')->where('id', $req->id)->first();
-
-        DB::table('csc_download_research_corner')->insert([
-          'id' => $id,
-          'id_itdp_profil_eks' => $id_profil,
-          'id_research_corner' => $req->id,
-          'waktu' => date('Y-m-d H:i:s')
-        ]);
-
-        DB::table('notif')->where('url_terkait', 'research-corner/read')->where('id_terkait', $req->id)->where('untuk_id', $id_user)->update([
-          'status_baca' => 1
-        ]);
-
-        DB::table('csc_research_corner')->where('id', $req->id)->update([
-          'download' => $before->download+1
-        ]);
-
-        $hasil = 'nihil';
-      }
-      echo json_encode($hasil);
-    }
-
-    public function download_front(Request $req)
-    {
-      $id_profil = Auth::guard('eksmp')->user()->id_profil;
-      $id_user = Auth::guard('eksmp')->user()->id;
       $date = date('Y-m-d H:i:s');
       $checking = DB::table('csc_download_research_corner')->where('id_itdp_profil_eks', $id_profil)->where('id_research_corner', $req->id)->first();
       if($checking){
@@ -143,15 +111,6 @@ class ResearchCornerController extends Controller
           'id_itdp_profil_eks' => $id_profil,
           'id_research_corner' => $req->id,
           'waktu' => $date
-        ]);
-
-        $id = DB::table('csc_additional_research_corner')->orderby('id', 'desc')->first();
-        if($id){ $id = $id->id+1; }else{ $id=1; }
-        DB::table('csc_additional_research_corner')->insert([
-          'id' => $id,
-          'id_itdp_profil_eks' => $id_profil,
-          'id_research_corner' => $req->id,
-          'created_at' => $date
         ]);
 
         $notif = DB::table('notif')->where('url_terkait', 'research-corner/read')->where('id_terkait', $req->id)->where('untuk_id', $id_user)->first();

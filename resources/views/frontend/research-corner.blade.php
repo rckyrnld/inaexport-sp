@@ -106,7 +106,7 @@
       window.open(obj.href, '_blank');
     } else if(login == 'eksportir'){
       $.ajax({
-          url: "{{route('research-corner.download-front')}}",
+          url: "{{route('research-corner.download')}}",
           type: 'get',
           data: {id:id},
           dataType: 'json',
