@@ -98,4 +98,30 @@ class FrontController extends Controller
         }
         return $result;
     }
+
+    public function Event(){
+        $e_detail = DB::table('event_detail')->orderby('id', 'asc')->paginate(8);
+        return view('frontend.event.index', compact('e_detail'));
+    }
+
+    public function search_event(Request $req){
+        $eq = $req->eq;
+        if ($eq!="") {
+            $e_detail = DB::table('event_detail')->where('event_name_en', 'LIKE', '%'.$eq.'%')->orderby('id', 'asc')->paginate(8)->setPath( '' );
+            $pagination = $e_detail->appends(array('eq' => $req->eq));
+            $e_detail->appends($req->only('eq'));
+            if (count($e_detail) > 0) {
+                return view('frontend.event.index', compact('e_detail'));
+            }else{
+                return view('frontend.event.index', compact('e_detail'))->withMessage('No Details found. Try to search again !');
+            }
+        }else{
+            return redirect('/event');
+        }
+    }
+
+    public function join_event($id){
+        $detail = DB::table('event_detail')->where('id', $id)->first();
+        return view('frontend.event.join_event', compact('detail'));
+    }
 }
