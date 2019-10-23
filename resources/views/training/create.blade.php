@@ -167,7 +167,7 @@
                         <td>
                           @if($jn->status == 0)
                             <center>
-                              <a href="{{url('admin/training/verifed',[$jn->id,$data->id, $jn->id_profil_eks])}}" class="btn btn-success btn-sm">Verifed</a>
+                              <a href="{{url('admin/training/verifed',[$jn->id,$data->id, $jn->id_profil_eks])}}" class="btn btn-success btn-sm">Verified</a>
                             </center>
                           @elseif($jn->status == 1)
                             <center><span class="fa fa-check"></span></center>
@@ -177,6 +177,7 @@
                     @endforeach
                   </tbody>
                 </table>
+                {{ $join->render("pagination::bootstrap-4") }}
               </div>
             </div>
             @endif

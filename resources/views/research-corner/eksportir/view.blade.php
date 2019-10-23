@@ -38,7 +38,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Type</label>
                  <div class="col-md-7">
-                    <input type="text" class="form-control" readonly value="{{rc_type($data->id_csc_research_type)}}">
+                    <input type="text" class="form-control" readonly value="{{rc_type($data->id_csc_research_type,'en')}}">
                  </div>
              </div>
 

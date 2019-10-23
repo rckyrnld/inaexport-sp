@@ -6,7 +6,7 @@
     $for = 'admin';
     $message = '';
   } else if(Auth::guard('eksmp')->user()){
-    if(Auth::guard('eksmp')->user()->id_role == 3){
+    if(Auth::guard('eksmp')->user()->id_role == 2){
       $for = 'eksportir';
       $message = '';
     } else {
@@ -49,16 +49,16 @@
   </div>
   <div id="content-body">
     <div class="py-5 text-center w-100">
-      <h4><b>@lang("frontend.terbaru") Research Corner</b></h4><br>
+      <h4><b>@lang("research-corner.terbaru") Research Corner</b></h4><br>
       <center>
-        <h5><b>@lang("frontend.direktorat")</b></h5>
+        <h5><b>@lang("research-corner.direktorat")</b></h5>
         <table class="table table-bordered table-striped" style="width: 90%; padding: 20px; text-align: center;">
           <thead>
-            <th style="text-align: center;">@lang("frontend.judul_rc")</th>
-            <th style="text-align: center;">@lang("frontend.tipe_rc")</th>
-            <th style="text-align: center;">@lang("frontend.negara_rc")</th>
-            <th style="text-align: center;">@lang("frontend.publish_rc")</th>
-            <th style="text-align: center;">Download</th>
+            <th style="text-align: center;">@lang("research-corner.judul_rc")</th>
+            <th style="text-align: center;">@lang("research-corner.tipe_rc")</th>
+            <th style="text-align: center;">@lang("research-corner.negara_rc")</th>
+            <th style="text-align: center;">@lang("research-corner.publish_rc")</th>
+            <th style="text-align: center;">@lang("research-corner.unduh_rc")</th>
           </thead>  
           <tbody>
             @foreach($research as $data)
@@ -82,7 +82,7 @@
             ?>
             <tr>
               <td>{{$title}}</td>
-              <td>{{rc_type($data->id_csc_research_type)}}</td>
+              <td>{{rc_type($data->id_csc_research_type, $loc)}}</td>
               <td>{{rc_country($data->id_mst_country)}}</td>
               <td>{{$date}}</td>
               <td><a href="{{$url}}" class="btn btn-primary" onclick="__download('{{$data->id}}', event, this)"><span class="fa fa-download"></span></a></td>
@@ -106,7 +106,7 @@
       window.open(obj.href, '_blank');
     } else if(login == 'eksportir'){
       $.ajax({
-          url: "{{route('research-corner.download-front')}}",
+          url: "{{route('research-corner.download')}}",
           type: 'get',
           data: {id:id},
           dataType: 'json',
@@ -118,8 +118,6 @@
             }
           }
       });
-    } else if(login == 'importir'){
-      alert("{{$message}}");
     } else {
       alert("{{$message}}");
     }

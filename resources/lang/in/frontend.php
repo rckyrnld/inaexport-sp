@@ -38,5 +38,4 @@ return [
     "t_date"    => 'Tanggal Mulai - Tanggal Berakhir', 
     "t_Comodity"    => "Komoditas",
     "t_join"    => "Bergabung"
-
 ];

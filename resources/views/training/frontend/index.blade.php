@@ -1,75 +1,97 @@
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-  <meta charset="utf-8" />
-  <title>Register Pembeli</title>
-  <meta name="description" content="Responsive, Bootstrap, BS4" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+@include('frontend.layout.header')
 
-  <!-- for ios 7 style, multi-resolution icon of 152x152 -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
-  <link rel="apple-touch-icon" href="../assets/images/logo.svg">
-  <meta name="apple-mobile-web-app-title" content="Flatkit">
-  <!-- for Chrome on Android, multi-resolution icon of 196x196 -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="shortcut icon" sizes="196x196" href="../assets/images/logo.svg">
-  
-  <!-- style -->
-
-  <link rel="stylesheet" href="{{url('assets')}}/libs/font-awesome/css/font-awesome.min.css" type="text/css" />
-
-  <!-- build:css ../assets/css/app.min.css -->
-  <link rel="stylesheet" href="{{url('assets')}}/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
-  <link rel="stylesheet" href="{{url('assets')}}/assets/css/app.css" type="text/css" />
-  <link rel="stylesheet" href="{{url('assets')}}/assets/css/style.css" type="text/css" />
-  <!-- endbuild -->
-</head>
-<body style="font-family: "Times New Roman", Times, serif;">
-<style>
-select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.com/entries/icons/original/000/015/163/narutoooh.jpg');   }
-</style>
-
-<div class="d-flex flex-column flex" style="background-color:  #2e899e  ; color: #ffffff">
- <div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
+<div class="d-flex flex-column flex" style="">
+	<div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
     <div class="mx-auto">
-	<table border="0" width="100%">
-	<tr>
-	<td width="30%" style="font-size:13px;padding-left:10px"><img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b></td>
-	<td width="30%"><!-- <center><span class="hidden-folded d-inline"><H5>Form Registrasi Pembeli Baru</H5></span></center> --></td>
-	<td width="40%" align="right" style="padding-right:10px;">
-	<a href="{{url('registrasi_pembeli')}}"><font color="white"><i class="fa fa-user"></i> @lang("login.lbl2")</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('registrasi_penjual')}}"><font color="white"><i class="fa fa-user"></i> @lang("login.lbl1")</font></a> &nbsp;&nbsp;&nbsp;
-	<a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
-	<a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
-	<a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
-	<a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> @lang("login.lbl3")</font></a>
-	
-	
-	</td>
-	</tr>
-	</table>
-	
-      
-       
-     
+    	<table border="0" width="100%">
+      	<tr>
+      	<td width="30%" style="font-size:13px;padding-left:10px"><img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b></td>
+      	<td width="30%"></td>
+      	<td width="40%" align="right" style="padding-right:10px;">
+        	<a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
+        	<a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
+        	<a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
+        	<a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")</font></a>
+      	</td>
+      	</tr>
+    	</table>
     </div>
   </div>
-  <div id="content-body" style="padding-left:100px; padding-right:100px ; color: #ffffff" >
-    <div class="py-5 w-100">
-	
-	
-      <div class="" style="text-color:black;padding-left:10px; padding-right:10px; border-radius: 3px;">
-	  <br>
-			<h5><center><br>
-			<img height="200px" src="{{url('assets')}}/assets/images/mail.png" alt="." ><br><br>
-			Cek Email Anda Untuk Mengaktifasi Akun Anda !
-			</center></h5>
-	 </div>
+  <div id="content-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-divider m-0"></div>
+          <div class="box-header bg-light">
+            <!-- Header Title -->
+          </div>
+          <div class="box-body bg-light">
+            <h4> View All Eksportir Training</h4><hr>
+            <form action="{{url('frontend/training/search')}}" method="get">
+              <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control" name="cari" placeholder="search..." value="{{ old('cari') }}" autocomplete="off">
+                </div>
+                <div class="col-md-1">
+                  <button type="submit" class="btn btn-primary" name="button">
+                    <span class="fa fa-search"></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div class="col-md-14"><br>
+              @foreach($data as $num => $val)
+                <div class="box">
+                  <div class="box-body">
+                    <b>{{$val->training_en}}</b><hr>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <i>{{date("Y/m/d", strtotime($val->start_date))}} - {{date("Y/m/d", strtotime($val->end_date))}}</i>
+                      </div>
+                    </div><br>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <b>Location</b>
+                      </div>
+                      <div class="col-md-4">
+                        : {{$val->location_en}}
+                      </div>
+                    </div><br>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <b>Topic</b>
+                      </div>
+                      <div class="col-md-4">
+                        : {{$val->topic_en}}
+                      </div>
+                    </div><br>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <b>Duration</b>
+                      </div>
+                      <div class="col-md-4">
+                        : {{$val->duration}} Days
+                      </div>
+                      <div class="col-md-4"></div>
+                      <div class="col-md-2">
+                        <a href="{{url('login')}}" type="submit" name="button" class="btn btn-primary btn-sm"> Join Now</a>
+                      </div>
+                    </div><br>
+                  </div>
+                </div>
+              @endforeach
+            </div>
+            {{ $data->render("pagination::bootstrap-4") }}
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </div>
-
 
 <!-- ############ SWITHCHER START-->
 <div id="setting">
@@ -207,25 +229,4 @@ select#gender option[value="male"]   { background-image:url('https://i.kym-cdn.c
 </div>
 <!-- ############ SWITHCHER END-->
 
-<!-- build:js scripts/app.min.js -->
-<!-- jQuery -->
-  <script src="{{url('assets')}}/libs/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap -->
-  <script src="{{url('assets')}}/libs/popper.js/dist/umd/popper.min.js"></script>
-  <script src="{{url('assets')}}/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- core -->
-  <script src="{{url('assets')}}/libs/pace-progress/pace.min.js"></script>
-  <script src="{{url('assets')}}/libs/pjax/pjax.js"></script>
-
-  <script src="{{url('assets')}}/html/scripts/lazyload.config.js"></script>
-  <script src="{{url('assets')}}/html/scripts/lazyload.js"></script>
-  <script src="{{url('assets')}}/html/scripts/plugin.js"></script>
-  <script src="{{url('assets')}}/html/scripts/nav.js"></script>
-  <script src="{{url('assets')}}/html/scripts/scrollto.js"></script>
-  <script src="{{url('assets')}}/html/scripts/toggleclass.js"></script>
-  <script src="{{url('assets')}}/html/scripts/theme.js"></script>
-  <script src="{{url('assets')}}/html/scripts/ajax.js"></script>
-  <script src="{{url('assets')}}/html/scripts/app.js"></script>
-<!-- endbuild -->
-</body>
-</html>
+@include('frontend.layout.footer')

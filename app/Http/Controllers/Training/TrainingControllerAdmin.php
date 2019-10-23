@@ -120,7 +120,7 @@ class TrainingControllerAdmin extends Controller
         ->selectRaw('tj.*, ipe.company')
         ->leftJoin('itdp_profil_eks as ipe','tj.id_profil_eks','=','ipe.id')
         ->where('id_training_admin', $id)
-        ->get();
+        ->paginate(10);
 
       $pageTitle = 'Training';
 			$page = 'view';
