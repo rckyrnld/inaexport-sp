@@ -15,7 +15,9 @@ class EventController extends Controller
 	public function index(){
 		$pageTitle = "Event";
 		if (Auth::guard('eksmp')->user()) {
-			$e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);
+			$id = strval(Auth::guard('eksmp')->user()->id);
+			$e_detail = DB::select("SELECT DISTINCT b.id_terkait, a.* FROM event_detail as a LEFT JOIN notif as b on b.id_terkait=a.id::VARCHAR WHERE b.untuk_id='$id' and b.url_terkait='event/show/read' ORDER BY a.id desc ");
+			// $e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);
 			return view('Event.index_eksportir', compact('pageTitle','e_detail'));
 		}else{
 			$e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);
@@ -156,6 +158,7 @@ class EventController extends Controller
 		            'status_baca' => 0,
 		            'waktu' => date('Y-m-d H:i:s'),
 		            'id_terkait' => $id,
+		            'to_role' => 2
 		        ]);
 	        }
 
