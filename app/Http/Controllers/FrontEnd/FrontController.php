@@ -77,6 +77,10 @@ class FrontController extends Controller
         return view('frontend.research-corner', compact('research'));
     }
 
+    public function tracking(){
+        return view('frontend.tracking');
+    }
+
     public function getSub(Request $request)
     {
         $level = $request->level;
