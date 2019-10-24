@@ -30,9 +30,18 @@ use Illuminate\Http\Request;
         }); 
         /*API Auth*/ 
         /*************************************************************************************************************/
-        Route::group(['middleware' => ['api', 'manage_token:admin_api,1|4']], function () {
-            Route::get('getRekapAnggota', 'Api\Admin\ManagementController@getRekapAnggota');
+        Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function () {
+            Route::get('getRekapAnggota', 'Api\Admin\ManagementController@getRekapAnggota');            
+
+            Route::get('getDetailVerifikasiImportir', 'Api\Admin\ManagementController@detailVerifikasiImportir');      
+            Route::post('submitVerifikasiImportir', 'Api\Admin\ManagementController@submitVerifikasiImportir');
+            
+            Route::get('getDetailVerifikasiEksportir', 'Api\Admin\ManagementController@detailVerifikasiEksportir');      
+            Route::post('submitVerifikasiEksportir', 'Api\Admin\ManagementController@submitVerifikasiEksportir');
+
         }); 
+
+        
      
         // Route::group(['middleware' => 'auth.jwt'], function () { 
         //   /*API Management*/

@@ -15,7 +15,7 @@ class LoginController extends Controller{
 
 public function __construct()
 {
-    auth()->shouldUse('user_api');
+    auth()->shouldUse('api_user');
 } 
 
 public function login(Request $request)
@@ -53,7 +53,7 @@ protected function respondWithToken($token)//: JsonResponse
         'id_profil' => auth()->user()->id_profil,
         'name' => auth()->user()->username,
         'email' => auth()->user()->email,
-        'type' => 'User Company' //api_user guard 
+        'type' => 'user' //api_user guard 
     ]);
 } 
 }

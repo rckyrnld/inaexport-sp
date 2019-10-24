@@ -45,11 +45,11 @@ return [
             'driver' => 'session',
             'provider' => 'eksmps',
         ],
-        'user_api' => [
+        'api_user' => [
             'driver' => 'jwt',
             'provider' => 'userApis',
         ],
-        'admin_api' => [
+        'api_admin' => [
                     'driver' => 'jwt',
                     'provider' => 'adminApis',
                 ],

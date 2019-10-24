@@ -17,21 +17,28 @@ class ManagementController extends Controller
 
     public function __construct()
     {
-       auth()->shouldUse('admin_api');
+       auth()->shouldUse('api_admin');
 	}
 
     public function getRekapAnggota(){
 		// dd(auth()->authenticate());
-		$eksportirs = DB::select(
-			"select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a LEFT JOIN
-			itdp_profil_eks b ON a.id_profil = b.id where a.id_role='2' order by a.id desc ");
-		$importirs = DB::select(
-			"select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a LEFT JOIN 
-			itdp_profil_imp b ON a.id_profil = b.id where a.id_role='3' order by a.id desc ");
-	   
+		$eksportirs = DB::table('itdp_company_users')
+							->leftJoin('itdp_profil_eks', 'itdp_company_users.id_profil', '=', 'itdp_profil_eks.id')
+							->where('itdp_company_users.id_role', '2')
+							->select('itdp_company_users.*', 'itdp_profil_eks.*')
+							->orderBy('itdp_company_users.id', 'desc')
+							->take(2)->get();
+		$importirs =  DB::table('itdp_company_users')
+							->leftJoin('itdp_profil_imp', 'itdp_company_users.id_profil', '=', 'itdp_profil_imp.id')
+							->where('itdp_company_users.id_role', '3')
+							->select('itdp_company_users.*', 'itdp_profil_imp.*')
+							->orderBy('itdp_company_users.id', 'desc')
+							->take(2)->get();
+	   $data = ['importirs' => $importirs, 'eksportirs' => $eksportirs];
 		if(count($eksportirs) > 0 && count($importirs) > 0){
 			$res['message'] = "Success";
-			$res['data'] = ["importirs" => $importirs, "eksportirs" => $eksportirs];
+			$res['data'] = $data;
+			$res['status_code'] = 200;
         	return response($res);
 		}else{
 			$res['message'] = "Failed";

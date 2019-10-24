@@ -18,7 +18,7 @@ class ProductController extends Controller
     // use AuthenticatesUsers;  
     public function __construct()
     {
-		$this->user = JWTAuth::parseToken()->authenticate();
+       auth()->shouldUse('user_api');
 	}
 
     public function findProductById(Request $request)
