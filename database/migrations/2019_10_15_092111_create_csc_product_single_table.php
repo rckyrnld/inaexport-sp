@@ -46,6 +46,7 @@ class CreateCscProductSingleTable extends Migration
             $table->text('product_description_in')->nullable();
             $table->text('product_description_chn')->nullable();
             $table->integer('status')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }

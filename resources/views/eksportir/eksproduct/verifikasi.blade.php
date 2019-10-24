@@ -387,15 +387,21 @@
                                         <input type="checkbox" {{$chck}} data-toggle="toggle" data-on="Publish" data-off="Hide" data-onstyle="info" data-offstyle="default" id="statusnya" disabled>
                                         <input type="hidden" name="status" id="status" value="{{$data->status}}"> 
                                     </div>
-                                </div><br>
-                                @if($data->status == 3)
+                                </div><br><br>
                                 <div class="row">
-                                    <label for="code" class="col-md-3"><b>This product was rejected due to</b></label>
-                                    <div class="col-md-9">
-                                        <textarea class="form-control" name="keterangan" rows="5" style="color: black;" readonly>{{$data->keterangan}}</textarea>
+                                    <div class="col-md-12">
+                                        <center>
+                                            <div class="btn-group">
+                                                <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{url($url)}}" id="formnya">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" name="verifikasi" value="1">
+                                                    <button class="btn btn-success" type="submit"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
+                                                </form>&nbsp;&nbsp;&nbsp;
+                                                <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#modalDecline"><i class="fa fa-times" aria-hidden="true"></i> Decline</button>
+                                            </div>
+                                        </center>
                                     </div>
-                                </div><br>
-                                @endif
+                                </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div style="float: right;">
@@ -410,6 +416,38 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalDecline" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{url($url)}}" id="formdecline">
+            {{ csrf_field() }}
+            <div class="modal-header">
+              <h4 class="modal-title" style="text-align: left;">Form Rejection</h4>
+              <button type="button" class="close" data-dismiss="modal" style="text-align: right;">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                  <div class="col-md-12">
+                    <input type="hidden" name="verifikasi" value="0">
+                    <label><b>This product was rejected due to :</b></label>
+                  </div>
+              </div><br>
+              <div class="row">
+                  <div class="col-md-12">
+                      <textarea class="form-control" name="keterangan" id="keterangan" rows="5"></textarea>
+                  </div>
+              </div><br>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" id="sendDecline">Send</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </form>
+      </div>
     </div>
 </div>
 
@@ -482,6 +520,17 @@
                 $('#status').val(1);
             } else {
                 $('#status').val(0);
+            }
+
+        });
+
+        $('#sendDecline').on('click', function() {
+            var keterangan = $('#keterangan').val();;
+
+            if(keterangan == "") {
+                alert("Please fill in the reason you rejected this product");
+            } else {
+                $('#formdecline').submit();
             }
 
         });

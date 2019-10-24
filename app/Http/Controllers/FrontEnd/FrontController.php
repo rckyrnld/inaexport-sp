@@ -20,6 +20,7 @@ class FrontController extends Controller
     {
         //Data Product
         $product = DB::table('csc_product_single')
+            ->where('status', 2)
             ->inRandomOrder()
             ->limit(10)
             ->get();
@@ -36,6 +37,7 @@ class FrontController extends Controller
             ->get();
         //Data Product
         $product = DB::table('csc_product_single')
+            ->where('status', 2)
             ->inRandomOrder()
             ->limit(10)
             ->get();
@@ -48,7 +50,7 @@ class FrontController extends Controller
         //Category Product
         $catdata = DB::table('csc_product')->where('id', $id)->first();
         //Product dengan Category yang dipilih
-        $prodcategory = DB::table('csc_product_single')->where('id_csc_product', $id)->orderby('prodname_en', 'asc')->paginate(20);
+        $prodcategory = DB::table('csc_product_single')->where('status', 2)->where('id_csc_product', $id)->orderby('prodname_en', 'asc')->paginate(20);
         return view('frontend.product.product_category', compact('catdata', 'prodcategory'));
     }
 
