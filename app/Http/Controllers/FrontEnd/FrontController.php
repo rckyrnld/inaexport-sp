@@ -107,14 +107,14 @@ class FrontController extends Controller
     }
 
     public function Event(){
-        $e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(8);
+        $e_detail = DB::table('event_detail')->where('status_en', 'Verified')->orderby('id', 'desc')->paginate(8);
         return view('frontend.event.index', compact('e_detail'));
     }
 
     public function search_event(Request $req){
         $eq = $req->eq;
         if ($eq!="") {
-            $e_detail = DB::table('event_detail')->where('event_name_en', 'LIKE', '%'.$eq.'%')->orderby('id', 'asc')->paginate(8)->setPath( '' );
+            $e_detail = DB::table('event_detail')->where('status_en', 'Verified')->where('event_name_en', 'LIKE', '%'.$eq.'%')->orderby('id', 'asc')->paginate(8)->setPath( '' );
             $pagination = $e_detail->appends(array('eq' => $req->eq));
             $e_detail->appends($req->only('eq'));
             if (count($e_detail) > 0) {
@@ -128,7 +128,7 @@ class FrontController extends Controller
     }
 
     public function join_event($id){
-        $detail = DB::table('event_detail')->where('id', $id)->first();
+        $detail = DB::table('event_detail')->where('status_en', 'Verified')->where('id', $id)->first();
         return view('frontend.event.join_event', compact('detail'));
     }
 

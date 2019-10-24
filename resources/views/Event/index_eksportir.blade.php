@@ -22,7 +22,7 @@
                                     <th>Action</th>
                                 </thead>
                                 <tbody>
-                                @foreach($e_detail as $key => $ed) 
+                                @foreach($e_detail as $key => $ed)
                                     <tr>
                                         <td>{{$key+1}}</td>
                                         <td>{{$ed->event_name_en}}</td>
