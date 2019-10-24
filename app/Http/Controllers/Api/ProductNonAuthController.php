@@ -24,6 +24,7 @@ class ProductNonAuthController extends Controller
 		$dataProduk = DB::table('itdp_company_users')
 							->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
 							->where('itdp_company_users.status', '=', 1)
+							->where('csc_product_single.status', 2)
 							->select('csc_product_single.id', 'csc_product_single.prodname_en',
 							'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type')
 							->inRandomOrder()
@@ -46,6 +47,7 @@ class ProductNonAuthController extends Controller
 		$dataProduk = DB::table('itdp_company_users')
 							->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
 							->where('itdp_company_users.status', '=', 1)
+							->where('csc_product_single.status', 2)
 							->where('csc_product_single.id_csc_product', $request->id_kategori)
 							->select('csc_product_single.id', 'csc_product_single.prodname_en',
 							'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type')
