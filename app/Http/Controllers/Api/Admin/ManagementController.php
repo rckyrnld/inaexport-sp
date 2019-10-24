@@ -24,20 +24,19 @@ class ManagementController extends Controller
 
     public function getRekapAnggota(){
 		// dd(auth()->authenticate());
-		$limitNya = Input::get('limit');
-		$pageNya = Input::get('page');
+		
 		$eksportirs = DB::table('itdp_company_users')
 							->leftJoin('itdp_profil_eks', 'itdp_company_users.id_profil', '=', 'itdp_profil_eks.id')
 							->where('itdp_company_users.id_role', '2')
 							->select('itdp_company_users.*', 'itdp_profil_eks.*')
-							->orderBy('itdp_company_users.id', 'desc')
-							->take($limitNya)->get();
+							->orderBy('itdp_company_users.id', 'desc')->skip($request->skip)
+							->take($request->take)->get();
 		$importirs =  DB::table('itdp_company_users')
 							->leftJoin('itdp_profil_imp', 'itdp_company_users.id_profil', '=', 'itdp_profil_imp.id')
 							->where('itdp_company_users.id_role', '3')
 							->select('itdp_company_users.*', 'itdp_profil_imp.*')
-							->orderBy('itdp_company_users.id', 'desc')
-							->take($limitNya)->get();
+							->orderBy('itdp_company_users.id', 'desc')->skip($request->skip)
+							->take($request->take)->get();
 	   $data = ['importirs' => $importirs, 'eksportirs' => $eksportirs];
 	   $dataResult = $this->customPaginate($data, $pageNya);
 		if(count($eksportirs) > 0 && count($importirs) > 0){
