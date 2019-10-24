@@ -39,7 +39,14 @@ class EksProductController extends Controller
             return \Yajra\DataTables\DataTables::of($user)
                 ->addIndexColumn()
                 ->addColumn('information', function ($mjl) {
-                    return "";
+                    $ket = "-";
+                    if($mjl->status == 2 || $mjl->status == 3){
+                        if($mjl->keterangan != NULL){
+                            $ket = $mjl->keterangan;
+                        }
+                    }
+
+                    return $ket;
                 })
                 ->addColumn('product_description', function ($mjl) {
                     if($mjl->product_description_en != NULL){
@@ -61,7 +68,11 @@ class EksProductController extends Controller
                 })
                 ->addColumn('status', function ($mjl) {
                     if($mjl->status == 1){
-                        return "Publish";
+                        return "Publish - Not Verified";
+                    }else if($mjl->status == 2){
+                        return "Publish - Verified";
+                    }else if($mjl->status == 3){
+                        return "Publish - Verification Rejected";
                     }else{
                         return "Hide";
                     }
@@ -72,7 +83,7 @@ class EksProductController extends Controller
                     <a href="' . route('eksproduct.view', $mjl->id) . '" class="btn btn-sm btn-info">
                         <i class="fa fa-search text-white"></i> View
                     </a>
-                    <a href="' . route('eksproduct.detail', $mjl->id) . '" class="btn btn-sm btn-success">
+                    <a href="' . route('eksproduct.edit', $mjl->id) . '" class="btn btn-sm btn-success">
                         <i class="fa fa-edit text-white"></i> Edit
                     </a>
                     <a href="' . route('eksproduct.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
@@ -92,7 +103,14 @@ class EksProductController extends Controller
             return \Yajra\DataTables\DataTables::of($user)
             ->addIndexColumn()
             ->addColumn('information', function ($mjl) {
-                return "";
+                $ket = "-";
+                if($mjl->status == 2 || $mjl->status == 3){
+                    if($mjl->keterangan != NULL){
+                        $ket = $mjl->keterangan;
+                    }
+                }
+
+                return $ket;
             })
             ->addColumn('product_description', function ($mjl) {
                 if($mjl->product_description_en != NULL){
@@ -129,19 +147,37 @@ class EksProductController extends Controller
             })
             ->addColumn('status', function ($mjl) {
                 if($mjl->status == 1){
-                    return "Publish";
+                    return "Publish - Not Verified";
+                }else if($mjl->status == 2){
+                    return "Publish - Verified";
+                }else if($mjl->status == 3){
+                    return "Publish - Verification Rejected";
                 }else{
                     return "Hide";
                 }
             })
             ->addColumn('action', function ($mjl) {
-                return '
-                <center>
-                <a href="' . route('eksproduct.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                    <i class="fa fa-search text-white"></i> View
-                </a>
-                </center>
-                ';
+                if($mjl->status == 1){
+                    return '
+                    <center>
+                    <a href="' . route('eksproduct.verifikasi', $mjl->id) . '" class="btn btn-sm btn-success">
+                        <i class="fa fa-search text-white"></i> Verification
+                    </a>
+                    <a href="' . route('eksproduct.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                        <i class="fa fa-search text-white"></i> View
+                    </a>
+                    </center>
+                    ';
+                }else{
+                    return '
+                    <center>
+                    <a href="' . route('eksproduct.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                        <i class="fa fa-search text-white"></i> View
+                    </a>
+                    </center>
+                    ';
+                }
+
             })
             ->rawColumns(['action', 'product_description'])
             ->make(true);
@@ -202,7 +238,7 @@ class EksProductController extends Controller
             }
 
 
-            DB::table('csc_product_single')->insert([
+            $save = DB::table('csc_product_single')->insert([
                 'id' => $idnew,
                 'id_csc_product' => $request->id_csc_product,
                 'id_csc_product_level1' => $request->id_csc_product_level1,
@@ -237,7 +273,27 @@ class EksProductController extends Controller
                 'status' => $request->status,
                 'created_at' => $datenow,
             ]);
+
+            if($save && $request->status == "1"){
+                $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+                foreach ($admin as $adm) {
+                    $notif = DB::table('notif')->insert([
+                        'dari_nama' => getCompanyName($id_user),
+                        'dari_id' => $id_user,
+                        'untuk_nama' => $adm->name,
+                        'untuk_id' => $adm->id,
+                        'keterangan' => 'New Product Published By '.getCompanyName($id_user).' with Title  "'.$request->prodname_en.'"',
+                        'url_terkait' => 'eksportir/verifikasi_product',
+                        'status_baca' => 0,
+                        'waktu' => $datenow,
+                        'id_terkait' => $idnew,
+                        'to_role' => 1,
+                    ]);
+                }
+            }
+
         }
+
         return redirect('eksportir/product');
     }
 
@@ -265,10 +321,20 @@ class EksProductController extends Controller
         }else{
             $jenis = "admin";
         }
+        $id_user = Auth::guard('eksmp')->user()->id;
         $pageTitle = 'Detail Product';
         $data = DB::table('csc_product_single')
             ->where('id', '=', $id)
             ->first();
+
+        //Read Notification
+        $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+        foreach ($admin as $adm) {
+            DB::table('notif')->where('dari_id', $adm->id)->where('url_terkait', 'eksportir/product_view')->where('id_terkait', $id)->where('untuk_id', $id_user)->update([
+                'status_baca' => 1,
+            ]);
+        }
+
         $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
         $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
         $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
@@ -362,6 +428,81 @@ class EksProductController extends Controller
                 'updated_at' => $datenow,
             ]);
         }
+        return redirect('eksportir/product');
+    }
+
+    public function verifikasi($id)
+    {
+        if(Auth::user()){
+            $id_user = Auth::user()->id;
+            $pageTitle = 'Verification Product';
+            $url = '/eksportir/actver_product/'.$id;
+            $jenis = "admin";
+
+            $data = DB::table('csc_product_single')->where('id', '=', $id)->first();
+
+            //Read Notification
+            DB::table('notif')->where('dari_id', $data->id_itdp_company_user)->where('url_terkait', 'eksportir/verifikasi_product')->where('id_terkait', $id)->where('untuk_id', $id_user)->update([
+                'status_baca' => 1,
+            ]);
+
+            $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
+            $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
+            $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
+            return view('eksportir.eksproduct.verifikasi', compact('pageTitle', 'data', 'url', 'catprod', 'catprod2', 'catprod3', 'jenis'));
+        }else{
+            return redirect('eksportir/product');
+        }
+    }
+
+    public function verifikasi_act($id, Request $request)
+    {
+        if(Auth::user()){
+            $id_user = Auth::user()->id;
+            $datenow = date("Y-m-d H:i:s");
+
+            $data = DB::table('csc_product_single')->where('id', $id)->first();
+
+            $verifikasi = $request->verifikasi;
+            // var_dump($verifikasi);
+            if($verifikasi == '1'){
+                $status = 2;
+                $ket = "This product has been added on the front page";
+                $notifnya = "has been accepted";
+            }else{
+                $keterangan = $request->keterangan;
+                // var_dump($keterangan);
+                $status = 3;
+                $ket = "The product that you added cannot be displayed on the front page because ".$keterangan;
+                $notifnya = "has been declined";
+            }
+
+            // var_dump($status);
+            // var_dump($ket);
+            // die();
+            $update = DB::table('csc_product_single')->where('id', $id)->update([
+                'status' => $status,
+                'keterangan' => $ket,
+                'updated_at' => $datenow,
+            ]);
+
+            if($update){
+                $pengirim = DB::table('itdp_admin_users')->where('id', $id_user)->first();
+                $notif = DB::table('notif')->insert([
+                    'dari_nama' => $pengirim->name,
+                    'dari_id' => $id_user,
+                    'untuk_nama' => getCompanyName($data->id_itdp_company_user),
+                    'untuk_id' => $data->id_itdp_company_user,
+                    'keterangan' => 'Product '.$data->prodname_en.' '.$notifnya.' by Admin',
+                    'url_terkait' => 'eksportir/product_view',
+                    'status_baca' => 0,
+                    'waktu' => $datenow,
+                    'id_terkait' => $id,
+                    'to_role' => 2,
+                ]);
+            }
+        }
+
         return redirect('eksportir/product');
     }
 
