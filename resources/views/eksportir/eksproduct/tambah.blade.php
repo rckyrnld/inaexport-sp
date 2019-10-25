@@ -412,7 +412,7 @@
             if(isChecked) {
                 $('#status').val(1);
             } else {
-                $('#status').val(2);
+                $('#status').val(0);
             }
 
         });

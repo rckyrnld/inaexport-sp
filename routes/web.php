@@ -22,13 +22,18 @@ Route::get('switch/{locale}', function ($locale) {
     App::setLocale($locale);
 });
 Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
+Route::get('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
 
 Route::namespace('FrontEnd')->group(function () {
 	Route::get('/front_end', 'FrontController@index');
 	Route::get('/front_end/all_product', 'FrontController@all_product');
-	Route::get('/front_end/research-corner', 'FrontController@research_corner');
 	Route::get('/front_end/category_product/{id}', 'FrontController@product_category');
 	Route::get('/front_end/product/{id}', 'FrontController@view_product');
+
+	////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
+	Route::get('/front_end/research-corner', 'FrontController@research_corner');
+	Route::get('/front_end/tracking', 'FrontController@tracking');
+	////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
 
 	/**
 	 * Createdby Intan Kamelia
@@ -42,6 +47,7 @@ Route::namespace('FrontEnd')->group(function () {
   Route::get('/front_end/training', 'FrontController@indexTraining');
   Route::get('frontend/training/search', 'FrontController@indexTrainingSearch');
   //End Training Frontend
+
 
 });
 
@@ -256,8 +262,12 @@ Route::namespace('Event')->prefix('event')->group(function () {
 		Route::get('/show_company/{id}', 'EventController@show_company');
 		Route::get('/show/read/{id}', 'EventController@show');
 		Route::get('/show_detail/{id}', 'EventController@show_detail');
+		Route::get('/show_detail/front/{id}', 'EventController@show_detail');
 		Route::any('/search', 'EventController@search');
 		Route::any('/search_eksportir', 'EventController@search_eksportir');
+
+		Route::post('/getEventOrg', 'EventController@getEventOrg');
+		Route::post('/getEventPlace', 'EventController@getEventPlace');
 
 });
 
@@ -413,9 +423,11 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/tambah_product', 'EksProductController@tambah');
     Route::post('/product_save', 'EksProductController@store');
     Route::get('/product_view/{id}', 'EksProductController@view')->name('eksproduct.view');
-    Route::get('/product_edit/{id}', 'EksProductController@edit')->name('eksproduct.detail');
+    Route::get('/product_edit/{id}', 'EksProductController@edit')->name('eksproduct.edit');
     Route::post('/product_update/{id}', 'EksProductController@update');
     Route::get('/product_delete/{id}', 'EksProductController@delete')->name('eksproduct.delete');
+    Route::get('/verifikasi_product/{id}', 'EksProductController@verifikasi')->name('eksproduct.verifikasi');
+    Route::post('/actver_product/{id}', 'EksProductController@verifikasi_act')->name('eksproduct.verifikasi_act');
 });
 
 //////////////////////////////////////////ILYAS END////////////////////////////////////////////////////////////////////////////////

@@ -15,10 +15,12 @@ class EventController extends Controller
 	public function index(){
 		$pageTitle = "Event";
 		if (Auth::guard('eksmp')->user()) {
-			$e_detail = DB::table('event_detail')->orderby('id', 'asc')->paginate(6);
+			$id = strval(Auth::guard('eksmp')->user()->id);
+			$e_detail = DB::select("SELECT DISTINCT b.id_terkait, a.* FROM event_detail as a LEFT JOIN notif as b on b.id_terkait=a.id::VARCHAR WHERE b.untuk_id='$id' and b.url_terkait='event/show/read' ORDER BY a.id desc ");
+			// $e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);
 			return view('Event.index_eksportir', compact('pageTitle','e_detail'));
 		}else{
-			$e_detail = DB::table('event_detail')->orderby('id', 'asc')->paginate(6);
+			$e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);
 			return view('Event.index', compact('pageTitle','e_detail'));
 		}
 	}
@@ -27,9 +29,9 @@ class EventController extends Controller
 		$url_store = '/event/store';
 		$pageTitle = 'Tambah Event';
 		$page='add';
-		$e_organizer = DB::table('event_organizer')->orderby('id', 'asc')->get();
-		$e_palce = DB::table('event_place')->orderby('id', 'asc')->get();
-		$e_comodity = DB::table('event_comodity')->orderby('id', 'asc')->get();
+		$e_organizer = DB::table('event_organizer')->orderby('id', 'desc')->get();
+		$e_palce = DB::table('event_place')->orderby('id', 'desc')->get();
+		$e_comodity = DB::table('event_comodity')->orderby('id', 'desc')->get();
 		// $prod_cat = DB::table('csc_product')->orderby('id', 'asc')->get();
 
 		return view('Event.create', compact('pageTitle', 'url_store', 'page', 'e_organizer','e_palce','e_comodity'));
@@ -156,6 +158,7 @@ class EventController extends Controller
 		            'status_baca' => 0,
 		            'waktu' => date('Y-m-d H:i:s'),
 		            'id_terkait' => $id,
+		            'to_role' => 2
 		        ]);
 	        }
 
@@ -318,20 +321,41 @@ class EventController extends Controller
           	$pagination = $e_detail->appends(array('q' => $req->q));
 	   		$e_detail->appends($req->only('q'));
           	if (count($e_detail) > 0) {
-          		if (Auth::guard('eksmp')->user()) {
-		   			return view('Event.index_eksportir', compact('pageTitle','e_detail'));
-		   		}else{
-		   			return view('Event.index', compact('pageTitle','e_detail'));
-		   		}
+		   		return view('Event.index', compact('pageTitle','e_detail'));
           	}else{
-          		if (Auth::guard('eksmp')->user()) {
-          			return view('Event.index_eksportir', compact('pageTitle','e_detail'))->withMessage('No Details found. Try to search again !');
-          		}else{
-          			return view('Event.index', compact('pageTitle','e_detail'))->withMessage('No Details found. Try to search again !');
-          		}
+          		return view('Event.index', compact('pageTitle','e_detail'))->withMessage('No Details found. Try to search again !');
+          	}
+    	}else{
+    		return redirect('/event');
+    	}
+    }
+
+   public function search_eksportir(Request $req){
+   		$pageTitle = "Event";
+    	$eq = $req->eq;
+    	if ($eq!="") {
+    		$e_detail = DB::table('event_detail')->where('event_name_en', 'LIKE', '%'.$eq.'%')->orderby('id', 'asc')->paginate(6)->setPath( '' );
+          	$pagination = $e_detail->appends(array('eq' => $req->eq));
+	   		$e_detail->appends($req->only('eq'));
+          	if (count($e_detail) > 0) {
+		   		return view('Event.index_eksportir', compact('pageTitle','e_detail'));
+          	}else{
+          		return view('Event.index_eksportir', compact('pageTitle','e_detail'))->withMessage('No Details found. Try to search again !');
           	}
     	}else{
     		return redirect('/event');
     	}
    }
+
+    public function getEventOrg(Request $req){
+  		$id = $req->id;
+  		$data = DB::table('event_organizer')->where('id', $id)->first();
+  		echo json_encode($data);
+    }
+    public function getEventPlace(Request $req){
+    	$id=$req->id;
+    	$data = DB::table('event_place')->where('id', $id)->first();
+    	echo json_encode($data);
+    }
+
 }

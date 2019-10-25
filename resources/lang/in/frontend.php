@@ -32,5 +32,10 @@ return [
     "tipe_rc" => "TIPE",
     "negara_rc" => "NEGARA",
     "publish_rc" => "TANGGAL PUBLIKASI",
-    "terbaru" => "10 Terbaru"
+    "terbaru" => "10 Terbaru",
+    "jdl_event" => "Daftar Peristiwa",
+    "cari"  => "Cari",
+    "t_date"    => 'Tanggal Mulai - Tanggal Berakhir', 
+    "t_Comodity"    => "Komoditas",
+    "t_join"    => "Bergabung"
 ];

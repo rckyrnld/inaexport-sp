@@ -29,14 +29,22 @@ class AdminResearchController extends Controller
           ->addIndexColumn()
           ->addColumn('country', function ($value) {
             $data =  DB::table('mst_country')->where('id', $value->id_mst_country)->first();
-            return $data->country;
+            if($data){
+              return $data->country;
+            } else {
+              return 'Country Not Found';
+            }
           })
           ->addColumn('type', function ($value) {
             $data =  DB::table('csc_research_type')->where('id', $value->id_csc_research_type)->first();
-            return $data->nama_en;
+            if($data){
+              return $data->nama_en;
+            } else {
+              return 'Type Not Found';
+            }
           })
           ->addColumn('date', function ($data) {
-            return getTanggalIndo(date('Y-m-d', strtotime($data->publish_date))).' ( '.date('H:i', strtotime($data->publish_date)).' )';
+            return date('d F Y', strtotime($data->publish_date)).' ( '.date('H:i', strtotime($data->publish_date)).' )';
           })
           ->addColumn('action', function ($data) {
             $research = DB::table('csc_broadcast_research_corner')
@@ -74,7 +82,7 @@ class AdminResearchController extends Controller
             }
           })
           ->addColumn('download_date', function ($data) {
-            return getTanggalIndo(date('Y-m-d', strtotime($data->waktu))).' ( '.date('H:i', strtotime($data->waktu)).' )';
+            return date('d F Y', strtotime($data->waktu)).' ( '.date('H:i', strtotime($data->waktu)).' )';
           })
           ->make(true);
     }
@@ -188,6 +196,7 @@ class AdminResearchController extends Controller
             'status_baca' => 0,
             'waktu' => $date,
             'id_terkait' => $req->research,
+            'to_role' => '2',
         ]);
       }
 

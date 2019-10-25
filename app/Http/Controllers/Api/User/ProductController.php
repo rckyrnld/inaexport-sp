@@ -1,42 +1,57 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Dingo\Api\Routing\Helpers;
+use Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 class ProductController extends Controller
 {
-	use Helpers;
 
+    // use AuthenticatesUsers;  
     public function __construct()
     {
-        $this->middleware('api.auth');
+       auth()->shouldUse('api_user');
 	}
 
-    public function findProductById($id_user)
+    public function findProductById(Request $request)
     {
-        // dd($this->middleware('api.auth'));
+		// dd($this->middleware('api.auth'));
+		// dd(Auth::guard('userApi')->user());
+		//  if(Auth::guard('userApi')->user()){
         	$dataProduk = DB::table('csc_product_single')
             ->where('id_itdp_company_user', '=', $request->id_user)
             ->orderBy('product_description_en', 'ASC')
             ->get();
 	   
-		if(count($dataProduk) > 0){
-			$res['message'] = "Success";
-			$res['data'] = $dataProduk;
-        	return response($res);
-		}else{
-			$res['message'] = "Failed";
-			return response($res);
-		}
+			if(count($dataProduk) > 0){
+				$res['message'] = "Success";
+				$res['data'] = $dataProduk;
+				return response($res);
+			}else{
+				$res['message'] = "Failed, No data.";
+				return response($res);
+			}
+		// }else{
+		// 	$res['message'] = "Failed";
+		// 	return response($res);
+		// }
 	}
 
-	public function browseProduct(){
-		$dataProduk = DB::table('csc_product_single').where('status', '=', 1)->orderBy('product_description_en', 'ASC')
-			->get();
+	public function browseProduct(Request $request){
+		$dataProduk = DB::table('itdp_company_users')
+							->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+							->where('itdp_company_users.status', '=', 1)
+							->where('csc_product_single.id_itdp_company_user', '=', $request->id_user)
+							->select('csc_product_single.id', 'csc_product_single.prodname_en',
+							'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type')
+							->orderBy('csc_product_single.prodname_en','asc')
+							->get();
 		if(count($dataProduk) > 0){
 			$res['message'] = "Success";
 			$res['data'] = $dataProduk;

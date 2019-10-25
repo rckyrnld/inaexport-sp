@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\Model;
+namespace App\Models\Api;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class EksmpApi extends Authenticatable implements JWTSubject
+class AdminApi extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
@@ -15,9 +16,10 @@ class EksmpApi extends Authenticatable implements JWTSubject
      *
      * @var array
      */
-	protected $table = 'itdp_company_users';
+    
+	protected $table = 'itdp_admin_users';
     protected $fillable = [
-        'username', 'email', 'password','id_role'
+        'name', 'email', 'password','password_real','id_group'
     ];
 
     /**
@@ -28,9 +30,9 @@ class EksmpApi extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-       /*penambahan yudha untuk api auth*/
-    public function getJWTIdentifier()
+    
+    /*penambahan yudha untuk api auth*/
+     public function getJWTIdentifier()
     {
         return $this->getKey();
     }

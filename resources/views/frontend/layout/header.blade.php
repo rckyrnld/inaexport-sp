@@ -16,6 +16,12 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="shortcut icon" sizes="196x196" href="../assets/images/logo.svg">
   
+   <!-- corousel -->
+  <link rel="stylesheet" href="{{url('/')}}/css/w3.css">
+  <style>
+    .mySlides {display:none;}
+  </style>
+  
   <!-- style -->
   <!--
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">

@@ -20,9 +20,14 @@ class FrontController extends Controller
     {
         //Data Product
         $product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
             ->inRandomOrder()
             ->limit(10)
             ->get();
+        
         return view('frontend.index', compact('product'));
     }
 
@@ -36,6 +41,10 @@ class FrontController extends Controller
             ->get();
         //Data Product
         $product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
             ->inRandomOrder()
             ->limit(10)
             ->get();
@@ -48,7 +57,14 @@ class FrontController extends Controller
         //Category Product
         $catdata = DB::table('csc_product')->where('id', $id)->first();
         //Product dengan Category yang dipilih
-        $prodcategory = DB::table('csc_product_single')->where('id_csc_product', $id)->orderby('prodname_en', 'asc')->paginate(20);
+        $prodcategory = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
+            ->where('csc_product_single.id_csc_product', $id)
+            ->orderby('csc_product_single.prodname_en', 'asc')
+            ->paginate(20);
         return view('frontend.product.product_category', compact('catdata', 'prodcategory'));
     }
 
@@ -74,7 +90,12 @@ class FrontController extends Controller
             ->limit(10)
             ->get();
 
-        return view('frontend.research-corner', compact('product', 'research'));
+        return view('frontend.research-corner', compact('research'));
+    }
+
+    public function tracking(){
+        $kurir = DB::table('api_tracking')->orderby('name', 'asc')->get();
+        return view('frontend.tracking', compact('kurir'));
     }
 
     public function getSub(Request $request)
@@ -107,14 +128,14 @@ class FrontController extends Controller
     }
 
     public function Event(){
-        $e_detail = DB::table('event_detail')->orderby('id', 'asc')->paginate(8);
+        $e_detail = DB::table('event_detail')->where('status_en', 'Verified')->orderby('id', 'desc')->paginate(8);
         return view('frontend.event.index', compact('e_detail'));
     }
 
     public function search_event(Request $req){
         $eq = $req->eq;
         if ($eq!="") {
-            $e_detail = DB::table('event_detail')->where('event_name_en', 'LIKE', '%'.$eq.'%')->orderby('id', 'asc')->paginate(8)->setPath( '' );
+            $e_detail = DB::table('event_detail')->where('status_en', 'Verified')->where('event_name_en', 'LIKE', '%'.$eq.'%')->orderby('id', 'asc')->paginate(8)->setPath( '' );
             $pagination = $e_detail->appends(array('eq' => $req->eq));
             $e_detail->appends($req->only('eq'));
             if (count($e_detail) > 0) {
@@ -123,12 +144,12 @@ class FrontController extends Controller
                 return view('frontend.event.index', compact('e_detail'))->withMessage('No Details found. Try to search again !');
             }
         }else{
-            return redirect('/event');
+            return redirect('/front_end/event');
         }
     }
 
     public function join_event($id){
-        $detail = DB::table('event_detail')->where('id', $id)->first();
+        $detail = DB::table('event_detail')->where('status_en', 'Verified')->where('id', $id)->first();
         return view('frontend.event.join_event', compact('detail'));
     }
 
