@@ -22,6 +22,7 @@ Route::get('switch/{locale}', function ($locale) {
     App::setLocale($locale);
 });
 Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
+Route::get('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
 
 Route::namespace('FrontEnd')->group(function () {
 	Route::get('/front_end', 'FrontController@index');
