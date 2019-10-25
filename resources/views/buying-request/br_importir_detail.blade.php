@@ -30,16 +30,6 @@
 
 <script src="{{url('assets')}}/html/scripts/plugins/datatable.js" ></script>
   <!-- endbuild -->
-  <style>
-  .table-striped > tbody > tr:nth-child(odd) {
-    background-color: rgba(118, 24, 24, 0.18)!important;
-    background-clip: padding-box!important;
-}
-.table-striped > tbody > tr:nth-child(even) {
-    background-color: rgba(118, 24, 24, 0.18)!important;
-    background-clip: padding-box!important;
-}
-  </style>
 </head>
 <body style="font-family: "Times New Roman", Times, serif;">
 
@@ -84,89 +74,236 @@
 	
       <div class="" style="text-color:black;padding-left:10px; padding-right:10px; border-radius: 3px;">
 	  <br>
-	  
-	   <?php 
-	   if(!empty(Auth::guard('eksmp')->user()->status)){
-	   if (Auth::guard('eksmp')->user()->status == 1) {
-	   ?>
-	   <h5><center>List <?php echo $pageTitle; ?></center></h5>
-	   <br><br>
-	   
-	   <a href="{{ url('br_importir_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add Buying Request</a><br><br>
-		 <table id="example1" border="0" class="table table-bordered table-striped">
-                                <thead class="text-white" style="background-color: #1089ff;">
-                               
-                                </thead>
-								<tbody>
-								<?php 
-								$pesan = DB::select("select * from csc_buying_request where by_role='3' and id_pembuat='".Auth::guard('eksmp')->user()->id."' order by id desc ");
-								foreach($pesan as $ryu){
-								?>
-								<tr>
-								<td><?php echo "<font size='4px'><b>".$ryu->subyek."</b></font><br>";
-								$cardata = DB::select("select nama_kategori_en from csc_product where id='".$ryu->id_csc_prod_cat."'");
-				 foreach($cardata as $ct){
-					 echo $ct->nama_kategori_en."<br>";
-				 }
-				 echo "Valid until ".$ryu->valid." days<br>";
-				 echo $ryu->date;
-								?></td>
-								<td width="20%"><center>
-								<?php if($ryu->status == 0 || $ryu->status == null){ ?>
-								<br><a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy(<?php echo $ryu->id; ?>)" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><i class="fa fa-wifi"></i> Broadcast</a><a title="Detail" href="{{ url('br_importir_detail/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-pencil"></i> Detail&nbsp;&nbsp;&nbsp;</a>
-								<?php }else if($ryu->status == 1 ){ ?>
-								<br><a title="Detail" href="{{ url('br_importir_lc/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-comment"></i> List Chat</a>
-								<?php } ?>
-								</center></td>
-								</tr>
-								<?php } ?>
-								
-								</tbody>
+	 <form class="form-horizontal" method="POST" action="{{ url('br_importir_save') }}" enctype="multipart/form-data">
+           {{ csrf_field() }}
 
-                            </table>
-	   <?php } else { ?>
-	   <h5><center>Pemberitahuan</center></h5>
-	   <br><br>
-	   <h6><center>" Akun anda belum diverifikasi oleh Admin / Perwakilan, Silahkan Lengkapi Terlebih Dahulu Profil Anda <br><br>Klik <a href="{{url('profil2/3/'.Auth::guard('eksmp')->user()->id)}}">Disini</a> Untuk Melengkapi Profil Anda !
-	   <br><br>Lalu Tunggu Sampai Admin / Perwakilan Meng-Verifikasi Akun Anda ! "</center></h6>
-	   <?php } } else { ?>
-	   <h5><center>Pemberitahuan</center></h5>
-	   <br><br>
-	   <h6><center>" Halaman Ini Khusus Untuk User Importir "</center></h6>
-	   <?php } ?>
-					<br>	
+<?php 
+								$pesan = DB::select("select * from csc_buying_request where id='".$id."' limit 1 ");
+								foreach($pesan as $ryu){
+									?>
+<div class="form-row">
+<div class="col-md-6">
+   <div class="box-body">
+   <br><br>
+  
+	<div class="form-row">
+		<div class="col-sm-12">
+		<label><b>What are you looking for</b></label>
+		</div>
+		<div class="form-group col-sm-8">
+			<input type="text" style="color:black;" value="<?php echo $ryu->subyek; ?>" name="cmp" id="cmp" class="form-control" >
+		</div>
+		<div class="form-group col-sm-4">
+			<select style="color:black;" class="form-control" name="valid" id="valid">
+			<option <?php if($ryu->valid == "7"){ echo "selected"; }?> value="7">Valid within 7 day</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="col-sm-12">
+		<label><b>Category</b></label>
+		</div>
+		<div class="form-group col-sm-12">
+			<?php 
+			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
+			?>
+			<select style="color:black;" class="form-control select2" name="category" id="category" onchange="t1()">
+			<option value="">-- Select Category --</option>
+			<?php foreach($ms1 as $val1){ ?>
+			<option <?php if($ryu->id_csc_prod_cat == $val1->id){ echo "selected"; }?>  value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
+			<?php } ?>
+			</select>
+		</div>
 		
-      </div>
-    </div>
-  </div>
+	</div>
+	<div id="t2">
+	<input type="hidden" name="t2s" id="t2s" value="0">
+	</div>
+	<div id="t3">
+	<input type="hidden" name="t3s" id="t3s" value="0">
+	</div>
+	<div class="form-row">
+		<div class="col-sm-12">
+		<label><b>Specification</b></label>
+		</div>
+		<div class="form-group col-sm-12">
+			<textarea style="color:black;" name="spec" id="spec" class="form-control" ><?php echo $ryu->spec; ?></textarea>
+		</div>
+		
+	</div>
+	
+	<div class="form-row">
+		<div class="col-sm-6">
+		<label><b>Estimated order quantity</b></label>
+		</div>
+		<div class="col-sm-6">
+		<label><b>Targeted price (Estimated total)</b></label>
+		</div>
+		<div class="form-group col-sm-6">
+			<div class="form-row">
+		<div class="col-sm-7"><input style="color:black;" type="number" value="<?php echo $ryu->eo; ?>" name="eo" id="eo" class="form-control"> </div>
+		<div class="col-sm-5"> <select style="color:black;" class="form-control" name="neo" id="neo"><option <?php if($ryu->neo == "Pieces"){ echo "selected"; }?> value="Pieces">Pieces</option></select></div>
+		</div>
+			
+			
+		</div>
+		<div class="form-group col-sm-6">
+				
+			<div class="form-row">
+		<div class="col-sm-7"><input style="color:black;" type="number" value="<?php echo $ryu->tp; ?>" name="tp" id="tp" class="form-control" ></div>
+		<div class="col-sm-5"> <select style="color:black;" class="form-control" name="ntp" id="ntp"><option <?php if($ryu->ntp == "IDR"){ echo "selected"; }?> value="IDR">IDR</option><option <?php if($ryu->ntp == "THB"){ echo "selected"; }?> value="THB">THB</option><option <?php if($ryu->ntp == "USD"){ echo "selected"; }?> value="USD">USD</option></select></div>
+		</div>
+		</div>
+		
+	</div>
+  
+	</div>
+
+</div>
+<div class="col-md-6">
+<div class="box-body">
+<br><br>
+<div class="form-row">
+		<div class="col-sm-12">
+		<label><b>Location of delivery</b></label>
+		</div>
+		<div class="form-group col-sm-6">
+			<?php 
+			$ms2 = DB::select("select id,country from mst_country order by country asc");
+			?>
+			<select style="color:black;" style="border-color: rgba(120, 130, 140, 0.5)!important;
+    border-radius: 0.25rem!important;
+    color: inherit!important;" class="form-control select2" name="country" id="country">
+			<option value="">-- Select Country --</option>
+			<?php foreach($ms2 as $val2){ ?>
+			<option <?php if($ryu->id_mst_country == $val2->id){ echo "selected"; }?> value="<?php echo $val2->id; ?>"><?php echo $val2->country; ?></option>
+			<?php } ?>
+			</select>
+		</div>
+		<div class="form-group col-sm-6">
+			<input style="color:black;" type="text" value="<?php echo $ryu->city; ?>" name="city" id="city" class="form-control" placeholder="City/State">
+		</div>
+	</div>
+<div class="form-row">
+		<div class="col-sm-12">
+		<label><b>Shipping & Payment conditions</b></label>
+		</div>
+		<div class="form-group col-sm-12">
+			<textarea style="color:black;" value="" name="ship" id="ship" class="form-control" ><?php echo $ryu->shipping; ?></textarea>
+		</div>
+		
+	</div>
+<div class="form-row">
+		<div class="col-sm-12">
+		<label><b>Add attachment (Relevant to  a request)</b></label>
+		</div>
+		<div class="form-group col-sm-12">
+			<!-- <input style="color:black;" type="file" value="" name="doc" id="doc" class="form-control" > -->
+			<a class="btn btn-warning" download href="{{ asset('uploads/buy_request/'.$ryu->files) }}">Download File</a>
+		</div>
+		
+	</div>
+	
+	
+
 </div>
 
- <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Broadcast Buying Request</h6>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-         
-        </div>
-		<div id ="isibroadcast"></div>
-        <!--<div class="modal-body">
-          1
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div> -->
-      </div>
-    </div>
-  </div>
-<script type="text/javascript">
-function xy(a){
+</div>
+
+
+<?php if($ryu->status != 0){ ?>
+<div class="col-md-12">
+<div class="box-body">
+<div style="background-color : #41289d47; ">
+	<hr>
+	<center><b><h6>Chat Column</h6></b></center>
+	<div style="background-color : white; width:100%; height:200px;"></div>
+	<textarea class="form-control" style="color:black"></textarea>
+	<div align="right"><a class="btn btn-success">Send Chat</a></div>
+</div>
+</div>
+</div>
+<?php } ?>
+
+
+
+<div class="col-sm-12">
+<div align="right">
+<a href="{{ url('br_importir') }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Back</a>
+
+
+</div>
+</div>
+
+								<?php } ?>
+</form>
+<?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
+<script>
+function t1(){
+	$('#t2').html('');
+	$('#t3').html('');
+	var t1 = $('#category').val();
 	var token = $('meta[name="csrf-token"]').attr('content');
-		$.get('{{URL::to("ambilbroad/")}}/'+a,{_token:token},function(data){
-			$("#isibroadcast").html(data);
+		$.get('{{URL::to("ambilt2/")}}/'+t1,{_token:token},function(data){
+			$("#t2").html(data);
+			$("#t3").html('<input type="hidden" name="t3s" id="t3s" value="0">');
+			 $('.select2').select2();
 			
 		 })
 }
+function t2(){
+	$('#t3').html('');
+	var t2 = $('#t2s').val();
+	var token = $('meta[name="csrf-token"]').attr('content');
+		$.get('{{URL::to("ambilt3/")}}/'+t2,{_token:token},function(data){
+			$("#t3").html(data);
+			 $('.select2').select2();
+			
+		 })
+}
+function nv(){
+	var a = $('#staim').val();
+	if(a == 2){
+		$('#sh1').html('<div class="form-row"><div class="form-group col-sm-4"><label><b>Alasan Reject</b></label></div><div class="form-group col-sm-8"><select onchange="ketv()" id="template_reject" name="template_reject" class="form-control"><option value="">-- Pilih Alasan Reject --</option><?php foreach($quertreject as $qr){ ?><option value="<?php echo $qr->id;?>"><?php echo $qr->nama_template;?></option><?php } ?></select></div></div>')
+	}else{
+		$('#sh1').html(' ');
+		$('#sh2').html(' ');
+	}
+}
+function ketv(){
+	var a = $('#template_reject').val();
+	if(a == 1){
+		$('#sh2').html('<div class="form-row"><div class="form-group col-sm-4"><label><b>Keterangan Reject</b></label></div><div class="form-group col-sm-8"><textarea class="form-control" id="txtreject" name="txtreject"></textarea></div></div>')
+	}
+}
+$(document).ready(function () {
+        $('.select2').select2();
+});
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+  
+
+                            
+                        </div>
+ 
+
+	 </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
   $(function () {
    $('#example1').DataTable({
      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]

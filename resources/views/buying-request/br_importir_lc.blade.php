@@ -92,34 +92,27 @@
 	   <h5><center>List <?php echo $pageTitle; ?></center></h5>
 	   <br><br>
 	   
-	   <a href="{{ url('br_importir_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add Buying Request</a><br><br>
-		 <table id="example1" border="0" class="table table-bordered table-striped">
+		<table id="example1" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
-                               
+									<th width="5%">No</th>
+									<th><center>Company Name</center></th>
+									<th><center>Email</center></th>
+									<th><center>Aksi</center></th>
                                 </thead>
 								<tbody>
 								<?php 
-								$pesan = DB::select("select * from csc_buying_request where by_role='3' and id_pembuat='".Auth::guard('eksmp')->user()->id."' order by id desc ");
+								$pesan = DB::select("select a.*,b.*,c.*,a.email as oemail from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where b.status_join='1' and a.id=b.id_eks and a.id_profil = c.id and id_br='".$id."'");
+								$na = 1;
 								foreach($pesan as $ryu){
 								?>
 								<tr>
-								<td><?php echo "<font size='4px'><b>".$ryu->subyek."</b></font><br>";
-								$cardata = DB::select("select nama_kategori_en from csc_product where id='".$ryu->id_csc_prod_cat."'");
-				 foreach($cardata as $ct){
-					 echo $ct->nama_kategori_en."<br>";
-				 }
-				 echo "Valid until ".$ryu->valid." days<br>";
-				 echo $ryu->date;
-								?></td>
-								<td width="20%"><center>
-								<?php if($ryu->status == 0 || $ryu->status == null){ ?>
-								<br><a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy(<?php echo $ryu->id; ?>)" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><i class="fa fa-wifi"></i> Broadcast</a><a title="Detail" href="{{ url('br_importir_detail/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-pencil"></i> Detail&nbsp;&nbsp;&nbsp;</a>
-								<?php }else if($ryu->status == 1 ){ ?>
-								<br><a title="Detail" href="{{ url('br_importir_lc/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-comment"></i> List Chat</a>
-								<?php } ?>
+								<td><?php echo $na; ?></td>
+								<td><?php echo $ryu->company; ?></td>
+								<td><?php echo $ryu->oemail; ?></td>
+								<td><center><a class="btn btn-success">Verifikasi</a>
 								</center></td>
 								</tr>
-								<?php } ?>
+								<?php  $na++; } ?>
 								
 								</tbody>
 

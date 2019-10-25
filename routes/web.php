@@ -46,6 +46,12 @@ Route::namespace('FrontEnd')->group(function () {
 });
 
 Route::get('/br_importir', 'BRFrontController@br_importir');
+Route::get('/br_importir_add', 'BRFrontController@br_importir_add');
+Route::get('/br_importir_detail/{id}', 'BRFrontController@br_importir_detail');
+Route::get('/br_importir_lc/{id}', 'BRFrontController@br_importir_lc');
+Route::get('/br_importir_bc/{id}', 'BRFrontController@br_importir_bc');
+Route::post('/br_importir_save', 'BRFrontController@br_importir_save');
+Route::get('/ambilbroad/{id}', 'BRFrontController@ambilbroad');
 /* Route::get('/registrasi_pembeli/{locale}', function ($locale) {
     App::setLocale($locale);
     return view('auth.register_pembeli');

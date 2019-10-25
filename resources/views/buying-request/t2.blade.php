@@ -10,7 +10,7 @@ if(count($qr) == 0){
 		</div>
 		<div class="form-group col-sm-12">
 			
-			<select class="form-control select2" name="t2s" id="t2s" onchange="t2()">
+			<select style="color:black;" class="form-control select2" name="t2s" id="t2s" onchange="t2()">
 			<option value="">-- Select Level 1 --</option>
 			<?php foreach($qr as $val1){ ?>
 			<option value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
