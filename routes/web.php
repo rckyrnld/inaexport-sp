@@ -417,9 +417,11 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/tambah_product', 'EksProductController@tambah');
     Route::post('/product_save', 'EksProductController@store');
     Route::get('/product_view/{id}', 'EksProductController@view')->name('eksproduct.view');
-    Route::get('/product_edit/{id}', 'EksProductController@edit')->name('eksproduct.detail');
+    Route::get('/product_edit/{id}', 'EksProductController@edit')->name('eksproduct.edit');
     Route::post('/product_update/{id}', 'EksProductController@update');
     Route::get('/product_delete/{id}', 'EksProductController@delete')->name('eksproduct.delete');
+    Route::get('/verifikasi_product/{id}', 'EksProductController@verifikasi')->name('eksproduct.verifikasi');
+    Route::post('/actver_product/{id}', 'EksProductController@verifikasi_act')->name('eksproduct.verifikasi_act');
 });
 
 //////////////////////////////////////////ILYAS END////////////////////////////////////////////////////////////////////////////////

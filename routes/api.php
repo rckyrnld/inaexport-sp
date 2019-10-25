@@ -31,44 +31,32 @@ use Illuminate\Http\Request;
         /*API Auth*/ 
         /*************************************************************************************************************/
         Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function () {
-            Route::get('getRekapAnggota', 'Api\Admin\ManagementController@getRekapAnggota');            
+            
+            Route::post('getRekapAnggota', 'Api\Admin\ManagementController@getRekapAnggota');            
 
-            Route::get('getDetailVerifikasiImportir', 'Api\Admin\ManagementController@detailVerifikasiImportir');      
+            Route::post('getDetailVerifikasiImportir', 'Api\Admin\ManagementController@detailVerifikasiImportir');      
             Route::post('submitVerifikasiImportir', 'Api\Admin\ManagementController@submitVerifikasiImportir');
             
-            Route::get('getDetailVerifikasiEksportir', 'Api\Admin\ManagementController@detailVerifikasiEksportir');      
+            Route::post('getDetailVerifikasiEksportir', 'Api\Admin\ManagementController@detailVerifikasiEksportir');      
             Route::post('submitVerifikasiEksportir', 'Api\Admin\ManagementController@submitVerifikasiEksportir');
 
         }); 
 
-        
-     
-        // Route::group(['middleware' => 'auth.jwt'], function () { 
-        //   /*API Management*/
-        //         Route::get('getRekapAnggota', 'App\Http\Api\Controllers\ManagementController@getRekapAnggota');
-        //     /*Anggota Importir*/
-        //         Route::get('getDetailVerifikasiImportir', 'App\Http\Api\Controllers\ManagementController@detailVerifikasiImportir');
-        //         Route::post('submitVerifikasiImportir', 'App\Http\Api\Controllers\ManagementController@submitVerifikasiImportir');
-        //     /*Anggota Importir*/
+        Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function(){
+                Route::post('getProdukList', 'Api\User\ProductController@findProductById');                
+                Route::post('browseProduk', 'Api\User\ProductController@browseProduct');
 
-        //     /*Anggota Eksportir*/
-        //         Route::get('getDetailVerifikasiEksportir', 'App\Http\Api\Controllers\ManagementController@detailVerifikasiEksportir');
-        //         Route::post('submitVerifikasiEksportir', 'App\Http\Api\Controllers\ManagementController@submitVerifikasiEksportir');
-        //     /*Anggota Eksportir*/  
-            
-        //     /*Management Product*/
-        //         Route::get('getProdukList', 'App\Http\Api\Controllers\ProductController@findProductById');                
-        //         Route::get('browseProduk', 'App\Http\Api\Controllers\ProductController@browseProduct');
-
-        //         Route::post('insertProduk', 'App\Http\Api\Controllers\ProductController@insertProduct');
-        //         Route::post('updateProduk', 'App\Http\Api\Controllers\ProductController@updateProduct');                
-        //         Route::post('deleteProduk', 'App\Http\Api\Controllers\ProductController@deleteProduct');
-        //     /*Management Product*/
-
-        // });
+                Route::post('insertProduk', 'Api\User\ProductController@insertProduct');
+                Route::post('updateProduk', 'Api\User\ProductController@updateProduct');                
+                Route::post('deleteProduk', 'Api\User\ProductController@deleteProduct');
+        });
+Route::namespace('Api')->group(function () {
             /*Contact Us*/
-            Route::post('contactUs', 'App\Http\Api\Controllers\ManagementNoAuthController@contactUs');
+            Route::post('contactUs', 'ManagementNoAuthController@contactUs');
             /*Contact Us*/
-                 
-        /*API Management*/
+                            
+            Route::get('browseProdukFe', 'ProductNonAuthController@browseProduct');
+            Route::post('browseProdukFeByKategori', 'ProductNonAuthController@browseProductByKategori');            
+            Route::get('getKategori', 'ProductNonAuthController@findKategori');
+});
 // });

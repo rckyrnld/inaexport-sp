@@ -20,9 +20,14 @@ class FrontController extends Controller
     {
         //Data Product
         $product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
             ->inRandomOrder()
             ->limit(10)
             ->get();
+        
         return view('frontend.index', compact('product'));
     }
 
@@ -36,6 +41,10 @@ class FrontController extends Controller
             ->get();
         //Data Product
         $product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
             ->inRandomOrder()
             ->limit(10)
             ->get();
@@ -48,7 +57,14 @@ class FrontController extends Controller
         //Category Product
         $catdata = DB::table('csc_product')->where('id', $id)->first();
         //Product dengan Category yang dipilih
-        $prodcategory = DB::table('csc_product_single')->where('id_csc_product', $id)->orderby('prodname_en', 'asc')->paginate(20);
+        $prodcategory = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
+            ->where('csc_product_single.id_csc_product', $id)
+            ->orderby('csc_product_single.prodname_en', 'asc')
+            ->paginate(20);
         return view('frontend.product.product_category', compact('catdata', 'prodcategory'));
     }
 

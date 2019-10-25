@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 
 class ManagementController extends Controller
@@ -22,22 +24,24 @@ class ManagementController extends Controller
 
     public function getRekapAnggota(){
 		// dd(auth()->authenticate());
+		
 		$eksportirs = DB::table('itdp_company_users')
 							->leftJoin('itdp_profil_eks', 'itdp_company_users.id_profil', '=', 'itdp_profil_eks.id')
 							->where('itdp_company_users.id_role', '2')
 							->select('itdp_company_users.*', 'itdp_profil_eks.*')
-							->orderBy('itdp_company_users.id', 'desc')
-							->take(2)->get();
+							->orderBy('itdp_company_users.id', 'desc')->skip($request->skip)
+							->take($request->take)->get();
 		$importirs =  DB::table('itdp_company_users')
 							->leftJoin('itdp_profil_imp', 'itdp_company_users.id_profil', '=', 'itdp_profil_imp.id')
 							->where('itdp_company_users.id_role', '3')
 							->select('itdp_company_users.*', 'itdp_profil_imp.*')
-							->orderBy('itdp_company_users.id', 'desc')
-							->take(2)->get();
+							->orderBy('itdp_company_users.id', 'desc')->skip($request->skip)
+							->take($request->take)->get();
 	   $data = ['importirs' => $importirs, 'eksportirs' => $eksportirs];
+	   $dataResult = $this->customPaginate($data, $pageNya);
 		if(count($eksportirs) > 0 && count($importirs) > 0){
 			$res['message'] = "Success";
-			$res['data'] = $data;
+			$res['data'] = $dataResult;
 			$res['status_code'] = 200;
         	return response($res);
 		}else{
@@ -174,6 +178,26 @@ class ManagementController extends Controller
 			$res['message'] = "Failed";
 			return response($res);
 		}	
+	}
+
+	public static function customPaginate($items,$perPage)
+	{
+			//Get current page form url e.g. &page=6
+		$currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+		//Create a new Laravel collection from the array data
+		$collection = new Collection($items);
+
+		//Define how many items we want to be visible in each page
+		$perPage = $perPage;
+
+		//Slice the collection to get the items to display in current page
+		$currentPageSearchResults = $collection->slice($currentPage * $perPage, $perPage)->all();
+
+		//Create our paginator and pass it to the view
+		$paginatedSearchResults = new LengthAwarePaginator($currentPageSearchResults, count($collection), $perPage);
+
+		return $paginatedSearchResults;
 	}
     
 }
