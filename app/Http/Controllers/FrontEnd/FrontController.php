@@ -94,7 +94,8 @@ class FrontController extends Controller
     }
 
     public function tracking(){
-        return view('frontend.tracking');
+        $kurir = DB::table('api_tracking')->orderby('name', 'asc')->get();
+        return view('frontend.tracking', compact('kurir'));
     }
 
     public function getSub(Request $request)

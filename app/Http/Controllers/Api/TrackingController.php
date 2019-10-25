@@ -22,35 +22,9 @@ class TrackingController extends Controller
 		    'json' => ['tracking_number' =>  $request->number, 'carrier_code' =>  $request->type]
         ]);
 
-        // $tampung = $res->getStatusCode();
-        // 200
-        $tampung = $res->getBody();
-        // {"type":"User"...'
+        // $tampung = $res->getBody();
 				
-		return response($tampung);
-		// if($fullName != null && $email != null && $subjek != null && $message != null){
-		// 	// dd($fullName.",".$email.",".$email.",".$subjek.",".$message.",".$dateNow);
-		// 	$contactUs = new ContactUs;
-		// 	$contactUs->fullname = $fullName;
-		// 	$contactUs->email = $email;
-		// 	$contactUs->subyek = $subjek;
-		// 	$contactUs->message = $message;
-		// 	$contactUs->status = 0;
-		// 	$contactUs->date_created = $dateNow;
-		// 	$isSuccess = $contactUs->save();
-
-		// 	if($isSuccess){
-		// 		$res['message'] = "Success";
-		// 		return response($res);
-		// 	}else{
-		// 		$res['message'] = "Failed";
-		// 		return response($res);
-		// 	}
-		// }else{
-		// 	$res['message'] = "Failed";
-		// 	return response($res);
-		// }
-		
+		return response($res->getBody());
 	}
     
 }
