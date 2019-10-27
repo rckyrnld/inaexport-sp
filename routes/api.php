@@ -58,5 +58,6 @@ Route::namespace('Api')->group(function () {
             Route::get('browseProdukFe', 'ProductNonAuthController@browseProduct');
             Route::post('browseProdukFeByKategori', 'ProductNonAuthController@browseProductByKategori');            
             Route::get('getKategori', 'ProductNonAuthController@findKategori');
+            Route::post('detailProdukFe', 'ProductNonAuthController@detailProduk');
 });
 // });

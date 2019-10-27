@@ -78,5 +78,20 @@ class ProductNonAuthController extends Controller
 			return response($res);
 		}
 	}
-	
+
+	public function detailProduk($id)
+    {
+        //Product
+        $data = DB::table('csc_product_single')
+            ->where('id', '=', $id)
+			->first();
+		if(count($data) > 0){
+			$res['message'] = "Success";
+			$res['data'] = $result;
+			return response($res);
+		}else{
+			$res['message'] = "Failed";
+			return response($res);
+		}
+	}
 }
