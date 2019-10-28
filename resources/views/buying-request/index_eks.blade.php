@@ -19,15 +19,16 @@
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>
                                     <th>No</th>
+									<th>
+                                        <center>Duration</center>
+                                    </th>
                                     <th>
                                         <center>Importir</center>
                                     </th>
 									<th>
                                         <center>Subyek</center>
                                     </th>
-                                    <th>
-                                        <center>Duration</center>
-                                    </th>
+                                    
                                     <th>
                                         <center>Date</center>
                                     </th>
@@ -49,6 +50,7 @@
 								<?php $nt = 1; foreach($data as $ruu){ ?>
 								<tr>
 									<td><?php echo $nt; ?></td>
+									<td><center>Valid for <?php echo $ruu->valid; ?> days</center></td>
 									<td><center>
 									<?php $usre = DB::select("select b.company from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
 									foreach($usre as $imp){ 
@@ -57,7 +59,7 @@
 									?>
 									</center></td>
 									<td><center><?php echo $ruu->subyek; ?></center></td>
-									<td><center><?php echo $ruu->valid; ?></center></td>
+									
 									<td><center><?php echo $ruu->date; ?></center></td>
 									<td><center>
 									<?php 
@@ -68,12 +70,14 @@
 									?>
 									</center></td>
 									<td><center>
-									<?php if($ruu->status_join == "1"){ echo "Menggung Verifikasi Importir"; }else if($ruu->status_join == "2"){ echo "Chat"; }
+									<?php if($ruu->status_join == "1"){ echo "Menunggu Verifikasi Importir"; }else if($ruu->status_join == "2"){ echo "Chat"; }
 									else if($ruu->status_join == "3"){ echo "Deal"; }else{ echo "-"; }?>
 									</center></td>
 									<td><center>
 									<?php if($ruu->status_join == null){ ?>
-									<a href="{{ url('br_join/'.$ruu->idb) }}" class="btn btn-success"><font color="white">Join</font></a>
+									<a href="{{ url('br_join/'.$ruu->idb) }}" class="btn btn-success"><font color="white"><i class="fa fa-plus"></i> Join</font></a>
+									<?php }else if($ruu->status_join == 1){ ?>
+									<a href="{{ url('br_chat/'.$ruu->idb) }}" class="btn btn-info"><font color="white"><i class="fa fa-comment"></i> Chat</font></a>
 									<?php } ?>
 									</center></td>
 								</tr>

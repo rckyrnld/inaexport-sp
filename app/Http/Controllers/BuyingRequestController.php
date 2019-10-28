@@ -78,6 +78,18 @@ class BuyingRequestController extends Controller
 		return view('buying-request.add', compact('pageTitle'));
     }
 	
+	public function br_join($id)
+    {
+		$pageTitle = "Join Buying Request Eksportir";
+		return view('buying-request.join', compact('id','pageTitle'));
+	}
+	
+	public function br_save_join($id)
+    {
+		$update = DB::select("update csc_buying_request_join set status_join='1' where id='".$id."' ");
+		return redirect('br_list');
+	}
+	
 	public function ambilt2($id)
     {
 		return view('buying-request.t2', compact('id'));

@@ -1,5 +1,5 @@
 @include('frontend.layout.header')
-
+<?php $loc = app()->getLocale(); ?>
 <div class="d-flex flex-column flex" style="">
 	<div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
     <div class="mx-auto">
@@ -26,14 +26,14 @@
             <!-- Header Title -->
           </div>
           <div class="box-body bg-light">
-            <h4> View All Eksportir Training</h4><hr>
+            <h4> @lang("training.title")</h4><hr>
             <form action="{{url('frontend/training/search')}}" method="get">
               <div class="row">
                 <div class="col-md-4">
                 </div>
                 <div class="col-md-4"></div>
                 <div class="col-md-3">
-                  <input type="text" class="form-control" name="cari" placeholder="search..." value="{{ old('cari') }}" autocomplete="off">
+                  <input type="text" class="form-control" name="cari" placeholder="@lang('training.cari')" value="{{ old('cari') }}" autocomplete="off">
                 </div>
                 <div class="col-md-1">
                   <button type="submit" class="btn btn-primary" name="button">
@@ -44,6 +44,85 @@
             </form>
             <div class="col-md-14"><br>
               @foreach($data as $num => $val)
+                @if($loc == "ch")
+                <div class="box">
+                  <div class="box-body">
+                    <b>{{$val->training_chn}}</b><hr>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <i>{{date("Y/m/d", strtotime($val->start_date))}} - {{date("Y/m/d", strtotime($val->end_date))}}</i>
+                      </div>
+                    </div><br>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <b>@lang("training.lokasi")</b>
+                      </div>
+                      <div class="col-md-4">
+                        : {{$val->location_chn}}
+                      </div>
+                    </div><br>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <b>@lang("training.topic")</b>
+                      </div>
+                      <div class="col-md-4">
+                        : {{$val->topic_chn}}
+                      </div>
+                    </div><br>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <b>@lang("training.durasi")</b>
+                      </div>
+                      <div class="col-md-4">
+                        : {{$val->duration}} 日
+                      </div>
+                      <div class="col-md-4"></div>
+                      <div class="col-md-2">
+                        <a href="{{url('login')}}" type="submit" name="button" class="btn btn-primary btn-sm"> 参加</a>
+                      </div>
+                    </div><br>
+                  </div>
+                </div>
+                @elseif($loc == "in")
+                <div class="box">
+                  <div class="box-body">
+                    <b>{{$val->training_in}}</b><hr>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <i>{{date("Y/m/d", strtotime($val->start_date))}} - {{date("Y/m/d", strtotime($val->end_date))}}</i>
+                      </div>
+                    </div><br>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <b>@lang("training.lokasi")</b>
+                      </div>
+                      <div class="col-md-4">
+                        : {{$val->location_in}}
+                      </div>
+                    </div><br>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <b>@lang("training.topic")</b>
+                      </div>
+                      <div class="col-md-4">
+                        : {{$val->topic_in}}
+                      </div>
+                    </div><br>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <b>@lang("training.durasi")</b>
+                      </div>
+                      <div class="col-md-4">
+                        : {{$val->duration}} Days
+                      </div>
+                      <div class="col-md-4"></div>
+                      <div class="col-md-2">
+                        <a href="{{url('login')}}" type="submit" name="button" class="btn btn-primary btn-sm"> Join Now</a>
+                      </div>
+                    </div><br>
+                  </div>
+                </div>
+                @elseif($loc == "en")
                 <div class="box">
                   <div class="box-body">
                     <b>{{$val->training_en}}</b><hr>
@@ -54,7 +133,7 @@
                     </div><br>
                     <div class="row">
                       <div class="col-md-2">
-                        <b>Location</b>
+                        <b>@lang("training.lokasi")</b>
                       </div>
                       <div class="col-md-4">
                         : {{$val->location_en}}
@@ -82,6 +161,7 @@
                     </div><br>
                   </div>
                 </div>
+                @endif
               @endforeach
             </div>
             {{ $data->render("pagination::bootstrap-4") }}

@@ -23,6 +23,9 @@
                                 <tr>
                                     <th>No</th>
                                     <th>
+                                        <center>Merek</center>
+                                    </th>
+                                    <th>
                                         <center>Country</center>
                                     </th>
                                     <th>
