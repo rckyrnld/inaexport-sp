@@ -29,7 +29,7 @@ class ProcapController extends Controller
     public function store(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::guard('eksmp')->user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
         DB::table('itdp_eks_production')->insert([
             'id_itdp_profil_eks' => $id_user,
             'tahun' => $request->tahun,
@@ -44,7 +44,7 @@ class ProcapController extends Controller
     {
 //        dd("masuk gan");
         $user = DB::table('itdp_eks_production')
-            ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
+            ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
@@ -110,5 +110,35 @@ class ProcapController extends Controller
                 'outsourcing_persen' => $request->out_persen,
             ]);
         return redirect('eksportir/product_capacity');
+    }
+
+    public function indexadmin($id)
+    {
+//        dd($id);
+        $pageTitle = "Product Capacity";
+
+        return view('eksportir.procap.indexadmin', compact('pageTitle', 'id'));
+    }
+
+    public function datanyaadmin($id)
+    {
+//        dd("masuk gan");
+        $user = DB::table('itdp_eks_production')
+            ->where('id_itdp_profil_eks', '=', $id)
+            ->get();
+//        dd($user);
+        return \Yajra\DataTables\DataTables::of($user)
+            ->addColumn('action', function ($mjl) {
+                return '
+                <center>
+                <a href="' . route('procap.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                    <i class="fa fa-search text-white"></i> View
+                </a>
+                </center>
+                ';
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

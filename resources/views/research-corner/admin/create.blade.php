@@ -6,6 +6,9 @@
   .button_form{width: 80px}
   input:read-only{ background-color:white !important}
   input:disabled{ background-color:white !important}
+  input[type="text"], input[type="text"]:focus, input[type="file"], input[type="file"]:focus{
+    border-color: #d6d9daad;
+  }
 </style>
 <?php 
   if($page == 'view'){

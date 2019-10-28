@@ -11,7 +11,7 @@
 |
 */
 //////////////////////////////////// START FRONTEND ////////////////////////////////////////////////////////////
-Route::get('locale/{locale}', function ($locale){
+Route::get('locale/{locale}', function ($locale) {
     Session::put('locale', $locale);
     return redirect()->back();
 });
@@ -25,28 +25,28 @@ Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
 Route::get('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
 
 Route::namespace('FrontEnd')->group(function () {
-	Route::get('/front_end', 'FrontController@index');
-	Route::get('/front_end/all_product', 'FrontController@all_product');
-	Route::get('/front_end/category_product/{id}', 'FrontController@product_category');
-	Route::get('/front_end/product/{id}', 'FrontController@view_product');
+    Route::get('/front_end', 'FrontController@index');
+    Route::get('/front_end/all_product', 'FrontController@all_product');
+    Route::get('/front_end/category_product/{id}', 'FrontController@product_category');
+    Route::get('/front_end/product/{id}', 'FrontController@view_product');
 
-	////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
-	Route::get('/front_end/research-corner', 'FrontController@research_corner');
-	Route::get('/front_end/tracking', 'FrontController@tracking');
-	////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
+    ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
+    Route::get('/front_end/research-corner', 'FrontController@research_corner');
+    Route::get('/front_end/tracking', 'FrontController@tracking');
+    ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
 
-	/**
-	 * Createdby Intan Kamelia
-	*/
-	Route::get('/front_end/event', 'FrontController@Event');
-	Route::any('/front_end/event/search', 'FrontController@search_event');
-	Route::get('/front_end/join_event/{id}', 'FrontController@join_event');
+    /**
+     * Createdby Intan Kamelia
+     */
+    Route::get('/front_end/event', 'FrontController@Event');
+    Route::any('/front_end/event/search', 'FrontController@search_event');
+    Route::get('/front_end/join_event/{id}', 'FrontController@join_event');
 
-  //YOSS
-  //Front End TrainingController
-  Route::get('/front_end/training', 'FrontController@indexTraining');
-  Route::get('frontend/training/search', 'FrontController@indexTrainingSearch');
-  //End Training Frontend
+    //YOSS
+    //Front End TrainingController
+    Route::get('/front_end/training', 'FrontController@indexTraining');
+    Route::get('frontend/training/search', 'FrontController@indexTrainingSearch');
+    //End Training Frontend
 
 
 });
@@ -56,6 +56,7 @@ Route::get('/br_importir_add', 'BRFrontController@br_importir_add');
 Route::get('/br_importir_detail/{id}', 'BRFrontController@br_importir_detail');
 Route::get('/br_importir_lc/{id}', 'BRFrontController@br_importir_lc');
 Route::get('/br_importir_bc/{id}', 'BRFrontController@br_importir_bc');
+Route::get('/br_konfirm/{id}/{id2}', 'BRFrontController@br_konfirm');
 Route::post('/br_importir_save', 'BRFrontController@br_importir_save');
 Route::get('/ambilbroad/{id}', 'BRFrontController@ambilbroad');
 /* Route::get('/registrasi_pembeli/{locale}', function ($locale) {
@@ -63,15 +64,13 @@ Route::get('/ambilbroad/{id}', 'BRFrontController@ambilbroad');
     return view('auth.register_pembeli');
 }); */
 Route::post('/simpan_rpembeli', 'RegistrasiController@simpan_rpembeli');
-Route::get('/verifypembeli/{id}','RegistrasiController@verifypembeli');
+Route::get('/verifypembeli/{id}', 'RegistrasiController@verifypembeli');
 
-Route::get('/registrasi_penjual','RegistrasiController@registrasi_penjual');
-Route::post('/simpan_rpenjual','RegistrasiController@simpan_rpenjual');
-Route::get('/verifypenjual/{id}','RegistrasiController@verifypenjual');
+Route::get('/registrasi_penjual', 'RegistrasiController@registrasi_penjual');
+Route::post('/simpan_rpenjual', 'RegistrasiController@simpan_rpenjual');
+Route::get('/verifypenjual/{id}', 'RegistrasiController@verifypenjual');
 
 Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');
-
-
 
 
 //////////////////////////////////// END FRONTEND ////////////////////////////////////////////////////////////
@@ -91,9 +90,9 @@ Route::get('/hapusperwakilan/{id}', 'VerifyuserController@hapusperwakilan');
 Route::get('/saveverify/{id}', 'VerifyuserController@saveverify');
 Route::get('/profil/{id}/{id2}', 'VerifyuserController@profil');
 Route::get('/profil2/{id}/{id2}', 'VerifyuserController@profil2');
-Route::post('/simpan_profil','VerifyuserController@simpan_profil');
-Route::post('/simpan_profil2','VerifyuserController@simpan_profil2');
-Route::post('/simpanperwakilan','VerifyuserController@simpanperwakilan');
+Route::post('/simpan_profil', 'VerifyuserController@simpan_profil');
+Route::post('/simpan_profil2', 'VerifyuserController@simpan_profil2');
+Route::post('/simpanperwakilan', 'VerifyuserController@simpanperwakilan');
 
 // Group
 Route::resource('/group', 'UM\GroupController');
@@ -134,6 +133,8 @@ Route::get('/permission_delete/{id}', 'UM\PermissionsController@destroy');
 Route::resource('/br_list', 'BuyingRequestController');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
 Route::get('/br_add', 'BuyingRequestController@add');
+Route::get('/br_join/{id}', 'BuyingRequestController@br_join');
+Route::get('/br_save_join/{id}', 'BuyingRequestController@br_save_join');
 Route::get('/ambilt2/{id}', 'BuyingRequestController@ambilt2');
 Route::get('/ambilt3/{id}', 'BuyingRequestController@ambilt3');
 Route::post('/br_save', 'BuyingRequestController@br_save');
@@ -145,137 +146,144 @@ Route::post('/updatepass', 'HomeController@updatepass');
 
 Route::namespace('Master')->group(function () {
 // Angga Start
-	//Master Country
-	Route::get('master-country/', 'MasterCountryController@index')->name('master.country.index');
-	Route::get('master-country/getData/', 'MasterCountryController@getData')->name('master.country.getData');
-	Route::get('master-country/create/', 'MasterCountryController@create')->name('master.country.create');
-	Route::get('master-country/check-kode/', 'MasterCountryController@check')->name('master.country.kode');
-	Route::get('master-country/edit/{id}', 'MasterCountryController@edit')->name('master.country.edit');
-	Route::get('master-country/view/{id}', 'MasterCountryController@view')->name('master.country.view');
-	Route::post('master-country/store/{param}','MasterCountryController@store')->name('master.country.store');
-	Route::get('master-country/destroy/{id}', 'MasterCountryController@destroy')->name('master.country.destroy');
-	Route::get('master-country/export/', 'MasterCountryController@export')->name('master.country.export');
-	//Master City
-	Route::get('master-city/', 'MasterCityController@index')->name('master.city.index');
-	Route::get('master-city/getData/', 'MasterCityController@getData')->name('master.city.getData');
-	Route::get('master-city/create/', 'MasterCityController@create')->name('master.city.create');
-	Route::get('master-city/edit/{id}', 'MasterCityController@edit')->name('master.city.edit');
-	Route::get('master-city/view/{id}', 'MasterCityController@view')->name('master.city.view');
-	Route::post('master-city/store/{param}','MasterCityController@store')->name('master.city.store');
-	Route::get('master-city/destroy/{id}', 'MasterCityController@destroy')->name('master.city.destroy');
-	Route::get('master-city/export/', 'MasterCityController@export')->name('master.city.export');
-	//Master Province
-	Route::get('master-province/', 'MasterProvinceController@index')->name('master.province.index');
-	Route::get('master-province/getData/', 'MasterProvinceController@getData')->name('master.province.getData');
-	Route::get('master-province/create/', 'MasterProvinceController@create')->name('master.province.create');
-	Route::get('master-province/check-kode/', 'MasterProvinceController@check')->name('master.province.kode');
-	Route::get('master-province/edit/{id}', 'MasterProvinceController@edit')->name('master.province.edit');
-	Route::get('master-province/view/{id}', 'MasterProvinceController@view')->name('master.province.view');
-	Route::post('master-province/store/{param}','MasterProvinceController@store')->name('master.province.store');
-	Route::get('master-province/destroy/{id}', 'MasterProvinceController@destroy')->name('master.province.destroy');
-	Route::get('master-province/export/', 'MasterProvinceController@export')->name('master.province.export');
-	//Master Port
-	Route::get('master-port/', 'MasterPortController@index')->name('master.port.index');
-	Route::get('master-port/getData/', 'MasterPortController@getData')->name('master.port.getData');
-	Route::get('master-port/create/', 'MasterPortController@create')->name('master.port.create');
-	Route::get('master-port/check-kode/', 'MasterPortController@check')->name('master.port.kode');
-	Route::get('master-port/edit/{id}', 'MasterPortController@edit')->name('master.port.edit');
-	Route::get('master-port/view/{id}', 'MasterPortController@view')->name('master.port.view');
-	Route::post('master-port/store/{param}','MasterPortController@store')->name('master.port.store');
-	Route::get('master-port/destroy/{id}', 'MasterPortController@destroy')->name('master.port.destroy');
-	Route::get('master-port/export/', 'MasterPortController@export')->name('master.port.export');
+    //Master Country
+    Route::get('master-country/', 'MasterCountryController@index')->name('master.country.index');
+    Route::get('master-country/getData/', 'MasterCountryController@getData')->name('master.country.getData');
+    Route::get('master-country/create/', 'MasterCountryController@create')->name('master.country.create');
+    Route::get('master-country/check-kode/', 'MasterCountryController@check')->name('master.country.kode');
+    Route::get('master-country/edit/{id}', 'MasterCountryController@edit')->name('master.country.edit');
+    Route::get('master-country/view/{id}', 'MasterCountryController@view')->name('master.country.view');
+    Route::post('master-country/store/{param}', 'MasterCountryController@store')->name('master.country.store');
+    Route::get('master-country/destroy/{id}', 'MasterCountryController@destroy')->name('master.country.destroy');
+    Route::get('master-country/export/', 'MasterCountryController@export')->name('master.country.export');
+    //Master City
+    Route::get('master-city/', 'MasterCityController@index')->name('master.city.index');
+    Route::get('master-city/getData/', 'MasterCityController@getData')->name('master.city.getData');
+    Route::get('master-city/create/', 'MasterCityController@create')->name('master.city.create');
+    Route::get('master-city/edit/{id}', 'MasterCityController@edit')->name('master.city.edit');
+    Route::get('master-city/view/{id}', 'MasterCityController@view')->name('master.city.view');
+    Route::post('master-city/store/{param}', 'MasterCityController@store')->name('master.city.store');
+    Route::get('master-city/destroy/{id}', 'MasterCityController@destroy')->name('master.city.destroy');
+    Route::get('master-city/export/', 'MasterCityController@export')->name('master.city.export');
+    //Master Province
+    Route::get('master-province/', 'MasterProvinceController@index')->name('master.province.index');
+    Route::get('master-province/getData/', 'MasterProvinceController@getData')->name('master.province.getData');
+    Route::get('master-province/create/', 'MasterProvinceController@create')->name('master.province.create');
+    Route::get('master-province/check-kode/', 'MasterProvinceController@check')->name('master.province.kode');
+    Route::get('master-province/edit/{id}', 'MasterProvinceController@edit')->name('master.province.edit');
+    Route::get('master-province/view/{id}', 'MasterProvinceController@view')->name('master.province.view');
+    Route::post('master-province/store/{param}', 'MasterProvinceController@store')->name('master.province.store');
+    Route::get('master-province/destroy/{id}', 'MasterProvinceController@destroy')->name('master.province.destroy');
+    Route::get('master-province/export/', 'MasterProvinceController@export')->name('master.province.export');
+    //Master Port
+    Route::get('master-port/', 'MasterPortController@index')->name('master.port.index');
+    Route::get('master-port/getData/', 'MasterPortController@getData')->name('master.port.getData');
+    Route::get('master-port/create/', 'MasterPortController@create')->name('master.port.create');
+    Route::get('master-port/check-kode/', 'MasterPortController@check')->name('master.port.kode');
+    Route::get('master-port/edit/{id}', 'MasterPortController@edit')->name('master.port.edit');
+    Route::get('master-port/view/{id}', 'MasterPortController@view')->name('master.port.view');
+    Route::post('master-port/store/{param}', 'MasterPortController@store')->name('master.port.store');
+    Route::get('master-port/destroy/{id}', 'MasterPortController@destroy')->name('master.port.destroy');
+    Route::get('master-port/export/', 'MasterPortController@export')->name('master.port.export');
 // Angga End
 });
 
 Route::namespace('Management')->group(function () {
 // Angga Start
-	//Management Category Product
-	Route::get('management-category-product/', 'CategoryProductController@index')->name('management.category-product.index');
-	Route::get('management-category-product/getData/', 'CategoryProductController@getData')->name('management.category-product.getData');
-	Route::get('management-category-product/create/', 'CategoryProductController@create')->name('management.category-product.create');
-	Route::get('management-category-product/edit/{id}', 'CategoryProductController@edit')->name('management.category-product.edit');
-	Route::get('management-category-product/view/{id}', 'CategoryProductController@view')->name('management.category-product.view');
-	Route::get('management-category-product/level_2/', 'CategoryProductController@level_2')->name('management.category-product.level2');
-	Route::post('management-category-product/store/{param}','CategoryProductController@store')->name('management.category-product.store');
-	Route::get('management-category-product/destroy/{id}', 'CategoryProductController@destroy')->name('management.category-product.destroy');
-	//Management Data Contact Us
-	Route::get('management-contact-us/', 'DataContactUsController@index')->name('management.contactus.index');
-	Route::get('management-contact-us/getData/', 'DataContactUsController@getData')->name('management.contactus.getData');
-	Route::get('management-contact-us/view/{id}', 'DataContactUsController@view')->name('management.contactus.view');
-	Route::get('management-contact-us/create/', 'DataContactUsController@create')->name('management.contactus.create');
-	Route::get('management-contact-us/destroy/{id}', 'DataContactUsController@destroy')->name('management.contactus.destroy');
-	Route::post('contact-us/send/','DataContactUsController@store')->name('management.contactus.store');
+    //Management Category Product
+    Route::get('management-category-product/', 'CategoryProductController@index')->name('management.category-product.index');
+    Route::get('management-category-product/getData/', 'CategoryProductController@getData')->name('management.category-product.getData');
+    Route::get('management-category-product/create/', 'CategoryProductController@create')->name('management.category-product.create');
+    Route::get('management-category-product/edit/{id}', 'CategoryProductController@edit')->name('management.category-product.edit');
+    Route::get('management-category-product/view/{id}', 'CategoryProductController@view')->name('management.category-product.view');
+    Route::get('management-category-product/level_2/', 'CategoryProductController@level_2')->name('management.category-product.level2');
+    Route::post('management-category-product/store/{param}', 'CategoryProductController@store')->name('management.category-product.store');
+    Route::get('management-category-product/destroy/{id}', 'CategoryProductController@destroy')->name('management.category-product.destroy');
+    //Management Data Contact Us
+    Route::get('management-contact-us/', 'DataContactUsController@index')->name('management.contactus.index');
+    Route::get('management-contact-us/getData/', 'DataContactUsController@getData')->name('management.contactus.getData');
+    Route::get('management-contact-us/view/{id}', 'DataContactUsController@view')->name('management.contactus.view');
+    Route::get('management-contact-us/create/', 'DataContactUsController@create')->name('management.contactus.create');
+    Route::get('management-contact-us/destroy/{id}', 'DataContactUsController@destroy')->name('management.contactus.destroy');
+    Route::post('contact-us/send/', 'DataContactUsController@store')->name('management.contactus.store');
 // Angga End
 });
 
 Route::namespace('ResearchCorner')->group(function () {
 // Angga Start
-	Route::prefix('admin/research-corner')->group(function () {
-		Route::name('admin.research-corner.')->group(function () {
-			Route::get('/', 'AdminResearchController@index')->name('index');
-			Route::get('/getData/', 'AdminResearchController@getData')->name('getData');
-			Route::get('/getDataDownload/{id}', 'AdminResearchController@getDataDownload')->name('getDataDownload');
-			Route::get('/create/', 'AdminResearchController@create')->name('create');
-			Route::post('/store/{param}', 'AdminResearchController@store')->name('store');
-			Route::get('/edit/{id}', 'AdminResearchController@edit')->name('edit');
-			Route::get('/view/{id}', 'AdminResearchController@view')->name('view');
-			Route::get('/destroy/{id}', 'AdminResearchController@destroy')->name('destroy');
-			Route::post('/broadcast/', 'AdminResearchController@broadcast')->name('broadcast');
-	    });
+    Route::prefix('admin/research-corner')->group(function () {
+        Route::name('admin.research-corner.')->group(function () {
+            Route::get('/', 'AdminResearchController@index')->name('index');
+            Route::get('/getData/', 'AdminResearchController@getData')->name('getData');
+            Route::get('/getDataDownload/{id}', 'AdminResearchController@getDataDownload')->name('getDataDownload');
+            Route::get('/create/', 'AdminResearchController@create')->name('create');
+            Route::post('/store/{param}', 'AdminResearchController@store')->name('store');
+            Route::get('/edit/{id}', 'AdminResearchController@edit')->name('edit');
+            Route::get('/view/{id}', 'AdminResearchController@view')->name('view');
+            Route::get('/destroy/{id}', 'AdminResearchController@destroy')->name('destroy');
+            Route::post('/broadcast/', 'AdminResearchController@broadcast')->name('broadcast');
+        });
     });
     Route::prefix('perwakilan/research-corner')->group(function () {
-		Route::name('perwakilan.research-corner.')->group(function () {
-			Route::get('/', 'PerwakilanResearchController@index')->name('index');
-			Route::get('/getData/', 'PerwakilanResearchController@getData')->name('getData');
-			Route::get('/getDataDownload/{id}', 'PerwakilanResearchController@getDataDownload')->name('getDataDownload');
-			Route::get('/create/', 'PerwakilanResearchController@create')->name('create');
-			Route::post('/store/{param}', 'PerwakilanResearchController@store')->name('store');
-			Route::get('/edit/{id}', 'PerwakilanResearchController@edit')->name('edit');
-			Route::get('/view/{id}', 'PerwakilanResearchController@view')->name('view');
-			Route::get('/destroy/{id}', 'PerwakilanResearchController@destroy')->name('destroy');
-			Route::post('/broadcast/', 'PerwakilanResearchController@broadcast')->name('broadcast');
-	    });
+        Route::name('perwakilan.research-corner.')->group(function () {
+            Route::get('/', 'PerwakilanResearchController@index')->name('index');
+            Route::get('/getData/', 'PerwakilanResearchController@getData')->name('getData');
+            Route::get('/getDataDownload/{id}', 'PerwakilanResearchController@getDataDownload')->name('getDataDownload');
+            Route::get('/create/', 'PerwakilanResearchController@create')->name('create');
+            Route::post('/store/{param}', 'PerwakilanResearchController@store')->name('store');
+            Route::get('/edit/{id}', 'PerwakilanResearchController@edit')->name('edit');
+            Route::get('/view/{id}', 'PerwakilanResearchController@view')->name('view');
+            Route::get('/destroy/{id}', 'PerwakilanResearchController@destroy')->name('destroy');
+            Route::post('/broadcast/', 'PerwakilanResearchController@broadcast')->name('broadcast');
+        });
     });
     Route::prefix('research-corner')->group(function () {
-		Route::name('research-corner.')->group(function () {
-			Route::get('/list/', 'ResearchCornerController@index')->name('index');
-			Route::get('/getData/', 'ResearchCornerController@getData')->name('getData');
-			Route::get('/read/{id}', 'ResearchCornerController@read')->name('view');
-			Route::get('/download/', 'ResearchCornerController@download')->name('download');
-	    });
+        Route::name('research-corner.')->group(function () {
+            Route::get('/list/', 'ResearchCornerController@index')->name('index');
+            Route::get('/getData/', 'ResearchCornerController@getData')->name('getData');
+            Route::get('/read/{id}', 'ResearchCornerController@read')->name('view');
+            Route::get('/download/', 'ResearchCornerController@download')->name('download');
+        });
     });
 // Angga End
 });
-
 
 
 /**
  * Createdby Intan Kamelia
  */
 Route::namespace('Event')->prefix('event')->group(function () {
-		Route::get('/', 'EventController@index');
-		Route::get('/create', 'EventController@create');
-		Route::post('/store', 'EventController@store');
-		Route::get('/edit/{id}', 'EventController@edit');
-		Route::post('/update/{id}', 'EventController@update');
-		Route::get('/delete/{id}', 'EventController@delete');
-		Route::get('/show_company/{id}', 'EventController@show_company');
-		Route::get('/show/read/{id}', 'EventController@show');
-		Route::get('/show_detail/{id}', 'EventController@show_detail');
-		Route::get('/show_detail/front/{id}', 'EventController@show_detail');
-		Route::any('/search', 'EventController@search');
-		Route::any('/search_eksportir', 'EventController@search_eksportir');
+    Route::get('/', 'EventController@index');
+    Route::get('/create', 'EventController@create');
+    Route::post('/store', 'EventController@store');
+    Route::get('/edit/{id}', 'EventController@edit');
+    Route::post('/update/{id}', 'EventController@update');
+    Route::get('/delete/{id}', 'EventController@delete');
+    Route::get('/show_company/{id}', 'EventController@show_company');
+    Route::get('/show/read/{id}', 'EventController@show');
+    Route::get('/show_detail/{id}', 'EventController@show_detail');
+    Route::get('/show_detail/front/{id}', 'EventController@show_detail');
+    Route::any('/search', 'EventController@search');
+    Route::any('/search_eksportir', 'EventController@search_eksportir');
 
-		Route::post('/getEventOrg', 'EventController@getEventOrg');
-		Route::post('/getEventPlace', 'EventController@getEventPlace');
+    Route::post('/getEventOrg', 'EventController@getEventOrg');
+    Route::post('/getEventPlace', 'EventController@getEventPlace');
+		Route::post('/update_status_join', 'EventController@updatestatjoin');
+		Route::post('/update_status_ver', 'EventController@updatestatver');
+		Route::post('/store_company', 'EventController@store_company');
+		Route::post('/update_status_company', 'EventController@updatestatcompany');
 
 });
 
 
 /////////////////////////////////////////ILYAS START//////////////////////////////////////////////////////////////////////////////////
 Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
+    //admin all
+    Route::get('/admin', 'AnnualController@indexadmin')->name('eksportir.indexadmin');
+    Route::get('/getreporteksportir', 'AnnualController@getreporteksportir')->name('datatables.reporteksportir');
+    Route::get('/listeksportir/{id}', 'AnnualController@listeksportir');
 
-    //Annual SALES
+    //Annual SALES USER
     Route::get('/annual_sales', 'AnnualController@index')->name('annual_sales.index');
     Route::get('/tambah_annual', 'AnnualController@tambah');
     Route::post('/annual_save', 'AnnualController@store');
@@ -285,7 +293,11 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/sales_delete/{id}', 'AnnualController@delete')->name('sales.delete');
     Route::post('/sales_update', 'AnnualController@update');
 
-    //Brand
+    //ADMIN
+    Route::get('/annual_sales_admin/{id}', 'AnnualController@indexadminannualsales')->name('annual_sales.indexadmin');
+    Route::get('/sales_getdata_admin/{id}', 'AnnualController@datanyaadmin');
+
+    //Brand USER
     Route::get('/brand', 'BrandController@index')->name('brand.index');
     Route::get('/tambah_brand', 'BrandController@tambah');
     Route::post('/brand_save', 'BrandController@store');
@@ -294,6 +306,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
     Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
     Route::post('/brand_update', 'BrandController@update');
+
+    //ADMIN
+    Route::get('/brand_admin/{id}', 'BrandController@indexadmin')->name('brand.indexadmin');
+    Route::get('/brand_getdata_admin/{id}', 'BrandController@datanyaadmin')->name('datatables.brandadmin');
 
     //country patern brand
     Route::get('/country_patern_brand', 'CountryPaternBrandController@index')->name('country_patern_brand.index');
@@ -305,6 +321,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/country_patern_brand_delete/{id}', 'CountryPaternBrandController@delete')->name('country_patern_brand.delete');
     Route::post('/country_patern_brand_update', 'CountryPaternBrandController@update');
 
+    //ADMIN
+    Route::get('/country_patern_brand_admin/{id}', 'CountryPaternBrandController@indexadmin')->name('country_patern_brand.indexadmin');
+    Route::get('/country_patern_brand_getdata_admin/{id}', 'CountryPaternBrandController@datanyaadmin')->name('datatables.country_patern_brandadmin');
+
     //production capacity
     Route::get('/product_capacity', 'ProcapController@index')->name('brand.index');
     Route::get('/tambah_procap', 'ProcapController@tambah');
@@ -315,7 +335,12 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/procap_delete/{id}', 'ProcapController@delete')->name('procap.delete');
     Route::post('/procap_update', 'ProcapController@update');
 
-    //contact
+    //ADMIN
+    Route::get('/product_capacity_admin/{id}', 'ProcapController@indexadmin')->name('product_capacity.indexadmin');
+    Route::get('/product_capacity_getdata_admin/{id}', 'ProcapController@datanyaadmin')->name('datatables.product_capacity');
+
+
+    //contact USER
     Route::get('/contact', 'ContactController@index')->name('contact.index');
     Route::get('/tambah_contact', 'ContactController@tambah');
     Route::post('/contact_save', 'ContactController@store');
@@ -324,6 +349,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/contact_view/{id}', 'ContactController@view')->name('contact.view');
     Route::get('/contact_delete/{id}', 'ContactController@delete')->name('contact.delete');
     Route::post('/contact_update', 'ContactController@update');
+
+    //ADMIN
+    Route::get('/contact_admin/{id}', 'ContactController@indexadmin')->name('contact.indexadmin');
+    Route::get('/contact_getdata_admin/{id}', 'ContactController@datanyaadmin')->name('datatables.contactadmin');
 
     //export destination
     Route::get('/export_destination', 'ExsdesController@index')->name('exportdes.index');
@@ -335,6 +364,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/exdes_delete/{id}', 'ExsdesController@delete')->name('exdes.delete');
     Route::post('/exdes_update', 'ExsdesController@update');
 
+    //ADMIN
+    Route::get('/export_destination_admin/{id}', 'ExsdesController@indexadmin')->name('export_destination.indexadmin');
+    Route::get('/export_destination_getdata_admin/{id}', 'ExsdesController@datanyaadmin');
+
     //port landing
     Route::get('/portland', 'PortlandController@index')->name('portland.index');
     Route::get('/tambah_portland', 'PortlandController@tambah');
@@ -344,6 +377,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/portland_view/{id}', 'PortlandController@view')->name('portland.view');
     Route::get('/portland_delete/{id}', 'PortlandController@delete')->name('portland.delete');
     Route::post('/portland_update', 'PortlandController@update');
+
+    //ADMIN
+    Route::get('/portland_admin/{id}', 'PortlandController@indexadmin')->name('export_destination.indexadmin');
+    Route::get('/portland_getdata_admin/{id}', 'PortlandController@datanyaadmin');
 
     //exhibition
     Route::get('/exhibition', 'ExhibitionController@index')->name('exhibition.index');
@@ -355,7 +392,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 //    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
 //    Route::post('/brand_update', 'BrandController@update');
 
-    //capacity utilization
+    //capacity utilization USER
     Route::get('/capulti', 'CapultiController@index')->name('capulti.index');
     Route::get('/tambah_capulti', 'CapultiController@tambah');
     Route::post('/capulti_save', 'CapultiController@store');
@@ -364,6 +401,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/capulti_view/{id}', 'CapultiController@view')->name('capulti.view');
     Route::get('/capulti_delete/{id}', 'CapultiController@delete')->name('capulti.delete');
     Route::post('/capulti_update', 'CapultiController@update');
+
+    //ADMIN
+    Route::get('/capulti_admin/{id}', 'CapultiController@indexadmin')->name('capulti.indexadmin');
+    Route::get('/capulti_getdata_admin/{id}', 'CapultiController@datanyaadmin');
 
     //raw material
     Route::get('/rawmaterial', 'RawmaterialController@index')->name('rawmaterial.index');
@@ -374,6 +415,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/rawmaterial_view/{id}', 'RawmaterialController@view')->name('rawmaterial.view');
     Route::get('/rawmaterial_delete/{id}', 'RawmaterialController@delete')->name('rawmaterial.delete');
     Route::post('/rawmaterial_update', 'RawmaterialController@update');
+
+    //ADMIN
+    Route::get('/rawmaterial_admin/{id}', 'RawmaterialController@indexadmin');
+    Route::get('/rawmaterial_getdata_admin/{id}', 'RawmaterialController@datanyaadmin');
 
     //labor
     Route::get('/labor', 'LaborController@index')->name('brand.index');
@@ -386,14 +431,18 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::post('/labor_update', 'LaborController@update');
 
     //consultan
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::get('/consultan', 'ConsultanController@index')->name('consultan.index');
+    Route::get('/tambah_consultan', 'ConsultanController@tambah');
+    Route::post('/consultan_save', 'ConsultanController@store');
+    Route::get('/consultan_getdata', 'ConsultanController@datanya')->name('datatables.consultan');
+    Route::get('/consultan_edit/{id}', 'ConsultanController@edit')->name('consultan.detail');
+    Route::get('/consultan_view/{id}', 'ConsultanController@view')->name('consultan.view');
+    Route::get('/consultan_delete/{id}', 'ConsultanController@delete')->name('consultan.delete');
+    Route::post('/consultan_update', 'ConsultanController@update');
+
+    //ADMIN
+    Route::get('/consultan_admin/{id}', 'ConsultanController@indexadmin');
+    Route::get('/consultan_getdata_admin/{id}', 'ConsultanController@datanyaadmin');
 
     //training
     Route::get('/training', 'TrainingController@index')->name('training.index');
@@ -406,14 +455,18 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 //    Route::post('/brand_update', 'BrandController@update');
 
     //tax
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::get('/taxes', 'TaxesController@index')->name('taxes.index');
+    Route::get('/tambah_taxes', 'TaxesController@tambah');
+    Route::post('/taxes_save', 'TaxesController@store');
+    Route::get('/taxes_getdata', 'TaxesController@datanya')->name('datatables.taxes');
+    Route::get('/taxes_edit/{id}', 'TaxesController@edit')->name('taxes.detail');
+    Route::get('/taxes_view/{id}', 'TaxesController@view')->name('taxes.view');
+    Route::get('/taxes_delete/{id}', 'TaxesController@delete')->name('taxes.delete');
+    Route::post('/taxes_update', 'TaxesController@update');
+
+    //ADMIN
+    Route::get('/taxes_admin/{id}', 'TaxesController@indexadmin');
+    Route::get('/taxes_getdata_admin/{id}', 'TaxesController@datanyaadmin');
 
     //Meidi
     //Product
@@ -436,44 +489,44 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 
 //Ticketing Support
 Route::namespace('TicketingSupport')->group(function () {
-  //Eksportir
-  Route::get('/ticketing', 'TicketingSupportController@index')->name('ticket_support.index');
-  Route::get('/ticketing/create', 'TicketingSupportController@create')->name('ticket_support.create');
-  Route::get('/ticketing/getData', 'TicketingSupportController@getData')->name('ticket_support.getData');
-  Route::post('/ticketing/store', 'TicketingSupportController@store')->name('ticket_support.store');
-  Route::get('/ticketing/chatview/{id}', 'TicketingSupportController@vchat')->name('ticket_support.vchat');
-  Route::post('/ticketing/sendchat', 'TicketingSupportController@sendchat')->name('ticket_support.sendchat');
-  Route::get('ticketing/view/{id}', 'TicketingSupportController@view')->name('ticket_support.view');
-  Route::get('ticketing/delete/{id}', 'TicketingSupportController@destroy')->name('ticket_support.delete');
-  //Admin
-  Route::get('admin/ticketing', 'TicketingSupportControllerAdmin@index')->name('ticket_support.index.admin');
-  Route::get('admin/ticketing/getData', 'TicketingSupportControllerAdmin@getData')->name('ticket_support.getData.admin');
-  Route::get('admin/ticketing/chatview/{id}', 'TicketingSupportControllerAdmin@vchat')->name('ticket_support.vchat.admin');
-  Route::get('admin/ticketing/view/{id}', 'TicketingSupportControllerAdmin@view')->name('ticket_support.view.admin');
-  Route::post('admin/ticketing/sendchat', 'TicketingSupportControllerAdmin@sendchat')->name('ticket_support.sendchat.admin');
-  Route::get('admin/ticketing/delete/{id}', 'TicketingSupportControllerAdmin@destroy')->name('ticket_support.delete.admin');
-  Route::post('admin/ticketing/change', 'TicketingSupportControllerAdmin@change')->name('ticket_support.delete.change');
+    //Eksportir
+    Route::get('/ticketing', 'TicketingSupportController@index')->name('ticket_support.index');
+    Route::get('/ticketing/create', 'TicketingSupportController@create')->name('ticket_support.create');
+    Route::get('/ticketing/getData', 'TicketingSupportController@getData')->name('ticket_support.getData');
+    Route::post('/ticketing/store', 'TicketingSupportController@store')->name('ticket_support.store');
+    Route::get('/ticketing/chatview/{id}', 'TicketingSupportController@vchat')->name('ticket_support.vchat');
+    Route::post('/ticketing/sendchat', 'TicketingSupportController@sendchat')->name('ticket_support.sendchat');
+    Route::get('ticketing/view/{id}', 'TicketingSupportController@view')->name('ticket_support.view');
+    Route::get('ticketing/delete/{id}', 'TicketingSupportController@destroy')->name('ticket_support.delete');
+    //Admin
+    Route::get('admin/ticketing', 'TicketingSupportControllerAdmin@index')->name('ticket_support.index.admin');
+    Route::get('admin/ticketing/getData', 'TicketingSupportControllerAdmin@getData')->name('ticket_support.getData.admin');
+    Route::get('admin/ticketing/chatview/{id}', 'TicketingSupportControllerAdmin@vchat')->name('ticket_support.vchat.admin');
+    Route::get('admin/ticketing/view/{id}', 'TicketingSupportControllerAdmin@view')->name('ticket_support.view.admin');
+    Route::post('admin/ticketing/sendchat', 'TicketingSupportControllerAdmin@sendchat')->name('ticket_support.sendchat.admin');
+    Route::get('admin/ticketing/delete/{id}', 'TicketingSupportControllerAdmin@destroy')->name('ticket_support.delete.admin');
+    Route::post('admin/ticketing/change', 'TicketingSupportControllerAdmin@change')->name('ticket_support.delete.change');
 });
 
 //Training
 Route::namespace('Training')->group(function () {
-  //Admin
-  Route::get('admin/training', 'TrainingControllerAdmin@index')->name('training.index.admin');
-  Route::get('admin/training/getData', 'TrainingControllerAdmin@getData')->name('training.getData.admin');
-  Route::get('admin/training/create', 'TrainingControllerAdmin@create')->name('training.create.admin');
-  Route::post('admin/training/store', 'TrainingControllerAdmin@store')->name('training.store.admin');
-  Route::post('admin/training/update/{id}', 'TrainingControllerAdmin@update')->name('training.update.admin');
-  Route::get('admin/training/publish/{id}', 'TrainingControllerAdmin@publish')->name('training.publish.admin');
-  Route::get('admin/training/edit/{id}', 'TrainingControllerAdmin@edit')->name('training.edit.admin');
-  Route::get('admin/training/view/{id}', 'TrainingControllerAdmin@view')->name('training.view.admin');
-  Route::get('admin/training/destroy/{id}', 'TrainingControllerAdmin@destroy')->name('training.destroy.admin');
-  Route::get('admin/training/verifed/{id}/{id_tr}/{id_profil}', 'TrainingControllerAdmin@verifed')->name('training.verifed.admin');
-  //Eksportir
-  Route::get('training', 'TrainingControllerEksportir@index')->name('training.index');
-  Route::get('training/getData', 'TrainingControllerEksportir@getData')->name('training.getData');
-  Route::get('training/view', 'TrainingControllerEksportir@view')->name('training.view');
-  Route::post('training/join', 'TrainingControllerEksportir@join')->name('training.join');
-  Route::get('training/search', 'TrainingControllerEksportir@search')->name('training.search');
+    //Admin
+    Route::get('admin/training', 'TrainingControllerAdmin@index')->name('training.index.admin');
+    Route::get('admin/training/getData', 'TrainingControllerAdmin@getData')->name('training.getData.admin');
+    Route::get('admin/training/create', 'TrainingControllerAdmin@create')->name('training.create.admin');
+    Route::post('admin/training/store', 'TrainingControllerAdmin@store')->name('training.store.admin');
+    Route::post('admin/training/update/{id}', 'TrainingControllerAdmin@update')->name('training.update.admin');
+    Route::get('admin/training/publish/{id}', 'TrainingControllerAdmin@publish')->name('training.publish.admin');
+    Route::get('admin/training/edit/{id}', 'TrainingControllerAdmin@edit')->name('training.edit.admin');
+    Route::get('admin/training/view/{id}', 'TrainingControllerAdmin@view')->name('training.view.admin');
+    Route::get('admin/training/destroy/{id}', 'TrainingControllerAdmin@destroy')->name('training.destroy.admin');
+    Route::get('admin/training/verifed/{id}/{id_tr}/{id_profil}', 'TrainingControllerAdmin@verifed')->name('training.verifed.admin');
+    //Eksportir
+    Route::get('training', 'TrainingControllerEksportir@index')->name('training.index');
+    Route::get('training/getData', 'TrainingControllerEksportir@getData')->name('training.getData');
+    Route::get('training/view', 'TrainingControllerEksportir@view')->name('training.view');
+    Route::post('training/join', 'TrainingControllerEksportir@join')->name('training.join');
+    Route::get('training/search', 'TrainingControllerEksportir@search')->name('training.search');
 });
 
 //END YOSS ------------------------------------------

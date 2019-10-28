@@ -31,13 +31,13 @@ class ExsdesController extends Controller
     public function store(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::guard('eksmp')->user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
         DB::table('itdp_eks_destination')->insert([
             'id_itdp_profil_eks' => $id_user,
             'id_mst_country' => $request->country,
             'rasio_persen' => $request->ratio_export,
             'tahun' => $request->year,
-            'comtahuncountry' => $id_user.$request->tahun.$request->country,
+            'comtahuncountry' => $id_user . $request->tahun . $request->country,
         ]);
         return redirect('eksportir/export_destination');
     }
@@ -48,7 +48,7 @@ class ExsdesController extends Controller
         $user = DB::table('itdp_eks_destination')
             ->select('itdp_eks_destination.id', 'itdp_eks_destination.rasio_persen', 'itdp_eks_destination.tahun', 'mst_country.country')
             ->join('mst_country', 'mst_country.id', '=', 'itdp_eks_destination.id_mst_country')
-            ->where('itdp_eks_destination.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
+            ->where('itdp_eks_destination.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
@@ -107,14 +107,46 @@ class ExsdesController extends Controller
     public function update(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::guard('eksmp')->user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
         DB::table('itdp_eks_destination')->where('id', $request->id_sales)
             ->update([
                 'id_mst_country' => $request->country,
                 'rasio_persen' => $request->ratio_export,
                 'tahun' => $request->year,
-                'comtahuncountry' => $id_user.$request->tahun.$request->country,
+                'comtahuncountry' => $id_user . $request->tahun . $request->country,
             ]);
         return redirect('eksportir/export_destination');
+    }
+
+    public function indexadmin($id)
+    {
+//        dd($id);
+        $pageTitle = "Export Destination";
+
+        return view('eksportir.export_destination.indexadmin', compact('pageTitle','id'));
+    }
+
+    public function datanyaadmin($id)
+    {
+//        dd("masuk gan");
+        $user = DB::table('itdp_eks_destination')
+            ->select('itdp_eks_destination.id', 'itdp_eks_destination.rasio_persen', 'itdp_eks_destination.tahun', 'mst_country.country')
+            ->leftjoin('mst_country', 'mst_country.id', '=', 'itdp_eks_destination.id_mst_country')
+            ->where('itdp_eks_destination.id_itdp_profil_eks', '=', $id)
+            ->get();
+//        dd($user);
+        return \Yajra\DataTables\DataTables::of($user)
+            ->addColumn('action', function ($mjl) {
+                return '
+                <center>
+                <a href="' . route('exdes.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                    <i class="fa fa-search text-white"></i> View
+                </a>
+                </center>
+                ';
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

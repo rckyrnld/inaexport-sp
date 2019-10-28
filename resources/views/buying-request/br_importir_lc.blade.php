@@ -91,7 +91,7 @@
 	   ?>
 	   <h5><center>List <?php echo $pageTitle; ?></center></h5>
 	   <br><br>
-	   
+	   <a href="{{ url('br_importir') }}" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</a><br><br>
 		<table id="example1" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
 									<th width="5%">No</th>
@@ -101,7 +101,7 @@
                                 </thead>
 								<tbody>
 								<?php 
-								$pesan = DB::select("select a.*,b.*,c.*,a.email as oemail from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where b.status_join='1' and a.id=b.id_eks and a.id_profil = c.id and id_br='".$id."'");
+								$pesan = DB::select("select a.*,b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where b.status_join >= '1' and a.id=b.id_eks and a.id_profil = c.id and id_br='".$id."'");
 								$na = 1;
 								foreach($pesan as $ryu){
 								?>
@@ -109,7 +109,12 @@
 								<td><?php echo $na; ?></td>
 								<td><?php echo $ryu->company; ?></td>
 								<td><?php echo $ryu->oemail; ?></td>
-								<td><center><a class="btn btn-success">Verifikasi</a>
+								<td><center>
+								<?php if($ryu->status_join == 1){ ?>
+								<a href="{{url('br_konfirm/'.$ryu->idb.'/'.$id)}}" class="btn btn-success"><i class="fa fa-check"></i> Verifikasi</a>
+								<?php }else if($ryu->status_join == 2){ ?>
+								<a class="btn btn-info"><i class="fa fa-comment"></i> Chat</a>
+								<?php } ?>
 								</center></td>
 								</tr>
 								<?php  $na++; } ?>

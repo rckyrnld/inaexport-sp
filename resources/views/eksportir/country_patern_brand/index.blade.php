@@ -23,7 +23,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        Brand
+                                        <center>Merek</center>
                                     </th>
                                     <th>
                                         <center>Country</center>

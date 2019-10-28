@@ -21,13 +21,32 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-sm-6">
-                                <label>Month</label>
-                                <input type="text" class="form-control" name="bulan" id="bulan">
+                                <label for="bulan">Month</label>
+                                <select class="form-control select2" id="bulan" name="bulan">
+                                    <option value="00">--Select Month--</option>
+                                    <option value="01">January</option>
+                                    <option value="02">February</option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">May</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label>Year</label>
-                                <input type="text" class="form-control" name="year"
-                                       id="year" required>
+                                <select class="atc form-control select2" required id="year"
+                                        name="year">
+                                    <option value="">- Select Years -</option>
+                                    @foreach($years as $sa)
+                                        <option value="{{$sa}}">{{$sa}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 

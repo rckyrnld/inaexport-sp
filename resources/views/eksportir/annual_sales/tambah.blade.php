@@ -11,22 +11,34 @@
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Year</label>
-                                <input type="text" name="year" id="year" class="form-control">
+                                <select class="atc form-control select2" required id="year"
+                                        name="year">
+                                    <option value="">- Select Years -</option>
+                                    @foreach($years as $sa)
+                                        <option value="{{$sa}}">{{$sa}}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="form-group col-sm-6">
                                 <label>Value (USD)</label>
-                                <input type="text" class="form-control" name="value" id="value" required>
+                                <input type="text"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" name="value" id="value" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Persen (%)</label>
-                                <input type="text" class="form-control" name="persen" id="persen">
+                                <input type="text"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" name="persen" id="persen">
                             </div>
                             <div class="form-group col-sm-6">
                                 <label>Nilai Ekspor (USD)</label>
-                                <input type="text" class="form-control" name="nilai_ekspor"
+                                <input type="text"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" name="nilai_ekspor"
                                        id="nilai_ekspor" required>
                             </div>
                         </div>
