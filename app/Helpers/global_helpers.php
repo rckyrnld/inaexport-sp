@@ -289,7 +289,8 @@ if (! function_exists('cekid')) {
       ->first();
 
         return $id;
-
+      }
+    }
 if (! function_exists('StatusJoin')) {
     function StatusJoin($id, $id_user){
         $data = DB::table('notif')->where('untuk_id', $id_user)->where('id_terkait', $id)->first();
