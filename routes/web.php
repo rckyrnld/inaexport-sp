@@ -268,6 +268,10 @@ Route::namespace('Event')->prefix('event')->group(function () {
 
 		Route::post('/getEventOrg', 'EventController@getEventOrg');
 		Route::post('/getEventPlace', 'EventController@getEventPlace');
+		Route::post('/update_status_join', 'EventController@updatestatjoin');
+		Route::post('/update_status_ver', 'EventController@updatestatver');
+		Route::post('/store_company', 'EventController@store_company');
+		Route::post('/update_status_company', 'EventController@updatestatcompany');
 
 });
 

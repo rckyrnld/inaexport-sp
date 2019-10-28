@@ -14,25 +14,25 @@
                           <div class="col-md-6">
                             <div class="w3-content w3-display-container">
                                 @if($detail->image_1 !== NULL)
-                                    <img class="mySlides" src="{{url('/')}}//uploads/Event/Image/{{$detail->id}}/{{$detail->image_1}}" style="width:100%;">
+                                    <img class="mySlides" src="{{url('/')}}/uploads/Event/Image/{{$detail->id}}/{{$detail->image_1}}" style="width:100%;">
                                 @else
                                     <img class="mySlides" src="{{url('/')}}/image/event/NoPicture.png" style="width:100%;height: 7.5cm">
                                 @endif
 
                                 @if($detail->image_2 !== NULL)
-                                    <img class="mySlides" src="{{url('/')}}//uploads/Event/Image/{{$detail->id}}/{{$detail->image_2}}" style="width:100%;">
+                                    <img class="mySlides" src="{{url('/')}}/uploads/Event/Image/{{$detail->id}}/{{$detail->image_2}}" style="width:100%;">
                                 @else
                                     <img class="mySlides" src="{{url('/')}}/image/event/NoPicture.png" style="width:100%;height: 7.5cm ">
                                 @endif
 
                                 @if($detail->image_3 !== NULL)
-                                    <img class="mySlides" src="{{url('/')}}//uploads/Event/Image/{{$detail->id}}/{{$detail->image_3}}" style="width:100%;">
+                                    <img class="mySlides" src="{{url('/')}}/uploads/Event/Image/{{$detail->id}}/{{$detail->image_3}}" style="width:100%;">
                                 @else
                                     <img class="mySlides" src="{{url('/')}}/image/event/NoPicture.png" style="width:100%;height: 7.5cm ">
                                 @endif
 
                                 @if($detail->image_4 !== NULL)
-                                    <img class="mySlides" src="{{url('/')}}//uploads/Event/Image/{{$detail->id}}/{{$detail->image_4}}" style="width:100%;">
+                                    <img class="mySlides" src="{{url('/')}}/uploads/Event/Image/{{$detail->id}}/{{$detail->image_4}}" style="width:100%;">
                                 @else
                                     <img class="mySlides" src="{{url('/')}}/image/event/NoPicture.png" style="width:100%;height: 7.5cm ">
                                 @endif
@@ -41,7 +41,18 @@
                               <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
                             </div><br>
                             <div class="w3-center">
-                                <button class="btn btn-primary btn-lg">&nbsp; Join &nbsp;</button>
+                              <?php $status = StatusJoin($detail->id, $id_user); ?>
+                              @if($status == 1)
+                                <button class="btn btn-warning btn-lg" disabled>&nbsp; Menunggu Verified &nbsp;</button>
+                              @elseif($status==null)
+                                <form action="{{url('/')}}/event/update_status_join" method="post">
+                                  {{ csrf_field() }}
+                                  <input type="hidden" name="id" value="{{$detail->id}}">
+                                  <button class="btn btn-primary btn-lg">&nbsp; Join &nbsp;</button>
+                                </form>
+                              @elseif($status==2)
+                                 <button class="btn btn-success btn-lg" disabled>&nbsp; Verified &nbsp;</button>
+                              @endif
                             </div>
                           </div>
                           <div class="col-md-6">
