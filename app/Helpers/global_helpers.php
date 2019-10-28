@@ -279,3 +279,30 @@ if (! function_exists('getCategoryName')) {
         return $nama;
     }
 }
+
+if (! function_exists('cekid')) {
+    function cekid($id){
+      $id = DB::table('itdp_company_users as icu')
+      ->selectRaw('ipe.id')
+      ->leftJoin('itdp_profil_eks as ipe','icu.id_profil','=','ipe.id')
+      ->where('icu.id', $id)
+      ->first();
+
+        return $id;
+      }
+    }
+if (! function_exists('StatusJoin')) {
+    function StatusJoin($id, $id_user){
+        $data = DB::table('notif')->where('untuk_id', $id_user)->where('id_terkait', $id)->first();
+        return $data->status;
+    }
+}
+
+if (! function_exists('CompanyZ')) {
+    function CompanyZ($id){
+        $da = DB::table('itdp_company_users')->where('id', $id)->first();
+        $dat = DB::table('itdp_profil_eks')->where('id', $da->id_profil)->first();
+        return $dat->company;
+
+    }
+}

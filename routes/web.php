@@ -56,6 +56,7 @@ Route::get('/br_importir_add', 'BRFrontController@br_importir_add');
 Route::get('/br_importir_detail/{id}', 'BRFrontController@br_importir_detail');
 Route::get('/br_importir_lc/{id}', 'BRFrontController@br_importir_lc');
 Route::get('/br_importir_bc/{id}', 'BRFrontController@br_importir_bc');
+Route::get('/br_konfirm/{id}/{id2}', 'BRFrontController@br_konfirm');
 Route::post('/br_importir_save', 'BRFrontController@br_importir_save');
 Route::get('/ambilbroad/{id}', 'BRFrontController@ambilbroad');
 /* Route::get('/registrasi_pembeli/{locale}', function ($locale) {
@@ -132,6 +133,8 @@ Route::get('/permission_delete/{id}', 'UM\PermissionsController@destroy');
 Route::resource('/br_list', 'BuyingRequestController');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
 Route::get('/br_add', 'BuyingRequestController@add');
+Route::get('/br_join/{id}', 'BuyingRequestController@br_join');
+Route::get('/br_save_join/{id}', 'BuyingRequestController@br_save_join');
 Route::get('/ambilt2/{id}', 'BuyingRequestController@ambilt2');
 Route::get('/ambilt3/{id}', 'BuyingRequestController@ambilt3');
 Route::post('/br_save', 'BuyingRequestController@br_save');
@@ -265,6 +268,10 @@ Route::namespace('Event')->prefix('event')->group(function () {
 
     Route::post('/getEventOrg', 'EventController@getEventOrg');
     Route::post('/getEventPlace', 'EventController@getEventPlace');
+		Route::post('/update_status_join', 'EventController@updatestatjoin');
+		Route::post('/update_status_ver', 'EventController@updatestatver');
+		Route::post('/store_company', 'EventController@store_company');
+		Route::post('/update_status_company', 'EventController@updatestatcompany');
 
 });
 

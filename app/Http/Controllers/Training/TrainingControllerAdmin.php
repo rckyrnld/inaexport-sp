@@ -165,7 +165,7 @@ class TrainingControllerAdmin extends Controller
       $id_penerima = DB::table('itdp_company_users')
       ->where('id_profil', $id_profil)
       ->first();
-
+			// dd($id_profil);
       $data = DB::table('training_join')->where('id', $id)->update([
         'status' => 1
       ]);
@@ -174,11 +174,19 @@ class TrainingControllerAdmin extends Controller
         ->where('untuk_id', Auth::user()->id)
         ->where('dari_id', $id_penerima->id)
         ->update([
-        'keterangan' => 'Training Telah Di Verifikasi',
+				'status_baca' => 1,
+      ]);
+
+			$send = DB::table('notif')->insert([
+				'dari_id' => Auth::user()->id,
+				'untuk_id' => $id_profil,
+				'keterangan' => 'Training Telah Di Verifikasi',
         'url_terkait' => 'training',
 				'status_baca' => 0,
+				'waktu' => date('Y-m-d H:i:s'),
         'to_role' => 2
       ]);
+
       if($data){
          Session::flash('success','Success verifed Data');
          return redirect()->route('training.view.admin',['id'=>$id_tr]);

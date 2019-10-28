@@ -3,9 +3,12 @@
     .thumbnail{ text-align: center; }
     p{ line-height: 5px; }
     .imge{
-        padding-right: 50px;
-        padding-top: 20px;
-        padding-left: 50px;
+        height: 2cm;
+        width: 7.5cm;
+        padding: 10px;
+        /*padding-right: 50px;*/
+        /*padding-top: 20px;*/
+        /*padding-left: 50px;*/
     }
     .centerZ {
       display: block;
@@ -64,35 +67,35 @@
                                       <tr>
                                     @endif
                                         <td>
-                                            <div class="box" style="width: 7cm;height: 7.5cm;margin: 5px;border-radius: 25px;">
+                                            <div class="box" style="width: 7.5cm;height: 8.5cm;margin: 5px;border-radius: 25px;box-shadow: 2px 2px gray, -0.1em 0 .4em gray;">
                                                 <div class="thumbnail">
-                                                    <div style="float: left;margin-top: 10px;margin-left: 5px;">
-                                                        <a href="{{url('/')}}/event/show_company/{{$ed->id}}"><img src="{{url('/')}}/image/event/show.png" class="icon_"></a> 
-                                                    </div>
                                                     <div class="imge">
                                                         @if($ed->image_1 !== NULL)
                                                             <?php $topZ='margin-top: -100px;';?>
-                                                            <img src="{{url('/')}}/uploads/Event/Image/{{$ed->id}}/{{$ed->image_1}}" class="centerZ">
+                                                            <img src="{{url('/')}}/uploads/Event/Image/{{$ed->id}}/{{$ed->image_1}}" class="img-fluid img-thumbnail">
                                                         @else
                                                             <?php $topZ='margin-top: -145px;';?>
-                                                            <img src="{{url('/')}}/image/event/NoPicture.png" alt="No Picture">
-                                                        @endif
-                                                    </div>
-                                                    <div style="float: right;margin-right: 5px;{{$topZ}}">
-                                                        <a href="{{url('/')}}/event/delete/{{$ed->id}}"><img src="{{url('/')}}/image/event/hapus.png" class="icon_"></a><br>
-                                                        <a href="{{url('/')}}/event/edit/{{$ed->id}}"><img src="{{url('/')}}/image/event/edit.png" class="icon_"></a><br>
-                                                        @if($ed->status_en == 'Verified') 
-                                                            <img src="{{url('/')}}/image/event/ceklis.png" class="icon_">
+                                                            <img src="{{url('/')}}/image/event/NoPicture.png" alt="No Picture" class="img-fluid">
                                                         @endif 
-                                                    </div>   
+                                                    </div>
+                                                    <div align="right">
+                                                        @if($ed->status_en == 'Verified') 
+                                                            <img src="{{url('/')}}/image/event/ceklis.png" class="">
+                                                        @endif  
+                                                    </div>
                                                </div>
-                                               <table style="margin-left:28px;margin-top: 0.5cm" class="tbl_">
+                                               <div class="caption">
+                                                <table style="margin-left:1.35cm;margin-top: 1.5cm">
                                                     <tr><td>{{$ed->event_name_en}}</td></tr>
                                                     <tr><td><b>Start Date - End Date</b></td></tr>
                                                     <tr><td>{{getTanggalIndo($ed->start_date)}} - {{getTanggalIndo($ed->end_date)}}</td></tr>
                                                     <tr><td><b>Comodity</b></td></tr>
                                                     <tr><td>{{getEventComodity($ed->event_comodity)}}</td></tr>
                                                 </table>
+                                                <a href="{{url('/')}}/event/show_company/{{$ed->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a> 
+                                                <a href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                                <a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                               </div>
                                             </div>
                                         </td>
                                     @if($co==2)
@@ -120,7 +123,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#tableexd').DataTable();
-        $(".tbl_")
     });
 </script>
 

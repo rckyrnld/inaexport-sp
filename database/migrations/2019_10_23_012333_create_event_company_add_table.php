@@ -17,6 +17,7 @@ class CreateEventCompanyAddTable extends Migration
             $table->bigIncrements('id');
             $table->integer('id_itdp_profil_eks');
             $table->integer('id_event_detail')->nullable();
+            $table->string('status')->nullable();
             $table->timestamp('waktu');
         });
     }

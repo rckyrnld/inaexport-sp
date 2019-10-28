@@ -13,6 +13,7 @@ use App\Exports\CityExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Session;
 use Auth;
+use Mail;
 
 class TicketingSupportController extends Controller
 {
@@ -47,6 +48,22 @@ class TicketingSupportController extends Controller
         'created_at' => date('Y-m-d H:i:s')
       ]);
 
+			$id_ticketing = $store->id;
+
+			//Tinggal Ganti Email1 dengan email kemendag
+			$data = [
+				'email' => $req->email,
+				'email1' => 'yossandiimran02@gmail.com',
+				'username' => $req->name,
+				'main_messages' => $req->messages,
+				'id' => $id_ticketing
+			];
+
+      Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
+                $mail->to($data['email1'], $data['username']);
+                $mail->subject('Requesting Ticketing Support');
+      });
+
 			return redirect('/ticketing');
 		}
 
@@ -71,10 +88,19 @@ class TicketingSupportController extends Controller
 						}
 					})
           ->addColumn('action', function ($data) {
-						if ($data->status == 1 || $data->status == 2){
+						if ($data->status == 1){
+							return '
+							<center>
+							<div class="btn-group">
+								<a href="'.route('ticket_support.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+							</div>
+							</center>
+							';
+						}else if ($data->status == 2){
 							return '
               <center>
               <div class="btn-group">
+								<a href="'.route('ticket_support.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
                 <a href="'.route('ticket_support.vchat', $data->id).'" class="btn btn-sm btn-warning">&nbsp;<i class="fa fa-envelope text-white"></i>&nbsp;Chat&nbsp;</a>&nbsp;&nbsp;
               </div>
               </center>
