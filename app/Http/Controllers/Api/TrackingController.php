@@ -13,18 +13,32 @@ class TrackingController extends Controller
     public function tracking(Request $request){
 		
 		$client = new Client();
-        $res = $client->request('POST', 'http://api.trackingmore.com/v2/trackings/realtime', [
-            'headers' => [
-		        'Content-Type' 			=> 'application/json',
-		        'Accept'     			=> 'application/json',
-		        'Trackingmore-Api-Key' 	=> 'bdfbf7bb-93e5-45b3-9136-24b05cf2d443'
-		    ],
-		    'json' => ['tracking_number' =>  $request->number, 'carrier_code' =>  $request->type]
-        ]);
+		$api = explode('|', $request->type);
+		if($api[0] == 'mytm'){
+	        $res = $client->request('POST', 'http://api.trackingmore.com/v2/trackings/realtime', [
+	            'headers' => [
+			        'Content-Type' 			=> 'application/json',
+			        'Accept'     			=> 'application/json',
+			        'Trackingmore-Api-Key' 	=> 'bdfbf7bb-93e5-45b3-9136-24b05cf2d443'
+			    ],
+			    'json' => ['tracking_number' =>  $request->number, 'carrier_code' =>  $api[1]]
+	        ]);
 
-        // $tampung = $res->getBody();
-				
-		return response($res->getBody());
+			return response($res->getBody());
+
+		} else if($api[0] == 'dhl') {
+			$res = $client->request('GET', 'https://api-eu.dhl.com/track/shipments', [
+	            'headers' => [
+			        'Content-Type' 		=> 'application/json',
+			        'Accept'     		=> 'application/json',
+			        'DHL-API-Key' 		=> 'dhl-try-it-out-key'
+			    ],
+			    'query' => ['trackingNumber' => $request->number, 'service' => $api[1]]
+	        ]);
+			
+			$tampung =  $res->getBody();
+			return response($tampung->getContents());
+		}		
 	}
     
 }
