@@ -56,10 +56,10 @@
 	          <!-- Header Title -->
 	        </div>
 						<div class="box-body bg-light">
-		          <h4>Form Ticketing</h4><hr>
+		          <h4>@if($loc == "ch") 表格票务 @elseif($loc == "en") Form Ticketing @elseif($loc == "in") Form Ticketing @endif</h4><hr>
 		          <div class="row">
 		            <div class="col-md-2">
-		              <b>Full Name</b>
+		              <b>@if($loc == "ch") 名称 @elseif($loc == "en") Name @elseif($loc == "in") Nama @endif</b>
 		            </div>
 		            <div class="col-md-4">
 									: {{$users->name}}
@@ -67,7 +67,7 @@
 		          </div><br>
 		          <div class="row">
 		            <div class="col-md-2">
-		              <b>E-Mail</b>
+		              <b>@if($loc == "ch") 电子邮件 @elseif($loc == "en") Email @elseif($loc == "in") Email @endif</b>
 		            </div>
 		            <div class="col-md-4">
 		              : {{$users->email}}
@@ -75,7 +75,7 @@
 		          </div><br>
 		          <div class="row">
 		            <div class="col-md-2">
-		              <b>Subject</b>
+		              <b>@if($loc == "ch") 学科 @elseif($loc == "en") Subject @elseif($loc == "in") Subyek @endif</b>
 		            </div>
 		            <div class="col-md-4">
 		              : {{$users->subyek}}
@@ -83,7 +83,7 @@
 		          </div><br>
 	            <div class="row">
 		            <div class="col-md-2">
-		              <b>Messages</b>
+		              <b>@if($loc == "ch")按摩 @elseif($loc == "en") Massages @elseif($loc == "in") Pesan @endif</b>
 		            </div>
 		            <div class="col-md-4">
 		              : {{$users->main_messages}}
@@ -102,7 +102,7 @@
 	                        <div class="row pull-right">
 	                          <div class="col-md-10">
 	                            <label class="label" style="background:orange; border-radius:10px; width:300px ">
-	                            &nbsp;&nbsp<b>You</b> :
+	                            &nbsp;&nbsp<b>@if($loc == "ch") 您 @elseif($loc == "en") You @elseif($loc == "in") Anda @endif</b> :
 	                            &nbsp;&nbsp{{$msg->messages}}<br>
 	                            &nbsp;&nbsp<i>{{$msg->messages_send}}</i>
 	                            </label>
@@ -116,7 +116,7 @@
 	                        <div class="row">
 	                          <div class="col-md-10">
 	                            <label class="label" style="background:aqua; border-radius:10px; width:300px">
-	                            &nbsp;&nbsp<b>Admin</b> :
+	                            &nbsp;&nbsp<b>@if($loc == "ch") 管理员 @elseif($loc == "en") Admin @elseif($loc == "in") Admin @endif</b> :
 	                            &nbsp;&nbsp{{$msg->messages}}<br>
 	                            &nbsp;&nbsp<i>{{$msg->messages_send}}</i>
 	                            </label>
@@ -139,7 +139,7 @@
 	                        <input type="text" class="form-control" name="messages" value="" autocomplete="off">
 	                      </div>
 	                      <div class="col-md-2 pull-right">
-	                        <button type="submit" name="button" class="btn btn-primary"><span class="fa fa-send"></span> Send Messages</button>
+	                        <button type="submit" name="button" class="btn btn-primary"><span class="fa fa-send"></span> @if($loc == "ch") 发送 @elseif($loc == "en") Send @elseif($loc == "in") Kirim @endif</button>
 	                      </div>
 	                    </div><br>
 	                    @endif

@@ -50,16 +50,17 @@ class TicketingSupportController extends Controller
 
 			$id_ticketing = $store->id;
 
-			//Tinggal Ganti Email & Pass dengan email kemendag
+			//Tinggal Ganti Email1 dengan email kemendag
 			$data = [
-				'email' => 'yossandiimran02@gmail.com',
+				'email' => $req->email,
+				'email1' => 'yossandiimran02@gmail.com',
 				'username' => $req->name,
 				'main_messages' => $req->messages,
 				'id' => $id_ticketing
 			];
 
       Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
-                $mail->to($data['email'], $data['username']);
+                $mail->to($data['email1'], $data['username']);
                 $mail->subject('Requesting Ticketing Support');
       });
 

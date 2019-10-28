@@ -57,10 +57,17 @@
 	        </div>
 					<form class="" action="{{route('ticket_support.store')}}" method="post">
 						<div class="box-body bg-light">
-		          <h4>Ticketing Support</h4><hr>
+							@if($loc == "ch")
+							<h4>票务支持</h4>
+							@elseif($loc == "en")
+							<h4>Ticketing Support</h4>
+							@elseif($loc == "in")
+							<h4>Ticketing Support</h4>
+							@endif
+		          <hr>
 		          <div class="row">
 		            <div class="col-md-2">
-		              Full Name
+		              @if($loc == "ch") 名称 @elseif($loc == "en") Name @elseif($loc == "in") Nama @endif
 		            </div>
 		            <div class="col-md-4">
 									<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -69,7 +76,7 @@
 		          </div><br>
 		          <div class="row">
 		            <div class="col-md-2">
-		              E-Mail
+		              @if($loc == "ch") 电子邮件 @elseif($loc == "en") Email @elseif($loc == "in") Email @endif
 		            </div>
 		            <div class="col-md-4">
 		              <input type="text" autocomplete="off" class="form-control" name="email" value=""required>
@@ -77,7 +84,7 @@
 		          </div><br>
 		          <div class="row">
 		            <div class="col-md-2">
-		              Subject
+		              @if($loc == "ch") 学科 @elseif($loc == "en") Subject @elseif($loc == "in") Subyek @endif
 		            </div>
 		            <div class="col-md-4">
 		              <input type="text" autocomplete="off" class="form-control" name="subject" value=""required>
@@ -85,7 +92,7 @@
 		          </div><br>
 		          <div class="row">
 		            <div class="col-md-2">
-		              Messages
+		              @if($loc == "ch")按摩 @elseif($loc == "en") Massages @elseif($loc == "in") Pesan @endif
 		            </div>
 		            <div class="col-md-4">
 		              <textarea name="messages" class="form-control" rows="8" cols="80"></textarea>
@@ -95,7 +102,7 @@
 		            <div class="col-md-2">
 		            </div>
 		            <div class="col-md-4">
-		              <button type="submit" class="btn btn-primary" name="button">Submit </button>
+		              <button type="submit" class="btn btn-primary" name="button">@if($loc == "ch") 发送 @elseif($loc == "en") Send @elseif($loc == "in") Kirim @endif</button>
 		            </div>
 		          </div>
 		        </div>
