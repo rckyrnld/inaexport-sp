@@ -2,81 +2,89 @@
 <div class="padding">
     <div class="row">
         <div class="col-md-12">
-            <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{url($url)}}">
-                {{ csrf_field() }}
-                <div class="box">
-                    @foreach($data as $val)
-                        <div class="box-divider m-0"></div>
-                        <div class="box-body">
-                            <div class="form-row">
-                                <div class="form-group col-sm-6">
-                                    <label>Year</label>
-                                    <select class="atc form-control select2" required id="year"
-                                            name="year">
-                                        <option value="">- Select Years -</option>
-                                        @foreach($years as $sa)
-                                            <option value="{{$sa}}" {{($val->tahun == $sa)?'selected':''}} >{{$sa}}</option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" value="{{$val->id}}" name="id_sales" class="form-control">
-                                </div>
-
-                                <div class="form-group col-sm-6">
-                                    <label>Value (USD)</label>
-                                    <input type="text"
-                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                           class="form-control" value="{{$val->nilai}}" name="value"
-                                           id="value" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-sm-6">
-                                    <label>Persen (%)</label>
-                                    <input type="text"
-                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                           class="form-control" value="{{$val->nilai_persen}}" name="persen"
-                                           id="persen">
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <label>Nilai Ekspor (USD)</label>
-                                    <input type="text"
-                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                           class="form-control" value="{{$val->nilai_ekspor}}"
-                                           name="nilai_ekspor"
-                                           id="nilai_ekspor" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-sm-6">
-
-                                </div>
-                                <div class="form-group col-sm-6">
-
-                                </div>
+            {{ csrf_field() }}
+            <div class="box">
+                @foreach($data as $val)
+                    {{-- <div class="box-header">
+                    </div> --}}
+                    <div class="box-divider m-0"></div>
+                    <div class="box-body">
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label>Name</label>
+                                <input disabled type="text"
+                                       class="form-control" value="{{$val->nama_pegawai}}" name="name">
+                                {{--                                <label>Year</label>--}}
+                                {{--                                <select class="atc form-control select2" required id="year"--}}
+                                {{--                                        name="year">--}}
+                                {{--                                    <option value="">- Select Years -</option>--}}
+                                {{--                                    @foreach($years as $sa)--}}
+                                {{--                                        <option value="{{$sa}}">{{$sa}}</option>--}}
+                                {{--                                    @endforeach--}}
+                                {{--                                </select>--}}
                             </div>
 
-                            <div class="form-row">
-                                <div class="form-group col-sm-6">
-
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <a style="color: white" href="{{url('/eksportir/annual_sales')}}"
-                                       class="btn btn-primary"><i style="color: white"></i>
-                                        Back
-                                    </a>
-                                    <button class="btn btn-success" type="submit"><i
-                                                class="fa fa-plus-circle"></i> Update
-                                    </button>
-                                </div>
+                            <div class="form-group col-sm-6">
+                                <label>Position</label>
+                                <input disabled type="text" value="{{$val->jabatan}}"
+                                       class="form-control" name="posotion">
                             </div>
                         </div>
-                    @endforeach
-                </div>
-            </form>
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label>Phone</label>
+                                <input disabled type="text" value="{{$val->telepon}}"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" name="phone">
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label>Official</label>
+                                <input disabled type="text" value="{{$val->pejabat}}"
+                                       class="form-control" name="pejabat">
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label style="font-weight:bold" for="problem">Problem</label>
+                                <textarea disabled class="form-control" id="problem"
+                                          name="problem">{{$val->masalah}}</textarea>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label style="font-weight:bold" for="solution">Solution</label>
+                                <textarea disabled type="text" class="form-control" name="solution"
+                                          id="solution">{{$val->solusi}}</textarea>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <input type="hidden" value="{{$val->id}}" class="form-control" name="id_sales"
+                                       id="id_sales">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <a style="color: white" href="{{ URL::previous() }}"
+                                   class="btn btn-primary"><i style="color: white"></i>
+                                    Back
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            {{--            </form>--}}
         </div>
     </div>
 </div>
-
+<script src="{{ asset('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
+<script>
+    CKEDITOR.replace('problem');
+    CKEDITOR.replace('solution');
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('.select2').select2();

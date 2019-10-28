@@ -8,14 +8,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class CapultiController extends Controller
+class ConsultanController extends Controller
 {
     public function index()
     {
 //        dd("mantap");die();
-        $pageTitle = "Capacity Utilization";
+        $pageTitle = "Consultan";
 
-        return view('eksportir.capacity_utilization.index', compact('pageTitle'));
+        return view('eksportir.consultan.index', compact('pageTitle'));
     }
 
     public function tambah()
@@ -26,42 +26,47 @@ class CapultiController extends Controller
         $years = [];
         for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
 //        dd($years);
-        $url = '/eksportir/capulti_save';
-        $pageTitle = 'Add Capacity Utilization';
-        return view('eksportir.capacity_utilization.tambah', compact('pageTitle', 'url', 'years'));
+        $url = '/eksportir/consultan_save';
+        $pageTitle = 'Add Consultan';
+        return view('eksportir.consultan.tambah', compact('pageTitle', 'url', 'years'));
     }
 
     public function store(Request $request)
     {
 //        dd($request);
+        $datenow = date('Y-m-d');
         $id_user = Auth::guard('eksmp')->user()->id_profil;
-        DB::table('itdp_production_capacity')->insert([
-            'id_itdp_profil_eks' => $id_user,
-            'tahun' => $request->year,
-            'kapasitas_terpakai_persen' => $request->used_capacity,
+        DB::table('itdp_eks_consultation')->insert([
+            'id_profil_eks' => $id_user,
+            'nama_pegawai' => $request->name,
+            'jabatan' => $request->posotion,
+            'telepon' => $request->phone,
+            'masalah' => $request->problem,
+            'solusi' => $request->solution,
+            'pejabat' => $request->pejabat,
+            'created_at' => $datenow
         ]);
-        return redirect('eksportir/capulti');
+        return redirect('eksportir/consultan');
     }
 
     public function datanya()
     {
 //        dd("masuk gan");
-        $user = DB::table('itdp_production_capacity')
-            ->select('itdp_production_capacity.id', 'itdp_production_capacity.tahun', 'itdp_production_capacity.kapasitas_terpakai_persen')
-            ->where('itdp_production_capacity.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
+        $user = DB::table('itdp_eks_consultation')
+            ->where('itdp_eks_consultation.id_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('capulti.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                <a href="' . route('consultan.view', $mjl->id) . '" class="btn btn-sm btn-info">
                     <i class="fa fa-search text-white"></i> View
                 </a>
-                <a href="' . route('capulti.detail', $mjl->id) . '" class="btn btn-sm btn-success">
+                <a href="' . route('consultan.detail', $mjl->id) . '" class="btn btn-sm btn-success">
                     <i class="fa fa-edit text-white"></i> Edit
                 </a>
-                <a href="' . route('capulti.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
+                <a href="' . route('consultan.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash text-white"></i> Delete
                 </a>
                 </center>
@@ -75,65 +80,71 @@ class CapultiController extends Controller
     public function edit($id)
     {
         $ldate = date('Y');
-        $pageTitle = 'Detail Capacity Utilization';
-        $url = '/eksportir/capulti_update';
+        $pageTitle = 'Detail Consulting';
+        $url = '/eksportir/consultan_update';
         $years = [];
         for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
-        $data = DB::table('itdp_production_capacity')
+        $data = DB::table('itdp_eks_consultation')
             ->where('id', '=', $id)
             ->get();
 //        dd($data);
-        return view('eksportir.capacity_utilization.edit', compact('pageTitle', 'data', 'url', 'years'));
+        return view('eksportir.consultan.edit', compact('pageTitle', 'data', 'url', 'years'));
     }
 
     public function view($id)
     {
         $ldate = date('Y');
-        $pageTitle = 'View Capacity Utilization';
+        $pageTitle = 'View Detail Consultan';
         $years = [];
         for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
-        $data = DB::table('itdp_production_capacity')
+        $data = DB::table('itdp_eks_consultation')
             ->where('id', '=', $id)
             ->get();
-        return view('eksportir.capacity_utilization.view', compact('pageTitle', 'data', 'years'));
+        return view('eksportir.consultan.view', compact('pageTitle', 'data', 'years'));
     }
 
     public function delete($id)
     {
 //        dd($id);
-        DB::table('itdp_production_capacity')->where('id', $id)
+        DB::table('itdp_eks_consultation')->where('id', $id)
             ->delete();
-        return redirect('eksportir/capulti');
+        return redirect('eksportir/consultan');
     }
 
     public function update(Request $request)
     {
 //        dd($request);
+        $datenow = date('Y-m-d');
         $id_user = Auth::guard('eksmp')->user()->id_profil;
-        DB::table('itdp_production_capacity')->where('id', $request->id_sales)
+        DB::table('itdp_eks_consultation')->where('id', $request->id_sales)
             ->update([
-                'id_itdp_profil_eks' => $id_user,
-                'tahun' => $request->year,
-                'kapasitas_terpakai_persen' => $request->used_capacity,
+                'id_profil_eks' => $id_user,
+                'nama_pegawai' => $request->name,
+                'jabatan' => $request->posotion,
+                'telepon' => $request->phone,
+                'masalah' => $request->problem,
+                'solusi' => $request->solution,
+                'pejabat' => $request->pejabat,
+                'modified' => $datenow
             ]);
-        return redirect('eksportir/capulti');
+        return redirect('eksportir/consultan');
     }
 
     public function indexadmin()
     {
-        $pageTitle = "Capacity Utilization";
-        return view('eksportir.capacity_utilization.indexadmin', compact('pageTitle'));
+        $pageTitle = "Consultan";
+        return view('eksportir.consultan.indexadmin', compact('pageTitle'));
     }
 
     public function datanyaadmin()
     {
-        $user = DB::table('itdp_production_capacity')->get();
+        $user = DB::table('itdp_eks_consultation')->get();
 
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('capulti.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                <a href="' . route('consultan.view', $mjl->id) . '" class="btn btn-sm btn-info">
                     <i class="fa fa-search text-white"></i> View
                 </a>
                

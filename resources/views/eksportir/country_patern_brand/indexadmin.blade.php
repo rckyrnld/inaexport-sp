@@ -10,10 +10,6 @@
                 </div>
 
                 <div class="box-body bg-light">
-                    <a class="btn" href="{{url('/eksportir/tambah_country_patern_brand')}}"
-                       style="background-color: #1089ff; color: white;"><i
-                                class="fa fa-plus-circle"></i>
-                        Tambah</a>
                     <div class="col-md-14">
                         <br>
                         <div class="table-responsive">
@@ -22,6 +18,9 @@
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>
                                     <th>No</th>
+                                    <th>
+                                        Brand
+                                    </th>
                                     <th>
                                         <center>Country</center>
                                     </th>
@@ -55,7 +54,7 @@
         $('#tablebrand').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('datatables.country_patern_brand') }}",
+            ajax: "{{ route('datatables.country_patern_brandadmin') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'merek', name: 'merek'},

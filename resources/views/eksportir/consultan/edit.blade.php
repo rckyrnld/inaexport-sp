@@ -10,57 +10,63 @@
                         <div class="box-body">
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-                                    <label>Year</label>
-                                    <select class="atc form-control select2" required id="year"
-                                            name="year">
-                                        <option value="">- Select Years -</option>
-                                        @foreach($years as $sa)
-                                            <option value="{{$sa}}" {{($val->tahun == $sa)?'selected':''}} >{{$sa}}</option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" value="{{$val->id}}" name="id_sales" class="form-control">
+                                    <label>Name</label>
+                                    <input type="text"
+                                           class="form-control" value="{{$val->nama_pegawai}}" name="name">
+                                    {{--                                <label>Year</label>--}}
+                                    {{--                                <select class="atc form-control select2" required id="year"--}}
+                                    {{--                                        name="year">--}}
+                                    {{--                                    <option value="">- Select Years -</option>--}}
+                                    {{--                                    @foreach($years as $sa)--}}
+                                    {{--                                        <option value="{{$sa}}">{{$sa}}</option>--}}
+                                    {{--                                    @endforeach--}}
+                                    {{--                                </select>--}}
                                 </div>
 
                                 <div class="form-group col-sm-6">
-                                    <label>Value (USD)</label>
-                                    <input type="text"
-                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                           class="form-control" value="{{$val->nilai}}" name="value"
-                                           id="value" required>
+                                    <label>Position</label>
+                                    <input type="text" value="{{$val->jabatan}}"
+                                           class="form-control" name="posotion">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-                                    <label>Persen (%)</label>
-                                    <input type="text"
+                                    <label>Phone</label>
+                                    <input type="text" value="{{$val->telepon}}"
                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                           class="form-control" value="{{$val->nilai_persen}}" name="persen"
-                                           id="persen">
+                                           class="form-control" name="phone">
                                 </div>
+
                                 <div class="form-group col-sm-6">
-                                    <label>Nilai Ekspor (USD)</label>
-                                    <input type="text"
-                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                           class="form-control" value="{{$val->nilai_ekspor}}"
-                                           name="nilai_ekspor"
-                                           id="nilai_ekspor" required>
+                                    <label>Official</label>
+                                    <input type="text" value="{{$val->pejabat}}"
+                                           class="form-control" name="pejabat">
                                 </div>
                             </div>
+                            <br>
+                            <br>
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-
+                                    <label style="font-weight:bold" for="problem">Problem</label>
+                                    <textarea class="form-control" id="problem"
+                                              name="problem">{{$val->masalah}}</textarea>
                                 </div>
-                                <div class="form-group col-sm-6">
 
+                                <div class="form-group col-sm-6">
+                                    <label style="font-weight:bold" for="solution">Solution</label>
+                                    <textarea type="text" class="form-control" name="solution"
+                                              id="solution">{{$val->solusi}}</textarea>
                                 </div>
                             </div>
+                            <br>
 
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-
+                                    <input type="hidden" value="{{$val->id}}" class="form-control" name="id_sales"
+                                           id="id_sales">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <a style="color: white" href="{{url('/eksportir/annual_sales')}}"
+                                    <a style="color: white" href="{{url('/eksportir/consultan')}}"
                                        class="btn btn-primary"><i style="color: white"></i>
                                         Back
                                     </a>
@@ -76,7 +82,11 @@
         </div>
     </div>
 </div>
-
+<script src="{{ asset('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
+<script>
+    CKEDITOR.replace('problem');
+    CKEDITOR.replace('solution');
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('.select2').select2();

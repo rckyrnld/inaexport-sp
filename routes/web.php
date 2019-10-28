@@ -198,7 +198,7 @@ Route::namespace('ResearchCorner')->group(function () {
 /////////////////////////////////////////ILYAS START//////////////////////////////////////////////////////////////////////////////////
 Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 
-    //Annual SALES
+    //Annual SALES USER
     Route::get('/annual_sales', 'AnnualController@index')->name('annual_sales.index');
     Route::get('/tambah_annual', 'AnnualController@tambah');
     Route::post('/annual_save', 'AnnualController@store');
@@ -208,7 +208,11 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/sales_delete/{id}', 'AnnualController@delete')->name('sales.delete');
     Route::post('/sales_update', 'AnnualController@update');
 
-    //Brand
+    //ADMIN
+    Route::get('/annual_sales_admin', 'AnnualController@indexadmin')->name('annual_sales.indexadmin');
+    Route::get('/sales_getdata_admin', 'AnnualController@datanyaadmin')->name('datatables.salesadmin');
+
+    //Brand USER
     Route::get('/brand', 'BrandController@index')->name('brand.index');
     Route::get('/tambah_brand', 'BrandController@tambah');
     Route::post('/brand_save', 'BrandController@store');
@@ -217,6 +221,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
     Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
     Route::post('/brand_update', 'BrandController@update');
+
+    //ADMIN
+    Route::get('/brand_admin', 'BrandController@indexadmin')->name('brand.indexadmin');
+    Route::get('/brand_getdata_admin', 'BrandController@datanyaadmin')->name('datatables.brandadmin');
 
     //country patern brand
     Route::get('/country_patern_brand', 'CountryPaternBrandController@index')->name('country_patern_brand.index');
@@ -228,6 +236,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/country_patern_brand_delete/{id}', 'CountryPaternBrandController@delete')->name('country_patern_brand.delete');
     Route::post('/country_patern_brand_update', 'CountryPaternBrandController@update');
 
+    //ADMIN
+    Route::get('/country_patern_brand_admin', 'CountryPaternBrandController@indexadmin')->name('country_patern_brand.indexadmin');
+    Route::get('/country_patern_brand_getdata_admin', 'CountryPaternBrandController@datanyaadmin')->name('datatables.country_patern_brandadmin');
+
     //production capacity
     Route::get('/product_capacity', 'ProcapController@index')->name('brand.index');
     Route::get('/tambah_procap', 'ProcapController@tambah');
@@ -238,7 +250,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/procap_delete/{id}', 'ProcapController@delete')->name('procap.delete');
     Route::post('/procap_update', 'ProcapController@update');
 
-    //contact
+    //contact USER
     Route::get('/contact', 'ContactController@index')->name('contact.index');
     Route::get('/tambah_contact', 'ContactController@tambah');
     Route::post('/contact_save', 'ContactController@store');
@@ -247,6 +259,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/contact_view/{id}', 'ContactController@view')->name('contact.view');
     Route::get('/contact_delete/{id}', 'ContactController@delete')->name('contact.delete');
     Route::post('/contact_update', 'ContactController@update');
+
+    //ADMIN
+    Route::get('/contact_admin', 'ContactController@indexadmin')->name('contact.indexadmin');
+    Route::get('/contact_getdata_admin', 'ContactController@datanyaadmin')->name('datatables.contactadmin');
 
     //export destination
     Route::get('/export_destination', 'ExsdesController@index')->name('exportdes.index');
@@ -278,7 +294,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 //    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
 //    Route::post('/brand_update', 'BrandController@update');
 
-    //capacity utilization
+    //capacity utilization USER
     Route::get('/capulti', 'CapultiController@index')->name('capulti.index');
     Route::get('/tambah_capulti', 'CapultiController@tambah');
     Route::post('/capulti_save', 'CapultiController@store');
@@ -287,6 +303,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/capulti_view/{id}', 'CapultiController@view')->name('capulti.view');
     Route::get('/capulti_delete/{id}', 'CapultiController@delete')->name('capulti.delete');
     Route::post('/capulti_update', 'CapultiController@update');
+
+    //ADMIN
+    Route::get('/capulti_admin', 'CapultiController@indexadmin')->name('capulti.indexadmin');
+    Route::get('/capulti_getdata_admin', 'CapultiController@datanyaadmin')->name('datatables.capultiadmin');
 
     //raw material
     Route::get('/rawmaterial', 'RawmaterialController@index')->name('rawmaterial.index');
@@ -309,14 +329,18 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::post('/labor_update', 'LaborController@update');
 
     //consultan
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::get('/consultan', 'ConsultanController@index')->name('consultan.index');
+    Route::get('/tambah_consultan', 'ConsultanController@tambah');
+    Route::post('/consultan_save', 'ConsultanController@store');
+    Route::get('/consultan_getdata', 'ConsultanController@datanya')->name('datatables.consultan');
+    Route::get('/consultan_edit/{id}', 'ConsultanController@edit')->name('consultan.detail');
+    Route::get('/consultan_view/{id}', 'ConsultanController@view')->name('consultan.view');
+    Route::get('/consultan_delete/{id}', 'ConsultanController@delete')->name('consultan.delete');
+    Route::post('/consultan_update', 'ConsultanController@update');
+
+    //ADMIN
+    Route::get('/consultan_admin', 'ConsultanController@indexadmin')->name('consultan.indexadmin');
+    Route::get('/consultan_getdata_admin', 'ConsultanController@datanyaadmin')->name('datatables.consultanadmin');
 
     //training
     Route::get('/training', 'TrainingController@index')->name('training.index');
@@ -329,14 +353,14 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 //    Route::post('/brand_update', 'BrandController@update');
 
     //tax
-//    Route::get('/brand', 'BrandController@index')->name('brand.index');
-//    Route::get('/tambah_brand', 'BrandController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::get('/taxes', 'TaxesController@index')->name('taxes.index');
+    Route::get('/tambah_taxes', 'TaxesController@tambah');
+    Route::post('/taxes_save', 'TaxesController@store');
+    Route::get('/taxes_getdata', 'TaxesController@datanya')->name('datatables.taxes');
+    Route::get('/taxes_edit/{id}', 'TaxesController@edit')->name('taxes.detail');
+    Route::get('/taxes_view/{id}', 'TaxesController@view')->name('taxes.view');
+    Route::get('/taxes_delete/{id}', 'TaxesController@delete')->name('taxes.delete');
+    Route::post('/taxes_update', 'TaxesController@update');
 
     //Meidi
     //Product

@@ -8,14 +8,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class LaborController extends Controller
+class TaxesController extends Controller
 {
     public function index()
     {
 //        dd("mantap");die();
-        $pageTitle = "Labor";
+        $pageTitle = "Taxes";
 
-        return view('eksportir.labor.index', compact('pageTitle'));
+        return view('eksportir.taxes.index', compact('pageTitle'));
     }
 
     public function tambah()
@@ -26,43 +26,50 @@ class LaborController extends Controller
         $years = [];
         for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
 //        dd($years);
-        $url = '/eksportir/labor_save';
-        $pageTitle = 'Add Raw Material';
-        return view('eksportir.labor.tambah', compact('pageTitle', 'url', 'years'));
+        $url = '/eksportir/taxes_save';
+        $pageTitle = 'Add Taxes';
+        return view('eksportir.taxes.tambah', compact('pageTitle', 'url', 'years'));
     }
 
     public function store(Request $request)
     {
 //        dd($request);
         $id_user = Auth::guard('eksmp')->user()->id_profil;
-        DB::table('itdp_eks_labor')->insert([
+        DB::table('itdp_eks_taxes')->insert([
             'id_itdp_profil_eks' => $id_user,
             'tahun' => $request->year,
-            'lokal_orang' => $request->local_employee,
-            'asing_orang' => $request->foreign_worker,
+            'laporan_pph' => $request->laporan_pph,
+            'laporan_ppn' => $request->laporan_ppn,
+            'laporan_psl21' => $request->laporan_pasal_21,
+            'setor_pph' => $request->total_pph,
+            'setor_ppn' => $request->total_ppn,
+            'setor_psl21' => $request->total_pasal_21,
+            'tunggakan_pph' => $request->tunggakan_pph,
+            'tunggakan_ppn' => $request->tunggakan_ppn,
+            'tunggakan_psl21' => $request->tunggakan_pasal_21,
             'idcompanytahun' => $id_user . $request->year,
         ]);
-        return redirect('eksportir/labor');
+        return redirect('eksportir/taxes');
     }
 
     public function datanya()
     {
 //        dd("masuk gan");
-        $user = DB::table('itdp_eks_labor')
-            ->where('itdp_eks_labor.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
+        $user = DB::table('itdp_eks_taxes')
+            ->where('itdp_eks_taxes.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('labor.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                <a href="' . route('taxes.view', $mjl->id) . '" class="btn btn-sm btn-info">
                     <i class="fa fa-search text-white"></i> View
                 </a>
-                <a href="' . route('labor.detail', $mjl->id) . '" class="btn btn-sm btn-success">
+                <a href="' . route('taxes.detail', $mjl->id) . '" class="btn btn-sm btn-success">
                     <i class="fa fa-edit text-white"></i> Edit
                 </a>
-                <a href="' . route('labor.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
+                <a href="' . route('taxes.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash text-white"></i> Delete
                 </a>
                 </center>
@@ -77,48 +84,55 @@ class LaborController extends Controller
     {
         $ldate = date('Y');
         $pageTitle = 'Detail Labor';
-        $url = '/eksportir/labor_update';
+        $url = '/eksportir/taxes_update';
         $years = [];
         for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
-        $data = DB::table('itdp_eks_labor')
+        $data = DB::table('itdp_eks_taxes')
             ->where('id', '=', $id)
             ->get();
 //        dd($data);
-        return view('eksportir.labor.edit', compact('pageTitle', 'data', 'url', 'years'));
+        return view('eksportir.taxes.edit', compact('pageTitle', 'data', 'url', 'years'));
     }
 
     public function view($id)
     {
         $ldate = date('Y');
-        $pageTitle = 'View Detail Labor';
+        $pageTitle = 'View Detail Taxes';
         $years = [];
         for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
-        $data = DB::table('itdp_eks_labor')
+        $data = DB::table('itdp_eks_taxes')
             ->where('id', '=', $id)
             ->get();
-        return view('eksportir.labor.view', compact('pageTitle', 'data', 'years'));
+        return view('eksportir.taxes.view', compact('pageTitle', 'data', 'years'));
     }
 
     public function delete($id)
     {
 //        dd($id);
-        DB::table('itdp_eks_labor')->where('id', $id)
+        DB::table('itdp_eks_taxes')->where('id', $id)
             ->delete();
-        return redirect('eksportir/labor');
+        return redirect('eksportir/taxes');
     }
 
     public function update(Request $request)
     {
 //        dd($request);
         $id_user = Auth::guard('eksmp')->user()->id_profil;
-        DB::table('itdp_eks_labor')->where('id', $request->id_sales)
+        DB::table('itdp_eks_taxes')->where('id', $request->id_sales)
             ->update([
                 'id_itdp_profil_eks' => $id_user,
                 'tahun' => $request->year,
-                'lokal_orang' => $request->local_employee,
-                'asing_orang' => $request->foreign_worker,
+                'laporan_pph' => $request->laporan_pph,
+                'laporan_ppn' => $request->laporan_ppn,
+                'laporan_psl21' => $request->laporan_pasal_21,
+                'setor_pph' => $request->total_pph,
+                'setor_ppn' => $request->total_ppn,
+                'setor_psl21' => $request->total_pasal_21,
+                'tunggakan_pph' => $request->tunggakan_pph,
+                'tunggakan_ppn' => $request->tunggakan_ppn,
+                'tunggakan_psl21' => $request->tunggakan_pasal_21,
                 'idcompanytahun' => $id_user . $request->year,
             ]);
-        return redirect('eksportir/labor');
+        return redirect('eksportir/taxes');
     }
 }

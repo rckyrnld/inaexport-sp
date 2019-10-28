@@ -15,52 +15,86 @@
                                             name="year">
                                         <option value="">- Select Years -</option>
                                         @foreach($years as $sa)
-                                            <option value="{{$sa}}" {{($val->tahun == $sa)?'selected':''}} >{{$sa}}</option>
+                                            <option value="{{$sa}}" {{($val->tahun == $sa)?'selected':''}}>{{$sa}}</option>
                                         @endforeach
                                     </select>
-                                    <input type="hidden" value="{{$val->id}}" name="id_sales" class="form-control">
                                 </div>
 
                                 <div class="form-group col-sm-6">
-                                    <label>Value (USD)</label>
+                                    <label>Report PPH</label>
                                     <input type="text"
-                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                           class="form-control" value="{{$val->nilai}}" name="value"
-                                           id="value" required>
+                                           class="form-control" value="{{$val->laporan_pph}}" name="laporan_pph">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-                                    <label>Persen (%)</label>
+                                    <label>Report PPN</label>
                                     <input type="text"
-                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                           class="form-control" value="{{$val->nilai_persen}}" name="persen"
-                                           id="persen">
+                                           class="form-control" value="{{$val->laporan_ppn}}" name="laporan_ppn">
                                 </div>
+
                                 <div class="form-group col-sm-6">
-                                    <label>Nilai Ekspor (USD)</label>
+                                    <label>Report Pasal 21</label>
                                     <input type="text"
-                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                           class="form-control" value="{{$val->nilai_ekspor}}"
-                                           name="nilai_ekspor"
-                                           id="nilai_ekspor" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-sm-6">
-
-                                </div>
-                                <div class="form-group col-sm-6">
-
+                                           class="form-control" value="{{$val->laporan_psl21}}" name="laporan_pasal_21">
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
+                                    <label>Total PPH</label>
+                                    <input type="text"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                           class="form-control" value="{{$val->setor_pph}}" name="total_pph">
+                                </div>
 
+                                <div class="form-group col-sm-6">
+                                    <label>Total PPN</label>
+                                    <input type="text"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                           class="form-control" value="{{$val->setor_ppn}}" name="total_ppn">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label>Total Pasal 21</label>
+                                    <input type="text"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                           class="form-control" value="{{$val->setor_psl21}}" name="total_pasal_21">
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label>Arrears PPH</label>
+                                    <input type="text"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                           class="form-control" value="{{$val->tunggakan_pph}}" name="tunggakan_pph">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label>Arrears PPN</label>
+                                    <input type="text"
+                                           value="{{$val->tunggakan_ppn}}"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                           class="form-control" name="tunggakan_ppn">
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label>Arrears Pasal 21</label>
+                                    <input type="text"
+                                           value="{{$val->tunggakan_psl21}}"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                           class="form-control" name="tunggakan_pasal_21">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <input type="hidden" value="{{$val->id}}" class="form-control" name="id_sales"
+                                           id="id_sales">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <a style="color: white" href="{{url('/eksportir/annual_sales')}}"
+                                    <a style="color: white" href="{{url('/eksportir/taxes')}}"
                                        class="btn btn-primary"><i style="color: white"></i>
                                         Back
                                     </a>

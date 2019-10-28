@@ -12,26 +12,25 @@ class AnnualController extends Controller
 {
     public function index()
     {
-//        $id_user = Auth::guard('eksmp')->user()->id;
-//        dd($id_user);
-//        dd("mantap");die();
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
+        dd($id_user);die();
         $pageTitle = "Annual Sales";
-
         return view('eksportir.annual_sales.index', compact('pageTitle'));
     }
 
     public function tambah()
     {
-//        dd($id_user);
+        $ldate = date('Y');
+        $years = [];
+        for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
         $url = '/eksportir/annual_save';
         $pageTitle = 'Tambah Annual Sales';
-        return view('eksportir.annual_sales.tambah', compact('pageTitle', 'url'));
+        return view('eksportir.annual_sales.tambah', compact('pageTitle', 'url', 'years'));
     }
 
     public function store(Request $request)
     {
-//        dd($request);
-        $id_user = Auth::guard('eksmp')->user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
         DB::table('itdp_eks_sales')->insert([
             'id_itdp_profil_eks' => $id_user,
             'tahun' => $request->year,
@@ -45,11 +44,9 @@ class AnnualController extends Controller
 
     public function datanya()
     {
-//        dd("masuk gan");
         $user = DB::table('itdp_eks_sales')
-            ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
-        ->
-        get();
+            ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
+            ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {
@@ -74,12 +71,15 @@ class AnnualController extends Controller
 
     public function edit($id)
     {
+        $ldate = date('Y');
+        $years = [];
+        for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
         $pageTitle = 'Detail Sales';
         $url = '/eksportir/sales_update';
         $data = DB::table('itdp_eks_sales')
             ->where('id', '=', $id)
             ->get();
-        return view('eksportir.annual_sales.edit', compact('pageTitle', 'data', 'url'));
+        return view('eksportir.annual_sales.edit', compact('pageTitle', 'data', 'url', 'years'));
     }
 
     public function view($id)
@@ -93,7 +93,6 @@ class AnnualController extends Controller
 
     public function delete($id)
     {
-//        dd($id);
         DB::table('itdp_eks_sales')->where('id', $id)
             ->delete();
         return redirect('eksportir/annual_sales');
@@ -101,7 +100,6 @@ class AnnualController extends Controller
 
     public function update(Request $request)
     {
-//        dd($request);
         DB::table('itdp_eks_sales')->where('id', $request->id_sales)
             ->update([
                 'tahun' => $request->year,
@@ -110,5 +108,31 @@ class AnnualController extends Controller
                 'nilai_ekspor' => $request->nilai_ekspor,
             ]);
         return redirect('eksportir/annual_sales');
+    }
+
+    public function indexadmin()
+    {
+        $pageTitle = "Annual Sales";
+        return view('eksportir.consultan.indexadmin', compact('pageTitle'));
+    }
+
+    public function datanyaadmin()
+    {
+        $user = DB::table('itdp_eks_sales')->get();
+
+        return \Yajra\DataTables\DataTables::of($user)
+            ->addColumn('action', function ($mjl) {
+                return '
+                <center>
+                <a href="' . route('sales.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                    <i class="fa fa-search text-white"></i> View
+                </a>
+               
+                </center>
+                ';
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

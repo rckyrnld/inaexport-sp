@@ -29,7 +29,7 @@ class ContactController extends Controller
     public function store(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::guard('eksmp')->user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
         DB::table('itdp_contact_eks')->insert([
             'id_itdp_profil_eks' => $id_user,
             'name' => $request->name,
@@ -43,7 +43,7 @@ class ContactController extends Controller
     {
 //        dd("masuk gan");
         $user = DB::table('itdp_contact_eks')
-            ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
+            ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
@@ -81,7 +81,7 @@ class ContactController extends Controller
     public function view($id)
     {
 //        dd($id);
-        $pageTitle = 'Detail Country Patern Brand';
+        $pageTitle = 'Detail Contact';
         $data = DB::table('itdp_contact_eks')
             ->where('id', '=', $id)
             ->get();
@@ -107,5 +107,31 @@ class ContactController extends Controller
                 'phone' => $request->phone,
             ]);
         return redirect('eksportir/contact');
+    }
+
+    public function indexadmin()
+    {
+        $pageTitle = "Contact";
+        return view('eksportir.contact.indexadmin', compact('pageTitle'));
+    }
+
+    public function datanyaadmin()
+    {
+        $user = DB::table('itdp_contact_eks')->get();
+
+        return \Yajra\DataTables\DataTables::of($user)
+            ->addColumn('action', function ($mjl) {
+                return '
+                <center>
+                <a href="' . route('contact.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                    <i class="fa fa-search text-white"></i> View
+                </a>
+               
+                </center>
+                ';
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

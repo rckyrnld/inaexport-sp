@@ -1,82 +1,110 @@
 @include('header')
-<title>E-Reporting | Tambah User</title>
 <div class="padding">
     <div class="row">
         <div class="col-md-12">
-            <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{url($url)}}">
-                {{ csrf_field() }}
-                <div class="box">
+            {{ csrf_field() }}
+            <div class="box">
+                @foreach($data as $val)
+                    {{-- <div class="box-header">
+                    </div> --}}
                     <div class="box-divider m-0"></div>
                     <div class="box-body">
                         <div class="form-row">
                             <div class="form-group col-sm-6">
-                                <label>Brand</label>
-                                <input type="text" name="brand" id="brand" class="form-control">
-                            </div>
-
-                            <div class="form-group col-sm-6">
-                                <label>Meaning Of Brand</label>
-                                <input type="text" class="form-control" name="arti_brand" id="arti_brand" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-sm-6">
-                                <label for="bulan">Month</label>
-                                <select class="form-control select2" id="bulan" name="bulan">
-                                    <option value="00">--Select Month--</option>
-                                    <option value="01">January</option>
-                                    <option value="02">February</option>
-                                    <option value="03">March</option>
-                                    <option value="04">April</option>
-                                    <option value="05">May</option>
-                                    <option value="06">June</option>
-                                    <option value="07">July</option>
-                                    <option value="08">August</option>
-                                    <option value="09">September</option>
-                                    <option value="10">October</option>
-                                    <option value="11">November</option>
-                                    <option value="12">December</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-sm-6">
                                 <label>Year</label>
-                                <select class="atc form-control select2" required id="year"
+                                <select disabled class="atc form-control select2" required id="year"
                                         name="year">
                                     <option value="">- Select Years -</option>
                                     @foreach($years as $sa)
-                                        <option value="{{$sa}}">{{$sa}}</option>
+                                        <option value="{{$sa}}" {{($val->tahun == $sa)?'selected':''}}>{{$sa}}</option>
                                     @endforeach
                                 </select>
                             </div>
+
+                            <div class="form-group col-sm-6">
+                                <label>Report PPH</label>
+                                <input disabled type="text"
+                                       class="form-control" value="{{$val->laporan_pph}}" name="laporan_pph">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label>Report PPN</label>
+                                <input disabled type="text"
+                                       class="form-control" value="{{$val->laporan_ppn}}" name="laporan_ppn">
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label>Report Pasal 21</label>
+                                <input disabled type="text"
+                                       class="form-control" value="{{$val->laporan_psl21}}" name="laporan_pasal_21">
+                            </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-sm-6">
-                                <label>Copyright Number</label>
-                                <input type="text" class="form-control" name="copyright_number" id="copyright_number">
+                                <label>Total PPH</label>
+                                <input disabled type="text"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" value="{{$val->setor_pph}}" name="total_pph">
                             </div>
-                            <div class="form-group col-sm-6">
 
+                            <div class="form-group col-sm-6">
+                                <label>Total PPN</label>
+                                <input disabled type="text"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" value="{{$val->setor_ppn}}" name="total_ppn">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label>Total Pasal 21</label>
+                                <input disabled type="text"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" value="{{$val->setor_psl21}}" name="total_pasal_21">
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label>Arrears PPH</label>
+                                <input disabled type="text"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" value="{{$val->tunggakan_pph}}" name="tunggakan_pph">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label>Arrears PPN</label>
+                                <input disabled type="text"
+                                       value="{{$val->tunggakan_ppn}}"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" name="tunggakan_ppn">
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label>Arrears Pasal 21</label>
+                                <input disabled type="text"
+                                       value="{{$val->tunggakan_psl21}}"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       class="form-control" name="tunggakan_pasal_21">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-sm-6">
-
+                                <input type="hidden" value="{{$val->id}}" class="form-control" name="id_sales"
+                                       id="id_sales">
                             </div>
                             <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/brand')}}"
+                                <a style="color: white" href="{{url('/eksportir/taxes')}}"
                                    class="btn btn-primary"><i style="color: white"></i>
                                     Back
                                 </a>
-                                <button class="btn btn-success" type="submit"><i
-                                            class="fa fa-plus-circle"></i> Submit
-                                </button>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                @endforeach
+            </div>
+            {{--            </form>--}}
         </div>
     </div>
 </div>
