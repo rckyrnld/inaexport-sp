@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ResearchCorner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Session;
 use Auth;
 
@@ -23,20 +24,28 @@ class PerwakilanResearchController extends Controller
     public function getData()
     {
       $id_user = Auth::user()->id;
-      $research = DB::table('csc_research_corner')->where('created_by', $id_user)->orderby('publish_date', 'asc')->get();
+      $research = DB::table('csc_research_corner')->where('created_by', $id_user)->orderby('publish_date', 'desc')->get();
 
       return \Yajra\DataTables\DataTables::of($research)
           ->addIndexColumn()
           ->addColumn('country', function ($value) {
             $data =  DB::table('mst_country')->where('id', $value->id_mst_country)->first();
-            return $data->country;
+            if($data){
+              return $data->country;
+            } else {
+              return 'Country Not Found';
+            }
           })
           ->addColumn('type', function ($value) {
             $data =  DB::table('csc_research_type')->where('id', $value->id_csc_research_type)->first();
-            return $data->nama_en;
+            if($data){
+              return $data->nama_en;
+            } else {
+              return 'Type Not Found';
+            }
           })
           ->addColumn('date', function ($data) {
-            return getTanggalIndo(date('Y-m-d', strtotime($data->publish_date))).' ( '.date('H:i', strtotime($data->publish_date)).' )';
+            return date('d F Y', strtotime($data->publish_date)).' ( '.date('H:i', strtotime($data->publish_date)).' )';
           })
           ->addColumn('action', function ($data) {
             $research = DB::table('csc_broadcast_research_corner')
@@ -67,10 +76,14 @@ class PerwakilanResearchController extends Controller
           ->addIndexColumn()
           ->addColumn('company', function ($var) {
             $data = DB::table('itdp_profil_eks')->where('id', $var->id_itdp_profil_eks)->first();
-            return $data->company;
+            if($data){
+              return $data->company;
+            } else {
+              return 'Profile '.$var->id_itdp_profil_eks.' Not Found';
+            }
           })
           ->addColumn('download_date', function ($data) {
-            return getTanggalIndo(date('Y-m-d', strtotime($data->waktu))).' ( '.date('H:i', strtotime($data->waktu)).' )';
+            return date('d F Y', strtotime($data->waktu)).' ( '.date('H:i', strtotime($data->waktu)).' )';
           })
           ->make(true);
     }
@@ -92,10 +105,11 @@ class PerwakilanResearchController extends Controller
       $id = DB::table('csc_research_corner')->orderby('id','desc')->first();
       if($id){ $id = $id->id+1; } else { $id = 1; }
             
-      $destination=public_path().'\uploads\Research Corner\File';
+      $destination= 'uploads\Research Corner\File\\';
       if($req->hasFile('file')){ 
+        $file = $req->file('file');
         $nama_file = time().'_Research '.$req->title_en.'_'.$req->file('file')->getClientOriginalName();
-        $req->file('file')->move($destination, $nama_file);
+        Storage::disk('uploads')->putFileAs($destination, $file, $nama_file);
       } else { $nama_file = $req->lastest_file; }
 
       if($param == 'Create'){
@@ -139,6 +153,7 @@ class PerwakilanResearchController extends Controller
     {
       $id_user = Auth::user()->id;
       $array = array();
+      $date = date('Y-m-d H:i:s');
 
       for($i = 0; $i<count($req->categori); $i++){
         $var = $req->categori[$i];
@@ -149,7 +164,7 @@ class PerwakilanResearchController extends Controller
           'id' => $id,
           'id_research_corner' => $req->research,
           'id_categori_product' => $req->categori[$i],
-          'created_at' => date('Y-m-d H:i:s')
+          'created_at' => $date
         ]);
 
         $perusahaan = DB::table('csc_product_single')->where('id_itdp_company_user', '!=', null)
@@ -179,8 +194,9 @@ class PerwakilanResearchController extends Controller
             'keterangan' => 'New Broadcast from '.$pengirim->name.' with Title  "'.$req->title_en.'"',
             'url_terkait' => 'research-corner/read',
             'status_baca' => 0,
-            'waktu' => date('Y-m-d H:i:s'),
+            'waktu' => $date,
             'id_terkait' => $req->research,
+            'to_role' => '2',
         ]);
       }
 

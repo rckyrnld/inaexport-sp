@@ -157,7 +157,7 @@
                                     <div class="row">
                                         <label for="code" class="col-md-2"><b>Color</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="color_en" id="color_en" autocomplete="off" required>
+                                            <input type="text" class="form-control" name="color_en" id="color_en" autocomplete="off">
                                         </div>
                                         <div class="col-md-3">
                                             <input type="text" class="form-control" name="color_in" id="color_in" autocomplete="off">
@@ -169,7 +169,7 @@
                                     <div class="row">
                                         <label for="code" class="col-md-2"><b>Size</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="size_en" id="size_en" autocomplete="off" required>
+                                            <input type="text" class="form-control" name="size_en" id="size_en" autocomplete="off">
                                         </div>
                                         <div class="col-md-3">
                                             <input type="text" class="form-control" name="size_in" id="size_in" autocomplete="off">
@@ -181,7 +181,7 @@
                                     <div class="row">
                                         <label for="code" class="col-md-2"><b>Raw Material</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="raw_material_en" id="raw_material_en" autocomplete="off" required>
+                                            <input type="text" class="form-control" name="raw_material_en" id="raw_material_en" autocomplete="off">
                                         </div>
                                         <div class="col-md-3">
                                             <input type="text" class="form-control" name="raw_material_in" id="raw_material_in" autocomplete="off">
@@ -193,7 +193,7 @@
                                     <div class="row">
                                         <label for="code" class="col-md-2"><b>Capacity</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="capacity" id="capacity" autocomplete="off" required>
+                                            <input type="text" class="form-control" name="capacity" id="capacity" autocomplete="off">
                                         </div>
                                         <div class="col-md-3">
                                         </div>
@@ -203,7 +203,7 @@
                                     <div class="row">
                                         <label for="code" class="col-md-2"><b>Price (USD)</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control integer" name="price_usd" id="price_usd" autocomplete="off" value="0" required>
+                                            <input type="text" class="form-control" name="price_usd" id="price_usd" autocomplete="off">
                                         </div>
                                         <div class="col-md-3">
                                         </div>
@@ -233,7 +233,7 @@
                                                 <button type="button" id="img_1" style="width: 100%; height: 120px;" class="img_upl">
                                                     <img src="{{url('/')}}/image/plus/plusin.png" id="image_1_ambil" style="height: 40px; width: 40px;"/>
                                                 </button>
-                                                <input type="file" id="image_1" name="image_1" style="display: none;" />
+                                                <input type="file" id="image_1" name="image_1" accept="image/*" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 1</center>
                                             </div>
@@ -243,7 +243,7 @@
                                                 <button type="button" id="img_2" style="width: 100%; height: 120px;" class="img_upl">
                                                     <img src="{{url('/')}}/image/plus/plusin.png" id="image_2_ambil" style="height: 40px; width: 40px;"/>
                                                 </button>
-                                                <input type="file" id="image_2" name="image_2" style="display: none;" />
+                                                <input type="file" id="image_2" name="image_2" accept="image/*" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 2</center>
                                             </div>
@@ -253,7 +253,7 @@
                                                 <button type="button" id="img_3" style="width: 100%; height: 120px;" class="img_upl">
                                                     <img src="{{url('/')}}/image/plus/plusin.png" id="image_3_ambil" style="height: 40px; width: 40px;"/>
                                                 </button>
-                                                <input type="file" id="image_3" name="image_3" style="display: none;" />
+                                                <input type="file" id="image_3" name="image_3" accept="image/*" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 3</center>
                                             </div>
@@ -263,7 +263,7 @@
                                                 <button type="button" id="img_4" style="width: 100%; height: 120px;" class="img_upl">
                                                     <img src="{{url('/')}}/image/plus/plusin.png" id="image_4_ambil" style="height: 40px; width: 40px;"/>
                                                 </button>
-                                                <input type="file" id="image_4" name="image_4" style="display: none;" />
+                                                <input type="file" id="image_4" name="image_4" accept="image/*" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 4</center>
                                             </div>
@@ -272,7 +272,7 @@
                                     <div class="row">
                                         <label for="code" class="col-md-2"><b>Minimum Selling</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="minimum_order" id="minimum_order" autocomplete="off" required>
+                                            <input type="text" class="form-control" name="minimum_order" id="minimum_order" autocomplete="off">
                                         </div>
                                         <div class="col-md-3">
                                         </div>
@@ -320,6 +320,7 @@
                                         <div class="col-md-12">
                                             <div style="float: right;">
                                                 <button type="button" class="btn btn-default" onclick="nextTab('descprod', 'infoprod')">Back</button>
+                                                <a class="btn btn-danger" href="{{url('eksportir/product')}}">Cancel</a>
                                                 <button type="button" class="btn btn-primary" id="hal3">Submit</button>
                                             </div>
                                         </div>
@@ -367,10 +368,7 @@
         document.getElementById("image_4").addEventListener('change',handleFileSelect,false);
 
         $("#hal1").on("click", function(){
-            if ($('#code').val() == "") {
-                alert("Empty Code, Please fill in!");
-                return false;
-            }else if ($('#prodname_en').val() == "") {
+            if ($('#prodname_en').val() == "") {
                 alert("Product name is empty, please fill in!");
                 return false;
             }else if ($('#id_csc_product').val() == "") {
@@ -383,42 +381,12 @@
         });
 
         $("#hal2").on("click", function(){
-            if ($('#color_en').val() == "") {
-                alert("Empty Color, Please fill in!");
-                return false;
-            }else if ($('#size_en').val() == "") {
-                alert("Empty Size, please fill in!");
-                return false;
-            }else if ($('#raw_material_en').val() == "") {
-                alert("Raw Material is empty, please fill in!");
-                return false;
-            }else if ($('#capacity').val() == "") {
-                alert("Empty Capacity, please fill in!");
-                return false;
-            }else if ($('#price_usd').val() == "") {
-                alert("Price (USD) is empty, please fill in!");
-                return false;
-            }else if ($('#image_1').val() == "" || $('#image_2').val() == "" || $('#image_3').val() == "" || $('#image_4').val() == "") {
-                alert("Photo is empty, please fill in!");
-                return false;
-            }else if ($('#minimum_order').val() == "") {
-                alert("Minimum Selling is empty, please fill in!");
-                return false;
-            }else {
-                nextTab('infoprod','descprod');
-                return true;
-            }
+            nextTab('infoprod','descprod');
+            return true;
         });
 
         $("#hal3").on("click", function(){
-            var desc = CKEDITOR.instances.product_description_en.getData();
-            if (desc == "") {
-                alert("Product Description is empty, Please fill in!");
-                document.getElementById('product_description_en').focus();
-                return false;
-            }else {
-                $("#formnya").submit();
-            }
+            $("#formnya").submit();
         });
 
         $("#code").focus(function(){}).blur(function(){
@@ -429,6 +397,14 @@
             $('#prodname_ea').text(this.value);
         });
 
+        $("#prodname_in").focus(function(){}).blur(function(){
+            $('#prodname_ia').text(this.value);
+        });
+
+        $("#prodname_chn").focus(function(){}).blur(function(){
+            $('#prodname_ca').text(this.value);
+        });
+
         $('#statusnya').on('change', function() {
             var isChecked = $(this).is(':checked');
             var selectedData;
@@ -436,29 +412,11 @@
             if(isChecked) {
                 $('#status').val(1);
             } else {
-                $('#status').val(2);
+                $('#status').val(0);
             }
 
         });
 
-        $('#price_usd').inputmask({
-            alias:"integer",
-            repeat:12,
-            digitsOptional:false,
-            decimalProtect:false,
-            radixFocus:true,
-            autoUnmask:false,
-            allowMinus:false,
-            clearMaskOnLostFocus: false,
-            groupSeparator:".",
-            placeholder: '0',
-            radixPoint:",",
-            autoGroup:true,
-            onBeforeMask: function (value, opts) {
-                return value;
-            },
-            removeMaskOnSubmit:true
-        });
     })
 
     function nextTab(now, next) {
@@ -471,7 +429,7 @@
 
     function getSub(sub, idp, ids, name) {
         if(sub == 3){
-            $('#select_3').text('>'+name);
+            $('#select_3').text('> '+name);
             $('#id_csc_product_level2').val(ids);
             $('.listbag3').removeClass('active');
             $('#kat3_'+ids).addClass('active');
@@ -480,11 +438,20 @@
                 $('#select_1').text(name);
                 $('#cadprod_en').text(name);
                 $('#id_csc_product').val(idp);
+                $('#select_2').text('');
+                $('#id_csc_product_level1').val('');
+                $('#select_3').text('');
+                $('#id_csc_product_level2').val('');
+                $('#prod2').html('');
+                $('#prod3').html('');
                 $('.listbag1').removeClass('active');
                 $('#kat1_'+idp).addClass('active');
             }else{
-                $('#select_2').text('>'+name);
+                $('#select_2').text(' >'+name);
                 $('#id_csc_product_level1').val(ids);
+                $('#select_3').text('');
+                $('#id_csc_product_level2').val('');
+                $('#prod3').html('');
                 $('.listbag2').removeClass('active');
                 $('#kat2_'+ids).addClass('active');
             }

@@ -48,6 +48,18 @@
                                         <center><label for="lbl"><b>China</b></label></center>
                                     </div>
                                 </div>
+                                @if($jenis == 'admin')
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label for="lbl"><b>Company Name</b></label>
+                                    </div>
+                                    <div class="col-md-3" >
+                                        <input type="text" class="form-control" name="compname" id="compname" autocomplete="off" value="{{getNameCompany($data->id_itdp_company_user)}}" style="text-transform: uppercase; font-weight: bold;" readonly>
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3"></div>
+                                </div><br>
+                                @endif
                                 <div class="row">
                                     <label for="code" class="col-md-3"><b>Code</b></label>
                                     <div class="col-md-3">
@@ -133,15 +145,15 @@
                                     <div class="col-md-2" style="margin-top: 20px;"><label><b>Select</b></label></div>
                                     <div class="col-md-8" style="margin-top: 20px;">
                                         @if($data->id_csc_product != NULL)
-                                            <span id="select_1">{{getNameCategoryProduct($data->id_csc_product)}}</span>
+                                            <span id="select_1">{{getNameCategoryProduct($data->id_csc_product, 'en')}}</span>
                                             <input type="hidden" name="id_csc_product" id="id_csc_product" value="{{$data->id_csc_product}}">
                                         @endif
                                         @if($data->id_csc_product_level1 != NULL)
-                                            <span id="select_2">> {{getNameCategoryProduct($data->id_csc_product_level1)}}</span>
+                                            <span id="select_2">> {{getNameCategoryProduct($data->id_csc_product_level1, 'en')}}</span>
                                             <input type="hidden" name="id_csc_product_level1" id="id_csc_product_level1" value="{{$data->id_csc_product_level1}}">
                                         @endif
                                         @if($data->id_csc_product_level2 != NULL)
-                                            <span id="select_3">> {{getNameCategoryProduct($data->id_csc_product_level2)}}</span>
+                                            <span id="select_3">> {{getNameCategoryProduct($data->id_csc_product_level2, 'en')}}</span>
                                             <input type="hidden" name="id_csc_product_level2" id="id_csc_product_level2" value="{{$data->id_csc_product_level2}}">
                                         @endif
                                     </div>
@@ -192,13 +204,13 @@
                                 <div class="row">
                                     <label for="code" class="col-md-2"><b>Category Product</b></label>
                                     <div class="col-md-3">
-                                        <center><span id="cadprod_en"></span>{{getNameCategoryProduct($data->id_csc_product)}}</center>
+                                        <center><span id="cadprod_en">{{getNameCategoryProduct($data->id_csc_product, 'en')}}</span></center>
                                     </div>
                                     <div class="col-md-3">
-                                        <center><span id="cadprod_in"></span></center>
+                                        <center><span id="cadprod_in">{{getNameCategoryProduct($data->id_csc_product, 'in')}}</span></center>
                                     </div>
                                     <div class="col-md-3">
-                                        <center><span id="cadprod_chn"></span></center>
+                                        <center><span id="cadprod_chn">{{getNameCategoryProduct($data->id_csc_product, 'chn')}}</span></center>
                                     </div>
                                 </div><br>
                                 <div class="row">
@@ -250,7 +262,7 @@
                                 <div class="row">
                                     <label for="code" class="col-md-2"><b>Price (USD)</b></label>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control integer" name="price_usd" id="price_usd" autocomplete="off" value="{{$data->price_usd}}" readonly>
+                                        <input type="text" class="form-control" name="price_usd" id="price_usd" autocomplete="off" value="{{$data->price_usd}}" readonly>
                                     </div>
                                     <div class="col-md-3">
                                     </div>
@@ -347,35 +359,43 @@
                                 <div class="row">
                                     <label for="code" class="col-md-3"><b>English</b></label>
                                     <div class="col-md-9">
-                                        <textarea class="form-control" id="product_description_en" name="product_description_en">{{$data->product_description_en}}</textarea>
+                                        <textarea class="form-control" id="product_description_en" name="product_description_en" disabled>{{$data->product_description_en}}</textarea>
                                     </div>
                                 </div><br>
                                 <div class="row">
                                     <label for="code" class="col-md-3"><b>Indonesia</b></label>
                                     <div class="col-md-9">
-                                        <textarea class="form-control" id="product_description_in" name="product_description_in">{{$data->product_description_in}}</textarea>
+                                        <textarea class="form-control" id="product_description_in" name="product_description_in" disabled>{{$data->product_description_in}}</textarea>
                                     </div>
                                 </div><br>
                                 <div class="row">
                                     <label for="code" class="col-md-3"><b>China</b></label>
                                     <div class="col-md-9">
-                                        <textarea class="form-control" id="product_description_chn" name="product_description_chn">{{$data->product_description_chn}}</textarea>
+                                        <textarea class="form-control" id="product_description_chn" name="product_description_chn" disabled>{{$data->product_description_chn}}</textarea>
                                     </div>
                                 </div><br>
                                 <div class="row">
                                     <label for="code" class="col-md-3"><b>Show Product</b></label>
                                     <div class="col-md-9">
                                         <?php
-                                            if($data->status == 1){
-                                                $chck = "checked";
-                                            }else{
+                                            if($data->status == 0){
                                                 $chck = "";
+                                            }else{
+                                                $chck = "checked";
                                             }
                                         ?>
-                                        <input type="checkbox" {{$chck}} data-toggle="toggle" data-on="Publish" data-off="Hide" data-onstyle="info" data-offstyle="default" id="statusnya">
+                                        <input type="checkbox" {{$chck}} data-toggle="toggle" data-on="Publish" data-off="Hide" data-onstyle="info" data-offstyle="default" id="statusnya" disabled>
                                         <input type="hidden" name="status" id="status" value="{{$data->status}}"> 
                                     </div>
                                 </div><br>
+                                @if($data->status == 3)
+                                <div class="row">
+                                    <label for="code" class="col-md-3"><b>This product was rejected due to</b></label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control" name="keterangan" rows="5" style="color: black;" readonly>{{$data->keterangan}}</textarea>
+                                    </div>
+                                </div><br>
+                                @endif
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div style="float: right;">
@@ -461,28 +481,9 @@
             if(isChecked) {
                 $('#status').val(1);
             } else {
-                $('#status').val(2);
+                $('#status').val(0);
             }
 
-        });
-
-        $('#price_usd').inputmask({
-            alias:"integer",
-            repeat:12,
-            digitsOptional:false,
-            decimalProtect:false,
-            radixFocus:true,
-            autoUnmask:false,
-            allowMinus:false,
-            clearMaskOnLostFocus: false,
-            groupSeparator:".",
-            placeholder: '0',
-            radixPoint:",",
-            autoGroup:true,
-            onBeforeMask: function (value, opts) {
-                return value;
-            },
-            removeMaskOnSubmit:true
         });
     })
 

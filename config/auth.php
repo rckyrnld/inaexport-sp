@@ -15,6 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
+        // 'guard' => 'api', //diganti yudha
         'passwords' => 'users',
     ],
 
@@ -40,16 +41,19 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-        ],
 		'eksmp' => [
             'driver' => 'session',
             'provider' => 'eksmps',
         ],
-    ],
+        'api_user' => [
+            'driver' => 'jwt',
+            'provider' => 'userApis',
+        ],
+        'api_admin' => [
+                    'driver' => 'jwt',
+                    'provider' => 'adminApis',
+                ],
+            ],
 
     /*
     |--------------------------------------------------------------------------
@@ -77,6 +81,14 @@ return [
             'driver' => 'eloquent',
             'model' => App\Eksmp::class,
         ],
+        'adminApis' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Api\AdminApi::class,
+        ],  
+        'userApis' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Api\UserApi::class,
+        ], 
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -109,6 +121,17 @@ return [
             'table' => 'password_reset',
             'expire' => 60,
         ],
+        	'adminApis' => [
+            'provider' => 'adminApis',
+            'table' => 'password_reset',
+            'expire' => 60,
+        ],
+        	'userApis' => [
+            'provider' => 'userApis',
+            'table' => 'password_reset',
+            'expire' => 60,
+        ],
     ],
+    
 
 ];

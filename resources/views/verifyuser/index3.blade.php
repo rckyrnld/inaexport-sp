@@ -15,7 +15,7 @@
                         <br>
                         <div class="table-responsive">
 						<a href="{{ url('tambahperwakilan') }}" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Perwakilan</a><br><br>
-                           <table id="example2" class="table table-bordered table-striped">
+                           <table id="users-table" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>
                                     <th>No</th>
@@ -41,6 +41,7 @@
                                 </tr>
                                 </thead>
 								<tbody>
+								<!--
 								<?php $i=1; foreach($data as $row){ ?>
 								<tr>
 									<td><?php echo $i;?></td>
@@ -56,6 +57,7 @@
 									</center></td>
 								</tr> 
 								<?php $i++; } ?>
+								-->
 								</tbody>
 
                             </table>
@@ -68,5 +70,27 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    $(function () {
+        $('#users-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('getpw') }}",
+            columns: [
+                {data: 'row', name: 'row'},
+                {data: 'f1', name: 'f1'},
+                {data: 'f2', name: 'f2'},
+                {data: 'f3', name: 'f3'},
+                {
+					data: 'f6', name: 'f6', orderable: false, searchable: false
+				},
+				{
+					data: 'f7', name: 'f7', orderable: false, searchable: false
+				},
+                {
+                    data: 'action', name: 'action', orderable: false, searchable: false
+                }]
+        });
+    });
+</script>
 @include('footer')

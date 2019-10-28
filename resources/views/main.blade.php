@@ -29,14 +29,22 @@
                 <li class="dropdown notifications-menu d-flex align-items-center">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-			  <?php $querynotif = DB::select("select * from notif where status_baca='0' order by id_notif desc limit 5"); ?>
+			  <?php 
+			  if(empty(Auth::user()->name)){ 
+			  $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc"); 
+			  $querynotif = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc limit 4"); 
+			  }else{
+			  $querynotifa = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc"); 
+			  $querynotif = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc limit 4"); 
+			  }
+			  ?>
               <span class="label label-warning" style="position: absolute!important;
     
     right: 7px!important;
     text-align: center!important;
     font-size: 9px!important;
     padding: 2px 3px!important;
-    line-height: .9!important;"><?php if(count($querynotif) == 0){ echo ""; }else{ echo count($querynotif); } ?></span>
+    line-height: .9!important;"><?php if(count($querynotifa) == 0){ echo "0"; }else{ echo count($querynotifa); } ?></span>
             </a>
             <ul class="dropdown-menu dropdown-menu-right w pt-0 mt-2 animate fadeIn" style="width:300px!important; padding-left:10px;padding-right:10px;">
               <li style="font-size:13px; border:2px;"><br>
@@ -51,7 +59,9 @@
 			  <hr>
 			  <?php } ?>
               </li>
-              <li><center><a href="{{ url('show_all_notif') }}">View all</a></center></li>
+              <li><center>
+			  <?php if(count($querynotifa) == 0){ echo "<b>Tidak Ada Notifikasi Tersedia Untuk Anda !</b><br><br>"; }else{ ?> 
+			  <a href="{{ url('show_all_notif') }}">View all</a> <?php } ?></center></li>
             </ul>
           </li>
 				

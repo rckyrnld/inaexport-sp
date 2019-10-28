@@ -1,21 +1,48 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Models\Api\AdminApi;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
-class VerifikasiAnggotaController extends Controller
+
+class ManagementController extends Controller
 {
-    public function index(){
 
-		$eksportirs = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
-        $importirs = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
-	   
+    public function __construct()
+    {
+       auth()->shouldUse('api_admin');
+	}
+
+    public function getRekapAnggota(){
+		// dd(auth()->authenticate());
+		
+		$eksportirs = DB::table('itdp_company_users')
+							->leftJoin('itdp_profil_eks', 'itdp_company_users.id_profil', '=', 'itdp_profil_eks.id')
+							->where('itdp_company_users.id_role', '2')
+							->select('itdp_company_users.*', 'itdp_profil_eks.*')
+							->orderBy('itdp_company_users.id', 'desc')->skip($request->skip)
+							->take($request->take)->get();
+		$importirs =  DB::table('itdp_company_users')
+							->leftJoin('itdp_profil_imp', 'itdp_company_users.id_profil', '=', 'itdp_profil_imp.id')
+							->where('itdp_company_users.id_role', '3')
+							->select('itdp_company_users.*', 'itdp_profil_imp.*')
+							->orderBy('itdp_company_users.id', 'desc')->skip($request->skip)
+							->take($request->take)->get();
+	   $data = ['importirs' => $importirs, 'eksportirs' => $eksportirs];
+	   $dataResult = $this->customPaginate($data, $pageNya);
 		if(count($eksportirs) > 0 && count($importirs) > 0){
 			$res['message'] = "Success";
-			$res['data'] = ["importirs" => $importirs, "eksportirs" => $eksportirs];
+			$res['data'] = $dataResult;
+			$res['status_code'] = 200;
         	return response($res);
 		}else{
 			$res['message'] = "Failed";
@@ -23,10 +50,10 @@ class VerifikasiAnggotaController extends Controller
 		}
 	}
 
-    public function detailVerifikasiImportir($id){
-		$companyUsers = DB::select("select * from itdp_company_users where id='$id' limit 1");
+    public function detailVerifikasiImportir(Request $request){
+		$companyUsers = DB::select("select * from itdp_company_users where id='$request->id' limit 1");
 	
-		$detailCompanyUsers = DB::select("select b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='$id' limit 1");
+		$detailCompanyUsers = DB::select("select b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='$request->id' limit 1");
 		
 		if((count($companyUsers) > 0) && (count($detailCompanyUsers) > 0)){
 			$res['message'] = "Success";
@@ -39,10 +66,10 @@ class VerifikasiAnggotaController extends Controller
 		}
 	}
 	
-	public function detailVerifikasiEksportir($id){
-		$companyUsers = DB::select("select * from itdp_company_users where id='$id' limit 1");
+	public function detailVerifikasiEksportir(Request $request){
+		$companyUsers = DB::select("select * from itdp_company_users where id='$request->id' limit 1");
 	
-		$detailCompanyUsers = DB::select("select b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='$id' limit 1");
+		$detailCompanyUsers = DB::select("select b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='$request->id' limit 1");
 		
 		if((count($companyUsers) > 0) && (count($detailCompanyUsers) > 0)){
 			$res['message'] = "Success";
@@ -151,6 +178,26 @@ class VerifikasiAnggotaController extends Controller
 			$res['message'] = "Failed";
 			return response($res);
 		}	
+	}
+
+	public static function customPaginate($items,$perPage)
+	{
+			//Get current page form url e.g. &page=6
+		$currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+		//Create a new Laravel collection from the array data
+		$collection = new Collection($items);
+
+		//Define how many items we want to be visible in each page
+		$perPage = $perPage;
+
+		//Slice the collection to get the items to display in current page
+		$currentPageSearchResults = $collection->slice($currentPage * $perPage, $perPage)->all();
+
+		//Create our paginator and pass it to the view
+		$paginatedSearchResults = new LengthAwarePaginator($currentPageSearchResults, count($collection), $perPage);
+
+		return $paginatedSearchResults;
 	}
     
 }

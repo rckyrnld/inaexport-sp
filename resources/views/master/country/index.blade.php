@@ -40,7 +40,7 @@
 </div>
 @include('footer')
 <script type="text/javascript">
-	$(function () {
+	$(document).ready(function () {
         $('#table').DataTable({
         	"order": [[ 1, "asc" ]],
             processing: true,

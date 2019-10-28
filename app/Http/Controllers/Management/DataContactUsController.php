@@ -67,6 +67,7 @@ class DataContactUsController extends Controller
             'status_baca' => 0,
             'waktu' => date('Y-m-d H:i:s'),
             'id_terkait' => $id,
+            'to_role' => '1',
         ]);
 
       if($data){
@@ -91,6 +92,7 @@ class DataContactUsController extends Controller
       $pageTitle = "Data Contact Us";
       $page = "view";
       $data = DB::table('csc_contact_us')->where('id',$id)->first();
+      $read_notif = DB::table('notif')->where('id_terkait',$id)->update(['status_baca' => 1]);
       return view('management.contact-us.create',compact('page','data','pageTitle'));
     }
 

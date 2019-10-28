@@ -14,9 +14,6 @@
   .modal-body{ height: 300px; }
   .modal-content { border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; overflow: hidden;}
   .modal-footer { background-color: #84afd4; color: white; font-size: 20px; text-align: center;}
-  /*CSS OPTION*/
-  .optionGroup { font-weight: bold; font-style: italic; }
-  .optionChild { padding-left: 15px; }
 </style>
 <div class="padding">
     <div class="row">
@@ -52,7 +49,7 @@
     </div>
 </div>
 
-<!-- Modal Kotrak -->
+<!-- Modal Broadcast -->
     <div class="modal fade" id="modal_broadcast" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -61,10 +58,7 @@
                     <tr>
                       <td width="20%"></td>
                       <td width="60%"><span class="modal-title" id="exampleModalLabel"><b>Broadcast Research Corner</b></span></td>
-                      <td width="20%" align="pull-right"><!-- 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true" class="fa fa-times" style="color: red !important;"></span>
-                        </button> -->
+                      <td width="20%" align="pull-right">
                       </td>
                     </tr>
                   </table>
@@ -108,7 +102,7 @@
     </div>
 @include('footer')
 <script type="text/javascript">
-	$(function() {
+	$(document).ready(function() {
 		$('#table').DataTable({
             processing: true,
             serverSide: true,

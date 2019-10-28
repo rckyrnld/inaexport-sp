@@ -51,7 +51,7 @@
                  <label class="control-label col-md-3">Type</label>
                  <div class="col-md-7">
                   @if($page == 'view')
-                    <input type="text" class="form-control" readonly value="{{rc_type($data->id_csc_research_type)}}">
+                    <input type="text" class="form-control" readonly value="{{rc_type($data->id_csc_research_type, 'en')}}">
                   @else
                      <select class="form-control" id="type" required name="type" {{$view}}>
                        <option></option>
@@ -159,7 +159,7 @@
 
 @include('footer')
 <script type="text/javascript">
-  $(function () {
+  $(document).ready(function () {
     var page = "{{$page}}";
     
     if(page == 'view'){

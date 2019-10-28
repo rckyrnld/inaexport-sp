@@ -165,8 +165,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Dingo\Api\Provider\LaravelServiceProvider::class,
-
+        // Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -239,9 +238,12 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-          'PDF' => Barryvdh\DomPDF\Facade::class,
-          'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+        // 'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
 
     ],
+
 
 ];

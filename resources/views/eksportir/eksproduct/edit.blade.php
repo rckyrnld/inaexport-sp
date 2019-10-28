@@ -1,63 +1,423 @@
 @include('header')
+<title>E-Reporting | Tambah User</title>
 <div class="padding">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <style>
+        .img_upl {
+            border: 1px dashed #6fccdd;
+            background: transparent;
+        }
+
+        .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+            background: #1a7688 !important;
+            color: white;
+        }
+
+        .toggle.btn.btn-info{
+            width: 15% !important;
+        }
+        .toggle.btn.btn-default.off{
+            width: 15% !important;   
+        }
+    </style>
     <div class="row">
         <div class="col-md-12">
-            <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{url($url)}}">
+            <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{url($url)}}" id="formnya">
                 {{ csrf_field() }}
                 <div class="box">
-                    @foreach($data as $val)
-                        <div class="box-divider m-0"></div>
-                        <div class="box-body">
-                            <div class="form-row">
-                                <div class="form-group col-sm-6">
-                                    <label>Brand</label>
-                                    <input type="text" name="brand" value="{{$val->merek}}" id="brand" class="form-control">
-                                    <input type="hidden" name="id_sales" value="{{$val->id}}">
+                    <div class="box-divider m-0"></div>
+                    <div class="box-body">
+                        <div id="exTab2" class="container"> 
+                            <ul class="nav nav-tabs" style="display: none;">
+                                <li class="nav-item"><a class="nav-link active" href="#formprod" id="set_formprod" data-toggle="tab">Form Product</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#infoprod" id="set_infoprod" data-toggle="tab">Information Product</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#descprod" id="set_descprod" data-toggle="tab">Description Product</a></li>
+                            </ul>
+                            <div class="tab-content ">
+                                <div class="tab-pane active" id="formprod">
+                                    <br>
+                                    <h3>Form Product</h3><hr>
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-3">
+                                            <center><label for="lbl"><b>English</b></label></center>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <center><label for="lbl"><b>Indonesia</b></label></center>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <center><label for="lbl"><b>China</b></label></center>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label for="code" class="col-md-3"><b>Code</b></label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="code" id="code" autocomplete="off" value="{{$data->code_en}}">
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-3"></div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-3"><b>Product Name</b></label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="prodname_en" id="prodname_en" autocomplete="off" value="{{$data->prodname_en}}">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="prodname_in" id="prodname_in" autocomplete="off" value="{{$data->prodname_in}}">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="prodname_chn" id="prodname_chn" autocomplete="off" value="{{$data->prodname_chn}}">
+                                        </div>
+                                    </div><br>
+                                    <div class="row" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 10px;">
+                                        <div class="col-md-12"><label><b>Product Category</b></label></div><br>
+                                        <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px; max-height: 450px;">
+                                        <div id="prod1" class="list-group" style="height: 430px; overflow-y: auto;">
+                                            @if($data->id_csc_product != NULL)
+                                                @foreach($catprod as $cp)
+                                                    <?php
+                                                        if($data->id_csc_product == $cp->id){
+                                                            $cact = "active";
+                                                        }else{
+                                                            $cact = "";
+                                                        }
+                                                    ?>
+                                                    <a href="#" class="list-group-item list-group-item-action listbag1 {{$cact}}" onclick="getSub(1,'{{$cp->id}}', '', '{{$cp->nama_kategori_en}}')" id="kat1_{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
+                                                @endforeach
+                                            @else
+                                            Category Not Found
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                                        <div id="prod2" class="list-group" style="height: 430px; overflow-y: auto;">
+                                            @if($data->id_csc_product_level1 != NULL)
+                                                @foreach($catprod2 as $cp1)
+                                                    @if($cp1->level_1 == $data->id_csc_product)
+                                                        <?php
+                                                            if($data->id_csc_product_level1 == $cp1->id){
+                                                                $cact1 = "active";
+                                                            }else{
+                                                                $cact1 = "";
+                                                            }
+                                                        ?>
+                                                        <a href="#" class="list-group-item list-group-item-action listbag2 {{$cact1}}" onclick="getSub(2,'{{$cp1->level_1}}', '{{$cp1->id}}','{{$cp1->nama_kategori_en}}')" id="kat2_{{$cp1->id}}">{{$cp1->nama_kategori_en}}</a>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                            Category Not Found
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                                        <div id="prod3" class="list-group" style="height: 430px; overflow-y: auto;">
+                                            @if($data->id_csc_product_level2 != NULL)
+                                                @foreach($catprod3 as $cp2)
+                                                    @if($cp2->level_2 == $data->id_csc_product)
+                                                        @if($cp2->level_1 == $data->id_csc_product_level1)
+                                                            <?php
+                                                                if($data->id_csc_product_level2 == $cp2->id){
+                                                                    $cact2 = "active";
+                                                                }else{
+                                                                    $cact2 = "";
+                                                                }
+                                                            ?>
+                                                            <a href="#" class="list-group-item list-group-item-action listbag3 {{$cact2}}" onclick="getSub(3,'{{$cp2->level_1}}', '{{$cp2->id}}','{{$cp2->nama_kategori_en}}')" id="kat3_{{$cp2->id}}">{{$cp2->nama_kategori_en}}</a>
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                            Category Not Found
+                                            @endif
+                                        </div>
+                                    </div>
+                                        <div class="col-md-2" style="margin-top: 20px;"><label><b>Select</b></label></div>
+                                        <div class="col-md-8" style="margin-top: 20px;">
+                                            @if($data->id_csc_product != NULL)
+                                                <span id="select_1">{{getNameCategoryProduct($data->id_csc_product, 'en')}}</span>
+                                                <input type="hidden" name="id_csc_product" id="id_csc_product" value="{{$data->id_csc_product}}">
+                                            @else
+                                                <span id="select_1"></span>
+                                                <input type="hidden" name="id_csc_product" id="id_csc_product">
+                                            @endif
+                                            @if($data->id_csc_product_level1 != NULL)
+                                                <span id="select_2">> {{getNameCategoryProduct($data->id_csc_product_level1, 'en')}}</span>
+                                                <input type="hidden" name="id_csc_product_level1" id="id_csc_product_level1" value="{{$data->id_csc_product_level1}}">
+                                            @else
+                                                <span id="select_2"></span>
+                                                <input type="hidden" name="id_csc_product_level1" id="id_csc_product_level1">
+                                            @endif
+                                            @if($data->id_csc_product_level2 != NULL)
+                                                <span id="select_3">> {{getNameCategoryProduct($data->id_csc_product_level2, 'en')}}</span>
+                                                <input type="hidden" name="id_csc_product_level2" id="id_csc_product_level2" value="{{$data->id_csc_product_level2}}">
+                                            @else
+                                                <span id="select_3"></span>
+                                                <input type="hidden" name="id_csc_product_level2" id="id_csc_product_level2">
+                                            @endif
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="btn-group" style="float: right;">
+                                                <button type="button" class="btn btn-primary" id="hal1">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="form-group col-sm-6">
-                                    <label>Meaning Of Brand</label>
-                                    <input type="text" class="form-control" value="{{$val->arti_merek}}" name="arti_brand" id="arti_brand" required>
+                                <div class="tab-pane" id="infoprod">
+                                    <br>
+                                    <h3>Information Product</h3><hr>
+                                    <div class="row">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-3">
+                                            <center><label for="lbl"><b>English</b></label></center>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <center><label for="lbl"><b>Indonesia</b></label></center>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <center><label for="lbl"><b>China</b></label></center>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label for="code" class="col-md-2"><b>Code</b></label>
+                                        <div class="col-md-3">
+                                            <center><span id="codenya">{{$data->code_en}}</span></center>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-3"></div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-2"><b>Product Name</b></label>
+                                        <div class="col-md-3">
+                                            <center><span id="prodname_ea">{{$data->prodname_en}}</span></center>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <center><span id="prodname_ia">{{$data->prodname_in}}</span></center>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <center><span id="prodname_ca">{{$data->prodname_chn}}</span></center>
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-2"><b>Category Product</b></label>
+                                        <div class="col-md-3">
+                                            <center><span id="cadprod_en">{{getNameCategoryProduct($data->id_csc_product, 'en')}}</span></center>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <center><span id="cadprod_in">{{getNameCategoryProduct($data->id_csc_product, 'in')}}</span></center>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <center><span id="cadprod_chn">{{getNameCategoryProduct($data->id_csc_product, 'chn')}}</span></center>
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-2"><b>Color</b></label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="color_en" id="color_en" autocomplete="off" value="{{$data->color_en}}" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="color_in" id="color_in" autocomplete="off" value="{{$data->color_in}}">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="color_chn" id="color_chn" autocomplete="off" value="{{$data->color_chn}}">
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-2"><b>Size</b></label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="size_en" id="size_en" autocomplete="off" value="{{$data->size_en}}" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="size_in" id="size_in" autocomplete="off" value="{{$data->size_in}}">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="size_chn" id="size_chn" autocomplete="off" value="{{$data->size_chn}}">
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-2"><b>Raw Material</b></label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="raw_material_en" id="raw_material_en" autocomplete="off" value="{{$data->raw_material_en}}" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="raw_material_in" id="raw_material_in" autocomplete="off" value="{{$data->raw_material_in}}">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="raw_material_chn" id="raw_material_chn" autocomplete="off" value="{{$data->raw_material_chn}}">
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-2"><b>Capacity</b></label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="capacity" id="capacity" autocomplete="off" value="{{$data->capacity}}" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-3">
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-2"><b>Price (USD)</b></label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="price_usd" id="price_usd" autocomplete="off" value="{{$data->price_usd}}" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-3">
+                                        </div>
+                                    </div><br>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label><b>Setting Media</b></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label for="code" class="col-md-2"><b>Image</b></label>
+                                        <!-- <div class="col-md-2">
+                                            <div id="ambil_ttd_utama" style="width: 100%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                                                <button type="button" id="img_utama" style="width: 100%; height: 120px;" class="img_upl">
+                                                    <img src="{{url('/')}}/image/plus/plusin.png" id="image_utama_ambil" style="height: 40px; width: 40px;"/>
+                                                </button>
+                                                <input type="file" id="image_utama" name="image_utama" style="display: none;" />
+                                                <br>
+                                                <center>+ Main Photo</center>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-md-2">
+                                            <div id="ambil_ttd_1" style="width: 100%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                                                <button type="button" id="img_1" style="width: 100%; height: 120px;" class="img_upl">
+                                                    @if($data->image_1 == NULL)
+                                                    <img src="{{url('/')}}/image/plus/plusin.png" id="image_1_ambil" style="height: 40px; width: 40px;"/>
+                                                    @else
+                                                    <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$data->id}}/{{$data->image_1}}" id="image_1_ambil" style="height: 100%; width: 100%;"/>
+                                                    @endif
+                                                </button>
+                                                <input type="file" id="image_1" name="image_1" style="display: none;" />
+                                                <br>
+                                                <center>+ Photo 1</center>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div id="ambil_ttd_2" style="width: 100%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                                                <button type="button" id="img_2" style="width: 100%; height: 120px;" class="img_upl">
+                                                    @if($data->image_2 == NULL)
+                                                    <img src="{{url('/')}}/image/plus/plusin.png" id="image_2_ambil" style="height: 40px; width: 40px;"/>
+                                                    @else
+                                                    <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$data->id}}/{{$data->image_2}}" id="image_2_ambil" style="height: 100%; width: 100%;"/>
+                                                    @endif
+                                                </button>
+                                                <input type="file" id="image_2" name="image_2" style="display: none;" />
+                                                <br>
+                                                <center>+ Photo 2</center>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div id="ambil_ttd_3" style="width: 100%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                                                <button type="button" id="img_3" style="width: 100%; height: 120px;" class="img_upl">
+                                                    @if($data->image_3 == NULL)
+                                                    <img src="{{url('/')}}/image/plus/plusin.png" id="image_3_ambil" style="height: 40px; width: 40px;"/>
+                                                    @else
+                                                    <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$data->id}}/{{$data->image_3}}" id="image_3_ambil" style="height: 100%; width: 100%;"/>
+                                                    @endif
+                                                </button>
+                                                <input type="file" id="image_3" name="image_3" style="display: none;" />
+                                                <br>
+                                                <center>+ Photo 3</center>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div id="ambil_ttd_4" style="width: 100%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                                                <button type="button" id="img_4" style="width: 100%; height: 120px;" class="img_upl">
+                                                    @if($data->image_4 == NULL)
+                                                    <img src="{{url('/')}}/image/plus/plusin.png" id="image_4_ambil" style="height: 40px; width: 40px;"/>
+                                                    @else
+                                                    <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$data->id}}/{{$data->image_4}}" id="image_4_ambil" style="height: 100%; width: 100%;"/>
+                                                    @endif
+                                                </button>
+                                                <input type="file" id="image_4" name="image_4" style="display: none;" />
+                                                <br>
+                                                <center>+ Photo 4</center>
+                                            </div>
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-2"><b>Minimum Selling</b></label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="minimum_order" id="minimum_order" autocomplete="off" value="{{$data->minimum_order}}" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-3">
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div style="float: right;">
+                                                <button type="button" class="btn btn-default" onclick="nextTab('infoprod', 'formprod')">Back</button>
+                                                <button type="button" class="btn btn-primary" id="hal2">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-sm-6">
-                                    <label>Month</label>
-                                    <input type="text" class="form-control" value="{{$val->bulan_merek}}" name="bulan" id="bulan">
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <label>Year</label>
-                                    <input type="text" class="form-control" value="{{$val->tahun_merek}}" name="year"
-                                           id="year" required>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-sm-6">
-                                    <label>Copyright Number</label>
-                                    <input type="text" class="form-control" value="{{$val->paten_merek}}" name="copyright_number" id="copyright_number">
-                                </div>
-                                <div class="form-group col-sm-6">
-
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-sm-6">
-
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <a style="color: white" href="{{url('/eksportir/brand')}}"
-                                       class="btn btn-primary"><i style="color: white"></i>
-                                        Back
-                                    </a>
-                                    <button class="btn btn-success" type="submit"><i
-                                                class="fa fa-plus-circle"></i> Update
-                                    </button>
+                                <div class="tab-pane" id="descprod">
+                                    <br>
+                                    <h3>Description Product</h3><hr>
+                                    <div class="row">
+                                        <label for="code" class="col-md-3"><b>English</b></label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" id="product_description_en" name="product_description_en">{{$data->product_description_en}}</textarea>
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-3"><b>Indonesia</b></label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" id="product_description_in" name="product_description_in">{{$data->product_description_in}}</textarea>
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-3"><b>China</b></label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" id="product_description_chn" name="product_description_chn">{{$data->product_description_chn}}</textarea>
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-3"><b>Show Product</b></label>
+                                        <div class="col-md-9">
+                                            <?php
+                                                if($data->status == 0){
+                                                    $chck = "";
+                                                }else{
+                                                    $chck = "checked";
+                                                }
+                                            ?>
+                                            <input type="checkbox" {{$chck}} data-toggle="toggle" data-on="Publish" data-off="Hide" data-onstyle="info" data-offstyle="default" id="statusnya">
+                                            <input type="hidden" name="status" id="status" value="{{$data->status}}"> 
+                                        </div>
+                                    </div><br>
+                                    @if($data->status == 3)
+                                    <div class="row">
+                                        <label for="code" class="col-md-3"><b>This product was rejected due to</b></label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" name="keterangan" rows="5" style="color: black;" readonly>{{$data->keterangan}}</textarea>
+                                        </div>
+                                    </div><br>
+                                    @endif
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div style="float: right;">
+                                                <button type="button" class="btn btn-default" onclick="nextTab('descprod', 'infoprod')">Back</button>
+                                                <a class="btn btn-danger" href="{{url('eksportir/product')}}">Cancel</a>
+                                                <button type="button" class="btn btn-primary" id="hal3">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
                 </div>
             </form>
         </div>
@@ -66,121 +426,158 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.select2').select2();
-        $('#STAT').on('change', function () {
-            var val = $('#STAT').val().split("|");
-            var nama = val[0];
-            var instansi = val[1];
-            // alert(gambar);
-            $('#institusi').val(instansi);
+        CKEDITOR.replace('product_description_en');
+        CKEDITOR.replace('product_description_in');
+        CKEDITOR.replace('product_description_chn');
 
+        // $("#img_utama").click(function() {
+        //     $("input[id='image_utama']").click();
+        // });
+
+        $("#img_1").click(function() {
+            $("input[id='image_1']").click();
         });
-        $('#tanggal_registrasi').val(new Date().toDateInputValue());
-        $("#email").keyup(function () {
-            var uname = $("#email").val();
-            // alert(uname);
-            $.get('{{url("getem")}}/' + uname, function (data) {
-                console.log(data);
-                if (data == 0) {
-                    $('#cekl').html("<font color='green'>Tersedia</font>");
-                } else {
-                    $('#cekl').html("<font color='red'>Telah digunakan</font>");
-                }
-                // $('#alot').html(data);
-            });
+
+        $("#img_2").click(function() {
+            $("input[id='image_2']").click();
         });
-        $('#provinsiku').on('change', function () {
-            var json = null;
-            var id = this.value;
 
-            $.get('{{URL::to("getkab")}}/' + id, function (data) {
-                $('#kabupatenku').val(null).trigger('change');
-                json = JSON.parse(data);
-                var test = null;
-                // console.log("##PANJANGNYA =" + json.length)
-                test =
-                    "<option class='' disabled='' selected='' value='0'>-PILIH KABUPATEN-</option>";
-                for (i = 0; i < json.length; i++) {
-
-                    test += "<option  class='' value='" + json[i].id +
-                        "'>" + json[i].nama_kab + "</option>";
-
-                }
-                $('#kabupatenmu').show();
-                $('#kabupatenku').html(test);
-                $('#kabupatenku').trigger('change');
-            });
-
+        $("#img_3").click(function() {
+            $("input[id='image_3']").click();
         });
-        $("#confirm_password").keyup(function () {
-            var password = $("#password").val();
-            var cpassword = $("#confirm_password").val();
-            if (cpassword == password) {
-                $('#cek2').html("<font color='green'>Sama</font>");
-            } else {
-                $('#cek2').html("<font color='red'>Tidak Sama</font>");
+
+        $("#img_4").click(function() {
+            $("input[id='image_4']").click();
+        });
+
+        // document.getElementById("image_utama").addEventListener('change',handleFileSelect,false);
+        document.getElementById("image_1").addEventListener('change',handleFileSelect,false);
+        document.getElementById("image_2").addEventListener('change',handleFileSelect,false);
+        document.getElementById("image_3").addEventListener('change',handleFileSelect,false);
+        document.getElementById("image_4").addEventListener('change',handleFileSelect,false);
+
+        $("#hal1").on("click", function(){
+            if ($('#prodname_en').val() == "") {
+                alert("Product name is empty, please fill in!");
+                return false;
+            }else if ($('#id_csc_product').val() == "") {
+                alert("Please select a product category!");
+                return false;
+            }else {
+                nextTab('formprod','infoprod');
+                return true;
             }
-            // $('#alot').html(data);
+        });
+
+        $("#hal2").on("click", function(){
+            nextTab('infoprod','descprod');
+            return true;
+        });
+
+        $("#hal3").on("click", function(){
+            $("#formnya").submit();
+        });
+
+        $("#code").focus(function(){}).blur(function(){
+            $('#codenya').text(this.value);
+        });
+
+        $("#prodname_en").focus(function(){}).blur(function(){
+            $('#prodname_ea').text(this.value);
+        });
+
+        $("#prodname_in").focus(function(){}).blur(function(){
+            $('#prodname_ia').text(this.value);
+        });
+
+        $("#prodname_chn").focus(function(){}).blur(function(){
+            $('#prodname_ca').text(this.value);
+        });
+
+        $('#statusnya').on('change', function() {
+            var isChecked = $(this).is(':checked');
+            var selectedData;
+
+            if(isChecked) {
+                $('#status').val(1);
+            } else {
+                $('#status').val(0);
+            }
 
         });
-    });
-    Date.prototype.toDateInputValue = (function () {
-        var local = new Date(this);
-        local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-        return local.toJSON().slice(0, 10);
-    });
+    })
 
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+    function nextTab(now, next) {
+        $('#set_'+now).removeClass('active');
+        $('#set_'+next).addClass('active');
 
-            reader.onload = function (e) {
-                $('#blah').attr('src', e.target.result);
-            };
+        $('.tab-pane.active').removeClass('active');
+        $('#'+next).addClass('active');
+    }
 
-            reader.readAsDataURL(input.files[0]);
+    function getSub(sub, idp, ids, name) {
+        if(sub == 3){
+            $('#select_3').text('> '+name);
+            $('#id_csc_product_level2').val(ids);
+            $('.listbag3').removeClass('active');
+            $('#kat3_'+ids).addClass('active');
+        }else{
+            if(sub == 1){
+                $('#select_1').text(name);
+                $('#cadprod_en').text(name);
+                $('#id_csc_product').val(idp);
+                $('#select_2').text('');
+                $('#id_csc_product_level1').val('');
+                $('#select_3').text('');
+                $('#id_csc_product_level2').val('');
+                $('#prod2').html('');
+                $('#prod3').html('');
+                $('.listbag1').removeClass('active');
+                $('#kat1_'+idp).addClass('active');
+            }else{
+                $('#select_2').text('> '+name);
+                $('#id_csc_product_level1').val(ids);
+                $('#select_3').text('');
+                $('#id_csc_product_level2').val('');
+                $('#prod3').html('');
+                $('.listbag2').removeClass('active');
+                $('#kat2_'+ids).addClass('active');
+            }
+            $.ajax({
+                url: "{{route('eksproduct.getSub')}}",
+                type: 'get',
+                data: {level:sub, idparent:idp, idsub:ids},
+                success:function(response){
+                    // console.log(response);
+                    if(sub == 1){
+                        $('#prod2').html(response);
+                    }else{
+                        $('#prod3').html(response);
+                    }
+                }
+            });
         }
     }
 
-    $("#tgl_mulai_berlaku").change(function () {
-        $("#label_tkeanggotaan").css("display", "none");
-        $("#tipe_keanggotaan").css("display", "block");
+    function handleFileSelect(evt){
+        var files = evt.target.files; // FileList object
+        var idfile = evt.target.id; // FileList object
 
-        var val = $("#tipe_keanggotaan").val().split("|");
-        var periode = val[1];
-        // alert(periode);
+        // FileReader support
+        if (FileReader && files && files.length) {
+            var fr = new FileReader();
+            fr.onload = function () {
+                document.getElementById(idfile+"_ambil").src = fr.result;
+                document.getElementById(idfile+"_ambil").style.width = "100%";
+                document.getElementById(idfile+"_ambil").style.height = "100%";
+            }
+            fr.readAsDataURL(files[0]);
+        }
+     }
 
-        var date = new Date(this.value);
-        var current = new Date();
-
-        var month = (date.getMonth() < 10) ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-        var hari = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
-        var result = hari + "-" + month + "-" + (Number(date.getFullYear()) + Number(periode));
-
-        $("#tanggal_kadaluarsa").val(result);
-    });
-
-    $("#tipe_keanggotaan").change(function () {
-        $("#label_tkadaluarsa").css("display", "none");
-        $("#tanggal_kadaluarsa").css("display", "block");
-
-        var val = this.value.split("|");
-        var periode = val[1];
-
-        var date = new Date($('#tgl_mulai_berlaku').val());
-        var current = new Date();
-
-        var month = (date.getMonth() < 10) ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-        var hari = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
-        var result = hari + "-" + month + "-" + (Number(date.getFullYear()) + Number(periode));
-
-        $("#tanggal_kadaluarsa").val(result);
-
-    });
-
-    $("#imgInp").change(function () {
-        readURL(this);
-    });
+     function getStatus(data) {
+         console.log(data);
+     }
 </script>
 
 @include('footer')

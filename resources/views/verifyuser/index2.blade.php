@@ -15,7 +15,7 @@
                         <br>
                         <div class="table-responsive">
 
-                           <table id="example2" class="table table-bordered table-striped">
+                           <table id="users-table" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>
                                     <th>No</th>
@@ -46,31 +46,7 @@
                                 </tr>
                                 </thead>
 								<tbody>
-								<?php $i=1; foreach($data as $row){ ?>
-								<tr>
-									<td><?php echo $i;?></td>
-									<td><center><?php echo $row->company;?></center></td>
-									<td><center><?php echo $row->addres;?></center></td>
-									<td><center><?php echo $row->postcode;?>
-									<?php /*
-									$cari1 = DB::select("select * from public.group where id_group='".$row->id_role."'");
-									foreach($cari1 as $cr1){ echo $cr1->group_name; }
-									*/ ?>
-									</center></td>
-									<td><center><?php echo $row->phone;?></center></td>
-									<td><center><?php echo $row->fax;?></center></td>
-									<td><center><?php if($row->agree == 1){ echo "<font color='green'>Sudah</font>";}else{ echo "<font color='red'>Belum</font>";};?></center></td>
-									<td><center><?php if($row->status_a == 1){ echo "<font color='green'>Verified</font>";} else if($row->status_a == 2){ echo "<font color='red'>Not Verified</font>";}else{ echo "<font color='orange'>Wait Administrator</font>";};?></center></td>
-									<td><center>
-									<?php if($row->status_a == 1 || $row->status_a == 2){ ?>
-									<a href="{{url('profil2/'.$row->id_role.'/'.$row->ida)}}" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>
-									
-									<?php }else{ ?>
-									<a href="{{url('profil2/'.$row->id_role.'/'.$row->ida)}}" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verify</a>
-									<?php } ?>
-									</center></td>
-								</tr>
-								<?php $i++; } ?>
+								
 								</tbody>
 
                             </table>
@@ -83,5 +59,30 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $('#users-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('getimportir') }}",
+            columns: [
+                {data: 'row', name: 'row'},
+                {data: 'f1', name: 'f1'},
+                {data: 'f2', name: 'f2'},
+                {data: 'f3', name: 'f3'},
+                {data: 'f4', name: 'f4'},
+                {data: 'f5', name: 'f5'},
+                {
+					data: 'f6', name: 'f6', orderable: false, searchable: false
+				},
+				{
+					data: 'f7', name: 'f7', orderable: false, searchable: false
+				},
+                {
+                    data: 'action', name: 'action', orderable: false, searchable: false
+                }]
+        });
+    });
+</script>
 
 @include('footer')

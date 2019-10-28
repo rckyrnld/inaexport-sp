@@ -1,0 +1,42 @@
+<?php
+return [
+    "title" => "前端 | Kementerian Perdagangan RI",
+    "title2" => "印尼贸易数字促销",
+    "btn" => "登入",
+	"a1" => "管理员",
+    "a2" => "出口商/进口商",
+	"lbl1" => "出口商注册",
+    "lbl2" => "进口商注册",
+    "lbl3" => "登入",
+    "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
+    "forms" => [
+        "company" => "Company",
+        "username" => "Username",
+        "email" => "Email",
+        "phone" => "Phone",
+        "fax" => "Fax",
+        "website" => "Website",
+        "password" => "Password",
+        "re-password" => "Re-Password",
+        "postcode" => "Postcode",
+        "address" => "Address",
+		
+    ],
+    "submit" => "Register",
+    "prodtitle" => "会员产品",
+    "moreproduct" => "更多产品",
+    "categorytitle" => "类别清单",
+
+    "hotlisttitle" => "热门名单",
+    "direktorat" => "贸易部国家出口发展总局",
+    "judul_rc" => "标题",
+    "tipe_rc" => "种类",
+    "negara_rc" => "国家",
+    "publish_rc" => "发布日期",
+    "terbaru" => "10 Latest",
+    "jdl_event" => "活动清单",
+    "cari"  => "寻找",
+    "t_date"    => '开始日期 - 结束日期', 
+    "t_Comodity"    => "大宗商品",
+    "t_join"    => "加入"
+];
