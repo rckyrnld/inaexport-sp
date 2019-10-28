@@ -1,7 +1,7 @@
 @include('frontend.layout.header')
 <style type="text/css">
   input[type="text"], input[type="text"]:focus{
-    border-color: #dce5e8;
+    border-color: #d6d9daad;
   }
 </style>
 <?php
