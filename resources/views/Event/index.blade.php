@@ -5,6 +5,7 @@
     .imge{
         height: 2cm;
         width: 7.5cm;
+        padding: 10px;
         /*padding-right: 50px;*/
         /*padding-top: 20px;*/
         /*padding-left: 50px;*/
@@ -66,7 +67,7 @@
                                       <tr>
                                     @endif
                                         <td>
-                                            <div class="box" style="width: 7.5cm;height: 8.5cm;margin: 5px;border-radius: 25px;">
+                                            <div class="box" style="width: 7.5cm;height: 8.5cm;margin: 5px;border-radius: 25px;box-shadow: 2px 2px gray, -0.1em 0 .4em gray;">
                                                 <div class="thumbnail">
                                                     <div class="imge">
                                                         @if($ed->image_1 !== NULL)
@@ -79,7 +80,7 @@
                                                     </div>
                                                     <div align="right">
                                                         @if($ed->status_en == 'Verified') 
-                                                            <img src="{{url('/')}}/image/event/ceklis.png" class="img-thumbnail">
+                                                            <img src="{{url('/')}}/image/event/ceklis.png" class="">
                                                         @endif  
                                                     </div>
                                                </div>
