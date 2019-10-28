@@ -13,9 +13,17 @@ class BuyingRequestController extends Controller
 {
     public function index()
     {
+		if(!empty(Auth::guard('eksmp')->user()->id)){
+		if(Auth::guard('eksmp')->user()->id_role == 2){
+		$pageTitle = "Buying Request Eksportir";
+		$data = DB::select("select a.*,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where a.id = b.id_br and b.id_eks='".Auth::guard('eksmp')->user()->id."' order by b.id desc ");
+        return view('buying-request.index_eks', compact('pageTitle','data'));
+		}
+		}else{
         $pageTitle = "Buying Request Perwakilan";
 		$data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
         return view('buying-request.index', compact('pageTitle','data'));
+		}
     }
 	
 	public function getcsc()
@@ -86,7 +94,7 @@ class BuyingRequestController extends Controller
 			$file = "";
 		}else{
 			$file = $request->file('doc')->getClientOriginalName();
-			$destinationPath = public_path() . "/upload/buy_request";
+			$destinationPath = public_path() . "/uploads/buy_request";
 			$request->file('doc')->move($destinationPath, $file);
 		}
 		$insert = DB::select("

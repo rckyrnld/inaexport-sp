@@ -23,12 +23,31 @@
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
                                     <label>Month</label>
-                                    <input type="text" class="form-control" value="{{$val->bulan_merek}}" name="bulan" id="bulan">
+                                    <select class="form-control select2"  id="bulan" name="bulan">
+                                        <option value="00">--Select Month--</option>
+                                        <option value="01" {{($val->bulan_merek == '01')?'selected':''}}>January</option>
+                                        <option value="02" {{($val->bulan_merek == '02')?'selected':''}}>February</option>
+                                        <option value="03" {{($val->bulan_merek == '03')?'selected':''}}>March</option>
+                                        <option value="04" {{($val->bulan_merek == '04')?'selected':''}}>April</option>
+                                        <option value="05" {{($val->bulan_merek == '05')?'selected':''}}>May</option>
+                                        <option value="06" {{($val->bulan_merek == '06')?'selected':''}}>June</option>
+                                        <option value="07" {{($val->bulan_merek == '07')?'selected':''}}>July</option>
+                                        <option value="08" {{($val->bulan_merek == '08')?'selected':''}}>August</option>
+                                        <option value="09" {{($val->bulan_merek == '09')?'selected':''}}>September</option>
+                                        <option value="10" {{($val->bulan_merek == '10')?'selected':''}}>October</option>
+                                        <option value="12" {{($val->bulan_merek == '11')?'selected':''}}>November</option>
+                                        <option value="12" {{($val->bulan_merek == '12')?'selected':''}}>December</option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>Year</label>
-                                    <input type="text" class="form-control" value="{{$val->tahun_merek}}" name="year"
-                                           id="year" required>
+                                    <select class="atc form-control select2" required id="year"
+                                            name="year">
+                                        <option value="">- Select Years -</option>
+                                        @foreach($years as $sa)
+                                            <option value="{{$sa}}" {{($val->tahun_merek == $sa)?'selected':''}} >{{$sa}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 

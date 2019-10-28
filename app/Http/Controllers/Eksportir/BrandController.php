@@ -21,15 +21,18 @@ class BrandController extends Controller
     public function tambah()
     {
 //        dd($id_user);
+        $ldate = date('Y');
+        $years = [];
+        for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
         $url = '/eksportir/brand_save';
         $pageTitle = 'Tambah Brand';
-        return view('eksportir.brand.tambah', compact('pageTitle', 'url'));
+        return view('eksportir.brand.tambah', compact('pageTitle', 'url', 'years'));
     }
 
     public function store(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::guard('eksmp')->user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
         DB::table('itdp_eks_product_brand')->insert([
             'id_itdp_profil_eks' => $id_user,
             'merek' => $request->brand,
@@ -45,7 +48,7 @@ class BrandController extends Controller
     {
 //        dd("masuk gan");
         $user = DB::table('itdp_eks_product_brand')
-            ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
+            ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
@@ -71,12 +74,15 @@ class BrandController extends Controller
 
     public function edit($id)
     {
+        $ldate = date('Y');
+        $years = [];
+        for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
         $pageTitle = 'Detail Sales';
         $url = '/eksportir/brand_update';
         $data = DB::table('itdp_eks_product_brand')
             ->where('id', '=', $id)
             ->get();
-        return view('eksportir.brand.edit', compact('pageTitle', 'data', 'url'));
+        return view('eksportir.brand.edit', compact('pageTitle', 'data', 'url', 'years'));
     }
 
     public function view($id)
@@ -108,5 +114,31 @@ class BrandController extends Controller
                 'paten_merek' => $request->copyright_number,
             ]);
         return redirect('eksportir/brand');
+    }
+
+    public function indexadmin()
+    {
+        $pageTitle = "Annual Sales";
+        return view('eksportir.brand.indexadmin', compact('pageTitle'));
+    }
+
+    public function datanyaadmin()
+    {
+        $user = DB::table('itdp_eks_product_brand')->get();
+
+        return \Yajra\DataTables\DataTables::of($user)
+            ->addColumn('action', function ($mjl) {
+                return '
+                <center>
+                <a href="' . route('brand.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                    <i class="fa fa-search text-white"></i> View
+                </a>
+               
+                </center>
+                ';
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

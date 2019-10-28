@@ -30,6 +30,16 @@
 
 <script src="{{url('assets')}}/html/scripts/plugins/datatable.js" ></script>
   <!-- endbuild -->
+  <style>
+  .table-striped > tbody > tr:nth-child(odd) {
+    background-color: rgba(118, 24, 24, 0.18)!important;
+    background-clip: padding-box!important;
+}
+.table-striped > tbody > tr:nth-child(even) {
+    background-color: rgba(118, 24, 24, 0.18)!important;
+    background-clip: padding-box!important;
+}
+  </style>
 </head>
 <body style="font-family: "Times New Roman", Times, serif;">
 
@@ -74,49 +84,89 @@
 	
       <div class="" style="text-color:black;padding-left:10px; padding-right:10px; border-radius: 3px;">
 	  <br>
-	  <form class="form-horizontal" method="POST" action="{{ url('simpan_rpembeli') }}">
-	   {{ csrf_field() }}
+	  
+	   <?php 
+	   if(!empty(Auth::guard('eksmp')->user()->status)){
+	   if (Auth::guard('eksmp')->user()->status == 1) {
+	   ?>
 	   <h5><center>List <?php echo $pageTitle; ?></center></h5>
 	   <br><br>
-		 <table id="example1" class="table table-bordered table-striped">
+	   
+	   <a href="{{ url('br_importir_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add Buying Request</a><br><br>
+		 <table id="example1" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
-                                <tr>
-                                    <th>No</th>
-                                    <th>
-                                        <center>Product Name</center>
-                                    </th>
-                                    <th>
-                                        <center>Duration</center>
-                                    </th>
-                                    <th>
-                                        <center>Date</center>
-                                    </th>
-									<th>
-                                        <center>Category</center>
-                                    </th>
-									<th>
-                                        <center>Specification</center>
-                                    </th>
-                                    <th>
-                                        <center>Status</center>
-                                    </th>
-									<th width="10%">
-                                        <center>Action</center>
-                                    </th>
-                                </tr>
+                               
                                 </thead>
 								<tbody>
+								<?php 
+								$pesan = DB::select("select * from csc_buying_request where by_role='3' and id_pembuat='".Auth::guard('eksmp')->user()->id."' order by id desc ");
+								foreach($pesan as $ryu){
+								?>
+								<tr>
+								<td><?php echo "<font size='4px'><b>".$ryu->subyek."</b></font><br>";
+								$cardata = DB::select("select nama_kategori_en from csc_product where id='".$ryu->id_csc_prod_cat."'");
+				 foreach($cardata as $ct){
+					 echo $ct->nama_kategori_en."<br>";
+				 }
+				 echo "Valid until ".$ryu->valid." days<br>";
+				 echo $ryu->date;
+								?></td>
+								<td width="20%"><center>
+								<?php if($ryu->status == 0 || $ryu->status == null){ ?>
+								<br><a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy(<?php echo $ryu->id; ?>)" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><i class="fa fa-wifi"></i> Broadcast</a><a title="Detail" href="{{ url('br_importir_detail/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-pencil"></i> Detail&nbsp;&nbsp;&nbsp;</a>
+								<?php }else if($ryu->status == 1 ){ ?>
+								<br><a title="Detail" href="{{ url('br_importir_lc/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-comment"></i> List Chat</a>
+								<?php } ?>
+								</center></td>
+								</tr>
+								<?php } ?>
 								
 								</tbody>
 
                             </table>
+	   <?php } else { ?>
+	   <h5><center>Pemberitahuan</center></h5>
+	   <br><br>
+	   <h6><center>" Akun anda belum diverifikasi oleh Admin / Perwakilan, Silahkan Lengkapi Terlebih Dahulu Profil Anda <br><br>Klik <a href="{{url('profil2/3/'.Auth::guard('eksmp')->user()->id)}}">Disini</a> Untuk Melengkapi Profil Anda !
+	   <br><br>Lalu Tunggu Sampai Admin / Perwakilan Meng-Verifikasi Akun Anda ! "</center></h6>
+	   <?php } } else { ?>
+	   <h5><center>Pemberitahuan</center></h5>
+	   <br><br>
+	   <h6><center>" Halaman Ini Khusus Untuk User Importir "</center></h6>
+	   <?php } ?>
 					<br>	
-		</form>
+		
       </div>
     </div>
   </div>
 </div>
+
+ <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Broadcast Buying Request</h6>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+         
+        </div>
+		<div id ="isibroadcast"></div>
+        <!--<div class="modal-body">
+          1
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
 <script type="text/javascript">
+function xy(a){
+	var token = $('meta[name="csrf-token"]').attr('content');
+		$.get('{{URL::to("ambilbroad/")}}/'+a,{_token:token},function(data){
+			$("#isibroadcast").html(data);
+			
+		 })
+}
   $(function () {
    $('#example1').DataTable({
      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]

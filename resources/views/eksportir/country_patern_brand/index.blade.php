@@ -23,9 +23,6 @@
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        Brand
-                                    </th>
-                                    <th>
                                         <center>Country</center>
                                     </th>
                                     <th>

@@ -378,16 +378,24 @@
                                     <label for="code" class="col-md-3"><b>Show Product</b></label>
                                     <div class="col-md-9">
                                         <?php
-                                            if($data->status == 1){
-                                                $chck = "checked";
-                                            }else{
+                                            if($data->status == 0){
                                                 $chck = "";
+                                            }else{
+                                                $chck = "checked";
                                             }
                                         ?>
                                         <input type="checkbox" {{$chck}} data-toggle="toggle" data-on="Publish" data-off="Hide" data-onstyle="info" data-offstyle="default" id="statusnya" disabled>
                                         <input type="hidden" name="status" id="status" value="{{$data->status}}"> 
                                     </div>
                                 </div><br>
+                                @if($data->status == 3)
+                                <div class="row">
+                                    <label for="code" class="col-md-3"><b>This product was rejected due to</b></label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control" name="keterangan" rows="5" style="color: black;" readonly>{{$data->keterangan}}</textarea>
+                                    </div>
+                                </div><br>
+                                @endif
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div style="float: right;">
@@ -473,7 +481,7 @@
             if(isChecked) {
                 $('#status').val(1);
             } else {
-                $('#status').val(2);
+                $('#status').val(0);
             }
 
         });

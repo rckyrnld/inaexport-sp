@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Dingo\Api\Routing\Helpers;
 use App\Models\ContactUs;
 
 class ManagementNoAuthController extends Controller
 {
-	use Helpers;
 
     public function contactUs(Request $request){
 		$fullName = $request->full_name;

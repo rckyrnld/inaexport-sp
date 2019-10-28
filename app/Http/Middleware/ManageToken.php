@@ -20,9 +20,9 @@ class ManageToken extends BaseMiddleware
      */
     public function handle(Request $request, Closure $next, $allowedGuards, $role)
     {
-        $submittedGuard = 'api_' . $request->header('Mg-Type');
+        $submittedGuard = $allowedGuards;
         $guards = explode('|', $allowedGuards);
-        // dd(auth()->authenticate());
+        //  dd($submittedGuard);
         foreach($guards as $guard) {
             if($guard === $submittedGuard) {
                 auth()->shouldUse($guard);
@@ -30,11 +30,17 @@ class ManageToken extends BaseMiddleware
         }
         try {
             if(auth()->authenticate()) {
-                // if($this->hasPermission($role, auth()->user())) {
+                 if($this->hasPermission($role, auth()->user())) {
                     return $next($request);
-                // }
-               // throw new NoPermissionException('You do not have permission to view this page.');
+                 }else{
+                 return response()->json([
+                'errors' => [
+                    'message' => 'You do not have permission to view this page.',
+                    'status_code' => 401
+                 ]
+            ]);
             }
+        }
         } catch (AuthenticationException $e) {
             try {
                 $this->checkForToken($request);
@@ -44,20 +50,33 @@ class ManageToken extends BaseMiddleware
                     $newtoken = $this->auth->parseToken()->refresh();
                     $response = $next($request);
 
-                    // if($this->hasPermission($role, auth()->user())) {
+                    if($this->hasPermission($role, auth()->user())) {
                         $response->header('Authorization', 'Bearer ' . $newtoken);
                         return $response;
-                    // }
-                    // return $response->json(['message' => 'You do not have permission to view this page.'], 403)
-                    //     ->header('Authorization', 'Bearer ' . $newtoken);
+                    }else{
+                 return response()->json([
+                'errors' => [
+                   'message' => 'You do not have permission to view this page.',
+                    'status_code' => 401]
+            ])->header('Authorization', 'Bearer ' . $newtoken);
+            }
                 } catch (TokenExpiredException $e) {
                     //refresh token expired
-                    throw new NotAuthorisedException('You are not authorised to view this page. Please log in.'); //401
+                    return response()->json([
+                                'errors' => [
+                                    'message' => 'You do not have permission to view this page.',
+                                    'status_code' => 401
+                                ]
+                            ]);
                 }
             }
         }       
-
-       // throw new NotAuthorisedException('You are not authorised to view this page. Please log in.'); //401
+            return response()->json([
+                                'errors' => [
+                                    'message' => 'You do not have permission to view this page.',
+                                    'status_code' => 401
+                                ]
+                            ]);
     } 
 
 /**
@@ -73,8 +92,12 @@ class ManageToken extends BaseMiddleware
             if($role == $user->role) {
                 return true;
             }
-        }
-
-       // throw new NoPermissionException('You do not have permission to view this page.'); //403
+        }         
+         return response()->json([
+                                'errors' => [
+                                    'message' => 'You do not have permission to view this page.',
+                                    'status_code' => 401
+                                ]
+                            ]);
     }
 }

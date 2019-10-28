@@ -15,7 +15,7 @@ class LoginController extends Controller{
 
 public function __construct()
 {
-    auth()->shouldUse('admin_api');
+    auth()->shouldUse('api_admin');
 } 
 
 public function login(Request $request)
@@ -28,7 +28,6 @@ public function login(Request $request)
             'email' => $request->input('email'), 
             'password' => $request->input('password'),
         ])) {
-
             return response()->json([
                 'errors' => [
                     'email' => ['Your email and/or password may be incorrect.']
@@ -52,7 +51,7 @@ protected function respondWithToken($token)//: JsonResponse
         'role' => auth()->user()->id_group,
         'name' => auth()->user()->name,
         'email' => auth()->user()->email,
-        'type' => 'Admin' //api_user guard 
+        'type' => 'admin' //api_user guard 
     ]);
 } 
 }
