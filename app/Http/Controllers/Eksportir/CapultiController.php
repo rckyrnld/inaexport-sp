@@ -34,7 +34,7 @@ class CapultiController extends Controller
     public function store(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::guard('eksmp')->user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
         DB::table('itdp_production_capacity')->insert([
             'id_itdp_profil_eks' => $id_user,
             'tahun' => $request->year,
@@ -48,7 +48,7 @@ class CapultiController extends Controller
 //        dd("masuk gan");
         $user = DB::table('itdp_production_capacity')
             ->select('itdp_production_capacity.id', 'itdp_production_capacity.tahun', 'itdp_production_capacity.kapasitas_terpakai_persen')
-            ->where('itdp_production_capacity.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
+            ->where('itdp_production_capacity.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
@@ -109,7 +109,7 @@ class CapultiController extends Controller
     public function update(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::guard('eksmp')->user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
         DB::table('itdp_production_capacity')->where('id', $request->id_sales)
             ->update([
                 'id_itdp_profil_eks' => $id_user,
@@ -117,5 +117,31 @@ class CapultiController extends Controller
                 'kapasitas_terpakai_persen' => $request->used_capacity,
             ]);
         return redirect('eksportir/capulti');
+    }
+
+    public function indexadmin()
+    {
+        $pageTitle = "Capacity Utilization";
+        return view('eksportir.capacity_utilization.indexadmin', compact('pageTitle'));
+    }
+
+    public function datanyaadmin()
+    {
+        $user = DB::table('itdp_production_capacity')->get();
+
+        return \Yajra\DataTables\DataTables::of($user)
+            ->addColumn('action', function ($mjl) {
+                return '
+                <center>
+                <a href="' . route('capulti.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                    <i class="fa fa-search text-white"></i> View
+                </a>
+               
+                </center>
+                ';
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

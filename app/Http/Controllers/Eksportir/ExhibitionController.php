@@ -29,7 +29,7 @@ class ExhibitionController extends Controller
     public function store(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::guard('eksmp')->user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
         DB::table('itdp_eks_production')->insert([
             'id_itdp_profil_eks' => $id_user,
             'tahun' => $request->tahun,
@@ -44,7 +44,7 @@ class ExhibitionController extends Controller
     {
 //        dd("masuk gan");
         $user = DB::table('itdp_eks_production')
-            ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
+            ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)

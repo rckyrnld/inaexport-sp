@@ -52,7 +52,7 @@
 
                             </div>
                             <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/annual_sales')}}"
+                                <a style="color: white" href="{{ URL::previous() }}"
                                    class="btn btn-success pull-right"><i style="color: white"></i>
                                     Back
                                 </a>

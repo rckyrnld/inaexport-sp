@@ -48,7 +48,7 @@ class TicketingSupportControllerAdmin extends Controller
               <div class="btn-group">
                 <a href="'.route('ticket_support.vchat.admin', $data->id).'" class="btn btn-sm btn-warning">&nbsp;<i class="fa fa-envelope text-white"></i>&nbsp;Chat&nbsp;</a>&nbsp;&nbsp;
 								<a href="'.route('ticket_support.view.admin', $data->id).'" class="btn btn-sm btn-primary">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-                <a href="'.route('master.city.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
+                <!-- <a href="'.route('master.city.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp; !>
               </div>
               </center>
               ';
@@ -57,8 +57,8 @@ class TicketingSupportControllerAdmin extends Controller
               <center>
               <div class="btn-group">
 								<a href="'.route('ticket_support.view.admin', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-								<a href="" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
-                <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Chat Ini ?\')" href="'.route('ticket_support.delete.admin', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+								<a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Chat Ini ?\')" href="'.route('ticket_support.delete.admin', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+								<!-- <a href="" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp; !>
               </div>
               </center>
               ';

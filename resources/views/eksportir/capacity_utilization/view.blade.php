@@ -12,13 +12,10 @@
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Year</label>
-                                <select class="atc form-control select2" disabled required id="port"
-                                        name="port">
-                                    <option value="">- Select Years -</option>
-                                    @foreach($years as $sa)
-                                        <option value="{{$sa}}" {{($val->tahun == $sa)?'selected':''}}>{{$sa}}</option>
-                                    @endforeach
-                                </select>
+                                <input disabled type="text"
+                                       class="form-control" value="{{$val->tahun}}"
+                                       name="used_capacity">
+
                             </div>
 
                             <div class="form-group col-sm-6">
@@ -35,7 +32,7 @@
 
                             </div>
                             <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/capulti')}}"
+                                <a style="color: white" href="{{ URL::previous() }}"
                                    class="btn btn-primary"><i style="color: white"></i>
                                     Back
                                 </a>

@@ -34,7 +34,7 @@ class RawmaterialController extends Controller
     public function store(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::guard('eksmp')->user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
         DB::table('itdp_eks_raw_material')->insert([
             'id_itdp_profil_eks' => $id_user,
             'tahun' => $request->year,
@@ -49,7 +49,7 @@ class RawmaterialController extends Controller
     {
 //        dd("masuk gan");
         $user = DB::table('itdp_eks_raw_material')
-            ->where('itdp_eks_raw_material.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id)
+            ->where('itdp_eks_raw_material.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
@@ -110,7 +110,7 @@ class RawmaterialController extends Controller
     public function update(Request $request)
     {
 //        dd($request);
-        $id_user = Auth::guard('eksmp')->user()->id;
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
         DB::table('itdp_eks_raw_material')->where('id', $request->id_sales)
             ->update([
                 'id_itdp_profil_eks' => $id_user,
