@@ -25,6 +25,12 @@
                         <p><h6><a href="{{url('/eksportir/#/'.$id)}}" style="color: blue">Training</a></h6></p>
                         <p><h6><a href="{{url('/eksportir/taxes_admin/'.$id)}}" style="color: blue">Tax</a></h6></p>
                         <p><h6><a href="{{url('/eksportir/contact_admin/'.$id)}}" style="color: blue">Contact</a></h6></p>
+                        <br>
+                        <br>
+                        <a style="color: white" href="{{ URL::previous() }}"
+                           class="btn btn-success pull-left"><i style="color: white"></i>
+                            Back
+                        </a>
                     </div>
                 </div>
 
