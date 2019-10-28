@@ -12,8 +12,8 @@ class AnnualController extends Controller
 {
     public function index()
     {
-        $id_user = Auth::guard('eksmp')->user()->id_profil;
-        dd($id_user);die();
+//        $id_user = Auth::guard('eksmp')->user()->id_profil;
+//        dd($id_user);die();
         $pageTitle = "Annual Sales";
         return view('eksportir.annual_sales.index', compact('pageTitle'));
     }
