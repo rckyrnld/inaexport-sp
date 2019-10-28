@@ -10,19 +10,19 @@
                 <div class="box-body bg-light">
                 <a class="btn btn-danger" href="{{url('/event')}}"><i class="fa fa-arrow-left"></i> Kembali</a><br><br>
                     <div class="container"><br>
-                         <ul id="myTab1" class="nav nav-tabs">
-                            <li class="active">
-                                <a href="#link_1" data-toggle="tab" class="btn btn-lg">With Notification</a>
+                         <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="#link_1" data-toggle="tab" class="nav-link active">With Notification</a>
                             </li>
-                            <li>
-                                <a href="#link_2" data-toggle="tab" class="btn btn-lg">Not With Notification</a>
+                            <li class="nav-item">
+                                <a href="#link_2" data-toggle="tab" class="nav-link">Not With Notification</a>
                             </li>
                         </ul><br><br>
 
                         <div id="myTabContent1" class="tab-content">
                             <!-- link 1 -->
-                            <div class="tab-pane fade in active" id="link_1">
-                                <div class="table-responsive">
+                            <div class="tab-pane active" id="link_1">
+                                <!-- <div class="table-responsive"> -->
                                     <table id="tableexdes" class="table  table-bordered table-striped">
                                         <thead class="text-white" style="background-color: #1089ff;">
                                         <tr>
@@ -55,7 +55,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                </div>
+                                <!-- </div> -->
                             </div>
                             <!-- link 2 -->
                             <div class="tab-pane fade in" id="link_2">
