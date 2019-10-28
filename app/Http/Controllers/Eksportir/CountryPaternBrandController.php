@@ -47,8 +47,8 @@ class CountryPaternBrandController extends Controller
 //        dd("masuk gan");
         $user = DB::table('itdp_eks_country_patents')
             ->select('itdp_eks_country_patents.id', 'itdp_eks_country_patents.bulan', 'itdp_eks_country_patents.tahun', 'mst_country.country', 'itdp_eks_product_brand.merek')
-            ->join('mst_country', 'mst_country.id', '=', 'itdp_eks_country_patents.id_mst_country')
-            ->join('itdp_eks_product_brand', 'itdp_eks_product_brand.id', '=', 'itdp_eks_country_patents.id_itdp_eks_product_brand')
+            ->leftjoin('mst_country', 'mst_country.id', '=', 'itdp_eks_country_patents.id_mst_country')
+            ->leftjoin('itdp_eks_product_brand', 'itdp_eks_product_brand.id', '=', 'itdp_eks_country_patents.id_itdp_eks_product_brand')
             ->where('itdp_eks_country_patents.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
 //        dd($user);
