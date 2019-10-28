@@ -7,6 +7,7 @@ use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 
 class AnnualController extends Controller
 {
@@ -69,6 +70,7 @@ class AnnualController extends Controller
             ->make(true);
     }
 
+
     public function edit($id)
     {
         $ldate = date('Y');
@@ -110,15 +112,25 @@ class AnnualController extends Controller
         return redirect('eksportir/annual_sales');
     }
 
-    public function indexadmin()
+    public function indexadminannualsales($id)
     {
-        $pageTitle = "Annual Sales";
-        return view('eksportir.consultan.indexadmin', compact('pageTitle'));
+//        dd($id);
+        $pageTitle = "List Eksportir";
+        return view('eksportir.annual_sales.indexadminannualsales', compact('pageTitle', 'id'));
     }
 
-    public function datanyaadmin()
+    public function indexadmin()
     {
-        $user = DB::table('itdp_eks_sales')->get();
+        $pageTitle = "List Eksportir";
+        return view('eksportir.annual_sales.indexadmin', compact('pageTitle'));
+    }
+
+    public function datanyaadmin($id)
+    {
+//        dd('hahahaha');
+        $user = DB::table('itdp_eks_sales')
+            ->where('id_itdp_profil_eks', '=', $id)
+            ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {
@@ -127,12 +139,53 @@ class AnnualController extends Controller
                 <a href="' . route('sales.view', $mjl->id) . '" class="btn btn-sm btn-info">
                     <i class="fa fa-search text-white"></i> View
                 </a>
-               
                 </center>
                 ';
             })
             ->addIndexColumn()
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    public function getreporteksportir()
+    {
+        $pesan = DB::select("SELECT ID, company,addres,postcode,phone,fax FROM itdp_profil_eks ORDER BY ID DESC ");
+//        dd($pesan);
+        return DataTables::of($pesan)
+            ->addColumn('f1', function ($pesan) {
+                return $pesan->company;
+            })
+            ->addColumn('f2', function ($pesan) {
+                return $pesan->addres;
+            })
+            ->addColumn('f3', function ($pesan) {
+                return $pesan->postcode;
+            })
+            ->addColumn('f4', function ($pesan) {
+                return $pesan->phone;
+            })
+            ->addColumn('f5', function ($pesan) {
+                return $pesan->fax;
+            })
+            ->addColumn('action', function ($pesan) {
+                return '<a href="' . url('eksportir/listeksportir/' . $pesan->id) . '" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>';
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function listeksportir($id)
+    {
+//        dd('hahahaha');
+        $data = DB::table('itdp_profil_eks')
+            ->where('id', '=', $id)
+            ->get();
+        foreach ($data as $datanya) {
+            $company = $datanya->company;
+        }
+//        dd($data);
+        $pageTitle = "List Eksportir";
+        return view('eksportir.annual_sales.listeksportir', compact('id', 'pageTitle', 'company'));
     }
 }

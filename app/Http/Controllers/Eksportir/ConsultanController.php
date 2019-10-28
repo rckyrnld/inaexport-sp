@@ -130,15 +130,18 @@ class ConsultanController extends Controller
         return redirect('eksportir/consultan');
     }
 
-    public function indexadmin()
+    public function indexadmin($id)
     {
+//        dd($id);
         $pageTitle = "Consultan";
-        return view('eksportir.consultan.indexadmin', compact('pageTitle'));
+        return view('eksportir.consultan.indexadmin', compact('pageTitle', 'id'));
     }
 
-    public function datanyaadmin()
+    public function datanyaadmin($id)
     {
-        $user = DB::table('itdp_eks_consultation')->get();
+        $user = DB::table('itdp_eks_consultation')
+            ->where('id_profil_eks', '=', $id)
+            ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {

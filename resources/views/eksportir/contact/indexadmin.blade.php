@@ -55,7 +55,7 @@
         $('#tablecontact').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('datatables.contactadmin') }}",
+            ajax: "{{ url('eksportir/contact_getdata_admin/'.$id) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'name', name: 'name'},

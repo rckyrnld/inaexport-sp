@@ -58,7 +58,7 @@
         $('#tablebrands').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('datatables.brandadmin') }}",
+            ajax: "{{ url('eksportir/brand_getdata_admin/'.$id) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'merek', name: 'merek'},

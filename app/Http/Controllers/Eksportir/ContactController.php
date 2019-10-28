@@ -109,15 +109,18 @@ class ContactController extends Controller
         return redirect('eksportir/contact');
     }
 
-    public function indexadmin()
+    public function indexadmin($id)
     {
+//        dd($id);
         $pageTitle = "Contact";
-        return view('eksportir.contact.indexadmin', compact('pageTitle'));
+        return view('eksportir.contact.indexadmin', compact('pageTitle', 'id'));
     }
 
-    public function datanyaadmin()
+    public function datanyaadmin($id)
     {
-        $user = DB::table('itdp_contact_eks')->get();
+        $user = DB::table('itdp_contact_eks')
+            ->where('id_itdp_profil_eks', '=', $id)
+            ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {
