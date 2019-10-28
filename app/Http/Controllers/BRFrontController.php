@@ -44,6 +44,12 @@ class BRFrontController extends Controller
         return view('buying-request.br_importir_lc',compact('pageTitle','id'));
     }
 	
+	public function br_konfirm($id,$id2)
+    {
+		$update = DB::select("update csc_buying_request_join set status_join='2' where id='".$id."' ");
+        return redirect('br_importir_lc/'.$id2);
+    }
+	
 	public function br_importir_bc($id)
     {
 		$update = DB::select("update csc_buying_request set status='1' where id='".$id."'");
