@@ -23,14 +23,31 @@
                                 </thead>
                                 <tbody>
                                 @foreach($e_detail as $key => $ed)
+                                <?php $status = StatusJoin($ed->id, $id_user); ?>
                                     <tr>
                                         <td>{{$key+1}}</td>
                                         <td>{{$ed->event_name_en}}</td>
                                         <td>{{getTanggalIndo($ed->start_date)}}</td>
                                         <td>{{getTanggalIndo($ed->end_date)}}</td>
                                         <td>{{getEventComodity($ed->event_comodity)}}</td>
-                                        <td>{{$ed->status_en}}</td>
-                                        <td><a href="{{url('/')}}/event/show_detail/{{$ed->id}}" class="btn btn-primary">Join</a></td>
+                                        <td>
+                                            @if($status==1)
+                                                Menunggu Verified
+                                            @elseif($status==2)
+                                                Verified
+                                            @else
+                                                Join
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($status == 1)
+                                                <a href="{{url('/')}}/event/show_detail/{{$ed->id}}" class="btn btn-warning">Menunggu Verified</a>
+                                            @elseif($status==null)
+                                                <a href="{{url('/')}}/event/show_detail/{{$ed->id}}" class="btn btn-primary">Join</a>
+                                            @elseif($status==2)
+                                                <a href="{{url('/')}}/event/show_detail/{{$ed->id}}" class="btn btn-success">Verified</a>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
