@@ -38,7 +38,7 @@ class TrainingControllerEksportir extends Controller
 		public function join(Request $req){
 			$id_user = Auth::guard('eksmp')->user()->id;
 			$data = DB::table('itdp_company_users as icu')
-			->selectRaw('ipe.id')
+			->selectRaw('ipe.id, ipe.company')
 			->leftJoin('itdp_profil_eks as ipe','icu.id_profil','=','ipe.id')
 			->where('icu.id', $id_user)
 			->first();
@@ -48,6 +48,17 @@ class TrainingControllerEksportir extends Controller
 				'id_profil_eks' => $data->id,
 				'date_join' => date('Y-m-d H:i:s'),
 				'status' => 0
+      ]);
+
+			$notif = DB::table('notif')->insert([
+        'dari_id' => Auth::guard('eksmp')->user()->id,
+        'untuk_id' => 1,
+        'keterangan' => ''.$data->company.' Request Untuk Mengikuti Training',
+        'waktu' => date('Y-m-d H:i:s'),
+				'url_terkait' => 'admin/training/view',
+				'status_baca' => 0,
+				'id_terkait' => $req->id_training_admin,
+        'to_role' => 1
       ]);
 
 			return redirect('/training');

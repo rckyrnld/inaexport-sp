@@ -14,7 +14,7 @@ class TrainingControllerAdmin extends Controller
 {
 
 		public function __construct(){
-      // $this->middleware('auth');
+      $this->middleware('auth');
     }
 
 	  public function index(){
@@ -162,15 +162,22 @@ class TrainingControllerAdmin extends Controller
     }
 
     public function verifed($id, $id_tr, $id_profil){
+      $id_penerima = DB::table('itdp_company_users')
+      ->where('id_profil', $id_profil)
+      ->first();
+
       $data = DB::table('training_join')->where('id', $id)->update([
         'status' => 1
       ]);
-      $notif = DB::table('notif')->insert([
-        'dari_id' => Auth::user()->id,
-        'untuk_id' => $id_profil,
+
+      $notif = DB::table('notif')
+        ->where('untuk_id', Auth::user()->id)
+        ->where('dari_id', $id_penerima->id)
+        ->update([
         'keterangan' => 'Training Telah Di Verifikasi',
-        'waktu' => date('Y-m-d H:i:s'),
-        'to_role' => 3
+        'url_terkait' => 'training',
+				'status_baca' => 0,
+        'to_role' => 2
       ]);
       if($data){
          Session::flash('success','Success verifed Data');
