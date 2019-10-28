@@ -15,7 +15,7 @@
                         <p><h6><a href="{{url('/eksportir/annual_sales_admin/'.$id)}}" style="color: blue">Annual Sales</a></h6></p>
                         <p><h6><a href="{{url('/eksportir/brand_admin/'.$id)}}" style="color: blue">Brand</a></h6></p>
                         <p><h6><a href="{{url('/eksportir/country_patern_brand_admin/'.$id)}}" style="color: blue">Country patent brand</a></h6></p>
-                        <p><h6><a href="{{url('/eksportir/contact_admin/'.$id)}}" style="color: blue">Production capacity</a></h6></p>
+                        <p><h6><a href="{{url('/eksportir/product_capacity_admin/'.$id)}}" style="color: blue">Production capacity</a></h6></p>
                         <p><h6><a href="{{url('/eksportir/export_destination_admin/'.$id)}}" style="color: blue">Export destination</a></h6></p>
                         <p><h6><a href="{{url('/eksportir/portland_admin/'.$id)}}" style="color: blue">Port of loading</a></h6></p>
                         <p><h6><a href="{{url('/eksportir/#/'.$id)}}" style="color: blue">Exhibition</a></h6></p>
