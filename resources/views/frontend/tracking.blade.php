@@ -118,6 +118,8 @@
     } else {
       $('.histori').remove(); 
       var type = $('#type').val();
+      var api = type.split('|');
+      
       var number = $('#number').val();
       $('#tracking').hide(); 
       $('#TeS').show(); 
@@ -158,18 +160,17 @@
                       var origin = response.data.items[0].original_country;
                       var destinasi = response.data.items[0].destination_country;
                       var track = response.data.items[0].origin_info.trackinfo;
-                      console.log(origin);
-                      console.log(track);
-                      if(origin != null || typeof origin !== 'undefined' || origin.length > 1){
-                        histori += '<tr class="histori"><td>Origin Country - '+origin+'</td>';
-                      } else {
+
+                      if(origin == null || typeof origin === 'undefined' || origin.length == 0){
                         histori += '<tr class="histori"><td>Origin Country - Not Found</td>';
+                      } else {
+                        histori += '<tr class="histori"><td>Origin Country - '+origin+'</td>';
                       }
 
-                      if(destinasi != null || typeof destinasi !== 'undefined' || destinasi.length > 1){
-                        histori += '<td style="text-align: right;">Destination Country - '+destinasi+'</td></tr>';
-                      } else {
+                      if(destinasi == null || typeof destinasi === 'undefined' || destinasi.length == 0){
                         histori += '<td style="text-align: right;">Destination Country - Not Found</td></tr>';
+                      } else {
+                        histori += '<td style="text-align: right;">Destination Country - '+destinasi+'</td></tr>';
                       }
 
                       if(sub_status == null || sub_status == ''){
@@ -190,10 +191,13 @@
                         $('#status_code').html(message);
                       }
 
-                      if(track.length != 0){
+                      if(track !== null){
                         for(var i=0; i < track.length; i++){
-                          histori +='<tr class="histori"><td>Date :'+track[i].Date+'</td>';
-                          histori +='<td>'+track[i].StatusDescription+'</td></tr>';
+                          var waktu = track[i].Date.split(' ');
+                          var time = waktu[1].split(':');
+                          var date = new Date(track[i].Date);
+                          histori +='<tr class="histori"><td style="padding-left:12%" width="50%">'+("0" + date.getDate()).slice(-2)+'-'+("0" + (date.getMonth() + 1)).slice(-2)+'-'+date.getFullYear()+'&nbsp;&nbsp;'+time[0]+':'+time[1]+'</td>';
+                          histori +='<td width="50%">'+track[i].StatusDescription+'</td></tr>';
                         }
                       }
 
@@ -206,7 +210,17 @@
                       $('#status').css({'background-color':'#c53731db', 'color':'white', 'text-align':'center'});
                       $('#tracking').show('slow'); 
                     break;
+                  case 429:
+                      $('#tbody_tracking').hide(); 
+                      $('#status_code').html('Exceeded API limits.  Default limit is 1 number 1 requests per 20 minutes');
+                      $('#status').css({'background-color':'#c53731db', 'color':'white', 'text-align':'center'});
+                      $('#tracking').show('slow'); 
+                    break;
                   default:
+                      $('#tbody_tracking').hide(); 
+                      $('#status').css({'background-color':'#b1b5b7eb', 'color':'white', 'text-align':'center'});
+                      $('#status_code').html('Unknown Error !');
+                      $('#tracking').show('slow'); 
                 }
               }
             }
