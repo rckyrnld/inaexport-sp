@@ -61,7 +61,7 @@ class TrainingControllerEksportir extends Controller
         'to_role' => 1
       ]);
 
-			return redirect('/training');
+			return redirect('/training/view');
 		}
 
     public function getData(){

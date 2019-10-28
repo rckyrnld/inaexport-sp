@@ -279,3 +279,15 @@ if (! function_exists('getCategoryName')) {
         return $nama;
     }
 }
+
+if (! function_exists('cekid')) {
+    function cekid($id){
+      $id = DB::table('itdp_company_users as icu')
+      ->selectRaw('ipe.id')
+      ->leftJoin('itdp_profil_eks as ipe','icu.id_profil','=','ipe.id')
+      ->where('icu.id', $id)
+      ->first();
+
+        return $id;
+    }
+}
