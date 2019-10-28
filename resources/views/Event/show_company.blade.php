@@ -22,7 +22,7 @@
                         <div id="myTabContent1" class="tab-content">
                             <!-- link 1 -->
                             <div class="tab-pane active" id="link_1">
-                                <!-- <div class="table-responsive"> -->
+                                <div class="table-responsive">
                                     <table id="tableexdes" class="table  table-bordered table-striped">
                                         <thead class="text-white" style="background-color: #1089ff;">
                                         <tr>
@@ -55,7 +55,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                <!-- </div> -->
+                                </div>
                             </div>
                             <!-- link 2 -->
                             <div class="tab-pane fade in" id="link_2">
