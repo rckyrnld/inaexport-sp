@@ -57,7 +57,7 @@
         $('#tableconsultan').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('datatables.consultanadmin') }}",
+            ajax: "{{ url('eksportir/consultan_getdata_admin/'.$id) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'nama_pegawai', name: 'nama_pegawai'},

@@ -6,35 +6,43 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Data Annual Sales</h5>
+                    <h5><i></i> Report Eksportir</h5>
                 </div>
 
                 <div class="box-body bg-light">
+
                     <div class="col-md-14">
                         <br>
                         <div class="table-responsive">
 
-                            <table id="tablesales" class="table  table-bordered table-striped">
+                            <table id="tableeksportir" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        Year
+                                        <center>Company</center>
                                     </th>
                                     <th>
-                                        <center>Nilai (USD)</center>
+                                        <center>Address</center>
                                     </th>
                                     <th>
-                                        <center>Persen (%)</center>
+                                        <center>Post Code</center>
                                     </th>
                                     <th>
-                                        <center>Nilai Ekspor (USD)</center>
+                                        <center>Telepon</center>
                                     </th>
                                     <th>
+                                        <center>Fax</center>
+                                    </th>
+
+                                    <th width="10%">
                                         <center>Action</center>
                                     </th>
                                 </tr>
                                 </thead>
+                                <tbody>
+
+                                </tbody>
 
                             </table>
                         </div>
@@ -46,23 +54,25 @@
         </div>
     </div>
 </div>
-
-@include('footer')
-
-<script>
+<script type="text/javascript">
     $(function () {
-        $('#tablesales').DataTable({
+        $('#tableeksportir').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('datatables.salesadmin') }}",
+            ajax: "{{ route('datatables.reporteksportir') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'tahun', name: 'tahun'},
-                {data: 'nilai', name: 'nilai'},
-                {data: 'nilai_persen', name: 'nilai_persen'},
-                {data: 'nilai_ekspor', name: 'nilai_ekspor'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
+                {data: 'f1', name: 'f1'},
+                {data: 'f2', name: 'f2'},
+                {data: 'f3', name: 'f3'},
+                {data: 'f4', name: 'phone'},
+                {data: 'fax', name: 'fax'},
+                {
+                    data: 'action', name: 'action', orderable: false, searchable: false
+                }
             ]
         });
     });
 </script>
+
+@include('footer')

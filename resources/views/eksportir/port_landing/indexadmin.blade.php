@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Data Capacity Utilization</h5>
+                    <h5><i></i> Data Port Of Landing</h5>
                 </div>
 
                 <div class="box-body bg-light">
@@ -19,10 +19,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Year</center>
-                                    </th>
-                                    <th>
-                                        <center>Used Capacity</center>
+                                        <center>Port</center>
                                     </th>
                                     <th>
                                         <center>Action</center>
@@ -48,11 +45,10 @@
         $('#tableexdes').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ url('eksportir/capulti_getdata_admin/'.$id) }}",
+            ajax: "{{ url('eksportir/portland_getdata_admin/'.$id) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'tahun', name: 'tahun'},
-                {data: 'kapasitas_terpakai_persen', name: 'kapasitas_terpakai_persen'},
+                {data: 'name_port', name: 'name_port'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });

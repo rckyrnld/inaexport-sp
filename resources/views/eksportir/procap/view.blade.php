@@ -11,19 +11,23 @@
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Year</label>
-                                <input type="text" disabled value="{{$val->tahun}}" name="tahun" id="tahun" class="form-control">
+                                <input type="text" disabled value="{{$val->tahun}}" name="tahun" id="tahun"
+                                       class="form-control">
                             </div>
 
                             <div class="form-group col-sm-6">
                                 <label>Own Production (%)</label>
-                                <input type="text" class="form-control" disabled value="{{$val->sendiri_persen}}" name="persen_sendiri" id="persen_sendiri" required>
+                                <input type="text" class="form-control" disabled value="{{$val->sendiri_persen}}"
+                                       name="persen_sendiri" id="persen_sendiri" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Outside Production (%)</label>
-                                <input type="text" disabled class="form-control" value="{{$val->outsourcing_persen}}" name="out_persen" id="out_persen">
-                                <input type="hidden" class="form-control" value="{{$val->id}}" name="id_sales" id="id_sales">
+                                <input type="text" disabled class="form-control" value="{{$val->outsourcing_persen}}"
+                                       name="out_persen" id="out_persen">
+                                <input type="hidden" class="form-control" value="{{$val->id}}" name="id_sales"
+                                       id="id_sales">
                             </div>
                             <div class="form-group col-sm-6">
 
@@ -44,11 +48,10 @@
 
                             </div>
                             <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/product_capacity')}}"
-                                   class="btn btn-primary"><i style="color: white"></i>
-                                    Kembali
+                                <a style="color: white" href="{{ URL::previous() }}"
+                                   class="btn btn-success pull-right"><i style="color: white"></i>
+                                    Back
                                 </a>
-
                             </div>
                         </div>
                     </div>
