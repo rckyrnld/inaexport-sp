@@ -39,7 +39,7 @@
                  <label class="control-label col-md-3">Province</label>
                  <div class="col-md-7">
                      <select class="form-control select2" required name="province" {{$view}}>
-                       <option style="display: none;" value="" id="first">Select Province</option>
+                       <option></option>
                        @foreach($province as $val)
                        <option value="{{$val->id}}" @isset($data) @if($data->id_mst_province == $val->id) selected @endif  @endisset>{{$val->province_en}}</option>
                        @endforeach
@@ -79,8 +79,8 @@
 <script type="text/javascript">
   $(document).ready(function () {
 
-    $('.select2').on('change', function(){
-      $("#first").prop("disabled", true);
+    $('.select2').select2({
+      placeholder: 'Select Province'
     });
 
     $('.integer').inputmask({

@@ -306,3 +306,18 @@ if (! function_exists('CompanyZ')) {
 
     }
 }
+
+if (! function_exists('getCompanyNameImportir')) {
+    function getCompanyNameImportir($id){
+        $nama = "-";
+        $data = DB::table('itdp_company_users')->where('id', $id)->first();
+        if($data->id_profil != NULL){
+          $profil = DB::table('itdp_profil_imp')->where('id', $data->id_profil)->first();
+          if($profil){
+            $nama = $profil->company;
+          }
+        }
+
+        return $nama;
+    }
+}

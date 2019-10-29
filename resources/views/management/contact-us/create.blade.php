@@ -5,7 +5,11 @@
 <?php 
   if($page == 'view'){
     $view = 'disabled';
-    $height = 22 * ( substr_count( $data->message, "\n" ) + 1 );
+    if(substr_count( $data->message, "\n" ) > 2){
+      $height = 22 * ( substr_count( $data->message, "\n" ) + 1 );
+    } else {
+      $height = 50;
+    }
   } else {
     $view = '';
     $height = 50;
@@ -18,7 +22,7 @@
       	 <div class="box-divider m-0"></div>
       	 <div class="box-header bg-info">
       	 	<h4 class="text-white">Message
-          <a href="{{route('management.contactus.index')}}" style="float: right;" class="btn btn-danger button_form"> Back</a><br><br></h4> </h4>
+          <a href="{{route('management.contact-us.index')}}" style="float: right;" class="btn btn-danger button_form"> Back</a><br><br></h4> </h4>
       	 </div>
       	 <div class="box-body">
           <div class="col-md-12">
@@ -62,7 +66,7 @@
                   <div align="right">
                     @if($page != 'view')
                     <button class="btn btn-primary button_form" type="submit">Submit</button>
-                    <a href="{{route('management.contactus.index')}}" class="btn btn-danger button_form">@if($page != 'view') Cancel @else Back @endif</a>
+                    <a href="{{route('management.contact-us.index')}}" class="btn btn-danger button_form">@if($page != 'view') Cancel @else Back @endif</a>
                     @endif
                   </div>
                 </div>

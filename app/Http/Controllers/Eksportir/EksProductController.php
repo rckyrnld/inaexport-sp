@@ -23,7 +23,18 @@ class EksProductController extends Controller
         if(Auth::guard('eksmp')->user()){
             return view('eksportir.eksproduct.index', compact('pageTitle'));
         }else{
-            return view('eksportir.eksproduct.index_admin', compact('pageTitle'));
+            return redirect('/home');
+        }
+    }
+
+    public function index_admin($id)
+    {
+        $pageTitle = "Product";
+        if(Auth::user()){
+            $id_profil = $id;
+            return view('eksportir.eksproduct.index_admin', compact('pageTitle', 'id_profil'));
+        }else{
+            return redirect('/home');
         }
     }
 
@@ -94,12 +105,18 @@ class EksProductController extends Controller
                 })
                 ->rawColumns(['action', 'product_description'])
                 ->make(true);
-        }else{
+        }
+    }
+
+    public function datanya_admin($id)
+    {
+        if(Auth::user()){
             $id_user = Auth::user()->id;
             $user = DB::table('csc_product_single')
             ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
             ->where('itdp_company_users.status', 1)
+            ->where('itdp_company_users.id_profil', $id)
             ->orderBy('csc_product_single.id_itdp_company_user', 'ASC')
             ->get();
 
@@ -321,14 +338,17 @@ class EksProductController extends Controller
     {
         if(Auth::guard('eksmp')->user()){
             $jenis = "eksportir";
+            $id_user = Auth::guard('eksmp')->user()->id;
         }else{
             $jenis = "admin";
+            $id_user = Auth::user()->id;
         }
-        $id_user = Auth::guard('eksmp')->user()->id;
+
         $pageTitle = 'Detail Product';
         $data = DB::table('csc_product_single')
             ->where('id', '=', $id)
             ->first();
+
 
         //Read Notification
         $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
@@ -338,10 +358,11 @@ class EksProductController extends Controller
             ]);
         }
 
+        $id_profil = $data->id_itdp_profil_eks;
         $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
         $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
         $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
-        return view('eksportir.eksproduct.view', compact('pageTitle', 'data', 'catprod', 'catprod2', 'catprod3', 'jenis'));
+        return view('eksportir.eksproduct.view', compact('pageTitle', 'data', 'catprod', 'catprod2', 'catprod3', 'jenis', 'id_profil'));
     }
 
     public function delete($id)
