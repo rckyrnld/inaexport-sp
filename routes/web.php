@@ -22,6 +22,12 @@ Route::get('switch/{locale}', function ($locale) {
     App::setLocale($locale);
 });
 Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
+Route::get('/forget_a', 'RegistrasiController@forget_a');
+Route::get('/gantipass1/{id}', 'RegistrasiController@gantipass1');
+Route::get('/gantipass2/{id}', 'RegistrasiController@gantipass2');
+Route::post('/updatepass1', 'RegistrasiController@updatepass1');
+Route::post('/updatepass2', 'RegistrasiController@updatepass2');
+Route::post('/resetpass', 'RegistrasiController@resetpass');
 Route::get('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
 
 Route::namespace('FrontEnd')->group(function () {
@@ -136,6 +142,7 @@ Route::resource('/br_list', 'BuyingRequestController');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
 Route::get('/br_add', 'BuyingRequestController@add');
 Route::get('/br_join/{id}', 'BuyingRequestController@br_join');
+Route::get('/br_chat/{id}', 'BuyingRequestController@br_chat');
 Route::get('/br_save_join/{id}', 'BuyingRequestController@br_save_join');
 Route::get('/ambilt2/{id}', 'BuyingRequestController@ambilt2');
 Route::get('/ambilt3/{id}', 'BuyingRequestController@ambilt3');

@@ -2,7 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
   <meta charset="utf-8" />
-  <title>@lang("login.title")</title>
+  <title>Forget Password</title>
   <meta name="description" content="Responsive, Bootstrap, BS4" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -108,89 +108,33 @@
                 </ul>
                 
         @endif
-       <br>
-        <ul class="nav nav-tabs" style="width:100%;text-align:center;">
-          <li class="active" style="width:50%;"><a data-toggle="tab" href="#menu1"><p style=""><font color="white">@lang("login.a1")</font></p></a></li>
-          <li style="width:50%;"><a data-toggle="tab" href="#menu2"><p style=""><font color="white">@lang("login.a2")</font></p></a></li>
-        </ul>
+       
+	   <b>FORM FORGET PASSWORD</b>
+	   <style>
+	   .custom-select, .custom-file-control, .custom-file-control:before, select.form-control:not([size]):not([multiple]):not(.form-control-lg):not(.form-control-sm) {
+    height: calc(1.28rem + 1.75rem + 2px)!important;
+}
+	   </style>
+         <form class="form-horizontal" method="POST" action="{{ url('resetpass') }}">
+           {{ csrf_field() }}
+		   <br>
+		
+		 <div class="form-group">
+            <select class="form-control" id="id_role" name="id_role" style="color:black;" >
+				<option value="1">Exporter/Importer</option>
+				<option value="2">Perwakilan</option>
+			</select>
+        </div>
+		
+		<div class="form-group">
+               <input id="email" type="email" placeholder="Email" class="form-control" name="email" style="color: #000000" value="" required="" autofocus="">
+
+        </div>
+		
+		<center><button type="submit" class="btn primary">Process</button></center>
+		   </form>
 		<br>
-        <div class="tab-content" style="padding-left:20px; padding-right:20px;">
-          <div id="menu1" class="tab-pane fade in active">
-		  
-             <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-           {{ csrf_field() }}
-		   
-             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-               <input id="email" type="email" placeholder="Email" class="form-control" name="email" style="color: #000000" value="{{ old('email') }}" required autofocus>
-
-                @if ($errors->has('email'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('email') }}</strong>
-                    </span>
-                @endif
-            </div>
-            <div class="form-group">
-              <input id="password" type="password" class="form-control" name="password" placeholder="password" required style="color: #000000">
-
-                  @if ($errors->has('password'))
-                      <span class="help-block">
-                          <strong>{{ $errors->first('password') }}</strong>
-                      </span>
-                  @endif
-            </div>      
-            <br>
-            <button type="submit" class="btn primary">@lang("login.btn")</button>
-			<br><br>
-			If you forget your password click <a href="{{url('forget_a')}}"><font color="orange"><b>This</b></font></a> !
-			<!--<div class="mb-3">        
-              <label class="md-check">
-                <input type="checkbox"><i class="primary"></i> Keep me signed in
-              </label>
-            </div> -->
-			<br>
-			<br>
-          </form>
-            
-          </div>
-		  
-		  <div id="menu2" class="tab-pane">
-             <form class="form-horizontal" method="POST" action="{{ route('loginei.login') }}">
-           {{ csrf_field() }}
-             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-               <input type="email" placeholder="Email" class="form-control" name="email2" style="color: #000000" value="{{ old('email') }}" required autofocus>
-
-                @if ($errors->has('email'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('email') }}</strong>
-                    </span>
-                @endif
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-control" name="password2" placeholder="password" required style="color: #000000">
-
-                  @if ($errors->has('password'))
-                      <span class="help-block">
-                          <strong>{{ $errors->first('password') }}</strong>
-                      </span>
-                  @endif
-            </div>      
-            <br>
-            <button type="submit" class="btn primary">Sign in</button>
-			<br><br>
-			If you forget your password click <a href="{{url('forget_a')}}"><font color="orange"><b>This</b></font></a> !
-			<!--<div class="mb-3">        
-              <label class="md-check">
-                <input type="checkbox"><i class="primary"></i> Keep me signed in
-              </label>
-            </div> -->
-			<br>
-			<br>
-          </form>
-            
-          </div>
-		  
-         </div>
-
+       
       </div>
 	  
 	  <br>
