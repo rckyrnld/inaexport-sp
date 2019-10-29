@@ -35,7 +35,7 @@ class PortlandController extends Controller
         DB::table('itdp_eks_port')->insert([
             'id_itdp_profil_eks' => $id_user,
             'id_mst_port' => $request->port,
-            'pelcompany' => $id_user.$request->tahun.$request->port,
+            'pelcompany' => $id_user . $request->tahun . $request->port,
         ]);
         return redirect('eksportir/portland');
     }
@@ -44,7 +44,7 @@ class PortlandController extends Controller
     {
 //        dd("masuk gan");
         $user = DB::table('itdp_eks_port')
-            ->select('itdp_eks_port.id','mst_port.name_port')
+            ->select('itdp_eks_port.id', 'mst_port.name_port')
             ->join('mst_port', 'mst_port.id', '=', 'itdp_eks_port.id_mst_port')
             ->where('itdp_eks_port.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
@@ -110,8 +110,40 @@ class PortlandController extends Controller
             ->update([
                 'id_itdp_profil_eks' => $id_user,
                 'id_mst_port' => $request->port,
-                'pelcompany' => $id_user.$request->tahun.$request->port,
+                'pelcompany' => $id_user . $request->tahun . $request->port,
             ]);
         return redirect('eksportir/portland');
+    }
+
+    public function indexadmin($id)
+    {
+//        dd($id);
+        $pageTitle = "Port Of Landing";
+
+        return view('eksportir.port_landing.indexadmin', compact('pageTitle', 'id'));
+    }
+
+    public function datanyaadmin($id)
+    {
+//        dd("masuk gan");
+        $user = DB::table('itdp_eks_port')
+            ->select('itdp_eks_port.id', 'mst_port.name_port')
+            ->leftjoin('mst_port', 'mst_port.id', '=', 'itdp_eks_port.id_mst_port')
+            ->where('itdp_eks_port.id_itdp_profil_eks', '=', $id)
+            ->get();
+//        dd($user);
+        return \Yajra\DataTables\DataTables::of($user)
+            ->addColumn('action', function ($mjl) {
+                return '
+                <center>
+                <a href="' . route('portland.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                    <i class="fa fa-search text-white"></i> View
+                </a>
+                </center>
+                ';
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

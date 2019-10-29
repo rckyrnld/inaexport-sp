@@ -23,13 +23,16 @@
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Year</center>
+                                        <center>Training</center>
                                     </th>
                                     <th>
-                                        <center>Local Employe</center>
+                                        <center>Organizer</center>
                                     </th>
                                     <th>
-                                        <center>Foreign Worker</center>
+                                        <center>Start Date</center>
+                                    </th>
+                                    <th>
+                                        <center>Due Date</center>
                                     </th>
                                     <th>
                                         <center>Action</center>
@@ -55,12 +58,13 @@
         $('#tableexdes').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('datatables.labor') }}",
+            ajax: "{{ route('datatables.training') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'tahun', name: 'tahun'},
-                {data: 'lokal_orang', name: 'lokal_orang'},
-                {data: 'asing_orang', name: 'asing_orang'},
+                {data: 'nama_training', name: 'nama_training'},
+                {data: 'penyelenggara', name: 'penyelenggara'},
+                {data: 'tanggal_mulai', name: 'tanggal_mulai'},
+                {data: 'tanggal_selesai', name: 'tanggal_selesai'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });

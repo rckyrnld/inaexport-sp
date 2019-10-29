@@ -32,7 +32,7 @@ class CategoryProductController extends Controller
               <div class="btn-group">
                 <a href="'.route('management.category-product.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
                 <a href="'.route('management.category-product.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
-                <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route('management.category-product.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+                <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('management.category-product.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
               </div>
               </center>
               ';
@@ -45,7 +45,7 @@ class CategoryProductController extends Controller
     {
       $pageTitle = 'Category Product';
       $page = 'create';
-      $url = "/management-category-product/store/Create";
+      $url = "/management/category-product/store/Create";
       $level_1 = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
       return view('management.category-product.create',compact('url','pageTitle','page','level_1'));
     }
@@ -88,10 +88,10 @@ class CategoryProductController extends Controller
 
       if($data){
          Session::flash('success','Success '.$param.' Data');
-         return redirect('management-category-product/');
+         return redirect('management/category-product/');
        }else{
          Session::flash('failed','Failed '.$param.' Data');
-         return redirect('management-category-product/');
+         return redirect('management/category-product/');
        }
     }
 
@@ -108,7 +108,7 @@ class CategoryProductController extends Controller
     {
       $page = "edit";
       $pageTitle = "Category Product";
-      $url = "/management-category-product/store/Update_".$id;
+      $url = "/management/category-product/store/Update_".$id;
       $data = DB::table('csc_product')->where('id', $id)->first();
       $level_1 = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
       return view('management.category-product.create',compact('url','data','pageTitle','page','level_1'));
@@ -119,10 +119,10 @@ class CategoryProductController extends Controller
       $data = DB::table('csc_product')->where('id', $id)->delete();
       if($data){
          Session::flash('success','Success Delete Data');
-         return redirect('management-category-product/');
+         return redirect('management/category-product/');
        }else{
          Session::flash('failed','Failed Delete Data');
-         return redirect('management-category-product/');
+         return redirect('management/category-product/');
        }
     }
 

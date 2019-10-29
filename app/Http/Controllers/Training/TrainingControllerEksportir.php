@@ -19,7 +19,7 @@ class TrainingControllerEksportir extends Controller
 
 	  public function index(){
       $pageTitle = 'Training';
-			$data = DB::table('training_admin')->where('status', 1)->paginate(10);
+			$data = DB::table('training_admin')->where('status', 1)->paginate(5);
 			$id_user = Auth::guard('eksmp')->user()->id;
 			$id = DB::table('itdp_company_users as icu')
 			->selectRaw('ipe.id')
@@ -53,7 +53,7 @@ class TrainingControllerEksportir extends Controller
 			$notif = DB::table('notif')->insert([
         'dari_id' => Auth::guard('eksmp')->user()->id,
         'untuk_id' => 1,
-        'keterangan' => ''.$data->company.' Request Untuk Mengikuti Training',
+        'keterangan' => '<b>'.$data->company.'</b> Request To Join Training',
         'waktu' => date('Y-m-d H:i:s'),
 				'url_terkait' => 'admin/training/view',
 				'status_baca' => 0,
@@ -61,7 +61,7 @@ class TrainingControllerEksportir extends Controller
         'to_role' => 1
       ]);
 
-			return redirect('/training');
+			return redirect('/training/view');
 		}
 
     public function getData(){

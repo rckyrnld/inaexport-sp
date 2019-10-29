@@ -116,15 +116,18 @@ class BrandController extends Controller
         return redirect('eksportir/brand');
     }
 
-    public function indexadmin()
+    public function indexadmin($id)
     {
-        $pageTitle = "Annual Sales";
-        return view('eksportir.brand.indexadmin', compact('pageTitle'));
+//        dd($id);
+        $pageTitle = "Brand";
+        return view('eksportir.brand.indexadmin', compact('pageTitle', 'id'));
     }
 
-    public function datanyaadmin()
+    public function datanyaadmin($id)
     {
-        $user = DB::table('itdp_eks_product_brand')->get();
+        $user = DB::table('itdp_eks_product_brand')
+            ->where('id_itdp_profil_eks', '=', $id)
+            ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {

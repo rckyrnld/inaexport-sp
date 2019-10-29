@@ -4,10 +4,12 @@
   if(Auth::user()){
     $for = 'admin';
     $message = '';
+    $dmr = '1cm';
   } else if(Auth::guard('eksmp')->user()){
     if(Auth::guard('eksmp')->user()->id_role == 2){
       $for = 'eksportir';
       $message = '';
+      $dmr = '2cm';
     } else {
       $for = 'importir';
         if($loc == "ch"){
@@ -17,6 +19,7 @@
         }else{
           $message = "You do not Have Access to Join!";
         }
+        $dmr = '2cm';
     }
   } else {
     $for = 'non user';
@@ -27,6 +30,7 @@
       }else{
         $message = "Please Login to Continue!";
       }
+      $dmr = '1cm';
   }
 ?>
 <style type="text/css">
@@ -93,7 +97,7 @@
                             </div>
                         </form>
                     </div><br>
-                    <div class="col-md-12"><br>
+                    <div class="col-md-12" style="margin-left:{{$dmr}}"><br>
                         <div class="row">
                             <table id="tableexd"><tbody>
                             <?php $co=0; ?>
@@ -137,6 +141,19 @@
                                                   } else {
                                                     $url = "#";
                                                   }
+
+                                                  if (Auth::guard('eksmp')->user()) {
+                                                        $id_ = Auth::guard('eksmp')->user()->id;
+                                                        $data = DB::table('event_company_add')->where('id_itdp_profil_eks', $id_)->where('id_event_detail', $ed->id)->first();
+                                                        if ($data) {
+                                                            $statt = $data->status;
+                                                        }else{
+                                                            $statt = null;
+                                                        }
+                                                   }else{
+                                                         $statt = null;
+                                                   }
+
                                                 ?>
 
                                                     <tr><td>{{$ed->event_name_en}}</td></tr>
@@ -144,7 +161,15 @@
                                                     <tr><td>{{$s_date}} - {{$e_date}}</td></tr>
                                                     <tr><td><b>@lang("frontend.t_Comodity")</b></td></tr>
                                                     <tr><td>{{$comod}}</td></tr>
-                                                    <tr><td style="padding-top: 9px"><a href="{{$url}}" onclick="_Join('{{$ed->id}}', event, this)" class="btn btn-primary">@lang("frontend.t_join")</a></td></tr>
+                                                    <tr><td style="padding-top: 9px">
+                                                        @if($statt==null)
+                                                            <a href="{{$url}}" onclick="_Join('{{$ed->id}}', event, this)" class="btn btn-primary">@lang("frontend.t_join")</a>
+                                                        @elseif($statt==1)
+                                                            <button class="btn btn-warning">Menunggu Verified</button>
+                                                        @elseif($statt==2)
+                                                            <button class="btn btn-success">Verified</button>
+                                                        @endif
+                                                    </td></tr>
                                                 </table>
                                             </div>
                                         </td>
@@ -170,13 +195,17 @@
 @include('frontend.layout.footer')
 <script type="text/javascript">
     var login = "{{$for}}";
+    csrf_token = '{{ csrf_token() }}';
+
     function _Join(id,e,obj){
        e.preventDefault();
        console.log(login);
         if(login == 'admin'){
           alert('admin');
         } else if(login == 'eksportir'){
-          alert('eksportir');
+          $.post("{{ url('event/store_company') }}", {'_token': csrf_token, 'id_event': id}, function(data){
+              location.reload();
+           });
         } else if(login == 'importir'){
           alert("{{$message}}");
         } else {

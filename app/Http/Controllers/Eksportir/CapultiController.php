@@ -119,15 +119,18 @@ class CapultiController extends Controller
         return redirect('eksportir/capulti');
     }
 
-    public function indexadmin()
+    public function indexadmin($id)
     {
+//        dd($id);
         $pageTitle = "Capacity Utilization";
-        return view('eksportir.capacity_utilization.indexadmin', compact('pageTitle'));
+        return view('eksportir.capacity_utilization.indexadmin', compact('pageTitle', 'id'));
     }
 
-    public function datanyaadmin()
+    public function datanyaadmin($id)
     {
-        $user = DB::table('itdp_production_capacity')->get();
+        $user = DB::table('itdp_production_capacity')
+            ->where('id_itdp_profil_eks', '=', $id)
+            ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {
@@ -136,7 +139,6 @@ class CapultiController extends Controller
                 <a href="' . route('capulti.view', $mjl->id) . '" class="btn btn-sm btn-info">
                     <i class="fa fa-search text-white"></i> View
                 </a>
-               
                 </center>
                 ';
             })

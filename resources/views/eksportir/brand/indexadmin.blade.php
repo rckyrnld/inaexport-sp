@@ -41,6 +41,11 @@
                                 </thead>
 
                             </table>
+                            <br>
+                            <a style="color: white" href="{{ URL::previous() }}"
+                               class="btn btn-success pull-right"><i style="color: white"></i>
+                                Back
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -58,7 +63,7 @@
         $('#tablebrands').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('datatables.brandadmin') }}",
+            ajax: "{{ url('eksportir/brand_getdata_admin/'.$id) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'merek', name: 'merek'},

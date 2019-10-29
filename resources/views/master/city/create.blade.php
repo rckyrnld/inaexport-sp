@@ -1,6 +1,9 @@
 @include('header')
 <style type="text/css">
   .button_form{width: 80px}
+  input[type="text"], input[type="text"]:focus{
+    border-color: #dce5e8;
+  }
 </style>
 <?php 
   if($page == 'view'){
@@ -27,7 +30,7 @@
                  <label class="control-label col-md-3">Country</label>
                  <div class="col-md-7">
                      <select class="form-control select2" required name="country" {{$view}}>
-                       <option style="display: none;" value="" id="first">Select Country</option>
+                       <option></option>
                        @foreach($country as $val)
                        <option value="{{$val->id}}" @isset($data) @if($data->id_mst_country == $val->id) selected @endif  @endisset>{{$val->country}}</option>
                        @endforeach
@@ -66,8 +69,8 @@
 @include('footer')
 <script type="text/javascript">
   $(document).ready(function () {
-    $('.select2').on('change', function(){
-      $("#first").prop("disabled", true);
+    $('.select2').select2({
+      placeholder: 'Select Country'
     });
   });
 </script>

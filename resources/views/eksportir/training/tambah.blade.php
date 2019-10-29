@@ -50,8 +50,12 @@
 
                             <div class="form-group col-sm-6">
                                 <label>Inside Outside</label>
-                                <input type="text"
-                                       class="form-control" name="inside_outside">
+                                <select class="atc form-control select2" required id="inside_outside"
+                                        name="inside_outside">
+                                    <option value="">- Select Status -</option>
+                                    <option value="inside"> Inside </option>
+                                    <option value="outside"> Outside </option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">
@@ -63,8 +67,13 @@
 
                             <div class="form-group col-sm-6">
                                 <label>Country</label>
-                                <input type="text"
-                                       class="form-control" name="country">
+                                <select class="atc form-control select2" required id="country"
+                                        name="country">
+                                    <option value="">- Pilih Country -</option>
+                                    @foreach($country as $sa)
+                                        <option value="{{$sa->id}}">{{$sa->country}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">
@@ -76,8 +85,13 @@
 
                             <div class="form-group col-sm-6">
                                 <label>City</label>
-                                <input type="text"
-                                       class="form-control" name="city">
+                                <select class="atc form-control select2" required id="city"
+                                        name="city">
+                                    <option value="">- Select City -</option>
+                                    @foreach($city as $sab)
+                                        <option value="{{$sab->id}}">{{$sab->city}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">

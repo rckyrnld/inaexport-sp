@@ -79,15 +79,16 @@ class ProductNonAuthController extends Controller
 		}
 	}
 
-	public function detailProduk($id)
+	public function detailProduk(Request $request)
     {
         //Product
         $data = DB::table('csc_product_single')
-            ->where('id', '=', $id)
+            ->where('id', '=', $request->id)
 			->first();
+			// dd($data);
 		if(count($data) > 0){
 			$res['message'] = "Success";
-			$res['data'] = $result;
+			$res['data'] = $data;
 			return response($res);
 		}else{
 			$res['message'] = "Failed";

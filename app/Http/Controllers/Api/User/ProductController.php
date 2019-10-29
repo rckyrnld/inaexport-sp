@@ -251,4 +251,20 @@ class ProductController extends Controller
 			return response($res);
         }
 	}
+
+	public function detailProduk(Request $request)
+    {
+        //Product
+        $data = DB::table('csc_product_single')
+            ->where('id', '=', $request->id)
+			->first();
+		if(count($data) > 0){
+			$res['message'] = "Success";
+			$res['data'] = $data;
+			return response($res);
+		}else{
+			$res['message'] = "Failed";
+			return response($res);
+		}
+	}
 }

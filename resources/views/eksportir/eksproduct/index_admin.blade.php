@@ -8,22 +8,17 @@
                 <div class="box-header bg-light">
                     <h5><i></i> Data Product</h5>
                 </div>
-
                 <div class="box-body bg-light">
-                    <a class="btn" href="{{url('/eksportir/tambah_product')}}"
+                    <!-- <a class="btn" href="{{url('/eksportir/tambah_product')}}"
                        style="background-color: #1089ff; color: white;"><i
                                 class="fa fa-plus-circle"></i>
-                        Tambah</a>
+                        Tambah</a> -->
                     <div class="col-md-14">
-                        <br>
                         <div class="table-responsive">
                             <table id="tablebrands" class="table  table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>
                                     <th>No</th>
-                                    <th>
-                                        <center>Company Name</center>
-                                    </th>
                                     <th>
                                         <center>Code</center>
                                     </th>
@@ -61,6 +56,11 @@
                                 </thead>
 
                             </table>
+                            <br>
+                            <a style="color: white" href="{{ URL::previous() }}"
+                               class="btn btn-success pull-right"><i style="color: white"></i>
+                                Back
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -76,10 +76,9 @@
         $('#tablebrands').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('datatables.eksproduct') }}",
+            ajax: "{{ route('datatables.eksproduct_admin', $id_profil) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'company_name', name: 'company_name'},
                 {data: 'code_en', name: 'code_en'},
                 {data: 'prodname_en', name: 'prodname_en'},
                 {data: 'color_en', name: 'color_en'},

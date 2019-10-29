@@ -111,4 +111,34 @@ class ProcapController extends Controller
             ]);
         return redirect('eksportir/product_capacity');
     }
+
+    public function indexadmin($id)
+    {
+//        dd($id);
+        $pageTitle = "Product Capacity";
+
+        return view('eksportir.procap.indexadmin', compact('pageTitle', 'id'));
+    }
+
+    public function datanyaadmin($id)
+    {
+//        dd("masuk gan");
+        $user = DB::table('itdp_eks_production')
+            ->where('id_itdp_profil_eks', '=', $id)
+            ->get();
+//        dd($user);
+        return \Yajra\DataTables\DataTables::of($user)
+            ->addColumn('action', function ($mjl) {
+                return '
+                <center>
+                <a href="' . route('procap.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                    <i class="fa fa-search text-white"></i> View
+                </a>
+                </center>
+                ';
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
+    }
 }

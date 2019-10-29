@@ -31,6 +31,11 @@
                                 </thead>
 
                             </table>
+                            <br>
+                            <a style="color: white" href="{{ URL::previous() }}"
+                               class="btn btn-success pull-right"><i style="color: white"></i>
+                                Back
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -48,7 +53,7 @@
         $('#tableexdes').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('datatables.capultiadmin') }}",
+            ajax: "{{ url('eksportir/capulti_getdata_admin/'.$id) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'tahun', name: 'tahun'},

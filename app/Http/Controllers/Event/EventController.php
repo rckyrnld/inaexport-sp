@@ -15,10 +15,10 @@ class EventController extends Controller
 	public function index(){
 		$pageTitle = "Event";
 		if (Auth::guard('eksmp')->user()) {
-			$id = strval(Auth::guard('eksmp')->user()->id);
-			$e_detail = DB::select("SELECT DISTINCT b.id_terkait, a.* FROM event_detail as a LEFT JOIN notif as b on b.id_terkait=a.id::VARCHAR WHERE b.untuk_id='$id' and b.url_terkait='event/show/read' ORDER BY a.id desc ");
+			$id_user = strval(Auth::guard('eksmp')->user()->id);
+			$e_detail = DB::select("SELECT DISTINCT b.id_terkait, a.* FROM event_detail as a LEFT JOIN notif as b on b.id_terkait=a.id::VARCHAR WHERE b.untuk_id='$id_user' and b.url_terkait='event/show/read' ORDER BY a.id desc ");
 			// $e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);
-			return view('Event.index_eksportir', compact('pageTitle','e_detail'));
+			return view('Event.index_eksportir', compact('pageTitle','e_detail', 'id_user'));
 		}else{
 			$e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);
 			return view('Event.index', compact('pageTitle','e_detail'));
@@ -303,14 +303,16 @@ class EventController extends Controller
 
     public function show_company($id){
     	$pageTitle = 'Show Event';
-    	$list = DB::table('notif')->where('url_terkait', 'event/show/read')->Where('id_terkait', $id)->get();
-    	return view('Event.show_company', compact('pageTitle','list'));
+    	$list = DB::table('notif')->where('url_terkait', 'event/show/read')->Where('id_terkait', $id)->where('status', '!=', null)->distinct()->get(['id_terkait','untuk_id', 'untuk_nama', 'waktu']);
+    	$listnono = DB::table('event_company_add')->where('id_event_detail', $id)->get();
+    	return view('Event.show_company', compact('pageTitle','list', 'listnono'));
     }
 
     public function show_detail($id){
     	$pageTitle = 'Show Event';
     	$detail = DB::table('event_detail')->where('id', $id)->first();
-    	return view('Event.show_detail', compact('pageTitle','detail'));
+    	$id_user = strval(Auth::guard('eksmp')->user()->id);
+    	return view('Event.show_detail', compact('pageTitle','detail', 'id_user'));
     }
 
     public function search(Request $req){
@@ -356,6 +358,46 @@ class EventController extends Controller
     	$id=$req->id;
     	$data = DB::table('event_place')->where('id', $id)->first();
     	echo json_encode($data);
+    }
+
+    public function updatestatjoin(Request $req){
+    	$id = $req->id;
+    	$id_user = Auth::guard('eksmp')->user()->id;
+    	DB::table('notif')->where('untuk_id', $id_user)->where('id_terkait', $id)->update([
+    		'status' => 1
+    	]);
+    	return redirect('/event');
+    }
+
+    public function updatestatver(Request $req){
+    	$id = $req->id;
+    	$untuk_id = $req->untuk_id;
+    	DB::table('notif')->where('untuk_id', $untuk_id)->where('id_terkait', $id)->update([
+    		'status' => 2
+    	]);
+    	return redirect('/event/show_company/'.$id);
+    }
+
+    public function store_company(Request $req){
+    	$datenow = date("Y-m-d H:i:s");
+    	$id_user = Auth::guard('eksmp')->user()->id;
+    	DB::table('event_company_add')->insert([
+    		'id_itdp_profil_eks'	=> $id_user,
+    		'id_event_detail'		=> $req->id_event,
+    		'status'				=> 1,
+    		'waktu'					=> $datenow
+    	]);
+    	return redirect('/front_end/event');
+    }
+
+    public function updatestatcompany(Request $req){
+    	$id_user = $req->id_itdp_profil_eks;
+    	$id = $req->id;
+
+    	DB::table('event_company_add')->where('id_itdp_profil_eks', $id_user)->where('id_event_detail', $id)->update([
+    		'status' => 2
+    	]);
+    	return redirect('/event/show_company/'.$id);
     }
 
 }

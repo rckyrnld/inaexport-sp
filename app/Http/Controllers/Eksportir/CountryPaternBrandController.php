@@ -119,18 +119,20 @@ class CountryPaternBrandController extends Controller
         return redirect('eksportir/country_patern_brand');
     }
 
-    public function indexadmin()
+    public function indexadmin($id)
     {
+//        dd($id);
         $pageTitle = "Country Patern Brand";
-        return view('eksportir.country_patern_brand.indexadmin', compact('pageTitle'));
+        return view('eksportir.country_patern_brand.indexadmin', compact('pageTitle', 'id'));
     }
 
-    public function datanyaadmin()
+    public function datanyaadmin($id)
     {
         $user = DB::table('itdp_eks_country_patents')
             ->select('itdp_eks_country_patents.id', 'itdp_eks_country_patents.bulan', 'itdp_eks_country_patents.tahun', 'mst_country.country', 'itdp_eks_product_brand.merek')
-            ->join('mst_country', 'mst_country.id', '=', 'itdp_eks_country_patents.id_mst_country')
-            ->join('itdp_eks_product_brand', 'itdp_eks_product_brand.id', '=', 'itdp_eks_country_patents.id_itdp_eks_product_brand')
+            ->leftjoin('mst_country', 'mst_country.id', '=', 'itdp_eks_country_patents.id_mst_country')
+            ->leftjoin('itdp_eks_product_brand', 'itdp_eks_product_brand.id', '=', 'itdp_eks_country_patents.id_itdp_eks_product_brand')
+            ->where('itdp_eks_country_patents.id_itdp_profil_eks', '=', $id)
             ->get();
 
         return \Yajra\DataTables\DataTables::of($user)

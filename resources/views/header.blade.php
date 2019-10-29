@@ -21,6 +21,9 @@
   <link rel="stylesheet" href="{{url('/')}}/css/w3.css">
   <style>
     .mySlides {display:none;}
+    table,th,tr,td{
+      text-align: center;
+    }
   </style>
   <!-- style -->
   <!--

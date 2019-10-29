@@ -52,11 +52,19 @@
 			  
 			  foreach($querynotif as $ar){
 			  ?>
+        @if($ar->id_terkait == NULL)
+        <a href="{{url($ar->url_terkait)}}">
+              <?php echo $ar->keterangan; ?><br>
+        <b><?php echo $ar->waktu; ?></b>
+        </a>
+        <hr>
+        @else
 			  <a href="{{url($ar->url_terkait.'/'.$ar->id_terkait)}}">
               <?php echo $ar->keterangan; ?><br>
 			  <b><?php echo $ar->waktu; ?></b>
 			  </a>
 			  <hr>
+        @endif
 			  <?php } ?>
               </li>
               <li><center>

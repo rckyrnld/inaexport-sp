@@ -1,5 +1,35 @@
 @include('frontend.layout.header')
-<?php $loc = app()->getLocale(); ?>
+<?php
+  $loc = app()->getLocale();
+  if(Auth::user()){
+    $for = 'admin';
+    $message = '';
+  } else if(Auth::guard('eksmp')->user()){
+    if(Auth::guard('eksmp')->user()->id_role == 2){
+      $for = 'eksportir';
+      $message = '';
+    } else {
+      $for = 'importir';
+        if($loc == "ch"){
+          $message = "您无权加入";
+        }elseif($loc == "in"){
+          $message = "Anda Tidak Memiliki Akses untuk Bergabung!";
+        }else{
+          $message = "You do not Have Access to Join!";
+        }
+    }
+  } else {
+    $for = 'non user';
+      if($loc == "ch"){
+        $message = "请先登录";
+      }elseif($loc == "in"){
+        $message = "Silahkan Login Terlebih Dahulu!";
+      }else{
+        $message = "Please Login to Continue!";
+      }
+  }
+
+?>
 <div class="d-flex flex-column flex" style="">
 	<div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
     <div class="mx-auto">
@@ -78,7 +108,21 @@
                       </div>
                       <div class="col-md-4"></div>
                       <div class="col-md-2">
-                        <a href="{{url('login')}}" type="submit" name="button" class="btn btn-primary btn-sm"> 参加</a>
+												@if($for == "admin" || $for == "eksportir")
+												<?php $id = cekid(Auth::guard('eksmp')->user()->id) ?>
+												<?php $cek = checkJoin($val->id, $id->id) ?>
+		                      @if($cek == 0)
+													<form action="{{route('training.join')}}" method="post">
+														<input type="hidden" name="_token" value="{{ csrf_token() }}">
+														<input type="hidden" name="id_training_admin" value="{{$val->id}}">
+														<button type="submit" name="button" class="btn btn-primary btn-sm"> 参加</button>
+													</form>
+													@else
+														<button class="btn btn-success btn-sm"> 参加</button>
+													@endif
+												@else
+													<a href="{{url('login')}}" type="submit" name="button" class="btn btn-primary btn-sm"> 参加</a>
+												@endif
                       </div>
                     </div><br>
                   </div>
@@ -117,7 +161,21 @@
                       </div>
                       <div class="col-md-4"></div>
                       <div class="col-md-2">
-                        <a href="{{url('login')}}" type="submit" name="button" class="btn btn-primary btn-sm"> Join Now</a>
+												@if($for == "admin" || $for == "eksportir")
+												<?php $id = cekid(Auth::guard('eksmp')->user()->id) ?>
+												<?php $cek = checkJoin($val->id, $id->id) ?>
+												@if($cek == 0)
+												<form action="{{route('training.join')}}" method="post">
+													<input type="hidden" name="_token" value="{{ csrf_token() }}">
+													<input type="hidden" name="id_training_admin" value="{{$val->id}}">
+													<button type="submit" name="button" class="btn btn-primary btn-sm"> {{$id}} Join Now</button>
+												</form>
+												@else
+													<button class="btn btn-success btn-sm"> Joined</button>
+												@endif
+												@else
+													<a href="{{url('login')}}" type="submit" name="button" class="btn btn-primary btn-sm"> Join Now</a>
+												@endif
                       </div>
                     </div><br>
                   </div>
@@ -156,7 +214,21 @@
                       </div>
                       <div class="col-md-4"></div>
                       <div class="col-md-2">
-                        <a href="{{url('login')}}" type="submit" name="button" class="btn btn-primary btn-sm"> Join Now</a>
+												@if($for == "admin" || $for == "eksportir")
+												<?php $id = cekid(Auth::guard('eksmp')->user()->id) ?>
+												<?php $cek = checkJoin($val->id, $id->id) ?>
+												@if($cek == 0)
+												<form action="{{route('training.join')}}" method="post">
+													<input type="hidden" name="_token" value="{{ csrf_token() }}">
+													<input type="hidden" name="id_training_admin" value="{{$val->id}}">
+													<button type="submit" name="button" class="btn btn-primary btn-sm"> Join Now</button>
+												</form>
+												@else
+													<button class="btn btn-success btn-sm"> Joined</button>
+												@endif
+												@else
+													<a href="{{url('login')}}" type="submit" name="button" class="btn btn-primary btn-sm"> Join Now</a>
+												@endif
                       </div>
                     </div><br>
                   </div>

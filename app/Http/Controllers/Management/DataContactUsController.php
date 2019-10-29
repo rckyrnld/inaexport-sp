@@ -16,13 +16,12 @@ class DataContactUsController extends Controller
 
 	  public function index(){
       $pageTitle = 'Data Contact Us';
-      $contactus = DB::table('csc_contact_us')->orderby('id','asc')->get();
-      return view('management.contact-us.index',compact('pageTitle','contactus'));
+      return view('management.contact-us.index',compact('pageTitle'));
     }
 
     public function getData()
     {
-      $contactus = DB::table('csc_contact_us')->orderby('id','asc')->get();
+      $contactus = DB::table('csc_contact_us')->orderby('id','desc')->get();
 
       return \Yajra\DataTables\DataTables::of($contactus)
           ->addIndexColumn()
@@ -30,8 +29,8 @@ class DataContactUsController extends Controller
               return '
               <center>
               <div class="btn-group">
-                <a href="'.route('management.contactus.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-                <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route('management.contactus.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+                <a href="'.route('management.contact-us.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+                <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('management.contact-us.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
               </div>
               </center>
               ';
@@ -63,7 +62,7 @@ class DataContactUsController extends Controller
             'untuk_nama' => 'Super Admin',
             'untuk_id' => '1',
             'keterangan' => 'New Message from Visitor with Title  "'.$req->subyek.'"',
-            'url_terkait' => 'management-contact-us/view',
+            'url_terkait' => 'management/contact-us/view',
             'status_baca' => 0,
             'waktu' => date('Y-m-d H:i:s'),
             'id_terkait' => $id,
@@ -72,10 +71,10 @@ class DataContactUsController extends Controller
 
       if($data){
          Session::flash('success','Success');
-         return redirect('/management-contact-us/');
+         return redirect('/management/contact-us/');
        }else{
          Session::flash('failed','Failed');
-         return redirect('/management-contact-us/');
+         return redirect('/management/contact-us/');
        }
     }
 
@@ -83,7 +82,7 @@ class DataContactUsController extends Controller
     {
       $pageTitle = 'Data Contact Us';
       $page = 'create';
-      $url = "/contact-us/send/";
+      $url = "/management/contact-us/send/";
       return view('management.contact-us.create',compact('url','pageTitle','page'));
     }
 
@@ -101,10 +100,10 @@ class DataContactUsController extends Controller
       $data = DB::table('csc_contact_us')->where('id',$id)->delete();
       if($data){
          Session::flash('success','Success Delete Data');
-         return redirect('/management-contact-us/');
+         return redirect('/management/contact-us/');
        }else{
          Session::flash('failed','Failed Delete Data');
-         return redirect('/management-contact-us/');
+         return redirect('/management/contact-us/');
        }
     }
 }

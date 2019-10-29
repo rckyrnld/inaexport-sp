@@ -38,6 +38,11 @@
                                 </thead>
 
                             </table>
+                            <br>
+                            <a style="color: white" href="{{ URL::previous() }}"
+                               class="btn btn-success pull-right"><i style="color: white"></i>
+                                Back
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -55,7 +60,7 @@
         $('#tablecontact').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('datatables.contactadmin') }}",
+            ajax: "{{ url('eksportir/contact_getdata_admin/'.$id) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'name', name: 'name'},

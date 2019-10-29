@@ -49,6 +49,7 @@ use Illuminate\Http\Request;
                 Route::post('insertProduk', 'Api\User\ProductController@insertProduct');
                 Route::post('updateProduk', 'Api\User\ProductController@updateProduct');                
                 Route::post('deleteProduk', 'Api\User\ProductController@deleteProduct');
+                Route::post('detailProdukById', 'Api\User\ProductController@detailProduk');
         });
 Route::namespace('Api')->group(function () {
             /*Contact Us*/

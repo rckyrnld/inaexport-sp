@@ -25,44 +25,51 @@ class TrainingController extends Controller
 //        dd($ldate);
         $years = [];
         for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
-//        dd($years);
+        $country = DB::table('mst_country')->get();
+        $city = DB::table('mst_city')->get();
         $url = '/eksportir/training_save';
         $pageTitle = 'Add Training';
-        return view('eksportir.training.tambah', compact('pageTitle', 'url', 'years'));
+        return view('eksportir.training.tambah', compact('pageTitle', 'url', 'years', 'country', 'city'));
     }
 
     public function store(Request $request)
     {
-        dd($request);
+//        dd($request);
         $id_user = Auth::guard('eksmp')->user()->id_profil;
         DB::table('itdp_eks_training')->insert([
             'id_itdp_profil_eks' => $id_user,
-            'tahun' => $request->year,
-            'lokal_orang' => $request->local_employee,
-            'asing_orang' => $request->foreign_worker,
-            'idcompanytahun' => $id_user . $request->year,
+            'nama_pegawai' => $request->name,
+            'nama_training' => $request->training,
+            'penyelenggara' => $request->organizer,
+            'tanggal_mulai' => $request->start_date,
+            'tanggal_selesai' => $request->due_date,
+            'dalam_luar' => $request->inside_outside,
+            'tempat_pelatihan' => $request->place_of_training,
+            'id_mst_country' => $request->country,
+            'id_mst_city' => $request->city,
+            'lisensi_nafed' => $request->lisenced_dgned,
         ]);
-        return redirect('eksportir/labor');
+        return redirect('eksportir/training');
     }
 
     public function datanya()
     {
 //        dd("masuk gan");
-        $user = DB::table('itdp_eks_labor')
-            ->where('itdp_eks_labor.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
+        $user = DB::table('itdp_eks_training')
+            ->where('itdp_eks_training.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('labor.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                <a href="' . route('training.vieweksportir', $mjl->id) . '" class="btn btn-sm btn-info">
                     <i class="fa fa-search text-white"></i> View
                 </a>
-                <a href="' . route('labor.detail', $mjl->id) . '" class="btn btn-sm btn-success">
+                <a href="' . route('training.detail', $mjl->id) . '" class="btn btn-sm btn-success">
                     <i class="fa fa-edit text-white"></i> Edit
                 </a>
-                <a href="' . route('labor.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
+                <a href="' . route('training.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash text-white"></i> Delete
                 </a>
                 </center>
@@ -76,49 +83,60 @@ class TrainingController extends Controller
     public function edit($id)
     {
         $ldate = date('Y');
-        $pageTitle = 'Detail Labor';
-        $url = '/eksportir/labor_update';
+        $pageTitle = 'Detail Training';
+        $url = '/eksportir/training_update';
+        $country = DB::table('mst_country')->get();
+        $city = DB::table('mst_city')->get();
         $years = [];
         for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
-        $data = DB::table('itdp_eks_labor')
+        $data = DB::table('itdp_eks_training')
             ->where('id', '=', $id)
             ->get();
 //        dd($data);
-        return view('eksportir.labor.edit', compact('pageTitle', 'data', 'url', 'years'));
+        return view('eksportir.training.edit', compact('pageTitle', 'data', 'url', 'years', 'country', 'city'));
     }
 
     public function view($id)
     {
+//        dd($id);
         $ldate = date('Y');
-        $pageTitle = 'View Detail Labor';
+        $pageTitle = 'View Detail Training';
+        $country = DB::table('mst_country')->get();
+        $city = DB::table('mst_city')->get();
         $years = [];
         for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
-        $data = DB::table('itdp_eks_labor')
+        $data = DB::table('itdp_eks_training')
             ->where('id', '=', $id)
             ->get();
-        return view('eksportir.labor.view', compact('pageTitle', 'data', 'years'));
+        return view('eksportir.training.view', compact('pageTitle', 'data', 'years', 'country', 'city'));
     }
 
     public function delete($id)
     {
 //        dd($id);
-        DB::table('itdp_eks_labor')->where('id', $id)
+        DB::table('itdp_eks_training')->where('id', $id)
             ->delete();
-        return redirect('eksportir/labor');
+        return redirect('eksportir/training');
     }
 
     public function update(Request $request)
     {
 //        dd($request);
         $id_user = Auth::guard('eksmp')->user()->id_profil;
-        DB::table('itdp_eks_labor')->where('id', $request->id_sales)
+        DB::table('itdp_eks_training')->where('id', $request->id_sales)
             ->update([
                 'id_itdp_profil_eks' => $id_user,
-                'tahun' => $request->year,
-                'lokal_orang' => $request->local_employee,
-                'asing_orang' => $request->foreign_worker,
-                'idcompanytahun' => $id_user . $request->year,
+                'nama_pegawai' => $request->name,
+                'nama_training' => $request->training,
+                'penyelenggara' => $request->organizer,
+                'tanggal_mulai' => $request->start_date,
+                'tanggal_selesai' => $request->due_date,
+                'dalam_luar' => $request->inside_outside,
+                'tempat_pelatihan' => $request->place_of_training,
+                'id_mst_country' => $request->country,
+                'id_mst_city' => $request->city,
+                'lisensi_nafed' => $request->lisenced_dgned,
             ]);
-        return redirect('eksportir/labor');
+        return redirect('eksportir/training');
     }
 }

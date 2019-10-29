@@ -19,7 +19,6 @@
           <div class="col-md-14">
             <div class="table-responsive">
               <h4>View Training</h4><hr>
-              <a href="{{url('training')}}" class="btn btn-danger"><span class="fa fa-arrow-left"></span> Back</a><br><br>
               <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable">
                 <thead class="text-white" style="background-color: #1089ff;">
                   <tr>

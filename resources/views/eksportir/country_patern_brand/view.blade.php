@@ -35,7 +35,7 @@
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Month</label>
-                                <select disabled class="form-control select2"  id="bulan" name="bulan">
+                                <select disabled class="form-control select2" id="bulan" name="bulan">
                                     <option value="00">--Select Month--</option>
                                     <option value="01" {{($val->bulan == '01')?'selected':''}}>January</option>
                                     <option value="02" {{($val->bulan == '02')?'selected':''}}>February</option>
@@ -64,11 +64,10 @@
 
                             </div>
                             <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/country_patern_brand')}}"
-                                   class="btn btn-primary"><i style="color: white"></i>
-                                    Kembali
+                                <a style="color: white" href="{{ URL::previous() }}"
+                                   class="btn btn-success pull-right"><i style="color: white"></i>
+                                    Back
                                 </a>
-
                             </div>
                         </div>
                     </div>
