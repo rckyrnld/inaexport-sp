@@ -400,7 +400,11 @@
                                     <div class="col-md-12">
                                         <div style="float: right;">
                                             <button type="button" class="btn btn-default" onclick="nextTab('descprod', 'infoprod')">Back</button>
-                                            <a class="btn btn-danger" href="{{url('eksportir/product')}}">Cancel</a>
+                                            @if(Auth::user())
+                                                <a class="btn btn-danger" href="{{url('eksportir/product_admin')}}/{{$id_profil}}">Cancel</a>
+                                            @else
+                                                <a class="btn btn-danger" href="{{url('eksportir/product')}}">Cancel</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

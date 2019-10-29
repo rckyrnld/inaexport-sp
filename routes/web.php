@@ -25,10 +25,17 @@ Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
 Route::get('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
 
 Route::namespace('FrontEnd')->group(function () {
+    /* Created by Meidiyanah */
+    //Product
     Route::get('/front_end', 'FrontController@index');
     Route::get('/front_end/all_product', 'FrontController@all_product');
     Route::get('/front_end/category_product/{id}', 'FrontController@product_category');
     Route::get('/front_end/product/{id}', 'FrontController@view_product');
+    //Inquiry Pembeli
+    Route::get('/front_end/inquiry_product/{id}', 'InquiryFrontController@create');
+    Route::post('front_end/inquiry_act/{id}', 'InquiryFrontController@store');
+    Route::get('/front_end/inquiry_list', 'InquiryFrontController@index');
+    Route::get('/front_end/inquiry_getdata', 'InquiryFrontController@datanya')->name('front.datatables.inquiry');
 
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
@@ -498,7 +505,9 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 
     //Meidi
     //Product
+    Route::get('/product_admin/{id}', 'EksProductController@index_admin')->name('eksproduct.index_admin');
     Route::get('/product', 'EksProductController@index')->name('eksproduct.index');
+    Route::get('/product_getdata_admin/{id}', 'EksProductController@datanya_admin')->name('datatables.eksproduct_admin');
     Route::get('/product_getdata', 'EksProductController@datanya')->name('datatables.eksproduct');
     Route::get('/getsub/', 'EksProductController@getSub')->name('eksproduct.getSub');
     Route::get('/tambah_product', 'EksProductController@tambah');
