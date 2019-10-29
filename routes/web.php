@@ -147,65 +147,93 @@ Route::post('/updatepass', 'HomeController@updatepass');
 Route::namespace('Master')->group(function () {
 // Angga Start
     //Master Country
-    Route::get('master-country/', 'MasterCountryController@index')->name('master.country.index');
-    Route::get('master-country/getData/', 'MasterCountryController@getData')->name('master.country.getData');
-    Route::get('master-country/create/', 'MasterCountryController@create')->name('master.country.create');
-    Route::get('master-country/check-kode/', 'MasterCountryController@check')->name('master.country.kode');
-    Route::get('master-country/edit/{id}', 'MasterCountryController@edit')->name('master.country.edit');
-    Route::get('master-country/view/{id}', 'MasterCountryController@view')->name('master.country.view');
-    Route::post('master-country/store/{param}', 'MasterCountryController@store')->name('master.country.store');
-    Route::get('master-country/destroy/{id}', 'MasterCountryController@destroy')->name('master.country.destroy');
-    Route::get('master-country/export/', 'MasterCountryController@export')->name('master.country.export');
+    Route::prefix('master-country')->group(function () {
+        Route::name('master.country.')->group(function () {
+		    Route::get('/', 'MasterCountryController@index')->name('index');
+		    Route::get('/getData/', 'MasterCountryController@getData')->name('getData');
+		    Route::get('/create/', 'MasterCountryController@create')->name('create');
+		    Route::get('/check-kode/', 'MasterCountryController@check')->name('kode');
+		    Route::get('/edit/{id}', 'MasterCountryController@edit')->name('edit');
+		    Route::get('/view/{id}', 'MasterCountryController@view')->name('view');
+		    Route::post('/store/{param}', 'MasterCountryController@store')->name('store');
+		    Route::get('/destroy/{id}', 'MasterCountryController@destroy')->name('destroy');
+    		Route::get('/export/', 'MasterCountryController@export')->name('export');
+        });
+    });
+
     //Master City
-    Route::get('master-city/', 'MasterCityController@index')->name('master.city.index');
-    Route::get('master-city/getData/', 'MasterCityController@getData')->name('master.city.getData');
-    Route::get('master-city/create/', 'MasterCityController@create')->name('master.city.create');
-    Route::get('master-city/edit/{id}', 'MasterCityController@edit')->name('master.city.edit');
-    Route::get('master-city/view/{id}', 'MasterCityController@view')->name('master.city.view');
-    Route::post('master-city/store/{param}', 'MasterCityController@store')->name('master.city.store');
-    Route::get('master-city/destroy/{id}', 'MasterCityController@destroy')->name('master.city.destroy');
-    Route::get('master-city/export/', 'MasterCityController@export')->name('master.city.export');
+    Route::prefix('master-city')->group(function () {
+        Route::name('master.city.')->group(function () {
+		    Route::get('/', 'MasterCityController@index')->name('index');
+		    Route::get('/getData/', 'MasterCityController@getData')->name('getData');
+		    Route::get('/create/', 'MasterCityController@create')->name('create');
+		    Route::get('/edit/{id}', 'MasterCityController@edit')->name('edit');
+		    Route::get('/view/{id}', 'MasterCityController@view')->name('view');
+		    Route::post('/store/{param}', 'MasterCityController@store')->name('store');
+		    Route::get('/destroy/{id}', 'MasterCityController@destroy')->name('destroy');
+		    Route::get('/export/', 'MasterCityController@export')->name('export');
+        });
+    });
+
     //Master Province
-    Route::get('master-province/', 'MasterProvinceController@index')->name('master.province.index');
-    Route::get('master-province/getData/', 'MasterProvinceController@getData')->name('master.province.getData');
-    Route::get('master-province/create/', 'MasterProvinceController@create')->name('master.province.create');
-    Route::get('master-province/check-kode/', 'MasterProvinceController@check')->name('master.province.kode');
-    Route::get('master-province/edit/{id}', 'MasterProvinceController@edit')->name('master.province.edit');
-    Route::get('master-province/view/{id}', 'MasterProvinceController@view')->name('master.province.view');
-    Route::post('master-province/store/{param}', 'MasterProvinceController@store')->name('master.province.store');
-    Route::get('master-province/destroy/{id}', 'MasterProvinceController@destroy')->name('master.province.destroy');
-    Route::get('master-province/export/', 'MasterProvinceController@export')->name('master.province.export');
+    Route::prefix('master-province')->group(function () {
+        Route::name('master.province.')->group(function () {
+		    Route::get('/', 'MasterProvinceController@index')->name('index');
+		    Route::get('/getData/', 'MasterProvinceController@getData')->name('getData');
+		    Route::get('/create/', 'MasterProvinceController@create')->name('create');
+		    Route::get('/check-kode/', 'MasterProvinceController@check')->name('kode');
+		    Route::get('/edit/{id}', 'MasterProvinceController@edit')->name('edit');
+		    Route::get('/view/{id}', 'MasterProvinceController@view')->name('view');
+		    Route::post('/store/{param}', 'MasterProvinceController@store')->name('store');
+		    Route::get('/destroy/{id}', 'MasterProvinceController@destroy')->name('destroy');
+		    Route::get('/export/', 'MasterProvinceController@export')->name('export');
+    	});
+    });
+
     //Master Port
-    Route::get('master-port/', 'MasterPortController@index')->name('master.port.index');
-    Route::get('master-port/getData/', 'MasterPortController@getData')->name('master.port.getData');
-    Route::get('master-port/create/', 'MasterPortController@create')->name('master.port.create');
-    Route::get('master-port/check-kode/', 'MasterPortController@check')->name('master.port.kode');
-    Route::get('master-port/edit/{id}', 'MasterPortController@edit')->name('master.port.edit');
-    Route::get('master-port/view/{id}', 'MasterPortController@view')->name('master.port.view');
-    Route::post('master-port/store/{param}', 'MasterPortController@store')->name('master.port.store');
-    Route::get('master-port/destroy/{id}', 'MasterPortController@destroy')->name('master.port.destroy');
-    Route::get('master-port/export/', 'MasterPortController@export')->name('master.port.export');
+    Route::prefix('master-port')->group(function () {
+        Route::name('master.port.')->group(function () {
+		    Route::get('/', 'MasterPortController@index')->name('index');
+		    Route::get('/getData/', 'MasterPortController@getData')->name('getData');
+		    Route::get('/create/', 'MasterPortController@create')->name('create');
+		    Route::get('/check-kode/', 'MasterPortController@check')->name('kode');
+		    Route::get('/edit/{id}', 'MasterPortController@edit')->name('edit');
+		    Route::get('/view/{id}', 'MasterPortController@view')->name('view');
+		    Route::post('/store/{param}', 'MasterPortController@store')->name('store');
+		    Route::get('/destroy/{id}', 'MasterPortController@destroy')->name('destroy');
+		    Route::get('/export/', 'MasterPortController@export')->name('export');
+    	});
+    });
 // Angga End
 });
 
 Route::namespace('Management')->group(function () {
 // Angga Start
     //Management Category Product
-    Route::get('management-category-product/', 'CategoryProductController@index')->name('management.category-product.index');
-    Route::get('management-category-product/getData/', 'CategoryProductController@getData')->name('management.category-product.getData');
-    Route::get('management-category-product/create/', 'CategoryProductController@create')->name('management.category-product.create');
-    Route::get('management-category-product/edit/{id}', 'CategoryProductController@edit')->name('management.category-product.edit');
-    Route::get('management-category-product/view/{id}', 'CategoryProductController@view')->name('management.category-product.view');
-    Route::get('management-category-product/level_2/', 'CategoryProductController@level_2')->name('management.category-product.level2');
-    Route::post('management-category-product/store/{param}', 'CategoryProductController@store')->name('management.category-product.store');
-    Route::get('management-category-product/destroy/{id}', 'CategoryProductController@destroy')->name('management.category-product.destroy');
-    //Management Data Contact Us
-    Route::get('management-contact-us/', 'DataContactUsController@index')->name('management.contactus.index');
-    Route::get('management-contact-us/getData/', 'DataContactUsController@getData')->name('management.contactus.getData');
-    Route::get('management-contact-us/view/{id}', 'DataContactUsController@view')->name('management.contactus.view');
-    Route::get('management-contact-us/create/', 'DataContactUsController@create')->name('management.contactus.create');
-    Route::get('management-contact-us/destroy/{id}', 'DataContactUsController@destroy')->name('management.contactus.destroy');
-    Route::post('contact-us/send/', 'DataContactUsController@store')->name('management.contactus.store');
+	Route::prefix('management/category-product')->group(function () {
+        Route::name('management.category-product.')->group(function () {
+		    Route::get('/', 'CategoryProductController@index')->name('index');
+		    Route::get('/getData/', 'CategoryProductController@getData')->name('getData');
+		    Route::get('/create/', 'CategoryProductController@create')->name('create');
+		    Route::get('/edit/{id}', 'CategoryProductController@edit')->name('edit');
+		    Route::get('/view/{id}', 'CategoryProductController@view')->name('view');
+		    Route::get('/level_2/', 'CategoryProductController@level_2')->name('level2');
+		    Route::post('/store/{param}', 'CategoryProductController@store')->name('store');
+		    Route::get('/destroy/{id}', 'CategoryProductController@destroy')->name('destroy');
+        });
+    });
+
+    //Management Contact Us
+    Route::prefix('management/contact-us')->group(function () {
+        Route::name('management.contact-us.')->group(function () {
+		    Route::get('/', 'DataContactUsController@index')->name('index');
+		    Route::get('/getData/', 'DataContactUsController@getData')->name('getData');
+		    Route::get('/view/{id}', 'DataContactUsController@view')->name('view');
+		    Route::get('/create/', 'DataContactUsController@create')->name('create');
+		    Route::get('/destroy/{id}', 'DataContactUsController@destroy')->name('destroy');
+		    Route::post('/send/', 'DataContactUsController@store')->name('store');
+        });
+    });
 // Angga End
 });
 

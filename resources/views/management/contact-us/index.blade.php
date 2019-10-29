@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="box-body bg-light">
-                	<a id="tambah" href="{{route('management.contactus.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
+                	<a id="tambah" href="{{route('management.contact-us.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
                     <div class="col-md-14"><br>
 		          	 <div class="table-responsive">
 					    <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable">
@@ -44,7 +44,7 @@
         $('#table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('management.contactus.getData') }}",
+            ajax: "{{ route('management.contact-us.getData') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'fullname', name: 'fullname'},
