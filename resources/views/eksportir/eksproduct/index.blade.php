@@ -17,7 +17,6 @@
                     <div class="col-md-14">
                         <br>
                         <div class="table-responsive">
-
                             <table id="tablebrands" class="table  table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>
