@@ -430,6 +430,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/labor_delete/{id}', 'LaborController@delete')->name('labor.delete');
     Route::post('/labor_update', 'LaborController@update');
 
+    //ADMIN
+    Route::get('/labor_admin/{id}', 'LaborController@indexadmin');
+    Route::get('/labor_getdata_admin/{id}', 'LaborController@datanyaadmin');
+
     //consultan
     Route::get('/consultan', 'ConsultanController@index')->name('consultan.index');
     Route::get('/tambah_consultan', 'ConsultanController@tambah');
@@ -448,11 +452,11 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/training', 'TrainingController@index')->name('training.index');
     Route::get('/tambah_training', 'TrainingController@tambah');
     Route::post('/training_save', 'TrainingController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::get('/training_getdata', 'TrainingController@datanya')->name('datatables.training');
+    Route::get('/training_edit/{id}', 'TrainingController@edit')->name('training.detail');
+    Route::get('/training_view/{id}', 'TrainingController@view')->name('training.vieweksportir');
+    Route::get('/training_delete/{id}', 'TrainingController@delete')->name('training.delete');
+    Route::post('/training_update', 'TrainingController@update');
 
     //tax
     Route::get('/taxes', 'TaxesController@index')->name('taxes.index');

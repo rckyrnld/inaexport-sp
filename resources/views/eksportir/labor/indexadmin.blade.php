@@ -6,14 +6,10 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Data Training</h5>
+                    <h5><i></i> Data Labor</h5>
                 </div>
 
                 <div class="box-body bg-light">
-                    <a class="btn" href="{{url('/eksportir/tambah_training')}}"
-                       style="background-color: #1089ff; color: white;"><i
-                                class="fa fa-plus-circle"></i>
-                        Add</a>
                     <div class="col-md-14">
                         <br>
                         <div class="table-responsive">
@@ -23,16 +19,13 @@
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Training</center>
+                                        <center>Year</center>
                                     </th>
                                     <th>
-                                        <center>Organizer</center>
+                                        <center>Local Employe</center>
                                     </th>
                                     <th>
-                                        <center>Start Date</center>
-                                    </th>
-                                    <th>
-                                        <center>Due Date</center>
+                                        <center>Foreign Worker</center>
                                     </th>
                                     <th>
                                         <center>Action</center>
@@ -58,13 +51,12 @@
         $('#tableexdes').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('datatables.training') }}",
+            ajax: "{{ url('/eksportir/labor_getdata_admin/'.$id) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'nama_training', name: 'nama_training'},
-                {data: 'penyelenggara', name: 'penyelenggara'},
-                {data: 'tanggal_mulai', name: 'tanggal_mulai'},
-                {data: 'tanggal_selesai', name: 'tanggal_selesai'},
+                {data: 'tahun', name: 'tahun'},
+                {data: 'lokal_orang', name: 'lokal_orang'},
+                {data: 'asing_orang', name: 'asing_orang'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });

@@ -10,29 +10,104 @@
                         <div class="box-body">
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-                                    <label>Year</label>
-                                    <select class="atc form-control select2" required id="year"
-                                            name="year">
-                                        <option value="">- Select Years -</option>
-                                        @foreach($years as $sa)
-                                            <option value="{{$sa}}" {{($val->tahun == $sa)?'selected':''}} >{{$sa}}</option>
-                                        @endforeach
-                                    </select>
+                                    <label>Name</label>
+                                    <input type="text"
+                                           class="form-control" value="{{$val->nama_pegawai}}" name="name">
+                                    {{--                                <select class="atc form-control select2" required id="year"--}}
+                                    {{--                                        name="year">--}}
+                                    {{--                                    <option value="">- Select Years -</option>--}}
+                                    {{--                                    @foreach($years as $sa)--}}
+                                    {{--                                        <option value="{{$sa}}">{{$sa}}</option>--}}
+                                    {{--                                    @endforeach--}}
+                                    {{--                                </select>--}}
                                 </div>
 
                                 <div class="form-group col-sm-6">
-                                    <label>Local Employee</label>
-                                    <input type="text" value="{{$val->lokal_orang}}"
-                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                           class="form-control" name="local_employee">
+                                    <label>Training</label>
+                                    <input value="{{$val->nama_training}}" type="text"
+                                           class="form-control" name="training">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-                                    <label>Foreign Worker</label>
-                                    <input type="text" value="{{$val->asing_orang}}"
-                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                           class="form-control" name="foreign_worker">
+                                    <label>Start Date</label>
+                                    <input value="{{$val->tanggal_mulai}}" type="date"
+                                           class="form-control" name="start_date">
+
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label>Due Date</label>
+                                    <input value="{{$val->tanggal_selesai}}" type="date"
+                                           class="form-control" name="due_date">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label>Organizer</label>
+                                    <input value="{{$val->penyelenggara}}" type="text"
+                                           class="form-control" name="organizer">
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label>Inside Outside</label>
+                                    <select class="atc form-control select2" required id="inside_outside"
+                                            name="inside_outside">
+                                        <option value="">- Select Status -</option>
+                                        <option value="inside" {{($val->dalam_luar == 'i')?'selected':''}}> Inside </option>
+                                        <option value="outside" {{($val->dalam_luar == 'o')?'selected':''}}> Outside </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label>Lisenced DGNED</label>
+                                    <input value="{{$val->lisensi_nafed}}" type="text"
+                                           class="form-control" name="lisenced_dgned">
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label>Country</label>
+                                    <select class="atc form-control select2" required id="country"
+                                            name="country">
+                                        <option value="">- Pilih Country -</option>
+                                        @foreach($country as $sa)
+                                            <option value="{{$sa->id}}" {{($val->id_mst_country == $sa->id)?'selected':''}}>{{$sa->country}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label>Place Of Training</label>
+                                    <input value="{{$val->tempat_pelatihan}}" type="text"
+                                           class="form-control" name="place_of_training">
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label>City</label>
+                                    <select class="atc form-control select2" required id="city"
+                                            name="city">
+                                        <option value="">- Select City -</option>
+                                        @foreach($city as $sab)
+                                            <option value="{{$sab->id}}" {{($val->id_mst_city == $sab->id)?'selected':''}}>{{$sab->city}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+
+                                </div>
+
+                                <div class="form-group col-sm-6">
+
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+
                                 </div>
 
                                 <div class="form-group col-sm-6">
@@ -46,7 +121,7 @@
                                            id="id_sales">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <a style="color: white" href="{{url('/eksportir/labor')}}"
+                                    <a style="color: white" href="{{url('/eksportir/training')}}"
                                        class="btn btn-primary"><i style="color: white"></i>
                                         Back
                                     </a>
