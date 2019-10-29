@@ -34,6 +34,11 @@
                                 </thead>
 
                             </table>
+                            <br>
+                            <a style="color: white" href="{{ URL::previous() }}"
+                               class="btn btn-success pull-right"><i style="color: white"></i>
+                                Back
+                            </a>
                         </div>
                     </div>
                 </div>
