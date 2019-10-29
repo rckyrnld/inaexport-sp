@@ -1,0 +1,1239 @@
+{
+	"info": {
+		"_postman_id": "36312b1f-7c50-4df0-ac0d-f66b70c6137d",
+		"name": "kemendag_api_new",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:80/kemendag/public/api/user-login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "alkafia@yahoo.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/user-login",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"user-login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/admin-login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "admin@admin.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/admin-login",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"admin-login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/browseProduk",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2tlbWVuZGFnXC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE1NzE4MDIyODMsImV4cCI6MTU3MTgwNTg4MywibmJmIjoxNTcxODAyMjgzLCJqdGkiOiJtd2ZWZlFNWDJ0NmtwM0o5Iiwic3ViIjozMDAsInBydiI6IjEyYWJhZTFiMmRiZjE2Y2QyNDMwYWI5ZDk0MmFiYWViYzY3M2IwYWYifQ.DtINRreJmVeWk0n1x6kXf49cuRyLLOfS0-k1nCRrlXM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_user",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/browseProduk",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"browseProduk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/getProdukList",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2tlbWVuZGFnXC9wdWJsaWNcL2FwaVwvdXNlci1sb2dpbiIsImlhdCI6MTU3MjEzNTA2OCwiZXhwIjoxNTcyMTM4NjY4LCJuYmYiOjE1NzIxMzUwNjgsImp0aSI6ImFxZGdRVWZvelJzZW5BSWIiLCJzdWIiOjMwMCwicHJ2IjoiNjM0ODY0ZGVmMGQyOWE2MDE5YzVhZTFmZjY5OGYwZTRkN2I1MmZhYyJ9.MsscmnTHjZPAI_d8QgShBUDvh8u_ziLovZwPnB7ViKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_user",
+							"value": "300",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/getProdukList",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"getProdukList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/insertProduk",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2tlbWVuZGFnXC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE1NzE2NDc5NjYsImV4cCI6MTU3MTY1MTU2NiwibmJmIjoxNTcxNjQ3OTY2LCJqdGkiOiJQSlJqRDJ6cGxOazhHa2Q2Iiwic3ViIjoxLCJwcnYiOiIxMmFiYWUxYjJkYmYxNmNkMjQzMGFiOWQ5NDJhYmFlYmM2NzNiMGFmIn0.4nCA-N5qg-mOfQ3h_Smp5BMMC_fetx4nP7LBeEEDDlw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image_1",
+							"value": "",
+							"type": "file"
+						},
+						{
+							"key": "image_2",
+							"value": "",
+							"type": "file"
+						},
+						{
+							"key": "image_3",
+							"value": "",
+							"type": "file"
+						},
+						{
+							"key": "image_4",
+							"value": "",
+							"type": "file"
+						},
+						{
+							"key": "id",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_role",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_profil",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_csc_product",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_csc_product_level1",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_csc_product_level2",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "prodname_en",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "prodname_in",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "prodname_chn",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "code_",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "color_en",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "color_in",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "color_chn",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "size_en",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "size_in",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "size_chn",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "raw_material_en",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "raw_material_in",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "raw_material_chn",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "capacity",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "price_usd",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "minimum_order",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "product_description_en",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "product_description_in",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "product_description_chn",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/insertProduk",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"insertProduk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/updateProduk",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2tlbWVuZGFnXC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE1NzE2NDc5NjYsImV4cCI6MTU3MTY1MTU2NiwibmJmIjoxNTcxNjQ3OTY2LCJqdGkiOiJQSlJqRDJ6cGxOazhHa2Q2Iiwic3ViIjoxLCJwcnYiOiIxMmFiYWUxYjJkYmYxNmNkMjQzMGFiOWQ5NDJhYmFlYmM2NzNiMGFmIn0.4nCA-N5qg-mOfQ3h_Smp5BMMC_fetx4nP7LBeEEDDlw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image_1",
+							"value": "",
+							"type": "file"
+						},
+						{
+							"key": "image_2",
+							"value": "",
+							"type": "file"
+						},
+						{
+							"key": "image_3",
+							"value": "",
+							"type": "file"
+						},
+						{
+							"key": "image_4",
+							"value": "",
+							"type": "file"
+						},
+						{
+							"key": "id",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_role",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_profil",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_csc_product",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_csc_product_level1",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_csc_product_level2",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "prodname_en",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "prodname_in",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "prodname_chn",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "code_",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "color_en",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "color_in",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "color_chn",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "size_en",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "size_in",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "size_chn",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "raw_material_en",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "raw_material_in",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "raw_material_chn",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "capacity",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "price_usd",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "minimum_order",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "product_description_en",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "product_description_in",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "product_description_chn",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_product",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/updateProduk",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"updateProduk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/deleteProduk",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2tlbWVuZGFnXC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE1NzE2NDc5NjYsImV4cCI6MTU3MTY1MTU2NiwibmJmIjoxNTcxNjQ3OTY2LCJqdGkiOiJQSlJqRDJ6cGxOazhHa2Q2Iiwic3ViIjoxLCJwcnYiOiIxMmFiYWUxYjJkYmYxNmNkMjQzMGFiOWQ5NDJhYmFlYmM2NzNiMGFmIn0.4nCA-N5qg-mOfQ3h_Smp5BMMC_fetx4nP7LBeEEDDlw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_product",
+							"value": "4145",
+							"type": "text"
+						},
+						{
+							"key": "id_role",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/deleteProduk",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"deleteProduk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/submitVerifikasiEksportir",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2tlbWVuZGFnXC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE1NzE2NDc5NjYsImV4cCI6MTU3MTY1MTU2NiwibmJmIjoxNTcxNjQ3OTY2LCJqdGkiOiJQSlJqRDJ6cGxOazhHa2Q2Iiwic3ViIjoxLCJwcnYiOiIxMmFiYWUxYjJkYmYxNmNkMjQzMGFiOWQ5NDJhYmFlYmM2NzNiMGFmIn0.4nCA-N5qg-mOfQ3h_Smp5BMMC_fetx4nP7LBeEEDDlw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_role",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_user",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "idu",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "staim",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "addres",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "province",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "postcode",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "fax",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "website",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_user_b",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "npwp",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "tanda_daftar",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "siup",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "situ",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "scoope",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "tob",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "employee",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "foto_profil",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/submitVerifikasiEksportir",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"submitVerifikasiEksportir"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/getDetailVerifikasiEksportir",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2tlbWVuZGFnXC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE1NzE2NDc5NjYsImV4cCI6MTU3MTY1MTU2NiwibmJmIjoxNTcxNjQ3OTY2LCJqdGkiOiJQSlJqRDJ6cGxOazhHa2Q2Iiwic3ViIjoxLCJwcnYiOiIxMmFiYWUxYjJkYmYxNmNkMjQzMGFiOWQ5NDJhYmFlYmM2NzNiMGFmIn0.4nCA-N5qg-mOfQ3h_Smp5BMMC_fetx4nP7LBeEEDDlw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/getDetailVerifikasiEksportir",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"getDetailVerifikasiEksportir"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/getDetailVerifikasiImportir",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2tlbWVuZGFnXC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE1NzE2NDc5NjYsImV4cCI6MTU3MTY1MTU2NiwibmJmIjoxNTcxNjQ3OTY2LCJqdGkiOiJQSlJqRDJ6cGxOazhHa2Q2Iiwic3ViIjoxLCJwcnYiOiIxMmFiYWUxYjJkYmYxNmNkMjQzMGFiOWQ5NDJhYmFlYmM2NzNiMGFmIn0.4nCA-N5qg-mOfQ3h_Smp5BMMC_fetx4nP7LBeEEDDlw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/getDetailVerifikasiImportir",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"getDetailVerifikasiImportir"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/submitVerifikasiImportir",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2tlbWVuZGFnXC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE1NzE2NDc5NjYsImV4cCI6MTU3MTY1MTU2NiwibmJmIjoxNTcxNjQ3OTY2LCJqdGkiOiJQSlJqRDJ6cGxOazhHa2Q2Iiwic3ViIjoxLCJwcnYiOiIxMmFiYWUxYjJkYmYxNmNkMjQzMGFiOWQ5NDJhYmFlYmM2NzNiMGFmIn0.4nCA-N5qg-mOfQ3h_Smp5BMMC_fetx4nP7LBeEEDDlw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_role",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_user",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "idu",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "staim",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "addres",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "province",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "postcode",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "fax",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "website",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "id_user_b",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "npwp",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "tanda_daftar",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "siup",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "situ",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "scoope",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "tob",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "employee",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/submitVerifikasiImportir",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"submitVerifikasiImportir"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/getRekapAnggota",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2tlbWVuZGFnXC9wdWJsaWNcL2FwaVwvYWRtaW4tbG9naW4iLCJpYXQiOjE1NzE4OTA0NDAsImV4cCI6MTU3MTg5NDA0MCwibmJmIjoxNTcxODkwNDQwLCJqdGkiOiIydGFBRjg1UWM0cUJ3NXlNIiwic3ViIjoxLCJwcnYiOiI0Zjk4YjQyZjU0OTgxZTZiOTc4NzNmYWMyZGYwMzViODU3ZDJiYjRmIn0.e0X4M6PCIZv8VYjG27kgtkoN9HdTPKT4OuBJ6cLF-8E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/getRekapAnggota?limit=10&page=1",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"getRekapAnggota"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/contactUs",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "full_name",
+							"value": "deswin simanjuntak",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "deswin@jalah.com",
+							"type": "text"
+						},
+						{
+							"key": "subject",
+							"value": "DESWIN HD",
+							"type": "text"
+						},
+						{
+							"key": "message",
+							"value": "Hai semua terimakasih telah memberikan waktu untuk menemani, Malam Jumat lo....",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/contactUs",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"contactUs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/browseProdukFe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/browseProdukFe",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"browseProdukFe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/browseProdukFeByKategori",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_kategori",
+							"value": "134",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/browseProdukFeByKategori",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"browseProdukFeByKategori"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/getKategori",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/getKategori",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"getKategori"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/detailProdukFe",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "490",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/detailProdukFe",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"detailProdukFe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:80/kemendag/public/api/detailProdukById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2tlbWVuZGFnXC9wdWJsaWNcL2FwaVwvdXNlci1sb2dpbiIsImlhdCI6MTU3MjEzNTA2OCwiZXhwIjoxNTcyMTM4NjY4LCJuYmYiOjE1NzIxMzUwNjgsImp0aSI6ImFxZGdRVWZvelJzZW5BSWIiLCJzdWIiOjMwMCwicHJ2IjoiNjM0ODY0ZGVmMGQyOWE2MDE5YzVhZTFmZjY5OGYwZTRkN2I1MmZhYyJ9.MsscmnTHjZPAI_d8QgShBUDvh8u_ziLovZwPnB7ViKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "490",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:80/kemendag/public/api/detailProdukById",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						"kemendag",
+						"public",
+						"api",
+						"detailProdukById"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
