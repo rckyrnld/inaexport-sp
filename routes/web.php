@@ -509,6 +509,21 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/product_delete/{id}', 'EksProductController@delete')->name('eksproduct.delete');
     Route::get('/verifikasi_product/{id}', 'EksProductController@verifikasi')->name('eksproduct.verifikasi');
     Route::post('/actver_product/{id}', 'EksProductController@verifikasi_act')->name('eksproduct.verifikasi_act');
+
+    //Angga
+    //Service
+    Route::prefix('service')->group(function () {
+        Route::name('service.')->group(function () {
+            Route::get('/', 'ServiceController@index')->name('index');
+		    Route::get('/getData/', 'ServiceController@getData')->name('getData');
+		    Route::get('/create/', 'ServiceController@create')->name('create');
+		    Route::get('/edit/{id}', 'ServiceController@edit')->name('edit');
+		    Route::get('/view/{id}', 'ServiceController@view')->name('view');
+		    Route::post('/store/{param}', 'ServiceController@store')->name('store');
+		    Route::get('/destroy/{id}', 'ServiceController@destroy')->name('destroy');
+		    Route::get('/export/', 'ServiceController@export')->name('export');
+        });
+    });
 });
 
 //////////////////////////////////////////ILYAS END////////////////////////////////////////////////////////////////////////////////
