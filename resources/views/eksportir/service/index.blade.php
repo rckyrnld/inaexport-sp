@@ -18,7 +18,6 @@
 
                 <div class="box-body bg-light">
                 	<a id="tambah" href="{{route('service.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
-
                     <div class="col-md-14"><br>
 		          	 <div class="table-responsive">
 					    <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable">
@@ -45,6 +44,7 @@
 <script type="text/javascript">
 	$(document).ready(function () {
         $('#table').DataTable({
+            "ordering": false,
             processing: true,
             serverSide: true,
             ajax: "{{ route('service.getData') }}",
@@ -59,4 +59,5 @@
             ]
         });
     });
+    
 </script>

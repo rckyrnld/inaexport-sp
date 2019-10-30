@@ -287,19 +287,19 @@
             var link = CKEDITOR.instances.link.getData();
             
             if( $('#name_en').val() == ''){
-                alert('Please input Name ( English )');
+                alert('Name ( EN ) is empty, please fill in!');
                 return false;
             } else if(checked < 3) {
-                alert("You must check at least one Field of Work");
+                alert("You must check at least one Field of Work!");
                 return false;
             } else if( $('#skill_en').val() == ''){
-                alert('Please input Skills ( English )');
+                alert('Skills ( EN ) is empty, please fill in!');
                 return false;
             } else if( experience == ''){
-                alert('Please input Experiences ( English )');
+                alert('Experiences ( EN ) is empty, please fill in!');
                 return false;
             } else if( link == ''){
-                alert('Please input Links');
+                alert('Links is empty, please fill in!');
                 return false;
             } else {
                 $('#formnya').submit();

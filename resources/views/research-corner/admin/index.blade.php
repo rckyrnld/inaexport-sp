@@ -14,6 +14,9 @@
   .modal-body{ height: 300px; }
   .modal-content { border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; overflow: hidden;}
   .modal-footer { background-color: #84afd4; color: white; font-size: 20px; text-align: center;}
+  #Tablemodal td {
+    text-align: left !important;
+  }
 </style>
 <div class="padding">
     <div class="row">
@@ -28,7 +31,7 @@
                 	<a id="tambah" href="{{route('admin.research-corner.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
                     <div class="col-md-14"><br>
 		          	 <div class="table-responsive">
-					    <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable" style="text-align: center;">
+					    <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable">
 					      <thead class="text-white" style="background-color: #1089ff;">
 					          <tr>
 					              <th width="7%">No</th>
@@ -66,7 +69,7 @@
                 <div class="modal-body">
                 	{!! Form::open(['url' => route('admin.research-corner.broadcast'), 'class' => 'form-horizontal', 'files' => true]) !!}
                 		<input type="hidden" name="research" id="research">
-                		<table width="100%" style="font-size: 15px;">
+          		<table width="100%" style="font-size: 15px;" id="Tablemodal">
 						    <tr>
 						      <td width="30%" style="padding-left: 20px; padding-top: 33px; ">Title Research Corner</td>
 						      <td width="70%" style="padding-top: 40px;" colspan="2"><input type="text" readonly id="title_en" name="title_en" class="form-control" style="width: 90% !important;"></td>

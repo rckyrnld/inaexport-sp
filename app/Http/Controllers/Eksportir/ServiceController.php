@@ -70,7 +70,7 @@ class ServiceController extends Controller
                     <div class="btn-group">
                       <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
                       <a href="'.route('service.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
-                      <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('master.city.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+                      <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('service.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
                     </div>
                   </center>';
             })
@@ -118,7 +118,10 @@ class ServiceController extends Controller
     public function store(Request $req)
     {
       $id_profil = Auth::guard('eksmp')->user()->id_profil;
+      $id_user = Auth::guard('eksmp')->user()->id;
       $id = DB::table('itdp_service_eks')->orderBy('id','desc')->first();
+      $date =  date('Y-m-d H:i:s');
+
       if($id){ $id = $id->id+1; }else{ $id = 1; }
       $bidang_en = '';
       $bidang_ind = '';
@@ -157,8 +160,26 @@ class ServiceController extends Controller
         'pengalaman_chn' => $req->experience_chn,
         'link' => $req->link,
         'status' => $req->status,
-        'created_at' => date('Y-m-d H:i:s')
+        'created_at' => $date
       ]);
+
+      if($req->status == 1){
+        $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+          foreach ($admin as $adm) {
+              $notif = DB::table('notif')->insert([
+                  'dari_nama' => getCompanyName($id_user),
+                  'dari_id' => $id_user,
+                  'untuk_nama' => $adm->name,
+                  'untuk_id' => $adm->id,
+                  'keterangan' => 'New Service Published By '.getCompanyName($id_user).' with Title  "'.$req->name_en.'"',
+                  'url_terkait' => 'eksportir/service/verifikasi',
+                  'status_baca' => 0,
+                  'waktu' => $date,
+                  'id_terkait' => $id,
+                  'to_role' => 1
+              ]);
+          }
+      }
 
       if($data){
          Session::flash('success','Success Store Data');
@@ -171,6 +192,8 @@ class ServiceController extends Controller
 
     public function update(Request $req, $id)
     {
+      $id_user = Auth::guard('eksmp')->user()->id;
+      $date = date('Y-m-d H:i:s');
       $bidang_en = '';
       $bidang_ind = '';
       $bidang_chn = '';
@@ -191,7 +214,7 @@ class ServiceController extends Controller
         }
       }
 
-      $data = DB::table('itdp_service_eks')->update([
+      $data = DB::table('itdp_service_eks')->where('id', $id)->update([
         'nama_en' => $req->name_en,
         'nama_ind' => $req->name_ind,
         'nama_chn' => $req->name_chn,
@@ -206,14 +229,50 @@ class ServiceController extends Controller
         'pengalaman_chn' => $req->experience_chn,
         'link' => $req->link,
         'status' => $req->status,
-        'updated_at' => date('Y-m-d H:i:s')
+        'updated_at' => $date
       ]);
+
+      if($req->status == 1){
+        $cek_notif = DB::table('notif')->where('url_terkait', 'eksportir/service/verifikasi')
+        ->where('id_terkait', $id)
+        ->where('dari_id', $id_user)
+        ->first();
+        if(!$cek_notif){
+          $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+          foreach ($admin as $adm) {
+              $notif = DB::table('notif')->insert([
+                  'dari_nama' => getCompanyName($id_user),
+                  'dari_id' => $id_user,
+                  'untuk_nama' => $adm->name,
+                  'untuk_id' => $adm->id,
+                  'keterangan' => 'New Service Published By '.getCompanyName($id_user).' with Title  "'.$req->name_en.'"',
+                  'url_terkait' => 'eksportir/service/verifikasi',
+                  'status_baca' => 0,
+                  'waktu' => $date,
+                  'id_terkait' => $id,
+                  'to_role' => 1
+              ]);
+          }
+        }
+      }
 
       if($data){
          Session::flash('success','Success Store Data');
          return redirect('/eksportir/service/');
        }else{
          Session::flash('failed','Failed Store Data');
+         return redirect('/eksportir/service/');
+       }
+    }
+
+    public function destroy($id)
+    {
+      $data = DB::table('itdp_service_eks')->where('id', $id)->delete();
+      if($data){
+         Session::flash('success','Success Delete Data');
+         return redirect('/eksportir/service/');
+       }else{
+         Session::flash('failed','Failed Delete Data');
          return redirect('/eksportir/service/');
        }
     }

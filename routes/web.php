@@ -542,6 +542,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 		    Route::post('/store/', 'ServiceController@store')->name('store');
 		    Route::post('/update/{id}', 'ServiceController@update')->name('update');
 		    Route::get('/destroy/{id}', 'ServiceController@destroy')->name('destroy');
+    		Route::get('/verifikasi/{id}', 'ServiceController@verifikasi')->name('verifikasi');
         });
     });
 });
