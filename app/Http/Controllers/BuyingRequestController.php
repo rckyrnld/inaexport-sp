@@ -84,6 +84,12 @@ class BuyingRequestController extends Controller
 		return view('buying-request.join', compact('id','pageTitle'));
 	}
 	
+	public function br_chat($id)
+    {
+		$pageTitle = "Chat Buying Request Eksportir";
+		return view('buying-request.chat', compact('id','pageTitle'));
+	}
+	
 	public function br_save_join($id)
     {
 		$update = DB::select("update csc_buying_request_join set status_join='1' where id='".$id."' ");

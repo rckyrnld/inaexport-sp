@@ -11,7 +11,7 @@
 
                 <div class="box-body bg-light">
                     <div class="col-md-14">
-                        <p><h6><a href="{{url('/eksportir/#/'.$id)}}" style="color: blue">Products</a></h6></p>
+                        <p><h6><a href="{{url('/eksportir/product_admin/'.$id)}}" style="color: blue">Products</a></h6></p>
                         <p><h6><a href="{{url('/eksportir/annual_sales_admin/'.$id)}}" style="color: blue">Annual
                                 Sales</a></h6></p>
                         <p><h6><a href="{{url('/eksportir/brand_admin/'.$id)}}" style="color: blue">Brand</a></h6></p>
@@ -28,6 +28,7 @@
                                 utilization</a></h6></p>
                         <p><h6><a href="{{url('/eksportir/rawmaterial_admin/'.$id)}}" style="color: blue">Raw
                                 material</a></h6></p>
+                        <p><h6><a href="{{url('/eksportir/labor_admin/'.$id)}}" style="color: blue">Labor</a>
                         <p><h6><a href="{{url('/eksportir/consultan_admin/'.$id)}}" style="color: blue">Consultation</a>
                         </h6></p>
                         <p><h6><a href="{{url('/eksportir/#/'.$id)}}" style="color: blue">Training</a></h6></p>
