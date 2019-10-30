@@ -493,6 +493,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/training_delete/{id}', 'TrainingController@delete')->name('training.delete');
     Route::post('/training_update', 'TrainingController@update');
 
+    //ADMIN
+    Route::get('/training_admin/{id}', 'TrainingController@indexadmin');
+    Route::get('/training_getdata_admin/{id}', 'TrainingController@datanyaadmin');
+
     //tax
     Route::get('/taxes', 'TaxesController@index')->name('taxes.index');
     Route::get('/tambah_taxes', 'TaxesController@tambah');

@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Data Raw Material</h5>
+                    <h5><i></i> Data Training</h5>
                 </div>
 
                 <div class="box-body bg-light">
@@ -19,16 +19,16 @@
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Year</center>
+                                        <center>Training</center>
                                     </th>
                                     <th>
-                                        <center>From Domestic</center>
+                                        <center>Organizer</center>
                                     </th>
                                     <th>
-                                        <center>Overseas</center>
+                                        <center>Start Date</center>
                                     </th>
                                     <th>
-                                        <center>Value From Domestic</center>
+                                        <center>Due Date</center>
                                     </th>
                                     <th>
                                         <center>Action</center>
@@ -59,13 +59,13 @@
         $('#tableexdes').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ url('eksportir/rawmaterial_getdata_admin/'.$id) }}",
+            ajax: "{{ url('eksportir/training_getdata_admin/'.$id) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'tahun', name: 'tahun'},
-                {data: 'lokal_persen', name: 'lokal_persen'},
-                {data: 'impor_persen', name: 'impor_persen'},
-                {data: 'nilai_impor', name: 'nilai_impor'},
+                {data: 'nama_training', name: 'nama_training'},
+                {data: 'penyelenggara', name: 'penyelenggara'},
+                {data: 'tanggal_mulai', name: 'tanggal_mulai'},
+                {data: 'tanggal_selesai', name: 'tanggal_selesai'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });

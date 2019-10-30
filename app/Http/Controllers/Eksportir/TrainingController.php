@@ -139,4 +139,34 @@ class TrainingController extends Controller
             ]);
         return redirect('eksportir/training');
     }
+
+    public function indexadmin($id)
+    {
+//        dd("mantap");die();
+        $pageTitle = "Training";
+
+        return view('eksportir.training.indexadmin', compact('pageTitle', 'id'));
+    }
+
+    public function datanyaadmin($id)
+    {
+//        dd("masuk gan");
+        $user = DB::table('itdp_eks_training')
+            ->where('itdp_eks_training.id_itdp_profil_eks', '=', $id)
+            ->get();
+//        dd($user);
+        return \Yajra\DataTables\DataTables::of($user)
+            ->addColumn('action', function ($mjl) {
+                return '
+                <center>
+                <a href="' . route('training.vieweksportir', $mjl->id) . '" class="btn btn-sm btn-info">
+                    <i class="fa fa-search text-white"></i> View
+                </a>               
+                </center>
+                ';
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
+    }
 }

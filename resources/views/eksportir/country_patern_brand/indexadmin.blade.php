@@ -38,7 +38,7 @@
 
                             </table>
                             <br>
-                            <a style="color: white" href="{{ URL::previous() }}"
+                            <a style="color: white" href="{{ url('eksportir/listeksportir/'.$id) }}"
                                class="btn btn-success pull-right"><i style="color: white"></i>
                                 Back
                             </a>
