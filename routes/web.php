@@ -22,6 +22,12 @@ Route::get('switch/{locale}', function ($locale) {
     App::setLocale($locale);
 });
 Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
+Route::get('/forget_a', 'RegistrasiController@forget_a');
+Route::get('/gantipass1/{id}', 'RegistrasiController@gantipass1');
+Route::get('/gantipass2/{id}', 'RegistrasiController@gantipass2');
+Route::post('/updatepass1', 'RegistrasiController@updatepass1');
+Route::post('/updatepass2', 'RegistrasiController@updatepass2');
+Route::post('/resetpass', 'RegistrasiController@resetpass');
 Route::get('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
 
 Route::namespace('FrontEnd')->group(function () {
@@ -40,6 +46,8 @@ Route::namespace('FrontEnd')->group(function () {
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
     Route::get('/front_end/tracking', 'FrontController@tracking');
+    Route::get('/front_end/contact-us', 'FrontController@contact_us');
+    Route::post('/contact-us/send', 'FrontController@contact_us_send');
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
 
     /**
@@ -141,6 +149,7 @@ Route::resource('/br_list', 'BuyingRequestController');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
 Route::get('/br_add', 'BuyingRequestController@add');
 Route::get('/br_join/{id}', 'BuyingRequestController@br_join');
+Route::get('/br_chat/{id}', 'BuyingRequestController@br_chat');
 Route::get('/br_save_join/{id}', 'BuyingRequestController@br_save_join');
 Route::get('/ambilt2/{id}', 'BuyingRequestController@ambilt2');
 Route::get('/ambilt3/{id}', 'BuyingRequestController@ambilt3');
@@ -236,9 +245,7 @@ Route::namespace('Management')->group(function () {
 		    Route::get('/', 'DataContactUsController@index')->name('index');
 		    Route::get('/getData/', 'DataContactUsController@getData')->name('getData');
 		    Route::get('/view/{id}', 'DataContactUsController@view')->name('view');
-		    Route::get('/create/', 'DataContactUsController@create')->name('create');
 		    Route::get('/destroy/{id}', 'DataContactUsController@destroy')->name('destroy');
-		    Route::post('/send/', 'DataContactUsController@store')->name('store');
         });
     });
 // Angga End
@@ -536,9 +543,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 		    Route::get('/create/', 'ServiceController@create')->name('create');
 		    Route::get('/edit/{id}', 'ServiceController@edit')->name('edit');
 		    Route::get('/view/{id}', 'ServiceController@view')->name('view');
-		    Route::post('/store/{param}', 'ServiceController@store')->name('store');
+		    Route::post('/store/', 'ServiceController@store')->name('store');
+		    Route::post('/update/{id}', 'ServiceController@update')->name('update');
 		    Route::get('/destroy/{id}', 'ServiceController@destroy')->name('destroy');
-		    Route::get('/export/', 'ServiceController@export')->name('export');
+    		Route::get('/verifikasi/{id}', 'ServiceController@verifikasi')->name('verifikasi');
         });
     });
 });

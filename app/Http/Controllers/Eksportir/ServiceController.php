@@ -22,10 +22,18 @@ class ServiceController extends Controller
     public function index()
     {
         $pageTitle = "Service";
-        if(Auth::guard('eksmp')->user()){
-            return view('eksportir.eksproduct.index', compact('pageTitle'));
-        }else if(Auth::check()){
-            return view('eksportir.eksproduct.index_admin', compact('pageTitle'));
+        if(Auth::guard('eksmp')->user()->id_role == 2){
+            return view('eksportir.service.index', compact('pageTitle'));
+        }else {
+            return redirect('/login');
+        }
+    }
+
+    public function index_admin()
+    {
+        $pageTitle = "Service";
+        if(Auth::user()){
+            return view('eksportir.service.index_admin', compact('pageTitle'));
         } else {
             return redirect('/login');
         }
@@ -34,130 +42,238 @@ class ServiceController extends Controller
     public function getData()
     {
       if(Auth::guard('eksmp')->user()->id_role == 2){
-        $array_kategori = array();
-        $array_research = array();
         $id_profil = Auth::guard('eksmp')->user()->id_profil;
 
-        $kategori = DB::table('csc_product_single')->where('id_itdp_profil_eks', $id_profil)
-          ->select('id_csc_product as kategori', 'id_csc_product_level1 as sub_kategori', 'id_csc_product_level2 as sub_sub_kategori')
-          ->distinct('kategori', 'sub_kategori', 'sub_sub_kategori')->get();
+        $service = DB::table('itdp_service_eks as a')->where('id_itdp_profil_eks', $id_profil)->orderBy('created_at', 'desc')->get();
 
-        foreach ($kategori as $key) {
-          if (!in_array($key->kategori, $array_kategori)){
-              array_push($array_kategori, $key->kategori);
-            }
-          if($key->sub_kategori != null){
-            if (!in_array($key->sub_kategori, $array_kategori)){
-              array_push($array_kategori, $key->sub_kategori);
-            }
-          }
-          if($key->sub_sub_kategori != null){
-            if (!in_array($key->sub_sub_kategori, $array_kategori)){
-              array_push($array_kategori, $key->sub_sub_kategori);
-            }
-          }
-        }
-
-        $tambahan = DB::table('csc_download_research_corner')->where('id_itdp_profil_eks', $id_profil)->get();
-        foreach ($tambahan as $key) {
-          if (!in_array($key->id_research_corner, $array_research)){
-              array_push($array_research, $key->id_research_corner);
-            }
-        }
-
-        $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
-        ->whereIn('a.id_categori_product', $array_kategori)
-        ->orWhereIn('a.id_research_corner', $array_research)
-        ->orderby('b.publish_date', 'desc')
-        ->distinct('a.id_research_corner')
-        ->select('b.*')
-        ->get();
-
-        return \Yajra\DataTables\DataTables::of($research)
+        return \Yajra\DataTables\DataTables::of($service)
             ->addIndexColumn()
-            ->addColumn('country', function ($value) {
-              $data =  DB::table('mst_country')->where('id', $value->id_mst_country)->first();
-              return $data->country;
-            })
-            ->addColumn('type', function ($value) {
-              $data =  DB::table('csc_research_type')->where('id', $value->id_csc_research_type)->first();
-              return $data->nama_en;
-            })
-            ->addColumn('date', function ($data) {
-              return getTanggalIndo(date('Y-m-d', strtotime($data->publish_date))).' ( '.date('H:i', strtotime($data->publish_date)).' )';
+            ->addColumn('status', function ($value) {
+              switch ($value->status) {
+                case 0:
+                    return 'Hide';
+                  break;
+                case 1:
+                    return 'Publish';
+                  break;
+                case 2:
+                    return 'Publish - Accepted';
+                  break;
+                case 3:
+                    return 'Publish - Rejected';
+                  break;
+                }
             })
             ->addColumn('action', function ($data) {
-              $id_profil = Auth::guard('eksmp')->user()->id_profil;
-              $download = DB::table('csc_download_research_corner')
-              ->where('id_research_corner', $data->id)
-              ->where('id_itdp_profil_eks', $id_profil)
-              ->first();
-                  if($download){
-                    return '<center>
-                      <a href="'.route("research-corner.view", $data->id).'" style="width:100px;" class="btn btn-sm btn-info">View</a>
-                      </center>';
-                  } else {
-                    return '<center>
-                      <a href="'.url('/').'/uploads/Research Corner/File/'.$data->exum.'" style="width:100px;" onclick="cek_download('.$data->id.', event, this)" class="btn btn-sm btn-warning text-white">Download</a>&nbsp;&nbsp;
-                      <a href="'.route("research-corner.view", $data->id).'" style="width:100px;" class="btn btn-sm btn-info">View</a>
-                      </center>';
-                  }
+                return '
+                  <center>
+                    <div class="btn-group">
+                      <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+                      <a href="'.route('service.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
+                      <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('service.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+                    </div>
+                  </center>';
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'skill_en', 'pengalaman_en', 'link'])
             ->make(true);
       } else {
-        return redirect('/home');
+        return redirect('/login');
       }
-      
     }
 
-    public function download(Request $req)
+    public function create()
     {
-      if(Auth::guard('eksmp')->user()->id_role == 2){
-        $id_profil = Auth::guard('eksmp')->user()->id_profil;
-        $id_user = Auth::guard('eksmp')->user()->id;
-        $date = date('Y-m-d H:i:s');
-        $checking = DB::table('csc_download_research_corner')->where('id_itdp_profil_eks', $id_profil)->where('id_research_corner', $req->id)->first();
-        if($checking){
-          $hasil = 'positif';
-        } else {
-          $id = DB::table('csc_download_research_corner')->orderby('id', 'desc')->first();
-          if($id){ $id = $id->id+1; }else{ $id=1; }
-          DB::table('csc_download_research_corner')->insert([
-            'id' => $id,
-            'id_itdp_profil_eks' => $id_profil,
-            'id_research_corner' => $req->id,
-            'waktu' => $date
-          ]);
-
-          $notif = DB::table('notif')->where('url_terkait', 'research-corner/read')->where('id_terkait', $req->id)->where('untuk_id', $id_user)->first();
-          if($notif){
-            DB::table('notif')->where('url_terkait', 'research-corner/read')->where('id_terkait', $req->id)->where('untuk_id', $id_user)->update([
-              'status_baca' => 1
-            ]);
-          }
-
-          $before = DB::table('csc_research_corner')->where('id', $req->id)->first();
-          DB::table('csc_research_corner')->where('id', $req->id)->update([
-            'download' => $before->download+1
-          ]);
-
-          $hasil = 'nihil';
+        if(Auth::guard('eksmp')->user()->id_role == 2){
+            $url = '/eksportir/service/store';
+            $pageTitle = 'Service';
+            return view('eksportir.service.create', compact('pageTitle', 'url'));
+        }else{
+            return redirect('/login');
         }
-        echo json_encode($hasil);
-      } else {
-        return redirect('/home');
-      }
     }
 
-    public function read($id)
+    public function view($id)
     {
-      if(Auth::guard('eksmp')->user()->id_role == 2){
-        $pageTitle = "Research Corner";
-        $data = DB::table('csc_research_corner')->where('id', $id)->first();
-        return view('research-corner.eksportir.view',compact('data','pageTitle'));
-      } else {
-        return redirect('/home');
+        if(Auth::guard('eksmp')->user()->id_role == 2){
+            $data = DB::table('itdp_service_eks')->where('id', $id)->first();
+            $pageTitle = 'Service';
+            return view('eksportir.service.view', compact('pageTitle', 'data'));
+        }else{
+            return redirect('/login');
+        }
+    }
+
+    public function edit($id)
+    {
+        if(Auth::guard('eksmp')->user()->id_role == 2){
+            $data = DB::table('itdp_service_eks')->where('id', $id)->first();
+            $url = '/eksportir/service/update/'.$id;
+            $pageTitle = 'Service';
+            return view('eksportir.service.edit', compact('pageTitle', 'url', 'data'));
+        }else{
+            return redirect('/login');
+        }
+    }
+
+    public function store(Request $req)
+    {
+      $id_profil = Auth::guard('eksmp')->user()->id_profil;
+      $id_user = Auth::guard('eksmp')->user()->id;
+      $id = DB::table('itdp_service_eks')->orderBy('id','desc')->first();
+      $date =  date('Y-m-d H:i:s');
+
+      if($id){ $id = $id->id+1; }else{ $id = 1; }
+      $bidang_en = '';
+      $bidang_ind = '';
+      $bidang_chn = '';
+
+      $jumlah_bidang = count($req->bidang_en);
+      for($i = 0; $i < $jumlah_bidang; $i++){
+        if($i === $jumlah_bidang-1){
+          $bidang_en .= $req->bidang_en[$i];
+          $bidang_ind .= $req->bidang_ind[$i];
+          $bidang_chn .= $req->bidang_chn[$i];
+        } else {
+          $bidang_en .= $req->bidang_en[$i];
+          $bidang_en .= ', ';
+          $bidang_ind .= $req->bidang_ind[$i];
+          $bidang_ind .= ', ';
+          $bidang_chn .= $req->bidang_chn[$i];
+          $bidang_chn .= ', ';
+        }
       }
+
+      $data = DB::table('itdp_service_eks')->insert([
+        'id' => $id,
+        'id_itdp_profil_eks' => $id_profil,
+        'nama_en' => $req->name_en,
+        'nama_ind' => $req->name_ind,
+        'nama_chn' => $req->name_chn,
+        'bidang_en' => $bidang_en,
+        'bidang_ind' => $bidang_ind,
+        'bidang_chn' => $bidang_chn,
+        'skill_en' => $req->skill_en,
+        'skill_ind' => $req->skill_ind,
+        'skill_chn' => $req->skill_chn,
+        'pengalaman_en' => $req->experience_en,
+        'pengalaman_ind' => $req->experience_ind,
+        'pengalaman_chn' => $req->experience_chn,
+        'link' => $req->link,
+        'status' => $req->status,
+        'created_at' => $date
+      ]);
+
+      if($req->status == 1){
+        $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+          foreach ($admin as $adm) {
+              $notif = DB::table('notif')->insert([
+                  'dari_nama' => getCompanyName($id_user),
+                  'dari_id' => $id_user,
+                  'untuk_nama' => $adm->name,
+                  'untuk_id' => $adm->id,
+                  'keterangan' => 'New Service Published By '.getCompanyName($id_user).' with Title  "'.$req->name_en.'"',
+                  'url_terkait' => 'eksportir/service/verifikasi',
+                  'status_baca' => 0,
+                  'waktu' => $date,
+                  'id_terkait' => $id,
+                  'to_role' => 1
+              ]);
+          }
+      }
+
+      if($data){
+         Session::flash('success','Success Store Data');
+         return redirect('/eksportir/service/');
+       }else{
+         Session::flash('failed','Failed Store Data');
+         return redirect('/eksportir/service/');
+       }
+    }
+
+    public function update(Request $req, $id)
+    {
+      $id_user = Auth::guard('eksmp')->user()->id;
+      $date = date('Y-m-d H:i:s');
+      $bidang_en = '';
+      $bidang_ind = '';
+      $bidang_chn = '';
+
+      $jumlah_bidang = count($req->bidang_en);
+      for($i = 0; $i < $jumlah_bidang; $i++){
+        if($i === $jumlah_bidang-1){
+          $bidang_en .= $req->bidang_en[$i];
+          $bidang_ind .= $req->bidang_ind[$i];
+          $bidang_chn .= $req->bidang_chn[$i];
+        } else {
+          $bidang_en .= $req->bidang_en[$i];
+          $bidang_en .= ', ';
+          $bidang_ind .= $req->bidang_ind[$i];
+          $bidang_ind .= ', ';
+          $bidang_chn .= $req->bidang_chn[$i];
+          $bidang_chn .= ', ';
+        }
+      }
+
+      $data = DB::table('itdp_service_eks')->where('id', $id)->update([
+        'nama_en' => $req->name_en,
+        'nama_ind' => $req->name_ind,
+        'nama_chn' => $req->name_chn,
+        'bidang_en' => $bidang_en,
+        'bidang_ind' => $bidang_ind,
+        'bidang_chn' => $bidang_chn,
+        'skill_en' => $req->skill_en,
+        'skill_ind' => $req->skill_ind,
+        'skill_chn' => $req->skill_chn,
+        'pengalaman_en' => $req->experience_en,
+        'pengalaman_ind' => $req->experience_ind,
+        'pengalaman_chn' => $req->experience_chn,
+        'link' => $req->link,
+        'status' => $req->status,
+        'updated_at' => $date
+      ]);
+
+      if($req->status == 1){
+        $cek_notif = DB::table('notif')->where('url_terkait', 'eksportir/service/verifikasi')
+        ->where('id_terkait', $id)
+        ->where('dari_id', $id_user)
+        ->first();
+        if(!$cek_notif){
+          $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+          foreach ($admin as $adm) {
+              $notif = DB::table('notif')->insert([
+                  'dari_nama' => getCompanyName($id_user),
+                  'dari_id' => $id_user,
+                  'untuk_nama' => $adm->name,
+                  'untuk_id' => $adm->id,
+                  'keterangan' => 'New Service Published By '.getCompanyName($id_user).' with Title  "'.$req->name_en.'"',
+                  'url_terkait' => 'eksportir/service/verifikasi',
+                  'status_baca' => 0,
+                  'waktu' => $date,
+                  'id_terkait' => $id,
+                  'to_role' => 1
+              ]);
+          }
+        }
+      }
+
+      if($data){
+         Session::flash('success','Success Store Data');
+         return redirect('/eksportir/service/');
+       }else{
+         Session::flash('failed','Failed Store Data');
+         return redirect('/eksportir/service/');
+       }
+    }
+
+    public function destroy($id)
+    {
+      $data = DB::table('itdp_service_eks')->where('id', $id)->delete();
+      if($data){
+         Session::flash('success','Success Delete Data');
+         return redirect('/eksportir/service/');
+       }else{
+         Session::flash('failed','Failed Delete Data');
+         return redirect('/eksportir/service/');
+       }
     }
 }

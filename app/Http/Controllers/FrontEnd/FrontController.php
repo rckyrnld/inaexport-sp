@@ -98,6 +98,44 @@ class FrontController extends Controller
         return view('frontend.tracking', compact('kurir'));
     }
 
+    public function contact_us(){
+        $page = 'create';
+        $url = "/contact-us/send/";
+        return view('frontend.contact-us', compact('page', 'url'));
+    }
+
+    public function contact_us_send(Request $req){
+        $id = DB::table('csc_contact_us')->orderby('id','desc')->first();
+        if($id){
+            $id = $id->id+1;
+        } else {
+            $id = 1;
+        }
+
+        $data = DB::table('csc_contact_us')->insert([
+            'id' => $id,
+            'fullname' => $req->name,
+            'email' => $req->email,
+            'subyek' => $req->subyek,
+            'message' => $req->message,
+            'date_created' => date('Y-m-d H:i:s')
+        ]);
+
+        $notif = DB::table('notif')->insert([
+            'dari_nama' => $req->name,
+            'untuk_nama' => 'Super Admin',
+            'untuk_id' => '1',
+            'keterangan' => 'New Message from Visitor with Title  "'.$req->subyek.'"',
+            'url_terkait' => 'management/contact-us/view',
+            'status_baca' => 0,
+            'waktu' => date('Y-m-d H:i:s'),
+            'id_terkait' => $id,
+            'to_role' => '1',
+        ]);
+
+        return redirect('/front_end/contact-us/');
+    }
+
     public function getSub(Request $request)
     {
         $level = $request->level;

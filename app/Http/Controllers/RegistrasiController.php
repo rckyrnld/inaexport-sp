@@ -26,6 +26,24 @@ class RegistrasiController extends Controller
         return view('auth.register_pembeli',compact('pageTitle'));
     } 
 	
+	public function forget_a()
+    {
+        $pageTitle = "Forget Password";
+        return view('auth.forget',compact('pageTitle'));
+    } 
+	
+	public function gantipass1($id)
+    {
+        $pageTitle = "Forget Password";
+        return view('auth.forget_form',compact('pageTitle','id'));
+    } 
+	
+	public function gantipass2($id)
+    {
+        $pageTitle = "Forget Password";
+        return view('auth.forget_form2',compact('pageTitle','id'));
+    } 
+	
 	public function set($lang) {
     session(['applocale' => $lang]);
 
@@ -127,6 +145,57 @@ class RegistrasiController extends Controller
         return view('gantipass',compact('pageTitle','queryxp'));
 	}
 	
+	public function resetpass(Request $request)
+    {
+		$id_role = $request->id_role;
+		$email = $request->email;
+		if($id_role == 1){
+			$ei = DB::select("select * from itdp_company_users where email='".$email."'");
+			if(count($ei) != 0){
+			foreach($ei as $ie){
+				$d1 = $ie->id;
+				$d2 = $ie->username;
+				$d3 = $ie->email;
+			}
+			$data = ['username' => $d2, 'id2' => $d1, 'nama' => $d2, 'email' => $d3];
+
+                Mail::send('UM.user.emailforget', $data, function ($mail) use ($data) {
+                    $mail->to($data['email'], $data['username']);
+                    $mail->subject('Forget Password');
+
+                });
+			}
+		}else if($id_role == 1){
+			$ei = DB::select("select * from itdp_admin_users where email='".$email."'");
+			if(count($ei) != 0){
+			foreach($ei as $ie){
+				$d1 = $ie->id;
+				$d2 = $ie->name;
+				$d3 = $ie->email;
+			}
+			$data = ['username' => $d2, 'id2' => $d1, 'nama' => $d2, 'email' => $d3];
+
+                Mail::send('UM.user.emailforget2', $data, function ($mail) use ($data) {
+                    $mail->to($data['email'], $data['username']);
+                    $mail->subject('Forget Password');
+
+                });
+			}
+		}
+		return redirect('');
+	}
+	
+	public function updatepass1(Request $request)
+    {
+		$update = DB::select("update itdp_company_users set password='".$request->password."' where id='".$request->ida."'");
+		return redirect('');
+	}
+	
+	public function updatepass2(Request $request)
+    {
+		$update = DB::select("update itdp_admin_users set password='".$request->password."' where id='".$request->ida."'");
+		return redirect('');
+	}
 	public function updatepass(Request $request)
     {
 		// echo bcrypt($request->password);die();

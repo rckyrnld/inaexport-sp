@@ -146,6 +146,18 @@ class ResearchCornerController extends Controller
     public function read($id)
     {
       if(Auth::guard('eksmp')->user()->id_role == 2){
+        $id_user = Auth::guard('eksmp')->user()->id;
+        $notif = DB::table('notif')->where('url_terkait', 'research-corner/read')
+        ->where('id_terkait', $id)
+        ->where('untuk_id', $id_user)
+        ->first();
+        
+        if($notif){
+          DB::table('notif')->where('url_terkait', 'research-corner/read')->where('id_terkait', $id)->where('untuk_id', $id_user)->update([
+            'status_baca' => 1
+          ]);
+        }
+
         $pageTitle = "Research Corner";
         $data = DB::table('csc_research_corner')->where('id', $id)->first();
         return view('research-corner.eksportir.view',compact('data','pageTitle'));
