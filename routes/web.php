@@ -40,6 +40,8 @@ Route::namespace('FrontEnd')->group(function () {
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
     Route::get('/front_end/tracking', 'FrontController@tracking');
+    Route::get('/front_end/contact-us', 'FrontController@contact_us');
+    Route::post('/contact-us/send', 'FrontController@contact_us_send');
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
 
     /**
@@ -236,9 +238,7 @@ Route::namespace('Management')->group(function () {
 		    Route::get('/', 'DataContactUsController@index')->name('index');
 		    Route::get('/getData/', 'DataContactUsController@getData')->name('getData');
 		    Route::get('/view/{id}', 'DataContactUsController@view')->name('view');
-		    Route::get('/create/', 'DataContactUsController@create')->name('create');
 		    Route::get('/destroy/{id}', 'DataContactUsController@destroy')->name('destroy');
-		    Route::post('/send/', 'DataContactUsController@store')->name('store');
         });
     });
 // Angga End
@@ -528,9 +528,9 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 		    Route::get('/create/', 'ServiceController@create')->name('create');
 		    Route::get('/edit/{id}', 'ServiceController@edit')->name('edit');
 		    Route::get('/view/{id}', 'ServiceController@view')->name('view');
-		    Route::post('/store/{param}', 'ServiceController@store')->name('store');
+		    Route::post('/store/', 'ServiceController@store')->name('store');
+		    Route::post('/update/{id}', 'ServiceController@update')->name('update');
 		    Route::get('/destroy/{id}', 'ServiceController@destroy')->name('destroy');
-		    Route::get('/export/', 'ServiceController@export')->name('export');
         });
     });
 });
