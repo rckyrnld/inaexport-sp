@@ -38,6 +38,12 @@ class BRFrontController extends Controller
         return view('buying-request.br_importir_detail',compact('pageTitle','id'));
     }
 	
+	public function br_importir_chat($id)
+    {
+        $pageTitle = "Chat Buying Request Importer";
+        return view('buying-request.br_importir_chat',compact('pageTitle','id'));
+    }
+	
 	public function br_importir_lc($id)
     {
         $pageTitle = "List Chat Buying Request Importer";
@@ -52,6 +58,8 @@ class BRFrontController extends Controller
 	
 	public function br_importir_bc($id)
     {
+		$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
+							('".$id."','40001','".Date('Y-m-d H:m:s')."')");
 		$update = DB::select("update csc_buying_request set status='1' where id='".$id."'");
         return redirect('br_importir');
     }
