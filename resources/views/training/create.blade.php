@@ -70,9 +70,15 @@
                  <div class="col-md-4">
                    <b>Duration</b>
                  </div>
-                 <div class="col-md-6">
+                 <div class="col-md-2">
                    <input type="number" autocomplete="off" class="form-control" name="duration" @if($page=='edit')  value="{{$data->duration}}" @endif   @if($page == 'view')value="{{$data->duration}}" disabled @endif required>
                  </div>
+								 <div class="col-md-4">
+									 <select class="form-control" name="param">
+									 		<option value="Days">Days</option>
+											<option value="Week">Week</option>
+									 </select>
+								 </div>
                </div><br>
                <div class="row">
                  <div class="col-md-4">

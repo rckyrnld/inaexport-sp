@@ -78,11 +78,12 @@ class TrainingControllerEksportir extends Controller
 			->get();
       return \Yajra\DataTables\DataTables::of($tick)
           ->addColumn('start_date', function($data){
-					   $date = date("Y-m-d", strtotime($data->start_date));
-             return $date;
+						$date = date("Y/m/d", strtotime($data->start_date));
+						$date2 = date("Y/m/d", strtotime($data->end_date));
+						return ''.$date.' - '.$date2.'';
 					})
           ->addColumn('duration', function($data){
-             return ''.$data->duration.' Days';
+             return ''.$data->duration.' '.$data->param.'';
 					})
           ->addColumn('action', function ($data) {
 						if ($data->status == 0){
