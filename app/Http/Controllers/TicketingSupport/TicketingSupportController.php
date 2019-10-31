@@ -29,7 +29,6 @@ class TicketingSupportController extends Controller
 
     public function create(){
       $pageTitle = 'Ticketing Support';
-      $id_user = Auth::guard('eksmp')->user()->id;
       return view('ticketingsupport.create', compact('pageTitle'));
     }
 

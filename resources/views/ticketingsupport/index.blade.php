@@ -1,4 +1,4 @@
-@include('header')
+@include('frontend.layout.header')
 <style type="text/css">
 	th {text-align: center;}
 	td {color: black;}
@@ -7,6 +7,22 @@
 	#export { background-color: #28bd4a; color: white; white-space: pre;}
 	#export:hover {background-color: #08b32e}
 </style>
+<div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
+	<div class="mx-auto">
+		<table border="0" width="100%">
+			<tr>
+			<td width="30%" style="font-size:13px;padding-left:10px"><img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b></td>
+			<td width="30%"></td>
+			<td width="40%" align="right" style="padding-right:10px;">
+				<a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
+				<a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
+				<a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
+				<a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")</font></a>
+			</td>
+			</tr>
+		</table>
+	</div>
+</div>
 <div class="padding">
   <div class="row">
     <div class="col-md-12">
