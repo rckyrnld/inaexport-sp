@@ -154,8 +154,8 @@ class BuyingRequestController extends Controller
 			$request->file('doc')->move($destinationPath, $file);
 		}
 		$insert = DB::select("
-			insert into csc_inquiry_global (company_name,valid,id_mst_country,city,id_prod_kat,id_prod_sub1_kat,id_prod_sub2_kat,shipping,spec,files
-			,eo,neo,tp,ntp,by_role,by_user,date) values
+			insert into csc_buying_request (subyek,valid,id_mst_country,city,id_csc_prod_cat,id_csc_prod_cat_level1,id_csc_prod_cat_level2,shipping,spec,files
+			,eo,neo,tp,ntp,by_role,id_pembuat,date) values
 			('".$request->cmp."','".$request->valid."','".$request->country."','".$request->city."','".$request->category."'
 			,'".$request->t2s."','".$request->t3s."','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
 			,'".$request->tp."','".$request->ntp."','4','".Auth::user()->id."','".Date('Y-m-d H:m:s')."')");
