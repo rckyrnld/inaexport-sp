@@ -42,6 +42,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::post('front_end/inquiry_act/{id}', 'InquiryFrontController@store');
     Route::get('/front_end/inquiry_list', 'InquiryFrontController@index');
     Route::get('/front_end/inquiry_getdata', 'InquiryFrontController@datanya')->name('front.datatables.inquiry');
+    Route::get('/front_end/ver_inquiry/{id}', 'InquiryFrontController@verifikasi_inquiry');
 
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
@@ -552,6 +553,18 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 });
 
 //////////////////////////////////////////ILYAS END////////////////////////////////////////////////////////////////////////////////
+
+//Meidi
+Route::namespace('Inquiry')->group(function () {
+    //Eksportir
+    Route::get('/inquiry', 'InquiryEksController@index')->name('eksportir.inquiry.index');
+    Route::get('/inquiry/getData/{jenis}', 'InquiryEksController@getData')->name('eksportir.inquiry.getData');
+    Route::get('/inquiry/joined/{id}', 'InquiryEksController@joined')->name('eksportir.inquiry.join');
+    Route::get('/inquiry/accept_chat/{id}', 'InquiryEksController@accept_chat')->name('eksportir.inquiry.accept_chat');
+    Route::get('/inquiry/view/{id}', 'InquiryEksController@view')->name('eksportir.inquiry.view');
+    Route::get('/inquiry/chatting/{id}', 'InquiryEksController@chatting')->name('eksportir.inquiry.chatting');
+    Route::get('/inquiry/sendChat', 'InquiryEksController@sendChat')->name('eksportir.inquiry.sendChat');
+});
 
 //YOSS---------------------------------------------
 
