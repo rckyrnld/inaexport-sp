@@ -21,37 +21,37 @@
   </div>
   <div id="content-body">
     <div class="py-5 text-center w-100">
-      <h4><b>Contact Us</b></h4><br>
+      <h4><b>@lang("frontend.cu-cu")</b></h4><br>
       <center>
         <div class="col-md-8">
          {!! Form::open(['url' => $url, 'class' => 'form-horizontal', 'files' => true]) !!}
            <div class="form-group row">
             <div class="col-md-1"></div>
-               <label class="control-label col-md-3">Full Name</label>
+               <label class="control-label col-md-3">@lang("frontend.cu-fullname")</label>
                <div class="col-md-6">
-                   <input type="text" id="id" class="form-control integer" name="name" autocomplete="off" required placeholder="Input">
+                   <input type="text" id="id" class="form-control integer" name="name" autocomplete="off" required>
                </div>
            </div>
 
            <div class="form-group row">
             <div class="col-md-1"></div>
-               <label class="control-label col-md-3">Email</label>
+               <label class="control-label col-md-3">@lang("frontend.cu-email")</label>
                <div class="col-md-6">
-                   <input type="email" class="form-control" name="email" autocomplete="off" required placeholder="Input">
+                   <input type="email" class="form-control" name="email" autocomplete="off" required>
                </div>
            </div>
 
            <div class="form-group row">
             <div class="col-md-1"></div>
-               <label class="control-label col-md-3">Subyek</label>
+               <label class="control-label col-md-3">@lang("frontend.cu-subyek")</label>
                <div class="col-md-6">
-                   <input type="text" class="form-control" name="subyek" autocomplete="off" required placeholder="Input">
+                   <input type="text" class="form-control" name="subyek" autocomplete="off" required>
                </div>
            </div>
 
            <div class="form-group row">
             <div class="col-md-1"></div>
-               <label class="control-label col-md-3">Messages</label>
+               <label class="control-label col-md-3">@lang("frontend.cu-message")</label>
                <div class="col-md-6">
                    <textarea class="form-control" name="message" id="message" style="height: 150px"></textarea>
                </div>
@@ -60,7 +60,7 @@
            <div class="form-group row">
               <div class="col-md-10">
                 <div align="right">
-                  <button class="btn btn-primary button_form" type="submit">Submit</button>
+                  <button class="btn btn-primary button_form" type="submit">@lang("frontend.cu-submit")</button>
                 </div>
               </div>
            </div>

@@ -18,7 +18,7 @@ class MasterCountryController extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'Country';
+      $pageTitle = 'Data Country';
       return view('master.country.index',compact('pageTitle'));
     }
 
@@ -47,7 +47,7 @@ class MasterCountryController extends Controller
 
     public function create()
     {
-      $pageTitle = 'Country';
+      $pageTitle = 'Data Country';
       $page = 'create';
       $url = "/master-country/store/Create";
       $country_region = DB::table('mst_country_region')->get();
@@ -95,7 +95,7 @@ class MasterCountryController extends Controller
 
     public function view($id)
     {
-      $pageTitle = "Country";
+      $pageTitle = "Data Country";
       $page = "view";
       $data = MasterCountry::where('id', $id)->first();
       $country_region = DB::table('mst_country_region')->get();
@@ -106,7 +106,7 @@ class MasterCountryController extends Controller
     public function edit($id)
     {
       $page = "edit";
-      $pageTitle = "Country";
+      $pageTitle = "Data Country";
       $url = "/master-country/store/Update_".$id;
       $data = MasterCountry::where('id', $id)->first();
       $country_region = DB::table('mst_country_region')->get();

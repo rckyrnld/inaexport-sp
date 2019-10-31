@@ -19,7 +19,7 @@ class MasterCityController extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'City';
+      $pageTitle = 'Data City';
       return view('master.city.index',compact('pageTitle'));
     }
 
@@ -49,7 +49,7 @@ class MasterCityController extends Controller
 
     public function create()
     {
-      $pageTitle = 'City';
+      $pageTitle = 'Data City';
       $page = 'create';
       $url = "/master-city/store/Create";
       $country = MasterCountry::orderby('country','asc')->get();
@@ -92,7 +92,7 @@ class MasterCityController extends Controller
 
     public function view($id)
     {
-      $pageTitle = "City";
+      $pageTitle = "Data City";
       $page = "view";
       $data = MasterCity::where('id', $id)->first();
       $country = MasterCountry::orderby('country','asc')->get();
@@ -102,7 +102,7 @@ class MasterCityController extends Controller
     public function edit($id)
     {
       $page = "edit";
-      $pageTitle = "City";
+      $pageTitle = "Data City";
       $url = "/master-city/store/Update_".$id;
       $data = MasterCity::where('id', $id)->first();
       $country = MasterCountry::orderby('country','asc')->get();

@@ -105,8 +105,43 @@
           @endif
         @endforeach
         </tbody>
-      </table>
+      </table><br>
     </center>
+    <div align="left" style="padding-left: 5%">
+      <table class="table" style="width: 20%; padding: 20px;">
+        <thead>
+          <tr>
+            <th><h5><b>@lang("frontend.service-title")</b></h5></th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($service as $nomor => $data)
+          <?php
+            if($loc == "ch"){
+              $name = $data->nama_chn;
+            }elseif($loc == "in"){
+              $name = $data->nama_ind;
+            }else{
+              $name = $data->nama_en;
+            }
+
+            if($name == NULL){
+              $name = $data->nama_en;
+            }
+          ?>
+          <tr>
+            <td>
+              <a href="{{url('/front_end/service-detail', $data->id)}}">
+                <div style="height:100%;width:100%">
+                  {{$name}}
+                </div>
+              </a>
+            </td>
+          </tr>
+            @endforeach
+        </tbody>
+      </table>
+    </div>
         <div class="px-3">
          {{--  <div>
             <a href="#" class="btn btn-block indigo text-white mb-2">

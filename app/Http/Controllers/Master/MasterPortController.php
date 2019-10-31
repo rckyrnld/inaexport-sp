@@ -19,7 +19,7 @@ class MasterPortController extends Controller
     }
 
     public function index(){
-      $pageTitle = 'Port';
+      $pageTitle = 'Data Port';
       return view('master.port.index',compact('pageTitle'));
     }
 
@@ -56,7 +56,7 @@ class MasterPortController extends Controller
 
     public function create()
     {
-      $pageTitle = 'Port';
+      $pageTitle = 'Data Port';
       $page = 'create';
       $url = "/master-port/store/Create";
       $province = MasterProvince::orderby('province_en','asc')->get();
@@ -93,7 +93,7 @@ class MasterPortController extends Controller
 
     public function view($id)
     {
-      $pageTitle = "Port";
+      $pageTitle = "Data Port";
       $page = "view";
       $data = MasterPort::where('id', $id)->first();
       $province = MasterProvince::orderby('province_en','asc')->get();
@@ -103,7 +103,7 @@ class MasterPortController extends Controller
     public function edit($id)
     {
       $page = "edit";
-      $pageTitle = "Port";
+      $pageTitle = "Data Port";
       $url = "/master-port/store/Update_".$id;
       $data = MasterPort::where('id', $id)->first();
       $province = MasterProvince::orderby('province_en','asc')->get();
