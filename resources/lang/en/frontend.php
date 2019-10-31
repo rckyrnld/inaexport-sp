@@ -37,5 +37,12 @@ return [
     "cari"  => "Search",
     "t_date"    => "Start Date - End Date", 
     "t_Comodity"    => "Comodity",
-    "t_join"        => "Join"
+    "t_join"        => "Join",
+    "cu-fullname"    => "Full Name",
+    "cu-email"    => "Email",
+    "cu-subyek"    => "Subyek",
+    "cu-message"    => "Message",
+    "cu-submit"    => "Send",
+    "cu-cu"    => "Contact Us",
+    "service-title"    => "Membership Service"
 ];

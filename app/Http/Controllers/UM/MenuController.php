@@ -106,10 +106,10 @@ class MenuController extends Controller
     public function edit($id)
     {
         $pageTitle = "Menus";
-        $url = "/submenu_update/".$id;
+        $url = "/menu_update/".$id;
         $res = DB::table('menu')->where('id_menu',$id)->first();
         $parent = DB::table('menu')->where('id_menu',$res->parent)->first();
-        return view('UM.menu.add',compact('url','res','pageTitle','parent'));
+        return view('UM.menu.addm',compact('url','res','pageTitle','parent'));
     }
 
     public function edit_submenu($id)

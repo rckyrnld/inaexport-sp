@@ -116,6 +116,8 @@
 								<br><a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy(<?php echo $ryu->id; ?>)" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><i class="fa fa-wifi"></i> Broadcast</a><a title="Detail" href="{{ url('br_importir_detail/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-pencil"></i> Detail&nbsp;&nbsp;&nbsp;</a>
 								<?php }else if($ryu->status == 1 ){ ?>
 								<br><a title="Detail" href="{{ url('br_importir_lc/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-comment"></i> List Chat</a>
+								<?php } else if($ryu->status == 4){ ?>
+								<br><a title="Detail" href="{{ url('br_importir_lc/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-comment"></i> List Chat</a>
 								<?php } ?>
 								</center></td>
 								</tr>

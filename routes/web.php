@@ -49,6 +49,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/tracking', 'FrontController@tracking');
     Route::get('/front_end/contact-us', 'FrontController@contact_us');
     Route::post('/contact-us/send', 'FrontController@contact_us_send');
+    Route::get('/front_end/service-detail/{id}', 'FrontController@service');
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
 
     /**
@@ -71,6 +72,7 @@ Route::get('/br_importir', 'BRFrontController@br_importir');
 Route::get('/br_importir_add', 'BRFrontController@br_importir_add');
 Route::get('/br_importir_detail/{id}', 'BRFrontController@br_importir_detail');
 Route::get('/br_importir_lc/{id}', 'BRFrontController@br_importir_lc');
+Route::get('/br_importir_chat/{id}', 'BRFrontController@br_importir_chat');
 Route::get('/br_importir_bc/{id}', 'BRFrontController@br_importir_bc');
 Route::get('/br_konfirm/{id}/{id2}', 'BRFrontController@br_konfirm');
 Route::post('/br_importir_save', 'BRFrontController@br_importir_save');
@@ -148,9 +150,11 @@ Route::get('/permission_delete/{id}', 'UM\PermissionsController@destroy');
 //buy request 
 Route::resource('/br_list', 'BuyingRequestController');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
+Route::get('/simpanchatbr/{id}/{id2}/{id3}/{id4}/{id5}', 'BuyingRequestController@simpanchatbr');
 Route::get('/br_add', 'BuyingRequestController@add');
 Route::get('/br_join/{id}', 'BuyingRequestController@br_join');
 Route::get('/br_chat/{id}', 'BuyingRequestController@br_chat');
+Route::get('/br_deal/{id}/{id2}/{id3}', 'BuyingRequestController@br_deal');
 Route::get('/br_save_join/{id}', 'BuyingRequestController@br_save_join');
 Route::get('/ambilt2/{id}', 'BuyingRequestController@ambilt2');
 Route::get('/ambilt3/{id}', 'BuyingRequestController@ambilt3');
@@ -540,6 +544,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::prefix('service')->group(function () {
         Route::name('service.')->group(function () {
             Route::get('/', 'ServiceController@index')->name('index');
+            Route::get('/admin', 'ServiceController@index_admin')->name('index_admin');
 		    Route::get('/getData/', 'ServiceController@getData')->name('getData');
 		    Route::get('/create/', 'ServiceController@create')->name('create');
 		    Route::get('/edit/{id}', 'ServiceController@edit')->name('edit');
@@ -548,6 +553,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 		    Route::post('/update/{id}', 'ServiceController@update')->name('update');
 		    Route::get('/destroy/{id}', 'ServiceController@destroy')->name('destroy');
     		Route::get('/verifikasi/{id}', 'ServiceController@verifikasi')->name('verifikasi');
+    		Route::get('/approve/{id}', 'ServiceController@approval')->name('approve');
         });
     });
 });

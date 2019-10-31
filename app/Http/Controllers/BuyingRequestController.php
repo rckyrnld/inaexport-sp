@@ -84,6 +84,19 @@ class BuyingRequestController extends Controller
 		return view('buying-request.join', compact('id','pageTitle'));
 	}
 	
+	public function simpanchatbr($id,$id2,$id3,$id4,$id5)
+    {
+	date_default_timezone_set('Asia/Jakarta');
+		$insert = DB::select("
+			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim) values
+			('".$id2."','".$id."','".Date('Y-m-d H:m:s')."','".$id4."','".$id3."','".$id5."')");
+	}	
+	public function br_deal($id,$id2,$id3)
+    {
+		$update = DB::select("update csc_buying_request_join set status_join='4' where id='".$id."' ");
+		$update2 = DB::select("update csc_buying_request set status='4', deal='".$id3."' where id='".$id2."' ");
+		return redirect('br_list');
+	}	
 	public function br_chat($id)
     {
 		$pageTitle = "Chat Buying Request Eksportir";
