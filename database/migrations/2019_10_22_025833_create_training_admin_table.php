@@ -21,6 +21,7 @@ class CreateTrainingAdminTable extends Migration
             $table->datetime('start_date')->nullable();
             $table->datetime('end_date')->nullable();
             $table->string('duration')->nullable();
+            $table->string('param')->nullable();
             $table->string('topic_en')->nullable();
             $table->string('topic_in')->nullable();
             $table->string('topic_chn')->nullable();

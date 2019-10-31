@@ -210,7 +210,7 @@
                         <b>Duration</b>
                       </div>
                       <div class="col-md-4">
-                        : {{$val->duration}} Days
+                        : {{$val->duration}} {{$val->param}}
                       </div>
                       <div class="col-md-4"></div>
                       <div class="col-md-2">

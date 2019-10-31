@@ -97,6 +97,7 @@
 									<th width="5%">No</th>
 									<th><center>Company Name</center></th>
 									<th><center>Email</center></th>
+									<th><center>Status</center></th>
 									<th><center>Aksi</center></th>
                                 </thead>
 								<tbody>
@@ -110,10 +111,16 @@
 								<td><?php echo $ryu->company; ?></td>
 								<td><?php echo $ryu->oemail; ?></td>
 								<td><center>
+								<?php if($ryu->status_join == "1"){ echo "Menunggu Verifikasi Importir"; }else if($ryu->status_join == "2"){ echo "Negosiation"; }
+									else if($ryu->status_join == "4"){ echo "Deal"; }else{ echo "-"; }?>
+								</center></td>
+								<td><center>
 								<?php if($ryu->status_join == 1){ ?>
 								<a href="{{url('br_konfirm/'.$ryu->idb.'/'.$id)}}" class="btn btn-success"><i class="fa fa-check"></i> Verifikasi</a>
 								<?php }else if($ryu->status_join == 2){ ?>
-								<a class="btn btn-info"><i class="fa fa-comment"></i> Chat</a>
+								<a href="{{url('br_importir_chat/'.$id)}}" class="btn btn-info"><i class="fa fa-comment"></i> Chat</a>
+								<?php }else if($ryu->status_join == 4){ ?>
+								<a href="{{url('br_importir_chat/'.$id)}}" class="btn btn-success"><i class="fa fa-list"></i> View</a>
 								<?php } ?>
 								</center></td>
 								</tr>

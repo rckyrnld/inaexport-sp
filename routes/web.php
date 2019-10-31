@@ -42,6 +42,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::post('front_end/inquiry_act/{id}', 'InquiryFrontController@store');
     Route::get('/front_end/inquiry_list', 'InquiryFrontController@index');
     Route::get('/front_end/inquiry_getdata', 'InquiryFrontController@datanya')->name('front.datatables.inquiry');
+    Route::get('/front_end/ver_inquiry/{id}', 'InquiryFrontController@verifikasi_inquiry');
 
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
@@ -71,6 +72,7 @@ Route::get('/br_importir', 'BRFrontController@br_importir');
 Route::get('/br_importir_add', 'BRFrontController@br_importir_add');
 Route::get('/br_importir_detail/{id}', 'BRFrontController@br_importir_detail');
 Route::get('/br_importir_lc/{id}', 'BRFrontController@br_importir_lc');
+Route::get('/br_importir_chat/{id}', 'BRFrontController@br_importir_chat');
 Route::get('/br_importir_bc/{id}', 'BRFrontController@br_importir_bc');
 Route::get('/br_konfirm/{id}/{id2}', 'BRFrontController@br_konfirm');
 Route::post('/br_importir_save', 'BRFrontController@br_importir_save');
@@ -148,9 +150,11 @@ Route::get('/permission_delete/{id}', 'UM\PermissionsController@destroy');
 //buy request 
 Route::resource('/br_list', 'BuyingRequestController');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
+Route::get('/simpanchatbr/{id}/{id2}/{id3}/{id4}/{id5}', 'BuyingRequestController@simpanchatbr');
 Route::get('/br_add', 'BuyingRequestController@add');
 Route::get('/br_join/{id}', 'BuyingRequestController@br_join');
 Route::get('/br_chat/{id}', 'BuyingRequestController@br_chat');
+Route::get('/br_deal/{id}/{id2}/{id3}', 'BuyingRequestController@br_deal');
 Route::get('/br_save_join/{id}', 'BuyingRequestController@br_save_join');
 Route::get('/ambilt2/{id}', 'BuyingRequestController@ambilt2');
 Route::get('/ambilt3/{id}', 'BuyingRequestController@ambilt3');
@@ -501,6 +505,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/training_delete/{id}', 'TrainingController@delete')->name('training.delete');
     Route::post('/training_update', 'TrainingController@update');
 
+    //ADMIN
+    Route::get('/training_admin/{id}', 'TrainingController@indexadmin');
+    Route::get('/training_getdata_admin/{id}', 'TrainingController@datanyaadmin');
+
     //tax
     Route::get('/taxes', 'TaxesController@index')->name('taxes.index');
     Route::get('/tambah_taxes', 'TaxesController@tambah');
@@ -551,6 +559,18 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 });
 
 //////////////////////////////////////////ILYAS END////////////////////////////////////////////////////////////////////////////////
+
+//Meidi
+Route::namespace('Inquiry')->group(function () {
+    //Eksportir
+    Route::get('/inquiry', 'InquiryEksController@index')->name('eksportir.inquiry.index');
+    Route::get('/inquiry/getData/{jenis}', 'InquiryEksController@getData')->name('eksportir.inquiry.getData');
+    Route::get('/inquiry/joined/{id}', 'InquiryEksController@joined')->name('eksportir.inquiry.join');
+    Route::get('/inquiry/accept_chat/{id}', 'InquiryEksController@accept_chat')->name('eksportir.inquiry.accept_chat');
+    Route::get('/inquiry/view/{id}', 'InquiryEksController@view')->name('eksportir.inquiry.view');
+    Route::get('/inquiry/chatting/{id}', 'InquiryEksController@chatting')->name('eksportir.inquiry.chatting');
+    Route::get('/inquiry/sendChat', 'InquiryEksController@sendChat')->name('eksportir.inquiry.sendChat');
+});
 
 //YOSS---------------------------------------------
 

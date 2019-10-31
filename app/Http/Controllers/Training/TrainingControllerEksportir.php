@@ -72,17 +72,18 @@ class TrainingControllerEksportir extends Controller
 			->first();
 
       $tick = DB::table('training_join as tj')
-			->selectRaw('tj.*,ta.start_date,ta.duration,ta.topic_in,ta.location_in,ta.training_in')
+			->selectRaw('tj.*,ta.start_date,ta.end_date,ta.param,ta.duration,ta.topic_in,ta.location_in,ta.training_in')
 			->leftJoin('training_admin as ta','ta.id','=','tj.id_training_admin')
 			->where('tj.id_profil_eks',$id->id)
 			->get();
       return \Yajra\DataTables\DataTables::of($tick)
           ->addColumn('start_date', function($data){
-					   $date = date("Y-m-d", strtotime($data->start_date));
-             return $date;
+						$date = date("Y/m/d", strtotime($data->start_date));
+						$date2 = date("Y/m/d", strtotime($data->end_date));
+						return ''.$date.' - '.$date2.'';
 					})
           ->addColumn('duration', function($data){
-             return ''.$data->duration.' Days';
+             return ''.$data->duration.' '.$data->param.'';
 					})
           ->addColumn('action', function ($data) {
 						if ($data->status == 0){

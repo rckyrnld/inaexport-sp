@@ -49,14 +49,20 @@
                                </div>
 
 
-                              
+                               <div class="form-group">
+                                   <label class="control-label col-md-3">Sub Menu</label>
+                                   <div class="col-md-7">
+
+                                       <input type="text" class="form-control" name="nama_submenu" placeholder="Submenu"  @isset($res)  @if($res->parent > 0) value="{{ $res->menu_name }}" @endif  @endisset>
+                                   </div>
+                               </div>
 
                               
                            
                                <div class="form-group">
                                    <label class="control-label col-md-3">Url</label>
                                    <div class="col-md-7">
-                                       <input type="text" class="form-control" name="url" placeholder="/menu/submenu" value="{{ $parent->url }}">
+                                       <input type="text" class="form-control" name="url" placeholder="/menu/submenu" @isset($res)  @if($res->parent > 0) value="{{ $res->url }}" @endif @endisset>
                                    </div>
                                </div>
 
