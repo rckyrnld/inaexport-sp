@@ -48,7 +48,11 @@ class BuyingRequestController extends Controller
 				return $naka;
             })
 			->addColumn('f6', function ($pesan) {
-				return $pesan->spec;
+				if($pesan->by_role == 4){
+					return "Perwakilan";
+				}else if($pesan->by_role == 3){
+					return "Importir";
+				}
             })
 			->addColumn('f7', function ($pesan) {
 				if($pesan->status == 1){
