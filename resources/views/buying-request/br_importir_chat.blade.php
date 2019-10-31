@@ -365,7 +365,7 @@
                     <div class="input-group">
                         <input style="color:black;" id="inputan" type="text" class="form-control input-sm" placeholder="Type your message here..." />
                         <span class="input-group-btn">
-                            <a  class="btn btn-info">
+                            <a  class="btn btn-info" data-toggle="modal" data-target="#myModal">
                                 <i class="fa fa-paperclip"></i></a>
 							<a onclick="kirimchat()" class="btn btn-warning" id="btn-chat">
                                 <i class="fa fa-paper-plane"></i> Send</a>
@@ -378,6 +378,25 @@
     </div>
 </div>
 </center>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Upload Bukti Bayar</h6>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+         
+        </div>
+		<div id ="isibroadcast"></div>
+        <div class="modal-body">
+          <input type="file" class="form-control" name="filez" id="filez">
+        </div>
+        <div class="modal-footer">
+			<a href="" class="btn btn-success">Send</a>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div> 
+      </div>
+    </div>
+  </div>
 
 <!--
 <a href="{{ url('br_save_join/'.$id) }}" class="btn btn-md btn-primary"><i class="fa fa-comment"></i> Chat</a>

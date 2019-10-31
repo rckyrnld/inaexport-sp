@@ -64,9 +64,22 @@ class BRFrontController extends Controller
         return redirect('br_importir');
     }
 	
+	public function br_pw_bc($id)
+    {
+		$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
+							('".$id."','40001','".Date('Y-m-d H:m:s')."')");
+		$update = DB::select("update csc_buying_request set status='1' where id='".$id."'");
+        return redirect('br_list');
+    }
+	
 	public function ambilbroad($id)
     {
         return view('buying-request.broad', compact('id'));
+    }
+	
+	public function ambilbroad2($id)
+    {
+        return view('buying-request.broad2', compact('id'));
     }
 	
 	public function br_importir_save(Request $request)

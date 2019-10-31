@@ -33,12 +33,12 @@
                                         <center>Category</center>
                                     </th>
 									<th>
-                                        <center>Specification</center>
+                                        <center>Create By</center>
                                     </th>
                                     <th>
                                         <center>Status</center>
                                     </th>
-									<th width="10%">
+									<th width="18%">
                                         <center>Action</center>
                                     </th>
                                 </tr>
@@ -57,6 +57,32 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Broadcast Buying Request</h6>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+         
+        </div>
+		<div id ="isibroadcast"></div>
+        <!--<div class="modal-body">
+          1
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+ <script type="text/javascript">
+function xy(a){
+	var token = $('meta[name="csrf-token"]').attr('content');
+		$.get('{{URL::to("ambilbroad2/")}}/'+a,{_token:token},function(data){
+			$("#isibroadcast").html(data);
+			
+		 })
+}
+</script>
 <script type="text/javascript">
     $(function () {
         $('#users-table').DataTable({
