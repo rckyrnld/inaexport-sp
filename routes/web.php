@@ -42,10 +42,13 @@ Route::namespace('FrontEnd')->group(function () {
     Route::post('front_end/inquiry_act/{id}', 'InquiryFrontController@store');
     Route::get('/front_end/inquiry_list', 'InquiryFrontController@index');
     Route::get('/front_end/inquiry_getdata', 'InquiryFrontController@datanya')->name('front.datatables.inquiry');
+    Route::get('/front_end/ver_inquiry/{id}', 'InquiryFrontController@verifikasi_inquiry');
 
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
     Route::get('/front_end/tracking', 'FrontController@tracking');
+    Route::get('/front_end/contact-us', 'FrontController@contact_us');
+    Route::post('/contact-us/send', 'FrontController@contact_us_send');
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
 
     /**
@@ -246,9 +249,7 @@ Route::namespace('Management')->group(function () {
 		    Route::get('/', 'DataContactUsController@index')->name('index');
 		    Route::get('/getData/', 'DataContactUsController@getData')->name('getData');
 		    Route::get('/view/{id}', 'DataContactUsController@view')->name('view');
-		    Route::get('/create/', 'DataContactUsController@create')->name('create');
 		    Route::get('/destroy/{id}', 'DataContactUsController@destroy')->name('destroy');
-		    Route::post('/send/', 'DataContactUsController@store')->name('store');
         });
     });
 // Angga End
@@ -503,6 +504,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/training_delete/{id}', 'TrainingController@delete')->name('training.delete');
     Route::post('/training_update', 'TrainingController@update');
 
+    //ADMIN
+    Route::get('/training_admin/{id}', 'TrainingController@indexadmin');
+    Route::get('/training_getdata_admin/{id}', 'TrainingController@datanyaadmin');
+
     //tax
     Route::get('/taxes', 'TaxesController@index')->name('taxes.index');
     Route::get('/tambah_taxes', 'TaxesController@tambah');
@@ -542,14 +547,27 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 		    Route::get('/create/', 'ServiceController@create')->name('create');
 		    Route::get('/edit/{id}', 'ServiceController@edit')->name('edit');
 		    Route::get('/view/{id}', 'ServiceController@view')->name('view');
-		    Route::post('/store/{param}', 'ServiceController@store')->name('store');
+		    Route::post('/store/', 'ServiceController@store')->name('store');
+		    Route::post('/update/{id}', 'ServiceController@update')->name('update');
 		    Route::get('/destroy/{id}', 'ServiceController@destroy')->name('destroy');
-		    Route::get('/export/', 'ServiceController@export')->name('export');
+    		Route::get('/verifikasi/{id}', 'ServiceController@verifikasi')->name('verifikasi');
         });
     });
 });
 
 //////////////////////////////////////////ILYAS END////////////////////////////////////////////////////////////////////////////////
+
+//Meidi
+Route::namespace('Inquiry')->group(function () {
+    //Eksportir
+    Route::get('/inquiry', 'InquiryEksController@index')->name('eksportir.inquiry.index');
+    Route::get('/inquiry/getData/{jenis}', 'InquiryEksController@getData')->name('eksportir.inquiry.getData');
+    Route::get('/inquiry/joined/{id}', 'InquiryEksController@joined')->name('eksportir.inquiry.join');
+    Route::get('/inquiry/accept_chat/{id}', 'InquiryEksController@accept_chat')->name('eksportir.inquiry.accept_chat');
+    Route::get('/inquiry/view/{id}', 'InquiryEksController@view')->name('eksportir.inquiry.view');
+    Route::get('/inquiry/chatting/{id}', 'InquiryEksController@chatting')->name('eksportir.inquiry.chatting');
+    Route::get('/inquiry/sendChat', 'InquiryEksController@sendChat')->name('eksportir.inquiry.sendChat');
+});
 
 //YOSS---------------------------------------------
 

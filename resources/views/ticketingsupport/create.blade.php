@@ -71,7 +71,7 @@
 		            </div>
 		            <div class="col-md-4">
 									<input type="hidden" name="_token" value="{{ csrf_token() }}">
-		              <input type="text" autocomplete="off" class="form-control" name="name" value=""required>
+		              <input type="text" autocomplete="off" class="form-control" name="name" value=""required @if($for == "eksportir") @elseif($for == "admin") disabled placeholder="@if($loc == "ch") 您必须先登录 @elseif($loc == "en") You Not Importer Or Eksporter @elseif($loc == "in") Anda Bukan Sebagai Importir/Eksportir @endif" @else disabled placeholder="@if($loc == "ch") 您必须先登录 @elseif($loc == "en") You Must Login First @elseif($loc == "in") Anda Harus Login Terlebih Dahulu @endif" @endif>
 		            </div>
 		          </div><br>
 		          <div class="row">
@@ -79,7 +79,7 @@
 		              @if($loc == "ch") 电子邮件 @elseif($loc == "en") Email @elseif($loc == "in") Email @endif
 		            </div>
 		            <div class="col-md-4">
-		              <input type="text" autocomplete="off" class="form-control" name="email" value=""required>
+		              <input type="text" autocomplete="off" class="form-control" name="email" value=""required @if($for == "eksportir") @elseif($for == "admin") disabled placeholder="@if($loc == "ch") 您必须先登录 @elseif($loc == "en") You Not Importer Or Eksporter @elseif($loc == "in") Anda Bukan Sebagai Importir/Eksportir @endif" @else disabled placeholder="@if($loc == "ch") 您必须先登录 @elseif($loc == "en") You Must Login First @elseif($loc == "in") Anda Harus Login Terlebih Dahulu @endif" @endif>
 		            </div>
 		          </div><br>
 		          <div class="row">
@@ -87,7 +87,7 @@
 		              @if($loc == "ch") 学科 @elseif($loc == "en") Subject @elseif($loc == "in") Subyek @endif
 		            </div>
 		            <div class="col-md-4">
-		              <input type="text" autocomplete="off" class="form-control" name="subject" value=""required>
+		              <input type="text" autocomplete="off" class="form-control" name="subject" value=""required @if($for == "eksportir") @elseif($for == "admin") disabled placeholder="@if($loc == "ch") 您必须先登录 @elseif($loc == "en") You Not Importer Or Eksporter @elseif($loc == "in") Anda Bukan Sebagai Importir/Eksportir @endif" @else disabled placeholder="@if($loc == "ch") 您必须先登录 @elseif($loc == "en") You Must Login First @elseif($loc == "in") Anda Harus Login Terlebih Dahulu @endif" @endif>
 		            </div>
 		          </div><br>
 		          <div class="row">
@@ -95,15 +95,21 @@
 		              @if($loc == "ch")按摩 @elseif($loc == "en") Massages @elseif($loc == "in") Pesan @endif
 		            </div>
 		            <div class="col-md-4">
-		              <textarea name="messages" class="form-control" rows="8" cols="80"></textarea>
+		              <textarea name="messages" class="form-control" rows="8" cols="80" @if($for == "eksportir") @elseif($for == "admin") disabled placeholder="@if($loc == "ch") 您必须先登录 @elseif($loc == "en") You Not Importer Or Eksporter @elseif($loc == "in") Anda Bukan Sebagai Importir/Eksportir @endif" @else disabled placeholder="@if($loc == "ch") 您必须先登录 @elseif($loc == "en") You Must Login First @elseif($loc == "in") Anda Harus Login Terlebih Dahulu @endif" @endif></textarea>
 		            </div>
 		          </div><br>
 		          <div class="row">
 		            <div class="col-md-2">
 		            </div>
 		            <div class="col-md-4">
-		              <button type="submit" class="btn btn-primary" name="button">@if($loc == "ch") 发送 @elseif($loc == "en") Send @elseif($loc == "in") Kirim @endif</button>
-		            </div>
+                  @if($for == "eksportir")
+		                <button type="submit" class="btn btn-primary" name="button">@if($loc == "ch") 发送 @elseif($loc == "en") Send @elseif($loc == "in") Kirim @endif</button>
+                  @elseif($for == "admin")
+                    <button type="button" class="btn btn-danger" name="button">@if($loc == "ch") 您必须先登录 @elseif($loc == "en") You Not Importer Or Eksporter @elseif($loc == "in") Anda Bukan Sebagai Importir/Eksportir @endif</button>
+                  @else
+                    <a href="{{url('login')}}" type="submit" name="button" class="btn btn-primary btn-sm"> @if($loc == "ch") 您必须先登录 @elseif($loc == "en") You Must Login First @elseif($loc == "in") Anda Harus Login Terlebih Dahulu @endif</a>
+                  @endif
+                </div>
 		          </div>
 		        </div>
 					</form>
