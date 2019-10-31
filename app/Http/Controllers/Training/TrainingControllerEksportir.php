@@ -72,7 +72,7 @@ class TrainingControllerEksportir extends Controller
 			->first();
 
       $tick = DB::table('training_join as tj')
-			->selectRaw('tj.*,ta.start_date,ta.duration,ta.topic_in,ta.location_in,ta.training_in')
+			->selectRaw('tj.*,ta.start_date,ta.end_date,ta.param,ta.duration,ta.topic_in,ta.location_in,ta.training_in')
 			->leftJoin('training_admin as ta','ta.id','=','tj.id_training_admin')
 			->where('tj.id_profil_eks',$id->id)
 			->get();
