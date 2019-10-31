@@ -48,6 +48,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/tracking', 'FrontController@tracking');
     Route::get('/front_end/contact-us', 'FrontController@contact_us');
     Route::post('/contact-us/send', 'FrontController@contact_us_send');
+    Route::get('/front_end/service-detail/{id}', 'FrontController@service');
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
 
     /**
@@ -535,6 +536,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::prefix('service')->group(function () {
         Route::name('service.')->group(function () {
             Route::get('/', 'ServiceController@index')->name('index');
+            Route::get('/admin', 'ServiceController@index_admin')->name('index_admin');
 		    Route::get('/getData/', 'ServiceController@getData')->name('getData');
 		    Route::get('/create/', 'ServiceController@create')->name('create');
 		    Route::get('/edit/{id}', 'ServiceController@edit')->name('edit');
@@ -543,6 +545,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
 		    Route::post('/update/{id}', 'ServiceController@update')->name('update');
 		    Route::get('/destroy/{id}', 'ServiceController@destroy')->name('destroy');
     		Route::get('/verifikasi/{id}', 'ServiceController@verifikasi')->name('verifikasi');
+    		Route::get('/approve/{id}', 'ServiceController@approval')->name('approve');
         });
     });
 });

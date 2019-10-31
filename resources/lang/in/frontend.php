@@ -37,5 +37,12 @@ return [
     "cari"  => "Cari",
     "t_date"    => 'Tanggal Mulai - Tanggal Berakhir', 
     "t_Comodity"    => "Komoditas",
-    "t_join"    => "Bergabung"
+    "t_join"    => "Bergabung",
+    "cu-fullname"    => "Nama Lengkap",
+    "cu-email"    => "Email",
+    "cu-subyek"    => "Subyek",
+    "cu-message"    => "Pesan",
+    "cu-cu"    => "Hubungi Kami",
+    "cu-submit"    => "Kirim",
+    "service-title"    => "Layanan Keanggotaan"
 ];
