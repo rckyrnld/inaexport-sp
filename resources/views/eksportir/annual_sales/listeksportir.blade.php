@@ -26,7 +26,7 @@
                         <p><h6><a href="{{url('/eksportir/training_admin/'.$id)}}" style="color: blue">Training</a></h6>
                         <p><h6><a href="{{url('/eksportir/taxes_admin/'.$id)}}" style="color: blue">Tax</a></h6>
                         <p><h6><a href="{{url('/eksportir/contact_admin/'.$id)}}" style="color: blue">Contact</a></h6>
-                        <p><h6><a href="{{url('/eksportir/service/admin/'.$id)}}" style="color: blue">Service</a></h6>
+                        <p><h6><a href="{{url('/eksportir/service/admin/')}}" style="color: blue">Service</a></h6>
                     </div>
                     <br>
                     <div class="form-group col-sm-6">
