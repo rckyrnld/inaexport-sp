@@ -321,3 +321,30 @@ if (! function_exists('getCompanyNameImportir')) {
         return $nama;
     }
 }
+
+if (! function_exists('getIdUserEks')) {
+    function getIdUserEks($id){
+        $data = DB::table('itdp_company_users')->where('id_profil', $id)->first();
+        return $data->id;
+    }
+}
+
+if (! function_exists('getServiceAttr')) {
+    function getServiceAttr($id, $col, $lang){
+        $data = DB::table('itdp_service_eks')->where('id', $id)->first();
+
+        if($lang != ""){
+          $dt = $col.'_'.$lang;
+          if($data->$dt != NULL){
+            $isi = $data->$dt;
+          } else {
+            $dt = $col.'_en';
+            $isi = $data->$dt;
+          }
+        } else {
+          $isi = $data->$col;
+        }
+
+        echo $isi;
+    }
+}

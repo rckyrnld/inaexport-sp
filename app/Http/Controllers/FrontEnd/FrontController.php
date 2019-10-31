@@ -27,8 +27,9 @@ class FrontController extends Controller
             ->inRandomOrder()
             ->limit(10)
             ->get();
-        
-        return view('frontend.index', compact('product'));
+
+        $service = DB::table('itdp_service_eks as a')->where('status', 2)->orderBy('created_at', 'desc')->get();
+        return view('frontend.index', compact('product','service'));
     }
 
     public function all_product()
@@ -102,6 +103,11 @@ class FrontController extends Controller
         $page = 'create';
         $url = "/contact-us/send/";
         return view('frontend.contact-us', compact('page', 'url'));
+    }
+
+    public function service($id){
+        $data = DB::table('itdp_service_eks')->where('id', $id)->first();
+        return view('frontend.service', compact('data'));
     }
 
     public function contact_us_send(Request $req){

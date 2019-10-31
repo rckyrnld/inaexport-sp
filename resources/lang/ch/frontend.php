@@ -38,5 +38,12 @@ return [
     "cari"  => "寻找",
     "t_date"    => '开始日期 - 结束日期', 
     "t_Comodity"    => "大宗商品",
-    "t_join"    => "加入"
+    "t_join"    => "加入",
+    "cu-fullname"    => "全名",
+    "cu-email"    => "电子邮件",
+    "cu-subyek"    => "主题",
+    "cu-message"    => "信息",
+    "cu-cu"    => "联系我们",
+    "cu-submit"    => "发送",
+    "service-title"    => "会员服务"
 ];

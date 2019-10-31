@@ -15,7 +15,7 @@ class CategoryProductController extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'Category Product';
+      $pageTitle = 'Data Category Product';
       $product = DB::table('csc_product')->orderby('nama_kategori_en', 'asc')->get();
       return view('management.category-product.index',compact('pageTitle','product'));
     }
@@ -43,7 +43,7 @@ class CategoryProductController extends Controller
 
     public function create()
     {
-      $pageTitle = 'Category Product';
+      $pageTitle = 'Data Category Product';
       $page = 'create';
       $url = "/management/category-product/store/Create";
       $level_1 = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
@@ -97,7 +97,7 @@ class CategoryProductController extends Controller
 
     public function view($id)
     {
-      $pageTitle = "Category Product";
+      $pageTitle = "Data Category Product";
       $page = "view";
       $data = DB::table('csc_product')->where('id', $id)->first();
       $level_1 = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
@@ -107,7 +107,7 @@ class CategoryProductController extends Controller
     public function edit($id)
     {
       $page = "edit";
-      $pageTitle = "Category Product";
+      $pageTitle = "Data Category Product";
       $url = "/management/category-product/store/Update_".$id;
       $data = DB::table('csc_product')->where('id', $id)->first();
       $level_1 = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
