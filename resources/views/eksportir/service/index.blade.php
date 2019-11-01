@@ -47,7 +47,7 @@
             "ordering": false,
             processing: true,
             serverSide: true,
-            ajax: "{{ route('service.getData') }}",
+            ajax: "{{ route('service.getData', 'id') }}",
             columns: [
                 {data: 'nama_en', name: 'nama_en'},
                 {data: 'bidang_en', name: 'bidang_en'},

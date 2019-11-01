@@ -32,6 +32,11 @@
 					          </tr>
 					      </thead>
 					    </table>
+                        <br>
+                        <a style="color: white" href="{{ url('eksportir/listeksportir/'.$id) }}"
+                           class="btn btn-success pull-right"><i style="color: white"></i>
+                            Back
+                        </a>
 					  </div>
       	  			</div>
                 </div>
@@ -46,7 +51,7 @@
             "ordering": false,
             processing: true,
             serverSide: true,
-            ajax: "{{ route('service.getData') }}",
+            ajax: "{{ route('service.getData', $id) }}",
             columns: [
                 {data: 'nama_en', name: 'nama_en'},
                 {data: 'bidang_en', name: 'bidang_en'},
