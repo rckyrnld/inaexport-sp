@@ -97,7 +97,9 @@ class ProductNonAuthController extends Controller
 	}
 
 	 public function getImageProduk(Request $request){
-        $path = storage_path().'uploads/Eksportir_Product/Image/'.$request->id.'/'.$request->image;
-        return response::download($path);        
+		$path = public_path().'/uploads/Eksportir_Product/Image/'.$request->id.'/'.$request->image;
+		dd($path);
+		
+        return response($path);        
     }
 }

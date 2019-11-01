@@ -18,14 +18,14 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $pageTitle = 'Users';
+        $pageTitle = 'Users Administrator';
        //  $user = User::join('group','group.id_group','=','users.id_group')->orderBy('id', 'DESC')->get();
-		$user = DB::select('select a.*,a.created_at as ca,b.* from itdp_admin_users a , "group" b where a.id_group = b.id_group order by a.id DESC');
+		$user = DB::select('select a.*,a.created_at as ca,b.* from itdp_admin_users a , "group" b where a.id_group=1 and a.id_group = b.id_group order by a.id DESC');
         $url = '/user_save';
         // $group = Group::all();
 		$nb = "group";
 		$data = DB::select("select a.* from itdp_company_users a order by a.id desc ");
-        $group = DB::select("select * from public.group where id_group!='2' and id_group!='3' order by id_group asc");
+        $group = DB::select("select * from public.group where id_group!='2' and id_group!='3' and id_group!='4' order by id_group asc");
         return view('UM.user.index',compact('pageTitle','user','url','group','data'));
     }
 
@@ -62,7 +62,8 @@ class UsersController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'password_real' => $request->password,
+            'password_real' => "-",
+            'type' => "DJPEN",
             'created_at' => date('Y-m-d H:i:s'),
             'id_group' => $request->id_group
         ]);
@@ -101,8 +102,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $pageTitle = 'Users';
-        $user = User::join('group','group.id_group','=','users.id_group')->get();
+        $pageTitle = 'Users Administrator';
+        $user = User::join('group','group.id_group','=','itdp_admin_users.id_group')->where('itdp_admin_users.id_group','1')->get();
         $url = '/user_update/'.$id;
         $res = User::find($id);
         $group = Group::all();
@@ -118,13 +119,21 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $update = User::where('id',$id)->update([
+		if(empty($request->password) || $request->password == null || $request->password == ""){
+			$update = User::where('id',$id)->update([
+            'name' => $request->name,
+            'email' => $request->email
+			]);
+		}else{
+			$update = User::where('id',$id)->update([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'password_real' => $request->password,
             'id_group' => $request->id_group
-        ]);
+			]);
+		}
+        
 
         if($update){
             Session::flash('success','Mengubah Data');
