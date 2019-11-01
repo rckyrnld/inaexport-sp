@@ -251,7 +251,7 @@ foreach($q2 as $p2){
                 <div class="panel-body" style="overflow-y: scroll;">
                     <ul class="chat" id="rchat">
 					<?php 
-					$qwr = DB::select("select * from csc_buying_request_chat where id_br='".$id_br."'");
+					$qwr = DB::select("select * from csc_buying_request_chat where id_br='".$id_br."' and id_join='".$id."'");
 					foreach($qwr as $r){
 					?>
 					
@@ -264,9 +264,15 @@ foreach($q2 as $p2){
                                     <strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo $r->username_pengirim; ?></b></strong>
 									<small class="glyphicon glyphicon-time"> (<?php echo $r->tanggal; ?>)</small>
                                 </div>
-                                <p>
+                                  <p>
                                     <?php echo $r->pesan; ?>
+									
                                 </p>
+								<p>
+								<?php if(empty($r->files)){}else{?>
+									<br><a target="_BLANK" href="{{asset('uploads/pop/'.$r->files)}}"><font color="green"><?php echo $r->files; ?></font></a>
+									<?php } ?>
+								</p>
                             </div>
                         </li>
 					<?php }else{ ?>
@@ -278,9 +284,15 @@ foreach($q2 as $p2){
 									<strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo $r->username_pengirim; ?></b></strong>
 									<small class="glyphicon glyphicon-time"> (<?php echo $r->tanggal; ?>)</small>
                                 </div>
-                                <p>
+                                  <p>
                                     <?php echo $r->pesan; ?>
+									
                                 </p>
+								<p>
+								<?php if(empty($r->files)){}else{?>
+									<br><a target="_BLANK" href="{{asset('uploads/pop/'.$r->files)}}"><font color="green"><?php echo $r->files; ?></font></a>
+									<?php } ?>
+								</p>
                             </div>
                         </li>
 					<?php } ?>
@@ -345,11 +357,12 @@ function kirimchat(){
 	var c = 4;
 	var d = <?php echo Auth::user()->id;?>;
 	var e = '<?php echo Auth::user()->name;?>';
+	var f = '<?php echo $id;?>';
 	var token = $('meta[name="csrf-token"]').attr('content');
 	if(a == null || a == ""){
 			alert("Write Something !");
 	}else{
-		$.get('{{URL::to("simpanchatbr/")}}/'+a+'/'+b+'/'+c+'/'+d+'/'+e,{_token:token},function(data){
+		$.get('{{URL::to("simpanchatbr/")}}/a/'+b+'/'+c+'/'+d+'/'+e+'/'+f,{a:a,_token:token},function(data){
 			
 		 });
 	$('#rchat').append('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix pull-right"><div class="header"><strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo Auth::user()->name;?></b></strong><small class="glyphicon glyphicon-time"> (<?php echo date('Y-m-d H:m:s'); ?>)</small></div><p>'+ a +'</p></div></li>');

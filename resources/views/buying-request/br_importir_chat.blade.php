@@ -136,8 +136,7 @@
 	
       <div class="" style="text-color:black;padding-left:10px; padding-right:10px; border-radius: 3px;">
 	  <br>
-	 <form class="form-horizontal" method="POST" action="{{ url('br_importir_save') }}" enctype="multipart/form-data">
-           {{ csrf_field() }}
+	 
 
 <?php 
 								$pesan = DB::select("select * from csc_buying_request where id='".$id."' limit 1 ");
@@ -322,7 +321,7 @@
                 <div class="panel-body" style="overflow-y: scroll;">
                     <ul class="chat" id="rchat" style="color:black!Important;">
 					<?php 
-					$qwr = DB::select("select * from csc_buying_request_chat where id_br='".$id."'");
+					$qwr = DB::select("select * from csc_buying_request_chat where id_br='".$id."' and id_join='".$idb."'");
 					foreach($qwr as $r){
 					?>
 					
@@ -337,7 +336,13 @@
                                 </div>
                                 <p>
                                     <?php echo $r->pesan; ?>
+									
                                 </p>
+								<p>
+								<?php if(empty($r->files)){}else{?>
+									<br><a target="_BLANK" href="{{asset('uploads/pop/'.$r->files)}}"><font color="green"><?php echo $r->files; ?></font></a>
+									<?php } ?>
+								</p>
                             </div>
                         </li>
 					<?php }else{ ?>
@@ -351,7 +356,13 @@
                                 </div>
                                 <p>
                                     <?php echo $r->pesan; ?>
+									
                                 </p>
+								<p>
+								<?php if(empty($r->files)){}else{?>
+									<br><a target="_BLANK" href="{{asset('uploads/pop/'.$r->files)}}"><font color="green"><?php echo $r->files; ?></font></a>
+									<?php } ?>
+								</p>
                             </div>
                         </li>
 					<?php } ?>
@@ -382,18 +393,44 @@
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Upload Bukti Bayar</h6>
+        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Upload Proof of Payment</h6>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
          
         </div>
-		<div id ="isibroadcast"></div>
+		<form id="formId" action="{{ url('uploadpop') }}" enctype="multipart/form-data" method="post">
+		   {{ csrf_field() }}
         <div class="modal-body">
-          <input type="file" class="form-control" name="filez" id="filez">
+		<div class="form-row">
+		<div class="col-sm-3">
+		<label><b>File Upload</b></label>
+		</div>
+		<div class="form-group col-sm-7">
+			 <input type="hidden" class="form-control" name="idq" id="idq" value="<?php echo $id; ?>">
+			 <input type="hidden" class="form-control" name="idb" id="idb" value="<?php echo $idb; ?>">
+			 <input type="hidden" class="form-control" name="idc" id="idc" value="<?php echo Auth::guard('eksmp')->user()->id; ?>">
+			 <input type="hidden" class="form-control" name="idd" id="idd" value="<?php echo Auth::guard('eksmp')->user()->username; ?>">
+			 <input type="hidden" class="form-control" name="ide" id="ide" value="<?php echo Auth::guard('eksmp')->user()->id_role; ?>">
+			 <input type="file" class="form-control" name="filez" id="filez">
+		</div>
+		
+	</div>
+	<div class="form-row">
+		<div class="col-sm-3">
+		<label><b>Note</b></label>
+		</div>
+		<div class="form-group col-sm-7">
+			 <textarea class="form-control" name="catatan"></textarea>
+		</div>
+		
+	</div>
+         
+		  
         </div>
         <div class="modal-footer">
-			<a href="" class="btn btn-success">Send</a>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-success" ><font color="white">Upload</font></button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div> 
+		</form>
       </div>
     </div>
   </div>
@@ -424,20 +461,38 @@
 </div>
 
 								<?php } ?>
-</form>
+
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script>
+$('#formId' ).submit(
+    function( e ) {
+        $.ajax( {
+            url: '{{URL::to("uploadpop")}}',
+            type: 'POST',
+            data: new FormData( this ),
+            processData: false,
+            contentType: false,
+            success: function(result){
+                console.log(result);
+                //$("#div1").html(str);
+            }
+        } );
+        e.preventDefault();
+    } 
+);
+
 function kirimchat(){
 	var a= $('#inputan').val();
 	var b= <?php echo $id; ?>;
 	var c = 3;
 	var d = <?php echo Auth::guard('eksmp')->user()->id;?>;
 	var e = '<?php echo Auth::guard('eksmp')->user()->username;?>';
+	var f= <?php echo $idb; ?>;
 	var token = $('meta[name="csrf-token"]').attr('content');
 	if(a == null || a == ""){
 			alert("Write Something !");
 	}else{
-		$.get('{{URL::to("simpanchatbr/")}}/'+a+'/'+b+'/'+c+'/'+d+'/'+e,{_token:token},function(data){
+		$.get('{{URL::to("simpanchatbr/")}}/a/'+b+'/'+c+'/'+d+'/'+e+'/'+f,{a:a,_token:token},function(data){
 			
 		 });
 	$('#rchat').append('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix pull-right"><div class="header"><strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo Auth::guard('eksmp')->user()->username;?></b></strong><small class="glyphicon glyphicon-time"> (<?php echo date('Y-m-d H:m:s'); ?>)</small></div><p>'+ a +'</p></div></li>');

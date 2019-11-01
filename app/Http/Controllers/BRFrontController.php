@@ -38,10 +38,10 @@ class BRFrontController extends Controller
         return view('buying-request.br_importir_detail',compact('pageTitle','id'));
     }
 	
-	public function br_importir_chat($id)
+	public function br_importir_chat($id,$idb)
     {
         $pageTitle = "Chat Buying Request Importer";
-        return view('buying-request.br_importir_chat',compact('pageTitle','id'));
+        return view('buying-request.br_importir_chat',compact('pageTitle','id','idb'));
     }
 	
 	public function br_importir_lc($id)
@@ -81,6 +81,21 @@ class BRFrontController extends Controller
     {
         return view('buying-request.broad2', compact('id'));
     }
+	
+	public function uploadpop(Request $request)
+    {		
+			$idq = $request->idq;
+			$idb = $request->idb;
+			$idc = $request->idc;
+			$file = $request->file('filez')->getClientOriginalName();
+			$destinationPath = public_path() . "/uploads/pop";
+			$request->file('filez')->move($destinationPath, $file);
+			$insert = DB::select("
+			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
+			('".$idq."','".$request->catatan."','".Date('Y-m-d H:m:s')."','".$request->idc."','".$request->ide."','".$request->idd."','".$idb."','".$file."')");
+			
+			return redirect('br_importir_chat/'.$idq.'/'.$idb);
+	}	
 	
 	public function br_importir_save(Request $request)
     {

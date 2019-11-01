@@ -72,11 +72,12 @@ Route::get('/br_importir', 'BRFrontController@br_importir');
 Route::get('/br_importir_add', 'BRFrontController@br_importir_add');
 Route::get('/br_importir_detail/{id}', 'BRFrontController@br_importir_detail');
 Route::get('/br_importir_lc/{id}', 'BRFrontController@br_importir_lc');
-Route::get('/br_importir_chat/{id}', 'BRFrontController@br_importir_chat');
+Route::get('/br_importir_chat/{id}/{id2}', 'BRFrontController@br_importir_chat');
 Route::get('/br_importir_bc/{id}', 'BRFrontController@br_importir_bc');
 Route::get('/br_pw_bc/{id}', 'BRFrontController@br_pw_bc');
 Route::get('/br_konfirm/{id}/{id2}', 'BRFrontController@br_konfirm');
 Route::post('/br_importir_save', 'BRFrontController@br_importir_save');
+Route::post('/uploadpop', 'BRFrontController@uploadpop');
 Route::get('/ambilbroad/{id}', 'BRFrontController@ambilbroad');
 Route::get('/ambilbroad2/{id}', 'BRFrontController@ambilbroad2');
 /* Route::get('/registrasi_pembeli/{locale}', function ($locale) {
@@ -152,7 +153,7 @@ Route::get('/permission_delete/{id}', 'UM\PermissionsController@destroy');
 //buy request 
 Route::resource('/br_list', 'BuyingRequestController');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
-Route::get('/simpanchatbr/{id}/{id2}/{id3}/{id4}/{id5}', 'BuyingRequestController@simpanchatbr');
+Route::get('/simpanchatbr/{id}/{id2}/{id3}/{id4}/{id5}/{id6}', 'BuyingRequestController@simpanchatbr');
 Route::get('/br_add', 'BuyingRequestController@add');
 Route::get('/br_pw_lc/{id}', 'BuyingRequestController@br_pw_lc');
 Route::get('/br_pw_dt/{id}', 'BuyingRequestController@br_pw_dt');
