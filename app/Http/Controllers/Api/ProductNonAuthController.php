@@ -104,7 +104,7 @@ class ProductNonAuthController extends Controller
 			return response()->download($path);        
 		// }else{
 		}catch(FileNotFoundException $e){
-			return respomse()->download(public_path().'/image/noimage.jpg');
+			return response()->download(public_path().'/image/noimage.jpg');
 	
 		}
 	}
