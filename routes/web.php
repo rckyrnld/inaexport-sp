@@ -552,8 +552,8 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::prefix('service')->group(function () {
         Route::name('service.')->group(function () {
             Route::get('/', 'ServiceController@index')->name('index');
-            Route::get('/admin', 'ServiceController@index_admin')->name('index_admin');
-		    Route::get('/getData/', 'ServiceController@getData')->name('getData');
+            Route::get('/admin/{id}', 'ServiceController@index_admin')->name('index_admin');
+		    Route::get('/getData/{id}', 'ServiceController@getData')->name('getData');
 		    Route::get('/create/', 'ServiceController@create')->name('create');
 		    Route::get('/edit/{id}', 'ServiceController@edit')->name('edit');
 		    Route::get('/view/{id}', 'ServiceController@view')->name('view');
