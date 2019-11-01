@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class ProductNonAuthController extends Controller
 {
