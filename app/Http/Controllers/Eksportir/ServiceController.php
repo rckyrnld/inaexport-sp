@@ -33,11 +33,11 @@ class ServiceController extends Controller
       }
     }
 
-    public function index_admin()
+    public function index_admin($id)
     {
       $pageTitle = "Service";
       if(Auth::user()){
-          return view('eksportir.service.index_admin', compact('pageTitle'));
+          return view('eksportir.service.index_admin', compact('pageTitle', 'id'));
       } else {
           return redirect('/login');
       }
@@ -118,10 +118,10 @@ class ServiceController extends Controller
       }
     }
 
-    public function getData()
+    public function getData($id)
     {
       if(Auth::user()){
-        $service = DB::table('itdp_service_eks as a')->where('status', '!=', 0)->orderBy('created_at', 'desc')->get();
+        $service = DB::table('itdp_service_eks as a')->where('id_itdp_profil_eks', $id)->where('status', '!=', 0)->orderBy('created_at', 'desc')->get();
       } else if(Auth::guard('eksmp')->user()) {
         if(Auth::guard('eksmp')->user()->id_role == 2){
           $id_profil = Auth::guard('eksmp')->user()->id_profil;
