@@ -99,14 +99,14 @@ class ProductNonAuthController extends Controller
 	 public function getImageProduk(Request $request){
 		//dd($path);
 		// if(response()->download($path) != null){
-		try{
-			$path = public_path().'/uploads/Eksportir_Product/Image/'.$request->id.'/'.$request->image;
-			return response()->download($path);        
+		// try{
+		// 	$path = public_path().'/uploads/Eksportir_Product/Image/'.$request->id.'/'.$request->image;
+		// 	return response()->download($path);        
 		// }else{
-		}catch(FileNotFoundException $e){
+		// }catch(FileNotFoundException $e){
 			return response()->download(public_path().'/image/noimage.jpg');
 	
-		}
+		// }
 	}
 	
 	public function responseView($pathToFile,$filename)
