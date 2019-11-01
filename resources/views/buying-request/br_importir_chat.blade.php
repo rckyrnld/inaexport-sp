@@ -501,7 +501,13 @@ function kirimchat(){
 	
 }
 function rfr(){
-	$('#rchat').html('Kosong')
+	a = <?php echo $id; ?>;
+	b = <?php echo $idb; ?>;
+	var token = $('meta[name="csrf-token"]').attr('content');
+	$.get('{{URL::to("refreshchat/")}}/'+a+'/'+b,{_token:token},function(data){
+		$('#rchat').html(data)
+		 });
+	//$('#rchat').html('Kosong')
 }
 </script>
 <script>

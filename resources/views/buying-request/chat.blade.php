@@ -372,7 +372,12 @@ function kirimchat(){
 	
 }
 function rfr(){
-	$('#rchat').html('Kosong')
+	a = $('#id_br').val();
+	b = <?php echo $id; ?>;
+	var token = $('meta[name="csrf-token"]').attr('content');
+	$.get('{{URL::to("refreshchat/")}}/'+a+'/'+b,{_token:token},function(data){
+		$('#rchat').html(data)
+		 });
 }
 function t1(){
 	$('#t2').html('');
