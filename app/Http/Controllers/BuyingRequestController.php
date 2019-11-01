@@ -28,19 +28,19 @@ class BuyingRequestController extends Controller
 	
 	public function getcsc()
     {
-        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_inquiry_global order by id desc ");
+        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request order by id desc ");
       return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
-				 return $pesan->company_name;
+				 return $pesan->subyek;
             })
 			->addColumn('f2', function ($pesan) {
-				 return $pesan->valid;
+				 return "Valid until ".$pesan->valid." days";
             })
 			->addColumn('f3', function ($pesan) {
 				 return $pesan->date;
             })
 			->addColumn('f4', function ($pesan) {
-				 $kat = $pesan->id_prod_kat;
+				 $kat = $pesan->id_csc_prod_cat;
 				 $cardata = DB::select("select nama_kategori_en from csc_product where id='".$kat."'");
 				 foreach($cardata as $ct){
 					 $naka = $ct->nama_kategori_en;
@@ -48,22 +48,33 @@ class BuyingRequestController extends Controller
 				return $naka;
             })
 			->addColumn('f6', function ($pesan) {
-				return $pesan->spec;
+				if($pesan->by_role == 4){
+					return "Perwakilan";
+				}else if($pesan->by_role == 3){
+					return "Importir";
+				}
             })
 			->addColumn('f7', function ($pesan) {
-				if($pesan->st_approve == 1){
-					return "Valid";
-				}else if($pesan->st_approve == 2){
-					return "Not Valid";
+				if($pesan->status == 1){
+					return "Negosiation";
+				}else if($pesan->status == 4){
+					return "Deal";
 				}else{
-					return "Wait Verify";
+					return "-";
 				}
 				 
             })
             ->addColumn('action', function ($pesan) {
-           
-                 
-				return '<a href="'.url('/').'" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verify</a>';
+				if($pesan->status == 1){
+					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary"><i class="fa fa-comment"></i> List Chat</a>';
+				}else if($pesan->status == 4){
+					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success"><i class="fa fa-list"></i> List Chat</a>';
+				}else{
+					return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i> Broadcast</i></a>
+					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Detail</a>';
+				}
+                
+				
 				
            
                 
@@ -77,6 +88,18 @@ class BuyingRequestController extends Controller
         $pageTitle = "Add Buying Request Perwakilan";
 		return view('buying-request.add', compact('pageTitle'));
     }
+	
+	public function br_pw_lc($id)
+    {
+		$pageTitle = "List Chat Request Perwakilan";
+		return view('buying-request.lc', compact('id','pageTitle'));
+	}
+	
+	public function br_pw_dt($id)
+    {
+		$pageTitle = "List Chat Request Perwakilan";
+		return view('buying-request.dt', compact('id','pageTitle'));
+	}
 	
 	public function br_join($id)
     {
@@ -101,6 +124,12 @@ class BuyingRequestController extends Controller
     {
 		$pageTitle = "Chat Buying Request Eksportir";
 		return view('buying-request.chat', compact('id','pageTitle'));
+	}
+	
+	public function br_pw_chat($id)
+    {
+		$pageTitle = "Chat Buying Request Perwakilan";
+		return view('buying-request.chat2', compact('id','pageTitle'));
 	}
 	
 	public function br_save_join($id)
@@ -129,8 +158,8 @@ class BuyingRequestController extends Controller
 			$request->file('doc')->move($destinationPath, $file);
 		}
 		$insert = DB::select("
-			insert into csc_inquiry_global (company_name,valid,id_mst_country,city,id_prod_kat,id_prod_sub1_kat,id_prod_sub2_kat,shipping,spec,files
-			,eo,neo,tp,ntp,by_role,by_user,date) values
+			insert into csc_buying_request (subyek,valid,id_mst_country,city,id_csc_prod_cat,id_csc_prod_cat_level1,id_csc_prod_cat_level2,shipping,spec,files
+			,eo,neo,tp,ntp,by_role,id_pembuat,date) values
 			('".$request->cmp."','".$request->valid."','".$request->country."','".$request->city."','".$request->category."'
 			,'".$request->t2s."','".$request->t3s."','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
 			,'".$request->tp."','".$request->ntp."','4','".Auth::user()->id."','".Date('Y-m-d H:m:s')."')");

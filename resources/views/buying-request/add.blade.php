@@ -138,7 +138,7 @@ body {font-family: Arial;}
 				
 			<div class="form-row">
 		<div class="col-sm-7"><input type="number" value="" name="tp" id="tp" class="form-control" ></div>
-		<div class="col-sm-5"> <select class="form-control" name="ntp" id="ntp"><option value="THB">THB</option></select></div>
+		<div class="col-sm-5"> <select class="form-control" name="ntp" id="ntp"><option value="IDR">IDR</option><option value="USD">USD</option><option value="THB">THB</option></select></div>
 		</div>
 		</div>
 		
