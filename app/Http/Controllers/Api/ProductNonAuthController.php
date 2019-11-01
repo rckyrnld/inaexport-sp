@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class ProductNonAuthController extends Controller
 {
@@ -98,8 +98,30 @@ class ProductNonAuthController extends Controller
 
 	 public function getImageProduk(Request $request){
 		$path = public_path().'/uploads/Eksportir_Product/Image/'.$request->id.'/'.$request->image;
-		dd($path);
-		
-        return response($path);        
+		if(is_file($path)){
+			return response()->download($path);        
+		}else{
+			return response()->download(public_path().'/image/noimage.jpg');
+		}
+	}
+	
+	public function responseView($pathToFile,$filename)
+    {
+
+         $headers =['Access-Control-Allow-Origin'      => '*',
+                    'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
+                    'Access-Control-Allow-Credentials' => 'true',
+                    'Access-Control-Max-Age'           => '86400',
+                    'Access-Control-Allow-Headers'     => 'Content-Type, Accept, Authorization, X-Requested-With, Application, Origin, Authorization, APIKey, Timestamp, AccessToken',
+                    'Content-Disposition' => 'filename='.$filename, 
+                    'Pragma' => 'public',
+                    'Content-Transfer-Encoding' => 'binary',
+                    'Content-Type' =>   $this->getContentType($pathToFile),
+                    'Content-Length' => filesize($pathToFile)];
+
+        $response = new BinaryFileResponse($pathToFile, 200 , $headers);
+        return $response;
+
     }
+
 }
