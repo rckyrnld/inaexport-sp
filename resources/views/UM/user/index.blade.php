@@ -65,8 +65,34 @@ body {font-family: Arial;}
       	  <div class="box-header">
       	  		
           	 	{{Form::open(['url' => $url,'method' => 'post'])}}
+				<?php // echo $url; ?>
+				 <div class="col-md-12">
+          	 		<div class="form-group row">
+				      {!!Form::label('password_confirm','Group',['class' => 'col-sm-2 col-form-label '])!!}
+				      <div class="col-sm-4">
+				     <select class="form-control" name="id_group">
+				        		@foreach($group as $res)
+
+				        		 <option @if($id_group == $res->id_group) selected="selected"  @endif value="{{$res->id_group}}">{{$res->group_name}}</option>
+
+				        		@endforeach
+				        	</select>
+				      </div>
+
+				    </div>
+				  </div>
+				  <div class="col-md-12">
+          	 		<div class="form-group row">
+				      {!!Form::label('password_confirm','Type',['class' => 'col-sm-2 col-form-label '])!!}
+				      <div class="col-sm-4">
+				     
+				        <input type="text" name="type" class="form-control" value="DJPEN" readonly> 
+						</div>
+
+				    </div>
+				  </div>
           	 	 <div class="col-md-12">
-          	 	 	<br>
+          	 	 	
           	 		<div class="form-group row">
 				      {!!Form::label('name','Nama',['class' => 'col-sm-2 col-form-label '])!!}
 				      <div class="col-sm-4">
@@ -79,28 +105,7 @@ body {font-family: Arial;}
 					  
 				    </div>
 				  </div>
-				   <div class="col-md-12">
-          	 		<div class="form-group row">
-				      {!!Form::label('password_confirm','Tipe',['class' => 'col-sm-2 col-form-label '])!!}
-				      <div class="col-sm-4">
-				     
-				        <!--<input type="password" name="password_confirm" class="form-control" value="{{$password}}"> -->
-						<select class="form-control" name="type">
-						<option>DJPEN</option>
-						<option>ITPC</option>
-						<option>KOMJEN</option>
-						<option>KBRI</option>
-						<option>ATASE PERDAGANGAN</option>
-						<option>DINAS PERDAGANGAN</option>
-						
-						</select>
-
-
-
-				      </div>
-
-				    </div>
-				  </div>
+				  
 
 				   <div class="col-md-12">
           	 		<div class="form-group row">
@@ -124,7 +129,7 @@ body {font-family: Arial;}
 				      <div class="col-sm-4">
 				      
 
-				       <input type="password" name="password" class="form-control" value="{{$password}}">
+				       <input type="password" name="password" class="form-control" value="">
 
 				      </div>
 
@@ -137,7 +142,7 @@ body {font-family: Arial;}
 				      {!!Form::label('password_confirm','Konfirmasi Password',['class' => 'col-sm-2 col-form-label '])!!}
 				      <div class="col-sm-4">
 				     
-				        <input type="password" name="password_confirm" class="form-control" value="{{$password}}">
+				        <input type="password" name="password_confirm" class="form-control" value="">
 
 
 
@@ -151,16 +156,10 @@ body {font-family: Arial;}
 
 				  <div class="col-md-12">
           	 		<div class="form-group row">
-				      {!!Form::label('group','Group',['class' => 'col-sm-2 col-form-label '])!!}
+				      {!!Form::label('group','&nbsp;',['class' => 'col-sm-2 col-form-label '])!!}
 				      <div class="col-sm-4">
 				     
-				        	<select class="form-control" name="id_group">
-				        		@foreach($group as $res)
-
-				        		 <option @if($id_group == $res->id_group) selected="selected"  @endif value="{{$res->id_group}}">{{$res->group_name}}</option>
-
-				        		@endforeach
-				        	</select>
+				        	
 				        	<br>
 
 
@@ -185,28 +184,14 @@ body {font-family: Arial;}
           </div>
       </div>
 
-<div class="tab">
-  <button class="tablinks active" onclick="openCity(event, 'London')"><font size="3px">Administrator & Perwakilan</font></button>
-  <button class="tablinks" onclick="openCity(event, 'Paris')"><font size="3px">Eksportir & Importir</font></button>
-</div>
-<div id="London" class="tabcontent" style="display:block;">
-       <div class="box">
-      	  {{-- <div class="box-header">
-      	  </div> --}}
-      	  <div class="box-divider m-0"></div>
 
-      	  <div class="box-body">
-      	  			 
-          	 <div class="col-md-12">
-          	 	<br>
-          	 <div class="table-responsive">
-          	 	
-			    <table id="example1" class="table  table-bordered table-striped" data-plugin="dataTable">
+<table id="example1" class="table  table-bordered table-striped" data-plugin="dataTable">
 			      <thead class="bg-success text-white">
 			          <tr>
 			              <th width="50">No</th>
 			              <th>Group</th>
 			              <th>User</th>
+			              <th>Email</th>
 			              <th><center>Tanggal Daftar</center></th>
 			              <th><center>Aksi</center></th>
 			             
@@ -219,6 +204,7 @@ body {font-family: Arial;}
 			      			<td>{{$no+1}}</td>
 			      			<td>{{$res->group_name}}</td>
 			      			<td>{{$res->name}}</td>
+			      			<td>{{$res->email}}</td>
 			      			<td><center>{{$res->ca}}</center></td>
 			      			<td><center>
 			      				<div class="btn-group">
@@ -234,67 +220,6 @@ body {font-family: Arial;}
 			      	@endforeach
 			      </tbody>
 			    </table>
-			  </div>
-			  </div>
-      	  </div>
-
-      </div>
-</div>
-<div id="Paris" class="tabcontent">
-<br>
-<table id="example2" class="table table-bordered table-striped">
-                                <thead class="text-white" style="background-color: #1089ff;">
-                                <tr>
-                                    <th>No</th>
-                                    <th>
-                                        <center>Username</center>
-                                    </th>
-                                    <th>
-                                        <center>Email</center>
-                                    </th>
-                                    <th>
-                                        <center>Role</center>
-                                    </th>
-                                    <th>
-                                        <center>Konfirmasi Email</center>
-                                    </th>
-									<th>
-                                        <center>Verify By Admin</center>
-                                    </th>
-                                    <th width="10%">
-                                        <center>Action</center>
-                                    </th>
-                                </tr>
-                                </thead>
-								<tbody>
-								<?php $i=1; foreach($data as $row){ ?>
-								<tr>
-									<td><?php echo $i;?></td>
-									<td><center><?php echo $row->username;?></center></td>
-									<td><center><?php echo $row->email;?></center></td>
-									<td><center>
-									<?php 
-									$cari1 = DB::select("select * from public.group where id_group='".$row->id_role."'");
-									foreach($cari1 as $cr1){ echo $cr1->group_name; }
-									?>
-									</center></td>
-									<td><center><?php if($row->agree == 1){ echo "<font color='green'>Sudah</font>";}else{ echo "<font color='red'>Belum</font>";};?></center></td>
-									<td><center><?php if($row->status == 1){ echo "<font color='green'>Sudah di Verifikasi</font>";}else{ echo "<font color='red'>Belum di Verifikasi</font>";};?></center></td>
-									<td><center>
-									<?php if($row->status == 1){ ?>
-									<a href="{{url('profil/'.$row->id_role.'/'.$row->id)}}" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>
-									
-									<?php }else{ ?>
-									<a href="{{url('profil/'.$row->id_role.'/'.$row->id)}}" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verifikasi</a>
-									<?php } ?>
-									</center></td>
-								</tr>
-								<?php $i++; } ?>
-								</tbody>
-
-                            </table>
-</div>
-
     </div>
   </div>
 </div>

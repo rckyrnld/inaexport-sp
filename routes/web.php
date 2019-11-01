@@ -43,6 +43,9 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/inquiry_list', 'InquiryFrontController@index');
     Route::get('/front_end/inquiry_getdata', 'InquiryFrontController@datanya')->name('front.datatables.inquiry');
     Route::get('/front_end/ver_inquiry/{id}', 'InquiryFrontController@verifikasi_inquiry');
+    Route::get('/front_end/chat_inquiry/{id}', 'InquiryFrontController@chatting')->name('front.inquiry.chatting');
+    Route::post('/front_end/inquiry_product/fileChat', 'InquiryFrontController@fileChat')->name('front.inquiry.fileChat');
+    Route::get('/front_end/view_inquiry/{id}', 'InquiryFrontController@view')->name('front.inquiry.view');
 
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
@@ -74,9 +77,11 @@ Route::get('/br_importir_detail/{id}', 'BRFrontController@br_importir_detail');
 Route::get('/br_importir_lc/{id}', 'BRFrontController@br_importir_lc');
 Route::get('/br_importir_chat/{id}', 'BRFrontController@br_importir_chat');
 Route::get('/br_importir_bc/{id}', 'BRFrontController@br_importir_bc');
+Route::get('/br_pw_bc/{id}', 'BRFrontController@br_pw_bc');
 Route::get('/br_konfirm/{id}/{id2}', 'BRFrontController@br_konfirm');
 Route::post('/br_importir_save', 'BRFrontController@br_importir_save');
 Route::get('/ambilbroad/{id}', 'BRFrontController@ambilbroad');
+Route::get('/ambilbroad2/{id}', 'BRFrontController@ambilbroad2');
 /* Route::get('/registrasi_pembeli/{locale}', function ($locale) {
     App::setLocale($locale);
     return view('auth.register_pembeli');
@@ -152,7 +157,10 @@ Route::resource('/br_list', 'BuyingRequestController');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
 Route::get('/simpanchatbr/{id}/{id2}/{id3}/{id4}/{id5}', 'BuyingRequestController@simpanchatbr');
 Route::get('/br_add', 'BuyingRequestController@add');
+Route::get('/br_pw_lc/{id}', 'BuyingRequestController@br_pw_lc');
+Route::get('/br_pw_dt/{id}', 'BuyingRequestController@br_pw_dt');
 Route::get('/br_join/{id}', 'BuyingRequestController@br_join');
+Route::get('/br_pw_chat/{id}', 'BuyingRequestController@br_pw_chat');
 Route::get('/br_chat/{id}', 'BuyingRequestController@br_chat');
 Route::get('/br_deal/{id}/{id2}/{id3}', 'BuyingRequestController@br_deal');
 Route::get('/br_save_join/{id}', 'BuyingRequestController@br_save_join');
@@ -570,6 +578,14 @@ Route::namespace('Inquiry')->group(function () {
     Route::get('/inquiry/view/{id}', 'InquiryEksController@view')->name('eksportir.inquiry.view');
     Route::get('/inquiry/chatting/{id}', 'InquiryEksController@chatting')->name('eksportir.inquiry.chatting');
     Route::get('/inquiry/sendChat', 'InquiryEksController@sendChat')->name('eksportir.inquiry.sendChat');
+    Route::post('/inquiry/fileChat', 'InquiryEksController@fileChat')->name('eksportir.inquiry.fileChat');
+    Route::get('/inquiry/dealing/{id}/{status}', 'InquiryEksController@dealing')->name('eksportir.inquiry.dealing');
+
+    //Perwakilan
+    Route::get('/inquiry_perwakilan', 'InquiryWakilController@index')->name('perwakilan.inquiry.index');
+    Route::get('/inquiry_perwakilan/getData', 'InquiryWakilController@getData')->name('perwakilan.inquiry.getData');
+    Route::get('/inquiry_perwakilan/create', 'InquiryWakilController@create')->name('perwakilan.inquiry.create');
+    Route::post('/inquiry_perwakilan/store', 'InquiryWakilController@store')->name('perwakilan.inquiry.store');
 });
 
 //YOSS---------------------------------------------

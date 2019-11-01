@@ -21,7 +21,9 @@ class CountryPaternBrandController extends Controller
     public function tambah()
     {
 //        dd($id_user);
-        $brand = DB::table('itdp_eks_product_brand')->get();
+        $brand = DB::table('itdp_eks_product_brand')
+            ->where('itdp_eks_product_brand.id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
+            ->get();
         $country = DB::table('mst_country')->get();
         $url = '/eksportir/country_patern_brand_save';
         $pageTitle = 'Tambah country patern brand';
