@@ -63,7 +63,7 @@ Route::namespace('Api')->group(function () {
             Route::post('browseProdukFeByKategori', 'ProductNonAuthController@browseProductByKategori');            
             Route::get('getKategori', 'ProductNonAuthController@findKategori');
             Route::post('detailProdukFe', 'ProductNonAuthController@detailProduk');
-            Route::post('getImageProduk','ProductNonAuthController@getImageProduk');
+            Route::get('getImageProduk/{id}/{image}','ProductNonAuthController@getImageProduk');
 
             //training
             Route::get('getTrainingall','TrainingNonAuthController@browseTraining');
