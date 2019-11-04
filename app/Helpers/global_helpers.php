@@ -348,3 +348,22 @@ if (! function_exists('getServiceAttr')) {
         echo $isi;
     }
 }
+
+if (! function_exists('getPerwakilanName')) {
+    function getPerwakilanName($id){
+        $nama = "-";
+        $data = DB::table('itdp_admin_users')->where('id', $id)->first();
+        if($data->id_admin_dn == 0){
+          $ln = DB::table('itdp_admin_ln')->where('id', $data->id_admin_ln)->first();
+          if($ln){
+            $nama = $ln->nama;
+          }
+        }else if($data->id_admin_ln == 0){
+          $dn = DB::table('itdp_admin_dn')->where('id', $data->id_admin_dn)->first();
+            $nama = $dn->nama;
+          }
+        }
+
+        return $nama;
+    }
+}

@@ -1,5 +1,9 @@
 @include('frontend.layout.header')
-
+<style>
+  .atag:hover{
+      text-decoration: underline;
+  }
+</style>
 <div class="d-flex flex-column flex" style="">
 	<div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
     <div class="mx-auto">
@@ -18,14 +22,21 @@
     </div>
   </div>
   <div id="content-body">
-    <div class="py-5 text-center w-100">
-      <h4><b>@lang("frontend.title2")</b></h4><br>
-      <center>
+    <div class="py-5 w-100">
+      <center><h4><b>@lang("frontend.title2")</b></h4><br></center>
       <div class="container">
         <div class="box" style="padding: 20px;">
         <?php
           $loc = app()->getLocale();
         ?>
+          <div class="row">
+            <div class="col-md-11">
+              <h5><b>@lang('inquiry.detail')</b></h5>
+            </div>
+            <div class="col-md-1">
+              <a href="{{url('/front_end/inquiry_list')}}" class="btn btn-danger" style="float: right;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> @lang('button-name.back')</a>
+            </div>
+          </div><br>
           <div class="row">
             <div class="col-lg-5">
               <div id="demo" class="carousel slide" data-ride="carousel">
@@ -188,20 +199,131 @@
                     </td>
                     <td><?php echo getProductAttr($data->id, 'product_description', $lct); ?></td>
                   </tr>
-                  <tr>
-                    <td colspan="2">
-                      <center>
-                        <a href="{{url('front_end/inquiry_product')}}/{{$data->id}}" class="btn btn-primary"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('product.inquiry')</a>
-                      </center>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
             </div>
+          </div><br>
+          <div class="row">
+              <div class="col-md-12">
+                  <h5><b>@lang('inquiry.titlechat')</b></h5>  
+              </div>
+          </div><br>
+          <div class="row">
+              <div class="col-md-12">
+                <div class="box" style="max-height: 400px; overflow-y: scroll;overflow-x: hidden; padding: 0px 5px 0px 5px; border: 1px solid rgba(120, 130, 140, 0.5);">
+                  <br>
+                  <div class="row">
+                    <?php
+                      $datenya = NULL;
+                    ?>
+                    @foreach($messages as $msg)
+                    @if($msg->sender == $id_user)
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                      @if($datenya == NULL)
+                          <?php
+                              $datenya = date('d-m-Y', strtotime($msg->created_at));
+                          ?>
+                          <center>
+                              <i>
+                                  {{$datenya}}
+                              </i>
+                          </center><br>
+                      @else
+                          @if($datenya != date('d-m-Y', strtotime($msg->created_at)))
+                              <?php
+                                  $datenya = date('d-m-Y', strtotime($msg->created_at));
+                              ?>
+                              <center>
+                                  <i>
+                                      {{$datenya}}
+                                  </i>
+                              </center><br>
+                          @endif
+                      @endif
+                      <div class="row pull-right">
+                        <div class="col-md-10">
+                          <label class="label" style="background: #FFD54F; border-radius:10px; width:300px; padding: 10px;">
+                              <b>@if($loc == "ch") 您 @elseif($loc == "en") You @elseif($loc == "in") Anda @endif</b> :<br>
+                              @if($msg->messages == NULL)
+                                  <a href="{{ url('/').'/uploads/ChatFileInquiry/'.$msg->id }}/{{ $msg->file }}" target="_blank" class="atag" style="color: red;">{{$msg->file}}</a><br>
+                              @else
+                                  {{$msg->messages}}<br>
+                              @endif
+                              <span style="color: #555; float: right;">{{date('H:i',strtotime($msg->created_at))}}</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div><br>
+                    <div class="col-md-1"></div>
+                    @else
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                      @if($datenya == NULL)
+                          <?php
+                              $datenya = date('d-m-Y', strtotime($msg->created_at));
+                          ?>
+                          <center>
+                              <i>
+                                  {{$datenya}}
+                              </i>
+                          </center><br>
+                      @else
+                          @if($datenya != date('d-m-Y', strtotime($msg->created_at)))
+                              <?php
+                                  $datenya = date('d-m-Y', strtotime($msg->created_at));
+                              ?>
+                              <center>
+                                  <i>
+                                      {{$datenya}}
+                                  </i>
+                              </center><br>
+                          @endif
+                      @endif
+                      <div class="row">
+                        <div class="col-md-10">
+                          <label class="label" style="background: #eee; border-radius:10px; width:300px; padding: 10px;">
+                              <b style="text-transform: capitalize;">{{getCompanyName($msg->sender)}}</b> :<br>
+                              @if($msg->messages == NULL)
+                                  <a href="{{ url('/').'/uploads/ChatFileInquiry/'.$msg->id }}/{{ $msg->file }}" target="_blank" class="atag" style="color: red;">{{$msg->file}}</a><br>
+                              @else
+                                  {{$msg->messages}}<br>
+                              @endif
+                              <span style="color: #555; float: right;">{{date('H:i',strtotime($msg->created_at))}}</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div><br>
+                    <div class="col-md-1"></div>
+                    @endif
+                    @endforeach
+                  </div><br>
+                </div>
+              </div>
           </div>
+          @if($inquiry->status != 3 && $inquiry->status != 4)
+          <div class="row">
+            <div class="col-md-12">
+              <form action="{{route('front.inquiry.fileChat')}}" method="post" enctype="multipart/form-data" id="uploadform2">
+              {{ csrf_field() }}
+              <div class="input-group mb-3">
+                  <input type="text" class="form-control" name="messages2" value="" id="messages2" autocomplete="off">
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-default" id="uploading2" name="uploading2" style="border-color: rgba(120, 130, 140, 0.5);">
+                        <img src="{{asset('image/paperclip.png')}}" width="20px">
+                    </button>
+                    <input type="file" id="upload_file2" name="upload_file2" style="display: none;" />
+                  </div>
+              </div>
+              <input type="hidden" name="sender2" id="sender2" value="{{$id_user}}">
+              <input type="hidden" name="id_inquiry2" id="id_inquiry2" value="{{$inquiry->id}}">
+              <input type="hidden" name="receiver2" id="receiver2" value="{{$data->id_itdp_company_user}}">
+              </form>
+            </div>
+          </div><br>
+          @endif
         </div>
       </div>
-      </center>
         <div class="px-3">
          {{--  <div>
             <a href="#" class="btn btn-block indigo text-white mb-2">
@@ -233,3 +355,47 @@
 </div>
 
 @include('frontend.layout.footer')
+
+<script>
+    $(document).ready(function(){
+        //Click Image
+        $("#uploading2").click(function() {
+            $("input[id='upload_file2']").click();
+        });
+
+        //Upload File
+        $("#upload_file2").on('change', function() {
+            if(this.value != ""){
+                $('#uploadform2').submit();
+            }else{
+                alert('The file cannot be uploaded');
+            }
+        });
+
+        //Send Message
+        $('#messages2').keypress(function(event){
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if(keycode == '13'){
+                var sender = $('#sender2').val();
+                var receiver = $('#receiver2').val();
+                var id_inquiry = $('#id_inquiry2').val();
+                var msg = this.value;
+                
+                $.ajax({
+                    url: "{{route('eksportir.inquiry.sendChat')}}",
+                    type: 'get',
+                    data: {from:sender, to:receiver, idinquiry:id_inquiry, messages: msg, file: ""},
+                    success:function(response){
+                        if(response == 1){
+                            location.reload();
+                        }else{
+                            alert("This message is not delivered!");
+                            location.reload();
+                        }
+                    }
+                });
+            }
+            event.stopPropagation();
+        });
+    })
+</script>

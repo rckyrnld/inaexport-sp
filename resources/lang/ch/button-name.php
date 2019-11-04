@@ -1,9 +1,14 @@
 <?php
 return [
     "add" => "Add",
-    "view" => "View",
+    "view" => "视图",
     "delete" => "Delete",
     "cancel" => "Cancel",
     "send" => "Send",
-    "edit" => "Edit"
+    "edit" => "Edit",
+    "chat" => "聊天室",
+    "join" => "加入",
+    "noact" => "没有行动",
+    "verified" => "验证",
+    "back" => "背部"
 ];
