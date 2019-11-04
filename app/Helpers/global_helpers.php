@@ -360,6 +360,7 @@ if (! function_exists('getPerwakilanName')) {
           }
         }else if($data->id_admin_ln == 0){
           $dn = DB::table('itdp_admin_dn')->where('id', $data->id_admin_dn)->first();
+          if($dn){
             $nama = $dn->nama;
           }
         }
