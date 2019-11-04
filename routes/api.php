@@ -40,6 +40,9 @@ use Illuminate\Http\Request;
             Route::post('getDetailVerifikasiEksportir', 'Api\Admin\ManagementController@detailVerifikasiEksportir');      
             Route::post('submitVerifikasiEksportir', 'Api\Admin\ManagementController@submitVerifikasiEksportir');
 
+            //training
+            Route::post('getDetailTrainingID', 'Api\Admin\TrainingadminController@findTrainingById');
+
         }); 
 
         Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function(){
@@ -61,5 +64,8 @@ Route::namespace('Api')->group(function () {
             Route::get('getKategori', 'ProductNonAuthController@findKategori');
             Route::post('detailProdukFe', 'ProductNonAuthController@detailProduk');
             Route::post('getImageProduk','ProductNonAuthController@getImageProduk');
+
+            //training
+            Route::get('getTrainingall','TrainingNonAuthController@browseTraining');
 });
 // });
