@@ -23,7 +23,6 @@
                             </div>
                             <div class="col-md-4">
                                 <input type="text" class="form-control" id="prodname" name="prodname" autocomplete="off" @if($data != NULL) value="{{$data->prodname}}" @endif required>
-                                <input type="hidden" class="form-control" id="id_country" name="id_country" value="{{$id_country}}">
                             </div>
                         </div><br>
                         <div class="row">
