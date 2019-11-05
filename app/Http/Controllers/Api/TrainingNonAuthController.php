@@ -23,6 +23,7 @@ class TrainingNonAuthController extends Controller
     public function browseTraining()
     {
         $dataTraining = DB::table('training_admin')
+            ->where('status', '=', '1')
             ->get();
         if (count($dataTraining) > 0) {
             $meta = [
