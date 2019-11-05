@@ -26,6 +26,7 @@ class TrainingadminController extends Controller
         // dd(Auth::guard('userApi')->user());
         //  if(Auth::guard('userApi')->user()){
         $dataTraining = DB::table('training_admin')
+            ->where('status', '=', '1')
             ->where('id', '=', $request->id_training)
             ->get();
 

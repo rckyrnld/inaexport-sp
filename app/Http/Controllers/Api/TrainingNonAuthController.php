@@ -25,11 +25,24 @@ class TrainingNonAuthController extends Controller
         $dataTraining = DB::table('training_admin')
             ->get();
         if (count($dataTraining) > 0) {
-            $res['message'] = "Success";
-            $res['data'] = $dataTraining;
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         } else {
-            $res['message'] = "Failed";
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         }
     }
