@@ -5,5 +5,10 @@ return [
     "delete" => "Hapus",
     "cancel" => "Batal",
     "send" => "Kirim",
-    "edit" => "Ubah"
+    "edit" => "Ubah",
+    "chat" => "Chat",
+    "join" => "Gabung",
+    "noact" => "Tidak Ada Aksi",
+    "verified" => "Verifikasi",
+    "back" => "Kembali"
 ];

@@ -5,5 +5,10 @@ return [
     "delete" => "Delete",
     "cancel" => "Cancel",
     "send" => "Send",
-    "edit" => "Edit"
+    "edit" => "Edit",
+    "chat" => "Chat",
+    "join" => "Join",
+    "noact" => "No Action",
+    "verified" => "Verification",
+    "back" => "Back"
 ];

@@ -118,9 +118,9 @@
 								<?php if($ryu->status_join == 1){ ?>
 								<a href="{{url('br_konfirm/'.$ryu->idb.'/'.$id)}}" class="btn btn-success"><i class="fa fa-check"></i> Verifikasi</a>
 								<?php }else if($ryu->status_join == 2){ ?>
-								<a href="{{url('br_importir_chat/'.$id)}}" class="btn btn-info"><i class="fa fa-comment"></i> Chat</a>
+								<a href="{{url('br_importir_chat/'.$id.'/'.$ryu->idb)}}" class="btn btn-info"><i class="fa fa-comment"></i> Chat</a>
 								<?php }else if($ryu->status_join == 4){ ?>
-								<a href="{{url('br_importir_chat/'.$id)}}" class="btn btn-success"><i class="fa fa-list"></i> View</a>
+								<a href="{{url('br_importir_chat/'.$id.'/'.$ryu->idb)}}" class="btn btn-success"><i class="fa fa-list"></i> View</a>
 								<?php } ?>
 								</center></td>
 								</tr>

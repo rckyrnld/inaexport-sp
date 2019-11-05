@@ -107,12 +107,13 @@ class BuyingRequestController extends Controller
 		return view('buying-request.join', compact('id','pageTitle'));
 	}
 	
-	public function simpanchatbr($id,$id2,$id3,$id4,$id5)
+	public function simpanchatbr($id,$id2,$id3,$id4,$id5,$id6)
     {
 	date_default_timezone_set('Asia/Jakarta');
+		$a = $_GET['a'];
 		$insert = DB::select("
-			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim) values
-			('".$id2."','".$id."','".Date('Y-m-d H:m:s')."','".$id4."','".$id3."','".$id5."')");
+			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join) values
+			('".$id2."','".$a."','".Date('Y-m-d H:m:s')."','".$id4."','".$id3."','".$id5."','".$id6."')");
 	}	
 	public function br_deal($id,$id2,$id3)
     {

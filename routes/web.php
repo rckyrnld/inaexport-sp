@@ -75,11 +75,14 @@ Route::get('/br_importir', 'BRFrontController@br_importir');
 Route::get('/br_importir_add', 'BRFrontController@br_importir_add');
 Route::get('/br_importir_detail/{id}', 'BRFrontController@br_importir_detail');
 Route::get('/br_importir_lc/{id}', 'BRFrontController@br_importir_lc');
-Route::get('/br_importir_chat/{id}', 'BRFrontController@br_importir_chat');
+Route::get('/br_importir_chat/{id}/{id2}', 'BRFrontController@br_importir_chat');
 Route::get('/br_importir_bc/{id}', 'BRFrontController@br_importir_bc');
 Route::get('/br_pw_bc/{id}', 'BRFrontController@br_pw_bc');
 Route::get('/br_konfirm/{id}/{id2}', 'BRFrontController@br_konfirm');
+Route::get('/refreshchat/{id}/{id2}', 'BRFrontController@refreshchat');
+Route::get('/refreshchat2/{id}/{id2}', 'BRFrontController@refreshchat2');
 Route::post('/br_importir_save', 'BRFrontController@br_importir_save');
+Route::post('/uploadpop', 'BRFrontController@uploadpop');
 Route::get('/ambilbroad/{id}', 'BRFrontController@ambilbroad');
 Route::get('/ambilbroad2/{id}', 'BRFrontController@ambilbroad2');
 /* Route::get('/registrasi_pembeli/{locale}', function ($locale) {
@@ -157,7 +160,7 @@ Route::get('/permission_delete/{id}', 'UM\PermissionsController@destroy');
 //buy request 
 Route::resource('/br_list', 'BuyingRequestController');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
-Route::get('/simpanchatbr/{id}/{id2}/{id3}/{id4}/{id5}', 'BuyingRequestController@simpanchatbr');
+Route::get('/simpanchatbr/{id}/{id2}/{id3}/{id4}/{id5}/{id6}', 'BuyingRequestController@simpanchatbr');
 Route::get('/br_add', 'BuyingRequestController@add');
 Route::get('/br_pw_lc/{id}', 'BuyingRequestController@br_pw_lc');
 Route::get('/br_pw_dt/{id}', 'BuyingRequestController@br_pw_dt');
@@ -588,6 +591,12 @@ Route::namespace('Inquiry')->group(function () {
     Route::get('/inquiry_perwakilan/getData', 'InquiryWakilController@getData')->name('perwakilan.inquiry.getData');
     Route::get('/inquiry_perwakilan/create', 'InquiryWakilController@create')->name('perwakilan.inquiry.create');
     Route::post('/inquiry_perwakilan/store', 'InquiryWakilController@store')->name('perwakilan.inquiry.store');
+    Route::get('/inquiry_perwakilan/edit/{id}', 'InquiryWakilController@edit')->name('perwakilan.inquiry.edit');
+    Route::post('/inquiry_perwakilan/update/{id}', 'InquiryWakilController@update')->name('perwakilan.inquiry.update');
+    Route::post('/inquiry_perwakilan/broadcasting', 'InquiryWakilController@broadcasting')->name('perwakilan.inquiry.broadcasting');
+    Route::get('/inquiry_perwakilan/view/{id}', 'InquiryWakilController@view')->name('perwakilan.inquiry.view');
+    Route::get('/inquiry_perwakilan/getDataCompany/{id}', 'InquiryWakilController@getDataCompany')->name('perwakilan.inquiry.getDataCompany');
+    Route::get('/inquiry_perwakilan/verifikasi/{id}', 'InquiryWakilController@verifikasi')->name('perwakilan.inquiry.verifikasi');
 });
 
 //YOSS---------------------------------------------
