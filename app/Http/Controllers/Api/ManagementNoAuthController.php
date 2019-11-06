@@ -169,7 +169,7 @@ class ManagementNoAuthController extends Controller
                 ->get();
             $hasil = count($chek);
             if ($hasil == 0) {
-                $insert = DB::table('itdp_profil_eks')
+                $insert = DB::table('itdp_profil_imp')
                     ->insertGetId([
                         "company" => $company,
                         "addres" => $address,
@@ -193,7 +193,7 @@ class ManagementNoAuthController extends Controller
                     ]);
                 // notif
                 $id_terkait = "2/" . $insert2;
-                $ket = "User baru Eksportir dengan nama " . $company;
+                $ket = "User baru Importir dengan nama " . $company;
                 $insert3 = DB::table('notif')
                     ->insertGetId([
                         "to_role" => '1',
