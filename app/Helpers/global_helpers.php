@@ -254,10 +254,12 @@ if (! function_exists('getCompanyName')) {
     function getCompanyName($id){
         $nama = "-";
         $data = DB::table('itdp_company_users')->where('id', $id)->first();
-        if($data->id_profil != NULL){
-          $profil = DB::table('itdp_profil_eks')->where('id', $data->id_profil)->first();
-          if($profil){
-            $nama = $profil->company;
+        if($data){
+          if($data->id_profil != NULL){
+            $profil = DB::table('itdp_profil_eks')->where('id', $data->id_profil)->first();
+            if($profil){
+              $nama = $profil->company;
+            }
           }
         }
 
@@ -311,10 +313,12 @@ if (! function_exists('getCompanyNameImportir')) {
     function getCompanyNameImportir($id){
         $nama = "-";
         $data = DB::table('itdp_company_users')->where('id', $id)->first();
-        if($data->id_profil != NULL){
-          $profil = DB::table('itdp_profil_imp')->where('id', $data->id_profil)->first();
-          if($profil){
-            $nama = $profil->company;
+        if($data){
+          if($data->id_profil != NULL){
+            $profil = DB::table('itdp_profil_imp')->where('id', $data->id_profil)->first();
+            if($profil){
+              $nama = $profil->company;
+            }
           }
         }
 
@@ -353,15 +357,33 @@ if (! function_exists('getPerwakilanName')) {
     function getPerwakilanName($id){
         $nama = "-";
         $data = DB::table('itdp_admin_users')->where('id', $id)->first();
-        if($data->id_admin_dn == 0){
-          $ln = DB::table('itdp_admin_ln')->where('id', $data->id_admin_ln)->first();
-          if($ln){
-            $nama = $ln->nama;
+        if($data){
+          if($data->id_admin_dn || $data->id_admin_ln){
+            if($data->id_admin_dn == 0){
+              $ln = DB::table('itdp_admin_ln')->where('id', $data->id_admin_ln)->first();
+              if($ln){
+                $nama = $ln->nama;
+              }
+            }else if($data->id_admin_ln == 0){
+              $dn = DB::table('itdp_admin_dn')->where('id', $data->id_admin_dn)->first();
+              if($dn){
+                $nama = $dn->nama;
+              }
+            }
           }
-        }else if($data->id_admin_ln == 0){
-          $dn = DB::table('itdp_admin_dn')->where('id', $data->id_admin_dn)->first();
-          if($dn){
-            $nama = $dn->nama;
+        }
+
+        return $nama;
+    }
+}
+
+if (! function_exists('getAdminName')) {
+    function getAdminName($id){
+        $nama = "-";
+        $data = DB::table('itdp_admin_users')->where('id', $id)->first();
+        if($data){
+          if($data->name != NULL){
+            $nama = $data->name;
           }
         }
 

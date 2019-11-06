@@ -11,7 +11,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><b>Detail Inquiry</b></h5>
+                    <h5><b>Details Inquiry</b></h5>
                 </div>
                 <div class="box-body bg-light">
                     <div class="row">

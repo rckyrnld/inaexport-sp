@@ -105,7 +105,7 @@
             <div class="col-md-2"></div>
             <label class="col-md-2"><b>@lang('inquiry.subject')</b></label>
             <div class="col-md-4">
-              <input type="text" name="subject" class="form-control" id="subject">
+              <input type="text" name="subject" class="form-control" id="subject" autocomplete="off">
             </div>
             <div class="col-md-1"></div>
           </div><br>

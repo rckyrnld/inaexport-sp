@@ -304,21 +304,22 @@
           @if($inquiry->status != 3 && $inquiry->status != 4)
           <div class="row">
             <div class="col-md-12">
-              <form action="{{route('front.inquiry.fileChat')}}" method="post" enctype="multipart/form-data" id="uploadform2">
-              {{ csrf_field() }}
               <div class="input-group mb-3">
                   <input type="text" class="form-control" name="messages2" value="" id="messages2" autocomplete="off">
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-default" id="uploading2" name="uploading2" style="border-color: rgba(120, 130, 140, 0.5);">
-                        <img src="{{asset('image/paperclip.png')}}" width="20px">
-                    </button>
-                    <input type="file" id="upload_file2" name="upload_file2" style="display: none;" />
+                    <form action="{{route('front.inquiry.fileChat')}}" method="post" enctype="multipart/form-data" id="uploadform2">
+                    {{ csrf_field() }}
+                      <button type="button" class="btn btn-default" id="uploading2" name="uploading2" style="border-color: rgba(120, 130, 140, 0.5);">
+                          <img src="{{asset('image/paperclip.png')}}" width="20px">
+                      </button>
+                      <input type="file" id="upload_file2" name="upload_file2" style="display: none;" />
+                      <input type="hidden" name="sender2" id="sender2" value="{{$id_user}}">
+                      <input type="hidden" name="id_inquiry2" id="id_inquiry2" value="{{$inquiry->id}}">
+                      <input type="hidden" name="type2" id="type2" value="{{$inquiry->type}}">
+                      <input type="hidden" name="receiver2" id="receiver2" value="{{$data->id_itdp_company_user}}">
+                    </form>
                   </div>
               </div>
-              <input type="hidden" name="sender2" id="sender2" value="{{$id_user}}">
-              <input type="hidden" name="id_inquiry2" id="id_inquiry2" value="{{$inquiry->id}}">
-              <input type="hidden" name="receiver2" id="receiver2" value="{{$data->id_itdp_company_user}}">
-              </form>
             </div>
           </div><br>
           @endif
@@ -379,12 +380,13 @@
                 var sender = $('#sender2').val();
                 var receiver = $('#receiver2').val();
                 var id_inquiry = $('#id_inquiry2').val();
+                var type = $('#type2').val();
                 var msg = this.value;
                 
                 $.ajax({
                     url: "{{route('eksportir.inquiry.sendChat')}}",
                     type: 'get',
-                    data: {from:sender, to:receiver, idinquiry:id_inquiry, messages: msg, file: ""},
+                    data: {from:sender, to:receiver, idinquiry:id_inquiry, messages: msg, file: "", typenya: type},
                     success:function(response){
                         if(response == 1){
                             location.reload();

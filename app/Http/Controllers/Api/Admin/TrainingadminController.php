@@ -19,30 +19,6 @@ class TrainingadminController extends Controller
         auth()->shouldUse('api_admin');
     }
 
-    public function findTrainingById(Request $request)
-    {
-//        json_encode($request);die();
-        // dd($this->middleware('api.auth'));
-        // dd(Auth::guard('userApi')->user());
-        //  if(Auth::guard('userApi')->user()){
-        $dataTraining = DB::table('training_admin')
-            ->where('id', '=', $request->id_training)
-            ->get();
-
-        if (count($dataTraining) > 0) {
-            $res['message'] = "Success";
-            $res['data'] = $dataTraining;
-            return response($res);
-        } else {
-            $res['message'] = "Failed, No data.";
-            return response($res);
-        }
-        // }else{
-        // 	$res['message'] = "Failed";
-        // 	return response($res);
-        // }
-    }
-
     public function browseProduct(Request $request)
     {
         $dataProduk = DB::table('itdp_company_users')
