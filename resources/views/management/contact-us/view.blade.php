@@ -41,7 +41,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Messages</label>
                  <div class="col-md-7">
-                     <textarea class="form-control" name="message" rows="10" disabled/>{{ $data->message }}</textarea>
+                     <textarea class="form-control" name="message" rows="16" disabled/>{{ $data->message }}</textarea>
                  </div>
              </div>
         

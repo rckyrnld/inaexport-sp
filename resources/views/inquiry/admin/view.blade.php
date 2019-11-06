@@ -15,7 +15,7 @@
                             <h5><b>Details Inquiry</b></h5>
                         </label>
                         <div class="col-md-2">
-                            <a href="{{url('/inquiry_perwakilan/')}}" class="btn btn-danger" style="float: right;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
+                            <a href="{{url('/inquiry_admin/')}}" class="btn btn-danger" style="float: right;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
                         </div>
                     </div><br><br>
                     <div class="row">
@@ -121,7 +121,7 @@
         $('#tablecompany').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('perwakilan.inquiry.getDataCompany', $data->id) }}",
+            ajax: "{{ route('admin.inquiry.getDataCompany', $data->id) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'company', name: 'company'},

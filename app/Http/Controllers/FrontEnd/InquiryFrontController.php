@@ -8,23 +8,22 @@ use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Lang;
+use Mail;
 
 class InquiryFrontController extends Controller
 {
     public function __construct()
     {
-        //
+        $this->middleware('auth:eksmp');
     }
 
     public function index()
     {
         $pageTitle = "TEST";
-        if(Auth::user()){
-            return redirect('/front_end');
-        }else if(Auth::guard('eksmp')->user()){
+        if(Auth::guard('eksmp')->user()->id_role == 3){
             return view('frontend.inquiry.index', compact('pageTitle'));
         }else{
-            return redirect('/login');
+            return redirect('/front_end');
         }
     }
 
@@ -164,21 +163,19 @@ class InquiryFrontController extends Controller
 
     public function create($id)
     {
-        if(Auth::user()){
-            return redirect('/front_end');
-        }else if(Auth::guard('eksmp')->user()){
+        if(Auth::guard('eksmp')->user()->id_role == 3){
             $id_user = Auth::guard('eksmp')->user()->id;
             $url = "/front_end/inquiry_act/".$id;
             $data = DB::table('csc_product_single')->where('id', $id)->first();
             return view('frontend.inquiry.create', compact('data', 'url', 'id_user'));
         }else{
-            return redirect('/login');
+            return redirect('/front_end');
         }
     }
 
     public function store($id, Request $request)
     {
-        if(Auth::guard('eksmp')->user()){
+        if(Auth::guard('eksmp')->user()->id_role == 3){
             $id_user = Auth::guard('eksmp')->user()->id;
             $id_product = $request->id_product;
             $type = $request->type;
@@ -249,6 +246,21 @@ class InquiryFrontController extends Controller
                     'waktu' => $datenow,
                     'to_role' => 2,
                 ]);
+
+                //Tinggal Ganti Email1 dengan email kemendag
+                $untuk = DB::table('itdp_company_users')->where('id', $dtproduct->id_itdp_company_user)->first();
+                $data = [
+                    'email' => $untuk->email,
+                    'username' => $untuk->username,
+                    'type' => "eksportir",
+                    'company' => getCompanyName($dtproduct->id_itdp_company_user),
+                    'dari' => "Importer"
+                ];
+
+                Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data) {
+                    $mail->to($data['email'], $data['username']);
+                    $mail->subject('Inquiry Information');
+                });
             }
 
             return redirect('/front_end/inquiry_list');
@@ -260,7 +272,7 @@ class InquiryFrontController extends Controller
 
     public function verifikasi_inquiry($id)
     {
-        if(Auth::guard('eksmp')->user()){
+        if(Auth::guard('eksmp')->user()->id_role == 3){
             $id_user = Auth::guard('eksmp')->user()->id;
             $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->update([
                 'status' => 2,
@@ -274,7 +286,7 @@ class InquiryFrontController extends Controller
 
     public function chatting($id)
     {
-        if(Auth::guard('eksmp')->user()){
+        if(Auth::guard('eksmp')->user()->id_role == 3){
             $id_user = Auth::guard('eksmp')->user()->id;
             $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->first();
             $data = DB::table('csc_product_single')->where('id', $inquiry->to)->first();
@@ -358,7 +370,7 @@ class InquiryFrontController extends Controller
 
     public function view($id)
     {
-        if(Auth::guard('eksmp')->user()){
+        if(Auth::guard('eksmp')->user()->id_role == 3){
             $id_user = Auth::guard('eksmp')->user()->id;
             $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->first();
             $data = DB::table('csc_product_single')->where('id', $inquiry->to)->first();

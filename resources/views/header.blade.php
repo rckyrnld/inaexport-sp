@@ -46,6 +46,12 @@
 <link rel="stylesheet" href="{{url('assets')}}/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" type="text/css" />
 
 <!-- build:js scripts/app.min.js -->
+<!-- Highchart -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
 <!-- jQuery -->
   <script src="{{url('assets')}}/libs/jquery/dist/jquery.min.js"></script>
 <!-- Select2 -->

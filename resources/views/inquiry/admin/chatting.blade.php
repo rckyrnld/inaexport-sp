@@ -33,55 +33,20 @@
                             <h5><b>Details Inquiry</b></h5>  
                         </div>
                         <div class="col-md-2">
-                            @if($cekfile != 0)
-                              @if($inquiry->type == "importir")
-                                @if($inquiry->status != 3 && $inquiry->status != 4)
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalDeal" style="width: 100%; color: white; font-size: 14px;">Deal</button>
-                                @endif
-                              @elseif($inquiry->type == "perwakilan" || $inquiry->type == "admin")
-                                @if($broadcast->status != 3 && $broadcast->status != 4)
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalDeal" style="width: 100%; color: white; font-size: 14px;">Deal</button>
-                                @endif
-                              @endif
-                            @endif
                         </div>
                     </div><br><br>
                     <div class="row">
+                        <label class="col-md-3"><b>Company Name</b></label>
+                        <div class="col-md-7">
+                            {{getCompanyName($data->id_itdp_company_users)}}
+                        </div>
+                    </div><br>
+                    <div class="row">
                         <label class="col-md-3"><b>Product Name</b></label>
                         <div class="col-md-7">
-                            @if($product != NULL)
-                            {{$product->prodname_en}}
-                            @else
                             {{$inquiry->prodname}}
-                            @endif
                         </div>
                     </div><br>
-                    @if($product != NULL)
-                    <div class="row">
-                        <label class="col-md-3"><b>Category Product</b></label>
-                        <div class="col-md-7">
-                            <?php
-                                $cat1 = getCategoryName($product->id_csc_product, "en");
-                                $cat2 = getCategoryName($product->id_csc_product_level1, "en");
-                                $cat3 = getCategoryName($product->id_csc_product_level2, "en");
-
-                                if($cat1 == "-"){
-                                  echo $cat1;
-                                }else{
-                                  if($cat2 == "-"){
-                                    echo $cat1;
-                                  }else{
-                                    if($cat3 == "-"){
-                                      echo $cat1." > ".$cat2;
-                                    }else{
-                                      echo $cat1." > ".$cat2." > ".$cat3;
-                                    }
-                                  }
-                                }
-                              ?>
-                        </div>
-                    </div><br>
-                    @endif
                     <div class="row">
                         <label class="col-md-3"><b>Kind Of Subject</b></label>
                         <div class="col-md-7">
@@ -119,11 +84,7 @@
                     <div class="row">
                         <label class="col-md-3"><b>Status</b></label>
                         <div class="col-md-7">
-                            @if($inquiry->type == "importir")
-                            <?php if($inquiry->status == 0){ $stat = 1; }else{$stat = $inquiry->status;}?>
-                            @elseif($inquiry->type == "perwakilan" || $inquiry->type == "admin")
-                            <?php if($broadcast->status == 0){ $stat = 1; }else{$stat = $broadcast->status;}?>
-                            @endif
+                            <?php if($data->status == 0){ $stat = 1; }else{$stat = $data->status;}?>
                             @lang('inquiry.stat'.$stat)
                         </div>
                     </div><br><br>
@@ -207,15 +168,7 @@
                                 <div class="row">
                                   <div class="col-md-10">
                                     <label class="label" style="background: #eee; border-radius:10px; width:300px; padding: 10px;">
-                                        <b>
-                                            @if($inquiry->type == "importir")
-                                            {{getCompanyNameImportir($msg->sender)}}
-                                            @elseif($inquiry->type == "perwakilan")
-                                            {{getPerwakilanName($msg->sender)}}
-                                            @elseif($inquiry->type == "admin")
-                                            {{getAdminName($msg->sender)}}
-                                            @endif
-                                        </b> :<br>
+                                        <b>{{getCompanyName($msg->sender)}}</b> :<br>
                                         @if($msg->messages == NULL)
                                             <a href="{{ url('/').'/uploads/ChatFileInquiry/'.$msg->id }}/{{ $msg->file }}" target="_blank" class="atag" style="color: red;">{{$msg->file}}</a><br>
                                         @else
@@ -233,61 +186,34 @@
                           </div>
                         </div>
                     </div>
-                    @if($inquiry->type == "importir")
-                        @if($inquiry->status != 3 && $inquiry->status != 4)
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" name="messages" value="" id="messages" autocomplete="off">
-                                <div class="input-group-append">
-                                  <form action="{{route('eksportir.inquiry.fileChat')}}" method="post" enctype="multipart/form-data" id="uploadform">
-                                  {{ csrf_field() }}
-                                      <button type="button" class="btn btn-default" id="uploading" name="uploading" style="border-color: rgba(120, 130, 140, 0.5);">
-                                          <img src="{{asset('image/paperclip.png')}}" width="20px">
-                                      </button>
-                                      <input type="file" id="upload_file" name="upload_file" style="display: none;" />
-                                      <input type="hidden" name="type" id="type" value="{{$inquiry->type}}">
-                                      <input type="hidden" name="id_inquiry" id="id_inquiry" value="{{$inquiry->id}}">
-                                      <input type="hidden" name="sender" id="sender" value="{{$id_user}}">
-                                      <input type="hidden" name="receiver" id="receiver" value="{{$inquiry->id_pembuat}}">
-                                  </form>
-                                </div>
+                    @if($data->status != 3 && $data->status != 4)
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="messages" value="" id="messages" autocomplete="off">
+                            <div class="input-group-append">
+                                <form action="{{route('admin.inquiry.fileChat')}}" method="post" enctype="multipart/form-data" id="uploadform">
+                                {{ csrf_field() }}
+                                    <button type="button" class="btn btn-default" id="uploading" name="uploading" style="border-color: rgba(120, 130, 140, 0.5);">
+                                      <img src="{{asset('image/paperclip.png')}}" width="20px">
+                                    </button>
+                                    <input type="file" id="upload_file" name="upload_file" style="display: none;" />
+                                    <input type="hidden" name="sender" id="sender" value="{{$id_user}}">
+                                    <input type="hidden" name="id_inquiry" id="id_inquiry" value="{{$inquiry->id}}">
+                                    <input type="hidden" name="id_broadcast" id="id_broadcast" value="{{$data->id}}">
+                                    <input type="hidden" name="receiver" id="receiver" value="{{$data->id_itdp_company_users}}">
+                                </form>
                             </div>
-                          </div>
-                          <div class="col-md-2 pull-right">
-                          </div>
-                        </div><br>
-                        @endif
-                    @elseif($inquiry->type == "perwakilan" || $inquiry->type == "admin")
-                        @if($broadcast->status != 3 && $broadcast->status != 4)
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" name="messages" value="" id="messages" autocomplete="off">
-                                <div class="input-group-append">
-                                  <form action="{{route('eksportir.inquiry.fileChat')}}" method="post" enctype="multipart/form-data" id="uploadform">
-                                  {{ csrf_field() }}
-                                      <button type="button" class="btn btn-default" id="uploading" name="uploading" style="border-color: rgba(120, 130, 140, 0.5);">
-                                          <img src="{{asset('image/paperclip.png')}}" width="20px">
-                                      </button>
-                                      <input type="file" id="upload_file" name="upload_file" style="display: none;" />
-                                      <input type="hidden" name="type" id="type" value="{{$inquiry->type}}">
-                                      <input type="hidden" name="id_inquiry" id="id_inquiry" value="{{$inquiry->id}}">
-                                      <input type="hidden" name="sender" id="sender" value="{{$id_user}}">
-                                      <input type="hidden" name="receiver" id="receiver" value="{{$inquiry->id_pembuat}}">
-                                  </form>
-                                </div>
-                            </div>
-                          </div>
-                          <div class="col-md-2 pull-right">
-                          </div>
-                        </div><br>
-                        @endif
+                        </div>
+                      </div>
+                      <div class="col-md-2 pull-right">
+                      </div>
+                    </div><br>
                     @endif
                     <br>
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="{{url('/inquiry')}}" class="btn btn-danger" style="float: right;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
+                            <a href="{{url('/inquiry_admin/view/'.$inquiry->id)}}" class="btn btn-danger" style="float: right;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
                         </div>
                     </div>
                 </div>
@@ -312,8 +238,8 @@
             <center>
                 <h6><b>Are you sure?</b></h6>
                 <br>
-                <a href="{{url('/inquiry/dealing/'.$inquiry->id.'/1')}}" class="btn btn-primary" style="width: 100px;">Deal</a>&nbsp;OR
-                &nbsp;<a href="{{url('/inquiry/dealing/'.$inquiry->id.'/2')}}" class="btn btn-danger" style="width: 100px;">Cancel</a>
+                <a href="{{url('/inquiry_admin/dealing/'.$inquiry->id.'/1')}}" class="btn btn-primary" style="width: 100px;">Deal</a>&nbsp;OR
+                &nbsp;<a href="{{url('/inquiry_admin/dealing/'.$inquiry->id.'/2')}}" class="btn btn-danger" style="width: 100px;">Cancel</a>
             </center>
             <br><br>
         </div>
@@ -352,14 +278,13 @@
                 var sender = $('#sender').val();
                 var receiver = $('#receiver').val();
                 var id_inquiry = $('#id_inquiry').val();
-                var type = $('#type').val();
+                var id_broadcast = $('#id_broadcast').val();
                 var msg = this.value;
-
                 
                 $.ajax({
-                    url: "{{route('eksportir.inquiry.sendChat')}}",
+                    url: "{{route('admin.inquiry.sendChat')}}",
                     type: 'get',
-                    data: {from:sender, to:receiver, idinquiry:id_inquiry, messages: msg, file: "", typenya: type},
+                    data: {from:sender, to:receiver, idinquiry:id_inquiry, messages: msg, file: "", idbroadcast: id_broadcast},
                     success:function(response){
                         // console.log(response);
                         if(response == 1){

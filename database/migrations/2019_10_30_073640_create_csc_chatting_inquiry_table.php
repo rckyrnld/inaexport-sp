@@ -22,6 +22,7 @@ class CreateCscChattingInquiryTable extends Migration
             $table->text('messages')->nullable();
             $table->text('file')->nullable();
             $table->integer('status')->nullable();
+            $table->integer('id_broadcast_inquiry')->nullable();
             $table->timestamp('created_at')->nullable();
         });
     }

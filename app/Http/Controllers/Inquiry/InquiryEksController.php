@@ -9,13 +9,14 @@ use Lang;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Mail;
 
 class InquiryEksController extends Controller
 {
     public function __construct()
     {
         // $this->middleware('auth');
-        // $this->middleware('auth:eksmp');
+        $this->middleware('auth:eksmp');
     }
 
     public function index()
@@ -176,7 +177,7 @@ class InquiryEksController extends Controller
                     if($mjl->status == 0 || $mjl->status == 2){
                         return '
                             <center>
-                            <a href="'.url('/inquiry/chatting').'/'.$mjl->id.'" class="btn btn-sm btn-warning" style="color: white;"><i class="fa fa-comments-o" aria-hidden="true"></i> '.Lang::get('button-name.chat').' <span class="badge badge-danger">'.$this->getCountChat($mjl->id, $id_user).'</span></a>
+                            <a href="'.url('/inquiry/chatting').'/'.$mjl->id.'" class="btn btn-sm btn-warning" style="color: white;"><i class="fa fa-comments-o" aria-hidden="true"></i> '.Lang::get('button-name.chat').' <span class="badge badge-danger">'.$this->getCountChat($mjl->id, $id_user, $mjl->type).'</span></a>
                             </center>';
                     }else if($mjl->status == 1){
                         return '
@@ -200,9 +201,9 @@ class InquiryEksController extends Controller
         }
     }
 
-    function getCountChat($id, $receiver)
+    function getCountChat($id, $receiver, $type)
     {
-        $count = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('type', 'importir')->where('receive', $receiver)->where('status', 0)->count();
+        $count = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('type', $type)->where('receive', $receiver)->where('status', 0)->count();
         return $count;
     }
 
@@ -230,10 +231,50 @@ class InquiryEksController extends Controller
                 $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->update([
                     'status' => 0,
                 ]);
-            }else if($data->type == "perwakilan"){
+                $users = DB::table('itdp_company_users')->where('id', $data->id_pembuat)->first();
+                $email = $users->email;
+                $username = $users->username;
+
+                //Tinggal Ganti Email1 dengan email kemendag
+                $data = [
+                    'email' => $email,
+                    'username' => $username,
+                    'type' => "importir",
+                    'company' => getCompanyNameImportir($data->id_pembuat),
+                    'dari' => "Eksportir"
+                ];
+
+                Mail::send('inquiry.mail.sendToPembuat', $data, function ($mail) use ($data) {
+                    $mail->to($data['email'], $data['username']);
+                    $mail->subject('Inquiry Information');
+                });
+            }else if($data->type == "perwakilan" || $data->type == "admin"){
                 $inquiry = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->update([
                     'status' => 0,
                 ]);
+
+                $users = DB::table('itdp_admin_users')->where('id', $data->id_pembuat)->first();
+                $email = $users->email;
+                $username = $users->name;
+                if($data->type == "perwakilan"){
+                    $name = getPerwakilanName($data->id_pembuat);
+                }else{
+                    $name = $users->name;
+                }
+
+                //Tinggal Ganti Email1 dengan email kemendag
+                $data = [
+                    'email' => $email,
+                    'username' => $username,
+                    'type' => "importir",
+                    'company' => $name,
+                    'dari' => "Eksportir"
+                ];
+
+                Mail::send('inquiry.mail.sendToPembuat', $data, function ($mail) use ($data) {
+                    $mail->to($data['email'], $data['username']);
+                    $mail->subject('Inquiry Information');
+                });
             }
             
             return redirect('/inquiry');
@@ -249,20 +290,38 @@ class InquiryEksController extends Controller
             $id_user = Auth::guard('eksmp')->user()->id;
             $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->first();
             $product = DB::table('csc_product_single')->where('id', $inquiry->to)->where('id_itdp_company_user', $id_user)->first();
-            $messages = DB::table('csc_chatting_inquiry')
-                ->where('id_inquiry', $id)
-                ->where('type', 'importir')
-                ->orderBy('created_at', 'asc')
-                ->get();
+            if($inquiry->type == "importir"){
+                $broadcast = NULL;
+                $messages = DB::table('csc_chatting_inquiry')
+                    ->where('id_inquiry', $id)
+                    ->where('type', $inquiry->type)
+                    ->orderBy('created_at', 'asc')
+                    ->get();
 
-            $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
+                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
 
-            //Read Chat
-            $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('type', 'importir')->where('receive', $id_user)->update([
-                'status' => 1,
-            ]);
+                //Read Chat
+                $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('type', $inquiry->type)->where('receive', $id_user)->update([
+                    'status' => 1,
+                ]);
+            }else if($inquiry->type == "perwakilan" || $inquiry->type == "admin"){
+                $broadcast = DB::table('csc_inquiry_broadcast')->where('id_itdp_company_users', $id_user)->where('id_inquiry', $id)->first();
+                $messages = DB::table('csc_chatting_inquiry')
+                    ->where('id_inquiry', $id)
+                    ->where('id_broadcast_inquiry', $broadcast->id)
+                    ->where('type', $inquiry->type)
+                    ->orderBy('created_at', 'asc')
+                    ->get();    
+
+                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
+
+                //Read Chat
+                $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('type', $inquiry->type)->where('receive', $id_user)->update([
+                    'status' => 1,
+                ]);
+            }
             
-            return view('inquiry.eksportir.chatting', compact('pageTitle','inquiry', 'product', 'messages', 'id_user', 'cekfile'));
+            return view('inquiry.eksportir.chatting', compact('pageTitle','inquiry', 'product', 'messages', 'id_user', 'cekfile', 'broadcast'));
         }else{
             return redirect('/home');
         }
@@ -275,20 +334,36 @@ class InquiryEksController extends Controller
         $sender = $request->from;
         $receiver = $request->to;
         $msg = $request->messages;
+        $type = $request->typenya;
 
         $idm = DB::table('csc_chatting_inquiry')->max('id');
         $idmax = $idm + 1;
 
-        $save = DB::table('csc_chatting_inquiry')->insert([
-            'id' => $idmax,
-            'id_inquiry' => $id,
-            'sender' => $sender,
-            'receive' => $receiver,
-            'type' => 'importir',
-            'messages' => $msg,
-            'status' => 0,
-            'created_at' => $datenow,
-        ]);
+        if($type == "importir"){
+            $save = DB::table('csc_chatting_inquiry')->insert([
+                'id' => $idmax,
+                'id_inquiry' => $id,
+                'sender' => $sender,
+                'receive' => $receiver,
+                'type' => $type,
+                'messages' => $msg,
+                'status' => 0,
+                'created_at' => $datenow,
+            ]);
+        }else if($type == "perwakilan" || $type == "admin"){
+            $cek = Db::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $sender)->first();
+            $save = DB::table('csc_chatting_inquiry')->insert([
+                'id' => $idmax,
+                'id_inquiry' => $id,
+                'id_broadcast_inquiry' => $cek->id,
+                'sender' => $sender,
+                'receive' => $receiver,
+                'type' => $type,
+                'messages' => $msg,
+                'status' => 0,
+                'created_at' => $datenow,
+            ]);
+        }
 
         if($save){
             return 1;
@@ -300,9 +375,12 @@ class InquiryEksController extends Controller
     public function fileChat(Request $request)
     {
         $datenow = date('Y-m-d H:i:s');
+        $id_user = Auth::guard('eksmp')->user()->id;
         $id = $request->id_inquiry;
         $sender = $request->sender;
         $receiver = $request->receiver;
+
+        $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
         $idm = DB::table('csc_chatting_inquiry')->max('id');
         $idmax = $idm + 1;
@@ -314,16 +392,31 @@ class InquiryEksController extends Controller
             Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
         }
 
-        $save = DB::table('csc_chatting_inquiry')->insert([
-            'id' => $idmax,
-            'id_inquiry' => $id,
-            'sender' => $sender,
-            'receive' => $receiver,
-            'type' => 'importir',
-            'file' => $nama_file1,
-            'status' => 0,
-            'created_at' => $datenow,
-        ]);
+        if($inquiry->type == "importir"){
+            $save = DB::table('csc_chatting_inquiry')->insert([
+                'id' => $idmax,
+                'id_inquiry' => $id,
+                'sender' => $sender,
+                'receive' => $receiver,
+                'type' => $inquiry->type,
+                'file' => $nama_file1,
+                'status' => 0,
+                'created_at' => $datenow,
+            ]);
+        }else if($inquiry->type == "perwakilan" || $inquiry->type == "admin"){
+            $broadcast = DB::table('csc_inquiry_broadcast')->where('id_itdp_company_users', $id_user)->where('id_inquiry', $id)->first();
+            $save = DB::table('csc_chatting_inquiry')->insert([
+                'id' => $idmax,
+                'id_inquiry' => $id,
+                'id_broadcast_inquiry' => $broadcast->id,
+                'sender' => $sender,
+                'receive' => $receiver,
+                'type' => $inquiry->type,
+                'file' => $nama_file1,
+                'status' => 0,
+                'created_at' => $datenow,
+            ]);
+        }
 
         return redirect('/inquiry/chatting/'.$id); 
         
@@ -331,15 +424,36 @@ class InquiryEksController extends Controller
 
     public function dealing($id, $status)
     {
+        $id_user = Auth::guard('eksmp')->user()->id;
         if($status == 1){
             $stat = 3;
         }else{
             $stat = 4;
         }
 
-        $update = DB::table('csc_inquiry_br')->where('id', $id)->update([
-            'status' => $stat,
-        ]);
+        $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->first();
+
+        if($inquiry->type == "perwakilan" || $inquiry->type == "admin"){
+            if($stat == 3){
+                $update = DB::table('csc_inquiry_br')->where('id', $id)->update([
+                    'status' => $stat,
+                ]);
+
+                $updatebr = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->update([
+                    'status' => 4,
+                ]); 
+            }
+
+            $updatebrm = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->update([
+                    'status' => $stat,
+                ]); 
+
+        }else if($inquiry->type == "importir"){
+            $update = DB::table('csc_inquiry_br')->where('id', $id)->update([
+                'status' => $stat,
+            ]);
+        }
+
 
         return redirect('/inquiry');
     }
@@ -351,20 +465,38 @@ class InquiryEksController extends Controller
             $id_user = Auth::guard('eksmp')->user()->id;
             $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->first();
             $product = DB::table('csc_product_single')->where('id', $inquiry->to)->where('id_itdp_company_user', $id_user)->first();
-            $messages = DB::table('csc_chatting_inquiry')
-                ->where('id_inquiry', $id)
-                ->where('type', 'importir')
-                ->orderBy('created_at', 'asc')
-                ->get();
+            if($inquiry->type == "importir"){
+                $broadcast = NULL;
+                $messages = DB::table('csc_chatting_inquiry')
+                    ->where('id_inquiry', $id)
+                    ->where('type', $inquiry->type)
+                    ->orderBy('created_at', 'asc')
+                    ->get();
 
-            $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
+                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
 
-            //Read Chat
-            $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('type', 'importir')->where('receive', $id_user)->update([
-                'status' => 1,
-            ]);
+                //Read Chat
+                $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('type', $inquiry->type)->where('receive', $id_user)->update([
+                    'status' => 1,
+                ]);
+            }else if($inquiry->type == "perwakilan" || $inquiry->type == "admin"){
+                $broadcast = DB::table('csc_inquiry_broadcast')->where('id_itdp_company_users', $id_user)->where('id_inquiry', $id)->first();
+                $messages = DB::table('csc_chatting_inquiry')
+                    ->where('id_inquiry', $id)
+                    ->where('id_broadcast_inquiry', $broadcast->id)
+                    ->where('type', $inquiry->type)
+                    ->orderBy('created_at', 'asc')
+                    ->get();    
+
+                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
+
+                //Read Chat
+                $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('type', $inquiry->type)->where('receive', $id_user)->update([
+                    'status' => 1,
+                ]);
+            }
             
-            return view('inquiry.eksportir.chatting', compact('pageTitle','inquiry', 'product', 'messages', 'id_user', 'cekfile'));
+            return view('inquiry.eksportir.chatting', compact('pageTitle','inquiry', 'product', 'messages', 'id_user', 'cekfile', 'broadcast'));
         }else{
             return redirect('/home');
         }

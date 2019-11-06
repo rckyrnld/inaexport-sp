@@ -37,7 +37,8 @@ class ServiceController extends Controller
     {
       $pageTitle = "Service";
       if(Auth::user()){
-          return view('eksportir.service.index_admin', compact('pageTitle', 'id'));
+          $data = DB::table('itdp_service_eks')->where('id', $id)->first();
+          return view('eksportir.service.index_admin', compact('pageTitle', 'id', 'data'));
       } else {
           return redirect('/login');
       }
@@ -112,7 +113,7 @@ class ServiceController extends Controller
               ]);
             }
           }
-          return redirect('/eksportir/service/admin');
+          return redirect('/eksportir/service/admin/'.$data_sebelumnya->id_itdp_profil_eks);
       }else{
           return redirect('/login');
       }
@@ -238,7 +239,7 @@ class ServiceController extends Controller
             'status_baca' => 1
           ]);
           $data = DB::table('itdp_service_eks')->where('id', $id)->first();
-          $button = '<a class="btn btn-danger" href="'.url('eksportir/service/admin').'" style="width: 80px;">Back</a>';
+          $button = '<a class="btn btn-danger" href="'.url('eksportir/service/admin/'.$data->id_itdp_profil_eks).'" style="width: 80px;">Back</a>';
           $pageTitle = 'Service';
           return view('eksportir.service.view', compact('pageTitle', 'data', 'button'));
         }else if(Auth::guard('eksmp')->user()->id_role == 2){

@@ -103,6 +103,8 @@ Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');
 //////////////////////////////////// START BACKEND ////////////////////////////////////////////////////////////
 
 Route::get('/login', 'HomeController@index');
+Route::get('/dashboard', 'DashboardController@index');
+Route::get('/dashboard/scopeData', 'DashboardController@data_new_user')->name('dashboard.scopeData');
 //Verify User
 Route::get('/verifyuser', 'VerifyuserController@index');
 Route::get('/geteksportir', 'VerifyuserController@geteksportir');
@@ -593,8 +595,42 @@ Route::namespace('Inquiry')->group(function () {
     Route::post('/inquiry_perwakilan/update/{id}', 'InquiryWakilController@update')->name('perwakilan.inquiry.update');
     Route::post('/inquiry_perwakilan/broadcasting', 'InquiryWakilController@broadcasting')->name('perwakilan.inquiry.broadcasting');
     Route::get('/inquiry_perwakilan/view/{id}', 'InquiryWakilController@view')->name('perwakilan.inquiry.view');
+    Route::get('/inquiry_perwakilan/delete/{id}', 'InquiryWakilController@delete')->name('perwakilan.inquiry.delete');
     Route::get('/inquiry_perwakilan/getDataCompany/{id}', 'InquiryWakilController@getDataCompany')->name('perwakilan.inquiry.getDataCompany');
     Route::get('/inquiry_perwakilan/verifikasi/{id}', 'InquiryWakilController@verifikasi')->name('perwakilan.inquiry.verifikasi');
+    Route::get('/inquiry_perwakilan/chatting/{id}', 'InquiryWakilController@chatting')->name('perwakilan.inquiry.chatting');
+    Route::get('/inquiry_perwakilan/sendChat', 'InquiryWakilController@sendChat')->name('perwakilan.inquiry.sendChat');
+    Route::post('/inquiry_perwakilan/fileChat', 'InquiryWakilController@fileChat')->name('perwakilan.inquiry.fileChat');
+    Route::get('/inquiry_perwakilan/view_detail/{id}', 'InquiryWakilController@view_detail')->name('perwakilan.inquiry.view_detail');
+    Route::get('/inquiry_perwakilan/delete_detail/{id}', 'InquiryWakilController@delete_detail')->name('perwakilan.inquiry.delete_detail');
+
+    //Admin
+    Route::get('/inquiry_admin', 'InquiryAdminController@index')->name('admin.inquiry.index');
+    Route::get('/inquiry_admin/getDataAdmin', 'InquiryAdminController@getDataAdmin')->name('admin.inquiry.getDataAdmin');
+    Route::get('/inquiry_admin/create', 'InquiryAdminController@create')->name('admin.inquiry.create');
+    Route::post('/inquiry_admin/store', 'InquiryAdminController@store')->name('admin.inquiry.store');
+    Route::get('/inquiry_admin/edit/{id}', 'InquiryAdminController@edit')->name('admin.inquiry.edit');
+    Route::post('/inquiry_admin/update/{id}', 'InquiryAdminController@update')->name('admin.inquiry.update');
+    Route::post('/inquiry_admin/broadcasting', 'InquiryAdminController@broadcasting')->name('admin.inquiry.broadcasting');
+    Route::get('/inquiry_admin/view/{id}', 'InquiryAdminController@view')->name('admin.inquiry.view');
+    Route::get('/inquiry_admin/delete/{id}', 'InquiryAdminController@delete')->name('admin.inquiry.delete');
+    Route::get('/inquiry_admin/getDataCompany/{id}', 'InquiryAdminController@getDataCompany')->name('admin.inquiry.getDataCompany');
+    Route::get('/inquiry_admin/verifikasi/{id}', 'InquiryAdminController@verifikasi')->name('admin.inquiry.verifikasi');
+    Route::get('/inquiry_admin/chatting/{id}', 'InquiryAdminController@chatting')->name('admin.inquiry.chatting');
+    Route::get('/inquiry_admin/sendChat', 'InquiryAdminController@sendChat')->name('admin.inquiry.sendChat');
+    Route::post('/inquiry_admin/fileChat', 'InquiryAdminController@fileChat')->name('admin.inquiry.fileChat');
+    Route::get('/inquiry_admin/view_detail/{id}', 'InquiryAdminController@view_detail')->name('admin.inquiry.view_detail');
+    Route::get('/inquiry_admin/delete_detail/{id}', 'InquiryAdminController@delete_detail')->name('admin.inquiry.delete_detail');
+    //Tab Perwakilan
+    Route::get('/inquiry_admin/getPerwakilan', 'InquiryAdminController@getPerwakilan')->name('admin.inquiry.getPerwakilan');
+    Route::get('/inquiry_admin/detail_perwakilan/{id}', 'InquiryAdminController@detail_perwakilan')->name('admin.inquiry.detail_perwakilan');
+    Route::get('/inquiry_admin/getDataPerwakilan/{id}', 'InquiryAdminController@getDataPerwakilan')->name('admin.inquiry.getDataPerwakilan');
+    Route::get('/inquiry_admin/perwakilan_view/{id}', 'InquiryAdminController@perwakilan_view')->name('admin.inquiry.perwakilan_view');
+    Route::get('/inquiry_admin/getDataCompanyWakil/{id}', 'InquiryAdminController@getDataCompanyWakil')->name('admin.inquiry.getDataCompanyWakil');
+    Route::get('/inquiry_admin/view_inquiry/{id}', 'InquiryAdminController@view_inquiry')->name('admin.inquiry.view_inquiry');
+    //Tab Importir
+    Route::get('/inquiry_admin/getDataImportir', 'InquiryAdminController@getDataImportir')->name('admin.inquiry.getDataImportir');
+    Route::get('/inquiry_admin/view_importir/{id}', 'InquiryAdminController@view_importir')->name('admin.inquiry.view_importir');
 });
 
 //YOSS---------------------------------------------

@@ -265,7 +265,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div style="float: right;">
-                                                <a class="btn btn-danger" href="{{url('eksportir/service/admin')}}" style="width: 80px;">Back</a>
+                                                <a class="btn btn-danger" href="{{url('eksportir/service/admin/'.$data->id_itdp_profil_eks)}}" style="width: 80px;">Back</a>
                                             </div>
                                         </div>
                                     </div>
