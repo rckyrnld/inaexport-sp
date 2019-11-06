@@ -23,49 +23,51 @@ use Illuminate\Http\Request;
 // $api = app('Dingo\Api\Routing\Router');
 
 // $api->version('v1', function ($api){
-        /*API Auth*/
-        Route::group(['middleware' => ['api']], function () {
-            Route::post('admin-login', 'Api\Auth\Admin\LoginController@login');
-            Route::post('user-login', 'Api\Auth\User\LoginController@login');
-        }); 
-        /*API Auth*/ 
-        /*************************************************************************************************************/
-        Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function () {
-            
-            Route::post('getRekapAnggota', 'Api\Admin\ManagementController@getRekapAnggota');            
+/*API Auth*/
+Route::group(['middleware' => ['api']], function () {
+    Route::post('admin-login', 'Api\Auth\Admin\LoginController@login');
+    Route::post('user-login', 'Api\Auth\User\LoginController@login');
+});
+/*API Auth*/
+/*************************************************************************************************************/
+Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function () {
 
-            Route::post('getDetailVerifikasiImportir', 'Api\Admin\ManagementController@detailVerifikasiImportir');      
-            Route::post('submitVerifikasiImportir', 'Api\Admin\ManagementController@submitVerifikasiImportir');
-            
-            Route::post('getDetailVerifikasiEksportir', 'Api\Admin\ManagementController@detailVerifikasiEksportir');      
-            Route::post('submitVerifikasiEksportir', 'Api\Admin\ManagementController@submitVerifikasiEksportir');
+    Route::post('getRekapAnggota', 'Api\Admin\ManagementController@getRekapAnggota');
 
-            //training
-            Route::post('getDetailTrainingID', 'Api\Admin\TrainingadminController@findTrainingById');
+    Route::post('getDetailVerifikasiImportir', 'Api\Admin\ManagementController@detailVerifikasiImportir');
+    Route::post('submitVerifikasiImportir', 'Api\Admin\ManagementController@submitVerifikasiImportir');
 
-        }); 
+    Route::post('getDetailVerifikasiEksportir', 'Api\Admin\ManagementController@detailVerifikasiEksportir');
+    Route::post('submitVerifikasiEksportir', 'Api\Admin\ManagementController@submitVerifikasiEksportir');
 
-        Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function(){
-                Route::post('getProdukList', 'Api\User\ProductController@findProductById');                
-                Route::post('browseProduk', 'Api\User\ProductController@browseProduct');
+});
 
-                Route::post('insertProduk', 'Api\User\ProductController@insertProduct');
-                Route::post('updateProduk', 'Api\User\ProductController@updateProduct');                
-                Route::post('deleteProduk', 'Api\User\ProductController@deleteProduct');
-                Route::post('detailProdukById', 'Api\User\ProductController@detailProduk');
-        });
+Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function () {
+    Route::post('getProdukList', 'Api\User\ProductController@findProductById');
+    Route::post('browseProduk', 'Api\User\ProductController@browseProduct');
+
+    Route::post('insertProduk', 'Api\User\ProductController@insertProduct');
+    Route::post('updateProduk', 'Api\User\ProductController@updateProduct');
+    Route::post('deleteProduk', 'Api\User\ProductController@deleteProduct');
+    Route::post('detailProdukById', 'Api\User\ProductController@detailProduk');
+});
 Route::namespace('Api')->group(function () {
-            /*Contact Us*/
-            Route::post('contactUs', 'ManagementNoAuthController@contactUs');
-            /*Contact Us*/
-                            
-            Route::get('browseProdukFe', 'ProductNonAuthController@browseProduct');
-            Route::post('browseProdukFeByKategori', 'ProductNonAuthController@browseProductByKategori');            
-            Route::get('getKategori', 'ProductNonAuthController@findKategori');
-            Route::post('detailProdukFe', 'ProductNonAuthController@detailProduk');
-            Route::get('getImageProduk/{id}/{image}','ProductNonAuthController@getImageProduk');
+    /*Contact Us*/
+    Route::post('contactUs', 'ManagementNoAuthController@contactUs');
+    /*Contact Us*/
 
-            //training
-            Route::get('getTrainingall','TrainingNonAuthController@browseTraining');
+    Route::get('browseProdukFe', 'ProductNonAuthController@browseProduct');
+    Route::post('browseProdukFeByKategori', 'ProductNonAuthController@browseProductByKategori');
+    Route::get('getKategori', 'ProductNonAuthController@findKategori');
+    Route::post('detailProdukFe', 'ProductNonAuthController@detailProduk');
+    Route::get('getImageProduk/{id}/{image}', 'ProductNonAuthController@getImageProduk');
+
+    //training
+    Route::get('getTrainingall', 'TrainingNonAuthController@browseTraining');
+    Route::post('getDetailTrainingID', 'TrainingNonAuthController@findTrainingById');
+
+    //register
+    Route::post('registerExp', 'ManagementNoAuthController@RegisterExp');
+    Route::post('registerImp', 'ManagementNoAuthController@RegisterImp');
 });
 // });
