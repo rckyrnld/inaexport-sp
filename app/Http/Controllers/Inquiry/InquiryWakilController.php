@@ -16,6 +16,7 @@ class InquiryWakilController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        changeStatusInquiry();
     }
 
     public function index()
@@ -41,7 +42,7 @@ class InquiryWakilController extends Controller
             $user = DB::table('csc_inquiry_br')
                 ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
                 ->where('type', 'perwakilan')
-                ->orderBy('csc_inquiry_br.date', 'DESC')
+                ->orderBy('csc_inquiry_br.created_at', 'DESC')
                 ->get();
 
             return \Yajra\DataTables\DataTables::of($user)
@@ -518,8 +519,8 @@ class InquiryWakilController extends Controller
                 })
                 ->addColumn('date', function ($mjl) {
                     $datenya = "-";
-                    if($mjl->created_at != NULL){
-                        $datenya = date('d/m/Y', strtotime($mjl->created_at));
+                    if($mjl->date != NULL){
+                        $datenya = date('d/m/Y', strtotime($mjl->date));
                     }
 
                     return $datenya;
@@ -547,6 +548,11 @@ class InquiryWakilController extends Controller
                             <a href="'.url('/inquiry_perwakilan/view_detail').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> View</a>
                             <a href="'.url('/inquiry_perwakilan/delete_detail').'/'.$mjl->id.'" class="btn btn-sm btn-danger" onclick="return confirm(\'Are You Sure?\')"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
                             </center>';
+                    }else if($mjl->status == 5){
+                        return '
+                            <center>
+                            <a href="'.url('/inquiry_perwakilan/view_detail').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> View</a>
+                            </center>';
                     }else{
                         return '
                             <center>
@@ -571,6 +577,23 @@ class InquiryWakilController extends Controller
             $id_user = Auth::user()->id;
             if(Auth::user()->id_group == 4){
                 $data = DB::table('csc_inquiry_broadcast')->where('id', $id)->first();
+                $datenow = date('Y-m-d H:i:s');
+                $inquiry = DB::table('csc_inquiry_br')->where('id', $data->id_inquiry)->first();
+
+                $durasi = 0;
+                if($inquiry){
+                    if($inquiry->duration != NULL){
+                        $jn = explode(' ', $inquiry->duration);
+                        if($jn[1] == "week" || $jn[1] == "weeks"){
+                            $durasi = (int)$jn[0] * 7;
+                        }else if($jn[1] == "month" || $jn[1] == "months"){
+                            $durasi = (int)$jn[0] * 30;
+                        }
+                    }
+                }
+
+                $date = strtotime("+".$durasi." days", strtotime($datenow));
+                $duedate = date('Y-m-d H:i:s', $date);
 
                 $inquiry = DB::table('csc_inquiry_br')->where('id', $data->id_inquiry)->update([
                     'status' => 2,
@@ -578,6 +601,8 @@ class InquiryWakilController extends Controller
 
                 $inquirybroadcast = DB::table('csc_inquiry_broadcast')->where('id', $id)->update([
                     'status' => 2,
+                    'date' => $datenow,
+                    'due_date' => $duedate,
                 ]);
 
                 return redirect('/inquiry_perwakilan/view/'.$data->id_inquiry);

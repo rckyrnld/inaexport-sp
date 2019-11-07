@@ -104,7 +104,6 @@ Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');
 
 Route::get('/login', 'HomeController@index');
 Route::get('/dashboard', 'DashboardController@index');
-Route::get('/dashboard/scopeData', 'DashboardController@data_new_user')->name('dashboard.scopeData');
 //Verify User
 Route::get('/verifyuser', 'VerifyuserController@index');
 Route::get('/geteksportir', 'VerifyuserController@geteksportir');

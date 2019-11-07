@@ -15,6 +15,7 @@ class InquiryFrontController extends Controller
     public function __construct()
     {
         $this->middleware('auth:eksmp');
+        changeStatusInquiry();
     }
 
     public function index()
@@ -44,7 +45,7 @@ class InquiryFrontController extends Controller
         ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
         ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
         ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
-        ->orderBy('csc_inquiry_br.date', 'DESC')
+        ->orderBy('csc_inquiry_br.created_at', 'DESC')
         ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
@@ -118,7 +119,12 @@ class InquiryFrontController extends Controller
             ->addColumn('status', function ($mjl) use($lct) {
                 $statnya = "-";
                 if($mjl->status != NULL){
-                    $statnya = Lang::get('inquiry.stat'.$mjl->status);
+                    if($mjl->status == 0){
+                        $stat = 1;
+                    }else{
+                        $stat = $mjl->status;
+                    }
+                    $statnya = Lang::get('inquiry.stat'.$stat);
                 }
 
                 return $statnya;
@@ -274,8 +280,27 @@ class InquiryFrontController extends Controller
     {
         if(Auth::guard('eksmp')->user()->id_role == 3){
             $id_user = Auth::guard('eksmp')->user()->id;
+            $datenow = date('Y-m-d H:i:s');
+            $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
+
+            $durasi = 0;
+            if($data){
+                if($data->duration != NULL){
+                    $jn = explode(' ', $data->duration);
+                    if($jn[1] == "week" || $jn[1] == "weeks"){
+                        $durasi = (int)$jn[0] * 7;
+                    }else if($jn[1] == "month" || $jn[1] == "months"){
+                        $durasi = (int)$jn[0] * 30;
+                    }
+                }
+            }
+
+            $date = strtotime("+".$durasi." days", strtotime($datenow));
+            $duedate = date('Y-m-d H:i:s', $date);
+
             $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->update([
                 'status' => 2,
+                'due_date' => $duedate,
             ]);
 
             return redirect('/front_end/inquiry_list');

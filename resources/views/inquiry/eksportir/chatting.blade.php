@@ -234,7 +234,7 @@
                         </div>
                     </div>
                     @if($inquiry->type == "importir")
-                        @if($inquiry->status != 3 && $inquiry->status != 4)
+                        @if($inquiry->status != 3 && $inquiry->status != 4 && $inquiry->status != 5)
                         <div class="row">
                           <div class="col-md-12">
                             <div class="input-group mb-3">
@@ -259,7 +259,7 @@
                         </div><br>
                         @endif
                     @elseif($inquiry->type == "perwakilan" || $inquiry->type == "admin")
-                        @if($broadcast->status != 3 && $broadcast->status != 4)
+                        @if($broadcast->status != 3 && $broadcast->status != 4 && $broadcast->status != 5)
                         <div class="row">
                           <div class="col-md-12">
                             <div class="input-group mb-3">

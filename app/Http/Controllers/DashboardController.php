@@ -16,57 +16,31 @@ class DashboardController extends Controller
     public function index()
     {
         if(Auth::user()->id_group == 1){
-            $pageTitle = "Dashboard";
-            $company = $this->getDataTopDownloadCompany();
-            $rc      = $this->getDataTopDownloadRc();
+            $pageTitle  = "Dashboard";
+            $company    = $this->getDataTopDownloadCompany();
+            $rc         = $this->getDataTopDownloadRc();
+            $user       = $this->getDataUser();
+            $inquiry    = $this->getDataInquiry();
             
-            return view('Dashboard',compact('pageTitle', 'top_download'))->with('Top_Company_Download', json_decode($company, true))->with('Top_Downloaded_RC', json_decode($rc, true));
+            return view('Dashboard',compact('pageTitle', 'top_download'))->with('Top_Company_Download', json_decode($company, true))->with('Top_Downloaded_RC', json_decode($rc, true))->with('User', json_decode($user, true))->with('Inquiry', json_decode($inquiry, true));
         } elseif(Auth::user()->id_group == 4) {
             dd(Auth::user());
         } else {
             return redirect('/');
         }
-
-        // $tes = DB::table('csc_inquiry_br')
-        //     ->select(DB::raw('extract(year from created_at) as year, count(*) as jumlah, type'))
-        //     ->groupby('year')
-        //     ->groupby('type')
-        //     ->limit(5)->get();
-        // dd($tes);
-
-        // foreach ($tes as $key => $value) {
-        //     if($key == 0){
-        //         $company .= '[{"name": "Company", "colorByPoint": true, "data":[{"name": "'.$this->getCompanyName($value->id_itdp_profil_eks).'", "y": '.$value->jumlah.'},';
-        //     } else if ($key == count($top_download_company)-1){
-        //         $company .= '{"name": "'.$this->getCompanyName($value->id_itdp_profil_eks).'", "y": '.$value->jumlah.'}]}]';
-        //     } else {
-        //         $company .= '{"name": "'.$this->getCompanyName($value->id_itdp_profil_eks).'", "y": '.$value->jumlah.'},';
-        //     }
-        // }
-
     }
 
-    public function data_new_user(){
+    private function getDataUser(){
         $fetch_data_new_user = '';
         $fetch_sub_data = '';
-        $new_user = [];
-        $tahun='';
-        for($year = intval(date('Y')); $year >= date('Y')-4; $year--){
-            if($year == date('Y')-4){
-                $tahun .= $year;
-                $new_user[$year] = '';
-            } else {
-                $tahun .= $year.',';
-                $new_user[$year] = '';
-            }
-        }
+        $tahun = $this->tahun();
 
         $new_user = DB::table('itdp_company_users as a')->selectRaw('extract(year from created_at) as year, count(b.id) as eksportir, count(c.id) as importir')
             ->leftjoin('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
             ->leftjoin('itdp_profil_imp as c', 'a.id_profil', '=', 'c.id')
             ->whereRaw('extract(year from created_at) in ('.$tahun.')')
             ->groupby('year')
-            ->get(); 
+            ->get();
 
         for ($i=0; $i < 2; $i++) { 
             if($i == 0){
@@ -118,8 +92,65 @@ class DashboardController extends Controller
             $fetch_data_new_user .= $end;
         }
         $return = '['.$fetch_data_new_user.','.$fetch_sub_data.']';
-        return json_decode($return);
+        return $return;
     } 
+
+    private function getDataInquiry(){
+        $fetch_inquiry = '';
+        $fetch_sub_data = '';
+        $tahun = $this->tahun();
+
+        $inquiry = DB::table('csc_inquiry_br')
+            ->select(DB::raw('extract(year from created_at) as year, count(*) as jumlah, type'))
+            ->groupby('type')->groupby('year')
+            ->whereRaw('extract(year from created_at) in ('.$tahun.')')
+            ->orderby('year','asc')->orderby('type','asc')
+            ->limit(5)->get();
+
+        for ($i=0; $i < 3 ; $i++) { 
+            if($i == 0){
+                $fetch_inquiry .= '[{"name": "Admin", "color": "#789ec5", "data": [';
+                $end = ']},';
+            } elseif($i == 1) {
+                $fetch_inquiry .= '{"name": "Representative", "color": "#f3cb3a", "data": [';
+                $end = ']},';
+            } else {
+                $fetch_inquiry .= '{"name": "Importer", "color": "#52e440", "data": [';
+                $end = ']}]';
+            }
+
+            foreach ($inquiry as $key => $value) {
+                if($i == 0 && $value->type == 'admin'){
+                    $id = 'Admin-'.$value->year;
+                    if ($value->year === date('Y')) {
+                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                    } else {
+                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"},';
+                    }
+                }
+
+                if($i == 1 && $value->type == 'perwakilan') {
+                    $id = 'Perwakilan-'.$value->year;
+                    if ($value->year === date('Y')) {
+                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                    } else {
+                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"},';
+                    }
+                } 
+
+                if($i == 2 && $value->type == 'importir') {
+                    $id = 'Importir-'.$value->year;
+                    if ($value->year === date('Y')) {
+                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                    } else {
+                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"},';
+                    }
+                }
+            }
+            $fetch_inquiry .= $end;
+        }
+        return $fetch_inquiry;
+    }
 
     private function getDataTopDownloadCompany(){
         $top_download_company = DB::table('csc_download_research_corner')
@@ -129,14 +160,21 @@ class DashboardController extends Controller
         ->limit(5)->get();
 
         $company = '';
+        $color = array(
+            0 => '#789ec5',
+            1 => '#44c742',
+            2 => '#c74242',
+            3 => '#e69419',
+            4 => '#855c9a',
+        );
 
         foreach ($top_download_company as $key => $value) {
             if($key == 0){
-                $company .= '[{"name": "Company", "colorByPoint": true, "data":[{"name": "'.$this->getCompanyName($value->id_itdp_profil_eks).'", "y": '.$value->jumlah.'},';
+                $company .= '[{"name": "Company", "data":[{"name": "'.$this->getCompanyName($value->id_itdp_profil_eks, $key).'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'},';
             } else if ($key == count($top_download_company)-1){
-                $company .= '{"name": "'.$this->getCompanyName($value->id_itdp_profil_eks).'", "y": '.$value->jumlah.'}]}]';
+                $company .= '{"name": "'.$this->getCompanyName($value->id_itdp_profil_eks, $key).'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'}]}]';
             } else {
-                $company .= '{"name": "'.$this->getCompanyName($value->id_itdp_profil_eks).'", "y": '.$value->jumlah.'},';
+                $company .= '{"name": "'.$this->getCompanyName($value->id_itdp_profil_eks, $key).'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'},';
             }
         }
 
@@ -150,19 +188,21 @@ class DashboardController extends Controller
         ->limit(5)->get();
 
         $rc = '';
+        $color = array(
+            0 => '#855c9a',
+            1 => '#e69419',
+            2 => '#44c742',
+            3 => '#c74242',
+            4 => '#789ec5',
+        );
 
         foreach ($top_download_rc as $key => $value) {
-            $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-            if($color == "#ffffff"){
-                $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-            }
-
             if($key == 0){
-                $rc .= '[{"name": "Research Corner", "data":[{"name": "'.$this->getRcName($value->id_research_corner).'", "color": "'.$color.'", "y": '.$value->jumlah.'},';
+                $rc .= '[{"name": "Research Corner", "data":[{"name": "'.$this->getRcName($value->id_research_corner, $key).'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'},';
             } else if ($key == count($top_download_rc)-1){
-                $rc .= '{"name": "'.$this->getRcName($value->id_research_corner).'", "color": "'.$color.'", "y": '.$value->jumlah.'}]}]';
+                $rc .= '{"name": "'.$this->getRcName($value->id_research_corner, $key).'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'}]}]';
             } else {
-                $rc .= '{"name": "'.$this->getRcName($value->id_research_corner).'", "color": "'.$color.'", "y": '.$value->jumlah.'},';
+                $rc .= '{"name": "'.$this->getRcName($value->id_research_corner, $key).'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'},';
             }
         }
 
@@ -211,21 +251,44 @@ class DashboardController extends Controller
         return $array[$month]; 
     }
 
-    private function getCompanyName($id){
+    private function getCompanyName($id, $key){
         $data = DB::table('itdp_profil_eks')->where('id', $id)->first();
         if($data){
             return $data->company;
         } else {
-            return 'Name not Found';
+            $number = $key + 1;
+            return 'Company not Found '.$number; 
         }
     }
 
-    private function getRcName($id){
+    private function getRcName($id, $key){
         $data = DB::table('csc_research_corner')->where('id', $id)->first();
         if($data){
-            return $data->title_en;
+            $banyak = DB::table('csc_research_corner')->where('title_en', $data->title_en)->get();
+            if(count($banyak) > 1){
+                $space = '';
+                for ($i=0; $i < $key+1 ; $i++) { 
+                    $space .= ' ';
+                }
+                return $data->title_en.' ( '.rc_country($data->id_mst_country).' )'.$space;
+            } else {
+                return $data->title_en.' ( '.rc_country($data->id_mst_country).' )';
+            }
         } else {
-            return 'Name not Found';
+            $number = $key + 1;
+            return 'Name not Found '.$number;
         }
+    }
+
+    private function tahun(){
+        $tahun='';
+        for($year = intval(date('Y')); $year >= date('Y')-4; $year--){
+            if($year == date('Y')-4){
+                $tahun .= $year;
+            } else {
+                $tahun .= $year.',';
+            }
+        }
+        return $tahun;
     }
 }
