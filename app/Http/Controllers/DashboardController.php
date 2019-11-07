@@ -16,14 +16,27 @@ class DashboardController extends Controller
     public function index()
     {
         if(Auth::user()->id_group == 1){
-            $pageTitle  = "Dashboard";
-            $company    = $this->getDataTopDownloadCompany();
-            $rc         = $this->getDataTopDownloadRc();
-            $user       = $this->getDataUser();
-            $inquiry    = $this->getDataInquiry();
+            $pageTitle      = "Dashboard";
+            $company        = $this->getDataTopDownloadCompany();
+            $rc             = $this->getDataTopDownloadRc();
+            $user           = $this->getDataUser();
+            $inquiry        = $this->getDataInquiry();
+            $top_inquiry    = $this->getDataTopInquiry();
             
-            return view('Dashboard',compact('pageTitle', 'top_download'))->with('Top_Company_Download', json_decode($company, true))->with('Top_Downloaded_RC', json_decode($rc, true))->with('User', json_decode($user, true))->with('Inquiry', json_decode($inquiry, true));
+            return view('Dashboard',compact('pageTitle', 'top_download'))->with('Top_Company_Download', json_decode($company, true))->with('Top_Downloaded_RC', json_decode($rc, true))->with('User', json_decode($user, true))->with('Inquiry', json_decode($inquiry, true))->with('Top_Inquiry', json_decode($top_inquiry, true));
         } elseif(Auth::user()->id_group == 4) {
+            if(Auth::user()->id_admin_ln == 0){
+                dd('negara Indonesia');
+            } else {
+                //  $new_user = DB::table('itdp_company_users as a')->selectRaw('extract(year from created_at) as year, count(b.id) as eksportir, count(c.id) as importir')
+                //     ->leftjoin('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
+                //     ->leftjoin('itdp_profil_imp as c', 'a.id_profil', '=', 'c.id')
+                //     ->whereRaw('extract(year from created_at) in (2019)')
+                //     ->groupby('year')
+                //     ->get();
+                // dd($new_user);
+                dd('negara TES');
+            }
             dd(Auth::user());
         } else {
             return redirect('/');
@@ -54,7 +67,7 @@ class DashboardController extends Controller
                 if($i == 0){
                     $jumlah = $value->eksportir;
                     $id = 'Ex-'.$value->year;
-                    if($value->year == date('Y')-4){
+                    if($value->year == (date('Y')-count($new_user))+1){
                         $fetch_sub_data .= '[{"name": "Exporter", "id": "Ex-'.$value->year.'", "data": [';
                     } else {
                         $fetch_sub_data .= '{"name": "Exporter", "id": "Ex-'.$value->year.'", "data": [';
@@ -79,9 +92,9 @@ class DashboardController extends Controller
 
                 for ($m=1; $m < 13; $m++) { 
                     if($i == 0){
-                        $fetch_sub_data .= $this->getDataSub($m, $value->year, 'eksportir');
+                        $fetch_sub_data .= $this->getDataSubUser($m, $value->year, 'eksportir');
                     } else {
-                        $fetch_sub_data .= $this->getDataSub($m, $value->year, 'importir');
+                        $fetch_sub_data .= $this->getDataSubUser($m, $value->year, 'importir');
                     }
                     if($m != 12){
                         $fetch_sub_data .= ',';
@@ -98,6 +111,7 @@ class DashboardController extends Controller
     private function getDataInquiry(){
         $fetch_inquiry = '';
         $fetch_sub_data = '';
+        $tampung_tahun = [];
         $tahun = $this->tahun();
 
         $inquiry = DB::table('csc_inquiry_br')
@@ -120,6 +134,9 @@ class DashboardController extends Controller
             }
 
             foreach ($inquiry as $key => $value) {
+                if(!in_array($value->year, $tampung_tahun)){
+                    array_push($tampung_tahun, $value->year);
+                }
                 if($i == 0 && $value->type == 'admin'){
                     $id = 'Admin-'.$value->year;
                     if ($value->year === date('Y')) {
@@ -127,6 +144,21 @@ class DashboardController extends Controller
                     } else {
                         $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"},';
                     }
+                    // Data Drilldown
+                    if($value->year == min($tampung_tahun)){
+                        $fetch_sub_data .= '[{"name": "Admin", "id": "'.$id.'", "data": [';
+                    } else {
+                        $fetch_sub_data .= '{"name": "Admin", "id": "'.$id.'", "data": [';
+                    }
+
+                    for ($m=1; $m < 13; $m++) { 
+                        $fetch_sub_data .= $this->getDataSubInquiry($m, $value->year, 'admin');
+                        if($m != 12){
+                            $fetch_sub_data .= ',';
+                        }
+                    }
+
+                    $fetch_sub_data .= ']},';
                 }
 
                 if($i == 1 && $value->type == 'perwakilan') {
@@ -136,6 +168,17 @@ class DashboardController extends Controller
                     } else {
                         $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"},';
                     }
+                    // Data Drilldown
+                    $fetch_sub_data .= '{"name": "Perwakilan", "id": "'.$id.'", "data": [';
+
+                    for ($m=1; $m < 13; $m++) { 
+                        $fetch_sub_data .= $this->getDataSubInquiry($m, $value->year, 'perwakilan');
+                        if($m != 12){
+                            $fetch_sub_data .= ',';
+                        }
+                    }
+
+                    $fetch_sub_data .= ']},';
                 } 
 
                 if($i == 2 && $value->type == 'importir') {
@@ -145,11 +188,27 @@ class DashboardController extends Controller
                     } else {
                         $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"},';
                     }
+                    // Data Drilldown
+                    $fetch_sub_data .= '{"name": "Importir", "id": "'.$id.'", "data": [';
+
+                    for ($m=1; $m < 13; $m++) { 
+                        $fetch_sub_data .= $this->getDataSubInquiry($m, $value->year, 'importir');
+                        if($m != 12){
+                            $fetch_sub_data .= ',';
+                        }
+                    }
+
+                    if($value->year == max($tampung_tahun)){
+                        $fetch_sub_data .= ']}]';
+                    } else {
+                        $fetch_sub_data .= ']},';
+                    }
                 }
             }
             $fetch_inquiry .= $end;
         }
-        return $fetch_inquiry;
+        $return = '['.$fetch_inquiry.','.$fetch_sub_data.']';
+        return $return;
     }
 
     private function getDataTopDownloadCompany(){
@@ -177,7 +236,6 @@ class DashboardController extends Controller
                 $company .= '{"name": "'.$this->getCompanyName($value->id_itdp_profil_eks, $key).'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'},';
             }
         }
-
         return $company;
     }
 
@@ -209,7 +267,48 @@ class DashboardController extends Controller
         return $rc;
     }
 
-    private function getDataSub($month, $year, $param){
+    private function getDataTopInquiry(){
+        $top_inquiry = DB::table('csc_inquiry_br')
+        ->select(DB::raw('count(*) as jumlah, id_pembuat, type'))
+        ->groupby('id_pembuat')
+        ->groupby('type')
+        ->orderby('jumlah', 'desc')
+        ->limit(10)->get();
+
+        $inquiry = '';
+        $color = array(
+            0 => '#789ec5',
+            1 => '#44c742',
+            2 => '#c74242',
+            3 => '#e69419',
+            4 => '#855c9a',
+        );
+
+        foreach ($top_inquiry as $key => $value) {
+            switch ($value->type) {
+                case 'admin':
+                        $name = getAdminName($value->id_pembuat).' ( Admin )';
+                    break;
+                case 'perwakilan':
+                        $name = getPerwakilanName($value->id_pembuat).' ( Representative )';
+                    break;
+                case 'importir':
+                        $name = getCompanyNameImportir($value->id_pembuat).' ( Importer )';
+                    break;
+            }
+
+            if($key == 0){
+                $inquiry .= '[{"name": "Inquiry", "data":[{"name": "'.$name.'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'},';
+            } else if ($key == count($top_inquiry)-1){
+                $inquiry .= '{"name": "'.$name.'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'}]}]';
+            } else {
+                $inquiry .= '{"name": "'.$name.'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'},';
+            }
+        }
+        return $inquiry;
+    }
+
+    private function getDataSubUser($month, $year, $param){
         if($param == "eksportir"){
             $user_perbulan = DB::table('itdp_company_users as a')->selectRaw('extract(month from created_at) as month, count(b.id) as banyak')
                 ->leftjoin('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
@@ -228,6 +327,23 @@ class DashboardController extends Controller
 
         if($user_perbulan){
             return '["'.$this->getMonth($month).'", '.$user_perbulan->banyak.']';
+        } else {
+            return '["'.$this->getMonth($month).'", 0]';
+        }
+    }
+
+    private function getDataSubInquiry($month, $year, $param){
+        $inquiry_perbulan = DB::table('csc_inquiry_br')
+            ->select(DB::raw('extract(month from created_at) as month, count(*) as jumlah, type'))
+            ->where('type', $param)
+            ->whereRaw('extract(year from created_at) in ('.$year.')')
+            ->whereRaw('extract(month from created_at) in ('.$month.')')
+            ->groupby('month')
+            ->groupby('type')
+            ->first();
+
+        if($inquiry_perbulan){
+            return '["'.$this->getMonth($month).'", '.$inquiry_perbulan->jumlah.']';
         } else {
             return '["'.$this->getMonth($month).'", 0]';
         }

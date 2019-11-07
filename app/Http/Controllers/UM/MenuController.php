@@ -40,7 +40,7 @@ class MenuController extends Controller
         $url = "/submenu_save";
         $res = DB::table('menu')->where('id_menu',$id)->first();
         $parent = DB::table('menu')->where('id_menu',$res->parent)->first();
-        return view('UM.menu.add',compact('url','pageTitle','res','parent'));
+        return view('UM.menu.add2',compact('url','pageTitle','res','parent'));
     }
 
 

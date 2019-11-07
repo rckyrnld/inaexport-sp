@@ -20,15 +20,134 @@ class BuyingRequestController extends Controller
         return view('buying-request.index_eks', compact('pageTitle','data'));
 		}
 		}else{
+		if(Auth::user()->id_group == 4){
         $pageTitle = "Buying Request Perwakilan";
 		$data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
         return view('buying-request.index', compact('pageTitle','data'));
+		}else{
+		$pageTitle = "Buying Request Admin";
+		$data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
+        return view('buying-request.indexadmin', compact('pageTitle','data'));
+		}
 		}
     }
 	
 	public function getcsc()
     {
-        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request order by id desc ");
+        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='4' order by id desc ");
+      return DataTables::of($pesan)
+            ->addColumn('f1', function ($pesan) {
+				 return $pesan->subyek;
+            })
+			->addColumn('f2', function ($pesan) {
+				 return "Valid until ".$pesan->valid." days";
+            })
+			->addColumn('f3', function ($pesan) {
+				 return $pesan->date;
+            })
+			->addColumn('f4', function ($pesan) {
+				 $kat = $pesan->id_csc_prod_cat;
+				 $cardata = DB::select("select nama_kategori_en from csc_product where id='".$kat."'");
+				 foreach($cardata as $ct){
+					 $naka = $ct->nama_kategori_en;
+				 }
+				return $naka;
+            })
+			->addColumn('f6', function ($pesan) {
+				if($pesan->by_role == 4){
+					return "Perwakilan";
+				}else if($pesan->by_role == 3){
+					return "Importir";
+				}
+            })
+			->addColumn('f7', function ($pesan) {
+				if($pesan->status == 1){
+					return "Negosiation";
+				}else if($pesan->status == 4){
+					return "Deal";
+				}else{
+					return "-";
+				}
+				 
+            })
+            ->addColumn('action', function ($pesan) {
+				if($pesan->status == 1){
+					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary"><i class="fa fa-comment"></i> List Chat</a>';
+				}else if($pesan->status == 4){
+					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success"><i class="fa fa-list"></i> List Chat</a>';
+				}else{
+					return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i> Broadcast</i></a>
+					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Detail</a>';
+				}
+                
+				
+				
+           
+                
+            })
+			->rawColumns(['action','f6','f7','f3','f4'])
+            ->make(true);
+    }
+	
+	public function getcsc0()
+    {
+        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='1' order by id desc ");
+      return DataTables::of($pesan)
+            ->addColumn('f1', function ($pesan) {
+				 return $pesan->subyek;
+            })
+			->addColumn('f2', function ($pesan) {
+				 return "Valid until ".$pesan->valid." days";
+            })
+			->addColumn('f3', function ($pesan) {
+				 return $pesan->date;
+            })
+			->addColumn('f4', function ($pesan) {
+				 $kat = $pesan->id_csc_prod_cat;
+				 $cardata = DB::select("select nama_kategori_en from csc_product where id='".$kat."'");
+				 foreach($cardata as $ct){
+					 $naka = $ct->nama_kategori_en;
+				 }
+				return $naka;
+            })
+			->addColumn('f6', function ($pesan) {
+				if($pesan->by_role == 4){
+					return "Perwakilan";
+				}else if($pesan->by_role == 3){
+					return "Importir";
+				}
+            })
+			->addColumn('f7', function ($pesan) {
+				if($pesan->status == 1){
+					return "Negosiation";
+				}else if($pesan->status == 4){
+					return "Deal";
+				}else{
+					return "-";
+				}
+				 
+            })
+            ->addColumn('action', function ($pesan) {
+				if($pesan->status == 1){
+					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary"><i class="fa fa-comment"></i> List Chat</a>';
+				}else if($pesan->status == 4){
+					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success"><i class="fa fa-list"></i> List Chat</a>';
+				}else{
+					return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i> Broadcast</i></a>
+					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Detail</a>';
+				}
+                
+				
+				
+           
+                
+            })
+			->rawColumns(['action','f6','f7','f3','f4'])
+            ->make(true);
+    }
+	public function getcsc3()
+    {
+        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='3' order by id desc ");
       return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
 				 return $pesan->subyek;
@@ -163,7 +282,7 @@ class BuyingRequestController extends Controller
 			,eo,neo,tp,ntp,by_role,id_pembuat,date) values
 			('".$request->cmp."','".$request->valid."','".$request->country."','".$request->city."','".$request->category."'
 			,'".$request->t2s."','".$request->t3s."','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
-			,'".$request->tp."','".$request->ntp."','4','".Auth::user()->id."','".Date('Y-m-d H:m:s')."')");
+			,'".$request->tp."','".$request->ntp."','".Auth::user()->id_group."','".Auth::user()->id."','".Date('Y-m-d H:m:s')."')");
 		
 		return redirect('br_list');
 	}

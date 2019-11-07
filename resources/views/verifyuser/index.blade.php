@@ -23,7 +23,7 @@
                                         <center>Company</center>
                                     </th>
                                     <th>
-                                        <center>Address</center>
+                                        <center>Email</center>
                                     </th>
                                     <th>
                                         <center>Zip Code</center>
@@ -40,7 +40,7 @@
 									<th>
                                         <center>Verify By Admin</center>
                                     </th>
-                                    <th width="10%">
+                                    <th width="15%">
                                         <center>Action</center>
                                     </th>
                                 </tr>
@@ -60,6 +60,14 @@
     </div>
 </div>
 <script type="text/javascript">
+function ConfirmDelete()
+    {
+      var x = confirm("Are you sure you want to delete?");
+      if (x)
+          return true;
+      else
+        return false;
+    }
     $(function () {
         $('#users-table').DataTable({
             processing: true,

@@ -108,18 +108,24 @@ Route::get('/dashboard', 'DashboardController@index');
 Route::get('/verifyuser', 'VerifyuserController@index');
 Route::get('/geteksportir', 'VerifyuserController@geteksportir');
 Route::get('/verifyimportir', 'VerifyuserController@index2');
+Route::get('/hapuseksportir/{id}', 'VerifyuserController@hapuseksportir');
+Route::get('/reseteksportir/{id}', 'VerifyuserController@reseteksportir');
+Route::get('/hapusimportir/{id}', 'VerifyuserController@hapusimportir');
+Route::get('/resetimportir/{id}', 'VerifyuserController@resetimportir');
 Route::get('/getimportir', 'VerifyuserController@getimportir');
 Route::get('/profilperwakilan', 'VerifyuserController@index3');
 Route::get('/getpw', 'VerifyuserController@getpw');
 Route::get('/tambahperwakilan', 'VerifyuserController@tambahperwakilan');
 Route::get('/detailverify/{id}', 'VerifyuserController@detailverify');
 Route::get('/hapusperwakilan/{id}', 'VerifyuserController@hapusperwakilan');
+Route::get('/editperwakilan/{id}', 'VerifyuserController@editperwakilan');
 Route::get('/saveverify/{id}', 'VerifyuserController@saveverify');
 Route::get('/profil/{id}/{id2}', 'VerifyuserController@profil');
 Route::get('/profil2/{id}/{id2}', 'VerifyuserController@profil2');
 Route::post('/simpan_profil', 'VerifyuserController@simpan_profil');
 Route::post('/simpan_profil2', 'VerifyuserController@simpan_profil2');
 Route::post('/simpanperwakilan', 'VerifyuserController@simpanperwakilan');
+Route::post('/updateperwakilan', 'VerifyuserController@updateperwakilan');
 
 // Group
 Route::resource('/group', 'UM\GroupController');
@@ -158,7 +164,9 @@ Route::get('/permission_delete/{id}', 'UM\PermissionsController@destroy');
 
 //buy request 
 Route::resource('/br_list', 'BuyingRequestController');
+Route::get('/getcsc0', 'BuyingRequestController@getcsc0');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
+Route::get('/getcsc3', 'BuyingRequestController@getcsc3');
 Route::get('/simpanchatbr/{id}/{id2}/{id3}/{id4}/{id5}/{id6}', 'BuyingRequestController@simpanchatbr');
 Route::get('/br_add', 'BuyingRequestController@add');
 Route::get('/br_pw_lc/{id}', 'BuyingRequestController@br_pw_lc');
