@@ -301,7 +301,7 @@
                 </div>
               </div>
           </div>
-          @if($inquiry->status != 3 && $inquiry->status != 4)
+          @if($inquiry->status != 3 && $inquiry->status != 4 && $inquiry->status != 5)
           <div class="row">
             <div class="col-md-12">
               <div class="input-group mb-3">

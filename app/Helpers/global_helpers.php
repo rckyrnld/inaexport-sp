@@ -390,3 +390,43 @@ if (! function_exists('getAdminName')) {
         return $nama;
     }
 }
+
+if (! function_exists('changeStatusInquiry')) {
+    function changeStatusInquiry(){
+        $data = DB::table('csc_inquiry_br')->get();
+        $datenow = strtotime(date('Y-m-d H:i:s'));
+        $different = [];
+        foreach ($data as $key) {
+          if($key->status == 2){
+            $date = [];
+            if($key->type == "importir"){
+              if($datenow >= strtotime($key->due_date)){
+                $updstat = DB::table('csc_inquiry_br')->where('id', $key->id)->update([
+                  'status' => 5,
+                ]);
+              }
+            }else{
+              $broadcast = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $key->id)->get();
+              $brostat = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $key->id)->where('status', 5)->get();
+              foreach ($broadcast as $key2) {
+                if($key2->status == 2){
+                  if($datenow >= strtotime($key2->due_date)){
+                    // array_push($date, $key2->id);
+                    $updstat = DB::table('csc_inquiry_broadcast')->where('id', $key2->id)->update([
+                      'status' => 5,
+                    ]);
+                  }
+                }
+              }
+              // array_push($different, $date);
+              if(count($broadcast) == count($brostat)){
+                $updstat = DB::table('csc_inquiry_br')->where('id', $key->id)->update([
+                  'status' => 5,
+                ]);
+              }
+            }
+          }
+        }
+        return 1;
+    }
+}
