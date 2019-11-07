@@ -43,6 +43,60 @@ class ManagementNoAuthController extends Controller
 
     }
 
+    public function getCountry()
+    {
+        $dataTraining = DB::table('mst_country')
+            ->get();
+        if (count($dataTraining) > 0) {
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
+    public function getProvince()
+    {
+        $dataTraining = DB::table('mst_province')
+            ->get();
+        if (count($dataTraining) > 0) {
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
     public function RegisterExp(Request $request)
     {
         $company = $request->company;
@@ -55,7 +109,9 @@ class ManagementNoAuthController extends Controller
         $postcode = $request->postcode;
         $address = $request->address;
         $dateNow = date("Y-m-d H:m:s");
-        if ($company != null && $email != null && $username != null && $phone != null && $fax != null && $website != null && $password != null && $postcode != null && $address != null) {
+        $id_province = $request->id_province;
+        $city = $request->city;
+        if ($company != null && $email != null && $username != null && $phone != null && $fax != null && $website != null && $password != null && $postcode != null && $address != null && $id_province != null && $city != null) {
 
             $chek = DB::table('itdp_company_users')
                 ->where('email', '=', $email)
@@ -74,7 +130,9 @@ class ManagementNoAuthController extends Controller
                         "email" => $email,
                         "website" => $website,
                         "created" => $dateNow,
-                        "status" => '1'
+                        "status" => '1',
+                        "id_mst_province" => $id_province,
+                        "city" => $city
                     ]);
                 $insert2 = DB::table('itdp_company_users')
                     ->insertGetId([
@@ -130,7 +188,7 @@ class ManagementNoAuthController extends Controller
                 $meta = [
                     'code' => 208,
                     'message' => 'Username Or Email Already Used',
-                    'status' => 'Already Reported '
+                    'status' => 'Failed'
                 ];
                 $data = '0';
                 $res['meta'] = $meta;
@@ -140,8 +198,8 @@ class ManagementNoAuthController extends Controller
         } else {
             $meta = [
                 'code' => 400,
-                'message' => 'All Data Must Be Filled i=In',
-                'status' => 'Bad Request'
+                'message' => 'All Data Must Be Filled In',
+                'status' => 'Failed'
             ];
             $data = '0';
             $res['meta'] = $meta;
@@ -162,8 +220,10 @@ class ManagementNoAuthController extends Controller
         $password = $request->password;
         $postcode = $request->postcode;
         $address = $request->address;
+        $id_country = $request->id_country;
+        $city = $request->city;
         $dateNow = date("Y-m-d H:m:s");
-        if ($company != null && $email != null && $username != null && $phone != null && $fax != null && $website != null && $password != null && $postcode != null && $address != null) {
+        if ($company != null && $email != null && $username != null && $phone != null && $fax != null && $website != null && $password != null && $postcode != null && $address != null && $id_country != null && $city != null) {
 
             $chek = DB::table('itdp_company_users')
                 ->where('email', '=', $email)
@@ -182,7 +242,9 @@ class ManagementNoAuthController extends Controller
                         "email" => $email,
                         "website" => $website,
                         "created" => $dateNow,
-                        "status" => '1'
+                        "status" => '1',
+                        "id_mst_country" => $id_country,
+                        "city" => $city
                     ]);
                 $insert2 = DB::table('itdp_company_users')
                     ->insertGetId([
@@ -238,7 +300,7 @@ class ManagementNoAuthController extends Controller
                 $meta = [
                     'code' => 208,
                     'message' => 'Username Or Email Already Used',
-                    'status' => 'Already Reported '
+                    'status' => 'Failed'
                 ];
                 $data = '0';
                 $res['meta'] = $meta;
@@ -248,8 +310,8 @@ class ManagementNoAuthController extends Controller
         } else {
             $meta = [
                 'code' => 400,
-                'message' => 'All Data Must Be Filled i=In',
-                'status' => 'Bad Request'
+                'message' => 'All Data Must Be Filled In',
+                'status' => 'Failed'
             ];
             $data = '0';
             $res['meta'] = $meta;

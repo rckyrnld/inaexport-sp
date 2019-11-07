@@ -61,6 +61,8 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     //training
     Route::post('joinTraining', 'Api\User\TraininguserController@joinTraining');
 
+    //tiketing
+    Route::post('createTiket', 'Api\User\TicketingController@createTicketing');
 });
 Route::namespace('Api')->group(function () {
     /*Contact Us*/
@@ -80,5 +82,9 @@ Route::namespace('Api')->group(function () {
     //register
     Route::post('registerExp', 'ManagementNoAuthController@RegisterExp');
     Route::post('registerImp', 'ManagementNoAuthController@RegisterImp');
+
+    //country province
+    Route::get('getCountry', 'ManagementNoAuthController@getCountry');
+    Route::get('getProvince', 'ManagementNoAuthController@getProvince');
 });
 // });

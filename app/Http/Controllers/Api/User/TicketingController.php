@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Api\User;
 
+use App\Models\TicketingSupportModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Mail;
 
 
-class TraininguserController extends Controller
+class TicketingController extends Controller
 {
 
     // use AuthenticatesUsers;  
@@ -19,25 +21,34 @@ class TraininguserController extends Controller
         auth()->shouldUse('api_user');
     }
 
-    public function joinTraining(Request $request)
+    public function createTicketing(Request $request)
     {
-        $store = DB::table('training_join')->insert([
-            'id_training_admin' => $request->id_training_admin,
-            'id_profil_eks' => $request->id_profil,
-            'date_join' => date('Y-m-d H:i:s'),
-            'status' => 0
+        $store = TicketingSupportModel::create([
+            'id_pembuat' => $request->id_profile,
+            'name' => $request->name,
+            'type' => $request->type,
+            'email' => $request->email,
+            'subyek' => $request->subject,
+            'main_messages' => $request->messages,
+            'status' => 1,
+            'created_at' => date('Y-m-d H:i:s')
         ]);
 
-        $notif = DB::table('notif')->insert([
-            'dari_id' => $request->id_profil,
-            'untuk_id' => 1,
-            'keterangan' => '<b>Request To Join Training',
-            'waktu' => date('Y-m-d H:i:s'),
-            'url_terkait' => 'admin/training/view',
-            'status_baca' => 0,
-            'id_terkait' => $request->id_training_admin,
-            'to_role' => 1
-        ]);
+        $id_ticketing = $store->id;
+
+        //Tinggal Ganti Email1 dengan email kemendag
+        $data = [
+            'email' => $request->email,
+            'email1' => 'yossandiimran02@gmail.com',
+            'username' => $request->name,
+            'main_messages' => $request->messages,
+            'id' => $id_ticketing
+        ];
+
+        Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
+            $mail->to($data['email1'], $data['username']);
+            $mail->subject('Requesting Ticketing Support');
+        });
         if (count($store) > 0) {
             $meta = [
                 'code' => 200,
