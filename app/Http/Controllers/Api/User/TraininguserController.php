@@ -19,22 +19,44 @@ class TraininguserController extends Controller
         auth()->shouldUse('api_admin');
     }
 
-    public function browseProduct(Request $request)
+    public function joinTraining(Request $request)
     {
-        $dataProduk = DB::table('itdp_company_users')
-            ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-            ->where('itdp_company_users.status', '=', 1)
-            ->where('csc_product_single.id_itdp_company_user', '=', $request->id_user)
-            ->select('csc_product_single.id', 'csc_product_single.prodname_en',
-                'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type')
-            ->orderBy('csc_product_single.prodname_en', 'asc')
-            ->get();
-        if (count($dataProduk) > 0) {
-            $res['message'] = "Success";
-            $res['data'] = $dataProduk;
+        $store = DB::table('training_join')->insert([
+            'id_training_admin' => $request->id_training_admin,
+            'id_profil_eks' => $request->id_profil,
+            'date_join' => date('Y-m-d H:i:s'),
+            'status' => 0
+        ]);
+
+        $notif = DB::table('notif')->insert([
+            'dari_id' => $request->id_profil,
+            'untuk_id' => 1,
+            'keterangan' => '<b>Request To Join Training',
+            'waktu' => date('Y-m-d H:i:s'),
+            'url_terkait' => 'admin/training/view',
+            'status_baca' => 0,
+            'id_terkait' => $request->id_training_admin,
+            'to_role' => 1
+        ]);
+        if (count($store) > 0) {
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '0';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         } else {
-            $res['message'] = "Failed";
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '0';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         }
     }

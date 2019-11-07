@@ -58,6 +58,9 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     Route::post('detailProfileImp', 'Api\User\ProfileController@findProfileImp');
     Route::post('detailFotoImp', 'Api\User\ProfileController@findImageimp');
 
+    //training
+    Route::post('joinTraining', 'Api\User\TraininguserController@joinTraining');
+
 });
 Route::namespace('Api')->group(function () {
     /*Contact Us*/
