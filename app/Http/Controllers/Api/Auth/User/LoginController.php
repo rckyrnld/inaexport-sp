@@ -76,6 +76,7 @@ class LoginController extends Controller
             'message' => 'Success',
             'status' => 'Success'
         ];
+        $datas[0]->type = $company[0]->type;
         $datas[0]->access_token = $token;
 //    $data = [
 //        'access_token' => $token,
