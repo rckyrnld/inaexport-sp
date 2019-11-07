@@ -64,7 +64,8 @@ class ProfileController extends Controller
         }
 
         $path = ($idFoto) ?  url('image/fotoprofil/' . $idFoto) : url('image/fotoprofil/aaaa.PNG');
-        $path2 = base64_encode((Image::make(file_get_contents($path))));
+        $path2 = Image::make($path)->resize(96,96)->response('png');
+        $path3 = base64_encode(file_get_contents($path2));
 
 
 

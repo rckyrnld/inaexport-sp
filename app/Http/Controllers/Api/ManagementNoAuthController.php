@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\ContactUs;
+use Mail;
 
 class ManagementNoAuthController extends Controller
 {
@@ -56,11 +57,12 @@ class ManagementNoAuthController extends Controller
         $dateNow = date("Y-m-d H:m:s");
         if ($company != null && $email != null && $username != null && $phone != null && $fax != null && $website != null && $password != null && $postcode != null && $address != null) {
 
-            $chek = DB::table('itdp_company_user')
-                ->where('email', '!=', $email)
-                ->and('username', '!=', $username)
+            $chek = DB::table('itdp_company_users')
+                ->where('email', '=', $email)
+                ->orWhere('username', '=', $username)
                 ->get();
             $hasil = count($chek);
+//            dd($hasil);
             if ($hasil == 0) {
                 $insert = DB::table('itdp_profil_eks')
                     ->insertGetId([
@@ -88,7 +90,7 @@ class ManagementNoAuthController extends Controller
                 $id_terkait = "2/" . $insert2;
                 $ket = "User baru Eksportir dengan nama " . $company;
                 $insert3 = DB::table('notif')
-                    ->insertGetId([
+                    ->insert([
                         "to_role" => '1',
                         "dari_nama" => $company,
                         "dari_id" => $insert,
@@ -163,11 +165,12 @@ class ManagementNoAuthController extends Controller
         $dateNow = date("Y-m-d H:m:s");
         if ($company != null && $email != null && $username != null && $phone != null && $fax != null && $website != null && $password != null && $postcode != null && $address != null) {
 
-            $chek = DB::table('itdp_company_user')
-                ->where('email', '!=', $email)
-                ->and('username', '!=', $username)
+            $chek = DB::table('itdp_company_users')
+                ->where('email', '=', $email)
+                ->orWhere('username', '=', $username)
                 ->get();
             $hasil = count($chek);
+//            dd($hasil);
             if ($hasil == 0) {
                 $insert = DB::table('itdp_profil_imp')
                     ->insertGetId([
@@ -195,7 +198,7 @@ class ManagementNoAuthController extends Controller
                 $id_terkait = "2/" . $insert2;
                 $ket = "User baru Importir dengan nama " . $company;
                 $insert3 = DB::table('notif')
-                    ->insertGetId([
+                    ->insert([
                         "to_role" => '1',
                         "dari_nama" => $company,
                         "dari_id" => $insert,
