@@ -50,6 +50,17 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     Route::post('updateProduk', 'Api\User\ProductController@updateProduct');
     Route::post('deleteProduk', 'Api\User\ProductController@deleteProduct');
     Route::post('detailProdukById', 'Api\User\ProductController@detailProduk');
+
+    //profile
+    Route::post('detailProfileExp', 'Api\User\ProfileController@findProfileExp');
+    Route::post('detailFotoExp', 'Api\User\ProfileController@findImageExp');
+
+    Route::post('detailProfileImp', 'Api\User\ProfileController@findProfileImp');
+    Route::post('detailFotoImp', 'Api\User\ProfileController@findImageimp');
+
+    //training
+    Route::post('joinTraining', 'Api\User\TraininguserController@joinTraining');
+
 });
 Route::namespace('Api')->group(function () {
     /*Contact Us*/

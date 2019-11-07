@@ -18,6 +18,8 @@ class CreateCscInquiryBroadcastTable extends Migration
             $table->integer('id_inquiry')->nullable();
             $table->integer('id_itdp_company_users')->nullable();
             $table->integer('status')->nullable();
+            $table->timestamp('date')->nullable();
+            $table->timestamp('due_date')->nullable();
             $table->timestamps();
         });
     }

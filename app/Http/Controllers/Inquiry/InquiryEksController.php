@@ -15,8 +15,8 @@ class InquiryEksController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth');
         $this->middleware('auth:eksmp');
+        changeStatusInquiry();
     }
 
     public function index()
@@ -46,7 +46,7 @@ class InquiryEksController extends Controller
                     ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
                     ->where('csc_inquiry_br.status', 1)
-                    ->orderBy('csc_inquiry_br.date', 'DESC')
+                    ->orderBy('csc_inquiry_br.created_at', 'DESC')
                     ->get();
                 foreach ($importir as $key) {
                     array_push($user, $key);
@@ -68,7 +68,7 @@ class InquiryEksController extends Controller
                     ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
                     ->where('csc_inquiry_br.status', '!=', 1)
-                    ->orderBy('csc_inquiry_br.date', 'DESC')
+                    ->orderBy('csc_inquiry_br.created_at', 'DESC')
                     ->get();
                 foreach ($importir as $key) {
                     array_push($user, $key);
@@ -109,7 +109,12 @@ class InquiryEksController extends Controller
                 ->addColumn('status', function ($mjl) {
                     $statnya = "-";
                     if($mjl->status != NULL){
-                        $statnya = Lang::get('inquiry.stat'.$mjl->status);
+                        if($mjl->status == 0){
+                            $stat = 1;
+                        }else{
+                            $stat = $mjl->status;
+                        }
+                        $statnya = Lang::get('inquiry.stat'.$stat);
                     }
 
                     return $statnya;

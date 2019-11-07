@@ -7,8 +7,13 @@
     color: #4c4d61 !important;
     fill: #4c4d61 !important;
   }
+  .download{
+    display: inline-block;
+    min-width: 50%;
+    float: left;
+  }
 </style>
-<div class="padding">
+<div class="container">
   <div class="row">
     <div class="col-md-12">
       <div class="box">
@@ -19,9 +24,13 @@
         <div class="box-body">
           <div class="tab-content p-3 mb-3">
             <div class="tab-pane animate fadeIn text-muted active show" id="tab4">
-              <div id="user_year" style="min-width: 310px; height: 400px; margin: 0 auto;"></div><br><br>
-              <div id="top_downloader" style="min-width: 310px; height: 300px; margin: 0 auto;"></div><br><br>
-              <div id="top_rc" style="min-width: 310px; height: 300px; margin: 0 auto;"></div>
+              <div id="user_year" style="min-width: 310px; height: 400px; margin: 0 auto;"></div>
+              <div style="width: 100%; padding-top: 50px;">
+                <div id="top_downloader" class="download" style="height: 300px; margin: 0 auto;"></div>
+                <div id="top_rc" class="download" style="height: 300px; margin: 0 auto;"></div>
+              </div>
+              <div id="inquiry" style="min-width: 310px; height: 400px; margin: 0 auto; padding-top: 50px;"></div><br><br>
+              <div id="top_inquiry" style="min-width: 310px; height: 400px; margin: 0 auto; padding-top: 50px;"></div><br><br>
               <div class="row">
                 <div class="table-responsive"> 
                 </div>
@@ -40,18 +49,18 @@
 @include('footer')
 <script type="text/javascript">
   $(document).ready(function() {
-    $.ajax({
-            url: "{{route('dashboard.scopeData')}}",
-            method: 'get',
-            dataType: 'json',
-            success:function(response){
-              new_user(response[0], response[1]);
-              top_downloader();
-            }
-      });
+    Highcharts.setOptions({
+        lang: {
+            drillUpText: '◁ Back to Top'
+        }
+    });
+    user();
+    top_downloader();
+    inquiry();
   });
 
-  function new_user(data, drilldown) {
+  function user() {
+    var data = JSON.parse('<?php echo addcslashes(json_encode($User),'\'\\'); ?>');
     var defaultTitle = "The Number of Members Each Year";
     var drilldownTitle = "The Number of Members Year ";
     
@@ -76,7 +85,7 @@
                 text: ''
             }
         },
-        series: data,
+        series: data[0],
         credits: {
           enabled: false
         },
@@ -87,7 +96,80 @@
             enabled: true
         },
         drilldown: {
-            series: drilldown
+            series: data[1]
+        }
+    });
+  }
+
+  function inquiry() {
+    var data_year = JSON.parse('<?php echo addcslashes(json_encode($Inquiry),'\'\\'); ?>');
+    var data_top = JSON.parse('<?php echo addcslashes(json_encode($Top_Inquiry),'\'\\'); ?>');
+    var defaultTitle = "Amount of Inquiry Each Year";
+    var drilldownTitle = "Amount of Inquiry Year ";
+    
+    var chart = Highcharts.chart('inquiry', {
+        chart: {
+          type: 'column',
+          events: {
+              drilldown: function(e) {
+                  chart.setTitle({ text: drilldownTitle + e.point.name });
+              },
+              drillup: function(e) {
+                  chart.setTitle({ text: defaultTitle });
+              }
+          }
+        },
+        xAxis: {
+                type : 'category'
+            },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: ''
+            }
+        },
+        series: data_year[0],
+        credits: {
+          enabled: false
+        },
+        title: {
+            text: defaultTitle
+        },
+        legend: {
+            enabled: true
+        },
+        drilldown: {
+            series: data_year[1]
+        }
+    });
+
+    Highcharts.chart('top_inquiry', {
+        chart: {
+          type: 'column'
+        },
+        xAxis: {
+                type : 'category'
+            },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: ''
+            }
+        },
+        series: data_top,
+        credits: {
+          enabled: false
+        },
+        title: {
+            text: 'Top 10 Most Making an Inquiry'
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            useHTML: true,
+            headerFormat: '',
+            pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">{point.name}</span><br/>'
         }
     });
   }
