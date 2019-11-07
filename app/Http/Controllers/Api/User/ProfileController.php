@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Intervention\Image\ImageManagerStatic as Image;
 
 
 class ProfileController extends Controller
@@ -59,10 +60,13 @@ class ProfileController extends Controller
             ->get();
 
         foreach ($dataProfil as $rt) {
-            $idFoto = $rt->foto_profil;
+            $idFoto =  $rt->foto_profil;
         }
-        $path = asset('image/fotoprofil/' . $idFoto);
-        $path2 = base64_encode(file_get_contents($path));
+
+        $path = ($idFoto) ?  asset('image/fotoprofil/' . $idFoto) : asset('image/fotoprofil/aaaa.PNG');
+        $path2 = base64_encode(Image::make($path)->resize(300,300));
+
+
 
         if (count($dataProfil) > 0) {
             $meta = [
