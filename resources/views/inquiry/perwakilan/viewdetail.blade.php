@@ -187,7 +187,7 @@
                               </div>
                             </div>
                         </div>
-                        @if($data->status != 3 && $data->status != 4)
+                        @if($data->status != 3 && $data->status != 4 && $data->status != 5)
                         <div class="row">
                           <div class="col-md-12">
                             <div class="input-group mb-3">

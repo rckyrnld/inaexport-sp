@@ -36,6 +36,7 @@ class CreateCscInquiryBrTable extends Migration
             $table->integer('status')->nullable();
             $table->timestamp('date')->nullable();
             $table->string('duration')->nullable();
+            $table->timestamp('due_date')->nullable();
             $table->timestamps();
         });
     }
