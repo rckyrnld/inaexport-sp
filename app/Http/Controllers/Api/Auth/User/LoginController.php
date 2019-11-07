@@ -42,7 +42,7 @@ class LoginController extends Controller
     protected function respondFailed()
     {
         $meta = [
-            'code' => '401',
+            'code' => 100,
             'message' => 'Unauthorized',
             'status' => 'Failed'
         ];
@@ -71,8 +71,10 @@ class LoginController extends Controller
                     ->get();
             }
         }
+
+//        dd($datas);
         $meta = [
-            'code' => '200',
+            'code' => 200,
             'message' => 'Success',
             'status' => 'Success'
         ];
@@ -89,7 +91,7 @@ class LoginController extends Controller
 //        'email' => auth()->user()->email,
 //        'type' => 'user' //api_user guard
 //    ];
-        $data = $datas;
+        $data = $datas[0];
         $res['meta'] = $meta;
         $res['data'] = $data;
         return $res;

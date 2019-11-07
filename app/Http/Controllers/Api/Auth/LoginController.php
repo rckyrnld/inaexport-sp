@@ -87,7 +87,7 @@ class LoginController extends Controller
     public function authenticated($datas)
     {
         $meta = [
-            'code' => '200',
+            'code' => 200,
             'message' => 'Success',
             'status' => 'Success'
         ];
@@ -100,7 +100,7 @@ class LoginController extends Controller
     public function sendFailedLoginResponse()
     {
         $meta = [
-            'code' => '401',
+            'code' => 401,
             'message' => 'Unauthorized',
             'status' => 'Failed'
         ];

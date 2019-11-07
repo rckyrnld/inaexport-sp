@@ -116,7 +116,7 @@ class ManagementNoAuthController extends Controller
 
                 });
                 $meta = [
-                    'code' => '200',
+                    'code' => 200,
                     'message' => 'Success',
                     'status' => 'OK'
                 ];
@@ -126,7 +126,7 @@ class ManagementNoAuthController extends Controller
                 return response($res);
             } else {
                 $meta = [
-                    'code' => '208',
+                    'code' => 208,
                     'message' => 'Username Or Email Already Used',
                     'status' => 'Already Reported '
                 ];
@@ -137,7 +137,7 @@ class ManagementNoAuthController extends Controller
             }
         } else {
             $meta = [
-                'code' => '400',
+                'code' => 400,
                 'message' => 'All Data Must Be Filled i=In',
                 'status' => 'Bad Request'
             ];
@@ -223,7 +223,7 @@ class ManagementNoAuthController extends Controller
 
                 });
                 $meta = [
-                    'code' => '200',
+                    'code' => 200,
                     'message' => 'Success',
                     'status' => 'OK'
                 ];
@@ -233,7 +233,7 @@ class ManagementNoAuthController extends Controller
                 return response($res);
             } else {
                 $meta = [
-                    'code' => '208',
+                    'code' => 208,
                     'message' => 'Username Or Email Already Used',
                     'status' => 'Already Reported '
                 ];
@@ -244,7 +244,7 @@ class ManagementNoAuthController extends Controller
             }
         } else {
             $meta = [
-                'code' => '400',
+                'code' => 400,
                 'message' => 'All Data Must Be Filled i=In',
                 'status' => 'Bad Request'
             ];

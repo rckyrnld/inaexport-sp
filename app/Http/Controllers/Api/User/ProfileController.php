@@ -29,7 +29,7 @@ class ProfileController extends Controller
 
         if (count($dataProfil) > 0) {
             $meta = [
-                'code' => '200',
+                'code' => 200,
                 'message' => 'Success',
                 'status' => 'Success'
             ];
@@ -39,7 +39,7 @@ class ProfileController extends Controller
             return response($res);
         } else {
             $meta = [
-                'code' => '204',
+                'code' => 204,
                 'message' => 'Data Not Found',
                 'status' => 'Failed'
             ];
@@ -66,7 +66,7 @@ class ProfileController extends Controller
 
         if (count($dataProfil) > 0) {
             $meta = [
-                'code' => '200',
+                'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
@@ -77,7 +77,7 @@ class ProfileController extends Controller
 
         } else {
             $meta = [
-                'code' => '204',
+                'code' => 204,
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
@@ -98,7 +98,7 @@ class ProfileController extends Controller
 
         if (count($dataProfil) > 0) {
             $meta = [
-                'code' => '200',
+                'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
@@ -108,7 +108,7 @@ class ProfileController extends Controller
             return response($res);
         } else {
             $meta = [
-                'code' => '204',
+                'code' => 204,
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
@@ -135,7 +135,7 @@ class ProfileController extends Controller
 
         if (count($dataProfil) > 0) {
             $meta = [
-                'code' => '200',
+                'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
@@ -146,7 +146,7 @@ class ProfileController extends Controller
 
         } else {
             $meta = [
-                'code' => '204',
+                'code' => 204,
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
