@@ -63,8 +63,8 @@ class ProfileController extends Controller
             $idFoto =  $rt->foto_profil;
         }
 
-        $path = ($idFoto) ?  asset('image/fotoprofil/' . $idFoto) : asset('image/fotoprofil/aaaa.PNG');
-        $path2 = base64_encode(Image::make($path)->resize(300,300));
+        $path = ($idFoto) ?  url('image/fotoprofil/' . $idFoto) : url('image/fotoprofil/aaaa.PNG');
+        $path2 = base64_encode((Image::make(file_get_contents($path))));
 
 
 

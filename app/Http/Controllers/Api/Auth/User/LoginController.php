@@ -93,7 +93,7 @@ class LoginController extends Controller
 //    ];
         $data = $datas[0];
         $res['meta'] = $meta;
-        $res['data'] = ['UserLogin'=>$data];
+        $res['data'] = $data;
         return $res;
 
 //    return response()->json([
