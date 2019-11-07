@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Mail;
 
 class VerifyuserController extends Controller
 {
@@ -35,7 +36,7 @@ class VerifyuserController extends Controller
 				 return $pesan->company;
             })
 			->addColumn('f2', function ($pesan) {
-				 return $pesan->addres;
+				 return $pesan->email;
             })
 			->addColumn('f3', function ($pesan) {
 				 return $pesan->postcode;
@@ -66,9 +67,15 @@ class VerifyuserController extends Controller
             ->addColumn('action', function ($pesan) {
            
                 if($pesan->status_a == 1 || $pesan->status_a == 2){ 
-				return '<a href="'.url('profil2/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>';
+				return '<a href="'.url('profil2/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>
+				<a Onclick="return ConfirmDelete();" href="'.url('hapusimportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="hapus"><i class="fa fa-trash text-white"></i></a>
+				<a href="'.url('resetimportir/'.$pesan->ida).'" class="btn btn-sm btn-warning" title="Reset Password"><i class="fa fa-key text-white"></i></a>
+				';
 				}else{
-				return '<a href="'.url('profil2/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verify</a>';
+				return '<a href="'.url('profil2/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-success"><i class="fa fa-check text-white"></i></a>
+				<a Onclick="return ConfirmDelete();" href="'.url('hapusimportir/'.$pesan->ida).'" class="btn btn-sm btn-danger"><i class="fa fa-trash text-white"></i></a>
+				<a href="'.url('resetimportir/'.$pesan->ida).'" class="btn btn-sm btn-warning"><i class="fa fa-key text-white"></i></a>
+				';
 				}
                
                 
@@ -87,7 +94,7 @@ class VerifyuserController extends Controller
 				 return $pesan->company;
             })
 			->addColumn('f2', function ($pesan) {
-				 return $pesan->addres;
+				 return $pesan->email;
             })
 			->addColumn('f3', function ($pesan) {
 				 return $pesan->postcode;
@@ -118,9 +125,15 @@ class VerifyuserController extends Controller
             ->addColumn('action', function ($pesan) {
            
                 if($pesan->status_a == 1 || $pesan->status_a == 2){ 
-				return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>';
+				return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>
+				<a Onclick="return ConfirmDelete();" href="'.url('hapuseksportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="hapus"><i class="fa fa-trash text-white"></i></a>
+				<a href="'.url('reseteksportir/'.$pesan->ida).'" class="btn btn-sm btn-warning" title="Reset Password"><i class="fa fa-key text-white"></i></a>
+				';
 				}else{
-				return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-success"><i class="fa fa-edit text-white"></i> Verify</a>';
+				return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-success" title="Verify"><i class="fa fa-check text-white"></i></a>
+				<a Onclick="return ConfirmDelete();" href="'.url('hapuseksportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="hapus"><i class="fa fa-trash text-white"></i></a>
+				<a href="'.url('reseteksportir/'.$pesan->ida).'" class="btn btn-sm btn-warning" title="Reset Password"><i class="fa fa-key text-white"></i></a>
+				';
 				}
                
                 
@@ -157,7 +170,11 @@ class VerifyuserController extends Controller
             })
             ->addColumn('action', function ($pesan) {
            
-               return '<center><a class="btn btn-danger" href="'.url('hapusperwakilan/'.$pesan->id).'"><i class="fa fa-trash"></i> Hapus</a></center>';
+               return '<center>
+			   <a class="btn btn-success" href="'.url('editperwakilan/'.$pesan->id).'"><i class="fa fa-edit"></i> &nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
+			   <a class="btn btn-danger" href="'.url('hapusperwakilan/'.$pesan->id).'"><i class="fa fa-trash"></i> Hapus</a>
+			   
+			   </center>';
 				
             })
 			->rawColumns(['action','f6','f7'])
@@ -178,10 +195,70 @@ class VerifyuserController extends Controller
         return view('verifyuser.index3', compact('pageTitle','data'));
     }
 
+	public function hapusimportir($id)
+    {
+		$delete = DB::select("delete from itdp_company_users where id='".$id."'");
+		return redirect('verifyimportir');
+	}
+	
+	public function hapuseksportir($id)
+    {
+		$delete = DB::select("delete from itdp_company_users where id='".$id."'");
+		return redirect('verifyuser');
+	}
+	
+	public function resetimportir($id)
+    {
+			$ei = DB::select("select * from itdp_company_users where id='".$id."'");
+			
+			foreach($ei as $ie){
+				$d1 = $ie->id;
+				$d2 = $ie->username;
+				$d3 = $ie->email;
+			}
+			$data = ['username' => $d2, 'id2' => $d1, 'nama' => $d2, 'email' => $d3];
+
+                Mail::send('UM.user.emailforget', $data, function ($mail) use ($data) {
+                    $mail->to($data['email'], $data['username']);
+                    $mail->subject('Forget Password');
+
+                });
+			
+		
+		return redirect('verifyimportir');
+	}
+	
+	public function reseteksportir($id)
+    {
+			$ei = DB::select("select * from itdp_company_users where id='".$id."'");
+			
+			foreach($ei as $ie){
+				$d1 = $ie->id;
+				$d2 = $ie->username;
+				$d3 = $ie->email;
+			}
+			$data = ['username' => $d2, 'id2' => $d1, 'nama' => $d2, 'email' => $d3];
+
+                Mail::send('UM.user.emailforget', $data, function ($mail) use ($data) {
+                    $mail->to($data['email'], $data['username']);
+                    $mail->subject('Forget Password');
+
+                });
+			
+		
+		return redirect('verifyuser');
+	}
+	
 	public function hapusperwakilan($id)
     {
 		$delete = DB::select("delete from itdp_admin_users where id='".$id."'");
 		return redirect('profilperwakilan');
+	}
+	
+	public function editperwakilan($id)
+    {
+		$pageTitle = "Edit Perwakilan";
+		return view('verifyuser.editperwakilan', compact('pageTitle','id'));
 	}
 
     public function detailverify($id)
@@ -241,7 +318,7 @@ class VerifyuserController extends Controller
 			('".$request->pejabat."','".$request->country."','".$request->email."','".$request->web."','".$request->phone."'
 			,'".$request->username."','".$request->username."','".bcrypt($request->password)."','".$request->status."')
 			");
-			$ambilmaxid = DB::select("select max(id) as maxid from itdp_admin_ln");
+			$ambilmaxid = DB::select("select max(id) as maxid from itdp_admin_dn");
 			foreach($ambilmaxid as $rt){
 				$id1 = $rt->maxid;
 			}
@@ -265,6 +342,67 @@ class VerifyuserController extends Controller
 			('".$request->username."','".$request->email."','".bcrypt($request->password)."','-','4'
 			,'".Date('Y-m-d H:m:s')."','".$id1."','".$request->type."','".$request->web."')
 			");
+			
+		}
+		
+		return redirect('profilperwakilan');
+	}
+	
+	public function updateperwakilan(Request $request)
+	{
+		if($request->type == "DINAS PERDAGANGAN"){
+			if(empty($request->password) || $request->password == null){
+			$update1 = DB::select("
+			update itdp_admin_dn set nama='".$request->pejabat."', id_country ='".$request->country."', email ='".$request->email."', web='".$request->web."'
+			, telp='".$request->phone."', kepala='".$request->username."', username='".$request->username."', status='".$request->status."'
+			where id='".$request->idb."'
+			");
+			
+			$update2 = DB::select("
+			update itdp_admin_users set name='".$request->username."', email ='".$request->email."', website='".$request->web."'
+			where id='".$request->ida."'
+			");
+			}else{
+			$update1 = DB::select("
+			update itdp_admin_dn set nama='".$request->pejabat."', id_country ='".$request->country."', email ='".$request->email."', web='".$request->web."'
+			, telp='".$request->phone."', kepala='".$request->username."', username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->status."'
+			where id='".$request->idb."'
+			");
+			
+			$update2 = DB::select("
+			update itdp_admin_users set name='".$request->username."', email ='".$request->email."', password ='".bcrypt($request->password)."', website='".$request->web."'
+			where id='".$request->ida."'
+			");
+			}
+			
+		}else{
+			// echo "b";die();
+			if(empty($request->password) || $request->password == null){
+			$update1 = DB::select("
+			update itdp_admin_ln set nama='".$request->pejabat."', id_country ='".$request->country."', email ='".$request->email."', web='".$request->web."'
+			, telp='".$request->phone."', kepala='".$request->username."', username='".$request->username."', status='".$request->status."'
+			where id='".$request->idb."'
+			");
+			
+			$update2 = DB::select("
+			update itdp_admin_users set name='".$request->username."', email ='".$request->email."', website='".$request->web."'
+			where id='".$request->ida."'
+			");
+			
+			}else{
+			$update1 = DB::select("
+			update itdp_admin_ln set nama='".$request->pejabat."', id_country ='".$request->country."', email ='".$request->email."', web='".$request->web."'
+			, telp='".$request->phone."', kepala='".$request->username."', username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->status."'
+			where id='".$request->idb."'
+			");
+			
+			$update2 = DB::select("
+			update itdp_admin_users set name='".$request->username."', email ='".$request->email."', password ='".bcrypt($request->password)."', website='".$request->web."'
+			where id='".$request->ida."'
+			");
+			}
+			
+			
 			
 		}
 		

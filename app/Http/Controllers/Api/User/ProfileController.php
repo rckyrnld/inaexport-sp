@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Intervention\Image\ImageManagerStatic as Image;
 
 
 class ProfileController extends Controller
@@ -29,9 +30,9 @@ class ProfileController extends Controller
 
         if (count($dataProfil) > 0) {
             $meta = [
-                'code' => '200',
+                'code' => 200,
                 'message' => 'Success',
-                'status' => 'OK'
+                'status' => 'Success'
             ];
             $data = $dataProfil;
             $res['meta'] = $meta;
@@ -39,9 +40,9 @@ class ProfileController extends Controller
             return response($res);
         } else {
             $meta = [
-                'code' => '204',
+                'code' => 204,
                 'message' => 'Data Not Found',
-                'status' => 'No Content'
+                'status' => 'Failed'
             ];
             $data = $dataProfil;
             $res['meta'] = $meta;
@@ -59,14 +60,18 @@ class ProfileController extends Controller
             ->get();
 
         foreach ($dataProfil as $rt) {
-            $idFoto = $rt->foto_profil;
+            $idFoto =  $rt->foto_profil;
         }
-        $path = asset('image/fotoprofil/' . $idFoto);
-        $path2 = base64_encode(file_get_contents($path));
+
+        $path = ($idFoto) ?  url('image/fotoprofil/' . $idFoto) : url('image/fotoprofil/aaaa.PNG');
+        $path2 = Image::make($path)->resize(96,96)->response('png');
+        $path3 = base64_encode(file_get_contents($path2));
+
+
 
         if (count($dataProfil) > 0) {
             $meta = [
-                'code' => '200',
+                'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
@@ -77,7 +82,7 @@ class ProfileController extends Controller
 
         } else {
             $meta = [
-                'code' => '204',
+                'code' => 204,
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
@@ -98,7 +103,7 @@ class ProfileController extends Controller
 
         if (count($dataProfil) > 0) {
             $meta = [
-                'code' => '200',
+                'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
@@ -108,7 +113,7 @@ class ProfileController extends Controller
             return response($res);
         } else {
             $meta = [
-                'code' => '204',
+                'code' => 204,
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
@@ -135,7 +140,7 @@ class ProfileController extends Controller
 
         if (count($dataProfil) > 0) {
             $meta = [
-                'code' => '200',
+                'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
@@ -146,7 +151,7 @@ class ProfileController extends Controller
 
         } else {
             $meta = [
-                'code' => '204',
+                'code' => 204,
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
