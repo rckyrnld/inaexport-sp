@@ -62,7 +62,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     Route::post('joinTraining', 'Api\User\TraininguserController@joinTraining');
 
     //tiketing
-    Route::post('createTiket', 'Api\User\TicketingController@createTicketing');
+    Route::post('createTicket', 'Api\User\TicketingController@createTicketing');
 });
 Route::namespace('Api')->group(function () {
     /*Contact Us*/
