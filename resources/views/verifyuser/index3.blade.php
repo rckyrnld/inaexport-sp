@@ -35,7 +35,7 @@
                                         <center>Type</center>
                                     </th>
 									
-                                    <th width="10%">
+                                    <th width="17%">
                                         <center>Action</center>
                                     </th>
                                 </tr>
