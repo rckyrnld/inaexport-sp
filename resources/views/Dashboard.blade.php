@@ -30,6 +30,7 @@
                 <div id="top_rc" class="download" style="height: 300px; margin: 0 auto;"></div>
               </div>
               <div id="inquiry" style="min-width: 310px; height: 400px; margin: 0 auto; padding-top: 50px;"></div><br><br>
+              <div id="top_inquiry" style="min-width: 310px; height: 400px; margin: 0 auto; padding-top: 50px;"></div><br><br>
               <div class="row">
                 <div class="table-responsive"> 
                 </div>
@@ -48,6 +49,11 @@
 @include('footer')
 <script type="text/javascript">
   $(document).ready(function() {
+    Highcharts.setOptions({
+        lang: {
+            drillUpText: '◁ Back to Top'
+        }
+    });
     user();
     top_downloader();
     inquiry();
@@ -96,7 +102,8 @@
   }
 
   function inquiry() {
-    var data = JSON.parse('<?php echo addcslashes(json_encode($Inquiry),'\'\\'); ?>');
+    var data_year = JSON.parse('<?php echo addcslashes(json_encode($Inquiry),'\'\\'); ?>');
+    var data_top = JSON.parse('<?php echo addcslashes(json_encode($Top_Inquiry),'\'\\'); ?>');
     var defaultTitle = "Amount of Inquiry Each Year";
     var drilldownTitle = "Amount of Inquiry Year ";
     
@@ -121,7 +128,7 @@
                 text: ''
             }
         },
-        series: data,
+        series: data_year[0],
         credits: {
           enabled: false
         },
@@ -130,10 +137,40 @@
         },
         legend: {
             enabled: true
+        },
+        drilldown: {
+            series: data_year[1]
         }
-        // drilldown: {
-        //     series: data[1]
-        // }
+    });
+
+    Highcharts.chart('top_inquiry', {
+        chart: {
+          type: 'column'
+        },
+        xAxis: {
+                type : 'category'
+            },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: ''
+            }
+        },
+        series: data_top,
+        credits: {
+          enabled: false
+        },
+        title: {
+            text: 'Top 10 Most Making an Inquiry'
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            useHTML: true,
+            headerFormat: '',
+            pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">{point.name}</span><br/>'
+        }
     });
   }
 
