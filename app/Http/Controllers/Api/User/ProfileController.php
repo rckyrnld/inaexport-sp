@@ -31,7 +31,7 @@ class ProfileController extends Controller
             $meta = [
                 'code' => '200',
                 'message' => 'Success',
-                'status' => 'OK'
+                'status' => 'Success'
             ];
             $data = $dataProfil;
             $res['meta'] = $meta;
@@ -41,7 +41,7 @@ class ProfileController extends Controller
             $meta = [
                 'code' => '204',
                 'message' => 'Data Not Found',
-                'status' => 'No Content'
+                'status' => 'Failed'
             ];
             $data = $dataProfil;
             $res['meta'] = $meta;
