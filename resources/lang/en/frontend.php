@@ -8,6 +8,7 @@ return [
     "lbl1" => "Exporter Registration",
     "lbl2" => "Importer Registration",
     "lbl3" => "Sign In",
+    "lbl4" => "Sign Out",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
@@ -44,5 +45,14 @@ return [
     "cu-message"    => "Message",
     "cu-submit"    => "Send",
     "cu-cu"    => "Contact Us",
-    "service-title"    => "Membership Service"
+    "service-title"    => "Membership Service",
+    "home" => [
+        "product" => "Products",
+        "supplier" => "Suppliers",
+        "sourcer" => "Sourcing Request",
+        "wishlist" => "Wish List",
+        "mycart" => "My Cart",
+        "popcategory" => "Popular Categories",
+        "allcategory" => "All Categories",
+    ],
 ];

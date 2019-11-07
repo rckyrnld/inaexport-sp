@@ -18,18 +18,27 @@ class FrontController extends Controller
 
     public function index()
     {
-        //Data Product
+        //Data Product yang paling banyak di beli (query masih menggunakan query sementara)
         $product = DB::table('csc_product_single')
             ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
             ->where('itdp_company_users.status', 1)
-            ->where('csc_product_single.status', 2)
-            ->inRandomOrder()
+            // ->where('csc_product_single.status', 2)
+            ->orderby('csc_product_single.id', 'DESC')
+            // ->inRandomOrder()
             ->limit(10)
             ->get();
 
-        $service = DB::table('itdp_service_eks as a')->where('status', 2)->orderBy('created_at', 'desc')->get();
-        return view('frontend.index', compact('product','service'));
+        // $service = DB::table('itdp_service_eks as a')->where('status', 2)->orderBy('created_at', 'desc')->get();
+        //Category Utama
+        $categoryutama = DB::table('csc_product')
+            ->where('level_1', 0)
+            ->where('level_2', 0)
+            ->orderBy('nama_kategori_en', 'ASC')
+            ->limit(9)
+            ->get();
+        return view('frontend.index', compact('product', 'categoryutama'));
+        // return view('frontend.index');
     }
 
     public function all_product()

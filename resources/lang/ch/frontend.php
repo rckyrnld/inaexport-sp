@@ -8,6 +8,7 @@ return [
 	"lbl1" => "出口商注册",
     "lbl2" => "进口商注册",
     "lbl3" => "登入",
+    "lbl4" => "登出",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
@@ -45,5 +46,14 @@ return [
     "cu-message"    => "信息",
     "cu-cu"    => "联系我们",
     "cu-submit"    => "发送",
-    "service-title"    => "会员服务"
+    "service-title"    => "会员服务",
+    "home" => [
+        "product" => "产品展示",
+        "supplier" => "供应商",
+        "sourcer" => "采购请求",
+        "wishlist" => "Wish List",
+        "mycart" => "My Cart",
+        "popcategory" => "热门类别",
+        "allcategory" => "所有类别",
+    ],
 ];

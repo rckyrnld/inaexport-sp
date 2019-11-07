@@ -8,6 +8,7 @@ return [
 	"lbl1" => "Pendaftaran Eksportir",
     "lbl2" => "Pendaftaran Importir",
     "lbl3" => "Masuk",
+    "lbl4" => "Keluar",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
@@ -44,5 +45,14 @@ return [
     "cu-message"    => "Pesan",
     "cu-cu"    => "Hubungi Kami",
     "cu-submit"    => "Kirim",
-    "service-title"    => "Layanan Keanggotaan"
+    "service-title"    => "Layanan Keanggotaan",
+    "home" => [
+        "product" => "Produk",
+        "supplier" => "Suppliers",
+        "sourcer" => "Sourcing Request",
+        "wishlist" => "Wish List",
+        "mycart" => "My Cart",
+        "popcategory" => "Popular Kategori",
+        "allcategory" => "Semua Kategori",
+    ],
 ];

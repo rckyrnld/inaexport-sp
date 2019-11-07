@@ -469,3 +469,15 @@ if (! function_exists('getNameRC')) {
         }
     }
 }
+
+if (! function_exists('getCategoryLevel')) {
+    function getCategoryLevel($level, $idutama, $idcat1){
+      if($level == 1){
+        $category = DB::table('csc_product')->where('level_1', $idutama)->where('level_2', 0)->orderby('nama_kategori_en', 'ASC')->get();
+      }else{
+        $category = DB::table('csc_product')->where('level_1', $idcat1)->where('level_2', $idutama)->orderby('nama_kategori_en', 'ASC')->get();
+      }
+
+      return $category;
+    }
+}
