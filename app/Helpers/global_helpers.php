@@ -447,18 +447,29 @@ if (! function_exists('getPerwakilanCountry')) {
 
 
 if (! function_exists('getCompanyNameRC')) {
-    function getCompanyNameRC($id, $key){
-        $data = DB::table('itdp_profil_eks')->where('id', $id)->first();
-        if($data){
-            return $data->company;
-        } else {
-            $number = $key + 1;
-            return 'Company not Found '.$number; 
-        }
+    function getCompanyNameRC($id, $key, $param){
+      if($param == 'null'){
+          $data = DB::table('itdp_profil_eks')->where('id', $id)->first();
+          if($data){
+              return $data->company;
+          } else {
+              $number = $key + 1;
+              return 'Company not Found '.$number; 
+          }
+      } else {
+        $data = DB::table('itdp_company_users')->where('id', $id)->first();
+        $data = DB::table('itdp_profil_eks')->where('id', $data->id_profil)->first();
+          if($data){
+              return $data->company;
+          } else {
+              $number = $key + 1;
+              return 'Company not Found '.$number; 
+          }
+      }
     }
 }
 
-if (! function_exists('getNameRC')) {
+if (! function_exists('getRcName')) {
     function getRcName($id, $key){
         $data = DB::table('csc_research_corner')->where('id', $id)->first();
         if($data){
@@ -469,6 +480,31 @@ if (! function_exists('getNameRC')) {
         }
     }
 }
+
+if (! function_exists('getNameEvent')) {
+    function getNameEvent($id, $key){
+        $data = DB::table('event_detail')->where('id', $id)->first();
+        if($data){
+            return $data->event_name_en;
+        } else {
+            $number = $key + 1;
+            return 'Event not Found '.$number;
+        }
+    }
+}
+
+if (! function_exists('getNameTraining')) {
+    function getNameTraining($id, $key){
+        $data = DB::table('training_admin')->where('id', $id)->first();
+        if($data){
+            return $data->training_en;
+        } else {
+            $number = $key + 1;
+            return 'Training not Found '.$number;
+        }
+    }
+}
+
 
 if (! function_exists('getCategoryLevel')) {
     function getCategoryLevel($level, $idutama, $idcat1){

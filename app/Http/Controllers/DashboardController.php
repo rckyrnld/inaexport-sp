@@ -23,8 +23,10 @@ class DashboardController extends Controller
             $inquiry        = $this->getDataInquiry();
             $top_inquiry    = $this->getDataTopInquiry();
             $buying         = $this->getDataBuying();
-            $top_buying     = $this->getDataTopBuying();
             $event          = $this->getDataEvent();
+            $training       = $this->getDataTraining();
+            $table_top_event = [];
+            $table_top_join_event = [];
 
             // DATA TABLE TOP TOP-AN
             $table_download_company = DB::table('csc_download_research_corner')
@@ -44,8 +46,72 @@ class DashboardController extends Controller
                 ->groupby('type')
                 ->orderby('jumlah', 'desc')
                 ->limit(5)->get();
-            
-            return view('Dashboard',compact('pageTitle', 'table_download_company', 'table_download_rc', 'table_inquiry'))->with('Top_Company_Download', json_decode($company, true))->with('Top_Downloaded_RC', json_decode($rc, true))->with('User', json_decode($user, true))->with('Inquiry', json_decode($inquiry, true))->with('Top_Inquiry', json_decode($top_inquiry, true))->with('Buying', json_decode($buying, true))->with('Event', json_decode($event, true));
+
+            $table_top_buying = DB::table('csc_buying_request_join')
+                ->select(DB::raw('count(*) as jumlah, id_eks'))
+                ->groupby('id_eks')
+                ->orderby('jumlah', 'desc')
+                ->limit(5)->get();
+
+            $table_top_training = DB::table('training_join')
+                ->select(DB::raw('count(*) as jumlah, id_training_admin'))
+                ->where('status', 1)
+                ->groupby('id_training_admin')
+                ->orderby('jumlah','desc')->get();
+
+            $table_top_join_training = DB::table('training_join')
+                ->select(DB::raw('count(*) as jumlah, id_profil_eks'))
+                ->where('status', 1)
+                ->groupby('id_profil_eks')
+                ->orderby('jumlah','desc')->get();
+        // DATA EVENT
+        $notif_event = DB::table('notif')
+            ->select(DB::raw('count(*) as jumlah, untuk_id as id_itdp_profil_eks'))
+            ->where('url_terkait', 'event/show/read')
+            ->where('status', 2)
+            ->groupby('untuk_id')
+            ->orderby('jumlah', 'desc')
+            ->get();
+        $tambahan_event = DB::table('event_company_add')
+            ->select(DB::raw('count(*) as jumlah, id_itdp_profil_eks'))
+            ->where('status', 2)
+            ->groupby('id_itdp_profil_eks')
+            ->orderby('jumlah','desc')->get();
+        $merge = $tambahan_event->merge($notif_event);
+            foreach ($merge as $key => $value) {
+                if(isset($table_top_join_event[$value->id_itdp_profil_eks])){
+                    $table_top_join_event[$value->id_itdp_profil_eks] += $value->jumlah;
+                } else {
+                    $table_top_join_event[$value->id_itdp_profil_eks] = intval($value->jumlah);
+                }
+            }
+        arsort($table_top_join_event);
+        $table_top_join_event = array_slice($table_top_join_event, 0, 5, true);
+
+        $notif_event2 = DB::table('notif')
+            ->select(DB::raw('count(*) as jumlah, id_terkait as id_event'))
+            ->where('url_terkait', 'event/show/read')
+            ->where('status', 2)
+            ->groupby('id_terkait')
+            ->orderby('jumlah', 'desc')
+            ->get();
+        $tambahan_event2 = DB::table('event_company_add')
+            ->select(DB::raw('count(*) as jumlah, id_event_detail as id_event'))
+            ->where('status', 2)
+            ->groupby('id_event_detail')
+            ->orderby('jumlah','desc')->get();
+        $merge2 = $tambahan_event2->merge($notif_event2);
+            foreach ($merge2 as $key => $value) {
+                if(isset($table_top_event[$value->id_event])){
+                    $table_top_event[$value->id_event] += $value->jumlah;
+                } else {
+                    $table_top_event[$value->id_event] = intval($value->jumlah);
+                }
+            }
+        arsort($table_top_event);
+        $table_top_event = array_slice($table_top_event, 0, 5, true);
+        // END OF DATA EVENT
+            return view('Dashboard',compact('pageTitle', 'table_download_company', 'table_download_rc', 'table_inquiry', 'table_top_buying','table_top_join_event','table_top_event','table_top_training','table_top_join_training'))->with('Top_Company_Download', json_decode($company, true))->with('Top_Downloaded_RC', json_decode($rc, true))->with('User', json_decode($user, true))->with('Inquiry', json_decode($inquiry, true))->with('Top_Inquiry', json_decode($top_inquiry, true))->with('Buying', json_decode($buying, true))->with('Event', json_decode($event, true))->with('Training', json_decode($training, true));
 
         } elseif(Auth::user()->id_group == 4) {
             // $this->getMemberPerwakilan();
@@ -106,9 +172,9 @@ class DashboardController extends Controller
 
                 for ($m=1; $m < 13; $m++) { 
                     if($i == 0){
-                        $fetch_sub_data .= $this->getDataSubUser($m, $value->year, 'eksportir');
+                        $fetch_sub_data .= $this->getDataSub($m, $value->year, 'eksportir', 'user');
                     } else {
-                        $fetch_sub_data .= $this->getDataSubUser($m, $value->year, 'importir');
+                        $fetch_sub_data .= $this->getDataSub($m, $value->year, 'importir', 'user');
                     }
                     if($m != 12){
                         $fetch_sub_data .= ',';
@@ -125,7 +191,8 @@ class DashboardController extends Controller
     private function getDataInquiry(){
         $fetch_inquiry = '';
         $fetch_sub_data = '';
-        $tampung_tahun = [];
+        $tahun_awal = [];
+        $tahun_akhir = $this->getLastCondition('csc_inquiry_br', 'created_at', 'type', 'importir');
         $tahun = $this->tahun();
 
         $inquiry = DB::table('csc_inquiry_br')
@@ -133,7 +200,7 @@ class DashboardController extends Controller
             ->groupby('type')->groupby('year')
             ->whereRaw('extract(year from created_at) in ('.$tahun.')')
             ->orderby('year','asc')->orderby('type','asc')
-            ->limit(5)->get();
+            ->get();
 
         for ($i=0; $i < 3 ; $i++) { 
             if($i == 0){
@@ -147,26 +214,30 @@ class DashboardController extends Controller
                 $end = ']}]';
             }
 
+            $tahun = 9999;
             foreach ($inquiry as $key => $value) {
-                if(!in_array($value->year, $tampung_tahun)){
-                    array_push($tampung_tahun, $value->year);
-                }
                 if($i == 0 && $value->type == 'admin'){
-                    $id = 'Admin-'.$value->year;
-                    if ($value->year === date('Y')) {
-                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
-                    } else {
-                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"},';
+                    if(!in_array($value->year, $tahun_awal)){
+                        array_push($tahun_awal, $value->year);
                     }
+                    $id = 'Admin-'.$value->year;
+                    if (intval($value->year) > intval($tahun)) {
+                        $fetch_inquiry .= ',{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                        $tahun = $value->year;
+                    } else {
+                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                        $tahun = $value->year;
+                    }
+
                     // Data Drilldown
-                    if($value->year == min($tampung_tahun)){
+                    if($value->year == min($tahun_awal)){
                         $fetch_sub_data .= '[{"name": "Admin", "id": "'.$id.'", "data": [';
                     } else {
                         $fetch_sub_data .= '{"name": "Admin", "id": "'.$id.'", "data": [';
                     }
 
                     for ($m=1; $m < 13; $m++) { 
-                        $fetch_sub_data .= $this->getDataSubInquiry($m, $value->year, 'admin');
+                        $fetch_sub_data .= $this->getDataSub($m, $value->year, 'admin', 'inquiry');
                         if($m != 12){
                             $fetch_sub_data .= ',';
                         }
@@ -177,16 +248,19 @@ class DashboardController extends Controller
 
                 if($i == 1 && $value->type == 'perwakilan') {
                     $id = 'Perwakilan-'.$value->year;
-                    if ($value->year === date('Y')) {
-                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                    if (intval($value->year) > intval($tahun)) {
+                        $fetch_inquiry .= ',{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                        $tahun = $value->year;
                     } else {
-                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"},';
+                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                        $tahun = $value->year;
                     }
+
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Perwakilan", "id": "'.$id.'", "data": [';
 
                     for ($m=1; $m < 13; $m++) { 
-                        $fetch_sub_data .= $this->getDataSubInquiry($m, $value->year, 'perwakilan');
+                        $fetch_sub_data .= $this->getDataSub($m, $value->year, 'perwakilan', 'inquiry');
                         if($m != 12){
                             $fetch_sub_data .= ',';
                         }
@@ -197,22 +271,24 @@ class DashboardController extends Controller
 
                 if($i == 2 && $value->type == 'importir') {
                     $id = 'Importir-'.$value->year;
-                    if ($value->year === date('Y')) {
-                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                    if (intval($value->year) > intval($tahun)) {
+                        $fetch_inquiry .= ',{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                        $tahun = $value->year;
                     } else {
-                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"},';
+                        $fetch_inquiry .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                        $tahun = $value->year;
                     }
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Importir", "id": "'.$id.'", "data": [';
 
                     for ($m=1; $m < 13; $m++) { 
-                        $fetch_sub_data .= $this->getDataSubInquiry($m, $value->year, 'importir');
+                        $fetch_sub_data .= $this->getDataSub($m, $value->year, 'importir', 'inquiry');
                         if($m != 12){
                             $fetch_sub_data .= ',';
                         }
                     }
 
-                    if($value->year == max($tampung_tahun)){
+                    if($value->year == $tahun_akhir){
                         $fetch_sub_data .= ']}]';
                     } else {
                         $fetch_sub_data .= ']},';
@@ -228,49 +304,53 @@ class DashboardController extends Controller
     private function getDataBuying(){
         $fetch_buying = '';
         $fetch_sub_data = '';
-        $tampung_tahun = [];
         $tahun = $this->tahun();
+        $tahun_akhir = $this->getLastCondition('csc_buying_request', 'date', 'by_role', 3);
+        $tahun_awal = [];
+        
 
         $buying = DB::table('csc_buying_request')
             ->select(DB::raw('extract(year from date) as year, count(*) as jumlah, by_role as type'))
             ->groupby('type')->groupby('year')
             ->whereRaw('extract(year from date) in ('.$tahun.')')
             ->orderby('year','asc')->orderby('type','asc')
-            ->limit(5)->get();
-
+            ->get();
 
         for ($i=0; $i < 3 ; $i++) { 
             if($i == 0){
-                $fetch_buying .= '[{"name": "Admin", "color": "#855c9a", "data": [';
+                $fetch_buying .= '[{"name": "Admin", "color": "#4cd25c", "data": [';
                 $end = ']},';
             } elseif($i == 1) {
                 $fetch_buying .= '{"name": "Representative", "color": "#8085e9", "data": [';
                 $end = ']},';
             } else {
-                $fetch_buying .= '{"name": "Importer", "color": "#4cd25c", "data": [';
+                $fetch_buying .= '{"name": "Importer", "color": "#855c9a", "data": [';
                 $end = ']}]';
             }
 
+            $tahun = 9999;
             foreach ($buying as $key => $value) {
-                if(!in_array($value->year, $tampung_tahun)){
-                    array_push($tampung_tahun, $value->year);
-                }
                 if($i == 0 && $value->type == 1){
+                    if(!in_array($value->year, $tahun_awal)){
+                        array_push($tahun_awal, $value->year);
+                    }
                     $id = 'Admin-'.$value->year;
-                    if ($value->year === date('Y')) {
-                        $fetch_buying .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                    if (intval($value->year) > intval($tahun)) {
+                        $fetch_buying .= ',{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                        $tahun = $value->year;
                     } else {
-                        $fetch_buying .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"},';
+                        $fetch_buying .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                        $tahun = $value->year;
                     }
                     // Data Drilldown
-                    if($value->year == min($tampung_tahun)){
+                    if($value->year == min($tahun_awal)){
                         $fetch_sub_data .= '[{"name": "Admin", "id": "'.$id.'", "data": [';
                     } else {
                         $fetch_sub_data .= '{"name": "Admin", "id": "'.$id.'", "data": [';
                     }
 
                     for ($m=1; $m < 13; $m++) { 
-                        $fetch_sub_data .= $this->getDataSubBuying($m, $value->year, 1);
+                        $fetch_sub_data .= $this->getDataSub($m, $value->year, 1, 'buying');
                         if($m != 12){
                             $fetch_sub_data .= ',';
                         }
@@ -281,16 +361,18 @@ class DashboardController extends Controller
 
                 if($i == 1 && $value->type == 4) {
                     $id = 'Perwakilan-'.$value->year;
-                    if ($value->year === date('Y')) {
-                        $fetch_buying .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                    if (intval($value->year) > intval($tahun)) {
+                        $fetch_buying .= ',{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                        $tahun = $value->year;
                     } else {
-                        $fetch_buying .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"},';
+                        $fetch_buying .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                        $tahun = $value->year;
                     }
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Perwakilan", "id": "'.$id.'", "data": [';
 
                     for ($m=1; $m < 13; $m++) { 
-                        $fetch_sub_data .= $this->getDataSubBuying($m, $value->year, 4);
+                        $fetch_sub_data .= $this->getDataSub($m, $value->year, 4, 'buying');
                         if($m != 12){
                             $fetch_sub_data .= ',';
                         }
@@ -301,22 +383,24 @@ class DashboardController extends Controller
 
                 if($i == 2 && $value->type == 3) {
                     $id = 'Importir-'.$value->year;
-                    if ($value->year === date('Y')) {
-                        $fetch_buying .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                    if (intval($value->year) > intval($tahun)) {
+                        $fetch_buying .= ',{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                        $tahun = $value->year;
                     } else {
-                        $fetch_buying .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"},';
+                        $fetch_buying .= '{"name": "'.$value->year.'", "y": '.$value->jumlah.', "drilldown": "'.$id.'"}';
+                        $tahun = $value->year;
                     }
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Importir", "id": "'.$id.'", "data": [';
 
                     for ($m=1; $m < 13; $m++) { 
-                        $fetch_sub_data .= $this->getDataSubBuying($m, $value->year, 3);
+                        $fetch_sub_data .= $this->getDataSub($m, $value->year, 3, 'buying');
                         if($m != 12){
                             $fetch_sub_data .= ',';
                         }
                     }
 
-                    if($value->year == max($tampung_tahun)){
+                    if($value->year == $tahun_akhir){
                         $fetch_sub_data .= ']}]';
                     } else {
                         $fetch_sub_data .= ']},';
@@ -333,26 +417,14 @@ class DashboardController extends Controller
         $fetch_event = '';
         $fetch_sub_data = '';
         $tampung_tahun = [];
-        $tahun='';
-        for($year = intval(date('Y')); $year >= date('Y')-9; $year--){
-            if($year == date('Y')-9){
-                $tahun .= $year;
-            } else {
-                $tahun .= $year.',';
-            }
-        }
+        $tahun = $this->tahun();
 
         $color = array(
             0 => '#A93226',
             1 => '#884EA0',
             2 => '#2471A3',
             3 => '#229954',
-            4 => '#D4AC0D',
-            5 => '#D68910',
-            6 => '#2ECC71',
-            7 => '#3498DB',
-            8 => '#AF7AC5',
-            9 => '#EC7063',
+            4 => '#D68910',
         );
 
         $event = DB::table('event_detail')
@@ -360,7 +432,7 @@ class DashboardController extends Controller
             ->groupby('year')
             ->whereRaw('extract(year from created_at) in ('.$tahun.')')
             ->orderby('year','asc')
-            ->limit(10)->get();
+            ->limit(5)->get();
 
         $fetch_event .= '[{"name": "Event", "data": [';
             foreach ($event as $key => $value) {
@@ -383,7 +455,7 @@ class DashboardController extends Controller
                 }
 
                 for ($m=1; $m < 13; $m++) { 
-                    $fetch_sub_data .= $this->getDataSubEvent($m, $value->year);
+                    $fetch_sub_data .= $this->getDataSub($m, $value->year, 0, 'event');
                     if($m != 12){
                         $fetch_sub_data .= ',';
                     }
@@ -398,6 +470,62 @@ class DashboardController extends Controller
         return $return;
     }
 
+    private function getDataTraining(){
+        $fetch_training = '';
+        $fetch_sub_data = '';
+        $tampung_tahun = [];
+        $tahun = $this->tahun();
+
+        $color = array(
+            0 => '#EC7063',
+            1 => '#AF7AC5',
+            2 => '#3498DB',
+            3 => '#2ECC71',
+            4 => '#D4AC0D',
+        );
+
+        $training = DB::table('training_admin')
+            ->select(DB::raw('extract(year from start_date) as year, count(*) as jumlah'))
+            ->groupby('year')
+            ->whereRaw('extract(year from start_date) in ('.$tahun.')')
+            ->orderby('year','asc')
+            ->limit(5)->get();
+
+        $fetch_training .= '[{"name": "Training", "data": [';
+            foreach ($training as $key => $value) {
+                if(!in_array($value->year, $tampung_tahun)){
+                    array_push($tampung_tahun, $value->year);
+                }
+
+                if ($value->year === date('Y')) {
+                    $fetch_training .= '{"name": "'.$value->year.'", "color": "'.$color[$key].'", "y": '.$value->jumlah.', "drilldown": "'.$value->year.'"}';
+                    $endnya = ']}]';
+                } else {
+                    $fetch_training .= '{"name": "'.$value->year.'", "color": "'.$color[$key].'", "y": '.$value->jumlah.', "drilldown": "'.$value->year.'"},';
+                    $endnya = ']},';
+                }
+                // Data Drilldown
+                if($value->year == min($tampung_tahun)){
+                    $fetch_sub_data .= '[{"name": "Training", "id": "'.$value->year.'", "data": [';
+                } else {
+                    $fetch_sub_data .= '{"name": "Training", "id": "'.$value->year.'", "data": [';
+                }
+
+                for ($m=1; $m < 13; $m++) { 
+                    $fetch_sub_data .= $this->getDataSub($m, $value->year, 0, 'training');
+                    if($m != 12){
+                        $fetch_sub_data .= ',';
+                    }
+                }
+
+                $fetch_sub_data .= $endnya;
+            }
+
+        $fetch_training .= ']}]';
+
+        $return = '['.$fetch_training.','.$fetch_sub_data.']';
+        return $return;
+    }
 
     private function getDataTopDownloadCompany(){
         $top_download_company = DB::table('csc_download_research_corner')
@@ -465,7 +593,7 @@ class DashboardController extends Controller
 
         $inquiry = '';
         $color = array(
-            0 => '#EC7063',
+            0 => '#e45344',
             1 => '#AF7AC5',
             2 => '#3498DB',
             3 => '#2ECC71',
@@ -497,120 +625,59 @@ class DashboardController extends Controller
         return $inquiry;
     }
 
-    private function getDataTopBuying(){
-        $top_buyer = DB::table('csc_buying_request')
-        ->select(DB::raw('count(*) as jumlah, id_pembuat, by_role as type'))
-        ->groupby('id_pembuat')
-        ->groupby('by_role')
-        ->orderby('jumlah', 'desc')
-        ->limit(10)->get();
-
-        $buyer = '';
-        $color = array(
-            0 => '#789ec5',
-            1 => '#44c742',
-            2 => '#c74242',
-            3 => '#e69419',
-            4 => '#855c9a',
-            0 => '#789ec5',
-            1 => '#44c742',
-            2 => '#c74242',
-            3 => '#e69419',
-            4 => '#855c9a',
-        );
-
-        foreach ($top_buyer as $key => $value) {
-            switch ($value->type) {
-                case 1:
-                        $name = getAdminName($value->id_pembuat).' ( Admin )';
-                    break;
-                case 4:
-                        $name = getPerwakilanName($value->id_pembuat).' ( Representative )';
-                    break;
-                case 3:
-                        $name = getCompanyNameImportir($value->id_pembuat).' ( Importer )';
-                    break;
-            }
-
-            if($key == 0){
-                $buyer .= '[{"name": "Buyer", "data":[{"name": "'.$name.'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'},';
-            } else if ($key == count($top_buyer)-1){
-                $buyer .= '{"name": "'.$name.'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'}]}]';
+    private function getDataSub($month, $year, $param, $jenis){
+        if($jenis == 'user'){
+            if($param == "eksportir"){
+                $data = DB::table('itdp_company_users as a')->selectRaw('extract(month from created_at) as month, count(b.id) as jumlah')
+                    ->leftjoin('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
+                    ->whereRaw('extract(year from created_at) in ('.$year.')')
+                    ->whereRaw('extract(month from created_at) in ('.$month.')')
+                    ->groupby('month')
+                    ->first(); 
             } else {
-                $buyer .= '{"name": "'.$name.'", "color": "'.$color[$key].'", "y": '.$value->jumlah.'},';
+                $data = DB::table('itdp_company_users as a')->selectRaw('extract(month from created_at) as month, count(b.id) as jumlah')
+                    ->leftjoin('itdp_profil_imp as b', 'a.id_profil', '=', 'b.id')
+                    ->whereRaw('extract(year from created_at) in ('.$year.')')
+                    ->whereRaw('extract(month from created_at) in ('.$month.')')
+                    ->groupby('month')
+                    ->first(); 
             }
-        }
-        return $buyer;
-    }
-
-    private function getDataSubUser($month, $year, $param){
-        if($param == "eksportir"){
-            $user_perbulan = DB::table('itdp_company_users as a')->selectRaw('extract(month from created_at) as month, count(b.id) as banyak')
-                ->leftjoin('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
+        } else if($jenis == 'inquiry'){
+            $data = DB::table('csc_inquiry_br')
+                ->select(DB::raw('extract(month from created_at) as month, count(*) as jumlah, type'))
+                ->where('type', $param)
                 ->whereRaw('extract(year from created_at) in ('.$year.')')
                 ->whereRaw('extract(month from created_at) in ('.$month.')')
                 ->groupby('month')
-                ->first(); 
-        } else {
-            $user_perbulan = DB::table('itdp_company_users as a')->selectRaw('extract(month from created_at) as month, count(b.id) as banyak')
-                ->leftjoin('itdp_profil_imp as b', 'a.id_profil', '=', 'b.id')
+                ->groupby('type')
+                ->first();
+        } else if($jenis == 'buying'){
+            $data = DB::table('csc_buying_request')
+                ->select(DB::raw('extract(month from date) as month, count(*) as jumlah, by_role as type'))
+                ->where('by_role', $param)
+                ->whereRaw('extract(year from date) in ('.$year.')')
+                ->whereRaw('extract(month from date) in ('.$month.')')
+                ->groupby('month')
+                ->groupby('type')
+                ->first();
+        } else if($jenis == 'event'){
+            $data = DB::table('event_detail')
+                ->select(DB::raw('extract(month from created_at) as month, count(*) as jumlah'))
                 ->whereRaw('extract(year from created_at) in ('.$year.')')
                 ->whereRaw('extract(month from created_at) in ('.$month.')')
                 ->groupby('month')
-                ->first(); 
+                ->first();
+        } else if($jenis == 'training'){
+            $data = DB::table('training_admin')
+                ->select(DB::raw('extract(month from start_date) as month, count(*) as jumlah'))
+                ->whereRaw('extract(year from start_date) in ('.$year.')')
+                ->whereRaw('extract(month from start_date) in ('.$month.')')
+                ->groupby('month')
+                ->first();
         }
 
-        if($user_perbulan){
-            return '["'.$this->getMonth($month).'", '.$user_perbulan->banyak.']';
-        } else {
-            return '["'.$this->getMonth($month).'", 0]';
-        }
-    }
-
-    private function getDataSubInquiry($month, $year, $param){
-        $inquiry_perbulan = DB::table('csc_inquiry_br')
-            ->select(DB::raw('extract(month from created_at) as month, count(*) as jumlah, type'))
-            ->where('type', $param)
-            ->whereRaw('extract(year from created_at) in ('.$year.')')
-            ->whereRaw('extract(month from created_at) in ('.$month.')')
-            ->groupby('month')
-            ->groupby('type')
-            ->first();
-
-        if($inquiry_perbulan){
-            return '["'.$this->getMonth($month).'", '.$inquiry_perbulan->jumlah.']';
-        } else {
-            return '["'.$this->getMonth($month).'", 0]';
-        }
-    }
-
-    private function getDataSubBuying($month, $year, $param){
-        $buying_perbulan = DB::table('csc_buying_request')
-            ->select(DB::raw('extract(month from date) as month, count(*) as jumlah, by_role as type'))
-            ->where('by_role', $param)
-            ->whereRaw('extract(year from date) in ('.$year.')')
-            ->whereRaw('extract(month from date) in ('.$month.')')
-            ->groupby('month')
-            ->groupby('type')
-            ->first();
-
-        if($buying_perbulan){
-            return '["'.$this->getMonth($month).'", '.$buying_perbulan->jumlah.']';
-        } else {
-            return '["'.$this->getMonth($month).'", 0]';
-        }
-    }
-
-    private function getDataSubEvent($month, $year){
-        $event_perbulan = DB::table('event_detail')
-            ->select(DB::raw('extract(month from created_at) as month, count(*) as jumlah'))
-            ->whereRaw('extract(year from created_at) in ('.$year.')')
-            ->whereRaw('extract(month from created_at) in ('.$month.')')
-            ->groupby('month')
-            ->first();
-
-        if($event_perbulan){
-            return '["'.$this->getMonth($month).'", '.$event_perbulan->jumlah.']';
+        if($data){
+            return '["'.$this->getMonth($month).'", '.$data->jumlah.']';
         } else {
             return '["'.$this->getMonth($month).'", 0]';
         }
@@ -673,6 +740,16 @@ class DashboardController extends Controller
             }
         }
         return $tahun;
+    }
+
+    private function getLastCondition($table, $param, $type, $param_type){
+        $data = DB::table($table)
+                ->select(DB::raw('extract(year from '.$param.') as year'))
+                ->groupby('year')
+                ->where($type, $param_type)
+                ->orderby('year', 'desc')
+                ->first(); 
+        return $data->year;
     }
 
     // DATA PERWAKILAN
