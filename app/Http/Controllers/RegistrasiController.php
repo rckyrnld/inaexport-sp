@@ -20,7 +20,19 @@ class RegistrasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function registrasi_pembeli()
+    public function loginadmin()
+    {
+        $pageTitle = "Log In Administrator";
+        return view('auth.loginadmin',compact('pageTitle'));
+    }
+	
+	public function pilihregister()
+    {
+        $pageTitle = "Choose Register";
+        return view('auth.cr',compact('pageTitle'));
+    }
+	
+	public function registrasi_pembeli()
     {
         $pageTitle = "Registrasi Pembeli";
         return view('auth.register_pembeli',compact('pageTitle'));
@@ -59,9 +71,9 @@ class RegistrasiController extends Controller
 	public function simpan_rpembeli(Request $request)
     {
 		$insert1 = DB::select("
-			insert into itdp_profil_imp (company,addres,postcode,phone,fax,email,website,created,status) values
+			insert into itdp_profil_imp (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
 			('".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
-			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1')
+			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1','".$request->city."','".$request->country."')
 		");
 		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_imp");
 		foreach($ambilmaxid as $rt){
@@ -104,9 +116,9 @@ class RegistrasiController extends Controller
 	public function simpan_rpenjual(Request $request)
     {
 		$insert1 = DB::select("
-			insert into itdp_profil_eks (company,addres,postcode,phone,fax,email,website,created,status) values
+			insert into itdp_profil_eks (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_province) values
 			('".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
-			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1')
+			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1','".$request->city."','".$request->prov."')
 		");
 		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_eks");
 		foreach($ambilmaxid as $rt){

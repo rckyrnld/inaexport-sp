@@ -28,7 +28,7 @@ Route::get('/gantipass2/{id}', 'RegistrasiController@gantipass2');
 Route::post('/updatepass1', 'RegistrasiController@updatepass1');
 Route::post('/updatepass2', 'RegistrasiController@updatepass2');
 Route::post('/resetpass', 'RegistrasiController@resetpass');
-Route::get('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
+Route::post('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
 
 Route::namespace('FrontEnd')->group(function () {
     /* Created by Meidiyanah */
@@ -97,6 +97,8 @@ Route::post('/simpan_rpenjual', 'RegistrasiController@simpan_rpenjual');
 Route::get('/verifypenjual/{id}', 'RegistrasiController@verifypenjual');
 
 Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');
+Route::get('/admin', 'RegistrasiController@loginadmin');
+Route::get('/pilihregister', 'RegistrasiController@pilihregister');
 
 
 //////////////////////////////////// END FRONTEND ////////////////////////////////////////////////////////////
