@@ -16,7 +16,7 @@ class TraininguserController extends Controller
     // use AuthenticatesUsers;  
     public function __construct()
     {
-        auth()->shouldUse('api_admin');
+        auth()->shouldUse('api_user');
     }
 
     public function joinTraining(Request $request)
@@ -40,7 +40,7 @@ class TraininguserController extends Controller
         ]);
         if (count($store) > 0) {
             $meta = [
-                'code' => '200',
+                'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
@@ -50,7 +50,7 @@ class TraininguserController extends Controller
             return response($res);
         } else {
             $meta = [
-                'code' => '204',
+                'code' => 204,
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];

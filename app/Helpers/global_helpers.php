@@ -430,3 +430,54 @@ if (! function_exists('changeStatusInquiry')) {
         return 1;
     }
 }
+
+if (! function_exists('getPerwakilanCountry')) {
+    function getPerwakilanCountry($id){
+        $country = 0;
+        $data = DB::table('itdp_admin_ln')->where('id', $id)->first();
+        if($data){
+          if($data->id_country != NULL){
+            $country = $data->id_country;
+          }
+        }
+
+        return $country;
+    }
+}
+
+
+if (! function_exists('getCompanyNameRC')) {
+    function getCompanyNameRC($id, $key){
+        $data = DB::table('itdp_profil_eks')->where('id', $id)->first();
+        if($data){
+            return $data->company;
+        } else {
+            $number = $key + 1;
+            return 'Company not Found '.$number; 
+        }
+    }
+}
+
+if (! function_exists('getNameRC')) {
+    function getRcName($id, $key){
+        $data = DB::table('csc_research_corner')->where('id', $id)->first();
+        if($data){
+            return $data->title_en.' ( '.rc_country($data->id_mst_country).' )';
+        } else {
+            $number = $key + 1;
+            return 'Name not Found '.$number;
+        }
+    }
+}
+
+if (! function_exists('getCategoryLevel')) {
+    function getCategoryLevel($level, $idutama, $idcat1){
+      if($level == 1){
+        $category = DB::table('csc_product')->where('level_1', $idutama)->where('level_2', 0)->orderby('nama_kategori_en', 'ASC')->get();
+      }else{
+        $category = DB::table('csc_product')->where('level_1', $idcat1)->where('level_2', $idutama)->orderby('nama_kategori_en', 'ASC')->get();
+      }
+
+      return $category;
+    }
+}
