@@ -28,7 +28,7 @@ Route::get('/gantipass2/{id}', 'RegistrasiController@gantipass2');
 Route::post('/updatepass1', 'RegistrasiController@updatepass1');
 Route::post('/updatepass2', 'RegistrasiController@updatepass2');
 Route::post('/resetpass', 'RegistrasiController@resetpass');
-Route::get('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
+Route::post('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
 
 Route::namespace('FrontEnd')->group(function () {
     /* Created by Meidiyanah */
