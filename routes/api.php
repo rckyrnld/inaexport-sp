@@ -59,10 +59,13 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     Route::post('detailFotoImp', 'Api\User\ProfileController@findImageimp');
 
     //training
-    Route::post('joinTraining', 'Api\User\TraininguserController@joinTraining');
+    Route::post('joinTraining', 'Api\User\ManagementUserController@joinTraining');
 
     //tiketing
-    Route::post('createTicket', 'Api\User\TicketingController@createTicketing');
+    Route::post('createTicket', 'Api\User\ManagementUserController@createTicketing');
+
+    //RC
+    Route::post('downloadResearch', 'Api\User\ManagementUserController@downloadResearch');
 });
 Route::namespace('Api')->group(function () {
     /*Contact Us*/
@@ -86,5 +89,12 @@ Route::namespace('Api')->group(function () {
     //country province
     Route::get('getCountry', 'ManagementNoAuthController@getCountry');
     Route::get('getProvince', 'ManagementNoAuthController@getProvince');
+
+    //RC
+    Route::get('getResearchc', 'ManagementNoAuthController@getResearchchor');
+
+    //tracking
+    Route::get('getDataTracking', 'ManagementNoAuthController@getDataTracking');
+    Route::post('tracking', 'TrackingController@tracking');
 });
 // });

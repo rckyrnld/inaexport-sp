@@ -18,7 +18,7 @@ class FrontController extends Controller
 
     public function index()
     {
-        //Data Product yang paling banyak di beli (query masih menggunakan query sementara)
+        //Data Product yang paling banyak di br dan inquiry (query masih menggunakan query sementara)
         $product = DB::table('csc_product_single')
             ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
@@ -41,15 +41,116 @@ class FrontController extends Controller
         // return view('frontend.index');
     }
 
-    public function all_product()
+    public function list_product()
     {
         //List Category Product
-        $catprod = DB::table('csc_product')
+        $categoryutama = DB::table('csc_product')
             ->where('level_1', 0)
             ->where('level_2', 0)
             ->orderBy('nama_kategori_en', 'ASC')
+            ->limit(10)
             ->get();
+
         //Data Product
+        $product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            // ->where('itdp_company_users.status', 1)
+            // ->where('csc_product_single.status', 2)
+            ->orderBy('csc_product_single.prodname_en', 'ASC')
+            ->paginate(12);
+
+        //Data Eksportir/Manufacturer
+        $manufacturer = DB::table('itdp_company_users as a')
+            ->join('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
+            ->selectRaw('a.*, b.id as idprofil, b.company')
+            ->where('a.id_role', 2)
+            ->inRandomOrder()
+            ->limit(10)
+            ->get();
+
+        $catActive = NULL;
+
+        // return view('frontend.product.all_product', compact('product', 'catprod'));
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive'));
+
+    }
+
+    public function getCategory(Request $request)
+    {
+        $name = $request->name;
+        $loc = $request->loc;
+        $srch = "nama_kategori_".$loc;
+        $categoryutama = DB::table('csc_product')
+            ->where($srch, 'ILIKE', '%'.$name.'%')
+            ->where('level_1', 0)
+            ->where('level_2', 0)
+            ->limit(10)
+            ->get();
+
+        $numb = 1;
+        $result = "";
+        foreach($categoryutama as $cu){
+            $catprod1 = getCategoryLevel(1, $cu->id, "");
+            $nk = "nama_kategori_".$loc; 
+            if($cu->$nk == NULL){
+                $nk = "nama_kategori_en";
+            }
+
+            if(count($catprod1) == 0){
+                $result .= '<a href="#" class="list-group-item">'.$cu->$nk.'</a>';
+            }else{
+                $result .= '<a onclick="openCollapse(\''.$numb.'\')" href="#menus{{$numb}}" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu"> '.$cu->$nk.' <i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop'.$numb.'"></i></a>
+                        <div class="collapse" id="menus'.$numb.'">';
+                foreach($catprod1 as $cat1){
+                    $result .= '<a href="#" class="list-group-item">'.$cat1->$nk.'</a>';
+                }
+                $result .= '</div>';
+            }
+            $numb++;
+        }
+
+        return $result;
+    }
+
+    public function getManufactur(Request $request)
+    {
+        $name = $request->name;
+        $manufacturer = DB::table('itdp_company_users as a')
+            ->join('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
+            ->selectRaw('a.*, b.id as idprofil, b.company')
+            ->where('a.id_role', 2)
+            ->where('b.company', 'ILIKE', '%'.$name.'%')
+            ->limit(10)
+            ->get();
+
+        $numb = 1;
+        $result = "";
+        foreach($manufacturer as $man){
+            $result .= '<li>
+                            <input type="checkbox">
+                            <a href="#">'.$man->company.'('.getCountProduct('company', $man->id).')</a>
+                            <span class="checkmark"></span>
+                        </li>';
+            $numb++;
+        }
+        $result .= '<li>
+                        <a href="#">View All</a>
+                    </li>';
+
+        return $result;
+    }
+
+    public function category_product($id)
+    {
+        //List Category Product
+        $categoryutama = DB::table('csc_product')
+            ->where('level_1', 0)
+            ->where('level_2', 0)
+            ->orderBy('nama_kategori_en', 'ASC')
+            ->limit(10)
+            ->get();
+        // //Data Product
         $product = DB::table('csc_product_single')
             ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
@@ -59,7 +160,9 @@ class FrontController extends Controller
             ->limit(10)
             ->get();
 
-        return view('frontend.product.all_product', compact('product', 'catprod'));
+        // return view('frontend.product.all_product', compact('product', 'catprod'));
+        return view('frontend.product.list_product', compact('categoryutama'));
+
     }
 
     public function product_category($id)

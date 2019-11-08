@@ -17,13 +17,13 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{url('assets')}}/libs/font-awesome/css/font-awesome.min.css" type="text/css" />
 
-    <!-- build:css ../assets/css/app.min.css -->
-    <link rel="stylesheet" href="{{url('assets')}}/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="{{asset('front/assets/css/plugins.css')}}">
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{asset('front/assets/css/style.css')}}">
+    <!-- build:css ../assets/css/app.min.css -->
+    <link rel="stylesheet" href="{{url('assets')}}/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
     <!-- endbuild -->
     <link rel="stylesheet" href="{{url('assets')}}/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" type="text/css" />
 
@@ -91,15 +91,8 @@
                                     @else
                                     <li class="top_links"><a href="{{url('login')}}"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")
                                     @endif
-                                    <li class="language-en">
-                                        <!-- <div id="google_translate_element" style="border-radius:5px;"></div> -->
-                                        <a href="{{ url('locale/en') }}"><img width="20px" src="{{asset('negara/en.png')}}"></a>
-                                    </li>
-                                    <li class="language-in">
-                                        <a href="{{ url('locale/in') }}"><img width="20px" src="{{asset('negara/in.png')}}"></a>
-                                    </li>
-                                    <li class="language-ch">
-                                        <a href="{{ url('locale/ch') }}"><img width="20px" src="{{asset('negara/ch.png')}}"></a>
+                                    <li class="language">
+                                        <div id="google_translate_element" style="border-radius:5px;"></div>
                                     </li>
                                 </ul>
                             </div>
@@ -169,13 +162,8 @@
                                 </form> -->
                             </div>
                             <div class="middel_right_info">
-
-                                <div class="header_wishlist">
-                                    <a href="wishlist.html"><span class="lnr lnr-heart"></span> Wish list </a>
-                                    <span class="wishlist_quantity">3</span>
-                                </div>
                                 <div class="mini_cart_wrapper">
-                                    <a href="javascript:void(0)"><span class="lnr lnr-cart"></span>My Cart </a>
+                                    <a href="javascript:void(0)"><img src="{{asset('front/assets/icon/product1.png')}}" alt="" style="width: 40px;">Products </a>
                                     <span class="cart_quantity">2</span>
                                     <!--mini cart-->
                                     <div class="mini_cart">
@@ -230,6 +218,67 @@
 
                                     </div>
                                     <!--mini cart end-->
+                                </div>
+                                <div class="mini_cart_wrapper">
+                                    <a href="javascript:void(0)"><img src="{{asset('front/assets/icon/love.png')}}" alt="" style="width: 40px;">Products </a>
+                                    <span class="cart_quantity">2</span>
+                                    <!--mini cart-->
+                                    <div class="mini_cart">
+                                        <div class="cart_item">
+                                            <div class="cart_img">
+                                                <a href="#"><img src="{{asset('front/assets/img/s-product/product.jpg')}}" alt=""></a>
+                                            </div>
+                                            <div class="cart_info">
+                                                <a href="#">JBL Flip 3 Splasroof Portable Bluetooth 2</a>
+
+                                                <span class="quantity">Qty: 1</span>
+                                                <span class="price_cart">$60.00</span>
+
+                                            </div>
+                                            <div class="cart_remove">
+                                                <a href="#"><i class="ion-android-close"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="cart_item">
+                                            <div class="cart_img">
+                                                <a href="#"><img src="{{asset('front/assets/img/s-product/product2.jpg')}}" alt=""></a>
+                                            </div>
+                                            <div class="cart_info">
+                                                <a href="#">Koss Porta Pro On Ear Headphones </a>
+                                                <span class="quantity">Qty: 1</span>
+                                                <span class="price_cart">$69.00</span>
+                                            </div>
+                                            <div class="cart_remove">
+                                                <a href="#"><i class="ion-android-close"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="mini_cart_table">
+                                            <div class="cart_total">
+                                                <span>Sub total:</span>
+                                                <span class="price">$138.00</span>
+                                            </div>
+                                            <div class="cart_total mt-10">
+                                                <span>total:</span>
+                                                <span class="price">$138.00</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mini_cart_footer">
+                                            <div class="cart_button">
+                                                <a href="cart.html">View cart</a>
+                                            </div>
+                                            <div class="cart_button">
+                                                <a href="checkout.html">Checkout</a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <!--mini cart end-->
+                                </div>
+                                <div class="header_wishlist">
+                                    <a href="wishlist.html"><img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 40px;">Hello </a>
+                                    <!-- <span class="wishlist_quantity">0</span> -->
                                 </div>
                             </div>
 

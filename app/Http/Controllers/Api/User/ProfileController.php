@@ -64,8 +64,8 @@ class ProfileController extends Controller
         }
 
         $path = ($idFoto) ?  url('image/fotoprofil/' . $idFoto) : url('image/fotoprofil/aaaa.PNG');
-        $path2 = Image::make($path)->resize(96,96)->response('png');
-        $path3 = base64_encode(file_get_contents($path2));
+        $path2 = (string) Image::make($path)->resize(96,96)->encode('data-url');
+//        $path3 = base64_encode(file_get_contents($path2));
 
 
 
@@ -135,8 +135,10 @@ class ProfileController extends Controller
             $idFoto = $rt->foto_profil;
         }
 
-        $path = asset('image/fotoprofil/' . $idFoto);
-        $path2 = base64_encode(file_get_contents($path));
+//        $path = asset('image/fotoprofil/' . $idFoto);
+//        $path2 = base64_encode(file_get_contents($path));
+        $path = ($idFoto) ?  url('image/fotoprofil/' . $idFoto) : url('image/fotoprofil/aaaa.PNG');
+        $path2 = (string) Image::make($path)->resize(96,96)->encode('data-url');
 
         if (count($dataProfil) > 0) {
             $meta = [

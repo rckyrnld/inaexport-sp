@@ -447,18 +447,29 @@ if (! function_exists('getPerwakilanCountry')) {
 
 
 if (! function_exists('getCompanyNameRC')) {
-    function getCompanyNameRC($id, $key){
-        $data = DB::table('itdp_profil_eks')->where('id', $id)->first();
-        if($data){
-            return $data->company;
-        } else {
-            $number = $key + 1;
-            return 'Company not Found '.$number; 
-        }
+    function getCompanyNameRC($id, $key, $param){
+      if($param == 'null'){
+          $data = DB::table('itdp_profil_eks')->where('id', $id)->first();
+          if($data){
+              return $data->company;
+          } else {
+              $number = $key + 1;
+              return 'Company not Found '.$number; 
+          }
+      } else {
+        $data = DB::table('itdp_company_users')->where('id', $id)->first();
+        $data = DB::table('itdp_profil_eks')->where('id', $data->id_profil)->first();
+          if($data){
+              return $data->company;
+          } else {
+              $number = $key + 1;
+              return 'Company not Found '.$number; 
+          }
+      }
     }
 }
 
-if (! function_exists('getNameRC')) {
+if (! function_exists('getRcName')) {
     function getRcName($id, $key){
         $data = DB::table('csc_research_corner')->where('id', $id)->first();
         if($data){
@@ -470,6 +481,31 @@ if (! function_exists('getNameRC')) {
     }
 }
 
+if (! function_exists('getNameEvent')) {
+    function getNameEvent($id, $key){
+        $data = DB::table('event_detail')->where('id', $id)->first();
+        if($data){
+            return $data->event_name_en;
+        } else {
+            $number = $key + 1;
+            return 'Event not Found '.$number;
+        }
+    }
+}
+
+if (! function_exists('getNameTraining')) {
+    function getNameTraining($id, $key){
+        $data = DB::table('training_admin')->where('id', $id)->first();
+        if($data){
+            return $data->training_en;
+        } else {
+            $number = $key + 1;
+            return 'Training not Found '.$number;
+        }
+    }
+}
+
+
 if (! function_exists('getCategoryLevel')) {
     function getCategoryLevel($level, $idutama, $idcat1){
       if($level == 1){
@@ -479,5 +515,44 @@ if (! function_exists('getCategoryLevel')) {
       }
 
       return $category;
+    }
+}
+
+
+if (! function_exists('getCountProduct')) {
+    function getCountProduct($jenis, $ideksportir){
+      if($jenis == "company"){
+        $product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
+            ->where('csc_product_single.id_itdp_company_user', $ideksportir)
+            ->count();
+      }
+
+      return $product;
+    }
+}
+
+if (! function_exists('getCountData')) {
+    function getCountData($tbl){
+      if($tbl == "event_detail"){
+        $data = DB::table($tbl)->where('status_en', 'Verified')->count();
+      }else if($tbl == "csc_product_single"){
+        $data = DB::table($tbl)
+          ->join('itdp_company_users', 'itdp_company_users.id', '=', $tbl.'.id_itdp_company_user')
+          ->select($tbl.'.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+          ->where('itdp_company_users.status', 1)
+          ->where($tbl.'.status', 2)
+          ->count();
+      }else if($tbl == "itdp_company_users"){
+        $data = DB::table($tbl)
+          ->join('itdp_profil_eks', 'itdp_company_users.id_profil', '=', 'itdp_profil_eks.id')
+          ->where('itdp_company_users.id_role', 2)
+          ->count();
+      }
+
+      return $data;
     }
 }

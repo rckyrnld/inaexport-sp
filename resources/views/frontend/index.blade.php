@@ -63,11 +63,7 @@
                                         </li>
                                     @endif
                                 @endforeach
-                                <li id="cat_toggle" class="has-sub"><a href="#"> @lang('frontend.home.allcategory')</a>
-                                    <ul class="categorie_sub">
-                                        <!-- <li><a href="#">Hide Categories</a></li> -->
-                                    </ul>
-                                </li>
+                                <li id="cat_toggle" class="has-sub"><a href="#"> @lang('frontend.home.allcategory')</a></li>
                             </ul>
                         </div>
                     </div>

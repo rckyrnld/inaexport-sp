@@ -97,6 +97,33 @@ class ManagementNoAuthController extends Controller
         }
     }
 
+    public function getDataTracking()
+    {
+        $dataTraining = DB::table('api_tracking')
+            ->get();
+        if (count($dataTraining) > 0) {
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
     public function RegisterExp(Request $request)
     {
         $company = $request->company;
@@ -319,6 +346,37 @@ class ManagementNoAuthController extends Controller
             return response($res);
         }
 
+    }
+
+    public function getResearchchor()
+    {
+        $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
+            ->orderby('a.created_at', 'desc')
+            ->distinct('a.id_research_corner', 'a.created_at')
+            ->select('b.*', 'a.id_research_corner', 'a.created_at')
+            ->limit(10)
+            ->get();
+        if (count($research) > 0) {
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
     }
 
 }

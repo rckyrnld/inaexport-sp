@@ -40,7 +40,7 @@
                       @foreach($table_download_company as $key => $value)
                       <tr>
                         <td>{{$key+1}}</td>
-                        <td>{{getCompanyNameRC($value->id_itdp_profil_eks,$key)}}</td>
+                        <td>{{getCompanyNameRC($value->id_itdp_profil_eks, $key, 'null')}}</td>
                         <td>{{$value->jumlah}}</td>
                       </tr>
                       @endforeach
@@ -85,7 +85,7 @@
               <div class="row">
                 <div class="col-md-6" style="float: left;">
                   <table class="table table-bordered table-hover" style="width: 100%; float: left; height: 300px;">
-                    <thead style="background-color: #EC7063; color: white;">
+                    <thead style="background-color: #e45344; color: white;">
                       <tr>
                         <th width="15%">No</th>
                         <th>Name</th>
@@ -118,11 +118,127 @@
               </div>
               <br><br>
               <div class="row">
-                <div id="buying" style="width: 100%; height: 400px; margin: 0 auto; padding-top: 50px;"></div>
+                <div class="col-md-6" style="float: left;">
+                  <table class="table table-bordered table-hover" style="width: 100%; float: left; height: 300px;">
+                    <thead style="background-color: #4cd25c; color: white;">
+                      <tr>
+                        <th width="15%">No</th>
+                        <th>Top Buyers</th>
+                        <th width="15%">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody style="color: black;">
+                      @foreach($table_top_buying as $key => $value)
+                      <tr>
+                        <td>{{$key+1}}</td>
+                        <td>{{getCompanyNameRC($value->id_eks, $key, 'buying')}}</td>
+                        <td>{{$value->jumlah}}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-6">
+                  <div id="buying" class="top_data" style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
+                </div>
               </div>
               <br><br>
               <div class="row">
-                <div id="event" style="width: 100%; height: 400px; margin: 0 auto; padding-top: 50px;"></div>
+                <div id="event" style="height: 300px; width: 100%; margin: 0 auto;"></div>
+              </div>
+              <br><br>
+              <div class="row">
+                <div class="col-md-6" style="float: left;">
+                  <table class="table table-bordered table-hover" style="width: 100%; float: left; height: 300px;">
+                    <thead style="background-color: #A93226; color: white;">
+                      <tr>
+                        <th width="15%">No</th>
+                        <th>Top Event</th>
+                        <th width="30%">Number of Members</th>
+                      </tr>
+                    </thead>
+                    <tbody style="color: black;">
+                      <?php $i=1; ?>
+                      @foreach($table_top_event as $key => $value)
+                      <tr>
+                        <td>{{$i}}</td>
+                        <td>{{getNameEvent($key, $i)}}</td>
+                        <td>{{$value}}</td>
+                      </tr>
+                      <?php $i++;?>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-6">
+                  <table class="table table-bordered table-hover" style="width: 100%; float: left; height: 300px;">
+                    <thead style="background-color: #D68910; color: white;">
+                      <tr>
+                        <th width="15%">No</th>
+                        <th>Top Member</th>
+                        <th width="30%">Number of Events</th>
+                      </tr>
+                    </thead>
+                    <tbody style="color: black;">
+                      <?php $i=1;?>
+                      @foreach($table_top_join_event as $key => $value)
+                      <tr>
+                        <td>{{$i}}</td>
+                        <td>{{getCompanyNameRC($key, $i, 'event')}}</td>
+                        <td>{{$value}}</td>
+                      </tr>
+                      <?php $i++;?>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <br><br>
+              <div class="row">
+                <div id="training" style="width: 100%; height: 400px; margin: 0 auto;"></div>
+              </div>
+              <br><br>
+              <div class="row">
+                <div class="col-md-6" style="float: left;">
+                  <table class="table table-bordered table-hover" style="width: 100%; float: left; height: 300px;">
+                    <thead style="background-color: #2ECC71; color: white;">
+                      <tr>
+                        <th width="15%">No</th>
+                        <th>Top Training</th>
+                        <th width="30%">Number of Members</th>
+                      </tr>
+                    </thead>
+                    <tbody style="color: black;">
+                      @foreach($table_top_training as $key => $value)
+                      <tr>
+                        <td>{{$i}}</td>
+                        <td>{{getNameTraining($value->id_training_admin, $key)}}</td>
+                        <td>{{$value->jumlah}}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-6">
+                  <table class="table table-bordered table-hover" style="width: 100%; float: left; height: 300px;">
+                    <thead style="background-color: #AF7AC5; color: white;">
+                      <tr>
+                        <th width="15%">No</th>
+                        <th>Top Member</th>
+                        <th width="30%">Number of Training</th>
+                      </tr>
+                    </thead>
+                    <tbody style="color: black;">
+                      @foreach($table_top_join_training as $key => $value)
+                      <tr>
+                        <td>{{$i}}</td>
+                        <td>{{getCompanyNameRC($value->id_profil_eks, $key, 'null')}}</td>
+                        <td>{{$value->jumlah}}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <br><br>
               <div class="row">
@@ -153,6 +269,7 @@
     inquiry();
     buying();
     event();
+    training();
   });
 
   function user() {
@@ -318,6 +435,48 @@
     var drilldownTitle = "Amount of Events Year ";
     
     var chart = Highcharts.chart('event', {
+        chart: {
+          type: 'column',
+          events: {
+              drilldown: function(e) {
+                  chart.setTitle({ text: drilldownTitle + e.point.name });
+              },
+              drillup: function(e) {
+                  chart.setTitle({ text: defaultTitle });
+              }
+          }
+        },
+        xAxis: {
+                type : 'category'
+            },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: ''
+            }
+        },
+        series: data_year[0],
+        credits: {
+          enabled: false
+        },
+        title: {
+            text: defaultTitle
+        },
+        legend: {
+            enabled: false
+        },
+        drilldown: {
+            series: data_year[1]
+        }
+    });
+  }
+
+  function training() {
+    var data_year = JSON.parse('<?php echo addcslashes(json_encode($Training),'\'\\'); ?>');
+    var defaultTitle = "Amount of Training Each Year";
+    var drilldownTitle = "Amount of Training Year ";
+    
+    var chart = Highcharts.chart('training', {
         chart: {
           type: 'column',
           events: {
