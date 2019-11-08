@@ -34,7 +34,10 @@ Route::namespace('FrontEnd')->group(function () {
     /* Created by Meidiyanah */
     //Product
     Route::get('/front_end', 'FrontController@index');
-    Route::get('/front_end/all_product', 'FrontController@all_product');
+    Route::get('/front_end/list_product', 'FrontController@list_product');
+    Route::get('/front_end/getCategory', 'FrontController@getCategory')->name('front.product.getCategory');
+    Route::get('/front_end/list_product/category/{id}', 'FrontController@category_product')->name('front.product.category_product');
+    Route::get('/front_end/getManufactur', 'FrontController@getManufactur')->name('front.product.getManufactur');
     Route::get('/front_end/category_product/{id}', 'FrontController@product_category');
     Route::get('/front_end/product/{id}', 'FrontController@view_product');
     //Inquiry Pembeli
