@@ -30,7 +30,30 @@ class VerifyuserController extends Controller
 	
 	 public function getimportir()
     {
+		if(Auth::user()->id_group == 1) {
       $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
+      }else if(Auth::user()->id_group == 4){
+		$a = Auth::user()->id;
+		if(Auth::user()->id_admin_dn == 0){
+		// luar
+		$b = Auth::user()->id_admin_ln;
+		$quer = DB::select("select * from  itdp_admin_ln where id='".$b."'");
+		foreach($quer as $t1){ $ic = $t1->id_country; }
+		// echo $ic;die();
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b, mst_country c, mst_group_country d where d.id = c.mst_country_group_id and d.id='".$ic."' and b.id_mst_country = c.id and  a.id_profil = b.id and id_role='3' order by a.id desc ");
+      
+		}else{
+		//dalam
+		$b = Auth::user()->id_admin_dn;
+		$quer = DB::select("select * from  itdp_admin_dn where id='".$b."'");
+		foreach($quer as $t1){ $ic = $t1->id_country; }
+		// echo $ic;die();
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
+      
+		
+		}
+		
+		}
       return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
 				 return $pesan->company;

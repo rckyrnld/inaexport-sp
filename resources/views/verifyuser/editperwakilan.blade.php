@@ -49,23 +49,44 @@
 
 				    </div>
 				</div>
-				<div class="col-md-12">
+				<?php if($qt->type=="DINAS PERDAGANGAN"){ ?>
+					<div class="col-md-12">
           	 		<div class="form-group row">
-				      {!!Form::label('password_confirm','Country',['class' => 'col-sm-2 col-form-label '])!!}
+				      {!!Form::label('password_confirm','Province',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
 						<select class="form-control" name="country">
 						<!-- <option>DJPEN</option> -->
 						<option value="0">-- Pilih Country --</option>
-						<?php $mst = DB::select("select * from mst_country order by country asc"); 
+						<?php $mst = DB::select("select * from mst_province order by province_en asc"); 
 						foreach($mst as $cu){
 						?>
-						<option <?php if($qt->id_country==$cu->id){ echo "selected"; } ?> value="<?php echo $cu->id; ?>"><?php echo $cu->country; ?></option>
+						<option <?php if($qt->id_country==$cu->id){ echo "selected"; } ?> value="<?php echo $cu->id; ?>"><?php echo $cu->province_en; ?></option>
 						<?php } ?>
 						
 						</select>
 					</div>
 					</div>
 				</div>
+				<?php } else { ?>
+				<div class="col-md-12">
+          	 		<div class="form-group row">
+				      {!!Form::label('password_confirm','Group Country',['class' => 'col-sm-2 col-form-label '])!!}
+				    <div class="col-sm-4">
+						<select class="form-control" name="country">
+						<!-- <option>DJPEN</option> -->
+						<option value="0">-- Pilih Country --</option>
+						<?php $mst = DB::select("select * from mst_group_country order by group_country asc"); 
+						foreach($mst as $cu){
+						?>
+						<option <?php if($qt->id_country==$cu->id){ echo "selected"; } ?> value="<?php echo $cu->id; ?>"><?php echo $cu->group_country; ?></option>
+						<?php } ?>
+						
+						</select>
+					</div>
+					</div>
+				</div>
+				<?php } ?>
+				
 				<div class="col-md-12">
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Email',['class' => 'col-sm-2 col-form-label '])!!}
