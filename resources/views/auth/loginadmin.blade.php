@@ -12,12 +12,12 @@
 	  <!-- <h5>LOGIN</h5> -->
 	  <div class="wrap-login100" style="padding-left : 30px; padding-right : 30px; font-size:12px;">
 	  
-	   <form class="form-horizontal" method="POST" action="{{ route('loginei.login') }}">
+	   <form class="form-horizontal" method="POST" action="{{ route('login') }}">
            {{ csrf_field() }}
            <h4>@lang("login.lbl3")</h4><br>
              <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}" align="left">
 			 <label>@lang("login.forms.email")</label>
-               <input type="email" placeholder="Email" class="form-control" name="email2" style="color: #000000" value="{{ old('email') }}" required autofocus>
+               <input type="email" placeholder="Email" class="form-control" name="email" style="color: #000000" value="{{ old('email') }}" required autofocus>
 
                 @if ($errors->has('email'))
                     <span class="help-block">
@@ -28,7 +28,7 @@
 			 
             <div class="form-group" align="left">
 			<label>@lang("login.forms.password")</label>
-              <input type="password" class="form-control" name="password2" placeholder="password" required style="color: #000000">
+              <input type="password" class="form-control" name="password" placeholder="password" required style="color: #000000">
 
                   @if ($errors->has('password'))
                       <span class="help-block">
