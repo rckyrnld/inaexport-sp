@@ -51,33 +51,7 @@
    <div class="box-body">
    <br>
    <img height="10px" src="{{url('assets')}}/assets/images/07-Form-Request_01.png" alt="." >
-   <!-- <table id="example" class="table table-striped table-bordered data">
-			<thead>
-				<tr>			
-					<th>Namahhhhhhhh</th>
-					<th>Alamat</th>
-					<th>Pekerjaan</th>
-					<th>Usia</th>
-					<th>Status</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>				
-					<td>Andi</td>
-					<td>Jakarta</td>
-					<td>Web Designer</td>
-					<td>21</td>
-					<td>Aktif</td>
-				</tr>
-				<tr>				
-					<td>Malas Ngoding</td>
-					<td>Bandung</td>
-					<td>Web Developer</td>
-					<td>26</td>
-					<td>Aktif</td>
-				</tr>
-			</tbody>
-		</table> -->
+  
   <table id="example1" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                

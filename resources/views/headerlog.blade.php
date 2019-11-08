@@ -68,11 +68,11 @@
 
 
 <div class="d-flex flex-column flex" style="background-color:  #c5e1f8  ; color: #ffffff">
-	<div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
+	<div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2492eb ; color: #ffffff">
     <div class="mx-auto">
 	<table border="0" width="100%" style="font-size: 10px!important;">
 	<tr>
-	<td width="30%" style="font-size:13px;padding-left:10px"><!-- <img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b> --></td>
+	<td width="30%" style="font-size:13px;padding-left:50px"><label><i class="ion-social-whatsapp-outline"></i> hotline : +62 000 111 222 333</label><!-- <img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b> --></td>
 	<td width="60%"><!-- <center><span class="hidden-folded d-inline"><H5>Form Registrasi Pembeli Baru</H5></span></center> --></td>
 	<td width="10%" align="right" style="padding-right:10px;">
 	<!-- <a href="{{url('registrasi_pembeli')}}"><font color="white"><i class="fa fa-user"></i> @lang("login.lbl2")</font></a> &nbsp;&nbsp;&nbsp;<a href="{{url('registrasi_penjual')}}"><font color="white"><i class="fa fa-user"></i> @lang("login.lbl1")</font></a> &nbsp;&nbsp;&nbsp;
