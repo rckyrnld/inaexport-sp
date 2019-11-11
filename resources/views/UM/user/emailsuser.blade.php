@@ -1,9 +1,9 @@
-<p>Dear User,</P>
-<p>Silahkan Verifikasi Akun Anda</p>
-<p>Brikut Username Dan Password Untuk Login Di Ministry Of Trade Kemendag :</p>
+<p>Dear user,</P>
+<p>please verify your account</p>
+<p>The following username and password are registered at the Ministry of Trade's ITDP :</p>
 <ol>
-    <ul>Nama : {{$nama}}</ul>
+    <ul>Name : {{$nama}}</ul>
     <ul>Username : {{$username}}</ul>
     <ul>Password : {{$password}}</ul>
 </ol>
-Klik <a href="{{url('verifypembeli/'.$id2)}}">Disini</a> untuk mengaktifasi akun !.
+click <a href="{{url('verifypembeli/'.$id2)}}">here</a> for activation account !.
