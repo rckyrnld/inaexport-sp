@@ -46,7 +46,7 @@ class LoginController extends Controller
             'message' => 'Unauthorized',
             'status' => 'Failed'
         ];
-        $data = [];
+        $data = [""];
         $res['meta'] = $meta;
         $res['data'] = $data;
         return $res;
@@ -80,6 +80,7 @@ class LoginController extends Controller
         ];
         $datas[0]->type = $company[0]->type;
         $datas[0]->access_token = $token;
+        $datas[0]->id_user = $company[0]->id;
         $datas[0]->role_name = ($company[0]->id_role == 3 ? "Importir" : "Eksportir");
 //    $data = [
 //        'access_token' => $token,

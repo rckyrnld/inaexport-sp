@@ -54,9 +54,11 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     //profile
     Route::post('detailProfileExp', 'Api\User\ProfileController@findProfileExp');
     Route::post('detailFotoExp', 'Api\User\ProfileController@findImageExp');
+    Route::post('updateDataExp', 'Api\User\ProfileController@updateProfilExp');
 
     Route::post('detailProfileImp', 'Api\User\ProfileController@findProfileImp');
     Route::post('detailFotoImp', 'Api\User\ProfileController@findImageimp');
+    Route::post('updateDataImp', 'Api\User\ProfileController@updateProfilImp');
 
     //training
     Route::post('joinTraining', 'Api\User\ManagementUserController@joinTraining');

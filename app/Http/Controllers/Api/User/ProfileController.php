@@ -103,15 +103,17 @@ class ProfileController extends Controller
             $res['data'] = $data;
             return response($res);
         } else {
-            $id_user_b = $request->id_profile;
+            $id_profile = $request->id_profile;
+            $id_user = $request->id_user;
 
-            if (empty($request->file('doc'))) {
+            if (empty($request->file('foto_profil'))) {
                 $file = "";
             } else {
-                $file = $request->file('doc')->getClientOriginalName();
-                $destinationPath = public_path() . "/eksportir";
-                $request->file('doc')->move($destinationPath, $file);
-                $updatetabd = DB::select("update itdp_profil_eks set doc='" . $file . "' where id='" . $id_user_b . "'");
+                $file = $request->file('foto_profil')->getClientOriginalName();
+                $destinationPath = public_path() . "/image/fotoprofil";
+                $request->file('foto_profil')->move($destinationPath, $file);
+                $updatetab12 = DB::select("update itdp_company_users set foto_profil='" . $file . "'  where id='" . $id_user . "' ");
+                $updatetab22 = DB::select("update itdp_profil_eks set logo='" . $file . "' where id='" . $id_profile . "'");
             }
             //UPDATE TAB 1
             if ($request->password == null) {
@@ -123,7 +125,7 @@ class ProfileController extends Controller
             //UPDATE TAB 2
 
             $updatetab2 = DB::select("update itdp_profil_eks set company='" . $request->company . "', addres='" . $request->addres . "', city='" . $request->city . "' , id_mst_province='" . $request->province . "' , postcode='" . $request->postcode . "', fax='" . $request->fax . "', website='" . $request->website . "', phone='" . $request->phone . "' 
-            where id='" . $id_user_b . "'");
+            where id='" . $id_profile . "'");
 
             //UPDATE TAB 3
             if ($request->npwp == null) {
@@ -131,8 +133,75 @@ class ProfileController extends Controller
             } else {
                 $updatetab2 = DB::select("update itdp_profil_eks set npwp='" . $request->npwp . "', tdp='" . $request->tanda_daftar . "', siup='" . $request->siup . "' 
 				, upduserid='" . $request->situ . "' , id_eks_business_size='" . $request->scoope . "', id_business_role_id='" . $request->tob . "', employe='" . $request->employee . "', status='" . $request->staim . "' 
-				where id='" . $id_user_b . "'");
+				where id='" . $id_profile . "'");
             }
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
+    public function updateProfilImp(Request $request)
+    {
+        if ($request->id_profile == null) {
+            $meta = [
+                'code' => 400,
+                'message' => 'All Data Must Be Filled In',
+                'status' => 'Failed'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $id_profile = $request->id_profile;
+            $id_user = $request->id_user;
+            if (empty($request->file('foto_profil'))) {
+                $file = "";
+            } else {
+                $file = $request->file('foto_profil')->getClientOriginalName();
+                $destinationPath = public_path() . "/image/fotoprofil";
+                $request->file('foto_profil')->move($destinationPath, $file);
+                $updatetab12 = DB::select("update itdp_company_users set foto_profil='" . $file . "'  where id='" . $id_user . "' ");
+                $updatetab22 = DB::select("update itdp_profil_imp set logo='" . $file . "' where id='" . $id_profile . "'");
+            }
+
+            //UPDATE TAB 1
+            if ($request->password == null) {
+                $updatetab1 = DB::select("update itdp_company_users set username='" . $request->username . "', email='" . $request->email . "', status='" . $request->staim . "'  where id='" . $id_user . "' ");
+            } else {
+                $updatetab1 = DB::select("update itdp_company_users set username='" . $request->username . "', password='" . bcrypt($request->password) . "', status='" . $request->staim . "' ,  email='" . $request->email . "' where id='" . $id_user . "' ");
+
+            }
+            //UPDATE TAB 2
+            $updatetab2 = DB::select("update itdp_profil_imp set company='" . $request->company . "', addres='" . $request->addres . "', city='" . $request->city . "' 
+		, id_mst_province='" . $request->province . "' , postcode='" . $request->postcode . "', fax='" . $request->fax . "', website='" . $request->website . "', phone='" . $request->phone . "' , status='" . $request->staim . "'
+		where id='" . $id_profile . "'");
+
+            if ($request->staim == 2) {
+                if ($request->template_reject == 1) {
+                    $updatetabz = DB::select("update itdp_company_users set id_template_reject='" . $request->template_reject . "', keterangan_reject='" . $request->txtreject . "'  where id='" . $id_user . "' ");
+
+                } else {
+                    $updatetabz = DB::select("update itdp_company_users set id_template_reject='" . $request->template_reject . "'  where id='" . $id_user . "' ");
+
+                }
+            }
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
         }
     }
 
