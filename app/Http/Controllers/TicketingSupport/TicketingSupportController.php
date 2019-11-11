@@ -26,7 +26,7 @@ class TicketingSupportController extends Controller
     public function index()
     {
         $pageTitle = 'Ticketing Support';
-        dd(Auth::guard('eksmp')->user());
+//        dd(Auth::guard('eksmp')->user());
         return view('ticketingsupport.index', compact('pageTitle'));
     }
 
