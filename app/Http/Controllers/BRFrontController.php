@@ -22,8 +22,27 @@ class BRFrontController extends Controller
      */
     public function br_importir()
     {
-        $pageTitle = "Buying Request Importer";
-        return view('buying-request.br_importir',compact('pageTitle'));
+        /*$pageTitle = "Buying Request Importer";
+        return view('buying-request.br_importir',compact('pageTitle')); */
+		 $product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            // ->where('csc_product_single.status', 2)
+            ->orderby('csc_product_single.id', 'DESC')
+            // ->inRandomOrder()
+            ->limit(10)
+            ->get();
+
+        // $service = DB::table('itdp_service_eks as a')->where('status', 2)->orderBy('created_at', 'desc')->get();
+        //Category Utama
+        $categoryutama = DB::table('csc_product')
+            ->where('level_1', 0)
+            ->where('level_2', 0)
+            ->orderBy('nama_kategori_en', 'ASC')
+            ->limit(9)
+            ->get();
+        return view('frontend.indexbr', compact('product', 'categoryutama'));
     }
 
 	public function br_importir_add()

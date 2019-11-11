@@ -6,22 +6,22 @@
 									?>
 <div class="form-row">
 		<div class="col-sm-3">
-		<label><b>What are you looking for</b></label>
+		<label><b>@lang("login.forms.by2")</b></label>
 		</div>
 		<div class="form-group col-sm-6">
-			<input type="text" readonly style="color:black;" value="<?php echo $ryu->subyek; ?>" name="cmp" id="cmp" class="form-control" >
+			<input type="text" readonly style="color:black;" value="<?php echo strtoupper($ryu->subyek); ?>" name="cmp" id="cmp" class="form-control" >
 		</div>
 		
 	</div>
 <div class="form-row">
 		<div class="col-sm-3">
-		<label><b>Category</b></label>
+		<label><b>@lang("login.forms.by3")</b></label>
 		</div>
 		<div class="form-group col-sm-6">
 			<?php 
 			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
 			?>
-			<select class="form-control select2" name="category" id="category" onchange="t1()" disabled>
+			<select class="form-control select2" name="category" id="category" onchange="t1()">
 			<option value="">-- Select Category --</option>
 			<?php foreach($ms1 as $val1){ ?>
 			<option <?php if($ryu->id_csc_prod_cat == $val1->id){ echo "selected"; }?> value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>

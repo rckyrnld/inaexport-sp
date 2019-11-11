@@ -1,5 +1,5 @@
 <!--shipping area start-->
-<section class="shipping_area" style="background-color: #ddeffd;">
+<!-- <section class="shipping_area" style="background-color: #ddeffd;">
         <div class="container">
             <div class=" row">
                 <div class="col-12">
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!--shipping area end-->
 
     <section class="call_to_action">
@@ -45,30 +45,36 @@
 
                 <div class="col-lg-4 col-6 text-center">
                     <ul class="list-group list-group-horizontal-sm justify-content-center">
-                        <li><img src="{{asset('front/assets/img/exporters.png')}}" alt=""></li>
-                        <li>        
-                            <span class="counters_number">274</span>
-                            <p class="counters_text">Exporters</p>
+                        <li>
+                            <img src="{{asset('front/assets/img/exporters.png')}}" alt="" style="width: 20%;">
+                            <span class="counters_number">{{getCountData('itdp_company_users')}}</span>
+                        </li>
+                         <li style="padding-left: 20%;">
+                            <p class="counters_text" style="font-size: 18px;">Exporters</p>
                         </li>
                     </ul>
                 </div>
 
                 <div class="col-lg-4 col-6 text-center">
                     <ul class="list-group list-group-horizontal-sm justify-content-center">
-                        <li><img src="{{asset('front/assets/img/events.png')}}" alt=""></li>
                         <li>
-                            <span class="counters_number">421</span>
-                            <p class="counters_text">Events</p>
+                            <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 20%;">
+                            <span class="counters_number">{{getCountData('event_detail')}}</span>
+                        </li>
+                        <li style="padding-left: 20%;">
+                            <p class="counters_text" style="font-size: 18px;">Events</p>
                         </li>
                     </ul>
                 </div>
 
                 <div class="col-lg-4 col-6 text-center">
                     <ul class="list-group list-group-horizontal-sm justify-content-center">
-                        <li><img src="{{asset('front/assets/img/events.png')}}" alt=""></li>
                         <li>
-                            <span class="counters_number">1,364</span>
-                            <p class="counters_text">Products</p>
+                            <img src="{{asset('front/assets/img/products.png')}}" alt="" style="width: 20%;">
+                            <span class="counters_number">{{getCountData('csc_product_single')}}</span>
+                        </li>
+                        <li style="padding-left: 20%;">
+                            <p class="counters_text" style="font-size: 18px;">Products</p>
                         </li>
                     </ul>
                 </div>

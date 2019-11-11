@@ -186,7 +186,7 @@
                                                         $qc = DB::select("select id,country from mst_country order by country asc");
                                                         foreach($qc as $cq){
                                                         ?>
-                                                        <option <?php if ($cq->id == $ryu->id_mst_province) {
+                                                        <option <?php if ($cq->id == $ryu->id_mst_country) {
                                                             echo "selected";
                                                         } ?> value="<?php echo $cq->id; ?>"><?php echo $cq->country; ?></option>
 

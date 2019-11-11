@@ -517,3 +517,42 @@ if (! function_exists('getCategoryLevel')) {
       return $category;
     }
 }
+
+
+if (! function_exists('getCountProduct')) {
+    function getCountProduct($jenis, $ideksportir){
+      if($jenis == "company"){
+        $product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
+            ->where('csc_product_single.id_itdp_company_user', $ideksportir)
+            ->count();
+      }
+
+      return $product;
+    }
+}
+
+if (! function_exists('getCountData')) {
+    function getCountData($tbl){
+      if($tbl == "event_detail"){
+        $data = DB::table($tbl)->where('status_en', 'Verified')->count();
+      }else if($tbl == "csc_product_single"){
+        $data = DB::table($tbl)
+          ->join('itdp_company_users', 'itdp_company_users.id', '=', $tbl.'.id_itdp_company_user')
+          ->select($tbl.'.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+          ->where('itdp_company_users.status', 1)
+          ->where($tbl.'.status', 2)
+          ->count();
+      }else if($tbl == "itdp_company_users"){
+        $data = DB::table($tbl)
+          ->join('itdp_profil_eks', 'itdp_company_users.id_profil', '=', 'itdp_profil_eks.id')
+          ->where('itdp_company_users.id_role', 2)
+          ->count();
+      }
+
+      return $data;
+    }
+}
