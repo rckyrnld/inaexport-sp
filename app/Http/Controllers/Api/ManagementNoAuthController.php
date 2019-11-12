@@ -379,4 +379,55 @@ class ManagementNoAuthController extends Controller
         }
     }
 
+    public function getEvent()
+    {
+        $research = DB::table('event_detail')
+            ->orderby('id', 'desc')
+            ->get();
+//        $hitung = count($research);
+//
+//        for ($i = 0; $i < $hitung; $i++) {
+//            $cobaaa = $research[$i]->id;
+////            $status[] = DB::table('event_company_add')->where('id_itdp_profil_eks', '300')->where('id_event_detail', $cobaaa)->get();
+//            $status[] = DB::table('event_detail')
+//                ->where('event_detail.id', '=', $cobaaa)
+////                ->join('event_company_add', 'event_detail.id', '=', 'event_company_add.id_event_detail')
+//                ->orderby('event_detail.id', 'desc')
+//                ->get();
+////            if ($status[$i] != null) {
+////                $statt = $status[$i]->status;
+////            }else{
+////                $statt = null;
+////            }
+////            $research[$i]->access_token = $statt;
+////            $hasilnya[] = DB::table('event_company_add')
+////                ->leftjoin('event_detail', 'event_detail.id', '=', 'event_company_add.id_event_detail')
+////                ->where('event_detail.id', '=', $cobaaa)
+//////                ->where('event_company_add.id_itdp_profil_eks', '300')
+////                ->limit(1)
+////                ->get();
+//        }
+
+        if (count($research) > 0) {
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $res['meta'] = $meta;
+            $res['data'] = $research;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $research;
+            return response($res);
+        }
+    }
+
 }

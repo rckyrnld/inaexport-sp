@@ -118,6 +118,39 @@ class ManagementUserController extends Controller
         }
     }
 
+    public function joinEvent(Request $request)
+    {
+        $datenow = date("Y-m-d H:i:s");
+        $id_user = $request->id_user;
+        $event = DB::table('event_company_add')->insert([
+            'id_itdp_profil_eks' => $id_user,
+            'id_event_detail' => $request->id_event,
+            'status' => 1,
+            'waktu' => $datenow
+        ]);
+        if (count($event) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '0';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
     public function createTicketing(Request $request)
     {
         $store = TicketingSupportModel::create([

@@ -55,5 +55,16 @@ return [
         "mycart" => "My Cart",
         "popcategory" => "热门类别",
         "allcategory" => "所有类别",
+        "search" => "搜索",
+        "cariproduct" => "输入关键字以搜索产品",
+    ],
+    "proddetail" => [
+        "home" => "家",
+        "default" => "默认",
+        "prodd" => "产品详情",
+        "minorder" => "最低订购",
+        "desc" => "描述",
+        "specs" => "规格规格",
+        "relprod" => "相关产品",
     ],
 ];

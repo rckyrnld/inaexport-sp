@@ -44,10 +44,6 @@ class VerifyuserController extends Controller
       
 		}else{
 		//dalam
-		$b = Auth::user()->id_admin_dn;
-		$quer = DB::select("select * from  itdp_admin_dn where id='".$b."'");
-		foreach($quer as $t1){ $ic = $t1->id_country; }
-		// echo $ic;die();
 		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
       
 		
@@ -118,8 +114,6 @@ class VerifyuserController extends Controller
 		if(Auth::user()->id_admin_dn == 0){
 		// luar
 		$b = Auth::user()->id_admin_ln;
-		$quer = DB::select("select * from  itdp_admin_ln where id='".$b."'");
-		foreach($quer as $t1){ $ic = $t1->id_country; }
 		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '9999999' and a.id_profil = b.id and id_role='2' order by a.id desc ");
 	
 		}else{

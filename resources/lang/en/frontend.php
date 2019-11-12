@@ -54,5 +54,16 @@ return [
         "mycart" => "My Cart",
         "popcategory" => "Popular Categories",
         "allcategory" => "All Categories",
+        "search" => "Search",
+        "cariproduct" => "Enter a keyword to search product",
+    ],
+    "proddetail" => [
+        "home" => "Home",
+        "default" => "Default",
+        "prodd" => "Product Details",
+        "minorder" => "Min. Order",
+        "desc" => "Description",
+        "specs" => "Specification",
+        "relprod" => "Related Products",
     ],
 ];

@@ -108,7 +108,7 @@
 		<label><b>@lang("login.forms.by2")</b></label>
 		</div>
 		<div class="form-group col-sm-8">
-			<input type="text" style="color:black;" value="" name="subyek" id="subyek" class="form-control" >
+			<input type="text" style="color:black;" value="" name="subyek" id="subyek" class="form-control" required>
 		</div>
 		<div class="form-group col-sm-4">
 			<select style="color:black;" class="form-control" name="valid" id="valid" required>
@@ -130,7 +130,7 @@
 			<?php 
 			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
 			?>
-			<select style="color:black;" class="form-control select2" name="category" id="category" onchange="t1()">
+			<select style="color:black;" class="form-control select2" name="category" id="category" onchange="t1()" required>
 			<option value="">@lang("login.forms.by11")</option>
 			<?php foreach($ms1 as $val1){ ?>
 			<option value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
@@ -188,7 +188,7 @@
 			?>
 			<select style="color:black;" style="border-color: rgba(120, 130, 140, 0.5)!important;
     border-radius: 0.25rem!important;
-    color: inherit!important;" class="form-control select2" name="country" id="country">
+    color: inherit!important;" class="form-control select2" name="country" id="country" required>
 			<option value="">-- @lang("login.forms.by12") --</option>
 			<?php foreach($ms2 as $val2){ ?>
 			<option value="<?php echo $val2->id; ?>"><?php echo $val2->country; ?></option>
@@ -213,7 +213,7 @@
 		<label><b>@lang("login.forms.by9")</b></label>
 		</div>
 		<div class="form-group col-sm-12">
-			<input style="color:black;" type="file" value="" name="doc" id="doc" class="form-controlz" >
+			<input style="color:black;" type="file" value="" name="doc" id="doc" class="form-controlz" required>
 		</div>
 		
 	</div>
