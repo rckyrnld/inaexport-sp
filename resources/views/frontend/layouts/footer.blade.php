@@ -185,12 +185,16 @@
 
     <!-- Plugins JS -->
     <script src="{{asset('front/assets/js/plugins.js')}}"></script>
-
     <!-- Main JS -->
     <script src="{{asset('front/assets/js/main.js')}}"></script>
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({pageLanguage: 'en', layout:google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+        function ce(){
+            var a = $('#lang').val();
+            var url = '<?php  echo url('locale/') ?>/'+a;
+            window.open(url,'myWindow');
         }
     </script>
 
