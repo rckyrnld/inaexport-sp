@@ -15,13 +15,24 @@ class TrackingController extends Controller
 		$client = new Client();
 		$api = explode('|', $request->type);
 		if($api[0] == 'mytm'){
-	        $res = $client->request('POST', 'http://api.trackingmore.com/v2/trackings/realtime', [
+			// Real Time Tracking ( Method POST )
+	      //   $res = $client->request('GET', 'http://api.trackingmore.com/v2/trackings/realtime', [
+	      //       'headers' => [
+			    //     'Content-Type' 			=> 'application/json',
+			    //     'Accept'     			=> 'application/json',
+			    //     'Trackingmore-Api-Key' 	=> 'cc9ef652-5eca-4c5e-bea2-89a10572ec84'
+			    // ],
+			    // 'json' => ['tracking_number' =>  $request->number, 'carrier_code' =>  $api[1]]
+	      //   ]);
+
+			// Method Get
+	        $res = $client->request('Get', 'https://api.trackingmore.com/v2/trackings/', [
 	            'headers' => [
 			        'Content-Type' 			=> 'application/json',
 			        'Accept'     			=> 'application/json',
-			        'Trackingmore-Api-Key' 	=> 'bdfbf7bb-93e5-45b3-9136-24b05cf2d443'
+			        'Trackingmore-Api-Key' 	=> 'cc9ef652-5eca-4c5e-bea2-89a10572ec84'
 			    ],
-			    'json' => ['tracking_number' =>  $request->number, 'carrier_code' =>  $api[1]]
+			    'query' => ['tracking_number' =>  $request->number, 'carrier_code' =>  $api[1]]
 	        ]);
 
 			return response($res->getBody());

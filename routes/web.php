@@ -56,6 +56,9 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/contact-us', 'FrontController@contact_us');
     Route::post('/contact-us/send', 'FrontController@contact_us_send');
     Route::get('/front_end/service-detail/{id}', 'FrontController@service');
+    Route::get('/front_end/test', function () {
+        return view('frontend.contoh.content_products_detail');
+    });
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
 
     /**
