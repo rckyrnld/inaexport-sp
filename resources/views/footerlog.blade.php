@@ -1,171 +1,204 @@
-</div>
-
-
-<!-- ############ SWITHCHER START-->
-<div id="setting">
-  <div class="setting dark-white rounded-bottom" id="theme">
-    <!-- <a href="#" data-toggle-class="active" data-target="#theme" class="dark-white toggle">
-      <i class="fa fa-gear text-primary fa-spin"></i>
-    </a> -->
-    <div class="box-header">
-      <a href="https://themeforest.net/item/apply-web-application-admin-template/21072584?ref=flatfull" class="btn btn-xs rounded danger float-right">BUY</a>
-      <strong>Theme Switcher</strong>
-    </div>
-    <div class="box-divider"></div>
-    <div class="box-body">
-      <p id="settingLayout">
-        <label class="md-check my-1 d-block">
-          <input type="checkbox" name="fixedAside">
-          <i></i>
-          <span>Fixed Aside</span>
-        </label>
-        <label class="md-check my-1 d-block">
-          <input type="checkbox" name="fixedContent">
-          <i></i>
-          <span>Fixed Content</span>
-        </label>
-        <label class="md-check my-1 d-block">
-          <input type="checkbox" name="folded">
-          <i></i>
-          <span>Folded Aside</span>
-        </label>
-        <label class="md-check my-1 d-block">
-          <input type="checkbox" name="container">
-          <i></i>
-          <span>Boxed Layout</span>
-        </label>
-        <label class="md-check my-1 d-block">
-          <input type="checkbox" name="ajax">
-          <i></i>
-          <span>Ajax load page</span>
-        </label>
-        <label class="pointer my-1 d-block" data-toggle="fullscreen" data-plugin="screenfull" data-target="fullscreen">
-          <span class="ml-1 mr-2 auto">
-            <i class="fa fa-expand d-inline"></i>
-            <i class="fa fa-compress d-none"></i>
-          </span>
-          <span>Fullscreen mode</span>
-        </label>
-      </p>
-      <p>Colors:</p>
-      <p>
-        <label class="radio radio-inline m-0 mr-1 ui-check ui-check-color">
-          <input type="radio" name="theme" value="primary">
-          <i class="primary"></i>
-        </label>
-        <label class="radio radio-inline m-0 mr-1 ui-check ui-check-color">
-          <input type="radio" name="theme" value="accent">
-          <i class="accent"></i>
-        </label>
-        <label class="radio radio-inline m-0 mr-1 ui-check ui-check-color">
-          <input type="radio" name="theme" value="warn">
-          <i class="warn"></i>
-        </label>
-        <label class="radio radio-inline m-0 mr-1 ui-check ui-check-color">
-          <input type="radio" name="theme" value="info">
-          <i class="info"></i>
-        </label>
-        <label class="radio radio-inline m-0 mr-1 ui-check ui-check-color">
-          <input type="radio" name="theme" value="success">
-          <i class="success"></i>
-        </label>
-        <label class="radio radio-inline m-0 mr-1 ui-check ui-check-color">
-          <input type="radio" name="theme" value="warning">
-          <i class="warning"></i>
-        </label>
-        <label class="radio radio-inline m-0 mr-1 ui-check ui-check-color">
-          <input type="radio" name="theme" value="danger">
-          <i class="danger"></i>
-        </label>
-      </p>
-      <div class="row no-gutters">
-        <div class="col">
-          <p>Brand</p>
-          <p>
-            <label class="radio radio-inline m-0 mr-1 ui-check">
-              <input type="radio" name="brand" value="dark-white">
-              <i class="light"></i>
-            </label>
-            <label class="radio radio-inline m-0 mr-1 ui-check ui-check-color">
-              <input type="radio" name="brand" value="dark">
-              <i class="dark"></i>
-            </label>
-          </p>
+<!--shipping area start-->
+<!-- <section class="shipping_area" style="background-color: #ddeffd;">
+        <div class="container">
+            <div class=" row">
+                <div class="col-12">
+                    <div class="shipping_inner">
+                        <div class="single_shipping">
+                            <div class="shipping_content">
+                                <img src="{{asset('front/assets/img/perlindungan_konsumen.png')}}" alt="">
+                                <h2>Perlindungan Konsumen</h2>
+                                <p>Jaminan perlindungan keamanan kepada konsumen & supplier</p>
+                            </div>
+                        </div>
+                        <div class="single_shipping">
+                            <div class="shipping_content">
+                                <img src="{{asset('front/assets/img/pengiriman.png')}}" alt="">
+                                <h2>Jaminan Pengiriman</h2>
+                                <p>Uang dikembalikan 100% jika barang tidak dikirimkan</p>
+                            </div>
+                        </div>
+                        <div class="single_shipping">
+                            <div class="shipping_content">
+                                <img src="{{asset('front/assets/img/pembayaran.png')}}" alt="">
+                                <h2>Pembayaran Aman</h2>
+                                <p>Pilihan metode pembayaran yang beragam, cepat dan aman</p>
+                            </div>
+                        </div>
+                        <div class="single_shipping">
+                            <div class="shipping_content">
+                                <img src="{{asset('front/assets/img/respon.png')}}" alt="">
+                                <h2>Respon Cepat</h2>
+                                <p>Pelayanan komunikasi 24jam/hari Solusi komunikasi cepat</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col mx-2">
-          <p>Aside</p>
-          <p>
-            <label class="radio radio-inline m-0 mr-1 ui-check">
-              <input type="radio" name="aside" value="white">
-              <i class="light"></i>
-            </label>
-            <label class="radio radio-inline m-0 mr-1 ui-check ui-check-color">
-              <input type="radio" name="aside" value="dark">
-              <i class="dark"></i>
-            </label>
-          </p>
-        </div>
-        <div class="col">
-          <p>Themes</p>
-          <div class="clearfix">
-            <label class="radio radio-inline ui-check">
-              <input type="radio" name="bg" value="">
-              <i class="light"></i>
-            </label>
-            <label class="radio radio-inline ui-check ui-check-color">
-              <input type="radio" name="bg" value="dark">
-              <i class="dark"></i>
-            </label>
-          </div>
-        </div>
-      </div>
-      <p>Demos</p>
-      <div class="text-md">
-        <a href="dashboard.html?folded=false&amp;bg=&amp;aside=dark&amp;brand=dark" class="no-ajax badge light">0</a>
-        <a href="dashboard.1.html?folded=false&amp;bg=&amp;aside=dark&amp;brand=dark-white" class="no-ajax badge light">1</a>
-        <a href="dashboard.2.html?folded=false&amp;bg=&amp;aside=dark&amp;brand=white" class="no-ajax badge light">2</a>
-        <a href="dashboard.3.html?folded=false&amp;bg=&amp;aside=white&amp;brand=white" class="no-ajax badge light">3</a>
-        <a href="dashboard.4.html?folded=true&amp;bg=&amp;aside=dark" class="no-ajax badge light">4</a>
-        <a href="dashboard.5.html?folded=true&amp;bg=&amp;aside=dark&amp;brand=dark" class="no-ajax badge light">5</a>
-        <a href="dashboard.6.html?folded=false&amp;bg=&amp;aside=white&amp;brand=white" class="no-ajax badge light">6</a>
-        <a href="dashboard.7.html?folded=false&amp;bg=&amp;aside=dark&amp;brand=dark" class="no-ajax badge light">7</a>
-        <a href="dashboard.8.html?folded=false&amp;bg=&amp;aside=white&amp;brand=white" class="no-ajax badge light">8</a>
-        <a href="rtl.html?folded&amp;bg=" class="no-ajax badge light">RTL</a>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
-function ce(){
-	var a = $('#lang').val();
-	var url = '<?php  echo url('locale/') ?>/'+a;
-	window.open(url,'myWindow');
-}
-</script>
-<!-- ############ SWITHCHER END-->
+    </section> -->
+    <!--shipping area end-->
 
-<!-- build:js scripts/app.min.js -->
-<!-- jQuery -->
-  <script src="{{url('assets')}}/libs/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap -->
-  <script src="{{url('assets')}}/libs/popper.js/dist/umd/popper.min.js"></script>
-  <script src="{{url('assets')}}/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- core -->
-  <script src="{{url('assets')}}/libs/pace-progress/pace.min.js"></script>
-  <script src="{{url('assets')}}/libs/pjax/pjax.js"></script>
+    <section class="call_to_action">
+        <div class="container">
+            <div class="row counters">
 
-  <script src="{{url('assets')}}/html/scripts/lazyload.config.js"></script>
-  <script src="{{url('assets')}}/html/scripts/lazyload.js"></script>
-  <script src="{{url('assets')}}/html/scripts/plugin.js"></script>
-  <script src="{{url('assets')}}/html/scripts/nav.js"></script>
-  <script src="{{url('assets')}}/html/scripts/scrollto.js"></script>
-  <script src="{{url('assets')}}/html/scripts/toggleclass.js"></script>
-  <script src="{{url('assets')}}/html/scripts/theme.js"></script>
-  <script src="{{url('assets')}}/html/scripts/ajax.js"></script>
-  <script src="{{url('assets')}}/html/scripts/app.js"></script>
-  <script>
-  
-  </script>
-<!-- endbuild -->
+                <div class="col-lg-4 col-6 text-center">
+                    <ul class="list-group list-group-horizontal-sm justify-content-center">
+                        <li>
+                            <img src="{{asset('front/assets/img/exporters.png')}}" alt="" style="width: 20%;">
+                            <span class="counters_number">{{getCountData('itdp_company_users')}}</span>
+                        </li>
+                         <li style="padding-left: 20%;">
+                            <p class="counters_text" style="font-size: 18px;">Exporters</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-6 text-center">
+                    <ul class="list-group list-group-horizontal-sm justify-content-center">
+                        <li>
+                            <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 20%;">
+                            <span class="counters_number">{{getCountData('event_detail')}}</span>
+                        </li>
+                        <li style="padding-left: 20%;">
+                            <p class="counters_text" style="font-size: 18px;">Events</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-6 text-center">
+                    <ul class="list-group list-group-horizontal-sm justify-content-center">
+                        <li>
+                            <img src="{{asset('front/assets/img/products.png')}}" alt="" style="width: 20%;">
+                            <span class="counters_number">{{getCountData('csc_product_single')}}</span>
+                        </li>
+                        <li style="padding-left: 20%;">
+                            <p class="counters_text" style="font-size: 18px;">Products</p>
+                        </li>
+                    </ul>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+
+<!--footer area start-->
+<footer class="footer_widgets mt-50">
+        <div class="container">
+            <div class="footer_top">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="widgets_container contact_us">
+                            <div class="footer_logo">
+                                <a href="#"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="150"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="widgets_container widget_menu">
+                            <h3>TRADE.ID</h3>
+                            <div class="footer_menu">
+                                <ul>
+                                    <li><a href="#">Tentang Kami</a></li>
+                                    <li><a href="#">Karir</a></li>
+                                    <li><a href="#">Hubungi Kami</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="widgets_container widget_menu">
+                            <h3>INFORMASI LAYANAN</h3>
+                            <div class="footer_menu">
+                                <ul>
+                                    <li><a href="#">Pengembalian Barang</a></li>
+                                    <li><a href="#">Syarat & Kondisi</a></li>
+                                    <li><a href="#">Kebijakan Privasi</a></li>
+                                </ul>
+                            </div>
+                        </div><br>
+                        <div class="widgets_container widget_menu">
+                            <h3>INFORMASI PENTING</h3>
+                            <div class="footer_menu">
+                                <ul>
+                                    <li><a href="#">Analisa Pasar Tuj Ekspor</a></li>
+                                    <li><a href="#">Event-event Kami</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="widgets_container widget_menu">
+                            <h3>HELP & SUPPORT</h3>
+                            <div class="footer_menu">
+                                <ul>
+                                    <li><a href="#">Getting Started</a></li>
+                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="#">Video Tour</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="widgets_container widget_menu">
+                            <h3>CONTACT CENTER</h3>
+                            <div class="footer_menu">
+                                <ul>
+                                    <li><a href="#">021-1234-5678</a></li>
+                                    <li><a href="#">0811-222-3333</a></li>
+                                </ul>
+                            </div>
+                        </div><br>
+                        <div class="widgets_container widget_menu">
+                            <h3>LET'S GET SOCIAL</h3>
+                            <div class="footer_menu">
+                                <div class="row">
+                                    <div class="container">
+                                        <a href="#"><img src="{{asset('front/assets/img/icon/fb.png')}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('front/assets/img/icon/wa.png')}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('front/assets/img/icon/ig.png')}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('front/assets/img/icon/yt.png')}}" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer_bottom">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="copyright_area">
+                            <p>Copyright &copy; <?php echo date("Y"); ?> </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--footer area end-->
+<!-- JS
+============================================ -->
+
+    <!-- Plugins JS -->
+    <script src="{{asset('front/assets/js/plugins.js')}}"></script>
+
+    <!-- Main JS -->
+    <script src="{{asset('front/assets/js/main.js')}}"></script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', layout:google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
 </body>
+
+
+<!-- Mirrored from demo.hasthemes.com/autima-preview/autima/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 01 Nov 2019 07:14:17 GMT -->
 </html>
