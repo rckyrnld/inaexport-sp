@@ -15,8 +15,8 @@ $loc = app()->getLocale();
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index.html">home</a></li>
-                            <li>Tracking of Goods</li>
+                            <li><a href="index.html">@lang("frontend.proddetail.home")</a></li>
+                            <li>@lang("frontend.tracking.goods")</li>
                         </ul>
                     </div>
                 </div>
@@ -46,14 +46,14 @@ $loc = app()->getLocale();
             <div class="col-12">
             <center>
                 <div class="col-md-8">
-                <h4><b>Tracking of Goods</b></h4><br>
+                <h4><b>@lang("frontend.tracking.goods")</b></h4><br>
                     <table width="100%" border="0" cellpadding="5">
                         <tr>
-                            <th>Tracking of Type</th>
+                            <th>@lang("frontend.tracking.kurir")</th>
                             <td>
                                 <select class="form-control" name="type" id="type" data-toggle="tooltip"
                                         data-trigger="manual" title="Please Select Tracking First">
-                                    <option value="" style="display: none;">Select a Courier</option>
+                                    <option value="" style="display: none;">@lang("frontend.tracking.select")</option>
                                     @foreach($kurir as $val)
                                         <option value="{{$val->api}}">{{$val->name}}</option>
                                     @endforeach
@@ -62,11 +62,11 @@ $loc = app()->getLocale();
                             <td></td>
                         </tr>
                         <tr>
-                            <th>Number Tracking</th>
+                            <th>@lang("frontend.tracking.number")</th>
                             <td><input type="text" autocomplete="true" name="number" id="number" class="form-control"
                                        data-toggle="tooltip" data-trigger="manual" title="Please Input Number"></td>
                             <td style="text-align: center; ">
-                                <button type="submit" class="btn btn-info" style="font-size: 12px; width: 100%; font-weight: bold;" onclick="track()"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</button>
+                                <button type="submit" class="btn btn-info" style="font-size: 12px; width: 100%; font-weight: bold;" onclick="track()"><i class="fa fa-search"></i>&nbsp;&nbsp;@lang("button-name.search")</button>
                             </td>
                         </tr>
                     </table>

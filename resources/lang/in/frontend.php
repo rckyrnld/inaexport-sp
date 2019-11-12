@@ -66,4 +66,10 @@ return [
         "specs" => "Spesifikasi",
         "relprod" => "Produk Terkait",
     ],
+    "tracking" => [
+        "goods" => "Pelacakan Barang",
+        "kurir" => "Kurir",
+        "number" => "Nomor Resi",
+        "select" => "Pilih Kurir",
+    ],
 ];

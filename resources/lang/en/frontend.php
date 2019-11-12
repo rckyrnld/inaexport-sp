@@ -66,4 +66,10 @@ return [
         "specs" => "Specification",
         "relprod" => "Related Products",
     ],
+    "tracking" => [
+        "goods" => "Tracking of Goods",
+        "kurir" => "Courier",
+        "number" => "Tracking Number",
+        "select" => "Select a Courier",
+    ],
 ];

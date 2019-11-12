@@ -16,7 +16,7 @@ class TrackingController extends Controller
 		$api = explode('|', $request->type);
 		if($api[0] == 'mytm'){
 			// Real Time Tracking ( Method POST )
-	      //   $res = $client->request('GET', 'http://api.trackingmore.com/v2/trackings/realtime', [
+	      //   $res = $client->request('POST', 'http://api.trackingmore.com/v2/trackings/realtime', [
 	      //       'headers' => [
 			    //     'Content-Type' 			=> 'application/json',
 			    //     'Accept'     			=> 'application/json',
@@ -26,7 +26,7 @@ class TrackingController extends Controller
 	      //   ]);
 
 			// Method Get
-	        $res = $client->request('Get', 'https://api.trackingmore.com/v2/trackings/', [
+	        $res = $client->request('GET', 'https://api.trackingmore.com/v2/trackings/', [
 	            'headers' => [
 			        'Content-Type' 			=> 'application/json',
 			        'Accept'     			=> 'application/json',

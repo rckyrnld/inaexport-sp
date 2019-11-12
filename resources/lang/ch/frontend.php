@@ -67,4 +67,10 @@ return [
         "specs" => "规格规格",
         "relprod" => "相关产品",
     ],
+    "tracking" => [
+        "goods" => "货物追踪",
+        "kurir" => "信使",
+        "number" => "追踪号码",
+        "select" => "选择快递",
+    ],
 ];

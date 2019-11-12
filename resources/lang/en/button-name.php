@@ -10,5 +10,6 @@ return [
     "join" => "Join",
     "noact" => "No Action",
     "verified" => "Verification",
-    "back" => "Back"
+    "back" => "Back",
+    "search" => "Search"
 ];
