@@ -258,7 +258,7 @@ class ProfileController extends Controller
                     'company' => $request->company,
                     'addres' => $request->addres,
                     'city' => $request->city,
-                    'id_mst_province' => $request->province,
+                    'id_mst_country' => $request->country,
                     'postcode' => $request->postcode,
                     'fax' => $request->fax,
                     'website' => $request->website,
