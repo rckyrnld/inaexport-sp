@@ -268,26 +268,26 @@ class ProfileController extends Controller
 //		, id_mst_province='" . $request->province . "' , postcode='" . $request->postcode . "', fax='" . $request->fax . "', website='" . $request->website . "', phone='" . $request->phone . "' , status='" . $request->staim . "'
 //		where id='" . $id_profile . "'");
 
-            if ($request->staim == 2) {
-                if ($request->template_reject == 1) {
-                    DB::table('itdp_company_users')
-                        ->where('id', $id_user)
-                        ->update([
-                            'id_template_reject' => $request->template_reject,
-                            'keterangan_reject' => $request->txtreject
-                        ]);
-//                    $updatetabz = DB::select("update itdp_company_users set id_template_reject='" . $request->template_reject . "', keterangan_reject='" . $request->txtreject . "'  where id='" . $id_user . "' ");
-
-                } else {
-                    DB::table('itdp_company_users')
-                        ->where('id', $id_user)
-                        ->update([
-                            'id_template_reject' => $request->template_reject,
-                        ]);
-//                    $updatetabz = DB::select("update itdp_company_users set id_template_reject='" . $request->template_reject . "'  where id='" . $id_user . "' ");
-
-                }
-            }
+//            if ($request->status == 2) {
+//                if ($request->id_template_reject == 1) {
+//                    DB::table('itdp_company_users')
+//                        ->where('id', $id_user)
+//                        ->update([
+//                            'id_template_reject' => $request->id_template_reject,
+//                            'keterangan_reject' => $request->keterangan_reject
+//                        ]);
+////                    $updatetabz = DB::select("update itdp_company_users set id_template_reject='" . $request->template_reject . "', keterangan_reject='" . $request->txtreject . "'  where id='" . $id_user . "' ");
+//
+//                } else {
+//                    DB::table('itdp_company_users')
+//                        ->where('id', $id_user)
+//                        ->update([
+//                            'id_template_reject' => $request->id_template_reject,
+//                        ]);
+////                    $updatetabz = DB::select("update itdp_company_users set id_template_reject='" . $request->template_reject . "'  where id='" . $id_user . "' ");
+//
+//                }
+//            }
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
