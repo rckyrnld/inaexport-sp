@@ -29,15 +29,16 @@
                                         <center>Subyek</center>
                                     </th>
                                     
-                                    <th>
-                                        <center>Date</center>
-                                    </th>
+                                   
 									<th>
                                         <center>Category</center>
                                     </th>
 									<!--<th>
                                         <center>Specification</center>
                                     </th>-->
+									 <th>
+                                        <center>Expired at</center>
+                                    </th>
                                     <th> 
                                         <center>Status</center>
                                     </th>
@@ -60,7 +61,7 @@
 									</center></td>
 									<td><center><?php echo $ruu->subyek; ?></center></td>
 									
-									<td><center><?php echo $ruu->date; ?></center></td>
+									
 									<td><center>
 									<?php 
 									$ms1 = DB::select("select id,nama_kategori_en from csc_product where id='".$ruu->id_csc_prod_cat."'");
@@ -69,6 +70,7 @@
 									}
 									?>
 									</center></td>
+									<td><center><?php echo $ruu->expired_at; ?></center></td>
 									<td><center>
 									<?php if($ruu->status_join == "1"){ echo "Menunggu Verifikasi Importir"; }else if($ruu->status_join == "2"){ echo "Negosiation"; }
 									else if($ruu->status_join == "4"){ echo "Deal"; }else{ echo "-"; }?>

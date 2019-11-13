@@ -62,6 +62,16 @@
 </head>
 
 <body>
+    <?php 
+        $loc = app()->getLocale(); 
+        if($loc == "ch"){
+            $lct = "chn";
+        }else if($loc == "in"){
+            $lct = "in";
+        }else{
+            $lct = "en";
+        }
+    ?>
     <!-- Main Wrapper Start -->
     <!--header area start-->
     <header class="header_area">
@@ -92,7 +102,25 @@
                                     <li class="top_links"><a href="{{url('login')}}"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")
                                     @endif
                                     <li class="language">
-                                        <div id="google_translate_element" style="border-radius:5px;"></div>
+                                        <!-- <div id="google_translate_element" style="border-radius:5px;"></div> -->
+                                        <select id="lang" class="form-control" style="
+                                           border: 0;
+                                           color: black;
+                                           background: white;
+                                           font-size: 12px;
+                                           padding: 0 11px;
+                                           margin-top: 10px;
+                                           width: 100px;
+                                           *
+                                           width: 350px;
+                                           *
+                                           background: #58B14C;
+                                           /*-webkit-appearance: none;*/
+                                           " onchange="ce()">
+                                            <option <?php if(app()->getLocale() == "en"){ echo "selected"; }?> value="en">English</option>
+                                            <option <?php if(app()->getLocale() == "in"){ echo "selected"; }?> value="in">Indonesia</option>
+                                            <option <?php if(app()->getLocale() == "ch"){ echo "selected"; }?> value="ch">China</option>
+                                        </select>
                                     </li>
                                 </ul>
                             </div>
@@ -130,10 +158,26 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <div id="products" class="container tab-pane active">
-                                        <form action="#">
+                                        <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_product')}}" id="formsprod">
+                                            {{ csrf_field() }}
                                             <div class="search_box">
-                                                <input placeholder="Enter a keyword to search product ..." type="text">
-                                                <button type="submit">Search</button>
+                                                <?php
+                                                    if(isset($search)){
+                                                        $cariprod = $search;
+                                                    }else{
+                                                        $cariprod = "";
+                                                    }
+
+                                                    if(isset($get_id_cat)){
+                                                        $caricat = $get_id_cat;
+                                                    }else{
+                                                        $caricat = "";
+                                                    }
+                                                ?>
+                                                <input placeholder="@lang('frontend.home.cariproduct') ..." type="text" name="cari_product" autocomplete="off" value="{{$cariprod}}" id="cari_product">
+                                                <input type="hidden" name="locnya" value="{{$lct}}" id="locnya">
+                                                <input type="hidden" name="cari_catnya" value="{{$caricat}}" id="cari_catnya">
+                                                <button type="submit">@lang('frontend.home.search')</button>
                                             </div>
                                         </form>
                                     </div>

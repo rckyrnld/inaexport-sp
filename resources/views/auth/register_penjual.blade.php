@@ -1,6 +1,6 @@
 @include('headerlog')
   <div id="content-body" style="background-color: #c5e1f8 ; color: black" >
-  <center><br><img height="70px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center>
+  <center><br><img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center>
     <div class="py-1 text-center w-100">
 	
 	<h3><b>@lang("login.title3")</b></h3>
@@ -9,7 +9,7 @@
 	  <br>
 	  <!-- <h5>LOGIN</h5> -->
 	   <h5><center><b>@lang("register2.title")</b></center></h5>
-	  <div class="wrap-login100" style="padding-left : 70px; font-size:12px;">
+	  <div class="wrap-login100" style="padding-left : 70px;padding-right : 70px; font-size:12px;">
 	  <form class="form-horizontal" method="POST" action="{{ url('simpan_rpenjual') }}">
 	   {{ csrf_field() }}
 	   <center>
@@ -132,8 +132,7 @@
 						
 		
                                 
-					<br>
-					<br>
+					
 		</center>
 		</form>
 		
@@ -142,8 +141,8 @@
 	  
 		
       </div>
-    </div>
+    </div><br>
+					<br>
   </div>
-  <br><br>
       
 @include('footerlog')

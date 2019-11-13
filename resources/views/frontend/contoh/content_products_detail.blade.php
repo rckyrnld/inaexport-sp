@@ -1,3 +1,4 @@
+@include('frontend.layouts.header')
     <!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
         <div class="container">
@@ -553,3 +554,4 @@
         </div>
     </section>
     <!--product area end-->
+@include('frontend.layouts.footer')

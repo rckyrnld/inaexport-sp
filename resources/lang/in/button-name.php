@@ -10,5 +10,6 @@ return [
     "join" => "Gabung",
     "noact" => "Tidak Ada Aksi",
     "verified" => "Verifikasi",
-    "back" => "Kembali"
+    "back" => "Kembali",
+    "search" => "Cari"
 ];
