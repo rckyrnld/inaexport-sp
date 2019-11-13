@@ -157,6 +157,11 @@ class BRFrontController extends Controller
 	
 	public function br_importir_save(Request $request)
     {
+		$g = count($request->category);
+		for($a = 0; $a < $g; $a++){
+			
+		}
+		echo "";die();
 		if(empty($request->file('doc'))){
 			$file = "";
 		}else{

@@ -27,6 +27,7 @@
 			<option <?php if($ryu->id_csc_prod_cat == $val1->id){ echo "selected"; }?> value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
 			<?php } ?>
 			</select>
+			
 		</div>
 		
 	</div>
