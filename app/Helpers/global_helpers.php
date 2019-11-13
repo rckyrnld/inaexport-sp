@@ -235,6 +235,9 @@ if (! function_exists('getProductAttr')) {
           $dt = $col.'_'.$lang;
           if($data->$dt != NULL){
             $isi = $data->$dt;
+          }else{
+            $dt = $col.'_en';
+            $isi = $data->$dt;
           }
         }else{
           if($data->$col != NULL){
@@ -274,6 +277,9 @@ if (! function_exists('getCategoryName')) {
           $col = "nama_kategori_".$loc;
           $data = DB::table('csc_product')->where('id', $id)->first();
           if($data->$col != NULL){
+            $nama = $data->$col;
+          }else{
+            $col = "nama_kategori_en";
             $nama = $data->$col;
           }
         }

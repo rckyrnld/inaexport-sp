@@ -9,6 +9,7 @@ return [
     "lbl2" => "Pendaftaran Importir",
     "lbl3" => "Masuk",
     "lbl4" => "Keluar",
+    "lbl5" => "Profil",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
@@ -54,5 +55,22 @@ return [
         "mycart" => "My Cart",
         "popcategory" => "Popular Kategori",
         "allcategory" => "Semua Kategori",
+        "search" => "Cari",
+        "cariproduct" => "Masukkan kata kunci untuk mencari produk",
+    ],
+    "proddetail" => [
+        "home" => "Beranda",
+        "default" => "Default",
+        "prodd" => "Detail Produk",
+        "minorder" => "Min. Order",
+        "desc" => "Deskripsi",
+        "specs" => "Spesifikasi",
+        "relprod" => "Produk Terkait",
+    ],
+    "tracking" => [
+        "goods" => "Pelacakan Barang",
+        "kurir" => "Kurir",
+        "number" => "Nomor Resi",
+        "select" => "Pilih Kurir",
     ],
 ];

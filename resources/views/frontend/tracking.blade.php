@@ -1,4 +1,4 @@
-@include('frontend.layout.header')
+@include('frontend.layouts.header')
 <style type="text/css">
     input[type="text"], input[type="text"]:focus {
         border-color: #d6d9daad;
@@ -7,44 +7,53 @@
 <?php
 $loc = app()->getLocale();
 ?>
-<div class="d-flex flex-column flex" style="">
-    <div class="light bg pos-rlt box-shadow"
-         style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
-        <div class="mx-auto">
-            <table border="0" width="100%">
-                <tr>
-                    <td width="30%" style="font-size:13px;padding-left:10px"><img height="30px"
-                                                                                  src="{{url('assets')}}/assets/images/logo.jpg"
-                                                                                  alt="."><b>&nbsp;&nbsp;&nbsp; Ministry
-                            Of Trade</b></td>
-                    <td width="30%"></td>
-                    <td width="40%" align="right" style="padding-right:10px;">
-                        <a href="{{ url('locale/en') }}"><img width="20px" height="15px"
-                                                              src="{{asset('negara/en.png')}}"></a>&nbsp;
-                        <a href="{{ url('locale/in') }}"><img width="20px" height="15px"
-                                                              src="{{asset('negara/in.png')}}"></a>&nbsp;
-                        <a href="{{ url('locale/ch') }}"><img width="20px" height="15px"
-                                                              src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
-                        <a href="{{url('login')}}"><font color="white"><i
-                                        class="fa fa-sign-in"></i> @lang("frontend.lbl3")</font></a>
-                    </td>
-                </tr>
-            </table>
+
+<!--breadcrumbs area start-->
+    <div class="breadcrumbs_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <ul>
+                            <li><a href="index.html">@lang("frontend.proddetail.home")</a></li>
+                            <li>@lang("frontend.tracking.goods")</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div id="content-body">
-        <div class="py-5 text-center w-100">
-            <h4><b>Tracking of goods</b></h4><br>
+<!--breadcrumbs area end-->
+
+<!-- Error Start -->
+<div id="error_message" class="product_d_info" style="background-color: #dcecf5; margin-bottom: 0px; display: none;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <center>
+                    <h3><b><span style="color: #7f7f7f;"><div id="status_error"></div></span></b></h3>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Error End -->
+
+<!-- Search Tracking start-->
+<div class="product_d_info" style="background-color: #ddeffd; margin-bottom: 0px; padding-bottom: 6%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
             <center>
                 <div class="col-md-8">
+                <h4><b>@lang("frontend.tracking.goods")</b></h4><br>
                     <table width="100%" border="0" cellpadding="5">
                         <tr>
-                            <th>Tracking of Type</th>
-                            <th>:</th>
+                            <th>@lang("frontend.tracking.kurir")</th>
                             <td>
                                 <select class="form-control" name="type" id="type" data-toggle="tooltip"
                                         data-trigger="manual" title="Please Select Tracking First">
-                                    <option></option>
+                                    <option value="" style="display: none;">@lang("frontend.tracking.select")</option>
                                     @foreach($kurir as $val)
                                         <option value="{{$val->api}}">{{$val->name}}</option>
                                     @endforeach
@@ -53,47 +62,87 @@ $loc = app()->getLocale();
                             <td></td>
                         </tr>
                         <tr>
-                            <th>Number Tracking</th>
-                            <th>:</th>
+                            <th>@lang("frontend.tracking.number")</th>
                             <td><input type="text" autocomplete="true" name="number" id="number" class="form-control"
                                        data-toggle="tooltip" data-trigger="manual" title="Please Input Number"></td>
                             <td style="text-align: center; ">
-                                <button type="submit" class="btn btn-success" onclick="track()">Search</button>
+                                <button type="submit" class="btn btn-info" style="font-size: 12px; width: 100%; font-weight: bold;" onclick="track()"><i class="fa fa-search"></i>&nbsp;&nbsp;@lang("button-name.search")</button>
                             </td>
                         </tr>
                     </table>
-                    <br>
-                    <div id="TeS"></div>
-                    <br>
-                    <table border="0" width="100%" class="table table-borderless" style="" id="tracking"
-                           style="display: none;">
-                        <thead>
-                        <tr>
-                            <th id="status" colspan="3">
-                                <h5>
-                                    <div id="status_code"></div>
-                                </h5>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody style="background-color: #e7ebf1; font-size: 14px; color: black" id="tbody_tracking">
-                        </tbody>
-                    </table>
+                    <div id="loading" style="padding-top: 3%"></div>
                 </div>
             </center>
+            </div>
         </div>
     </div>
 </div>
+<!-- Search Tracking end-->
+
+<div id="tracking" style="display: none;">
+<!-- Result Tracking start-->
+<div class="product_d_info" style="background-color: #dcecf5; margin-top: 0px;margin-bottom: 0px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <center>
+                    <h2><b><span id="color_status_event" style="color: #20af0f;"><div id="status_event"></div></span></b></h2>
+                    <h5><div id="time_last_event"></div></h5>
+                    <div id="delivered" style="font-size: 16px; display: none;">
+                        <br>
+                        <b>DELIVERED</b><p>
+                        <span style="font-size: 15px">Signed for by : <span id="signed"></span></span>
+                    </div><br>
+                    <table width="30%" style="text-align: center; font-size: 15px">
+                        <tr>
+                            <td width="40%" style="font-weight: bold;">FROM</td>
+                            <td rowspan="2" width="20%"><img src="{{asset('front/assets/icon/tracking_plane.png')}}"></td>
+                            <td width="40%" style="font-weight: bold;">TO</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;color: grey;"><div id="origin"></div></td>
+                            <td style="vertical-align: top;color: grey;"><div id="destinasi"></div></td>
+                        </tr>
+                    </table>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Result Tracking end-->
+
+<!-- Histori Tracking start-->
+<div id="histori" class="product_d_info" style="background-color: #ddeffd; margin-top: 0px; margin-bottom: 0px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <h5>
+                    <b>Travel Histori</b>
+                </h5>
+                <br>
+                <table width="100%" class="table table-borderless table-striped" style="color: white">
+                    <thead>
+                        <tr class="bg-info">
+                            <td style="text-align: center;" width="22%">Date</td>
+                            <td style="text-align: center;" width="48%" colspan="2">Activity</td>
+                            <td style="text-align: center;" width="30%">Location</td>
+                        </tr>
+                    </thead>
+                    <tbody style="background-color: #bedeef; color: black" id="tbody_tracking"></tbody>
+                </table>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</div>
+<!-- Histori Tracking end-->
 </div>
 
-@include('frontend.layout.header')
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#type').select2({
-            placeholder: 'Select a Courier'
-        });
-    });
+<div style="margin-bottom: 8%; margin-top: 0px"></div>
 
+@include('frontend.layouts.footer')
+<script type="text/javascript">
     var list_status = {
         'pending': 'Pending',
         'transit': 'Transit',
@@ -121,6 +170,22 @@ $loc = app()->getLocale();
         'exception008': 'The Package is Canceled'
     }
 
+    function color(param){
+        switch(param){
+            case 'delivered':
+                return '#20af0f';
+                break;
+            case 'exception':
+                return '#daca08';
+                break;
+            case 'notfound':
+                return '#84837f';
+                break;
+            default :
+                return '#2c9ada';
+        }
+    }
+
     function track() {
         if ($('#type').val() == '') {
             $('#type').tooltip('toggle');
@@ -141,9 +206,10 @@ $loc = app()->getLocale();
 
             var number = $('#number').val();
             $('#tracking').hide();
-            $('#TeS').show();
-            $('#TeS').html('<div class="progress"><div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div>');
-            $('.progress-bar').animate({width: "30%"}, 100);
+            $('#error_message').hide();
+            $('#loading').show();
+            $('#loading').html('<div class="progress"><div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div>');
+            $('.progress-bar').animate({width: "50%"}, 100);
 
             $.ajax({
                 url: "{{route('api.tracking')}}",
@@ -157,114 +223,104 @@ $loc = app()->getLocale();
                 statusCode: {
                     500: function () {
                         end_loading();
-                        $('#tbody_tracking').hide();
-                        $('#status').css({'background-color': '#b1b5b7eb', 'color': 'white', 'text-align': 'center'});
-                        $('#status_code').html('Server Busy! Please Try Again.');
-                        $('#tracking').show('slow');
+                        $('#status_error').html('Server Busy! Please Try Again.');
+                        $('#error_message').show('slow');
                     },
                     200: function (response) {
                         end_loading();
-                        console.log(response);
-                        // console.log(response.meta.code);
                         // console.log(response.data.items[0].status);
-                        // console.log(response.data.items[0].substatus);
-                        // console.log(response.data.items[0].origin_info);
-                        // console.log(response.data.items[0].origin_info.trackinfo[0]);
-                        // console.log(response.data.items[0].origin_info.phone);
                         switch (response.meta.code) {
                             case 200:
-                                $('#tbody_tracking').show();
                                 var histori = '';
-                                var status = response.data.items[0].status;
-                                var sub_status = response.data.items[0].substatus;
-                                var origin = response.data.items[0].original_country;
-                                var destinasi = response.data.items[0].destination_country;
-                                var track = response.data.items[0].origin_info.trackinfo;
+                                var status = response.data.status;
+                                var sub_status = response.data.substatus;
+                                var signed = response.data.singed_by;
+                                var origin = response.data.original_country;
+                                var destinasi = response.data.destination_country;
+                                var track = response.data.origin_info.trackinfo;
+
+                                var last_time = new Date(response.data.lastUpdateTime);
+                                var options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+                                last_time = last_time.toLocaleDateString("en-US", options);
+                                last_time = last_time.split(',');
+
+                                $('#color_status_event').css({'color': color(status)});
 
                                 if (origin == null || typeof origin === 'undefined' || origin.length == 0) {
-                                    histori += '<tr class="histori"><td>Origin Country - Not Found</td>';
+                                    $('#origin').html('Unknown');
                                 } else {
-                                    histori += '<tr class="histori"><td>Origin Country - ' + origin + '</td>';
+                                    $('#origin').html(origin);
                                 }
 
                                 if (destinasi == null || typeof destinasi === 'undefined' || destinasi.length == 0) {
-                                    histori += '<td style="text-align: right;">Destination Country - Not Found</td></tr>';
+                                    $('#destinasi').html('Unknown');
                                 } else {
-                                    histori += '<td style="text-align: right;">Destination Country - ' + destinasi + '</td></tr>';
+                                    $('#destinasi').html(destinasi);
                                 }
 
                                 if (sub_status == null || sub_status == '') {
                                     var message = list_status[status];
-                                    if (status == 'expired' || status == 'undelivered' || status == 'pending') {
-                                        $('#status').css({
-                                            'background-color': '#ead226',
-                                            'color': '#525230',
-                                            'text-align': 'center'
-                                        });
-                                    } else {
-                                        $('#status').css({
-                                            'background-color': '#6fe45a',
-                                            'color': 'white',
-                                            'text-align': 'center'
-                                        });
-                                    }
-                                    $('#status_code').html(message);
                                 } else {
                                     if (status == 'notfound') {
                                         var message = sub_status_nf[sub_status];
                                     } else {
                                         var message = sub_status_ex[sub_status];
                                     }
-                                    $('#status').css({
-                                        'background-color': '#ead226',
-                                        'color': '#525230',
-                                        'text-align': 'center'
-                                    });
-                                    $('#status_code').html(message);
+                                }
+                                    
+                                $('#status_event').html(message);
+                                if(last_time[0] == "Invalid Date"){
+                                    $('#time_last_event').hide();
+                                } else {
+                                    $('#time_last_event').show();
+                                    $('#time_last_event').html(last_time[0]+last_time[1]+' at'+last_time[2]);
+                                }
+
+                                if(status == 'delivered' && signed != null ){
+                                    $('#signed').html(signed);
+                                    $('#delivered').show();
+                                } else {
+                                    $('#delivered').hide();
                                 }
 
                                 if (track !== null) {
-                                    for (var i = 0; i < track.length; i++) {
-                                        var waktu = track[i].Date.split(' ');
-                                        var time = waktu[1].split(':');
-                                        var date = new Date(track[i].Date);
-                                        histori += '<tr class="histori"><td style="padding-left:12%" width="50%">' + ("0" + date.getDate()).slice(-2) + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear() + '&nbsp;&nbsp;' + time[0] + ':' + time[1] + '</td>';
-                                        histori += '<td width="50%">' + track[i].StatusDescription + '</td></tr>';
+                                    var tanggal = '';
+                                    var output_tgl = '';
+                                    for (var i = 0; i < track.length; i++) {    
+                                        var waktu = new Date(track[i].Date);
+                                        waktu = waktu.toLocaleDateString("en-US", options);
+                                        waktu = waktu.split(', ');
+                                        if(tanggal == waktu[1]){
+                                            output_tgl = '';
+                                        } else {
+                                            output_tgl = waktu[0]+', '+waktu[1];
+                                        }
+                                        histori += '<tr class="histori"><td>'+ output_tgl +'</td><td width="10%">'+ waktu[2] +'</td><td>'+ track[i].StatusDescription +'</td><td>'+ track[i].Details +'</td></tr>';
+                                        tanggal = waktu[1];
                                     }
+                                    $('#histori').show();
+                                } else {
+                                    $('#histori').hide();
                                 }
 
                                 $('#tbody_tracking').append(histori);
                                 $('#tracking').show('slow');
                                 break;
                             case 4014:
-                                $('#tbody_tracking').hide();
-                                $('#status_code').html('Tracking Number is Invalid');
-                                $('#status').css({
-                                    'background-color': '#c53731db',
-                                    'color': 'white',
-                                    'text-align': 'center'
-                                });
-                                $('#tracking').show('slow');
+                                $('#status_error').html('Tracking Number is Invalid');
+                                $('#error_message').show('slow');
                                 break;
                             case 429:
-                                $('#tbody_tracking').hide();
-                                $('#status_code').html('Exceeded API limits.  Default limit is 1 number 1 requests per 20 minutes');
-                                $('#status').css({
-                                    'background-color': '#c53731db',
-                                    'color': 'white',
-                                    'text-align': 'center'
-                                });
-                                $('#tracking').show('slow');
+                                $('#status_error').html('Exceeded API limits.');
+                                $('#error_message').show('slow');
+                                break;
+                            case 4031:
+                                $('#status_error').html('Purchase not found or Delivery not done yet !');
+                                $('#error_message').show('slow');
                                 break;
                             default:
-                                $('#tbody_tracking').hide();
-                                $('#status').css({
-                                    'background-color': '#b1b5b7eb',
-                                    'color': 'white',
-                                    'text-align': 'center'
-                                });
-                                $('#status_code').html('Unknown Error !');
-                                $('#tracking').show('slow');
+                                $('#status_error').html('Unknown Error !');
+                                $('#error_message').show('slow');
                         }
                     }
                 }
@@ -279,7 +335,7 @@ $loc = app()->getLocale();
             setTimeout(function () {
                 $('.my-box').html();
             }, 100);
-            $('#TeS').hide();
+            $('#loading').hide();
         }, 500);
     }
 

@@ -1,7 +1,7 @@
-<p>Dear User,</P>
-<p>Anda Telah Mengakses Fitur Forget Password</p>
+<p>Dear Member, </P>
+<p>You have accessed the Forget Password feature</p>
 <ol>
-    <ul>Nama : {{$nama}}</ul>
+    <ul>Name : {{$nama}}</ul>
     <ul>Username : {{$username}}</ul>
 </ol>
-Klik <a href="{{url('gantipass1/'.$id2)}}">Disini</a> Untuk Mengganti Password Anda !.
+click <a href="{{url('gantipass1/'.$id2)}}">here</a> to chages your password !.

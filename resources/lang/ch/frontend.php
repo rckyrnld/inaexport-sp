@@ -9,6 +9,7 @@ return [
     "lbl2" => "进口商注册",
     "lbl3" => "登入",
     "lbl4" => "登出",
+    "lbl5" => "轮廓",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
@@ -55,5 +56,22 @@ return [
         "mycart" => "My Cart",
         "popcategory" => "热门类别",
         "allcategory" => "所有类别",
+        "search" => "搜索",
+        "cariproduct" => "输入关键字以搜索产品",
+    ],
+    "proddetail" => [
+        "home" => "家",
+        "default" => "默认",
+        "prodd" => "产品详情",
+        "minorder" => "最低订购",
+        "desc" => "描述",
+        "specs" => "规格规格",
+        "relprod" => "相关产品",
+    ],
+    "tracking" => [
+        "goods" => "货物追踪",
+        "kurir" => "信使",
+        "number" => "追踪号码",
+        "select" => "选择快递",
     ],
 ];
