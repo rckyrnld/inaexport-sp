@@ -36,7 +36,7 @@ class LoginController extends Controller
             return response()->json(['message' => 'Could not create token!'], 401);
         }
 
-        return $this->respondWithToken($token, $request->email);
+        return $this->respondWithToken($token, $request->email, $request->password);
     }
 
     protected function respondFailed()
@@ -52,7 +52,7 @@ class LoginController extends Controller
         return $res;
     }
 
-    protected function respondWithToken($token, $email)//: JsonResponse
+    protected function respondWithToken($token, $email, $password)//: JsonResponse
     {
         $datas = '';
 
@@ -72,7 +72,6 @@ class LoginController extends Controller
             }
         }
 
-//        dd($datas);
         $meta = [
             'code' => 200,
             'message' => 'Success',
@@ -83,8 +82,7 @@ class LoginController extends Controller
         $datas[0]->id_user = $company[0]->id;
         $datas[0]->role_name = ($company[0]->id_role == 3 ? "Importir" : "Eksportir");
         $datas[0]->id_role = $company[0]->id_role;
-        $datas[0]->password = $company[0]->password;
-        $datas[0]->username = $company[0]->username;
+        $datas[0]->password = $password;
         $datas[0]->username = $company[0]->username;
         $datas[0]->id_template_reject = ($company[0]->id_template_reject == null ? "" : $company[0]->id_template_reject);
         $datas[0]->keterangan_reject = $company[0]->keterangan_reject;
