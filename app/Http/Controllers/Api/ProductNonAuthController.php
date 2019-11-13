@@ -31,12 +31,25 @@ class ProductNonAuthController extends Controller
             				->limit(10)
 							->get();
 		if(count($dataProduk) > 0){
-			$res['message'] = "Success";
-			$res['data'] = $dataProduk;
-        	return response($res);
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
 		}else{
-			$res['message'] = "Failed";
-			return response($res);
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
 		}
 	}
 
@@ -54,12 +67,25 @@ class ProductNonAuthController extends Controller
 							->orderBy('csc_product_single.prodname_en','asc')
 							->get();
 		if(count($dataProduk) > 0){
-			$res['message'] = "Success";
-			$res['data'] = $dataProduk;
-        	return response($res);
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
 		}else{
-			$res['message'] = "Failed";
-			return response($res);
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
 		}
 	}
 
@@ -70,12 +96,25 @@ class ProductNonAuthController extends Controller
 						->orderBy('nama_kategori_en', 'ASC')
 						->get();
 		if(count($result) > 0){
-			$res['message'] = "Success";
-			$res['data'] = $result;
-        	return response($res);
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $result;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
 		}else{
-			$res['message'] = "Failed";
-			return response($res);
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = $result;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
 		}
 	}
 
@@ -87,12 +126,25 @@ class ProductNonAuthController extends Controller
 			->first();
 			// dd($data);
 		if(count($data) > 0){
-			$res['message'] = "Success";
-			$res['data'] = $data;
-			return response($res);
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
 		}else{
-			$res['message'] = "Failed";
-			return response($res);
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+//            $data = data;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
 		}
 	}
 
