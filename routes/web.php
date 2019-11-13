@@ -137,6 +137,7 @@ Route::post('/simpan_profil', 'VerifyuserController@simpan_profil');
 Route::post('/simpan_profil2', 'VerifyuserController@simpan_profil2');
 Route::post('/simpanperwakilan', 'VerifyuserController@simpanperwakilan');
 Route::post('/updateperwakilan', 'VerifyuserController@updateperwakilan');
+Route::post('/simpan_kontak', 'VerifyuserController@simpan_kontak');
 
 // Group
 Route::resource('/group', 'UM\GroupController');
