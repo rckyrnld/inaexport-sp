@@ -311,9 +311,9 @@ function xy(a){
 			$("#isibroadcast").html(data);
 			
 		 })
-	$(document).ready(function () {
-        $('.select2').select2();
-});
+	$('.cobas2').select2();
+	
+
 }
 function t1(){
 	$('#t2').html('');
