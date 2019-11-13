@@ -290,6 +290,12 @@ class VerifyuserController extends Controller
 		return redirect('profilperwakilan');
 	}
 	
+	public function bacanotif($id)
+    {
+		$update = DB::select("update notif set status_baca='1' where id_notif='".$id."'");
+		
+	}
+	
 	public function editperwakilan($id)
     {
 		$pageTitle = "Edit Perwakilan";

@@ -34,8 +34,13 @@
 			  $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc"); 
 			  $querynotif = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc limit 4"); 
 			  }else{
-			  $querynotifa = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc"); 
-			  $querynotif = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc limit 4"); 
+				if(Auth::user()->id_group == 1){
+				$querynotifa = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc"); 
+				$querynotif = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc limit 4"); 
+			  }else{
+				$querynotifa = DB::select("select * from notif where untuk_id='".Auth::user()->id."' and status_baca='0' and to_role='4' order by id_notif desc"); 
+				$querynotif = DB::select("select * from notif where untuk_id='".Auth::user()->id."' and status_baca='0' and to_role='4' order by id_notif desc limit 4");
+			  }
 			  }
 			  ?>
               <span class="label label-warning" style="position: absolute!important;
@@ -53,13 +58,13 @@
 			  foreach($querynotif as $ar){
 			  ?>
         @if($ar->id_terkait == NULL)
-        <a href="{{url($ar->url_terkait)}}">
+        <a onclick="closenotif(<?php echo $ar->id_notif; ?>)" href="{{url($ar->url_terkait)}}">
               <?php echo $ar->keterangan; ?><br>
         <b><?php echo $ar->waktu; ?></b>
         </a>
         <hr>
         @else
-			  <a href="{{url($ar->url_terkait.'/'.$ar->id_terkait)}}">
+			  <a onclick="closenotif(<?php echo $ar->id_notif; ?>)" href="{{url($ar->url_terkait.'/'.$ar->id_terkait)}}">
               <?php echo $ar->keterangan; ?><br>
 			  <b><?php echo $ar->waktu; ?></b>
 			  </a>

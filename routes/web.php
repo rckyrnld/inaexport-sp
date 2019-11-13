@@ -78,6 +78,7 @@ Route::namespace('FrontEnd')->group(function () {
 
 });
 
+Route::get('/br_importir_all', 'BRFrontController@br_importir_all');
 Route::get('/br_importir', 'BRFrontController@br_importir');
 Route::get('/br_importir_add', 'BRFrontController@br_importir_add');
 Route::get('/br_importir_detail/{id}', 'BRFrontController@br_importir_detail');
@@ -114,6 +115,7 @@ Route::get('/pilihregister', 'RegistrasiController@pilihregister');
 Route::get('/login', 'HomeController@index');
 Route::get('/dashboard', 'DashboardController@index');
 //Verify User
+Route::get('/bacanotif/{id}', 'VerifyuserController@bacanotif');
 Route::get('/verifyuser', 'VerifyuserController@index');
 Route::get('/geteksportir', 'VerifyuserController@geteksportir');
 Route::get('/verifyimportir', 'VerifyuserController@index2');
