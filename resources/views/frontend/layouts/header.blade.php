@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="{{ app()->getLocale() }}">
 
 
@@ -95,9 +95,16 @@
                                             <!-- <li><a href="my-account.html">My Account </a></li> -->
                                             <!-- <li><a href="cart.html">Shopping Cart</a></li> -->
                                             <!-- <li><a href="wishlist.html">Wishlist</a></li> -->
+                                            <li><a href="" style="text-decoration: none" onclick="event.preventDefault(); document.getElementById('profile-form').submit();">@lang('frontend.lbl5')</a></li>
                                             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('frontend.lbl4')</a></li>
                                         </ul>
                                     </li>
+<form id="profile-form" action="{{ route('profile') }}" method="POST" style="display: none;">
+    {{ csrf_field() }}
+</form>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    {{ csrf_field() }}
+</form>
                                     @else
                                     <li class="top_links"><a href="{{url('login')}}"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")
                                     @endif

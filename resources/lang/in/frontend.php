@@ -9,6 +9,7 @@ return [
     "lbl2" => "Pendaftaran Importir",
     "lbl3" => "Masuk",
     "lbl4" => "Keluar",
+    "lbl5" => "Profil",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",

@@ -117,7 +117,9 @@ $loc = app()->getLocale();
         <div class="row">
             <div class="col-1"></div>
             <div class="col-10">
-                <b>Travel Histori</b>
+                <h5>
+                    <b>Travel Histori</b>
+                </h5>
                 <br>
                 <table width="100%" class="table table-borderless table-striped" style="color: white">
                     <thead>
@@ -241,7 +243,6 @@ $loc = app()->getLocale();
                                 var options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
                                 last_time = last_time.toLocaleDateString("en-US", options);
                                 last_time = last_time.split(',');
-                                console.log(last_time);
 
                                 $('#color_status_event').css({'color': color(status)});
 
