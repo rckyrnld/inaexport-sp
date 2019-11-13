@@ -10,5 +10,6 @@ return [
     "join" => "加入",
     "noact" => "没有行动",
     "verified" => "验证",
-    "back" => "背部"
+    "back" => "背部",
+    "search" => "搜索"
 ];

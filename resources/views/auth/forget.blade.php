@@ -1,7 +1,7 @@
 @include('headerlog')
   
   <div id="content-body" style="background-color: #c5e1f8 ; color: black" >
-  <center><br><img height="70px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center>
+  <center><br><img <img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center>
     <div class="py-1 text-center w-100">
 	
 	<h3><b>@lang("login.title2")</b></h3>
@@ -27,7 +27,7 @@
 
         </div>
 		<div class="form-group">
-		<center><button style="width: 100%;" type="submit" class="btn primary">@lang("login.btn2")</button></center>
+		<center><button style="width: 100%;" type="submit" class="btn btn-primary">@lang("login.btn2")</button></center>
 		</div>
 			<br>
           </form>
@@ -37,6 +37,8 @@
 	  
 		
       </div>
+	  <br><br>
     </div>
   </div>
+  
 @include('footerlog')

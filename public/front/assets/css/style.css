@@ -6251,6 +6251,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   border-bottom: 1px solid #f0f0f0;
   padding-bottom: 15px;
   margin-bottom: 40px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 15px;
+  margin-top: 40px;
 }
 .product_info_button ul {
   justify-content: center;
@@ -6285,13 +6288,14 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   position: absolute;
 }
 .product_info_button ul li a.active {
-  color: #333333;
+  color: #79b5cd
 }
 .product_info_button ul li a.active::before {
   width: 100%;
 }
 .product_info_button ul li a:hover {
-  color: #333333;
+  color: #79b5cd;
+  text-decoration: none;
 }
 .product_info_button ul li:last-child a {
   margin-right: 0;

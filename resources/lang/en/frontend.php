@@ -9,6 +9,7 @@ return [
     "lbl2" => "Importer Registration",
     "lbl3" => "Sign In",
     "lbl4" => "Sign Out",
+    "lbl5" => "Profile",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
@@ -54,5 +55,22 @@ return [
         "mycart" => "My Cart",
         "popcategory" => "Popular Categories",
         "allcategory" => "All Categories",
+        "search" => "Search",
+        "cariproduct" => "Enter a keyword to search product",
+    ],
+    "proddetail" => [
+        "home" => "Home",
+        "default" => "Default",
+        "prodd" => "Product Details",
+        "minorder" => "Min. Order",
+        "desc" => "Description",
+        "specs" => "Specification",
+        "relprod" => "Related Products",
+    ],
+    "tracking" => [
+        "goods" => "Tracking of Goods",
+        "kurir" => "Courier",
+        "number" => "Tracking Number",
+        "select" => "Select a Courier",
     ],
 ];

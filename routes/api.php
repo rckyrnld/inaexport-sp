@@ -63,6 +63,9 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     //training
     Route::post('joinTraining', 'Api\User\ManagementUserController@joinTraining');
 
+    //event
+    Route::post('joinEvent', 'Api\User\ManagementUserController@joinEvent');
+
     //tiketing
     Route::post('createTicket', 'Api\User\ManagementUserController@createTicketing');
 
@@ -98,5 +101,8 @@ Route::namespace('Api')->group(function () {
     //tracking
     Route::get('getDataTracking', 'ManagementNoAuthController@getDataTracking');
     Route::post('tracking', 'TrackingController@tracking');
+
+    //event
+    Route::get('getDataEvent', 'ManagementNoAuthController@getEvent');
 });
 // });
