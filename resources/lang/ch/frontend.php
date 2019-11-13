@@ -9,6 +9,7 @@ return [
     "lbl2" => "进口商注册",
     "lbl3" => "登入",
     "lbl4" => "登出",
+    "lbl5" => "轮廓",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
