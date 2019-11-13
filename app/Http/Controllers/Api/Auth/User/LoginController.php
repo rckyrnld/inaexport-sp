@@ -84,6 +84,7 @@ class LoginController extends Controller
         $datas[0]->role_name = ($company[0]->id_role == 3 ? "Importir" : "Eksportir");
         $datas[0]->id_role = $company[0]->id_role;
         $datas[0]->password = $company[0]->password;
+        $datas[0]->username = $company[0]->username;
 //    $data = [
 //        'access_token' => $token,
 //        'token_type' => 'Bearer',
