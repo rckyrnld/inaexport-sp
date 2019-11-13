@@ -12,7 +12,14 @@
 
 <!-- ############ LAYOUT END-->
 </div>
-
+<script>
+function closenotif(x){
+	var token = $('meta[name="csrf-token"]').attr('content');
+		$.get('{{URL::to("bacanotif/")}}/'+x,{_token:token},function(data){
+			
+		 });
+}
+</script>
 
 <!-- ############ SWITHCHER START-->
 <div id="setting">

@@ -10,10 +10,21 @@
                 </div>
 
                 <div class="box-body bg-light">
-                    <a class="btn" href="{{url('/eksportir/tambah_product')}}"
+				 <?php if(empty(Auth::user()->name)){ 
+				 if(Auth::guard('eksmp')->user()->status == 1){
+				 ?>
+				 <a class="btn" href="{{url('/eksportir/tambah_product')}}"
                        style="background-color: #1089ff; color: white;"><i
                                 class="fa fa-plus-circle"></i>
                         Add</a>
+				 <?php }else{ ?>
+				 
+				 <?php } ?>
+				 
+					<?php   }else{ ?>
+					  
+					  <?php } ?>
+                    
                     <div class="col-md-14">
                         <br>
                         <div class="table-responsive">

@@ -53,11 +53,19 @@ class ProductController extends Controller
 							->orderBy('csc_product_single.prodname_en','asc')
 							->get();
 		if(count($dataProduk) > 0){
-			$res['message'] = "Success";
+			  $meta = [
+            'code' => 200,
+            'message' => 'Success',
+            'status' => 'Success'
+        ];
 			$res['data'] = $dataProduk;
         	return response($res);
 		}else{
-			$res['message'] = "Failed";
+			$meta = [
+            'code' => 410,
+            'message' => 'Data tidak ditemukam',
+            'status' => 'Success'
+        ];
 			return response($res);
 		}
 	}

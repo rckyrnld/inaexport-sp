@@ -110,6 +110,7 @@ Route::get('/pilihregister', 'RegistrasiController@pilihregister');
 Route::get('/login', 'HomeController@index');
 Route::get('/dashboard', 'DashboardController@index');
 //Verify User
+Route::get('/bacanotif/{id}', 'VerifyuserController@bacanotif');
 Route::get('/verifyuser', 'VerifyuserController@index');
 Route::get('/geteksportir', 'VerifyuserController@geteksportir');
 Route::get('/verifyimportir', 'VerifyuserController@index2');
