@@ -1,4 +1,4 @@
-<p>Dear Member,</P>
+<p>Dear Member, </P>
 <p>You have accessed the Forget Password feature</p>
 <ol>
     <ul>Name : {{$nama}}</ul>

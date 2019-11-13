@@ -1,4 +1,4 @@
-<p>Dear Admin,</P>
+<p>Dear Admin, </P>
 <p>Please, Verification Ticketing User</p>
 <hr>
 <ol>
