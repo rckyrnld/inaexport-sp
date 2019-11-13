@@ -46,7 +46,7 @@ class LoginController extends Controller
             'message' => 'Unauthorized',
             'status' => 'Failed'
         ];
-        $data = [""];
+        $data = "";
         $res['meta'] = $meta;
         $res['data'] = $data;
         return $res;

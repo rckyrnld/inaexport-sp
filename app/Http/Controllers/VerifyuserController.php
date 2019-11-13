@@ -96,10 +96,6 @@ class VerifyuserController extends Controller
 				<a href="'.url('resetimportir/'.$pesan->ida).'" class="btn btn-sm btn-warning"><i class="fa fa-key text-white"></i></a>
 				';
 				}
-               
-                
-           
-                
             })
 			->rawColumns(['action','f6','f7'])
             ->make(true);
