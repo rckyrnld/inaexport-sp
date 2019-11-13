@@ -243,16 +243,16 @@ class RegistrasiController extends Controller
 		return redirect('');
 	}
 	
-	public function updatepass1(Request $request)
+	public function updatepass1(Request $request,$id)
     {
 		$update = DB::select("update itdp_company_users set password='".$request->password."' where id='".$request->ida."'");
-		return redirect('');
+		return redirect('login');
 	}
 	
-	public function updatepass2(Request $request)
+	public function updatepass2(Request $request,$id)
     {
 		$update = DB::select("update itdp_admin_users set password='".$request->password."' where id='".$request->ida."'");
-		return redirect('');
+		return redirect('login');
 	}
 	public function updatepass(Request $request)
     {

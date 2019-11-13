@@ -25,8 +25,8 @@ Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
 Route::get('/forget_a', 'RegistrasiController@forget_a');
 Route::get('/gantipass1/{id}', 'RegistrasiController@gantipass1');
 Route::get('/gantipass2/{id}', 'RegistrasiController@gantipass2');
-Route::post('/updatepass1', 'RegistrasiController@updatepass1');
-Route::post('/updatepass2', 'RegistrasiController@updatepass2');
+Route::post('/updatepass1/{id}', 'RegistrasiController@updatepass1');
+Route::post('/updatepass2/{id}', 'RegistrasiController@updatepass2');
 Route::post('/resetpass', 'RegistrasiController@resetpass');
 Route::post('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
 
