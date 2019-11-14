@@ -96,10 +96,6 @@ class VerifyuserController extends Controller
 				<a href="'.url('resetimportir/'.$pesan->ida).'" class="btn btn-sm btn-warning"><i class="fa fa-key text-white"></i></a>
 				';
 				}
-               
-                
-           
-                
             })
 			->rawColumns(['action','f6','f7'])
             ->make(true);
@@ -292,6 +288,12 @@ class VerifyuserController extends Controller
     {
 		$delete = DB::select("delete from itdp_admin_users where id='".$id."'");
 		return redirect('profilperwakilan');
+	}
+	
+	public function bacanotif($id)
+    {
+		$update = DB::select("update notif set status_baca='1' where id_notif='".$id."'");
+		
 	}
 	
 	public function editperwakilan($id)
@@ -492,6 +494,14 @@ class VerifyuserController extends Controller
 		return redirect('profil/'.$id_role.'/'.$id_user);
 		
 	
+	}
+	
+	public function simpan_kontak(Request $request)
+    {
+		$insert= DB::select("insert into itdp_contact_imp (name,email,phone,id_user) values
+		('".$request->name."','".$request->email."','".$request->phone."','".$request->idb."')
+		");
+		return redirect('profil2/3/'.$request->idb);
 	}
 	
 	public function simpan_profil2(Request $request)

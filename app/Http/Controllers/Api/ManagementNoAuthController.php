@@ -228,7 +228,7 @@ class ManagementNoAuthController extends Controller
                 'message' => 'All Data Must Be Filled In',
                 'status' => 'Failed'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);

@@ -25,7 +25,29 @@ class HomeController extends Controller
      */
     public function index()
     {
+		if(empty(Auth::user()->name)){ 
+		}else{ 
+			if(Auth::user()->id_group == 4){
+				if(Auth::user()->type == "DINAS PERDAGANGAN"){
+					$qr = DB::select("select b.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and a.id='".Auth::user()->id."'");
+					foreach($qr as $rq){ $sts = $rq->status; }
+					if($sts==0){
+					Auth::logout();
+					return redirect('admin');	
+					}
+				}else{
+					$qr = DB::select("select b.* from itdp_admin_users a, itdp_admin_ln b  where a.id_admin_ln = b.id and a.id='".Auth::user()->id."'");
+					foreach($qr as $rq){ $sts = $rq->status; }
+					if($sts==0){
+					Auth::logout();
+					return redirect('admin');	
+					}
+					
+				}
+			}
+		}
         $pageTitle = "Beranda";
+		
         return view('home',compact('pageTitle'));
     }
 	

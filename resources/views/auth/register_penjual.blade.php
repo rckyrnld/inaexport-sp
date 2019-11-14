@@ -126,7 +126,9 @@
 							&nbsp;
 							</div>
                             <div class="form-group col-sm-5" align="right">
-                                <button style="width: 100%;" class="btn btn-success" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></button>
+							<a style="width: 100%;" class="btn btn-success" style="border-color: #4CAF50;" onclick="simpanpenjual()"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></a>
+                           
+                                <!-- <button style="width: 100%;" class="btn btn-success" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></button> -->
                             </div>
                         </div>
 						
@@ -144,5 +146,75 @@
     </div><br>
 					<br>
   </div>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Attention</h6>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">&times;</button>
+         
+        </div>
+		
+        <div class="modal-body">
+          <h5><center><br>
+			<img style="height:80px!important;" src="{{url('assets')}}/assets/images/mail.png" alt="." ><br><br>
+			Check your mail for activate account !
+			</center></h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ <script>
+function simpanpenjual(){
+	var company = $('#company').val();
+	var username = $('#username').val();
+	var email = $('#email').val();
+	var phone = $('#phone').val();
+	var fax = $('#fax').val();
+	var website = $('#website').val();
+	var password = $('#password').val();
+	var city = $('#city').val();
+	var prov = $('#prov').val();
+	var postcode = $('#postcode').val();
+	var alamat = $('#alamat').val();
+	var token = $('meta[name="csrf-token"]').attr('content');
+	if(company == ""){
+		alert("Please complete the field !")
+	}else{
+		/*
+		$.post('{{url('/simpan_rpenjual')}}',{company:company,username:username,email:email,phone:phone,fax:fax,password:password,city:city,prov:prov,postcode:postcode,alamat:alamat,_token:token},function (data) {
+		 	
+		 });
+		*/
+		$.ajax({
+			type: "POST",
+			url: '{{url('/simpan_rpenjual')}}',
+			data: { company:company,username:username,email:email,website:website,phone:phone,fax:fax,password:password,city:city,prov:prov,postcode:postcode,alamat:alamat,_token:'{{csrf_token()}}' },
+			success: function (data) {
+			   console.log(data);
+			},
+			error: function (data, textStatus, errorThrown) {
+				console.log(data);
+
+			},
+		});
+		$('#company').val('');
+		$('#username').val('');
+		$('#website').val('');
+		$('#email').val('');
+		$('#phone').val('');
+		$('#fax').val('');
+		$('#password').val('');
+		$('#kpassword').val('');
+		$('#city').val('');
+		$('#prov').val('');
+		$('#postcode').val('');
+		$('#alamat').val('');
+	$("#myModal").modal("show");
+	}
+}
+ </script>
       
 @include('footerlog')

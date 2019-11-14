@@ -25,8 +25,8 @@ Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
 Route::get('/forget_a', 'RegistrasiController@forget_a');
 Route::get('/gantipass1/{id}', 'RegistrasiController@gantipass1');
 Route::get('/gantipass2/{id}', 'RegistrasiController@gantipass2');
-Route::post('/updatepass1', 'RegistrasiController@updatepass1');
-Route::post('/updatepass2', 'RegistrasiController@updatepass2');
+Route::post('/updatepass1/{id}', 'RegistrasiController@updatepass1');
+Route::post('/updatepass2/{id}', 'RegistrasiController@updatepass2');
 Route::post('/resetpass', 'RegistrasiController@resetpass');
 Route::post('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
 
@@ -80,6 +80,7 @@ Route::namespace('FrontEnd')->group(function () {
 
 });
 
+Route::get('/br_importir_all', 'BRFrontController@br_importir_all');
 Route::get('/br_importir', 'BRFrontController@br_importir');
 Route::get('/br_importir_add', 'BRFrontController@br_importir_add');
 Route::get('/br_importir_detail/{id}', 'BRFrontController@br_importir_detail');
@@ -116,6 +117,7 @@ Route::get('/pilihregister', 'RegistrasiController@pilihregister');
 Route::get('/login', 'HomeController@index');
 Route::get('/dashboard', 'DashboardController@index');
 //Verify User
+Route::get('/bacanotif/{id}', 'VerifyuserController@bacanotif');
 Route::get('/verifyuser', 'VerifyuserController@index');
 Route::get('/geteksportir', 'VerifyuserController@geteksportir');
 Route::get('/verifyimportir', 'VerifyuserController@index2');
@@ -137,6 +139,7 @@ Route::post('/simpan_profil', 'VerifyuserController@simpan_profil');
 Route::post('/simpan_profil2', 'VerifyuserController@simpan_profil2');
 Route::post('/simpanperwakilan', 'VerifyuserController@simpanperwakilan');
 Route::post('/updateperwakilan', 'VerifyuserController@updateperwakilan');
+Route::post('/simpan_kontak', 'VerifyuserController@simpan_kontak');
 
 // Group
 Route::resource('/group', 'UM\GroupController');

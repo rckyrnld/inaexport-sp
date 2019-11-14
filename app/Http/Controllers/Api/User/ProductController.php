@@ -16,15 +16,15 @@ class ProductController extends Controller
     // use AuthenticatesUsers;  
     public function __construct()
     {
-       auth()->shouldUse('api_user');
-	}
+        auth()->shouldUse('api_user');
+    }
 
     public function findProductById(Request $request)
     {
-		// dd($this->middleware('api.auth'));
-		// dd(Auth::guard('userApi')->user());
-		//  if(Auth::guard('userApi')->user()){
-        	$dataProduk = DB::table('csc_product_single')
+        // dd($this->middleware('api.auth'));
+        // dd(Auth::guard('userApi')->user());
+        //  if(Auth::guard('userApi')->user()){
+        $dataProduk = DB::table('csc_product_single')
             ->where('id_itdp_company_user', '=', $request->id_user)
             ->orderBy('product_description_en', 'ASC')
             ->get();
@@ -53,11 +53,19 @@ class ProductController extends Controller
 							->orderBy('csc_product_single.prodname_en','asc')
 							->get();
 		if(count($dataProduk) > 0){
-			$res['message'] = "Success";
+			  $meta = [
+            'code' => 200,
+            'message' => 'Success',
+            'status' => 'Success'
+        ];
 			$res['data'] = $dataProduk;
         	return response($res);
 		}else{
-			$res['message'] = "Failed";
+			$meta = [
+            'code' => 410,
+            'message' => 'Data tidak ditemukam',
+            'status' => 'Success'
+        ];
 			return response($res);
 		}
 	}
@@ -156,36 +164,36 @@ class ProductController extends Controller
 
             $dtawal = DB::table('csc_product_single')->where('id', $request->id_product)->first();
 
-            $destination= 'uploads\Eksportir_Product\Image\\'.$request->id_product;
-            if($request->hasFile('image_1')){ 
+            $destination = 'uploads\Eksportir_Product\Image\\' . $request->id_product;
+            if ($request->hasFile('image_1')) {
                 $file1 = $request->file('image_1');
-                $nama_file1 = time().'_'.$request->prodname_en.'_'.$request->file('image_1')->getClientOriginalName();
+                $nama_file1 = time() . '_' . $request->prodname_en . '_' . $request->file('image_1')->getClientOriginalName();
                 Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
-            }else{
+            } else {
                 $nama_file1 = $dtawal->image_1;
             }
 
-            if($request->hasFile('image_2')){ 
+            if ($request->hasFile('image_2')) {
                 $file2 = $request->file('image_2');
-                $nama_file2 = time().'_'.$request->prodname_en.'_'.$request->file('image_2')->getClientOriginalName();
+                $nama_file2 = time() . '_' . $request->prodname_en . '_' . $request->file('image_2')->getClientOriginalName();
                 Storage::disk('uploads')->putFileAs($destination, $file2, $nama_file2);
-            }else{
+            } else {
                 $nama_file2 = $dtawal->image_2;
             }
 
-            if($request->hasFile('image_3')){ 
+            if ($request->hasFile('image_3')) {
                 $file3 = $request->file('image_3');
-                $nama_file3 = time().'_'.$request->prodname_en.'_'.$request->file('image_3')->getClientOriginalName();
+                $nama_file3 = time() . '_' . $request->prodname_en . '_' . $request->file('image_3')->getClientOriginalName();
                 Storage::disk('uploads')->putFileAs($destination, $file3, $nama_file3);
-            }else{
+            } else {
                 $nama_file3 = $dtawal->image_3;
             }
 
-            if($request->hasFile('image_4')){ 
+            if ($request->hasFile('image_4')) {
                 $file4 = $request->file('image_4');
-                $nama_file4 = time().'_'.$request->prodname_en.'_'.$request->file('image_4')->getClientOriginalName();
+                $nama_file4 = time() . '_' . $request->prodname_en . '_' . $request->file('image_4')->getClientOriginalName();
                 Storage::disk('uploads')->putFileAs($destination, $file4, $nama_file4);
-            }else{
+            } else {
                 $nama_file4 = $dtawal->image_4;
             }
 
@@ -221,50 +229,99 @@ class ProductController extends Controller
                 'product_description_chn' => $request->product_description_chn,
                 'status' => $request->status,
                 'updated_at' => $datenow,
-			]);
-			if($insertRecord){
-					$res['message'] = "Success";
-					return response($res);
-				}else{
-					$res['message'] = "Failed";
-					return response($res);
-				}
-			}else{
-					$res['message'] = "Failed";
-					return response($res);
-			}
-	}
+            ]);
+            if ($insertRecord) {
+                $meta = [
+                    'code' => 200,
+                    'message' => 'Success',
+                    'status' => 'OK'
+                ];
+                $data = '';
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            } else {
+                $meta = [
+                    'code' => 400,
+                    'message' => 'All Data Must Be Filled In',
+                    'status' => 'Failed'
+                ];
+                $data = '';
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            }
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+    }
 
-	public function deleteProduct(Request $request){
-		if($request->id_role != "1" || $request->id_role != "4"){
+    public function deleteProduct(Request $request)
+    {
+        if ($request->id_role != "1" || $request->id_role != "4") {
             $deleteRecord = DB::table('csc_product_single')->where('id', $request->id_product)
                 ->delete();
-            if($deleteRecord){
-					$res['message'] = "Success";
-					return response($res);
-				}else{
-					$res['message'] = "Failed";
-					return response($res);
-				}
-        }else{
-            $res['message'] = "Failed";
-			return response($res);
+            if ($deleteRecord) {
+                $meta = [
+                    'code' => 200,
+                    'message' => 'Success',
+                    'status' => 'OK'
+                ];
+                $data = '';
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            } else {
+                $meta = [
+                    'code' => 400,
+                    'message' => 'All Data Must Be Filled In',
+                    'status' => 'Failed'
+                ];
+                $data = '';
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            }
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
         }
-	}
+    }
 
-	public function detailProduk(Request $request)
+    public function detailProduk(Request $request)
     {
         //Product
         $data = DB::table('csc_product_single')
             ->where('id', '=', $request->id)
-			->first();
-		if(count($data) > 0){
-			$res['message'] = "Success";
-			$res['data'] = $data;
-			return response($res);
-		}else{
-			$res['message'] = "Failed";
-			return response($res);
-		}
-	}
+            ->first();
+        if (count($data) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $res['message'] = "Failed";
+            return response($res);
+        }
+    }
 }

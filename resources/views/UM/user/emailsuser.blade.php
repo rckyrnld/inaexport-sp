@@ -1,4 +1,4 @@
-<p>Dear user,</P>
+<p>Dear user, </P>
 <p>please verify your account</p>
 <p>The following username and password are registered at the Ministry of Trade's ITDP :</p>
 <ol>

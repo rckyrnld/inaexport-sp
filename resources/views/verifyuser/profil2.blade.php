@@ -292,7 +292,7 @@
                                                     </select>
                                                     <?php } ?>
                                                 </div>
-
+											
 
                                             </div>
                                             <div id="sh1">
@@ -304,6 +304,9 @@
 
                                     </div>
                                 </div>
+								
+								
+
 
 
                                 <div align="right">
@@ -314,7 +317,91 @@
                                     <?php } ?>
                                     <button class="btn btn-md btn-primary"><i class="fa fa-save"></i> Save</button>
                                 </div>
-                            </form>
+				</form>
+							<hr>	
+		<br><h5><center>List Contact</center></h5><br><br>
+		<a data-toggle="modal" data-target="#myModal"  class="btn btn-success"><font color="white"><i class="fa fa-plus"></i> Add Contact</font></a><br><br>
+		<table id="example1" class="table  table-bordered table-striped">
+			      <thead class="bg-success text-white">
+			          <tr>
+			              <th width="50">No</th>
+			              <th>Name</th>
+			              <th>Email</th>
+			              <th><center>Phone</center></th>
+			              <th><center>Aksi</center></th>
+			             
+			          </tr>
+					</thead>
+					<tbody>
+					<?php 
+					$qr = DB::select("select * from itdp_contact_imp where id_user='".$idb."'");
+					$nb = 1;
+					foreach($qr as $rq){
+					?>
+					<tr style="color:white;">
+						<td><?php echo $nb; ?></td>
+						<td><?php echo $rq->name; ?></td>
+						<td><?php echo $rq->email; ?></td>
+						<td><?php echo $rq->phone; ?></td>
+						<td><a class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a></td>
+					</tr>
+					<?php $nb++; } ?>
+					</tbody>
+					  </table>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Add Contact Importir</h6>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">&times;</button>
+         
+        </div>
+		<form class="form-horizontal" method="POST" action="{{ url('simpan_kontak') }}"
+                                  enctype="multipart/form-data">
+                                {{ csrf_field() }}
+		<div class="modal-body">
+		 <div class="form-row">
+                                                <div class="form-group col-sm-1">
+												</div>
+                                                <div class="form-group col-sm-2">
+                                                    <label><b>Name</b></label>
+                                                </div>
+                                                <div class="form-group col-sm-5">
+                                                    <input type="hidden" value="<?php echo $idb; ?>" name="idb" class="form-control">
+                                                    <input type="text" value="" name="name" id="name" class="form-control">
+                                                </div>
+                                            </div>
+			<div class="form-row">	
+												<div class="form-group col-sm-1">
+												</div>
+                                                <div class="form-group col-sm-2">
+                                                    <label><b>Email</b></label>
+                                                </div>
+                                                <div class="form-group col-sm-5">
+                                                    <input type="text" value="" name="email" id="email" class="form-control">
+                                                </div>
+                                            </div>
+			<div class="form-row">
+												<div class="form-group col-sm-1">
+												</div>
+                                                <div class="form-group col-sm-2">
+                                                    <label><b>Phone</b></label>
+                                                </div>
+                                                <div class="form-group col-sm-5">
+                                                    <input type="text" value="" name="phone" id="phone" class="form-control">
+                                                </div>
+                                            </div>
+          
+        </div>
+        <div class="modal-footer">
+		
+          <button type="button" class="btn btn-md btn-danger" data-dismiss="modal">Close</button>
+		  <button class="btn btn-md btn-primary"><i class="fa fa-save"></i> Save</button>
+        </div>
+		</form>
+      </div>
+    </div>
+  </div>
+                            
                             <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
                             <script>
                                 function nv() {
