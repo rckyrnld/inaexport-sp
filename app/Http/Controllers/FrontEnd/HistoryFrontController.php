@@ -315,10 +315,18 @@ class HistoryFrontController extends Controller
 			
             ->addColumn('col7', function ($buy) {
 
-								
-							
-				return '<center><a href="'.url('br_importir_lc/'.$buy->id).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-comments-o text-white"></i> List Chat</a></center>
-				';
+				if($buy->status == 0 || $buy->status == null){
+					return '<center>
+					<a title="Broadcast" onclick="xy('.$buy->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i></font></a>
+					<a title="Detail" href="'.url('br_importir_detail/'.$buy->id).'" class="btn btn-info"><i class="fa fa-pencil"></i></a>
+					</center>';
+				
+				}else if($buy->status == 1 ){
+					return '<center><a title="Detail" href="'.url('br_importir_detail/'.$buy->id).'" class="btn btn-info"><i class="fa fa-comments"></i></a></center>';
+				} else if($buy->status == 4){
+					return '<center><a title="Detail" href="'.url('br_importir_detail/'.$buy->id).'" class="btn btn-info"><i class="fa fa-comments"></i></a></center>';
+				}
+					
                 /*if($pesan->status_a == 1 || $pesan->status_a == 2){ 
 				return '<a href="'.url('profil2/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>
 				<a Onclick="return ConfirmDelete();" href="'.url('hapusimportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="hapus"><i class="fa fa-trash text-white"></i></a>
