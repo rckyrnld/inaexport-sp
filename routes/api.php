@@ -71,6 +71,10 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
 
     //RC
     Route::post('downloadResearch', 'Api\User\ManagementUserController@downloadResearch');
+
+    //inquiry
+    Route::post('getInquiry', 'Api\User\InquiryController@getListinquiry');
+    Route::post('searchInquiry', 'Api\User\InquiryController@searchListinquiry');
 });
 Route::namespace('Api')->group(function () {
     /*Contact Us*/

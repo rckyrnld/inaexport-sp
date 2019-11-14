@@ -20,16 +20,17 @@ class InquiryController extends Controller
         auth()->shouldUse('api_user');
     }
 
-    public function getListinquiry()
+    public function getListinquiry(Request $request)
     {
-        $id_user = Auth::guard('eksmp')->user()->id;
+//        dd($request);
+        $id_user = $request->id_user;
         $user = DB::table('csc_inquiry_br')
             ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
             ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
             ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
             ->orderBy('csc_inquiry_br.created_at', 'DESC')
             ->get();
-        if(count($user) > 0){
+        if (count($user) > 0) {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
@@ -39,8 +40,58 @@ class InquiryController extends Controller
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
-        }else{
-            $res['message'] = "Failed";
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '0';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
+    public function searchListinquiry(Request $request)
+    {
+        $id_user = $request->id_user;
+        $queryaaa = $request->parameternya;
+
+        $user = DB::table('csc_inquiry_br')
+            ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
+            ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
+            ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
+            ->where(function ($query) use ($queryaaa) {
+                $query->where('csc_inquiry_br.subyek_in', 'like', '%' . $queryaaa . '%')
+                    ->orwhere('csc_inquiry_br.subyek_chn', 'like', '%' . $queryaaa . '%')
+                    ->orwhere('csc_inquiry_br.subyek_en', 'like', '%' . $queryaaa . '%')
+                    ->orwhere('csc_inquiry_br.messages_en', 'like', '%' . $queryaaa . '%')
+                    ->orwhere('csc_inquiry_br.messages_in', 'like', '%' . $queryaaa . '%')
+                    ->orwhere('csc_inquiry_br.messages_chn', 'like', '%' . $queryaaa . '%');
+            })
+            ->orderBy('csc_inquiry_br.created_at', 'DESC')
+            ->get();
+
+        if (count($user) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $user;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         }
     }
