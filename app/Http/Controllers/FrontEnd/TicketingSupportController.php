@@ -82,18 +82,16 @@ class TicketingSupportController extends Controller
 
     public function vchat($id)
     {
+        $id_user = Auth::guard('eksmp')->user()->id;
         $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
             ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
             ->where('ts.id', $id)
             ->orderby('cts.messages_send', 'asc')
             ->get();
 
-        $users = TicketingSupportModel::where('id', $id)->first();
+        $ticket = TicketingSupportModel::where('id', $id)->first();
 
-        $pageTitle = "Chat Ticketing Support";
-        $jenis = 'chat';
-
-        return view('ticketingsupport.vchat', compact('jenis', 'pageTitle', 'users', 'messages'));
+        return view('frontend.ticketing.chatting', compact('ticket', 'messages', 'id_user'));
 
     }
 
@@ -106,16 +104,11 @@ class TicketingSupportController extends Controller
             'messages' => $req->messages,
             'messages_send' => date('Y-m-d H:i:s')
         ]);
-        return redirect('ticketing/chatview/' . $req->id);
+        return redirect('/front_end/ticketing_support/chatview/' . $req->id);
     }
 
     public function view($id)
     {
-        // $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
-        //     ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
-        //     ->where('ts.id', $id)
-        //     ->orderby('cts.messages_send', 'asc')
-        //     ->get();
         $ticket = TicketingSupportModel::where('id', $id)->first();
         return view('frontend.ticketing.view', compact('ticket'));
     }
@@ -126,10 +119,10 @@ class TicketingSupportController extends Controller
         $data = TicketingSupportModel::where('id', $id)->delete();
         if ($data) {
             Session::flash('success', 'Success Delete Data');
-            return redirect('/ticketing');
+            return redirect('/front_end/history');
         } else {
             Session::flash('failed', 'Failed Delete Data');
-            return redirect('/ticketing');
+            return redirect('/front_end/history');
         }
     }
 

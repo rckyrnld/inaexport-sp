@@ -194,6 +194,7 @@ class InquiryFrontController extends Controller
             ]);
             
             return view('frontend.inquiry.chatting', compact('inquiry', 'data', 'messages', 'id_user'));
+            // return view('frontend.inquiry.chatting');
         }else{
             return redirect('/front_end');
         }
