@@ -157,6 +157,13 @@ class BRFrontController extends Controller
 	
 	public function br_importir_save(Request $request)
     {
+		$kumpulcat = "";
+		$g = count($request->category);
+		for($a = 0; $a < $g; $a++){
+			$kumpulcat= $kumpulcat.$request->category[$a].",";
+		}
+		$h = explode(",",$kumpulcat);
+		
 		if(empty($request->file('doc'))){
 			$file = "";
 		}else{
@@ -166,10 +173,10 @@ class BRFrontController extends Controller
 		}
 		$insert = DB::select("
 			insert into csc_buying_request (subyek,valid,id_mst_country,city,id_csc_prod_cat,id_csc_prod_cat_level1,id_csc_prod_cat_level2,shipping,spec,files
-			,eo,neo,tp,ntp,by_role,id_pembuat,date) values
-			('".$request->subyek."','".$request->valid."','".$request->country."','".$request->city."','".$request->category."'
-			,'".$request->t2s."','".$request->t3s."','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
-			,'".$request->tp."','".$request->ntp."','3','".Auth::guard('eksmp')->user()->id."','".Date('Y-m-d H:m:s')."')");
+			,eo,neo,tp,ntp,by_role,id_pembuat,date,id_csc_prod) values
+			('".$request->subyek."','".$request->valid."','".$request->country."','".$request->city."','".$h[0]."'
+			,'0','0','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
+			,'".$request->tp."','".$request->ntp."','3','".Auth::guard('eksmp')->user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat."')");
 		
 		return redirect('br_importir');
 	}

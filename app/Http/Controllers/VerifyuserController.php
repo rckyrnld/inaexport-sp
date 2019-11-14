@@ -496,6 +496,14 @@ class VerifyuserController extends Controller
 	
 	}
 	
+	public function simpan_kontak(Request $request)
+    {
+		$insert= DB::select("insert into itdp_contact_imp (name,email,phone,id_user) values
+		('".$request->name."','".$request->email."','".$request->phone."','".$request->idb."')
+		");
+		return redirect('profil2/3/'.$request->idb);
+	}
+	
 	public function simpan_profil2(Request $request)
     {
 		$id_role = $request->id_role;

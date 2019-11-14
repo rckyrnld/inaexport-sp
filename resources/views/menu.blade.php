@@ -38,7 +38,9 @@
              @foreach(Menu::get() as $sub)
              @if($sub->parent == $res->id_menu)
              <li>
-               <a href="{{url($sub->url)}}"><span class="nav-text">{{$sub->menu_name}}</span></a>
+               <a href="{{url($sub->url)}}"><span class="nav-icon">
+                <i class="fa {{$sub->icon}}"></i>
+              </span>{{$sub->menu_name}}</span></a>
              </li>
              @endif
              @endforeach

@@ -100,7 +100,7 @@ body {font-family: Arial;}
 			<?php 
 			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
 			?>
-			<select class="form-control select2" name="category" id="category" onchange="t1()">
+			<select class="form-control select2" multiple name="category[]" id="category" onchange="t1()">
 			<option value="">-- Select Category --</option>
 			<?php foreach($ms1 as $val1){ ?>
 			<option value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
@@ -135,9 +135,47 @@ body {font-family: Arial;}
 		<div class="form-group col-sm-6">
 			<div class="form-row">
 		<div class="col-sm-7"><input type="number" name="eo" id="eo" class="form-control"> </div>
-		<div class="col-sm-5"> <select class="form-control" name="neo" id="neo"><option value="Pieces">Pieces</option></select></div>
+		<div class="col-sm-5"> 
+		<select class="form-control select2" name="neo" id="neo">
+		 
+                  											                    											  <option value="Each">Each</option>
+                  											                    											  <option value="Foot">Foot</option>
+                  											                    											  <option value="Gallons">Gallons</option>
+                  											                    											  <option value="Kilograms">Kilograms</option>
+                  											                    											  <option value="Liters">Liters</option>
+                  											                    											  <option value="Packs">Packs</option>
+                  											                    											  <option value="Pairs">Pairs</option>
+                  											  		                                      <option value="Pieces" selected="selected">Pieces</option>
+		                                                        											  <option value="Reams">Reams</option>
+                  											                    											  <option value="Rods">Rods</option>
+                  											                    											  <option value="Rolls">Rolls</option>
+                  											                    											  <option value="Sets">Sets</option>
+                  											                    											  <option value="Sheets">Sheets</option>
+                  											                    											  <option value="Square Meters">Square Meters</option>
+                  											                    											  <option value="Tons">Tons</option>
+                  											                    											  <option value="Unit">Unit</option>
+                  											                    											  <option value="令">令</option>
+                  											                    											  <option value="件">件</option>
+                  											                    											  <option value="加仑">加仑</option>
+                  											                    											  <option value="包">包</option>
+                  											                    											  <option value="千克">千克</option>
+                  											                    											  <option value="升">升</option>
+                  											                    											  <option value="单位">单位</option>
+                  											                    											  <option value="卷">卷</option>
+                  											                    											  <option value="吨">吨</option>
+                  											                    											  <option value="套">套</option>
+                  											                    											  <option value="对">对</option>
+                  											                    											  <option value="平方米">平方米</option>
+                  											                    											  <option value="张">张</option>
+                  											                    											  <option value="根">根</option>
+                  											                    											  <option value="每个">每个</option>
+                  											                    											  <option value="英尺">英尺</option>
+                  											                    											  <option value="集装箱">集装箱</option>
+		
+		</select></div>
 		</div>
 			
+                                  </select>
 			
 		</div>
 		<div class="form-group col-sm-6">

@@ -81,7 +81,7 @@ class RegistrasiController extends Controller
 		}
 		$insert2 = DB::select("
 			insert into itdp_company_users (id_profil,username,password,email,status,id_role,type) values
-			('".$id1."','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','3','Dalam Negeri')
+			('".$id1."','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','3','Luar Negeri')
 		");
 		$ambilmaxid2 = DB::select("select max(id) as maxid2 from itdp_company_users");
 		foreach($ambilmaxid2 as $rt2){
@@ -120,7 +120,7 @@ class RegistrasiController extends Controller
 
                 });
 			
-			$data2 = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => 'safaririch12@gmail.com'];
+			$data2 = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => 'kementerianperdagangan.max@gmail.com'];
 
                 Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
                     $mail->to($data2['email'], $data2['username']);
@@ -179,7 +179,7 @@ class RegistrasiController extends Controller
                     $mail->subject('Notifikasi Aktifasi Akun');
 
                 });
-			$data2 = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => 'safaririch12@gmail.com'];
+			$data2 = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => 'kementerianperdagangan.max@gmail.com'];
 
                 Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
                     $mail->to($data2['email'], $data2['username']);
@@ -243,16 +243,16 @@ class RegistrasiController extends Controller
 		return redirect('');
 	}
 	
-	public function updatepass1(Request $request)
+	public function updatepass1(Request $request,$id)
     {
-		$update = DB::select("update itdp_company_users set password='".$request->password."' where id='".$request->ida."'");
-		return redirect('');
+		$update = DB::select("update itdp_company_users set password='".bcrypt($request->password)."' where id='".$request->ida."'");
+		return redirect('login');
 	}
 	
-	public function updatepass2(Request $request)
+	public function updatepass2(Request $request,$id)
     {
-		$update = DB::select("update itdp_admin_users set password='".$request->password."' where id='".$request->ida."'");
-		return redirect('');
+		$update = DB::select("update itdp_admin_users set password='".bcrypt($request->password)."' where id='".$request->ida."'");
+		return redirect('login');
 	}
 	public function updatepass(Request $request)
     {
