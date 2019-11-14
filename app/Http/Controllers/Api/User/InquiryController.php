@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -96,65 +97,137 @@ class InquiryController extends Controller
         }
     }
 
-    public function joinTraining(Request $request)
+    public function store(Request $request)
     {
-        $store = DB::table('training_join')->insert([
-            'id_training_admin' => $request->id_training_admin,
-            'id_profil_eks' => $request->id_profil,
-            'date_join' => date('Y-m-d H:i:s'),
-            'status' => 0
-        ]);
+        if ($request->id_role == 3) {
+            $id_user = $request->id_user;
+            $id_product = $request->id_product;
+            $type = 'importir';
+            $datenow = date("Y-m-d H:i:s");
 
-        $notif = DB::table('notif')->insert([
-            'dari_id' => $request->id_profil,
-            'untuk_id' => 1,
-            'keterangan' => '<b>Request To Join Training',
-            'waktu' => date('Y-m-d H:i:s'),
-            'url_terkait' => 'admin/training/view',
-            'status_baca' => 0,
-            'id_terkait' => $request->id_training_admin,
-            'to_role' => 1
-        ]);
-        if (count($store) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = '0';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
+            $dtproduct = DB::table('csc_product_single')->where('id', $id_product)->first();
+            $idn = DB::table('csc_inquiry_br')->max('id');
+            $idnew = $idn + 1;
+
+            $destination = 'uploads\Inquiry\\' . $idnew;
+            if ($request->hasFile('filedo')) {
+                $file1 = $request->file('filedo');
+                $nama_file1 = time() . '_' . $request->subyek_en . '_' . $file1->getClientOriginalName();
+                Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+            }
+
+            //Jenis Perihal
+            $jpen = "";
+            $jpin = "";
+            $jpchn = "";
+            if ($request->kos == "offer to sell") {
+                $jpen = $request->kos;
+                $jpin = "menawarkan untuk menjual";
+                $jpchn = "出售要约";
+            } else if ($request->kos == "offer to buy") {
+                $jpen = $request->kos;
+                $jpin = "menawarkan untuk membeli";
+                $jpchn = "报价购买";
+            } else if ($request->kos == "consultation") {
+                $jpen = $request->kos;
+                $jpin = "konsultasi";
+                $jpchn = "咨询服务";
+            }
+
+            $save = DB::table('csc_inquiry_br')->insert([
+                'id' => $idnew,
+                'id_pembuat' => $id_user,
+                'type' => $type,
+                'id_csc_prod_cat' => $dtproduct->id_csc_product,
+                'id_csc_prod_cat_level1' => $dtproduct->id_csc_product_level1,
+                'id_csc_prod_cat_level2' => $dtproduct->id_csc_product_level2,
+                'jenis_perihal_en' => $jpen,
+                'jenis_perihal_in' => $jpin,
+                'jenis_perihal_chn' => $jpchn,
+                'messages_en' => $request->messages,
+                'messages_in' => $request->messages,
+                'messages_chn' => $request->messages,
+                'subyek_en' => $request->subject,
+                'subyek_in' => $request->subject,
+                'subyek_chn' => $request->subject,
+                'to' => $id_product,
+                'file' => $nama_file1,
+                'status' => 1,
+                'date' => $datenow,
+                'duration' => $request->duration,
+                'created_at' => $datenow,
+            ]);
+
+            if ($save) {
+                $notif = DB::table('notif')->insert([
+                    'dari_nama' => getCompanyNameImportir($id_user),
+                    'dari_id' => $id_user,
+                    'untuk_nama' => getCompanyName($dtproduct->id_itdp_company_user),
+                    'untuk_id' => $dtproduct->id_itdp_company_user,
+                    'keterangan' => 'New Inquiry By ' . getCompanyNameImportir($id_user) . ' with Subyek  "' . $request->subject . '"',
+                    'url_terkait' => 'inquiry',
+                    'status_baca' => 0,
+                    'waktu' => $datenow,
+                    'to_role' => 2,
+                ]);
+
+                //Tinggal Ganti Email1 dengan email kemendag
+                $untuk = DB::table('itdp_company_users')->where('id', $dtproduct->id_itdp_company_user)->first();
+                $data = [
+                    'email' => $untuk->email,
+                    'username' => $untuk->username,
+                    'type' => "eksportir",
+                    'company' => getCompanyName($dtproduct->id_itdp_company_user),
+                    'dari' => "Importer"
+                ];
+
+//                Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data) {
+//                    $mail->to($data['email'], $data['username']);
+//                    $mail->subject('Inquiry Information');
+//                });
+                $meta = [
+                    'code' => 200,
+                    'message' => 'Success',
+                    'status' => 'OK'
+                ];
+                $data = '';
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            }
         } else {
             $meta = [
-                'code' => 204,
-                'message' => 'Data Not Found',
-                'status' => 'No Content'
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
             ];
-            $data = '0';
+            $data = "";
             $res['meta'] = $meta;
             $res['data'] = $data;
-            return response($res);
+            return $res;
         }
+
     }
 
-    public function joinEvent(Request $request)
+    public function getDataeks(Request $request)
     {
-        $datenow = date("Y-m-d H:i:s");
+//        dd($request);
         $id_user = $request->id_user;
-        $event = DB::table('event_company_add')->insert([
-            'id_itdp_profil_eks' => $id_user,
-            'id_event_detail' => $request->id_event,
-            'status' => 1,
-            'waktu' => $datenow
-        ]);
-        if (count($event) > 0) {
+        $importir = DB::table('csc_inquiry_br')
+            ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
+            ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
+            ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
+//            ->where('csc_inquiry_br.status', 1)
+            ->orderBy('csc_inquiry_br.created_at', 'DESC')
+            ->get();
+
+        if (count($importir) > 0) {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = $importir;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -169,43 +242,26 @@ class InquiryController extends Controller
             $res['data'] = $data;
             return response($res);
         }
+
     }
 
-    public function createTicketing(Request $request)
+    public function joined(Request $request)
     {
-        $store = TicketingSupportModel::create([
-            'id_pembuat' => $request->id_profile,
-            'name' => $request->name,
-            'type' => $request->type,
-            'email' => $request->email,
-            'subyek' => $request->subject,
-            'main_messages' => $request->messages,
-            'status' => 1,
-            'created_at' => date('Y-m-d H:i:s')
-        ]);
+        $id_inquiry = $request->id_inquiry;
+        $id_user = $request->id_user;
+        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+        $product = DB::table('csc_product_single')->where('id', $inquiry->to)->where('id_itdp_company_user', $id_user)->first();
 
-        $id_ticketing = $store->id;
+        $path = ($inquiry->file) ? url('uploads/Inquiry/' . $id_inquiry . '/' . $inquiry->file) : '';
+        $product->file = $path;
 
-        //Tinggal Ganti Email1 dengan email kemendag
-        $data = [
-            'email' => $request->email,
-            'email1' => 'yossandiimran02@gmail.com',
-            'username' => $request->name,
-            'main_messages' => $request->messages,
-            'id' => $id_ticketing
-        ];
-
-        Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
-            $mail->to($data['email1'], $data['username']);
-            $mail->subject('Requesting Ticketing Support');
-        });
-        if (count($store) > 0) {
+        if (count($product) > 0) {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = $product;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -215,10 +271,378 @@ class InquiryController extends Controller
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
+
+        }
+    }
+
+    public function accept_chat(Request $request)
+    {
+        $id_inquiry = $request->id_inquiry;
+
+        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
+            'status' => 0,
+        ]);
+
+        if (count($inquiry) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+
+        }
+
+    }
+
+    public function verifikasi_inquiry(Request $request)
+    {
+        $id_inquiry = $request->id_inquiry;
+        $datenow = date('Y-m-d H:i:s');
+        $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+
+        $durasi = 0;
+        if ($data) {
+            if ($data->duration != NULL) {
+                $jn = explode(' ', $data->duration);
+                if ($jn[1] == "week" || $jn[1] == "weeks") {
+                    $durasi = (int)$jn[0] * 7;
+                } else if ($jn[1] == "month" || $jn[1] == "months") {
+                    $durasi = (int)$jn[0] * 30;
+                }
+            }
+        }
+
+        $date = strtotime("+" . $durasi . " days", strtotime($datenow));
+        $duedate = date('Y-m-d H:i:s', $date);
+
+        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
+            'status' => 2,
+            'due_date' => $duedate,
+        ]);
+
+        if (count($inquiry) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+
+        }
+
+    }
+
+    public function masukchattingImp(Request $request)
+    {
+        $id_inquiry = $request->id_inquiry;
+        $id_user = $request->id_user;
+
+        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+        $data = DB::table('csc_product_single')->where('id', $inquiry->to)->first();
+        $idpenerima = $data->id_itdp_company_user;
+        $messages = DB::table('csc_chatting_inquiry')
+            ->where('id_inquiry', $id_inquiry)
+            ->where('type', 'importir')
+            ->orderBy('created_at', 'asc')
+            ->get();
+//        dd($data->id_itdp_company_user);
+        //Read Chat
+        $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id_inquiry)->where('type', 'importir')->where('receive', $id_user)->update([
+            'status' => 1,
+        ]);
+
+        if (count($messages) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $data = array();
+            array_push($data, array(
+                'id_penerima' => $idpenerima,
+                'items' => $messages
+            ));
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+
+        }
+    }
+
+    public function sendChatimp(Request $request)
+    {
+        $datenow = date('Y-m-d H:i:s');
+        $id_inquiry = $request->id_inquiry;
+        $sender = $request->id_user;
+        $receiver = $request->id_penerima;
+        $msg = $request->messages;
+
+        $idm = DB::table('csc_chatting_inquiry')->max('id');
+        $idmax = $idm + 1;
+
+        $save = DB::table('csc_chatting_inquiry')->insert([
+            'id' => $idmax,
+            'id_inquiry' => $id_inquiry,
+            'sender' => $sender,
+            'receive' => $receiver,
+            'type' => 'importir',
+            'messages' => $msg,
+            'status' => 0,
+            'created_at' => $datenow,
+        ]);
+
+        if (count($save) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+
+        }
+    }
+
+    public function fileChat(Request $request)
+    {
+        $datenow = date('Y-m-d H:i:s');
+        $id_inquiry = $request->id_inquiry;
+        $sender = $request->id_user;
+        $receiver = $request->id_penerima;
+
+        $idm = DB::table('csc_chatting_inquiry')->max('id');
+        $idmax = $idm + 1;
+
+        $destination = 'uploads\ChatFileInquiry\\' . $idmax;
+        if ($request->hasFile('upload_file')) {
+            $file1 = $request->file('upload_file');
+            $nama_file1 = time() . '_' . $request->file('upload_file')->getClientOriginalName();
+            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+        }
+
+        $save = DB::table('csc_chatting_inquiry')->insert([
+            'id' => $idmax,
+            'id_inquiry' => $id_inquiry,
+            'sender' => $sender,
+            'receive' => $receiver,
+            'type' => 'importir',
+            'file' => $nama_file1,
+            'status' => 0,
+            'created_at' => $datenow,
+        ]);
+
+        if (count($save) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+
+        }
+
+    }
+
+    public function masukchattingEks(Request $request)
+    {
+        $id_user = $request->id_user;//sender
+        $id_inquiry = $request->id_inquiry;
+        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+        $product = DB::table('csc_product_single')->where('id', $inquiry->to)->where('id_itdp_company_user', $id_user)->first();
+
+        $broadcast = NULL;
+        $messages = DB::table('csc_chatting_inquiry')
+            ->where('id_inquiry', $id_inquiry)
+            ->where('type', $inquiry->type)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+//        dd($inquiry->id_pembuat);
+        $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id_inquiry)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
+
+        //Read Chat
+        $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id_inquiry)->where('type', $inquiry->type)->where('receive', $id_user)->update([
+            'status' => 1,
+        ]);
+
+        if (count($messages) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = array();
+            array_push($data, array(
+                'id_penerima' => $inquiry->id_pembuat,
+                'items' => $messages
+            ));
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+
+        }
+
+    }
+
+    public function sendChatEks(Request $request)
+    {
+        $datenow = date('Y-m-d H:i:s');
+        $id_inquiry = $request->id_inquiry;
+        $sender = $request->id_user;
+        $receiver = $request->id_penerima;
+        $msg = $request->messages;
+        $type = 'importir';
+
+        $idm = DB::table('csc_chatting_inquiry')->max('id');
+        $idmax = $idm + 1;
+
+        $save = DB::table('csc_chatting_inquiry')->insert([
+            'id' => $idmax,
+            'id_inquiry' => $id_inquiry,
+            'sender' => $sender,
+            'receive' => $receiver,
+            'type' => $type,
+            'messages' => $msg,
+            'status' => 0,
+            'created_at' => $datenow,
+        ]);
+        if (count($save) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+
+        }
+    }
+
+    public function dealing(Request $request)
+    {
+        $id_inquiry = $request->id_inquiry;
+        $status = $request->status;
+        $id_user = $request->id_user;
+        if ($status == 1) {
+            $stat = 3;
+        } else {
+            $stat = 4;
+        }
+        $update = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
+            'status' => $stat,
+        ]);
+
+
+        if (count($update) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+
         }
     }
 }
