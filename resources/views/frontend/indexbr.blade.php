@@ -63,10 +63,17 @@
 								?>
 								<tr>
 								<td><?php echo "<b>".strtoupper($ryu->subyek)."</b><br>";
-								$cardata = DB::select("select nama_kategori_en from csc_product where id='".$ryu->id_csc_prod_cat."'");
-				 foreach($cardata as $ct){
-					 echo $ct->nama_kategori_en."<br>";
-				 }
+								
+								$cr = explode(',',$ryu->id_csc_prod);
+				$hitung = count($cr);
+				$semuacat = "";
+				for($a = 0; $a < ($hitung - 1); $a++){
+					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+					$semuacat = $semuacat."- ".$napro."<br>";
+				}
+				echo $semuacat."<br>";
+								
 				 echo "Valid until ".$ryu->valid." days<br>";
 				 echo $ryu->date;
 								?></td>
@@ -300,7 +307,9 @@
 @include('frontend.layouts.footer')
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script type="text/javascript">
+
 	$(document).ready(function() {
+	$('.select2').select2();
     $('#example').DataTable();
 } );
 </script>
@@ -352,9 +361,7 @@ function ketv(){
 		$('#sh2').html('<div class="form-row"><div class="form-group col-sm-4"><label><b>Keterangan Reject</b></label></div><div class="form-group col-sm-8"><textarea class="form-control" id="txtreject" name="txtreject"></textarea></div></div>')
 	}
 }
-$(document).ready(function () {
-        $('.select2').select2();
-});
+
 function openCity(evt, cityName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");

@@ -46,12 +46,15 @@ class BuyingRequestController extends Controller
 				 return $pesan->date;
             })
 			->addColumn('f4', function ($pesan) {
-				 $kat = $pesan->id_csc_prod_cat;
-				 $cardata = DB::select("select nama_kategori_en from csc_product where id='".$kat."'");
-				 foreach($cardata as $ct){
-					 $naka = $ct->nama_kategori_en;
-				 }
-				return $naka;
+				$cr = explode(',',$pesan->id_csc_prod);
+				$hitung = count($cr);
+				$semuacat = "";
+				for($a = 0; $a < ($hitung - 1); $a++){
+					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+					$semuacat = $semuacat."- ".$napro."<br>";
+				}
+				return $semuacat;
             })
 			->addColumn('f6', function ($pesan) {
 				if($pesan->by_role == 4){
@@ -103,12 +106,15 @@ class BuyingRequestController extends Controller
 				 return $pesan->date;
             })
 			->addColumn('f4', function ($pesan) {
-				 $kat = $pesan->id_csc_prod_cat;
-				 $cardata = DB::select("select nama_kategori_en from csc_product where id='".$kat."'");
-				 foreach($cardata as $ct){
-					 $naka = $ct->nama_kategori_en;
-				 }
-				return $naka;
+				 $cr = explode(',',$pesan->id_csc_prod);
+				$hitung = count($cr);
+				$semuacat = "";
+				for($a = 0; $a < ($hitung - 1); $a++){
+					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+					$semuacat = $semuacat."- ".$napro."<br>";
+				}
+				return $semuacat;
             })
 			->addColumn('f6', function ($pesan) {
 				if($pesan->by_role == 4){
@@ -159,12 +165,15 @@ class BuyingRequestController extends Controller
 				 return $pesan->date;
             })
 			->addColumn('f4', function ($pesan) {
-				 $kat = $pesan->id_csc_prod_cat;
-				 $cardata = DB::select("select nama_kategori_en from csc_product where id='".$kat."'");
-				 foreach($cardata as $ct){
-					 $naka = $ct->nama_kategori_en;
-				 }
-				return $naka;
+				$cr = explode(',',$pesan->id_csc_prod);
+				$hitung = count($cr);
+				$semuacat = "";
+				for($a = 0; $a < ($hitung - 1); $a++){
+					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+					$semuacat = $semuacat."- ".$napro."<br>";
+				}
+				return $semuacat;
             })
 			->addColumn('f6', function ($pesan) {
 				if($pesan->by_role == 4){
@@ -234,11 +243,16 @@ class BuyingRequestController extends Controller
 			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join) values
 			('".$id2."','".$a."','".Date('Y-m-d H:m:s')."','".$id4."','".$id3."','".$id5."','".$id6."')");
 	}	
+	public function br_trx($id,$id2)
+    {
+		$pageTitle = "Transaksi Buying Request";
+		return view('buying-request.trx', compact('id','pageTitle','id2'));
+	}	
 	public function br_deal($id,$id2,$id3)
     {
 		$update = DB::select("update csc_buying_request_join set status_join='4' where id='".$id."' ");
 		$update2 = DB::select("update csc_buying_request set status='4', deal='".$id3."' where id='".$id2."' ");
-		return redirect('br_list');
+		return redirect('br_trx/'.$id2.'/'.$id);
 	}	
 	public function br_chat($id)
     {
@@ -291,6 +305,12 @@ class BuyingRequestController extends Controller
 			,'0','0','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
 			,'".$request->tp."','".$request->ntp."','".Auth::user()->id_group."','".Auth::user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat."')");
 		
+		return redirect('br_list');
+	}
+	
+	public function br_save_trx(Request $request)
+    {
+		$update = DB::select("update csc_buying_request set type_tracking='".$request->type_tracking."',no_track='".$request->no_track."' where id='".$request->id1."' ");
 		return redirect('br_list');
 	}
 

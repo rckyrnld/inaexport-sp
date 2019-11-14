@@ -205,10 +205,12 @@ Route::get('/br_join/{id}', 'BuyingRequestController@br_join');
 Route::get('/br_pw_chat/{id}', 'BuyingRequestController@br_pw_chat');
 Route::get('/br_chat/{id}', 'BuyingRequestController@br_chat');
 Route::get('/br_deal/{id}/{id2}/{id3}', 'BuyingRequestController@br_deal');
+Route::get('/br_trx/{id}/{id2}', 'BuyingRequestController@br_trx');
 Route::get('/br_save_join/{id}', 'BuyingRequestController@br_save_join');
 Route::get('/ambilt2/{id}', 'BuyingRequestController@ambilt2');
 Route::get('/ambilt3/{id}', 'BuyingRequestController@ambilt3');
 Route::post('/br_save', 'BuyingRequestController@br_save');
+Route::post('/br_save_trx', 'BuyingRequestController@br_save_trx');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

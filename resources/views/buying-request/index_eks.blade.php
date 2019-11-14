@@ -62,14 +62,25 @@
 									<td><center><?php echo $ruu->subyek; ?></center></td>
 									
 									
-									<td><center>
-									<?php 
+									<td>
+									<?php
+$cr = explode(',',$ruu->id_csc_prod);
+				$hitung = count($cr);
+				$semuacat = "";
+				for($a = 0; $a < ($hitung - 1); $a++){
+					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+					$semuacat = $semuacat."- ".$napro."<br>";
+				}
+				echo $semuacat;
+									/*
 									$ms1 = DB::select("select id,nama_kategori_en from csc_product where id='".$ruu->id_csc_prod_cat."'");
 									foreach($ms1 as $c1){ 
 									echo $c1->nama_kategori_en; 
 									}
+									*/
 									?>
-									</center></td>
+									</td>
 									<td><center><?php echo $ruu->expired_at; ?></center></td>
 									<td><center>
 									<?php if($ruu->status_join == "1"){ echo "Menunggu Verifikasi Importir"; }else if($ruu->status_join == "2"){ echo "Negosiation"; }
