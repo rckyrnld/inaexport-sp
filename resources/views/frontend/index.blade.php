@@ -239,12 +239,8 @@
                     ?>
                     <div class="tab-pane fade show {{$clsnya}}" id="tabke{{$numbe}}" role="tabpanel">
                         <div class="product_carousel product_column5 owl-carousel">
-                            <?php
-
-                            ?>
                             @foreach($product as $p)
                             <?php
-                                $nprod = "prodname_".$lct;
                                 $cat1 = getCategoryName($p->id_csc_product, $lct);
                                 $cat2 = getCategoryName($p->id_csc_product_level1, $lct);
                                 $cat3 = getCategoryName($p->id_csc_product_level2, $lct);
@@ -286,7 +282,7 @@
                             ?>
                                 <div class="single_product">
                                     <div class="product_name">
-                                        <h3><a href="{{url('front_end/product/'.$p->id)}}">{{$p->$nprod}}</a></h3>
+                                        <h3><a href="{{url('front_end/product/'.$p->id)}}">{{getProductAttr($p->id, 'prodname', $lct)}}</a></h3>
                                         <p class="manufacture_product"><a href="#">{{$categorynya}}</a></p>
                                     </div>
                                     <div class="product_thumb">
@@ -296,13 +292,13 @@
                                             <!-- <span class="label_sale">-57%</span> -->
                                         </div>
 
-                                        <div class="action_links">
+                                        <!-- <div class="action_links">
                                             <ul>
                                                 <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box" title="quick view"> <span class="lnr lnr-magnifier"></span></a></li>
                                                 <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="lnr lnr-heart"></span></a></li>
                                                 <li class="compare"><a href="compare.html" title="compare"><span class="lnr lnr-sync"></span></a></li>
                                             </ul>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="product_content">
                                         <div class="product_footer d-flex align-items-center">
@@ -332,6 +328,8 @@
         </div>
     </section>
     <!--product area end-->
+<!-- Plugins JS -->
+<script src="{{asset('front/assets/js/plugins.js')}}"></script>
 @include('frontend.layouts.footer')
 <script type="text/javascript">
     // $(document).ready(function () {

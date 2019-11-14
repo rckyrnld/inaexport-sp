@@ -11,5 +11,6 @@ return [
     "noact" => "没有行动",
     "verified" => "验证",
     "back" => "背部",
-    "search" => "搜索"
+    "search" => "搜索",
+    "submit" => "提交"
 ];

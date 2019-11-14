@@ -18,13 +18,6 @@
         background-color: #DDEFFD; 
         border: none;
     }
-    /*.list-group.panel > .list-group-item {
-      border-bottom-right-radius: 4px;
-      border-bottom-left-radius: 4px
-    }
-    .list-group-submenu {
-      margin-left:20px;
-    }*/
 </style>
 <!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
@@ -33,19 +26,27 @@
                 <div class="col-6">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index.html">home</a></li>
+                            <li><a href="{{url('/front_end')}}">home</a></li>
                             @if($catActive == NULL)
-                            <li>Default</li>
+                            <li><a href="{{url('/front_end/list_product')}}">Default</a></li>
                             @else
-                            <li>{{$catActive}}</li>
+                            <?php echo $catActive; ?>
                             @endif
                         </ul>
                     </div>
                 </div>
+                <?php
+                    if(isset($search)){
+                        $cariprod = $search;
+                    }else{
+                        $cariprod = "";
+                    }
+                ?>
+                <input type="hidden" name="pencarian_nama" id="pencarian_nama" value="{{$cariprod}}">
                 <div class="col-2" style="text-align: right;">
                     <div class="breadcrumb_content">
                         <div class="page_amount">
-                            <p><b>{{count($product)}} Products</b> Found</p>
+                            <p><b>{{$coproduct}} Products</b> Found</p>
                         </div>
                     </div>
                 </div>
@@ -53,9 +54,7 @@
                     <div class="breadcrumb_content">
                         <b>Sort By</b> <select name="orderby" id="short" style="border: none;">
                                 <option value="" selected>Default</option>
-                                <option value="1">Average rating</option>
-                                <option value="2">Popularity</option>
-                                <option value="3">Newness</option>
+                                <option value="3">Newest</option>
                                 <option value="4">Price: low to high</option>
                                 <option value="5">Price: high to low</option>
                                 <option value="6">Product Name: Z</option>
@@ -88,9 +87,6 @@
                                 <input type="text" class="form-control" id="cari_kategori" name="cari_kategori" placeholder="Search Category" style="font-size: 12px;">
                                 <br>
                                 <div class="list-group list-group-flush" id="catlist">
-                                    <?php
-                                        $numb = 1;
-                                    ?>
                                     @foreach($categoryutama as $cu)
                                         <?php
                                             $catprod1 = getCategoryLevel(1, $cu->id, "");
@@ -100,16 +96,15 @@
                                             }
                                         ?>
                                         @if(count($catprod1) == 0)
-                                            <a href="#" class="list-group-item">{{$cu->$nk}}</a>
+                                            <a href="{{url('/front_end/list_product/category/'.$cu->id)}}" class="list-group-item">{{$cu->$nk}}</a>
                                         @else
-                                            <a onclick="openCollapse('{{$numb}}')" href="#menus{{$numb}}" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu"> {{$cu->$nk}} <i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop{{$numb}}"></i></a>
-                                                <div class="collapse" id="menus{{$numb}}">
+                                            <a onclick="openCollapse('{{$cu->id}}')" href="#menus{{$cu->id}}" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu"> {{$cu->$nk}} <i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop{{$cu->id}}"></i></a>
+                                                <div class="collapse" id="menus{{$cu->id}}">
                                                     @foreach($catprod1 as $cat1)
-                                                        <a href="#" class="list-group-item">{{$cat1->$nk}}</a>
+                                                        <a href="{{url('/front_end/list_product/category/'.$cat1->id)}}" class="list-group-item">{{$cat1->$nk}}</a>
                                                     @endforeach
                                                 </div>
                                         @endif
-                                        <?php $numb++; ?>
                                     @endforeach
                                 </div>
                             </div>
@@ -126,7 +121,7 @@
                                 <ul id="manufacturlist">
                                     @foreach($manufacturer as $man)
                                         <li>
-                                            <input type="checkbox">
+                                            <input type="checkbox" name="checkexp" value="{{$man->id}}">
                                             <a href="#">{{$man->company}}({{getCountProduct('company', $man->id)}})</a>
                                             <span class="checkmark"></span>
                                         </li>
@@ -208,25 +203,16 @@
                                     <div class="product_thumb">
                                         <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
                                         <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a>
-                                        <div class="action_links">
+                                        <!-- <div class="action_links">
                                             <ul>
                                                 <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box" title="quick view"> <span class="lnr lnr-magnifier"></span></a></li>
                                                 <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="lnr lnr-heart"></span></a></li>
                                                 <li class="compare"><a href="compare.html" title="compare"><span class="lnr lnr-sync"></span></a></li>
                                             </ul>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="product_content grid_content">
                                         <div class="content_inner">
-                                            <!-- <div class="product_ratings">
-                                                <ul>
-                                                    <li><a href="#"><i class="ion-star"></i></a></li>
-                                                    <li><a href="#"><i class="ion-star"></i></a></li>
-                                                    <li><a href="#"><i class="ion-star"></i></a></li>
-                                                    <li><a href="#"><i class="ion-star"></i></a></li>
-                                                    <li><a href="#"><i class="ion-star"></i></a></li>
-                                                </ul>
-                                            </div> -->
                                             <div class="product_footer d-flex align-items-center">
                                                 <div class="price_box">
                                                     <span class="current_price">
@@ -280,9 +266,10 @@
                             </div>
                         @endforeach
                     </div>
-
-                    <div class="shop_toolbar t_bottom">
-                        <div class="pagination">
+                    <br>
+                    @if($coproduct > 12)
+                    <!-- <div class="shop_toolbar t_bottom"> -->
+                        <div class="pagination" style="float: right;">
                            <!--  <ul>
                                 <li class="current">1</li>
                                 <li><a href="#">2</a></li>
@@ -292,7 +279,8 @@
                             </ul> -->
                             {{ $product->links() }}
                         </div>
-                    </div>
+                    <!-- </div> -->
+                    @endif
                     <!--shop toolbar end-->
                     <!--shop wrapper end-->
                 </div>
@@ -312,7 +300,7 @@
                 data: {name:isi, loc: "{{$lct}}"},
                 success:function(response){
                     $("#catlist").html("");
-                    console.log(response);
+                    // console.log(response);
                     $("#catlist").html(response);
                 }
             });
@@ -326,11 +314,46 @@
                 data: {name:isi},
                 success:function(response){
                     $("#manufacturlist").html("");
-                    console.log(response);
+                    // console.log(response);
                     $("#manufacturlist").html(response);
                 }
             });
         });
+
+        $("#short").on('change', function () {
+            var search = $('#cari_product').val();
+            var lct = $('#locnya').val();
+            var category = $('#cari_catnya').val();
+            var exportir = [];
+            $.each($("input[name='checkexp']:checked"), function(){
+                exportir.push($(this).val());
+            });
+
+            if(search == ""){
+                search = null;
+            }
+
+            if(lct == ""){
+                lct = null;
+            }
+
+            if(category == ""){
+                category = null;
+            }
+
+            if(exportir.length == 0){
+                exportir = null;
+            }
+            
+            // $.ajax({
+            //     url: "{{url('/front_end/list_product')}}",
+            //     type: 'get',
+            //     data: {cari_catnya:category, cari_product: search, locnya: lct, isieks: exportir},
+            //     success:function(response){
+                    
+            //     }
+            // });
+        })
     })
 
     function openCollapse(col) {

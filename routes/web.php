@@ -32,23 +32,39 @@ Route::post('/api-tracking/', 'Api\TrackingController@tracking')->name('api.trac
 
 Route::namespace('FrontEnd')->group(function () {
     /* Created by Meidiyanah */
+    //Transaction
+    Route::get('/front_end/list_transaction', 'TransactionFrontController@index');
+    Route::get('/front_end/transaction_getdata', 'TransactionFrontController@datanya')->name('front.datatables.transaction');
     //Product
     Route::get('/front_end', 'FrontController@index');
     Route::get('/front_end/list_product', 'FrontController@list_product');
     Route::get('/front_end/getCategory', 'FrontController@getCategory')->name('front.product.getCategory');
-    Route::get('/front_end/list_product/category/{id}', 'FrontController@category_product')->name('front.product.category_product');
+    Route::get('/front_end/list_product/category/{id}', 'FrontController@product_category')->name('front.product.product_category');
     Route::get('/front_end/getManufactur', 'FrontController@getManufactur')->name('front.product.getManufactur');
-    Route::get('/front_end/category_product/{id}', 'FrontController@product_category');
     Route::get('/front_end/product/{id}', 'FrontController@view_product');
     //Inquiry Pembeli
     Route::get('/front_end/inquiry_product/{id}', 'InquiryFrontController@create');
     Route::post('front_end/inquiry_act/{id}', 'InquiryFrontController@store');
-    Route::get('/front_end/inquiry_list', 'InquiryFrontController@index');
-    Route::get('/front_end/inquiry_getdata', 'InquiryFrontController@datanya')->name('front.datatables.inquiry');
     Route::get('/front_end/ver_inquiry/{id}', 'InquiryFrontController@verifikasi_inquiry');
     Route::get('/front_end/chat_inquiry/{id}', 'InquiryFrontController@chatting')->name('front.inquiry.chatting');
     Route::post('/front_end/inquiry_product/fileChat', 'InquiryFrontController@fileChat')->name('front.inquiry.fileChat');
     Route::get('/front_end/view_inquiry/{id}', 'InquiryFrontController@view')->name('front.inquiry.view');
+    //Ticketing Support
+    //Eksportir
+    Route::get('/front_end/ticketing_support', 'TicketingSupportController@create')->name('front.ticket.create');
+    Route::post('/front_end/ticketing_support/store', 'TicketingSupportController@store')->name('front.ticket.store');
+    Route::get('/front_end/ticketing_support/chatview/{id}', 'TicketingSupportController@vchat')->name('front.ticket.vchat');
+    Route::post('/front_end/ticketing_support/sendchat', 'TicketingSupportController@sendchat')->name('front.ticket.sendchat');
+    Route::get('/front_end/ticketing_support/view/{id}', 'TicketingSupportController@view')->name('front.ticket.view');
+    Route::get('/front_end/ticketing_support/delete/{id}', 'TicketingSupportController@destroy')->name('front.ticket.delete');
+    //History Transaction
+    Route::get('/front_end/history', 'HistoryFrontController@index');
+    //Ticketing Support
+    Route::get('/front_end/history/ticketing_getdata', 'HistoryFrontController@data_ticketing')->name('front.datatables.ticketing');
+    //Inquiry
+    Route::get('/front_end/history/inquiry_getdata', 'HistoryFrontController@data_inquiry')->name('front.datatables.inquiry');
+    //Buying Request
+    Route::get('/front_end/history/br_getdata', 'HistoryFrontController@data_br')->name('front.datatables.br');
 
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
@@ -56,7 +72,9 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/contact-us', 'FrontController@contact_us');
     Route::post('/contact-us/send', 'FrontController@contact_us_send');
     Route::get('/front_end/service-detail/{id}', 'FrontController@service');
+    Route::get('/profile/getCity/{param}', 'ImporterController@getCity')->name('ajax-city');
     Route::post('/profile/', 'ImporterController@profile')->name('profile');
+    Route::post('/profile/update/', 'ImporterController@update')->name('profile.update');
     Route::get('/front_end/test', function () {
         return view('frontend.contoh.content_products_detail');
     });
@@ -656,15 +674,6 @@ Route::namespace('Inquiry')->group(function () {
 
 //Ticketing Support
 Route::namespace('TicketingSupport')->group(function () {
-    //Eksportir
-    Route::get('/ticketing', 'TicketingSupportController@index')->name('ticket_support.index');
-    Route::get('/ticketing/create', 'TicketingSupportController@create')->name('ticket_support.create');
-    Route::get('/ticketing/getData', 'TicketingSupportController@getData')->name('ticket_support.getData');
-    Route::post('/ticketing/store', 'TicketingSupportController@store')->name('ticket_support.store');
-    Route::get('/ticketing/chatview/{id}', 'TicketingSupportController@vchat')->name('ticket_support.vchat');
-    Route::post('/ticketing/sendchat', 'TicketingSupportController@sendchat')->name('ticket_support.sendchat');
-    Route::get('ticketing/view/{id}', 'TicketingSupportController@view')->name('ticket_support.view');
-    Route::get('ticketing/delete/{id}', 'TicketingSupportController@destroy')->name('ticket_support.delete');
     //Admin
     Route::get('admin/ticketing', 'TicketingSupportControllerAdmin@index')->name('ticket_support.index.admin');
     Route::get('admin/ticketing/getData', 'TicketingSupportControllerAdmin@getData')->name('ticket_support.getData.admin');

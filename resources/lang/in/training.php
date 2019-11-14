@@ -4,5 +4,9 @@ return [
   "lokasi" => "Lokasi",
   "topic" => "Topik",
   "durasi"=> "Durasi",
-  "cari" => "cari"
+  "cari" => "cari",
+  "day" => "Hari",
+  "date" => "Tanggal",
+  "join" => "Gabung",
+  "joined" => "Bergabung"
 ];
