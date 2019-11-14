@@ -189,7 +189,10 @@ class RegistrasiController extends Controller
         return view('auth.waitmail',compact('pageTitle'));
     }
 	
-	public function verifypembeli($id)
+	public function transaksibr()
+    {
+		get
+	}	public function verifypembeli($id)
     {
 		$update = DB::select("update itdp_company_users set agree='1' where id='".$id."'");
 		return redirect('');

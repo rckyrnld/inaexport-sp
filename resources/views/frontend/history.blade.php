@@ -201,20 +201,30 @@
                           <br>
                           <div class="row">
                             <div class="col-lg-12 col-md-12">
-                              <table id="tableticket" class="table table-bordered table-striped" style="width: 100%; text-transform: capitalize;">
+							
+                              <table id="tablebureq" class="table table-bordered table-striped" style="width: 100%; text-transform: capitalize;">
                                 <thead class="text-white" style="background-color: #5fa9f9; color: white;">
                                   <tr>
                                     <th width="5%">
-                                      <center>@lang('inquiry.number')</center>
+                                      <center>No</center>
                                     </th>
-                                    <th width="15%">
-                                      <center>@lang('inquiry.prodname')</center>
+									<th>
+                                      <center>Subyek</center>
                                     </th>
-                                    <th width="15%">
-                                      <center>@lang('frontend.history.validasi')</center>
+                                    <th>
+                                      <center>Category</center>
                                     </th>
-                                    <th width="20%">
-                                      <center>@lang('inquiry.action')</center>
+                                    <th>
+                                      <center>Created at</center>
+                                    </th>
+                                    <th>
+                                      <center>Valid Time</center>
+                                    </th>
+									<th>
+                                      <center>Status</center>
+                                    </th>
+									<th>
+                                      <center>Action</center>
                                     </th>
                                   </tr>
                                 </thead>
@@ -278,6 +288,21 @@
                 {data: 'kos', name: 'kos'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
+            ],
+            fixedColumns: true
+        });
+		$('#tablebureq').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('front.datatables.br') }}",
+            columns: [
+                {data: 'row', name: 'row'},
+                {data: 'col1', name: 'col1'},
+                {data: 'col2', name: 'col2'},
+                {data: 'col3', name: 'col3'},
+                {data: 'col4', name: 'col4'},
+                {data: 'col5', name: 'col5'},
+                {data: 'col7', name: 'col7', orderable: false, searchable: false}
             ],
             fixedColumns: true
         });

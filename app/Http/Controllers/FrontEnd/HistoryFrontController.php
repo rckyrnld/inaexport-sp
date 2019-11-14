@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 use App\Models\MasterCity;
 use App\Models\MasterCountry;
 use App\Models\ChatingTicketingSupportModel;
@@ -264,6 +265,73 @@ class HistoryFrontController extends Controller
                 }
             })
             ->rawColumns(['action'])
+            ->make(true);
+    }
+	
+	public function data_br()
+    {
+        $loc = app()->getLocale();
+        $lct = "";
+        if($loc == "ch"){
+            $lct = "chn";
+        }elseif($loc == "in"){
+            $lct = "in";
+        }else{
+            $lct = "en";
+        }
+        $id_user = Auth::guard('eksmp')->user()->id;
+        $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.* from csc_buying_request a, csc_buying_request_join b where b.id_br = a.id and a.id_pembuat='".$id_user."' order by a.id desc ");
+      
+
+        return DataTables::of($buy)
+            ->addColumn('col1', function ($buy) {
+				 return $buy->subyek;
+            })
+			->addColumn('col2', function ($buy) {
+				$cr = explode(',',$buy->id_csc_prod);
+				$hitung = count($cr);
+				$semuacat = "";
+				for($a = 0; $a < ($hitung - 1); $a++){
+					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+					$semuacat = $semuacat."- ".$napro."<br>";
+				}
+				return $semuacat;
+            })
+			->addColumn('col3', function ($buy) {
+				 return $buy->date;
+            })
+			->addColumn('col4', function ($buy) {
+				 return 'Valid '.$buy->valid." days";
+            })
+			->addColumn('col5', function ($buy) {
+				 if($buy->deal == null || $buy->deal == 0 || empty($buy->deal)){
+					return "Negosiation";
+				 }else{
+					return "Deal";
+				 }
+            })
+			
+			
+            ->addColumn('col7', function ($buy) {
+
+								
+							
+				return '<center><a href="'.url('br_importir_lc/'.$buy->id).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-comments-o text-white"></i> List Chat</a></center>
+				';
+                /*if($pesan->status_a == 1 || $pesan->status_a == 2){ 
+				return '<a href="'.url('profil2/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>
+				<a Onclick="return ConfirmDelete();" href="'.url('hapusimportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="hapus"><i class="fa fa-trash text-white"></i></a>
+				<a href="'.url('resetimportir/'.$pesan->ida).'" class="btn btn-sm btn-warning" title="Reset Password"><i class="fa fa-key text-white"></i></a>
+				';
+				}else{
+				return '<a href="'.url('profil2/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-success"><i class="fa fa-check text-white"></i></a>
+				<a Onclick="return ConfirmDelete();" href="'.url('hapusimportir/'.$pesan->ida).'" class="btn btn-sm btn-danger"><i class="fa fa-trash text-white"></i></a>
+				<a href="'.url('resetimportir/'.$pesan->ida).'" class="btn btn-sm btn-warning"><i class="fa fa-key text-white"></i></a>
+				';
+				} */
+            })
+			->rawColumns(['col7','col4','col5','col2'])
             ->make(true);
     }
 
