@@ -73,4 +73,18 @@ return [
         "number" => "Tracking Number",
         "select" => "Select a Courier",
     ],
+    "listtran" => "List Transaction",
+    "ticket_title" => "Form Ticketing Support",
+    "yourname" => "Your Name",
+    "youremail" => "Your E-mail",
+    "history" => [
+        "title" => "History Transaction",
+        "ticket" => "Ticketing Support",
+        "inquiry" => "Inquiry",
+        "buyr" => "Buying Request",
+        "fullname" => "Full Name",
+        "email" => "E-mail",
+        "compeksp" => "Company Exporter",
+        "validasi" => "Validation",
+    ],
 ];

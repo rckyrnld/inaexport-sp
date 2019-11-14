@@ -1,4 +1,16 @@
 @include('frontend.layouts.header')
+<style type="text/css">
+  .btn-document{
+    background-color: rgba(220, 220, 220, 0.29);
+    color: #326BA2;
+    white-space:normal !important;
+    max-width:auto;
+  }
+
+  .btn-document:hover{
+    color: #326BA2;
+  }
+</style>
 <?php 
     $loc = app()->getLocale(); 
     if($loc == "ch"){
@@ -51,27 +63,8 @@
                     <div class="breadcrumb_content">
                         <ul>
                             <li><a href="{{url('/front_end')}}">@lang('frontend.proddetail.home')</a></li>
-                            @if($data->id_csc_product == NULL)
-                            <li><a href="{{url('/front_end/list_product')}}">@lang('frontend.proddetail.dafault')</a></li>
-                            @else
-                                @if($cat1 == "-")
-                                    <li><a href="{{url('/front_end/list_product')}}">@lang('frontend.proddetail.dafault')</a></li>
-                                @else
-                                    @if($cat2 == "-")
-                                        <li><a href="{{url('/front_end/list_product/category/'.$data->id_csc_product_level1)}}">{{$cat1}}</a></li>
-                                    @else
-                                        @if($cat3 == "-")
-                                            <li><a href="{{url('/front_end/list_product/category/'.$data->id_csc_product)}}">{{$cat1}}</a></li>
-                                            <li><a href="{{url('/front_end/list_product/category/'.$data->id_csc_product_level1)}}">{{$cat2}}</a></li>
-                                        @else
-                                             <li><a href="{{url('/front_end/list_product/category/'.$data->id_csc_product)}}">{{$cat1}}</a></li>
-                                            <li><a href="{{url('/front_end/list_product/category/'.$data->id_csc_product_level1)}}">{{$cat2}}</a></li>
-                                            <li><a href="{{url('/front_end/list_product/category/'.$data->id_csc_product_level2)}}">{{$cat3}}</a></li>
-                                        @endif
-                                    @endif
-                                @endif
-                            @endif
-                            <li>@lang('inquiry.form')</li>
+                            <li><a href="{{url('/front_end/history')}}">@lang('frontend.history.title')</a></li>
+                            <li>@lang('inquiry.detail')</li>
                         </ul>
                     </div>
                 </div>
@@ -81,8 +74,6 @@
     <!--breadcrumbs area end-->
 
     <!--product details start-->
-  <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{url($url)}}" id="formnya">
-  {{ csrf_field() }}
     <div class="product_details mt-20">
         <div class="container">
             <div class="row">
@@ -127,27 +118,19 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="product_d_right">
-                      <!-- <h1>{{getProductAttr($data->id, 'prodname', $lct)}}</h1>
-                        <div class="price_box">
-                            <span class="current_price">
-                                @if(is_numeric($data->price_usd))
-                                    $ {{$data->price_usd}}
-                                @else
-                                    {{$data->price_usd}}
-                                @endif
-                            </span>
-                        </div> -->
+                        <h1><b>{{getProductAttr($data->id, 'prodname', $lct)}}</b></h1>
+                        <hr>
                         <div class="product_desc">
                             <table border="0" cellpadding="10" cellspacing="10" style="width: 100%; font-size: 14px;">
                               <tbody>
-                                <tr>
+                                <!-- <tr>
                                   <td width="30%">@lang('inquiry.prodname')</td>
                                   <td width="60%">
                                     <input type="hidden" name="id_product" id="id_product" value="{{$data->id}}">
                                     <input type="hidden" name="type" id="type" value="importir">
                                     <b>{{getProductAttr($data->id, 'prodname', $lct)}}</b>
                                   </td>
-                                </tr>
+                                </tr> -->
                                 <tr>
                                   <td width="30%">@lang('inquiry.category')</td>
                                   <td width="60%">
@@ -171,12 +154,10 @@
                                 <tr>
                                   <td width="30%">@lang('inquiry.kos')</td>
                                   <td width="60%">
-                                    <select class="form-control" name="kos" id="kos" style="font-size: 14px;">
-                                      <option value="" style="display: none;"> - @lang('inquiry.selectkos') - </option>
-                                      <option value="offer to sell">@lang('inquiry.ots')</option>
-                                      <option value="offer to buy">@lang('inquiry.otb')</option>
-                                      <option value="consultation">@lang('inquiry.consul')</option>
-                                    </select>
+                                    <?php
+                                      $nkos = "jenis_perihal_".$lct;
+                                    ?>
+                                    <span style="text-transform: capitalize;">{{$inquiry->$nkos}}</span>
                                   </td>
                                 </tr>
                                 <tr>
@@ -188,122 +169,65 @@
                                 <tr>
                                   <td width="30%">@lang('inquiry.subject')</td>
                                   <td width="60%">
-                                    <input type="text" name="subject" class="form-control" id="subject" autocomplete="off" style="font-size: 14px;">
+                                    <?php
+                                      $nsub = "subyek_".$lct;
+                                    ?>
+                                    <span style="text-transform: capitalize;">{{$inquiry->$nsub}}</span>
                                   </td>
                                 </tr>
                                 <tr>
                                   <td width="30%" style="vertical-align: top;">@lang('inquiry.msg')</td>
                                   <td width="60%">
-                                    <textarea class="form-control" id="messages" name="messages" style="font-size: 14px;" rows="5"></textarea>
+                                    <?php
+                                      $nmsg = "messages_".$lct;
+                                    ?>
+                                    <span style="text-transform: capitalize;"><?php echo $inquiry->$nmsg; ?></span>
                                   </td>
                                 </tr>
                                 <tr>
                                   <td width="30%">@lang('inquiry.file')</td>
                                   <td width="60%">
-                                    <div class="input-group mb-3">
-                                      <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="filedo" name="filedo" style="font-size: 14px;">
-                                        <label class="custom-file-label" for="inputGroupFile01" id="labfiledo"> - @lang('inquiry.choose') - </label>
-                                      </div>
-                                    </div>
+                                    @if($inquiry->file == "")
+                                        <input type="text" class="btn btn-document" value="Dokumen Kosong" autocomplete="off" readonly style="text-align: center; background: gray;">
+                                    @else
+                                        <a href="{{ url('/').'/uploads/Inquiry/'.$inquiry->id }}/{{ $inquiry->file }}" target="_blank" class="btn btn-document">{{$inquiry->file}}</a>
+                                    @endif
                                   </td>
                                 </tr>
                                 <tr>
                                   <td width="30%">@lang('inquiry.duration')</td>
                                   <td width="60%">
-                                    <select class="form-control" name="duration" id="duration" style="font-size: 14px;">
-                                      <option value="" style="display: none;"> - @lang('inquiry.selectduration') - </option>
-                                      <option value="1 week">@lang('inquiry.v1w')</option>
-                                      <option value="2 weeks">@lang('inquiry.v2w')</option>
-                                      <option value="3 weeks">@lang('inquiry.v3w')</option>
-                                      <option value="1 month">@lang('inquiry.v1m')</option>
-                                      <option value="2 months">@lang('inquiry.v2m')</option>
-                                      <option value="3 months">@lang('inquiry.v3m')</option>
-                                      <option value="4 months">@lang('inquiry.v4m')</option>
-                                      <option value="5 months">@lang('inquiry.v5m')</option>
-                                      <option value="6 months">@lang('inquiry.v6m')</option>
-                                    </select>
+                                    <?php
+                                      if($inquiry->duration != NULL){
+                                        $d = explode(' ', $inquiry->duration);
+                                        if($d[1] == "week" || $d[1] == "weeks"){
+                                          $dw = "w";
+                                        }else if($d[1] == "month" || $d[1] == "months"){
+                                          $dw = "m";
+                                        }
+                                        $durasi = "v".$d[0].$dw;
+                                      }
+                                    ?>
+                                    <span style="text-transform: capitalize;">@lang('inquiry.'.$durasi)</span>
                                   </td>
                                 </tr>
                               </tbody>
                             </table>
                         </div>
-                        <!-- <div class="product_variant quantity">
-                            <label>@lang('frontend.proddetail.minorder')</label>
-                            <input type="text" name="minorder" value="{{$data->minimum_order}}" readonly>
-
-                        </div><br> -->
-                        <div class="">
-                            <center>
-                                <a href="{{url('/front_end/list_product')}}" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;@lang('button-name.cancel')</a>
-                                <button type="button" class="btn btn-primary" id="btnsubmit"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;&nbsp;@lang('button-name.submit')</button>
-                            </center>
+                        <div style="float: right;">
+                          <a href="{{url('/front_end/history')}}" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;@lang('button-name.back')</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-  </form>
-<?php
-  $alertkos = "";
-  $alertsubject = "";
-  $alertmsg = "";
-  $alertfile = "";
-  $alertdurasi = "";
-
-  if($loc == "ch"){
-    $alertkos = "主题种类为空，请填写！";
-    $alertsubject = "主题为空，请填写！";
-    $alertmsg = "留言为空，请填写！";
-    $alertfile = "文件为空，请填写！";
-    $alertdurasi = "期限为空，请填写！";    
-  }else if($loc == "in"){
-    $alertkos = "Jenis Subjek kosong, silahkan isi!";
-    $alertsubject = "Subjek kosong, silahkan isi!";
-    $alertmsg = "Pesan kosong, silahkan isi!";
-    $alertfile = "File kosong, silahkan isi!";
-    $alertdurasi = "Durasi kosong, silahkan isi!";
-  }else{
-    $alertkos = "Kind of Subject is empty, please fill in!";
-    $alertsubject = "Subject is empty, please fill in!";
-    $alertmsg = "Messages is empty, please fill in!";
-    $alertfile = "File is empty, please fill in!";
-    $alertdurasi = "Duration is empty, please fill in!";
-  }
-?>
     <!--product details end-->
 <!-- Plugins JS -->
 <script src="{{asset('front/assets/js/plugins.js')}}"></script>
 @include('frontend.layouts.footer')
 <script type="text/javascript">
     $(document).ready(function(){
-        //Upload File
-        $("#filedo").on('change', function() {
-            if(this.value != ""){
-              var val = this.value;
-              var v = val.split('\\');
-              $('#labfiledo').html(v[v.length - 1]);
-            }else{
-                alert('The file cannot be uploaded');
-            }
-        });
-
-        $('#btnsubmit').on('click', function () {
-          
-          if ($('#kos').val() == "") {
-              alert("<?php echo $alertkos; ?>");
-          }else if ($('#subject').val() == "") {
-              alert("<?php echo $alertsubject; ?>");
-          }else if ($('#messages').val() == "") {
-              alert("<?php echo $alertmsg; ?>");
-          }else if ($('#filedo').val() == "") {
-              alert("<?php echo $alertfile; ?>");
-          }else if ($('#duration').val() == "") {
-              alert("<?php echo $alertdurasi; ?>");
-          }else {
-              $('#formnya').submit();
-          }
-        });
+        //
     });
 </script>

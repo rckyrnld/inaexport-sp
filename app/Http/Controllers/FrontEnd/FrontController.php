@@ -16,7 +16,7 @@ class FrontController extends Controller
         //
     }
 
-    public function index()
+        public function index()
     {
         //Data Product yang paling banyak di br dan inquiry (query masih menggunakan query sementara)
         $product = DB::table('csc_product_single')
@@ -41,7 +41,7 @@ class FrontController extends Controller
         // return view('frontend.index');
     }
 
-    public function list_product()
+    public function list_product(Request $request)
     {
         //List Category Product
         $categoryutama = DB::table('csc_product')
@@ -51,14 +51,70 @@ class FrontController extends Controller
             ->limit(10)
             ->get();
 
+
         //Data Product
-        $product = DB::table('csc_product_single')
-            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-            // ->where('itdp_company_users.status', 1)
-            // ->where('csc_product_single.status', 2)
-            ->orderBy('csc_product_single.prodname_en', 'ASC')
-            ->paginate(12);
+        if($request->cari_catnya == NULL){
+            if($request->cari_product){
+                $search = $request->cari_product;
+                $nprod = "prodname_".$request->locnya;
+                $product = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    // ->where('itdp_company_users.status', 1)
+                    // ->where('csc_product_single.status', 2)
+                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
+                    ->inRandomOrder()
+                    ->paginate(12);
+                $coproduct = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    // ->where('itdp_company_users.status', 1)
+                    // ->where('csc_product_single.status', 2)
+                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
+                    ->inRandomOrder()
+                    ->count();
+            }else{
+                $search = "";
+                $product = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    // ->where('itdp_company_users.status', 1)
+                    // ->where('csc_product_single.status', 2)
+                    ->inRandomOrder()
+                    ->paginate(12);
+                $coproduct = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    // ->where('itdp_company_users.status', 1)
+                    // ->where('csc_product_single.status', 2)
+                    ->inRandomOrder()
+                    ->count();
+            }
+            $catActive = NULL;
+             $get_id_cat = NULL;
+        }else{
+            dd($request->cari_catnya);
+            $catActive = '';
+            if (strstr($request->cari_catnya, '|')) {
+                $pisah = explode('|', $request->cari_catnya);
+                $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$pisah[0]).'">'.getCategoryName($pisah[0], $request->locnya).'</a></li>';
+                $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$pisah[1]).'">'.getCategoryName($pisah[1], $request->locnya).'</a></li>';
+                $get_id_cat = $pisah[0].'|'.$pisah[1];
+            } else {
+                $pisah = $request->cari_catnya;
+                $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$pisah).'">'.getCategoryName($pisah, $request->locnya).'</a></li>';
+                $get_id_cat = $pisah;
+            }
+
+            if($request->cari_product){
+                $search = $request->cari_product;
+            }else{
+                $search = "";
+            }
+
+            $product = $this->getQueryCategory('data', $pisah, $request->locnya, $request->cari_product);
+            $coproduct = $this->getQueryCategory('count', $pisah, $request->locnya, $request->cari_product);
+        }
 
         //Data Eksportir/Manufacturer
         $manufacturer = DB::table('itdp_company_users as a')
@@ -69,11 +125,103 @@ class FrontController extends Controller
             ->limit(10)
             ->get();
 
-        $catActive = NULL;
 
         // return view('frontend.product.all_product', compact('product', 'catprod'));
-        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive'));
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat'));
 
+    }
+
+    function getQueryCategory($jenis, $dt, $lct, $search)
+    {
+        if(is_array($dt)){
+            if($search){
+                $nprod = "prodname_".$lct;
+                $product = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    // ->where('itdp_company_users.status', 1)
+                    // ->where('csc_product_single.status', 2)
+                    ->where('csc_product_single.id_csc_product', $dt[0])
+                    ->where('csc_product_single.id_csc_product_level1', $dt[1])
+                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
+                    ->inRandomOrder()
+                    ->paginate(12);
+                $coproduct = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    // ->where('itdp_company_users.status', 1)
+                    // ->where('csc_product_single.status', 2)
+                    ->where('csc_product_single.id_csc_product', $dt[0])
+                    ->where('csc_product_single.id_csc_product_level1', $dt[1])
+                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
+                    ->inRandomOrder()
+                    ->count();
+            }else{
+                $product = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    // ->where('itdp_company_users.status', 1)
+                    // ->where('csc_product_single.status', 2)
+                    ->where('csc_product_single.id_csc_product', $dt[0])
+                    ->where('csc_product_single.id_csc_product_level1', $dt[1])
+                    ->inRandomOrder()
+                    ->paginate(12);
+                $coproduct = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    // ->where('itdp_company_users.status', 1)
+                    // ->where('csc_product_single.status', 2)
+                    ->where('csc_product_single.id_csc_product', $dt[0])
+                    ->where('csc_product_single.id_csc_product_level1', $dt[1])
+                    ->inRandomOrder()
+                    ->count();
+            }
+        }else{
+            if($search){
+                $nprod = "prodname_".$lct;
+                $product = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    // ->where('itdp_company_users.status', 1)
+                    // ->where('csc_product_single.status', 2)
+                    ->where('csc_product_single.id_csc_product', $dt)
+                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
+                    ->inRandomOrder()
+                    ->paginate(12);
+                $coproduct = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    // ->where('itdp_company_users.status', 1)
+                    // ->where('csc_product_single.status', 2)
+                    ->where('csc_product_single.id_csc_product', $dt)
+                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
+                    ->inRandomOrder()
+                    ->count();
+            }else{
+                $product = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    // ->where('itdp_company_users.status', 1)
+                    // ->where('csc_product_single.status', 2)
+                    ->where('csc_product_single.id_csc_product', $dt)
+                    ->inRandomOrder()
+                    ->paginate(12);
+                $coproduct = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    // ->where('itdp_company_users.status', 1)
+                    // ->where('csc_product_single.status', 2)
+                    ->where('csc_product_single.id_csc_product', $dt)
+                    ->inRandomOrder()
+                    ->count();
+            }
+        }
+
+        if($jenis == "data"){
+            return $product;
+        }else{
+            return $coproduct;
+        }
     }
 
     public function getCategory(Request $request)
@@ -88,7 +236,6 @@ class FrontController extends Controller
             ->limit(10)
             ->get();
 
-        $numb = 1;
         $result = "";
         foreach($categoryutama as $cu){
             $catprod1 = getCategoryLevel(1, $cu->id, "");
@@ -98,19 +245,18 @@ class FrontController extends Controller
             }
 
             if(count($catprod1) == 0){
-                $result .= '<a href="#" class="list-group-item">'.$cu->$nk.'</a>';
+                $result .= '<a href="'.url('/front_end/list_product/category/'.$cu->id).'" class="list-group-item">'.$cu->$nk.'</a>';
             }else{
-                $result .= '<a onclick="openCollapse(\''.$numb.'\')" href="#menus{{$numb}}" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu"> '.$cu->$nk.' <i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop'.$numb.'"></i></a>
-                        <div class="collapse" id="menus'.$numb.'">';
+                $result .= '<a onclick="openCollapse(\''.$cu->id.'\')" href="#menus'.$cu->id.'" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu"> '.$cu->$nk.' <i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop'.$cu->id.'"></i></a>
+                        <div class="collapse" id="menus'.$cu->id.'">';
                 foreach($catprod1 as $cat1){
-                    $result .= '<a href="#" class="list-group-item">'.$cat1->$nk.'</a>';
+                    $result .= '<a href="'.url('/front_end/list_product/category/'.$cat1->id).'" class="list-group-item">'.$cat1->$nk.'</a>';
                 }
                 $result .= '</div>';
             }
-            $numb++;
         }
 
-        return $result;
+        echo $result;
     }
 
     public function getManufactur(Request $request)
@@ -141,8 +287,12 @@ class FrontController extends Controller
         return $result;
     }
 
-    public function category_product($id)
+    public function product_category($id)
     {
+        $lct = app()->getLocale();
+        //Category Product
+        $catdata = DB::table('csc_product')->where('id', $id)->first();
+
         //List Category Product
         $categoryutama = DB::table('csc_product')
             ->where('level_1', 0)
@@ -150,48 +300,72 @@ class FrontController extends Controller
             ->orderBy('nama_kategori_en', 'ASC')
             ->limit(10)
             ->get();
-        // //Data Product
-        $product = DB::table('csc_product_single')
-            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-            ->where('itdp_company_users.status', 1)
-            ->where('csc_product_single.status', 2)
+
+        //Data Eksportir/Manufacturer
+        $manufacturer = DB::table('itdp_company_users as a')
+            ->join('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
+            ->selectRaw('a.*, b.id as idprofil, b.company')
+            ->where('a.id_role', 2)
             ->inRandomOrder()
             ->limit(10)
             ->get();
 
-        // return view('frontend.product.all_product', compact('product', 'catprod'));
-        return view('frontend.product.list_product', compact('categoryutama'));
+        $catActive = '';
+        if($catdata->level_1 == 0 && $catdata->level_2 == 0){
+            $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->id).'">'.getCategoryName($catdata->id, $lct).'</a></li>';
+            $colnya = "id_csc_product";
+            $get_id_cat = $catdata->id;
+        }else if($catdata->level_1 != 0 && $catdata->level_2 == 0){
+            $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->level_1).'">'.getCategoryName($catdata->level_1, $lct).'</a></li>';
+            $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->id).'">'.getCategoryName($catdata->id, $lct).'</a></li>';
+            $colnya = "id_csc_product_level1";
+            $get_id_cat = $catdata->level_1.'|'.$catdata->id;
+        }else if($catdata->level_1 != 0 && $catdata->level_2 != 0){
+            $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->level_2).'">'.getCategoryName($catdata->level_2, $lct).'</a></li>';
+            $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->level_1).'">'.getCategoryName($catdata->level_1, $lct).'</a></li>';
+            $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->id).'">'.getCategoryName($catdata->id, $lct).'</a></li>';
+            $colnya = "id_csc_product_level2";
+            $get_id_cat = $catdata->level_2.'|'.$catdata->level_1.'|'.$catdata->id;
+        }
 
-    }
-
-    public function product_category($id)
-    {
-        //Category Product
-        $catdata = DB::table('csc_product')->where('id', $id)->first();
-        //Product dengan Category yang dipilih
-        $prodcategory = DB::table('csc_product_single')
+        //Data Product
+        $product = DB::table('csc_product_single')
             ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-            ->where('itdp_company_users.status', 1)
-            ->where('csc_product_single.status', 2)
-            ->where('csc_product_single.id_csc_product', $id)
-            ->orderby('csc_product_single.prodname_en', 'asc')
-            ->paginate(20);
-        return view('frontend.product.product_category', compact('catdata', 'prodcategory'));
+            // ->where('itdp_company_users.status', 1)
+            // ->where('csc_product_single.status', 2)
+            ->where('csc_product_single.'.$colnya, $id)
+            ->orderBy('csc_product_single.prodname_en', 'ASC')
+            ->paginate(12);
+        $coproduct = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            // ->where('itdp_company_users.status', 1)
+            // ->where('csc_product_single.status', 2)
+            ->where('csc_product_single.'.$colnya, $id)
+            ->orderBy('csc_product_single.prodname_en', 'ASC')
+            ->count();
+
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat'));
     }
 
     public function view_product($id)
     {
-        //Product
+        //Product Pilih
         $data = DB::table('csc_product_single')
             ->where('id', '=', $id)
             ->first();
-        //Category Per Level
-        $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
-        $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
-        $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
-        return view('frontend.product.view_product', compact('data', 'catprod', 'catprod2', 'catprod3'));
+
+        //Product Lain
+        $product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            // ->where('csc_product_single.status', 2)
+            ->inRandomOrder()
+            ->limit(10)
+            ->get();
+        return view('frontend.product.detail_products', compact('data', 'product'));
     }
 
     public function research_corner(){

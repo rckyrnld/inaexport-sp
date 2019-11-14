@@ -28,6 +28,7 @@ return [
     "ots" => "Offer to Sell",
     "otb" => "Offer to Buy",
     "consul" => "Consultation",
+    "choose" => "Choose file",
     "v1w" => "Valid for 1 week",
     "v2w" => "Valid for 2 weeks",
     "v3w" => "Valid for 3 weeks",
@@ -37,4 +38,10 @@ return [
     "v4m" => "Valid for 4 months",
     "v5m" => "Valid for 5 months",
     "v6m" => "Valid for 6 months",
+    "list" => [
+        "exportir" => "Exporter",
+        "date" => "Date Transaction",
+        "origin" => "Origin",
+        "notrack" => "No Tracking",
+    ],
 ];

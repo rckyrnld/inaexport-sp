@@ -11,5 +11,6 @@ return [
     "noact" => "Tidak Ada Aksi",
     "verified" => "Verifikasi",
     "back" => "Kembali",
-    "search" => "Cari"
+    "search" => "Cari",
+    "submit" => "Kirim"
 ];

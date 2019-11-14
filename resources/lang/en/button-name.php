@@ -11,5 +11,6 @@ return [
     "noact" => "No Action",
     "verified" => "Verification",
     "back" => "Back",
-    "search" => "Search"
+    "search" => "Search",
+    "submit" => "Submit"
 ];

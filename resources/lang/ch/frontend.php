@@ -74,4 +74,18 @@ return [
         "number" => "追踪号码",
         "select" => "选择快递",
     ],
+    "listtran" => "清单交易",
+    "ticket_title" => "表格票务支持",
+    "yourname" => "你的名字",
+    "youremail" => "您的电子邮件",
+    "history" => [
+        "title" => "历史交易",
+        "ticket" => "票务支持",
+        "inquiry" => "查询",
+        "buyr" => "购买要求",
+        "fullname" => "全名",
+        "email" => "电子邮件",
+        "compeksp" => "公司出口商",
+        "validasi" => "验证方式",
+    ],
 ];

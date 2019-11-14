@@ -73,4 +73,18 @@ return [
         "number" => "Nomor Resi",
         "select" => "Pilih Kurir",
     ],
+    "listtran" => "Daftar Transaksi",
+    "ticket_title" => "Formulir Ticketing Support",
+    "yourname" => "Nama Anda",
+    "youremail" => "E-mail Anda",
+    "history" => [
+        "title" => "Riwayat Transaksi",
+        "ticket" => "Ticketing Support",
+        "inquiry" => "Inquiry",
+        "buyr" => "Buying Request",
+        "fullname" => "Nama Lengkap",
+        "email" => "E-mail",
+        "compeksp" => "Perusahaan Eksportir",
+        "validasi" => "Validasi",
+    ],
 ];

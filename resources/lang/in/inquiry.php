@@ -28,6 +28,7 @@ return [
     "ots" => "Menawarkan untuk Menjual",
     "otb" => "Menawarkan untuk Membeli",
     "consul" => "Konsultasi",
+    "choose" => "Pilih File",
     "v1w" => "Berlaku selama 1 minggu",
     "v2w" => "Berlaku selama 2 minggu",
     "v3w" => "Berlaku selama 3 minggu",
@@ -37,4 +38,10 @@ return [
     "v4m" => "Berlaku selama 4 bulan",
     "v5m" => "Berlaku selama 5 bulan",
     "v6m" => "Berlaku selama 6 bulan",
+    "list" => [
+        "exportir" => "Eksportir",
+        "date" => "Tanggal Transaksi",
+        "origin" => "Origin",
+        "notrack" => "No Resi",
+    ],
 ];
