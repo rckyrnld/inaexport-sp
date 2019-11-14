@@ -4,5 +4,9 @@ return [
     "lokasi" => "位置",
     "topic" => "话题",
     "durasi"=> "持续时间",
-    "cari" => "寻找..."
+    "cari" => "寻找...",
+	"day" => "天",
+	"date" => "日期",
+	"join" => "加入",
+	"joined" => "已加入"
 ];

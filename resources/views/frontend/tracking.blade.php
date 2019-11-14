@@ -12,7 +12,7 @@ $loc = app()->getLocale();
     <div class="breadcrumbs_area">
         <div class="container">
             <div class="row">
-                <div class="col-12">
+                <div class="col-lg-12 col-md-12">
                     <div class="breadcrumb_content">
                         <ul>
                             <li><a href="index.html">@lang("frontend.proddetail.home")</a></li>
@@ -29,7 +29,7 @@ $loc = app()->getLocale();
 <div id="error_message" class="product_d_info" style="background-color: #dcecf5; margin-bottom: 0px; display: none;">
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-12 col-md-12">
                 <center>
                     <h3><b><span style="color: #7f7f7f;"><div id="status_error"></div></span></b></h3>
                 </center>
@@ -43,9 +43,9 @@ $loc = app()->getLocale();
 <div class="product_d_info" style="background-color: #ddeffd; margin-bottom: 0px; padding-bottom: 6%;">
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-12 col-md-12">
             <center>
-                <div class="col-md-8">
+                <div class="col-lg-8 col-md-8">
                 <h4><b>@lang("frontend.tracking.goods")</b></h4><br>
                     <table width="100%" border="0" cellpadding="5">
                         <tr>
@@ -84,7 +84,7 @@ $loc = app()->getLocale();
 <div class="product_d_info" style="background-color: #dcecf5; margin-top: 0px;margin-bottom: 0px;">
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-12 col-md-12">
                 <center>
                     <h2><b><span id="color_status_event" style="color: #20af0f;"><div id="status_event"></div></span></b></h2>
                     <h5><div id="time_last_event"></div></h5>
@@ -115,8 +115,8 @@ $loc = app()->getLocale();
 <div id="histori" class="product_d_info" style="background-color: #ddeffd; margin-top: 0px; margin-bottom: 0px;">
     <div class="container">
         <div class="row">
-            <div class="col-1"></div>
-            <div class="col-10">
+            <div class="col-lg-1 col-md-1"></div>
+            <div class="col-lg-10 col-md-10">
                 <h5>
                     <b>Travel Histori</b>
                 </h5>
@@ -132,7 +132,7 @@ $loc = app()->getLocale();
                     <tbody style="background-color: #bedeef; color: black" id="tbody_tracking"></tbody>
                 </table>
             </div>
-            <div class="col-1"></div>
+            <div class="col-lg-1 col-md-1"></div>
         </div>
     </div>
 </div>

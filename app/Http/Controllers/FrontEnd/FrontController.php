@@ -312,8 +312,8 @@ class FrontController extends Controller
     //Front End Training
     public function indexTraining(){
       $pageTitle = 'Training';
-			$data = DB::table('training_admin')->where('status', 1)->paginate(10);
-      return view('training.frontend.index',compact('data','pageTitle'));
+			$data = DB::table('training_admin')->where('status', 1)->paginate(3);
+      return view('frontend.training',compact('data','pageTitle'));
     }
 
     public function indexTrainingSearch(Request $request){

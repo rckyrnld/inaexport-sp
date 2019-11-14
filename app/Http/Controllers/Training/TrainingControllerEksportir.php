@@ -35,34 +35,44 @@ class TrainingControllerEksportir extends Controller
       return view('training.create', compact('page','pageTitle'));
     }
 
-		public function join(Request $req){
-			$id_user = Auth::guard('eksmp')->user()->id;
-			$data = DB::table('itdp_company_users as icu')
-			->selectRaw('ipe.id, ipe.company')
-			->leftJoin('itdp_profil_eks as ipe','icu.id_profil','=','ipe.id')
-			->where('icu.id', $id_user)
-			->first();
+	public function join(Request $req){
+		$id_user = $req->id_user;
+		$id_training = $req->id_training_admin; 
+		$data = DB::table('itdp_company_users as icu')
+		->selectRaw('ipe.id, ipe.company')
+		->leftJoin('itdp_profil_eks as ipe','icu.id_profil','=','ipe.id')
+		->where('icu.id', $id_user)
+		->first();
 
-			$store = DB::table('training_join')->insert([
-        'id_training_admin' => $req->id_training_admin,
+		$cek = DB::table('training_join')->where('id_profil_eks', $data->id)
+			->where('id_training_admin', $id_training)
+			->first();
+		if($cek){
+			$return = 'Failed';
+		} else {
+			$return = 'Success';
+			DB::table('training_join')->insert([
+	        	'id_training_admin' => $id_training,
 				'id_profil_eks' => $data->id,
 				'date_join' => date('Y-m-d H:i:s'),
 				'status' => 0
-      ]);
+	      	]);
 
-			$notif = DB::table('notif')->insert([
-        'dari_id' => Auth::guard('eksmp')->user()->id,
-        'untuk_id' => 1,
-        'keterangan' => '<b>'.$data->company.'</b> Request To Join Training',
-        'waktu' => date('Y-m-d H:i:s'),
+			DB::table('notif')->insert([
+			    'dari_id' => $id_user,
+			    'untuk_id' => 1,
+			    'keterangan' => '<b>'.$data->company.'</b> Request To Join Training',
+			    'waktu' => date('Y-m-d H:i:s'),
 				'url_terkait' => 'admin/training/view',
 				'status_baca' => 0,
-				'id_terkait' => $req->id_training_admin,
-        'to_role' => 1
-      ]);
-
-			return redirect('/training/view');
+				'id_terkait' => $id_training,
+	        	'to_role' => 1
+	      	]);
 		}
+
+
+      	return json_encode($return);
+	}
 
     public function getData(){
 			$id = DB::table('itdp_company_users as icu')
