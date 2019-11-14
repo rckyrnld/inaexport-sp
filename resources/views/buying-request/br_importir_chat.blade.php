@@ -487,7 +487,7 @@
     });
 </script>
 <script>
-$('#formId' ).submit(
+/*$('#formId' ).submit(
     function( e ) {
         $.ajax( {
             url: '{{URL::to("uploadpop")}}',
@@ -502,7 +502,7 @@ $('#formId' ).submit(
         } );
         e.preventDefault();
     } 
-);
+); */
 
 function kirimchat(){
 	var a= $('#inputan').val();

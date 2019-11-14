@@ -322,9 +322,9 @@ class HistoryFrontController extends Controller
 					</center>';
 				
 				}else if($buy->status == 1 ){
-					return '<center><a title="Detail" href="'.url('br_importir_detail/'.$buy->id).'" class="btn btn-info"><i class="fa fa-comments"></i></a></center>';
+					return '<center><a title="Detail" href="'.url('br_importir_lc/'.$buy->id).'" class="btn btn-info"><i class="fa fa-comments"></i></a></center>';
 				} else if($buy->status == 4){
-					return '<center><a title="Detail" href="'.url('br_importir_detail/'.$buy->id).'" class="btn btn-info"><i class="fa fa-comments"></i></a></center>';
+					return '<center><a title="Detail" href="'.url('br_importir_lc/'.$buy->id).'" class="btn btn-info"><i class="fa fa-comments"></i></a></center>';
 				}
 					
                 /*if($pesan->status_a == 1 || $pesan->status_a == 2){ 
