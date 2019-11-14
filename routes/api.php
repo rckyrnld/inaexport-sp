@@ -73,8 +73,27 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     Route::post('downloadResearch', 'Api\User\ManagementUserController@downloadResearch');
 
     //inquiry
+    //imp
     Route::post('getInquiry', 'Api\User\InquiryController@getListinquiry');
     Route::post('searchInquiry', 'Api\User\InquiryController@searchListinquiry');
+    Route::post('simpanInquiryImportir', 'Api\User\InquiryController@store');
+    Route::post('verifikasi_inquiryImportir', 'Api\User\InquiryController@verifikasi_inquiry');
+    Route::post('chatImportir', 'Api\User\InquiryController@masukchattingImp');
+    Route::post('sendchatImportir', 'Api\User\InquiryController@sendChatimp');
+
+
+    Route::post('sendchatFile', 'Api\User\InquiryController@fileChat');
+
+
+    //eks
+    Route::post('getInquiryeks', 'Api\User\InquiryController@getDataeks');
+    Route::post('joinedEks', 'Api\User\InquiryController@joined');
+    Route::post('acceptjoinedEks', 'Api\User\InquiryController@accept_chat');
+    Route::post('chatEksportir', 'Api\User\InquiryController@masukchattingEks');
+    Route::post('sendchatEksportir', 'Api\User\InquiryController@sendChatEks');
+    Route::post('dealingEksportir', 'Api\User\InquiryController@dealing');
+
+
 });
 Route::namespace('Api')->group(function () {
     /*Contact Us*/

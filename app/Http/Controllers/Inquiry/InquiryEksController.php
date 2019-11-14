@@ -38,6 +38,7 @@ class InquiryEksController extends Controller
     {
         if(Auth::guard('eksmp')->user()){
             $id_user = Auth::guard('eksmp')->user()->id;
+//            dd($jenis);
 
             if($jenis == 1){
                 $user = [];
@@ -48,9 +49,11 @@ class InquiryEksController extends Controller
                     ->where('csc_inquiry_br.status', 1)
                     ->orderBy('csc_inquiry_br.created_at', 'DESC')
                     ->get();
+//                dd($importir);
                 foreach ($importir as $key) {
                     array_push($user, $key);
                 }
+//                dd($user);
                 $perwakilan = DB::table('csc_inquiry_br as a')
                     ->join('csc_inquiry_broadcast as b', 'b.id_inquiry', '=', 'a.id')
                     ->selectRaw('a.id, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.status')
