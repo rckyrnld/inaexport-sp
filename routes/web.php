@@ -73,8 +73,9 @@ Route::namespace('FrontEnd')->group(function () {
     Route::post('/contact-us/send', 'FrontController@contact_us_send');
     Route::get('/front_end/service-detail/{id}', 'FrontController@service');
     Route::get('/profile/getCity/{param}', 'ImporterController@getCity')->name('ajax-city');
-    Route::post('/profile/', 'ImporterController@profile')->name('profile');
+    Route::get('/profile/', 'ImporterController@profile')->name('profile');
     Route::post('/profile/update/', 'ImporterController@update')->name('profile.update');
+    Route::post('/profile/contact_update/', 'ImporterController@contact_update')->name('profile.contact_update');
     Route::get('/front_end/test', function () {
         return view('frontend.contoh.content_products_detail');
     });
