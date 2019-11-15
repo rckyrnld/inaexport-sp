@@ -139,6 +139,7 @@
 			<option <?php if($ryu->valid == "5"){ echo "selected"; }?> value="7">Valid within 5 day</option>
 			<option <?php if($ryu->valid == "7"){ echo "selected"; }?> value="7">Valid within 7 day</option>
 			<option <?php if($ryu->valid == "14"){ echo "selected"; }?> value="7">Valid within 2 week</option>
+			<option <?php if($ryu->valid == "30"){ echo "selected"; }?> value="7">Valid within 1 month</option>
 			</select>
 		</div>
 	</div>
@@ -328,7 +329,7 @@
                             </div>
                         </li>
 					<?php }else{ ?>
-						<li class="left clearfix"><span class="chat-img pull-left">
+						<li class="left clearfix" align="left"><span class="chat-img pull-left">
                             <img src="http://placehold.it/50/55C1E7/fff&text=H" alt="User Avatar" class="img-circle" />
                         </span>
                             <div class="chat-body clearfix">
@@ -336,7 +337,7 @@
 									<strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo $r->username_pengirim; ?></b></strong>
 									<small class="glyphicon glyphicon-time"> (<?php echo $r->tanggal; ?>)</small>
                                 </div>
-                                <p>
+                                 <p>
                                     <?php echo $r->pesan; ?>
 									
                                 </p>
@@ -345,6 +346,7 @@
 									<br><a target="_BLANK" href="{{asset('uploads/pop/'.$r->files)}}"><font color="green"><?php echo $r->files; ?></font></a>
 									<?php } ?>
 								</p>
+								
                             </div>
                         </li>
 					<?php } ?>
@@ -436,7 +438,7 @@
 
 <div class="col-sm-12">
 <div align="right">
-<a href="{{ url('br_importir') }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Back</a>
+<a href="{{ url('br_importir_lc/'.$id) }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Back</a>
 
 
 </div>

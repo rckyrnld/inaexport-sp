@@ -124,8 +124,8 @@
 			<option value="3">Valid within 3 day</option>
 			<option value="5">Valid within 5 day</option>
 			<option value="7">Valid within 7 day</option>
-			<option value="14">Valid within 2 weak</option>
-			<option value="30">Valid within 1 mount</option>
+			<option value="14">Valid within 2 week</option>
+			<option value="30">Valid within 1 month</option>
 			</select>
 		</div>
 	</div>
@@ -170,7 +170,7 @@
 		</div>
 		<div class="form-group col-sm-6">
 			<div class="form-row">
-		<div class="col-sm-7"><input style="color:black;" type="number" name="eo" id="eo" class="form-control"> </div>
+		<div class="col-sm-7"><input style="color:black;" type="number" min="1" name="eo" id="eo" class="form-control"> </div>
 		<div class="col-sm-5"> 
 		<select class="form-control select2" name="neo" id="neo"><option value="">@lang("login.forms.by14")</option>
 		 
@@ -217,7 +217,7 @@
 		<div class="form-group col-sm-6">
 				
 			<div class="form-row">
-		<div class="col-sm-7"><input style="color:black;" type="number" value="" name="tp" id="tp" class="form-control" ></div>
+		<div class="col-sm-7"><input style="color:black;" type="number" min="1" value="" name="tp" id="tp" class="form-control" ></div>
 		<div class="col-sm-5"> <select style="color:black;" class="form-control" name="ntp" id="ntp"><option value="">@lang("login.forms.by14")</option><option value="IDR">IDR</option><option value="THB">THB</option><option value="USD">USD</option></select></div>
 		</div>
 		</div>

@@ -87,8 +87,8 @@ body {font-family: Arial;}
 			<option value="3">Valid within 3 day</option>
 			<option value="5">Valid within 5 day</option>
 			<option value="7">Valid within 7 day</option>
-			<option value="14">Valid within 2 weak</option>
-			<option value="30">Valid within 1 mount</option>
+			<option value="14">Valid within 2 week</option>
+			<option value="30">Valid within 1 month</option>
 			</select>
 		</div>
 	</div>
