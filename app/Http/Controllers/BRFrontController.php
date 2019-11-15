@@ -175,8 +175,8 @@ class BRFrontController extends Controller
 		*/
 		$cariprod = DB::select("select * from csc_buying_request where id='".$id."'");
 		foreach($cariprod as $prodcari) { $rrr = $prodcari->id_csc_prod; $zzz = $prodcari->id_pembuat; }
-		$namacom = DB::select("select * from itdp_company_users where id='".$zzz."'");
-		foreach($namacom as $comnama){ $namapembuat = $comnama->username; }
+		$namacom = DB::select("select * from itdp_admin_users where id='".$zzz."'");
+		foreach($namacom as $comnama){ $namapembuat = $comnama->name; }
 		$cr = explode(',',$rrr);
 		$hitung = count($cr);
 		$semuacat = "";
