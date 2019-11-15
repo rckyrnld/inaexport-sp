@@ -40,7 +40,7 @@ class InquiryFrontController extends Controller
                 ->where('to', $id)
                 ->where('status', 3)
                 ->count();
-            return view('frontend.inquiry.create', compact('data', 'url', 'id_user', 'coinquiry'));
+            return view('frontend.inquiry.create_new', compact('data', 'url', 'id_user', 'coinquiry'));
         }else{
             return redirect('/front_end');
         }

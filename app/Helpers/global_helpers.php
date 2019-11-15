@@ -562,3 +562,19 @@ if (! function_exists('getCountData')) {
       return $data;
     }
 }
+
+if (! function_exists('getProductByCategory')) {
+    function getProductByCategory($category){
+      $product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
+            ->where('csc_product_single.id_csc_product', $category)
+            ->inRandomOrder()
+            ->limit(10)
+            ->get();
+
+      return $product;
+    }
+}

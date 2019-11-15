@@ -50,7 +50,15 @@
                             <span class="counters_number">{{getCountData('itdp_company_users')}}</span>
                         </li>
                          <li style="padding-left: 20%;">
-                            <p class="counters_text" style="font-size: 18px;">Exporters</p>
+                            <p class="counters_text" style="font-size: 18px;">
+                                @if($loc == 'ch')
+                                出口商
+                                @elseif($loc == 'in')
+                                Eksportir
+                                @else
+                                Exporters
+                                @endif
+                            </p>
                         </li>
                     </ul>
                 </div>
@@ -62,7 +70,15 @@
                             <span class="counters_number">{{getCountData('event_detail')}}</span>
                         </li>
                         <li style="padding-left: 20%;">
-                            <p class="counters_text" style="font-size: 18px;">Events</p>
+                            <p class="counters_text" style="font-size: 18px;">
+                                @if($loc == 'ch')
+                                事件
+                                @elseif($loc == 'in')
+                                Acara
+                                @else
+                                Events
+                                @endif
+                            </p>
                         </li>
                     </ul>
                 </div>
@@ -74,7 +90,7 @@
                             <span class="counters_number">{{getCountData('csc_product_single')}}</span>
                         </li>
                         <li style="padding-left: 20%;">
-                            <p class="counters_text" style="font-size: 18px;">Products</p>
+                            <p class="counters_text" style="font-size: 18px;">@lang('frontend.home.product')</p>
                         </li>
                     </ul>
                 </div>

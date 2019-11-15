@@ -1537,7 +1537,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .categories_title {
   /* background: #333; */
-  background: rgba(253, 250, 250, 0.5);
+  background: rgb(36, 146, 235);
   padding-left: 49px;
   position: relative;
   cursor: pointer;
@@ -1592,11 +1592,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .categories_menu_toggle {
   padding: 15px 0 9px;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
+  /*border-bottom: 1px solid #ddd;*/
   /* background: #fff; */
-  background-color: rgba(253, 252, 252, 0.5);
+  background-color: rgb(36, 146, 235);
   position: absolute;
   width: 100%;
   top: 100%;
@@ -1609,7 +1607,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     /* background: #fff; */
-    background-color: rgba(253, 252, 252, 1.0);
+    background-color: rgb(36, 146, 235);
     position: absolute;
     width: 100%;
     top: 100%;
@@ -1696,6 +1694,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   display: block;
   cursor: pointer;
   padding: 0 15px;
+  text-decoration: none;
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .categories_menu_toggle > ul > li > a {
@@ -1746,8 +1745,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   left: 100%;
 }
 .categories_menu_toggle > ul > li:hover > a {
-  background: #F0F0F0;
+  background: #fff;
   font-weight: 700;
+  color: #1a70bb;
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .categories_menu_toggle > ul > li:hover > a {
@@ -1842,9 +1842,11 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   text-transform: uppercase;
   display: block;
   margin-bottom: 5px;
+  color: #1a70bb;
 }
 .categories_menu_toggle > ul > li ul.categories_mega_menu > li > a:hover {
   color: #79b5cd;
+  text-decoration: none;
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .categories_menu_toggle > ul > li ul.categories_mega_menu > li.menu_item_children > a {
@@ -1952,6 +1954,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 .categorie_sub_menu li a:hover {
   color: #79b5cd;
+  text-decoration: none;
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .categorie_sub_menu li a {

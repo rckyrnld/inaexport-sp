@@ -1,3 +1,4 @@
+@include('frontend.layouts.header')
 <!--slider area start-->
 <section class="slider_section mb-50">
         <div class="container">
@@ -1178,5 +1179,8 @@
         </div>
     </section>
     <!--product area end-->
+<!-- Plugins JS -->
+<script src="{{asset('front/assets/js/plugins.js')}}"></script>
+@include('frontend.layouts.footer')
 
     

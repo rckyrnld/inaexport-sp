@@ -56,6 +56,7 @@ return [
         "mycart" => "My Cart",
         "popcategory" => "热门类别",
         "allcategory" => "所有类别",
+        "morecategory" => "更多分类",
         "search" => "搜索",
         "cariproduct" => "输入关键字以搜索产品",
     ],

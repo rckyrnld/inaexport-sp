@@ -148,28 +148,28 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-md-6">
                         <div class="logo">
-                            <a href="index.html"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>
+                            <a href="{{url('/front_end')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>
                         </div>
                     </div>
                     <div class="col-lg-10 col-md-6">
                         <div class="middel_right">
                             <div class="search-container">
                                 <!-- Nav pills -->
-                                <ul class="nav nav-pills" role="tablist">
-                                    <li class="nav-item">
+                                <!-- <ul class="nav nav-pills" role="tablist">
+                                    <li class="nav-item"> -->
                                     <a class="nav-link active" data-toggle="pill" href="#products">@lang('frontend.home.product')</a>
-                                    </li>
+                                    <!-- </li>
                                     <li class="nav-item">
                                     <a class="nav-link" data-toggle="pill" href="#suppliers">@lang('frontend.home.supplier')</a>
                                     </li>
                                     <li class="nav-item">
                                     <a class="nav-link" data-toggle="pill" href="#request">@lang('frontend.home.sourcer')</a>
                                     </li>
-                                </ul>
+                                </ul> -->
 
                                 <!-- Tab panes -->
-                                <div class="tab-content">
-                                    <div id="products" class="container tab-pane active">
+                                <!-- <div class="tab-content">
+                                    <div id="products" class="container tab-pane active"> -->
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_product')}}" id="formsprod">
                                             {{ csrf_field() }}
                                             <div class="search_box">
@@ -192,7 +192,7 @@
                                                 <button type="submit">@lang('frontend.home.search')</button>
                                             </div>
                                         </form>
-                                    </div>
+                                    <!-- </div>
                                     <div id="suppliers" class="container tab-pane fade">
                                         <form action="#">
                                             <div class="search_box">
@@ -209,7 +209,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- <form action="#">
                                     <div class="search_box">
                                         <input placeholder="Search entire store here ..." type="text">

@@ -55,6 +55,7 @@ return [
         "mycart" => "My Cart",
         "popcategory" => "Popular Categories",
         "allcategory" => "All Categories",
+        "morecategory" => "More Categories",
         "search" => "Search",
         "cariproduct" => "Enter a keyword to search product",
     ],

@@ -55,6 +55,7 @@ return [
         "mycart" => "My Cart",
         "popcategory" => "Popular Kategori",
         "allcategory" => "Semua Kategori",
+        "morecategory" => "Kategori Lainnya",
         "search" => "Cari",
         "cariproduct" => "Masukkan kata kunci untuk mencari produk",
     ],

@@ -53,6 +53,7 @@
 
     <!--product details start-->
     <form action="{{route('front.ticket.store')}}" method="post">
+      {{ csrf_field() }}
       <div class="product_details mt-20" style="background-color: #ddeffd; margin-bottom: 0px !important; margin-top: 0px; font-size: 14px;">
           <div class="container">
             <br><br>

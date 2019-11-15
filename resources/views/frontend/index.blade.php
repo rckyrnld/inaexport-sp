@@ -1,5 +1,42 @@
 @include('frontend.layouts.header')
 <!--slider area start-->
+<style type="text/css">
+    .row-menu{
+        margin-top: 10%;
+        margin-bottom: 10%;
+    }
+
+    .product_tab_button.nav li{
+      margin: 2% 0 1% 0;
+    }
+
+    .product_tab_button.nav li a{
+      color: black;
+    }
+
+    .product_tab_button.nav li a.active, .product_tab_button.nav li a:hover{
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .for-act{
+        text-decoration: none;
+        opacity: 0.7;
+    }
+
+    .box-cu{
+        width: 90%;
+        background-color: white;
+        /*border: 1px solid silver;*/
+        border-radius: 20px;
+        padding: 3%;
+    }
+
+    .button_form{
+        width: 30%;
+    }
+</style>
 <?php 
     $loc = app()->getLocale(); 
     if($loc == "ch"){
@@ -10,7 +47,8 @@
         $lct = "en";
     }
 ?>
-<section class="slider_section mb-50">
+    <!--menu & category start-->
+    <section class="slider_section mb-50" style="margin-bottom: 0px;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-12">
@@ -29,11 +67,12 @@
                                         }
                                     ?>
                                     @if(count($catprod1) == 0)
-                                        <li><a href="#">{{$cu->$nk}}</a></li>
+                                        <li><a href="{{url('/front_end/list_product/category/'.$cu->id)}}">{{$cu->$nk}}</a></li>
                                     @else
-                                        <li class="menu_item_children categorie_list"><a href="#">{{$cu->$nk}} <i class="fa fa-angle-right"></i></a>
+                                        <li class="menu_item_children categorie_list"><a href="{{url('/front_end/list_product/category/'.$cu->id)}}">{{$cu->$nk}} <i class="fa fa-angle-right"></i></a>
                                             <ul class="categories_mega_menu">
-                                                @foreach($catprod1 as $c1)
+                                                @foreach($catprod1 as $key => $c1)
+                                                  @if($key < 19)
                                                     <?php
                                                         $catprod2 = getCategoryLevel(2, $cu->id, $c1->id);
                                                         $nk = "nama_kategori_".$lct; 
@@ -41,84 +80,127 @@
                                                             $nk = "nama_kategori_en";
                                                         }
                                                     ?>
-                                                    @if(count($catprod2) == 0)
-                                                        <li class="menu_item_children"><a href="#">{{$c1->$nk}}</a></li>
-                                                    @else
-                                                        <li class="menu_item_children"><a href="#">{{$c1->$nk}}</a>
-                                                            <ul class="categorie_sub_menu">
-                                                                @foreach($catprod2 as $c2)
-                                                                <?php
-                                                                    $nk = "nama_kategori_".$lct; 
-                                                                    if($c2->$nk == NULL){
-                                                                        $nk = "nama_kategori_en";
-                                                                    }
-                                                                ?>
-                                                                    <li><a href="#">{{$c2->$nk}}</a></li>
-                                                            @endforeach
-                                                            </ul>
-                                                        </li>
-                                                    @endif
+                                                    <li class="menu_item_children"><a href="{{url('/front_end/list_product/category/'.$c1->id)}}" style="text-transform: capitalize !important;">{{$c1->$nk}}</a></li>
+                                                  @endif
                                                 @endforeach
+                                                @if(count($catprod1) > 19)
+                                                <li class="menu_item_children"><a href="{{url('/front_end/list_product')}}" style="text-transform: capitalize !important;"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;@lang('frontend.home.morecategory')</a></li>
+                                                @endif
                                             </ul>
                                         </li>
                                     @endif
                                 @endforeach
-                                <li id="cat_toggle" class="has-sub"><a href="#"> @lang('frontend.home.allcategory')</a></li>
+                                <li id="cat_toggle"><a href="{{url('/front_end/list_product')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;@lang('frontend.home.morecategory')</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-12">
-                    <div class="slider_area owl-carousel">
-                        <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('front/assets/img/slider/slider0.png')}}">
-                            <div class="slider_content">
-                                <h1>#1 B2B2C</h1>
-                                <h2>Online Marketplace</h2><br><br>
-                                <h2>234.000 wholesale<br>
-                                & retail product online<br><br>
-                                at a quality you can trust</h2><br>
-                                <a class="button-join" href="shop.html">Join Now</a>
+                    <div class="row-menu">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/inquiry.png')}}" alt="" class="img-menu"></a>
                             </div>
-
+                            <div class="col-md-4">
+                                <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/buying_request.png')}}" alt="" class="img-menu"></a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="{{url('/front_end/ticketing_support')}}"><img src="{{asset('front/assets/icon/ticketing.png')}}" alt="" class="img-menu"></a>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a href="{{url('/front_end/event')}}"><img src="{{asset('front/assets/icon/event.png')}}" alt="" class="img-menu"></a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="{{url('/front_end/training')}}"><img src="{{asset('front/assets/icon/training.png')}}" alt="" class="img-menu"></a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="{{url('/front_end/research-corner')}}"><img src="{{asset('front/assets/icon/research_corner.png')}}" alt="" class="img-menu"></a>
+                            </div>
                         </div>
-                        <!-- <div class="single_slider d-flex align-items-center" data-bgimg="assets/img/slider/slider5.jpg">
-                            <div class="slider_content">
-                                <h2>Height - Quality</h2>
-                                <h1>The Parts Of shock Absorbers & Brake Kit</h1>
-                                <a class="button" href="shop.html">shopping now</a>
-                            </div>
-                        </div>
-                        <div class="single_slider d-flex align-items-center" data-bgimg="assets/img/slider/slider6.jpg">
-                            <div class="slider_content">
-                                <h2>Engine Oils</h2>
-                                <h1>Top Quality Oil For Every Vehicle</h1>
-                                <a class="button" href="shop.html">shopping now</a>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
-
     </section>
-    <!--slider area end-->
-
-    <!--product area start-->
-    <section class="product_area mb-50">
+    <!--menu & category end-->
+    
+    <!--buyer & seller start-->
+    <div class="breadcrumbs_area">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="section_title">
-                        <ul class="product_tab_button nav" role="tablist">
+                    <div class="breadcrumb_content">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <center>
+                            <?php
+                                $url = '/login';
+                                if(Auth::guard('eksmp')->user()){
+                                    if(Auth::guard('eksmp')->user()->id_role == 2){
+                                        $url = '/home';
+                                    }else if(Auth::guard('eksmp')->user()->id_role == 3){
+                                        $url = '/front_end';
+                                    }
+                                }
+                            ?>
+                                <a href="{{url($url)}}" class="for-act">
+                                  <img src="{{asset('front/assets/icon/icon_buyer.png')}}" alt="" style="width: 20%;">
+                                  <span style="font-size: 27px; color: #37791C;">
+                                    @if($loc == 'ch')
+                                    给买家
+                                    @elseif($loc == 'in')
+                                    PEMBELI
+                                    @else
+                                    FOR BUYER
+                                    @endif
+                                  </span>
+                                </a>
+                            </center>
+                          </div>
+                          <div class="col-md-6">
+                            <center>
+                                <a href="{{url($url)}}" class="for-act">
+                                  <img src="{{asset('front/assets/icon/icon_seller.png')}}" alt="" style="width: 20%;">
+                                  <span style="font-size: 27px; color: #EA8125;">
+                                    @if($loc == 'ch')
+                                    印尼出口商
+                                    @elseif($loc == 'in')
+                                    EKSPORTIR INDONESIA
+                                    @else
+                                    FOR INDONESIA EXPORTER
+                                    @endif
+                                  </span>
+                                </a>
+                            </center>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--buyer & seller start-->
+
+    <!--category product start-->
+    <section class="product_area mb-50" style="background-color: #ddeffd;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section_title" style="margin-bottom: 0px;">
+                        <ul class="product_tab_button nav" role="tablist" style="background-color: inherit;">
                             <?php
                                 $numb = 1;
                             ?>
-                            @foreach($categoryutama as $cut)
+                            @foreach($categoryutama2 as $cut)
                             <?php
                                 $cls = "";
                                 if($numb == 1){
                                     $cls = "active";
                                 }
+
+                                $imgarray = ['agriculture','apparel','automotive','jewelry','health_beauty','electrics','furniture','industrial_parts','gift_card','food'];
                             ?>
                             <li>
                                 <?php
@@ -140,96 +222,30 @@
                                         $kategorinya = $textkat;
                                     }
                                 ?>
-                                <a class="{{$cls}}" data-toggle="tab" href="#tabke{{$numb}}" role="tab" aria-controls="tabke{{$numb}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$numb}}')">
-                                    <img src="{{asset('front/assets/img/kategori/agriculture.png')}}" alt="">
+                                <a class="{{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" role="tab" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
+                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="">
                                     {{$kategorinya}}
                                 </a>
                             </li>
                             <?php $numb++; ?>
                             @endforeach
-                            <!-- <li>
-                                
-                                    <a data-toggle="tab" href="#wheels" role="tab" aria-controls="wheels" aria-selected="false">
-                                        <img src="{{asset('front/assets/img/kategori/apparel.png')}}" alt="">
-                                        Apparel
-                                    </a>
-                                
-                            </li>
-                            <li>
-                                
-                                    <a data-toggle="tab" href="#turbo" role="tab" aria-controls="turbo" aria-selected="false">
-                                        <img src="{{asset('front/assets/img/kategori/food.png')}}" alt="">
-                                        Food
-                                    </a>
-                                
-                            </li>
-                            <li>
-                                
-                                    <a data-toggle="tab" href="#" role="tab" aria-controls="" aria-selected="false">
-                                        <img src="{{asset('front/assets/img/kategori/furniture.png')}}" alt="">
-                                        Furniture
-                                    </a>
-                                
-                            </li>
-                            <li>
-                                
-                                    <a data-toggle="tab" href="#" role="tab" aria-controls="" aria-selected="false">
-                                        <img src="{{asset('front/assets/img/kategori/jewelry.png')}}" alt="">
-                                        Jewelry
-                                    </a>
-                                
-                            </li>
-                            <li>
-                                
-                                    <a data-toggle="tab" href="#" role="tab" aria-controls="" aria-selected="false">
-                                        <img src="{{asset('front/assets/img/kategori/gift_card.png')}}" alt="">
-                                        Gift & Card
-                                    </a>
-                                
-                            </li>
-                            <li>
-                                
-                                    <a data-toggle="tab" href="#" role="tab" aria-controls="" aria-selected="false">
-                                        <img src="{{asset('front/assets/img/kategori/health_beauty.png')}}" alt="">
-                                        Health & Beauty
-                                    </a>
-                                
-                            </li>
-                            <li>
-                                
-                                    <a data-toggle="tab" href="#" role="tab" aria-controls="" aria-selected="false">
-                                        <img src="{{asset('front/assets/img/kategori/industrial_parts.png')}}" alt="">
-                                        Industrial Parts
-                                    </a>
-                                
-                            </li>
-                            <li>
-                                
-                                    <a data-toggle="tab" href="#" role="tab" aria-controls="" aria-selected="false">
-                                        <img src="{{asset('front/assets/img/kategori/electrics.png')}}" alt="">
-                                        Electrics
-                                    </a>
-                                
-                            </li>
-                            <li>
-                                
-                                    <a data-toggle="tab" href="#" role="tab" aria-controls="" aria-selected="false">
-                                        <img src="{{asset('front/assets/img/kategori/automotive.png')}}" alt="">
-                                        Automotive
-                                    </a>
-                                
-                            </li> -->
                         </ul>
                     </div>
 
                 </div>
             </div>
-
+        </div>
+    </section>
+    <!--category product end-->
+<br>
+    <!--product category start-->
+    <section class="product_area mb-50">
+        <div class="container">
             <div class="tab-content" id="tabing-product">
                 <?php
                     $numbe = 1;
                 ?>
-                @foreach($categoryutama as $cuta)
+                @foreach($categoryutama2 as $cuta)
                     <?php
                         if($numbe == 1){
                             $clsnya = "active";
@@ -237,97 +253,203 @@
                             $clsnya = "";
                         }
                     ?>
-                    <div class="tab-pane fade show {{$clsnya}}" id="tabke{{$numbe}}" role="tabpanel">
+                    <div class="tab-pane fade show {{$clsnya}}" id="tabke{{$cuta->id}}" role="tabpanel">
+                        <?php
+                            $product = getProductByCategory($cuta->id);
+                        ?>
+                        @if(count($product) == 0)
+                        <center>
+                            <span style="font-size: 15px;">
+                                @if($loc == "ch")
+                                - 此类别的产品为空 -
+                                @elseif($loc == "in")
+                                - Produk dalam kategori ini kosong - 
+                                @else
+                                - Products in this category are empty -
+                                @endif
+                            </span>
+                        </center>
+                        @else
                         <div class="product_carousel product_column5 owl-carousel">
-                            @foreach($product as $p)
-                            <?php
-                                $cat1 = getCategoryName($p->id_csc_product, $lct);
-                                $cat2 = getCategoryName($p->id_csc_product_level1, $lct);
-                                $cat3 = getCategoryName($p->id_csc_product_level2, $lct);
+                                @foreach($product as $key => $p)
+                                    <?php
+                                        $cat1 = getCategoryName($p->id_csc_product, $lct);
+                                        $cat2 = getCategoryName($p->id_csc_product_level1, $lct);
+                                        $cat3 = getCategoryName($p->id_csc_product_level2, $lct);
 
-                                if($cat3 == "-"){
-                                    if($cat2 == "-"){
-                                        $categorynya = $cat1;
-                                    }else{
-                                        $categorynya = $cat2;
-                                    }
-                                }else{
-                                    $categorynya = $cat3;
-                                }
+                                        if($cat3 == "-"){
+                                            if($cat2 == "-"){
+                                                $categorynya = $cat1;
+                                            }else{
+                                                $categorynya = $cat2;
+                                            }
+                                        }else{
+                                            $categorynya = $cat3;
+                                        }
 
-                                $img1 = $p->image_1;
-                                $img2 = $p->image_2;
+                                        $img1 = $p->image_1;
+                                        $img2 = $p->image_2;
 
-                                if($img1 == NULL){
-                                    $isimg1 = '/image/noimage.jpg';
-                                }else{
-                                    $image1 = 'uploads/Eksportir_Product/Image/'.$p->id.'/'.$img1; 
-                                    if(file_exists($image1)) {
-                                      $isimg1 = '/uploads/Eksportir_Product/Image/'.$p->id.'/'.$img1;
-                                    }else {
-                                      $isimg1 = '/image/noimage.jpg';
-                                    }  
-                                }
+                                        if($img1 == NULL){
+                                            $isimg1 = '/image/noimage.jpg';
+                                        }else{
+                                            $image1 = 'uploads/Eksportir_Product/Image/'.$p->id.'/'.$img1; 
+                                            if(file_exists($image1)) {
+                                              $isimg1 = '/uploads/Eksportir_Product/Image/'.$p->id.'/'.$img1;
+                                            }else {
+                                              $isimg1 = '/image/noimage.jpg';
+                                            }  
+                                        }
 
-                                if($img2 == NULL){
-                                    $isimg2 = '/image/noimage.jpg';
-                                }else{
-                                    $image2 = 'uploads/Eksportir_Product/Image/'.$p->id.'/'.$img2; 
-                                    if(file_exists($image2)) {
-                                      $isimg2 = '/uploads/Eksportir_Product/Image/'.$p->id.'/'.$img2;
-                                    }else {
-                                      $isimg2 = '/image/noimage.jpg';
-                                    }  
-                                }
-                            ?>
-                                <div class="single_product">
-                                    <div class="product_name">
-                                        <h3><a href="{{url('front_end/product/'.$p->id)}}">{{getProductAttr($p->id, 'prodname', $lct)}}</a></h3>
-                                        <p class="manufacture_product"><a href="#">{{$categorynya}}</a></p>
-                                    </div>
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
-                                        <a class="secondary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a>
-                                        <div class="label_product">
-                                            <!-- <span class="label_sale">-57%</span> -->
-                                        </div>
-
-                                        <!-- <div class="action_links">
-                                            <ul>
-                                                <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box" title="quick view"> <span class="lnr lnr-magnifier"></span></a></li>
-                                                <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="lnr lnr-heart"></span></a></li>
-                                                <li class="compare"><a href="compare.html" title="compare"><span class="lnr lnr-sync"></span></a></li>
-                                            </ul>
-                                        </div> -->
-                                    </div>
-                                    <div class="product_content">
-                                        <div class="product_footer d-flex align-items-center">
-                                            <div class="price_box">
-                                                @if(is_numeric($p->price_usd))
-                                                    <span class="regular_price">
-                                                        $ {{$p->price_usd}}
-                                                    </span>
-                                                @else
-                                                    <span class="regular_price" style="font-size: 13px;">
-                                                        {{$p->price_usd}}
-                                                    </span>
-                                                @endif
+                                        if($img2 == NULL){
+                                            $isimg2 = '/image/noimage.jpg';
+                                        }else{
+                                            $image2 = 'uploads/Eksportir_Product/Image/'.$p->id.'/'.$img2; 
+                                            if(file_exists($image2)) {
+                                              $isimg2 = '/uploads/Eksportir_Product/Image/'.$p->id.'/'.$img2;
+                                            }else {
+                                              $isimg2 = '/image/noimage.jpg';
+                                            }  
+                                        }
+                                    ?>
+                                        <div class="single_product" style="height: 350px;">
+                                            <div class="product_name">
+                                                <h3><a href="{{url('front_end/product/'.$p->id)}}">{{getProductAttr($p->id, 'prodname', $lct)}}</a></h3>
+                                                <p class="manufacture_product"><a href="#">{{$categorynya}}</a></p>
                                             </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="add to cart"><span class="lnr lnr-cart"></span></a>
+                                            <div class="product_thumb">
+                                                <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
+                                                <a class="secondary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a>
+                                                <div class="label_product">
+                                                    <!-- <span class="label_sale">-57%</span> -->
+                                                </div>
+                                            </div>
+                                            <div class="product_content">
+                                                <div class="product_footer d-flex align-items-center">
+                                                    <div class="price_box">
+                                                        @if(is_numeric($p->price_usd))
+                                                            <span class="regular_price">
+                                                                $ {{$p->price_usd}}
+                                                            </span>
+                                                        @else
+                                                            <span class="regular_price" style="font-size: 13px;">
+                                                                {{$p->price_usd}}
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                     <?php $numbe++; ?>
                 @endforeach
             </div>
         </div>
     </section>
-    <!--product area end-->
+    <!--product category end-->
+
+    <!--regis start-->
+    <section class="breadcrumbs_area" style="padding-top: 4%;padding-bottom: 4%; margin-bottom: 0px;" data-bgimg="{{asset('front/assets/icon/homepage2.png')}}">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <div class="box-cu">
+                                <form action="{{url('/contact-us/send/')}}" method="POST">
+                                    {{ csrf_field() }}
+                                    <center><h5><b>@lang("frontend.cu-cu")</b></h5></center>
+                                    <br>
+                                   <div class="form-group row">
+                                       <div class="col-md-12">
+                                           <input type="text" id="id" class="form-control integer" name="name" autocomplete="off" placeholder="@lang("frontend.cu-fullname")" style="font-size: 13px;" required>
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                       <div class="col-md-12">
+                                           <input type="email" class="form-control" name="email" autocomplete="off" placeholder="@lang("frontend.cu-email")" style="font-size: 13px;" required>
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                       <div class="col-md-12">
+                                           <input type="text" class="form-control" name="subyek" autocomplete="off" placeholder="@lang("frontend.cu-subyek")" style="font-size: 13px;" required>
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                       <div class="col-md-12">
+                                           <textarea class="form-control" name="message" id="message" placeholder="@lang("frontend.cu-message")" style="height: 150px;font-size: 13px;"></textarea>
+                                       </div>
+                                   </div>
+                              
+                                   <div class="form-group row">
+                                      <div class="col-md-12">
+                                        <div align="left">
+                                          <button class="btn btn-primary button_form" type="submit">@lang("button-name.submit")</button>
+                                        </div>
+                                      </div>
+                                   </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--regis end-->
+
+    <!--regis start-->
+    <section class="product_area mb-50" style="background-color: #ddeffd; padding: 6%; margin-bottom: 0px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                            @if($loc == "in")
+                                <span style="font-size: 20px;">
+                                    Buat akun Anda dan mulailah berbisnis <span style="color: #007bff;">skala internasional</span>
+                                </span><br>
+                            @elseif($loc == "ch")
+                                <span style="font-size: 20px;">
+                                    创建您的帐户并开始从事业务<span style="color: #007bff;">国际规模</span>
+                                </span><br>
+                            @else
+                                <span style="font-size: 20px;">
+                                    Create your account and start doing business on <span style="color: #007bff;">an international scale</span>
+                                </span><br>
+                            @endif
+                            <span style="font-size: 12px; color: #007bff;">+ {{getCountData('itdp_company_users')}}</span>
+                            @if($loc == "in")
+                                <span style="font-size: 12px; color: silver;">pengusaha telah bergabung</span>
+                            @elseif($loc == "ch")
+                                <span style="font-size: 12px; color: silver;">位企业家加入</span>
+                            @else
+                                <span style="font-size: 12px; color: silver;">entrepreneurs have joined</span>
+                            @endif
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                            <center>
+                                <a href="{{url('/pilihregister')}}" class="btn btn-primary" style="width: 120px; font-size: 18px; border-radius: 30px;">@if($loc == 'ch') 寄存器 @elseif($loc == "in") Daftar @else Register @endif</a>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--regis end-->
+
+
 <!-- Plugins JS -->
 <script src="{{asset('front/assets/js/plugins.js')}}"></script>
 @include('frontend.layouts.footer')
