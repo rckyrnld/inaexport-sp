@@ -51,6 +51,19 @@
 
              <div class="form-group row">
               <div class="col-md-1"></div>
+                 <label class="control-label col-md-3">Cover</label>
+                 <div class="col-md-7">
+                    @if($page != 'view')
+                     <input type="file" class="form-control" name="cover" accept="image/*" {{$view}} @if($page == 'create') @endif/>
+                     <input type="hidden" name="lastest_cover" @isset($data) value="{{ $data->cover }}" @endisset>
+                    @else 
+                      <a href="{{ url('/').'/uploads/Research Corner/Cover/'.$data->cover}}" target="_blank" class="btn btn-outline-secondary" style="width: 30%"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Cover</a>
+                    @endif
+                 </div>
+             </div>
+
+             <div class="form-group row">
+              <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Type</label>
                  <div class="col-md-7">
                   @if($page == 'view')
@@ -113,7 +126,7 @@
                  <label class="control-label col-md-3">File</label>
                  <div class="col-md-7">
                     @if($page != 'view')
-                     <input type="file" class="form-control" name="file" autocomplete="off" placeholder="Input" {{$view}} @if($page == 'create') required @endif>
+                     <input type="file" class="form-control" name="file" {{$view}} @if($page == 'create') required @endif>
                      <input type="hidden" name="lastest_file" @isset($data) value="{{ $data->exum }}" @endisset>
                     @else 
                       <a href="{{ url('/').'/uploads/Research Corner/File/'.$data->exum}}" target="_blank" class="btn btn-outline-secondary" style="width: 30%"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Document</a>

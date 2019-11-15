@@ -1,4 +1,4 @@
-@include('frontend.layout.header')
+@include('frontend.layouts.header')
 <?php
   $loc = app()->getLocale();
   if(Auth::user()){
@@ -59,140 +59,140 @@
     #tableexd{
         margin: 1cm;
     }
+    img.rc{
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 10px;
+    }
+    .detail_rc{
+      color: #1a70bb;
+      font-family: 'Arial' !important; 
+    }
 </style>
-<div class="d-flex flex-column flex" style="">
-    <div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
-        <div class="mx-auto">
-            <table border="0" width="100%">
-                <tr>
-                    <td width="30%" style="font-size:13px;padding-left:10px"><img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b></td>
-                    <td width="30%"></td>
-                    <td width="40%" align="right" style="padding-right:10px;">
-                        <a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
-                        <a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
-                        <a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
-                        <a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")</font></a>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="content-body">
-        <div class="py-5 text-center w-100">
-            <!-- <div class="box"> -->
-                <h4><b>@lang("frontend.jdl_event")</b></h4><br>
-                <center>
-                    <h5><b>@lang("frontend.direktorat")</b></h5>
-                    <div class="col-md-3" style="float: right;">
-                        <form action="{{url('/')}}/front_end/event/search" method="POST" role="search">
-                            {{ csrf_field() }}
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="eq"
-                                    placeholder="Search Title..." autocomplete="off"> <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-default">
-                                        <span class="glyphicon glyphicon-search"></span>
-                                        @lang("frontend.cari")
-                                    </button>
-                                </span>
-                            </div>
-                        </form>
-                    </div><br>
-                    <div class="col-md-12" style="margin-left:{{$dmr}}"><br>
-                        <div class="row">
-                            <table id="tableexd"><tbody>
-                            <?php $co=0; ?>
-                            @foreach($e_detail as $ed) 
-                                @if($co < 4)
-                                    @if($co==0)
-                                        <tr>
-                                    @endif
-                                        <td>
-                                            <div class="box" style="width: 7cm;height: 7.7cm;margin: 5px;border-radius: 25px;">
-                                                <div class="thumbnail">
-                                                    <div class="imge">
-                                                        @if($ed->image_1 !== NULL)
-                                                            <img src="{{url('/')}}/uploads/Event/Image/{{$ed->id}}/{{$ed->image_1}}" class="centerZ">
-                                                        @else
-                                                            <img src="{{url('/')}}/image/event/NoPicture.png" alt="No Picture" style="width:55%;height: 50%">
-                                                        @endif
-                                                    </div>
-                                               </div><br>
-                                               <table style="margin-left:28px;" class="tbl_">
-                                                <?php
-                                                  if($loc == "ch"){
-                                                    $title = $ed->event_name_chn;
-                                                    $s_date = date('d F Y', strtotime($ed->start_date));
-                                                    $e_date = date('d F Y', strtotime($ed->end_date));
-                                                    $comod = getEventCom($ed->event_comodity,'ch');
-                                                  }elseif($loc == "in"){
-                                                    $title = $ed->event_name_in;
-                                                    $s_date = getTanggalIndo(date('Y-m-d', strtotime($ed->start_date)));
-                                                    $e_date = getTanggalIndo(date('Y-m-d', strtotime($ed->end_date)));
-                                                    $comod = getEventCom($ed->event_comodity,'in');
-                                                  }else{
-                                                    $title = $ed->event_name_en;
-                                                    $s_date = date('d F Y', strtotime($ed->start_date));
-                                                    $e_date = date('d F Y', strtotime($ed->end_date));
-                                                    $comod = getEventCom($ed->event_comodity, 'en');
-                                                  }
 
-                                                  if($for == "admin" || $for == "eksportir"){
-                                                    $url = url('/').'/front_end/join_event/'.$ed->id;
-                                                  } else {
-                                                    $url = "#";
-                                                  }
-
-                                                  if (Auth::guard('eksmp')->user()) {
-                                                        $id_ = Auth::guard('eksmp')->user()->id;
-                                                        $data = DB::table('event_company_add')->where('id_itdp_profil_eks', $id_)->where('id_event_detail', $ed->id)->first();
-                                                        if ($data) {
-                                                            $statt = $data->status;
-                                                        }else{
-                                                            $statt = null;
-                                                        }
-                                                   }else{
-                                                         $statt = null;
-                                                   }
-
-                                                ?>
-
-                                                    <tr><td>{{$ed->event_name_en}}</td></tr>
-                                                    <tr><td><b>@lang("frontend.t_date") </b></td></tr>
-                                                    <tr><td>{{$s_date}} - {{$e_date}}</td></tr>
-                                                    <tr><td><b>@lang("frontend.t_Comodity")</b></td></tr>
-                                                    <tr><td>{{$comod}}</td></tr>
-                                                    <tr><td style="padding-top: 9px">
-                                                        @if($statt==null)
-                                                            <a href="{{$url}}" onclick="_Join('{{$ed->id}}', event, this)" class="btn btn-primary">@lang("frontend.t_join")</a>
-                                                        @elseif($statt==1)
-                                                            <button class="btn btn-warning">Menunggu Verified</button>
-                                                        @elseif($statt==2)
-                                                            <button class="btn btn-success">Verified</button>
-                                                        @endif
-                                                    </td></tr>
-                                                </table>
-                                            </div>
-                                        </td>
-                                    @if($co==3)
-                                        </tr>
-                                    @endif
-                                    <?php if ($co==3){ $co=0; }else{ $co++; }  ?>
-                                @endif
-                            @endforeach
-                            <tr>
-                                <td colspan="4"><br><br><div style="float: right;">
-                                {{ $e_detail->render("pagination::bootstrap-4") }}</div></td>
-                            </tr>
-                            </tbody></table>
-                        </div><br><br>
+<!--breadcrumbs area start-->
+    <div class="breadcrumbs_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="breadcrumb_content">
+                        <ul>
+                            <li><a href="index.html">@lang("frontend.proddetail.home")</a></li>
+                            <li>Events</li>
+                        </ul>
                     </div>
-                </center>
-                
-            <!-- </div> -->
+                </div>
+            </div>
         </div>
     </div>
+<!--breadcrumbs area end-->
+
+
+<div style="background-color: white; padding-bottom: 3%;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-12">
+        <span style="color: #1a70bb; text-align: center;"><h2>@lang("frontend.jdl_event")</h2></span>
+      </div>
+    </div><br>
+      @foreach($e_detail as $key => $ed)
+      @if($key == 0 || $key == 5 )
+        <div class="form-group row utama" style="height: 100%">
+      @endif
+      
+      @if( $key == 0 || $key == 1 )
+          <div class="col-lg-6 col-md-6 col-12 second" style="height: 100%;">
+      @elseif($key >= 5)
+          <div class="col-lg-3 col-md-3 col-12 second" style="height: 100%;">
+      @endif
+
+      @if( $key > 0 && $key < 5)
+        @if($key == 1)
+          <div class="form-group row" style="height: 100%;">
+        @endif
+          <div class="col-lg-6 col-md-6 col-12" style="height: 50%; padding-top: 10px;">
+      @endif
+        <?php
+          if($loc == "ch"){
+            $title = $ed->event_name_chn;
+            $s_date = date('d F Y', strtotime($ed->start_date));
+            $e_date = date('d F Y', strtotime($ed->end_date));
+            $comod = getEventCom($ed->event_comodity,'ch');
+            $lokasi = $ed->name_chn;
+          }elseif($loc == "in"){
+            $title = $ed->event_name_in;
+            $s_date = getTanggalIndo(date('Y-m-d', strtotime($ed->start_date)));
+            $e_date = getTanggalIndo(date('Y-m-d', strtotime($ed->end_date)));
+            $comod = getEventCom($ed->event_comodity,'in');
+            $lokasi = $ed->name_in;
+          }else{
+            $title = $ed->event_name_en;
+            $s_date = date('d F Y', strtotime($ed->start_date));
+            $e_date = date('d F Y', strtotime($ed->end_date));
+            $comod = getEventCom($ed->event_comodity, 'en');
+            $lokasi = $ed->name_en;
+          }
+
+          if($for == "admin" || $for == "eksportir"){
+            $url = url('/').'/front_end/join_event/'.$ed->id;
+          } else {
+            $url = "#";
+          }
+
+          if (Auth::guard('eksmp')->user()) {
+                $id_ = Auth::guard('eksmp')->user()->id;
+                $data = DB::table('event_company_add')->where('id_itdp_profil_eks', $id_)->where('id_event_detail', $ed->id)->first();
+                if ($data) {
+                    $statt = $data->status;
+                }else{
+                    $statt = null;
+                }
+           }else{
+                 $statt = null;
+           }
+
+          $image = 'uploads/Event/Image/'.$ed->id.'/'.$ed->image_1;
+          if($ed->image_1 != null || $ed->image_1 != ''){
+            if(file_exists($image)) {
+              $image = 'uploads/Event/Image/'.$ed->id.'/'.$ed->image_1;
+            } else {
+              $image = '/image/event/NoPicture.png';
+            }
+          } else {
+            $image = '/image/event/NoPicture.png';
+          }
+
+        ?>
+          <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
+            <img class="rc" src="{{url('/')}}/{{$image}}">
+          </div>
+          <div style="height: 25%; padding-top: 5px;">
+              <span style="font-family: arial; font-weight: 500; font-size: 18px;">{{$title}}</span><br>
+              <span class="detail_rc">
+              <i class="fa fa-calendar-check-o"></i>&nbsp;&nbsp;{{$s_date}} - {{$e_date}}
+              <br>
+              <i class="fa fa-map-marker"></i>&nbsp;&nbsp;&nbsp;{{$lokasi}}
+              </span>
+          </div>
+      </div>
+        @if( $key == 4 || $key == 9)
+          </div>
+          @if($key == 4)
+            </div></div>
+          @endif
+        @endif
+      @endforeach
+    <div class="row">
+      <div class="container">
+        <div class="row justify-content-center">
+          
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-@include('frontend.layout.footer')
+<div style="margin-top: 0px; margin-bottom: 5%; background-color: white;"></div>
+@include('frontend.layouts.footer')
 <script type="text/javascript">
     var login = "{{$for}}";
     csrf_token = '{{ csrf_token() }}';

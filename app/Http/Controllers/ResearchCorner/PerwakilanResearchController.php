@@ -112,6 +112,13 @@ class PerwakilanResearchController extends Controller
         Storage::disk('uploads')->putFileAs($destination, $file, $nama_file);
       } else { $nama_file = $req->lastest_file; }
 
+      $destination= 'uploads\Research Corner\Cover\\';
+      if($req->hasFile('cover')){ 
+        $cover = $req->file('cover');
+        $nama_image = time().'_Cover '.$req->title_en.'_'.$req->file('cover')->getClientOriginalName();
+        Storage::disk('uploads')->putFileAs($destination, $cover, $nama_image);
+      } else { $nama_image = $req->lastest_cover; }
+
       if($param == 'Create'){
         $data = DB::table('csc_research_corner')->insert([
           'id' => $id,
@@ -122,6 +129,8 @@ class PerwakilanResearchController extends Controller
           'id_mst_hscodes' => $req->code,
           'publish_date' => $req->date,
           'exum' => $nama_file,
+          'cover' => $nama_image,
+          'download' => 0,
           'created_by' => $id_user
         ]);
       } else {
@@ -136,6 +145,7 @@ class PerwakilanResearchController extends Controller
           'id_mst_hscodes' => $req->code,
           'publish_date' => $req->date,
           'exum' => $nama_file,
+          'cover' => $nama_image,
           'created_by' => $id_user
         ]);
       }

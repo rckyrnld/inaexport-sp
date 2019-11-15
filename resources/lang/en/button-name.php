@@ -12,5 +12,6 @@ return [
     "verified" => "Verification",
     "back" => "Back",
     "search" => "Search",
-    "submit" => "Submit"
+    "submit" => "Submit",
+    "donlod" => "Download File"
 ];

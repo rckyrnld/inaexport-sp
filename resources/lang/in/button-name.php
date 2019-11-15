@@ -12,5 +12,6 @@ return [
     "verified" => "Verifikasi",
     "back" => "Kembali",
     "search" => "Cari",
-    "submit" => "Kirim"
+    "submit" => "Kirim",
+    "donlod" => "Unduh File"
 ];

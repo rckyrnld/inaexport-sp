@@ -62,7 +62,7 @@
 </style>
 <div class="container">
   <div class="row justify-content-center" style="padding-top: 4%;">
-    <div class="col-10">
+    <div class="col-lg-10 col-md-10">
       <img src="{{asset('front/assets/img/banner list training.png')}}" width="100%">
     </div>
   </div>  
@@ -175,6 +175,7 @@
               <div class="container">
                 <div class="row justify-content-center">
                   {{ $data->render("pagination::bootstrap-4") }}
+                </div>
               </div>
             </div>
         </div>
@@ -196,19 +197,24 @@
     var _token = $('meta[name=csrf-token]').attr('content');
 
     if(login == 'eksportir'){
-      $.ajax({
-          url: "{{route('training.join')}}",
-          type: 'post',
-          data: { _token : _token, id_training_admin:id, id_user:id_user},
-          dataType: 'json',
-          success: function(data) {
-            if(data == 'Success'){
-              window.location = "{{url('/training/view')}}";
-            } else {
-              location.reload();
+      var result = confirm("Are You Sure?"); 
+      if (result == true) { 
+        $.ajax({
+            url: "{{route('training.join')}}",
+            type: 'post',
+            data: { _token : _token, id_training_admin:id, id_user:id_user},
+            dataType: 'json',
+            success: function(data) {
+              if(data == 'Success'){
+                window.location = "{{url('/training/view')}}";
+              } else {
+                location.reload();
+              }
             }
-          }
-      });
+        });
+      } else { 
+        return false; 
+      } 
     } else {
       alert("{{$message}}");
     }

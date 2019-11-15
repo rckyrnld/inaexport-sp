@@ -374,10 +374,14 @@ class FrontController extends Controller
             ->orderby('a.created_at', 'desc')
             ->distinct('a.id_research_corner', 'a.created_at')
             ->select('b.*', 'a.id_research_corner', 'a.created_at')
-            ->limit(10)
+            ->limit(9)
             ->get();
 
-        return view('frontend.research-corner', compact('research'));
+        // $json = json_decode($research->toJson(), true);
+        // $page = $json["current_page"];
+        // $item_page = $json["data"];
+        // dd($research);
+        return view('frontend.research-corner', compact('research', 'page', 'item_page'));
     }
 
     public function tracking(){
@@ -458,7 +462,7 @@ class FrontController extends Controller
     }
 
     public function Event(){
-        $e_detail = DB::table('event_detail')->where('status_en', 'Verified')->orderby('id', 'desc')->paginate(8);
+        $e_detail = DB::table('event_detail as a')->join('event_place as b', 'a.id_event_place', '=', 'b.id')->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')->where('a.status_en', 'Verified')->orderby('a.id', 'desc')->limit(9)->get();
         return view('frontend.event.index', compact('e_detail'));
     }
 

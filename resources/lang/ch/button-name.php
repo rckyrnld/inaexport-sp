@@ -12,5 +12,6 @@ return [
     "verified" => "验证",
     "back" => "背部",
     "search" => "搜索",
-    "submit" => "提交"
+    "submit" => "提交",
+    "donlod" => "下载文件"
 ];
