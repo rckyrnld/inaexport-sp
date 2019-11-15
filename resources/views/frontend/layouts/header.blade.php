@@ -218,122 +218,59 @@
                                 </form> -->
                             </div>
                             <div class="middel_right_info">
-                                <div class="mini_cart_wrapper">
-                                    <a href="javascript:void(0)"><img src="{{asset('front/assets/icon/product1.png')}}" alt="" style="width: 40px;">Products </a>
-                                    <span class="cart_quantity">2</span>
-                                    <!--mini cart-->
-                                    <div class="mini_cart">
-                                        <div class="cart_item">
-                                            <div class="cart_img">
-                                                <a href="#"><img src="{{asset('front/assets/img/s-product/product.jpg')}}" alt=""></a>
-                                            </div>
-                                            <div class="cart_info">
-                                                <a href="#">JBL Flip 3 Splasroof Portable Bluetooth 2</a>
-
-                                                <span class="quantity">Qty: 1</span>
-                                                <span class="price_cart">$60.00</span>
-
-                                            </div>
-                                            <div class="cart_remove">
-                                                <a href="#"><i class="ion-android-close"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="cart_item">
-                                            <div class="cart_img">
-                                                <a href="#"><img src="{{asset('front/assets/img/s-product/product2.jpg')}}" alt=""></a>
-                                            </div>
-                                            <div class="cart_info">
-                                                <a href="#">Koss Porta Pro On Ear Headphones </a>
-                                                <span class="quantity">Qty: 1</span>
-                                                <span class="price_cart">$69.00</span>
-                                            </div>
-                                            <div class="cart_remove">
-                                                <a href="#"><i class="ion-android-close"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="mini_cart_table">
-                                            <div class="cart_total">
-                                                <span>Sub total:</span>
-                                                <span class="price">$138.00</span>
-                                            </div>
-                                            <div class="cart_total mt-10">
-                                                <span>total:</span>
-                                                <span class="price">$138.00</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="mini_cart_footer">
-                                            <div class="cart_button">
-                                                <a href="cart.html">View cart</a>
-                                            </div>
-                                            <div class="cart_button">
-                                                <a href="checkout.html">Checkout</a>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <!--mini cart end-->
-                                </div>
-                                <div class="mini_cart_wrapper">
-                                    <a href="javascript:void(0)"><img src="{{asset('front/assets/icon/love.png')}}" alt="" style="width: 40px;">Products </a>
-                                    <span class="cart_quantity">2</span>
-                                    <!--mini cart-->
-                                    <div class="mini_cart">
-                                        <div class="cart_item">
-                                            <div class="cart_img">
-                                                <a href="#"><img src="{{asset('front/assets/img/s-product/product.jpg')}}" alt=""></a>
-                                            </div>
-                                            <div class="cart_info">
-                                                <a href="#">JBL Flip 3 Splasroof Portable Bluetooth 2</a>
-
-                                                <span class="quantity">Qty: 1</span>
-                                                <span class="price_cart">$60.00</span>
-
-                                            </div>
-                                            <div class="cart_remove">
-                                                <a href="#"><i class="ion-android-close"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="cart_item">
-                                            <div class="cart_img">
-                                                <a href="#"><img src="{{asset('front/assets/img/s-product/product2.jpg')}}" alt=""></a>
-                                            </div>
-                                            <div class="cart_info">
-                                                <a href="#">Koss Porta Pro On Ear Headphones </a>
-                                                <span class="quantity">Qty: 1</span>
-                                                <span class="price_cart">$69.00</span>
-                                            </div>
-                                            <div class="cart_remove">
-                                                <a href="#"><i class="ion-android-close"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="mini_cart_table">
-                                            <div class="cart_total">
-                                                <span>Sub total:</span>
-                                                <span class="price">$138.00</span>
-                                            </div>
-                                            <div class="cart_total mt-10">
-                                                <span>total:</span>
-                                                <span class="price">$138.00</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="mini_cart_footer">
-                                            <div class="cart_button">
-                                                <a href="cart.html">View cart</a>
-                                            </div>
-                                            <div class="cart_button">
-                                                <a href="checkout.html">Checkout</a>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <!--mini cart end-->
+                                <div class="mini_cart_wrapper" style="padding-right: 15px">
+                                    <table style="width: 150px;">
+                                        <tr>
+                                            <td rowspan="2" style="width: 50px">
+                                                <img src="{{asset('front/assets/icon/product1.png')}}" alt="" style="width: 50px;">
+                                            </td>
+                                            <td style="">
+                                                <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
+                                                    Products
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                @if(Auth::guard('eksmp')->user())
+                                                <span style="color: black; font-weight: 600; font-size: 12px; padding-left: 10px;">
+                                                    @if(Auth::guard('eksmp')->user()->id_role == 3)
+                                                        {{getCompanyNameImportir(Auth::guard('eksmp')->user()->id)}}
+                                                    @elseif(Auth::guard('eksmp')->user()->id_role == 2)
+                                                        {{getCompanyName(Auth::guard('eksmp')->user()->id)}}
+                                                    @endif
+                                                </span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                                 <div class="header_wishlist">
-                                    <a href="wishlist.html"><img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 40px;">Hello </a>
+                                    <table style="width: 150px;">
+                                        <tr>
+                                            <td rowspan="2" style="width: 50px">
+                                                <img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">
+                                            </td>
+                                            <td style="">
+                                                <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
+                                                    Hello
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                @if(Auth::guard('eksmp')->user())
+                                                <span style="color: black; font-weight: 600; font-size: 12px; padding-left: 10px;">
+                                                    @if(Auth::guard('eksmp')->user()->id_role == 3)
+                                                        {{getCompanyNameImportir(Auth::guard('eksmp')->user()->id)}}
+                                                    @elseif(Auth::guard('eksmp')->user()->id_role == 2)
+                                                        {{getCompanyName(Auth::guard('eksmp')->user()->id)}}
+                                                    @endif
+                                                </span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
                                     <!-- <span class="wishlist_quantity">0</span> -->
                                 </div>
                             </div>
