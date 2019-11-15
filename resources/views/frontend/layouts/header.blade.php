@@ -89,22 +89,27 @@
                             <div class="top_right text-right">
                                 <ul>
                                     @if(Auth::guard('eksmp')->user())
-                                    <li class="top_links"><a href="#"><i class="ion-android-person"></i> {{getCompanyNameImportir(Auth::guard('eksmp')->user()->id)}}<i class="ion-ios-arrow-down"></i></a>
+                                        <li class="top_links"><a href="#"><i class="ion-android-person"></i>
+                                        @if(Auth::guard('eksmp')->user()->id_role == 3)
+                                            {{getCompanyNameImportir(Auth::guard('eksmp')->user()->id)}}
+                                        @elseif(Auth::guard('eksmp')->user()->id_role == 2)
+                                            {{getCompanyName(Auth::guard('eksmp')->user()->id)}}
+                                        @endif
+                                            <i class="ion-ios-arrow-down"></i></a>
                                         <ul class="dropdown_links">
                                             <!-- <li><a href="checkout.html">Checkout </a></li> -->
                                             <!-- <li><a href="my-account.html">My Account </a></li> -->
                                             <!-- <li><a href="cart.html">Shopping Cart</a></li> -->
                                             <!-- <li><a href="wishlist.html">Wishlist</a></li> -->
-                                            <li><a href="" style="text-decoration: none" onclick="event.preventDefault(); document.getElementById('profile-form').submit();">@lang('frontend.lbl5')</a></li>
+                                            @if(Auth::guard('eksmp')->user()->id_role == 3)
+                                            <li><a href="{{route('profile')}}" style="text-decoration: none">@lang('frontend.lbl5')</a></li>
+                                            @endif
                                             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('frontend.lbl4')</a></li>
                                         </ul>
                                     </li>
-<form id="profile-form" action="{{ route('profile') }}" method="POST" style="display: none;">
-    {{ csrf_field() }}
-</form>
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-    {{ csrf_field() }}
-</form>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                    </form>
                                     @else
                                     <li class="top_links"><a href="{{url('login')}}"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")
                                     @endif

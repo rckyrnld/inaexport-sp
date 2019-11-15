@@ -1,6 +1,13 @@
 @include('frontend.layouts.header')
 <?php
 $loc = app()->getLocale();
+$img1 = "front/assets/icon/icon logo.png";
+if($profile->foto_profil != NULL){
+        $imge1 = 'uploads/Profile/Importir/'.$id_user.'/'.$profile->foto_profil;
+        if(file_exists($imge1)) {
+          $img1 = 'uploads/Profile/Importir/'.$id_user.'/'.$profile->foto_profil;
+        }
+    }
 ?>
 <style type="text/css">
    .btn.navigasi.active{
@@ -77,16 +84,16 @@ $loc = app()->getLocale();
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="info" role="tabpanel">
-                    <form id="profile" action="{{route('profile.update')}}" method="POST">
+                    <form id="profile" action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="row" style="padding-top: 15px">
                             <div class="col-lg-3 col-md-3">
                                 <span class="logo">Logo</span>
                                 <br>
-                                <img src="{{asset('front/assets/icon/icon logo.png')}}" style="width: 100%;">
+                                <img src="{{asset($img1)}}" style="width: 100%;">
                                 <p style="padding: 6px">
                                     <span class="btn btn-primary btn-file">
-                                        Upload <input type="file" name="avatar" accept="image/*" />
+                                        Upload <input type="file" name="avatar" accept="image/*" id="avatar" />
                                     </span>
                                 </p>
                             </div>
@@ -95,7 +102,10 @@ $loc = app()->getLocale();
                                 <table width="100%" class="form" style="border-spacing: 10px; border-collapse: separate;">
                                     <tr>
                                         <td width="30%">Username</td>
-                                        <td><input type="text" class="form-control" name="username" value="{{$profile->username}}" id="username" data-toggle="tooltip" data-trigger="manual" title="Please Fill Username !"></td>
+                                        <td>
+                                            <!-- <input type="hidden" class="form-control" name="id_user" value="{{$id_user}}" id="id_user"> -->
+                                            <input type="text" class="form-control" name="username" value="{{$profile->username}}" id="username" data-toggle="tooltip" data-trigger="manual" title="Please Fill Username !">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td width="30%">Password</td>
@@ -171,6 +181,8 @@ $loc = app()->getLocale();
                     </form>
                     </div>
                     <div class="tab-pane fade" id="contact" role="tabpanel">
+                        <form id="form-contact" action="{{route('profile.contact_update')}}" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
                         <div class="row justify-content-center" style="padding-top: 30px">
                             <div class="col-lg-12 col-md-12">
                                 <div class="table-responsive">
@@ -185,20 +197,23 @@ $loc = app()->getLocale();
                                             </tr>
                                         </thead>
                                         <tbody style="background-color: #f5f5f5" id="tbody_contact">
-                                            <input type="hidden" id="number" value="2">
-                                            <tr id="contact_1">
-                                                <td><input type="text" name="name_contact[]" class="form-control contact" value="Angga"></td>
-                                                <td><input type="text" name="email_contact[]" class="form-control contact" value="Anggamawan30@gmail.com"></td>
-                                                <td><input type="text" name="phone_contact[]" class="form-control contact" value="082127024434"></td>
-                                                <td><a onclick="hapus(1)"><i class="fa fa-minus-square-o" aria-hidden="true" style="font-size: 24px;"></i></a></td>
-                                            </tr>
+                                            <input type="hidden" id="number" value="{{count($contact)}}">
+                                            @foreach ($contact as $key => $value)
+                                                <tr id="contact_{{$key+1}}">
+                                                    <td><input type="text" name="name_contact[]" class="form-control contact" value="{{$value->name}}" autocomplete="off"></td>
+                                                    <td><input type="text" name="email_contact[]" class="form-control contact" value="{{$value->email}}" autocomplete="off"></td>
+                                                    <td><input type="text" name="phone_contact[]" class="form-control contact" value="{{$value->phone}}" autocomplete="off"></td>
+                                                    <td><a onclick="hapus('{{$key+1}}')"><i class="fa fa-minus-square-o" aria-hidden="true" style="font-size: 24px;"></i></a></td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                                 <br>
-                                <div align="right"><button class="btn navigasi active" style="width: 20%;border-radius: 10px;font-weight: 600;">Update</button></div>
+                                <div align="right"><button class="btn navigasi active" type="submit" style="width: 20%;border-radius: 10px;font-weight: 600;">Update</button></div>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -212,7 +227,7 @@ $loc = app()->getLocale();
     $(document).ready(function() {
         var country = $('#country').val();
         $.ajax({
-          url: "{{route('ajax-city', $id)}}",
+          url: "{{route('ajax-city', $id_user)}}",
           type: 'get',
           data: {
             id:country
@@ -265,9 +280,9 @@ $loc = app()->getLocale();
         var table = '';
         var nomor = parseInt($('#number').val());
         table += '<tr id="contact_'+nomor+'">';
-        table += '<td><input type="text" name="name_contact[]" class="form-control contact"></td>';
-        table += '<td><input type="text" name="email_contact[]" class="form-control contact"></td>';
-        table += '<td><input type="text" name="phone_contact[]" class="form-control contact"></td>';
+        table += '<td><input type="text" name="name_contact[]" class="form-control contact" autocomplete="off"></td>';
+        table += '<td><input type="text" name="email_contact[]" class="form-control contact" autocomplete="off"></td>';
+        table += '<td><input type="text" name="phone_contact[]" class="form-control contact" autocomplete="off"></td>';
         table += '<td><a onclick="hapus('+nomor+')"><i class="fa fa-minus-square-o" aria-hidden="true" style="font-size: 24px;"></i></a></td>';
         table += '</tr>';
         $('#tbody_contact').append(table);
