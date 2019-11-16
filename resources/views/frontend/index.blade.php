@@ -99,7 +99,7 @@
                     <div class="row-menu">
                         <div class="row">
                             <div class="col-md-4">
-                                <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/inquiry.png')}}" alt="" class="img-menu"></a>
+                                <a href="{{url('/br_importir_all')}}"><img src="{{asset('front/assets/icon/inquiry.png')}}" alt="" class="img-menu"></a>
                             </div>
                             <div class="col-md-4">
                                 <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/buying_request.png')}}" alt="" class="img-menu"></a>
