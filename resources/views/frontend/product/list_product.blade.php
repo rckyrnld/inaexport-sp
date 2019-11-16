@@ -26,7 +26,7 @@
                 <div class="col-6">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="{{url('/front_end')}}">home</a></li>
+                            <li><a href="{{url('/')}}">home</a></li>
                             @if($catActive == NULL)
                             <li><a href="{{url('/front_end/list_product')}}">Default</a></li>
                             @else
