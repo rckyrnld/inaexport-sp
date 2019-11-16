@@ -247,6 +247,12 @@ class BuyingRequestController extends Controller
     {
 		$pageTitle = "Transaksi Buying Request";
 		return view('buying-request.trx', compact('id','pageTitle','id2'));
+	}
+	
+	public function br_trx2($id,$id2)
+    {
+		$pageTitle = "Transaksi Buying Request";
+		return view('trx.trx', compact('id','pageTitle','id2'));
 	}	
 	public function br_deal($id,$id2,$id3)
     {

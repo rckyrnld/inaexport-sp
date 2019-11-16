@@ -34,12 +34,18 @@
                                         <center>Price</center>
                                     </th>
 									<th>
+                                        <center>Buyer</center>
+                                    </th>
+									<th>
                                         <center>Subyek</center>
                                     </th>
 									<!--<th>
                                         <center>Specification</center>
                                     </th>-->
 									 <th>
+                                        <center>Type Tracking</center>
+                                    </th>
+									<th>
                                         <center>No Tracking</center>
                                     </th>
 									<th width="18%">
@@ -69,9 +75,11 @@ $cr = explode(',',$ruu->id_csc_prod);
 									</td>
 									<td><center><?php echo $ruu->eo." ".$ruu->neo; ?></center></td>
 									<td><center><?php echo $ruu->tp." ".$ruu->ntp; ?></center></td>
+									<td><center><?php if($ruu->by_role == 1){ echo "Admin"; }else if($ruu->by_role == 4){ echo "Perwakilan"; }else{ echo "Importir"; } ?></center></td>
 									<td><center><?php echo $ruu->subyek; ?></center></td>
 									
 									
+									<td><center><?php echo $ruu->type_tracking; ?></center></td>
 									<td><center><?php echo $ruu->no_track; ?></center></td>
 									
 									<td><center>
