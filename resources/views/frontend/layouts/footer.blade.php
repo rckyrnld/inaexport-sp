@@ -56,7 +56,7 @@
                                 出口商
                                 @elseif($loc == 'in')
                                 Eksportir
-                                @else if($loc == 'en')
+                                @else
                                 Exporters
                                 @endif 
                             </p>
@@ -76,7 +76,7 @@
                                 事件
                                 @elseif($loc == 'in')
                                 Acara
-                                @else if($loc == 'en')
+                                @else
                                 Events
                                 @endif
                             </p>
