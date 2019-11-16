@@ -42,6 +42,14 @@ class TrxController extends Controller
 		return view('trx.detailtrx', compact('pageTitle','id','id2'));
 	}
 	
+	public function joineks($id,$id2)
+    {
+		$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,status_join,date) values 
+		('".$id."','".$id2."','1','".Date('Y-m-d')."')
+		");
+		return redirect('br_importir_all');
+	}
+	
 	public function data_br3()
     {
         
@@ -53,17 +61,6 @@ class TrxController extends Controller
 				 return $buy->subyek;
             })
 			->addColumn('col2', function ($buy) {
-				/*
-				$cr = explode(',',$buy->id_csc_prod);
-				$hitung = count($cr);
-				$semuacat = "";
-				for($a = 0; $a < ($hitung - 1); $a++){
-					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
-					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
-					$semuacat = $semuacat."- ".$napro."<br>";
-				}
-				return $semuacat;
-				*/
 				$carieks = DB::select("select * from itdp_company_users where id='".$buy->id_eks."'"); 
 									foreach($carieks as $eks){ $rty=  $eks->username; }
 				return $rty;
@@ -88,6 +85,67 @@ class TrxController extends Controller
 			
 			
 			->rawColumns(['col4','col5','col2','col6'])
+            ->make(true);
+    }
+	
+	
+	public function data_br4()
+    {
+         $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row,* from csc_buying_request ");
+      
+
+        return DataTables::of($buy)
+            ->addColumn('col1', function ($buy) {
+				 return $buy->subyek;
+            })
+			->addColumn('col2', function ($buy) {
+				$cr = explode(',',$buy->id_csc_prod);
+				$hitung = count($cr);
+				$semuacat = "";
+				for($a = 0; $a < ($hitung - 1); $a++){
+					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+					$semuacat = $semuacat."- ".$napro."<br>";
+				}
+				return $semuacat;
+            })
+			->addColumn('col3', function ($buy) {
+				 return $buy->date;
+            })
+			->addColumn('col4', function ($buy) {
+				 return 'Valid '.$buy->valid." days";
+            })
+			->addColumn('col5', function ($buy) {
+				 if($buy->deal == null || $buy->deal == 0 || empty($buy->deal)){
+					return "Negosiation";
+				 }else{
+					return "Deal";
+				 }
+            })
+			->addColumn('col6', function ($buy) {
+				 if($buy->by_role == 3){
+					return "Importir";
+				 }else if($buy->by_role == 4){
+					return "Perwakilan";
+				 }else if($buy->by_role == 1){
+					return "Admin";
+				 }else{
+					 return "";
+				 }
+            })
+			
+			->addColumn('aks', function ($buy) {
+				 $adaga = DB::select("select * from csc_buying_request_join where id_br='".$buy->id."' and id_eks='".Auth::guard('eksmp')->user()->id."'");
+				 if(count($adaga) == 0){
+					 return '<center><a href="'.url('joineks/'.$buy->id.'/'.Auth::guard('eksmp')->user()->id).'" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Join</a></center	>';
+				 }else{
+						return '<center><font color="green">On List</font></center>';
+				 }
+				 
+            })
+			
+			
+			->rawColumns(['col4','col5','col2','col6','aks'])
             ->make(true);
     }
 	
