@@ -238,16 +238,16 @@ foreach($q2 as $p2){
 			<b>Tracking of Type</b>
 		</div>
 		<div class="form-group col-sm-3">
-			<select class="form-control" name="type_tracking" required>
+			<select <?php if($p2->status_trx == 1){ echo "readonly"; }?> class="form-control" name="type_tracking" required>
 				<option value="">- Select Tracking Type -</option>
-				<option value="DHL Express">DHL Express</option>
-				<option value="DHL Active Tracing">DHL Active Tracing</option>
-				<option value="DHL Global Forwarding">DHL Global Forwarding</option>
-				<option value="Fedex">Fedex</option>
-				<option value="Fedex Freight">Fedex Freight</option>
-				<option value="FedEx Ground">FedEx Ground</option>
-				<option value="China EMS">China EMS</option>
-				<option value="Deutsche Post DHL">Deutsche Post DHL</option>
+				<option <?php if($p2->type_tracking == "DHL Express"){ echo "selected"; }?> value="DHL Express">DHL Express</option>
+				<option <?php if($p2->type_tracking == "DHL Active Tracing"){ echo "selected"; }?> value="DHL Active Tracing">DHL Active Tracing</option>
+				<option <?php if($p2->type_tracking == "DHL Global Forwarding"){ echo "selected"; }?> value="DHL Global Forwarding">DHL Global Forwarding</option>
+				<option <?php if($p2->type_tracking == "Fedex"){ echo "selected"; }?> value="Fedex">Fedex</option>
+				<option <?php if($p2->type_tracking == "Fedex Freight"){ echo "selected"; }?> value="Fedex Freight">Fedex Freight</option>
+				<option <?php if($p2->type_tracking == "FedEx Ground"){ echo "selected"; }?> value="FedEx Ground">FedEx Ground</option>
+				<option <?php if($p2->type_tracking == "China EMS"){ echo "selected"; }?> value="China EMS">China EMS</option>
+				<option <?php if($p2->type_tracking == "Deutsche Post DHL"){ echo "selected"; }?> value="Deutsche Post DHL">Deutsche Post DHL</option>
 			</select>
 		</div>
 	</div>
@@ -256,17 +256,17 @@ foreach($q2 as $p2){
 			<b>No Tracking</b>
 		</div>
 		<div class="form-group col-sm-3">
-			<input class="form-control" type="text" id="no_track" name="no_track" value="" required>
+			<input class="form-control" type="text" id="no_track" name="no_track" value="<?php echo $p2->no_track; ?>" <?php if($p2->status_trx == 1){ echo "readonly"; }?> required>
+			<input class="form-control" type="hidden" id="tipekirim" name="tipekirim" value="" required>
 		</div>
 	</div>
 	
 	<div class="form-row">
-		<div class="form-group col-sm-2">
-			
-		</div>
-		<div class="form-group col-sm-3">
-			<center><button style="width:45%;" type="submit" class="btn btn-info">Submit</button>
-			<a style="width:45%;" href="{{url('br_list')}}" class="btn btn-danger">Cancel</a></center>
+		
+		<div class="form-group col-sm-5">
+			<center><button style="width:33%;" onclick="getyou(1)" type="submit" class="btn btn-info">Submit</button>
+			<button style="width:30%;" onclick="getyou(0)" type="submit" class="btn btn-warning"><font color="white">Draft</font></button>
+			<a style="width:33%;" href="{{url('br_list')}}" class="btn btn-danger">Cancel</a></center>
 		</div>
 	</div>
 	</div>
@@ -279,6 +279,9 @@ foreach($q2 as $p2){
 
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script>
+function getyou(x){
+	$('#tipekirim').val(x);
+}
 function kirimchat(){
 	var a= $('#inputan').val();
 	var b= $('#id_br').val();
