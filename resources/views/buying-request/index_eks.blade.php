@@ -42,7 +42,7 @@
                                     <th> 
                                         <center>Status</center>
                                     </th>
-									<th width="10%">
+									<th width="18%">
                                         <center>Action</center>
                                     </th>
                                 </tr>
@@ -83,11 +83,16 @@ $cr = explode(',',$ruu->id_csc_prod);
 									</td>
 									<td><center><?php echo $ruu->expired_at; ?></center></td>
 									<td><center>
-									<?php if($ruu->status_join == "1"){ echo "Menunggu Verifikasi Importir"; }else if($ruu->status_join == "2"){ echo "Negosiation"; }
-									else if($ruu->status_join == "4"){ echo "Deal"; }else{ echo "-"; }?>
+									<?php if($ruu->statusa !=4){ if($ruu->status_join == "1"){ echo "Wait Importir Verification"; }else if($ruu->status_join == "2"){ echo "Negosiation"; }
+									else if($ruu->status_join == "4"){ echo "Deal"; }else{ echo "-"; } 
+									}else{
+										if($ruu->status_join == "4"){ echo "<font color='green'>Deal</font>";
+										}else{ echo "<font color='red'>Expired</font>"; }
+									}
+									?>
 									</center></td>
 									<td><center>
-									<?php if($ruu->status_join == null){ ?>
+									<?php if($ruu->statusa !=4){ if($ruu->status_join == null){ ?>
 									<a href="{{ url('br_join/'.$ruu->idb) }}" class="btn btn-success"><font color="white"><i class="fa fa-plus"></i> Join</font></a>
 									<?php }else if($ruu->status_join == 1){ ?>
 									Wait Verification
@@ -95,7 +100,13 @@ $cr = explode(',',$ruu->id_csc_prod);
 									<a href="{{ url('br_chat/'.$ruu->idb) }}" class="btn btn-info"><font color="white"><i class="fa fa-comment"></i> Chat</font></a>
 									<?php }else if($ruu->status_join == 4){ ?>
 									<a href="{{ url('br_chat/'.$ruu->idb) }}" class="btn btn-success"><font color="white"><i class="fa fa-list"></i> View</font></a>
-									<?php } ?>
+									<?php }}else{  if($ruu->status_join == "4"){  ?>
+									<a href="{{ url('br_chat/'.$ruu->idb) }}" class="btn btn-success"><font color="white"><i class="fa fa-list"></i> Detail</font></a>
+									<a href="{{ url('br_trx/'.$ruu->ida.'/'.$ruu->idb) }}" class="btn btn-info"><font color="white">&nbsp;&nbsp;<i class="fa fa-truck"></i> Trx &nbsp;&nbsp;</font></a>
+									
+									<?php }else { ?>
+									
+									<?php }} ?>
 									</center></td>
 								</tr>
 								<?php $nt++; } ?>

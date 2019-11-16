@@ -35,15 +35,18 @@
 			<div class="form-row" style="font-size:12px;">
 			 <!--<img style="width:100%!important;" src="{{url('assets')}}/assets/images/07-Form-Request_01.png" alt="." >-->
   
-  <table id="example1" border="0" class="table table-bordered table-striped">
+  <table id="tablebureq" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
+								<th>No</th>
 								<th>Subyek</th>
 								<th>Category</th>
 								<th>Create at</th>
 								<th>Valid Time</th>
+								<th>Status</th>
 								<th>Create By</th>
                                 </thead>
-								<tbody>
+								<!--<tbody>
+								
 								<?php 
 								$pesan = DB::select("select * from csc_buying_request order by id desc ");
 								foreach($pesan as $ryu){
@@ -62,19 +65,11 @@
 				<td><?php echo "Valid until ".$ryu->valid." days<br>"; ?></td>
 				<td><?php if($ryu->by_role == 1){ echo "Admin"; }else if($ryu->by_role == 4){ echo "Perwakilan"; }else{ echo "Importir";
 				} ?></td>
-								<!--<td width="20%"><center>
-								<?php if($ryu->status == 0 || $ryu->status == null){ ?>
-								<br><a title="Broadcast" onclick="xy(<?php echo $ryu->id; ?>)" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i></font></a><a title="Detail" href="{{ url('br_importir_detail/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-pencil"></i></a>
-								<?php }else if($ryu->status == 1 ){ ?>
-								<br><a title="Detail" href="{{ url('br_importir_lc/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-comment"></i></a>
-								<?php } else if($ryu->status == 4){ ?>
-								<br><a title="Detail" href="{{ url('br_importir_lc/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-comment"></i></a>
-								<?php } ?>
-								</center></td> -->
+								
 								</tr>
 								<?php } ?>
 								
-								</tbody>
+								</tbody> -->
 
                             </table>
 
@@ -93,6 +88,23 @@
 <script type="text/javascript">
 	$(document).ready(function() {
     $('#example').DataTable();
+	
+	$('#tablebureq').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('front.datatables.br2') }}",
+            columns: [
+                {data: 'row', name: 'row'},
+                {data: 'col1', name: 'col1'},
+                {data: 'col2', name: 'col2'},
+                {data: 'col3', name: 'col3'},
+                {data: 'col4', name: 'col4'},
+                {data: 'col6', name: 'col6'},
+                {data: 'col5', name: 'col5'}
+                
+            ],
+            fixedColumns: true
+        });
 } );
 </script>
 <script>

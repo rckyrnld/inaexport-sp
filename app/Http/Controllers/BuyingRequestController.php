@@ -16,13 +16,13 @@ class BuyingRequestController extends Controller
 		if(!empty(Auth::guard('eksmp')->user()->id)){
 		if(Auth::guard('eksmp')->user()->id_role == 2){
 		$pageTitle = "Buying Request Eksportir";
-		$data = DB::select("select a.*,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where a.id = b.id_br and b.id_eks='".Auth::guard('eksmp')->user()->id."' order by b.id desc ");
+		$data = DB::select("select a.*,a.id as ida,a.status as statusa,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where a.id = b.id_br and b.id_eks='".Auth::guard('eksmp')->user()->id."' order by b.id desc ");
         return view('buying-request.index_eks', compact('pageTitle','data'));
 		}
 		}else{
 		if(Auth::user()->id_group == 4){
         $pageTitle = "Buying Request Perwakilan";
-		$data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
+		$data = DB::select("select a.*,a.id as ida,a.status as status_a,b.*,b.id as idb from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
         return view('buying-request.index', compact('pageTitle','data'));
 		}else{
 		$pageTitle = "Buying Request Admin";
@@ -310,7 +310,8 @@ class BuyingRequestController extends Controller
 	
 	public function br_save_trx(Request $request)
     {
-		$update = DB::select("update csc_buying_request set type_tracking='".$request->type_tracking."',no_track='".$request->no_track."' where id='".$request->id1."' ");
+		
+		$update = DB::select("update csc_buying_request set status_trx='".$request->tipekirim."', type_tracking='".$request->type_tracking."',no_track='".$request->no_track."' where id='".$request->id1."' ");
 		return redirect('br_list');
 	}
 

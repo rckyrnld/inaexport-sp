@@ -151,7 +151,11 @@ foreach($q2 as $p2){
 			?>
 		</div>
 		<div class="form-group col-sm-6" align="right">
+		<?php if($p2->status == 4){ ?>
+		
+		<?php }else{ ?>
 		<a data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-hand-o-right "></i> Deal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></a>
+		<?php } ?>
 		</div>
 	</div>
 	

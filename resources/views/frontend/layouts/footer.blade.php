@@ -116,49 +116,49 @@
                             <h3>TRADE.ID</h3>
                             <div class="footer_menu">
                                 <ul>
-                                    <li><a href="#">Tentang Kami</a></li>
-                                    <li><a href="#">Karir</a></li>
-                                    <li><a href="#">Hubungi Kami</a></li>
+                                    <li><a href="#">@lang("footer.tentangkami")</a></li>
+                                    <li><a href="#">@lang("footer.karir")</a></li>
+                                    <li><a href="#">@lang("footer.hubungikami")</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="widgets_container widget_menu">
-                            <h3>INFORMASI LAYANAN</h3>
+                            <h3>@lang("footer.informasilayanan")</h3>
                             <div class="footer_menu">
                                 <ul>
-                                    <li><a href="#">Pengembalian Barang</a></li>
-                                    <li><a href="#">Syarat & Kondisi</a></li>
-                                    <li><a href="#">Kebijakan Privasi</a></li>
+                                    <li><a href="#">@lang("footer.pengembalianbarang")</a></li>
+                                    <li><a href="#">@lang("footer.syaratkondisi")</a></li>
+                                    <li><a href="#">@lang("footer.kebijakanprivasi")</a></li>
                                 </ul>
                             </div>
                         </div><br>
                         <div class="widgets_container widget_menu">
-                            <h3>INFORMASI PENTING</h3>
+                            <h3>@lang("footer.informasipenting")</h3>
                             <div class="footer_menu">
                                 <ul>
-                                    <li><a href="#">Analisa Pasar Tuj Ekspor</a></li>
-                                    <li><a href="#">Event-event Kami</a></li>
+                                    <li><a href="#">@lang("footer.analisapasar")</a></li>
+                                    <li><a href="#">@lang("footer.even")</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="widgets_container widget_menu">
-                            <h3>HELP & SUPPORT</h3>
+                            <h3>@lang("footer.bantuandukungan")</h3>
                             <div class="footer_menu">
                                 <ul>
-                                    <li><a href="#">Getting Started</a></li>
-                                    <li><a href="#">FAQ</a></li>
-                                    <li><a href="#">Video Tour</a></li>
+                                    <li><a href="#">@lang("footer.mulai")</a></li>
+                                    <li><a href="#">@lang("footer.faq")</a></li>
+                                    <li><a href="#">@lang("footer.turvideo")</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="widgets_container widget_menu">
-                            <h3>CONTACT CENTER</h3>
+                            <h3>@lang("footer.contactcenter")</h3>
                             <div class="footer_menu">
                                 <ul>
                                     <li><a href="#">021-1234-5678</a></li>
@@ -167,7 +167,7 @@
                             </div>
                         </div><br>
                         <div class="widgets_container widget_menu">
-                            <h3>LET'S GET SOCIAL</h3>
+                            <h3>@lang("footer.lgd")</h3>
                             <div class="footer_menu">
                                 <div class="row">
                                     <div class="container">
@@ -186,7 +186,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="copyright_area">
-                            <p>Copyright &copy; <?php echo date("Y"); ?> </p>
+                            <p>@lang("footer.cc") &copy; <?php echo date("Y"); ?> </p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
