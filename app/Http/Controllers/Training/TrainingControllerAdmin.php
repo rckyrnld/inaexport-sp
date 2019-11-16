@@ -73,7 +73,7 @@ class TrainingControllerAdmin extends Controller
 
     public function getData(){
 
-      $tick = DB::table('training_admin as ts')->get();
+      $tick = DB::table('training_admin as ts')->orderby('id', 'DESC')->get();
 
       return \Yajra\DataTables\DataTables::of($tick)
 					->addColumn('status', function($data){

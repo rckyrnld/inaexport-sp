@@ -332,6 +332,7 @@ Route::namespace('ResearchCorner')->group(function () {
             Route::get('/view/{id}', 'AdminResearchController@view')->name('view');
             Route::get('/destroy/{id}', 'AdminResearchController@destroy')->name('destroy');
             Route::post('/broadcast/', 'AdminResearchController@broadcast')->name('broadcast');
+            Route::get('/hscode', 'AdminResearchController@hscode')->name('hscode');
         });
     });
     Route::prefix('perwakilan/research-corner')->group(function () {
