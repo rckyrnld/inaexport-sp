@@ -80,7 +80,7 @@
         @if($key == 1)
           <div class="form-group row" style="height: 100%;">
         @endif
-          <div class="col-lg-6 col-md-6 col-12" style="height: 50%; padding-top: 10px;">
+          <div class="col-lg-6 col-md-6 col-12" style="height: 50%; padding-top: 5px;">
       @endif
         <?php
           if($loc == "ch"){
@@ -112,11 +112,11 @@
           }
         ?>
           <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-            <img class="rc" src="{{url('/')}}/{{$image}}">
+              <img class="rc" src="{{url('/')}}/{{$image}}" width="100%">
           </div>
           <div style="height: 25%; padding-top: 5px;">
-              <span style="font-family: arial; font-weight: 500; font-size: 18px;">{{$title}}</span><br>
-              <span class="detail_rc">
+              <span style="font-family: arial; font-weight: 500; font-size: 18px;"><strong>{{$title}}</strong></span><br>
+              <span class="detail_rc" style="font-size: 12px;">
               <i class="fa fa-calendar-check-o"></i>&nbsp;&nbsp;{{$date}}
               <br>
               <a href="{{$url}}" class="detail_rc" onclick="__download('{{$data->id}}', event, this)" style="text-decoration: none;"><i class="fa fa-download"></i>&nbsp;&nbsp;&nbsp;@lang("button-name.donlod")</a>
