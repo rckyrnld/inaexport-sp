@@ -104,6 +104,7 @@
                                             @if(Auth::guard('eksmp')->user()->id_role == 3)
                                             <li><a href="{{route('profile')}}" style="text-decoration: none">@lang('frontend.lbl5')</a></li>
                                             @endif
+											<li><a href="{{url('front_end/history')}}" style="text-decoration: none">@lang('frontend.lbl7')</a></li>
                                             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('frontend.lbl4')</a></li>
                                         </ul>
                                     </li>
@@ -232,7 +233,7 @@
                                             </td>
                                             <td style="">
                                                 <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
-                                                    Products
+                                                    @lang("frontend.lbl8")
                                                 </span>
                                             </td>
                                         </tr>
@@ -260,7 +261,7 @@
                                             </td>
                                             <td style="">
                                                 <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
-                                                    Tracking
+                                                    @lang("frontend.lbl9")
                                                 </span>
                                             </td>
                                         </tr>
@@ -298,7 +299,7 @@
                                             </td>
                                             <td style="">
                                                 <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
-                                                    Hello
+                                                    @lang("frontend.lbl10")
                                                 </span>
                                             </td>
                                         </tr>

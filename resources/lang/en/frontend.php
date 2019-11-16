@@ -11,6 +11,10 @@ return [
     "lbl4" => "Sign Out",
     "lbl5" => "Profile",
     "lbl6" => "You need to login to process tickets",
+    "lbl7" => "History",
+	"lbl8" => "Product",
+    "lbl9" => "Tracking",
+    "lbl10" => "Hello",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",

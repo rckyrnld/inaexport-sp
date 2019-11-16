@@ -11,6 +11,10 @@ return [
     "lbl4" => "登出",
     "lbl5" => "轮廓",
     "lbl6" => "您需要登录才能处理工单",
+    "lbl7" => "历史",
+	"lbl8" => "产品",
+    "lbl9" => "追踪",
+    "lbl10" => "你好",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
