@@ -306,8 +306,10 @@ foreach($q2 as $p2){
                     <div class="input-group">
                         <input id="inputan" type="text" class="form-control input-sm" placeholder="Type your message here..." />
                         <span class="input-group-btn">
+						<a  class="btn btn-info" data-toggle="modal" data-target="#myModal2">
+                              <font color="white">  <i class="fa fa-paperclip"></i></a>
                             <a onclick="kirimchat()" class="btn btn-warning" id="btn-chat">
-                                <i class="fa fa-paper-plane"></i> Send</a>
+                                <i class="fa fa-paper-plane"></i> Send</a></font>
                         </span>
                     </div>
 					
@@ -349,6 +351,52 @@ foreach($q2 as $p2){
       </div>
     </div>
   </div>
+  
+  <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Upload Proof of Payment</h6>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+         
+        </div>
+		<form id="formId" action="{{ url('uploadpop2') }}" enctype="multipart/form-data" method="post">
+		   {{ csrf_field() }}
+        <div class="modal-body">
+		<div class="form-row">
+		<div class="col-sm-3">
+		<label><b>File Upload</b></label>
+		</div>
+		<div class="form-group col-sm-7">
+			 <input type="hidden" class="form-control" name="idq" id="idq" value="<?php echo $id; ?>">
+			 <input type="hidden" class="form-control" name="idb" id="idb" value="<?php echo $id_br; ?>">
+			 <input type="hidden" class="form-control" name="idc" id="idc" value="<?php echo Auth::user()->id; ?>">
+			 <input type="hidden" class="form-control" name="idd" id="idd" value="<?php echo Auth::user()->name; ?>">
+			 <input type="hidden" class="form-control" name="ide" id="ide" value="<?php echo Auth::user()->id_group; ?>">
+			 <input type="file" class="form-control" name="filez" id="filez">
+		</div>
+		
+	</div>
+	<div class="form-row">
+		<div class="col-sm-3">
+		<label><b>Note</b></label>
+		</div>
+		<div class="form-group col-sm-7">
+			 <textarea class="form-control" name="catatan"></textarea>
+		</div>
+		
+	</div>
+         
+		  
+        </div>
+        <div class="modal-footer">
+			<button type="submit" class="btn btn-success" ><font color="white">Upload</font></button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div> 
+		</form>
+      </div>
+    </div>
+  </div>
+
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script>
 function kirimchat(){
