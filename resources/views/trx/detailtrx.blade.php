@@ -159,7 +159,7 @@ foreach($q2 as $p2){
 			<b>File</b>
 		</div>
 		<div class="form-group col-sm-6">
-			<a download href="{{asset('uploads/buy_request/'.$p2->files)}}"><?php echo $p2->files; ?></a>
+			<a class="btn btn-warning" download href="{{asset('uploads/buy_request/'.$p2->files)}}"><i class="fa fa-download"></i> Download File</a>
 		</div>
 	</div>
 	<div class="form-row">

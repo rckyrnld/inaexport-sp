@@ -15,6 +15,7 @@ return [
 	"lbl8" => "产品",
     "lbl9" => "追踪",
     "lbl10" => "你好",
+    "lbl11" => "交易",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
