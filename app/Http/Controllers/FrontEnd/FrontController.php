@@ -468,7 +468,7 @@ class FrontController extends Controller
     }
 
     public function Event(){
-        $e_detail = DB::table('event_detail as a')->join('event_place as b', 'a.id_event_place', '=', 'b.id')->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')->where('a.status_en', 'Verified')->orderby('a.id', 'desc')->limit(9)->get();
+        $e_detail = DB::table('event_detail as a')->join('event_place as b', 'a.id_event_place', '=', 'b.id')->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')->where('a.status_en', 'Verified')->orderby('a.id', 'desc')->paginate(3);
         return view('frontend.event.index', compact('e_detail'));
     }
 
@@ -490,7 +490,7 @@ class FrontController extends Controller
 
     public function join_event($id){
         $detail = DB::table('event_detail')->where('status_en', 'Verified')->where('id', $id)->first();
-        return view('frontend.event.join_event', compact('detail'));
+        return view('frontend.event.detail_event', compact('detail'));
     }
 
     //Front End Training
