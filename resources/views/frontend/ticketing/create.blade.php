@@ -100,7 +100,7 @@
                     <div class="col-md-10">
                       <div style="float: right;">
                         <a href="{{url('/')}}" class="btn btn-danger" style="font-size: 14px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;@lang('button-name.cancel')</a>
-                        <button type="button" class="btn btn-primary" name="button" id="button" style="font-size: 14px;"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;&nbsp;@lang('button-name.submit')</button>
+                        <button type="submit" class="btn btn-primary" name="button" id="button" style="font-size: 14px;"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;&nbsp;@lang('button-name.submit')</button>
                       </div>
                     </div>
                   </div>
@@ -117,7 +117,8 @@
 @include('frontend.layouts.footer')
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#button").click(function() {
+        $( "#formTicket" ).submit(function( event ) {
+          event.preventDefault();
           @if(Auth::guard('eksmp')->user())
             $( "#formTicket" ).submit();
           @else
