@@ -36,9 +36,10 @@ class TrxController extends Controller
 		}
     }
 	
-	public function detailtrx($ida,$idb)
+	public function detailtrx($id,$id2)
     {
-		return view('trx.detailtrx', compact('pageTitle','data'));
+		$pageTitle = "";
+		return view('trx.detailtrx', compact('pageTitle','id','id2'));
 	}
 	
 	public function data_br3()
