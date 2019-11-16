@@ -164,7 +164,76 @@ $cr = explode(',',$ruu->id_csc_prod);
 <div id="Paris" class="tabcontent">
   <div class="box-body">
 						
-                           <center>Greed</center>
+    <div class="form-row">
+		<div class="form-group col-sm-1">
+			<b>Buyer</b>
+		</div>
+		<div class="form-group col-sm-2">
+			<select name="buyer" class="form-control">
+				<option value="">- Select Buyer -</option>
+				<option value="1">Admin</option>
+				<option value="4">Perwakilan</option>
+				<option value="3">Importir</option>
+			</select>
+		</div>
+		<div class="form-group col-sm-1">
+			
+		</div>
+		
+		<div class="form-group col-sm-1">
+			<b>Source</b>
+		</div>
+		<div class="form-group col-sm-2">
+			<select name="buyer" class="form-control">
+				<option value="br">Buying Request</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="form-group col-sm-1">
+			<a onclick="ambillist()" class="btn btn-success"><font color="white">&nbsp;Search&nbsp;&nbsp;</font></a>
+		</div>
+		<div class="form-group col-sm-2">
+			
+		</div>
+	</div>
+	<div class="form-row"><br>
+		<table id="example2" class="table table-bordered table-striped">
+                                <thead class="text-white" style="background-color: #1089ff;">
+                                <tr>
+                                    <th>No</th>
+									
+                                  
+									
+                                    
+                                   
+									<th>
+                                        <center>Eksportir</center>
+                                    </th>
+									<th>
+                                        <center>Product Name</center>
+                                    </th>
+									<th>
+                                        <center>Date</center>
+                                    </th>
+									<th>
+                                        <center>Quantity</center>
+                                    </th>
+									<th>
+                                        <center>Price</center>
+                                    </th>
+									<th>
+                                        <center>Seller</center>
+                                    </th>
+									<th>
+                                        <center>Source</center>
+                                    </th>
+									
+                                </tr>
+                                </thead>
+								<tbody id="ambillist"></tbody>
+								</table>
+	</div>
 </div>
 </div>
 
