@@ -16,6 +16,8 @@ return [
     "lbl9" => "Pelacakan",
     "lbl10" => "Halo",
     "lbl11" => "Transaksi",
+    "lbl12" => "Anda perlu login untuk memproses",
+    "lbl13" => "Acara hanya untuk eksportir",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",

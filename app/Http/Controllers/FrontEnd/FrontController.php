@@ -493,6 +493,22 @@ class FrontController extends Controller
         return view('frontend.event.detail_event', compact('detail'));
     }
 
+    public function gabung_event($id)
+    {   $cek = DB::table('event_company_add')->where('id_event_detail', $id)->where('id_itdp_profil_eks', Auth::guard('eksmp')->user()->id)->first();
+        if (!$cek) {
+            $data = DB::table('event_company_add')->insert([
+                'id_itdp_profil_eks' => Auth::guard('eksmp')->user()->id,
+                'id_event_detail' => $id,
+                'waktu' => date('Y-m-d H:i:s'),
+                'status' => 1
+            ]);
+        } else {
+            $data = $cek;
+        }
+        $detail = DB::table('event_detail')->where('status_en', 'Verified')->where('id', $id)->first();
+        return view('frontend.event.detail_event', compact('detail', 'data'));
+    }
+
     //Front End Training
     public function indexTraining(){
       $pageTitle = 'Training';

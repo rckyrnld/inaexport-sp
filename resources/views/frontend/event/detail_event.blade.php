@@ -52,6 +52,20 @@
           $img4 = 'uploads/Event/Image/'.$detail->id.'/'.$detail->image_4;
         }
     }
+
+    if (isset($data)) {
+        $button = '<button class="btn training joined btn-info" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.joined').'</button>';
+    } else {
+        if (Auth::guard('eksmp')->user()) {
+            if (Auth::guard('eksmp')->user()->id_role == 2) {
+                $button = '<button class="btn training join btn-info" onclick="__join('.$detail->id.')" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
+            } else {
+                $button = '<button class="btn training join btn-info" onclick="notif()" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
+            }
+        } else {
+            $button = '<button class="btn training join btn-info" onclick="__join('.$detail->id.')" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
+        }
+    }
 ?>
     <!--breadcrumbs area start-->
    <div class="breadcrumbs_area">
@@ -124,7 +138,7 @@
                             </div>
                             <div>
                                 <center>
-                                    <a href="{{url('/front_end/join_event')}}/{{$detail->id}}" class="btn btn-primary" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('training.join')</a>
+                                    <?php echo $button; ?>
                                 </center>
                             </div>
                         <!-- </form> -->
@@ -136,4 +150,18 @@
     <!--product details end-->
 <!-- Plugins JS -->
 <script src="{{asset('front/assets/js/plugins.js')}}"></script>
+<script type="text/javascript">
+    function __join(id){
+        @if(!Auth::guard('eksmp')->user())
+            alert("@lang('frontend.lbl12')");
+            window.location.href = "{{url('/login')}}";
+        @else
+            window.location.href = "{{url('/front_end/gabung_event')}}/"+id;
+        @endif
+    }
+
+    function notif() {
+        alert("@lang('frontend.lbl13')");
+    }
+</script>
 @include('frontend.layouts.footer')

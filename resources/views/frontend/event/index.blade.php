@@ -139,35 +139,35 @@
                         ?>
 
                         <div class="col-lg-4 col-md-4 col-12">
-                          <div>
+                          <div style="background-color: #2385d4; border-radius: 10px; vertical-align: top">
+                          <div style="padding: 10px;">
                             <center>
                             <img class="img-responsive" src="{{url('/')}}/{{$image}}" width="50%;">
                             </center>
                           </div>
-                          <div style="background-color: #2385d4; border-radius: 10px; vertical-align: top">
                             <div class="col" style="height: 100%; padding-top: 15px;">
                               <span style="color: #edf1f5; font-weight: 600; font-size: 20px;">{{$training}}</span><br>
 
-                              <span class="training">
+                              <span class="training" style="font-size: 15px;">
                                 <i class="fa fa-bullhorn"></i>&nbsp;&nbsp;@lang("training.topic")
                               </span><br>
-                              <span class="training_topic">
+                              <span class="training_topic" style="font-size: 15px;">
                                 {{$topic}}
                               </span>
                               <br>
 
-                              <span class="training">
+                              <span class="training" style="font-size: 15px;">
                                 <i class="fa fa-calendar"></i>&nbsp;&nbsp;@lang("training.date")
                               </span><br>
-                              <span class="training_topic">
+                              <span class="training_topic" style="font-size: 15px;">
                                 {{date("d F Y", strtotime($val->start_date))}} - {{date("d F Y", strtotime($val->end_date))}}
                               </span>
                               <br>
 
-                              <span class="training">
+                              <span class="training" style="font-size: 15px;">
                                 <i class="fa fa-street-view"></i>&nbsp;&nbsp;@lang("training.lokasi")
                               </span><br>
-                              <span class="training_topic">
+                              <span class="training_topic" style="font-size: 15px;">
                                 {{$location}}
                               </span>
                               <br><br>
