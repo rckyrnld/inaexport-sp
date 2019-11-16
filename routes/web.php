@@ -112,6 +112,7 @@ Route::get('/refreshchat/{id}/{id2}', 'BRFrontController@refreshchat');
 Route::get('/refreshchat2/{id}/{id2}', 'BRFrontController@refreshchat2');
 Route::post('/br_importir_save', 'BRFrontController@br_importir_save');
 Route::post('/uploadpop', 'BRFrontController@uploadpop');
+Route::post('/uploadpop2', 'BRFrontController@uploadpop2');
 Route::get('/ambilbroad/{id}', 'BRFrontController@ambilbroad');
 Route::get('/ambilbroad2/{id}', 'BRFrontController@ambilbroad2');
 /* Route::get('/registrasi_pembeli/{locale}', function ($locale) {

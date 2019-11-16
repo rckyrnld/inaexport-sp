@@ -269,6 +269,21 @@ class BRFrontController extends Controller
 			('".$idq."','".$request->catatan."','".Date('Y-m-d H:m:s')."','".$request->idc."','".$request->ide."','".$request->idd."','".$idb."','".$file."')");
 			
 			return redirect('br_importir_chat/'.$idq.'/'.$idb);
+	}
+	
+	public function uploadpop2(Request $request)
+    {		
+			$idq = $request->idq;
+			$idb = $request->idb;
+			$idc = $request->idc;
+			$file = $request->file('filez')->getClientOriginalName();
+			$destinationPath = public_path() . "/uploads/pop";
+			$request->file('filez')->move($destinationPath, $file);
+			$insert = DB::select("
+			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
+			('".$idb."','".$request->catatan."','".Date('Y-m-d H:m:s')."','".$request->idc."','".$request->ide."','".$request->idd."','".$idq."','".$file."')");
+			
+			return redirect('br_pw_chat/'.$idq);
 	}	
 	
 	public function br_importir_save(Request $request)
