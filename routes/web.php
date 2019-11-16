@@ -220,6 +220,8 @@ Route::post('/br_save_trx', 'BuyingRequestController@br_save_trx');
 
 //trx 
 Route::resource('/trx_list', 'TrxController');
+Route::get('/br_getdata3', 'TrxController@data_br3')->name('front.datatables.br3');
+Route::get('/detailtrx/{id}/{id2}', 'TrxController@detailtrx');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
