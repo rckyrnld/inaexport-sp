@@ -28,7 +28,7 @@ class TicketingSupportControllerAdmin extends Controller
 
     public function getData(){
 
-      $tick = TicketingSupportModel::from('ticketing_support as ts')
+      $tick = TicketingSupportModel::from('ticketing_support as ts')->orderby('id', 'DESC')
 				->get();
 
       return \Yajra\DataTables\DataTables::of($tick)

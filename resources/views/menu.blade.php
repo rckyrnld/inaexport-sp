@@ -95,7 +95,7 @@
             <span class="nav-icon">
               <i class="badge badge-xs badge-o md b-success"></i>
             </span>
-            <span class="nav-text">Pengaturan Menu</span>
+            <span class="nav-text">Setting Menu</span>
           </a>
         </li> 
 		

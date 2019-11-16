@@ -23,7 +23,7 @@ class AdminResearchController extends Controller
 
     public function getData()
     {
-      $research = DB::table('csc_research_corner')->orderby('publish_date', 'desc')->get();
+      $research = DB::table('csc_research_corner')->orderby('id', 'desc')->get();
 
       return \Yajra\DataTables\DataTables::of($research)
           ->addIndexColumn()
@@ -94,7 +94,7 @@ class AdminResearchController extends Controller
       $url = "/admin/research-corner/store/Create";
       $type = DB::table('csc_research_type')->orderby('nama_en', 'asc')->get();
       $country = DB::table('mst_country')->orderby('country', 'asc')->get();
-      $hscode = DB::table('mst_hscodes')->orderby('desc_eng', 'asc')->get();
+      // $hscode = DB::table('mst_hscodes')->orderby('desc_eng', 'asc')->get();
       return view('research-corner.admin.create',compact('url','pageTitle','page','country','hscode','type'));
     }
 
@@ -252,5 +252,20 @@ class AdminResearchController extends Controller
          Session::flash('failed','Failed Delete Data');
          return redirect('admin/research-corner/');
        }
+    }
+
+    public function hscode(Request $request)
+    {
+      $hscode = DB::table('mst_hscodes')
+                        ->select('id', 'desc_eng')
+                        ->orderby('desc_eng', 'asc');
+      if (isset($request->q)) {
+          $hscode->where('desc_eng', 'LIKE', '%'.$request->q.'%');
+      } else if (isset($request->code)) {
+          $hscode->where('id', $request->code);
+      } else {
+          $hscode->limit(10);
+      }
+      return response()->json($hscode->get());
     }
 }

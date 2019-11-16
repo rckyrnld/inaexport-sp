@@ -103,12 +103,7 @@
                   @if($page == 'view')
                     <input type="text" class="form-control" readonly value="{{rc_hscodes($data->id_mst_hscodes)}}">
                   @else
-                     <select class="form-control" id="code" required name="code" {{$view}}>
-                       <option></option>
-                       @foreach($hscode as $val)
-                       <option value="{{$val->id}}" @isset($data) @if($data->id_mst_hscodes == $val->id) selected @endif @endisset>{{$val->desc_eng}}</option>
-                       @endforeach
-                     </select>
+                     <select class="form-control" id="code" required name="code" {{$view}}></select>
                   @endif
                  </div>
              </div>
@@ -206,8 +201,42 @@
       placeholder: 'Select Country'
     });
 
+    // $('#code').select2({
+    //   placeholder: 'Select Code'
+    // });
+
     $('#code').select2({
-      placeholder: 'Select Code'
+      allowClear: true,
+      placeholder: 'Select Code',
+      ajax: {
+        url: "{{route('admin.research-corner.hscode')}}",
+        dataType: 'json',
+        delay: 250,
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (item) {
+              return {
+                text: item.desc_eng,
+                id: item.id
+              }
+            })
+          };
+        },
+        cache: true
+      }
     });
+
+    var hscode = {{$data->id_mst_hscodes}};
+    if (hscode != null) {
+        $.ajax({
+            type: 'GET',
+            url: "{{route('admin.research-corner.hscode')}}",
+            data: { code: hscode }
+        }).then(function (data) {
+            var option = new Option(data[0].desc_eng, data[0].id, true, true);
+
+            $('#code').append(option).trigger('change');
+        });
+    }
   });
 </script>
