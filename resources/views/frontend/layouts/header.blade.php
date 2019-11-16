@@ -103,8 +103,11 @@
                                             <!-- <li><a href="wishlist.html">Wishlist</a></li> -->
                                             @if(Auth::guard('eksmp')->user()->id_role == 3)
                                             <li><a href="{{route('profile')}}" style="text-decoration: none">@lang('frontend.lbl5')</a></li>
-                                            @endif
+                                            
+                                            
+											@endif
 											<li><a href="{{url('front_end/history')}}" style="text-decoration: none">@lang('frontend.lbl7')</a></li>
+											<li><a href="{{url('trx_list')}}" style="text-decoration: none">@lang('frontend.lbl11')</a></li>
                                             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('frontend.lbl4')</a></li>
                                         </ul>
                                     </li>

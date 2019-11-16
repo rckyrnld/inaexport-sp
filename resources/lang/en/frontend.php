@@ -15,6 +15,7 @@ return [
 	"lbl8" => "Product",
     "lbl9" => "Tracking",
     "lbl10" => "Hello",
+    "lbl11" => "Transaction",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",

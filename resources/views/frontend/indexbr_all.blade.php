@@ -34,6 +34,89 @@
                     </div>
 			<div class="form-row" style="font-size:12px;">
 			 <!--<img style="width:100%!important;" src="{{url('assets')}}/assets/images/07-Form-Request_01.png" alt="." >-->
+<?php 
+			 if(!empty(Auth::guard('eksmp')->user()->id)){
+		if(Auth::guard('eksmp')->user()->id_role == 2){
+			
+?>
+<table id="tablebureq3" border="0" class="table table-bordered table-striped">
+                                <thead class="text-white" style="background-color: #1089ff;">
+								<th>No</th>
+								<th>Subyek</th>
+								<th>Category</th>
+								<th>Create at</th>
+								<th>Valid Time</th>
+								<th>Status</th>
+								<th>Create By</th>
+								<th>Aksi</th>
+                                </thead>
+								<!--<tbody>
+								
+								<?php 
+								$pesan = DB::select("select * from csc_buying_request order by id desc ");
+								foreach($pesan as $ryu){
+								?>
+								<tr>
+								<td><?php echo "<b>".strtoupper($ryu->subyek)."</b><br>";
+								
+				 
+				 
+								?></td>
+				<td><?php $cardata = DB::select("select nama_kategori_en from csc_product where id='".$ryu->id_csc_prod_cat."'");
+				 foreach($cardata as $ct){
+					 echo $ct->nama_kategori_en."";
+				 } ?></td>
+				<td><?php echo $ryu->date; ?></td>
+				<td><?php echo "Valid until ".$ryu->valid." days<br>"; ?></td>
+				<td><?php if($ryu->by_role == 1){ echo "Admin"; }else if($ryu->by_role == 4){ echo "Perwakilan"; }else{ echo "Importir";
+				} ?></td>
+								
+								</tr>
+								<?php } ?>
+								
+								</tbody> -->
+
+                            </table>
+			 <?php }else{ ?>
+			 
+			 <table id="tablebureq2" border="0" class="table table-bordered table-striped">
+                                <thead class="text-white" style="background-color: #1089ff;">
+								<th>No</th>
+								<th>Subyek</th>
+								<th>Category</th>
+								<th>Create at</th>
+								<th>Valid Time</th>
+								<th>Status</th>
+								<th>Create By</th>
+                                </thead>
+								<!--<tbody>
+								
+								<?php 
+								$pesan = DB::select("select * from csc_buying_request order by id desc ");
+								foreach($pesan as $ryu){
+								?>
+								<tr>
+								<td><?php echo "<b>".strtoupper($ryu->subyek)."</b><br>";
+								
+				 
+				 
+								?></td>
+				<td><?php $cardata = DB::select("select nama_kategori_en from csc_product where id='".$ryu->id_csc_prod_cat."'");
+				 foreach($cardata as $ct){
+					 echo $ct->nama_kategori_en."";
+				 } ?></td>
+				<td><?php echo $ryu->date; ?></td>
+				<td><?php echo "Valid until ".$ryu->valid." days<br>"; ?></td>
+				<td><?php if($ryu->by_role == 1){ echo "Admin"; }else if($ryu->by_role == 4){ echo "Perwakilan"; }else{ echo "Importir";
+				} ?></td>
+								
+								</tr>
+								<?php } ?>
+								
+								</tbody> -->
+
+                            </table>
+			 <?php }}else{ ?>
   
   <table id="tablebureq" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
@@ -73,7 +156,7 @@
 
                             </table>
 
-
+			 <?php } ?>
 			<!--<a href="{{ url('br_importir_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add Buying Request</a><br><br> -->
 		
             </div>
@@ -101,6 +184,42 @@
                 {data: 'col4', name: 'col4'},
                 {data: 'col6', name: 'col6'},
                 {data: 'col5', name: 'col5'}
+                
+            ],
+            fixedColumns: true
+        });
+		
+		$('#tablebureq2').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('front.datatables.br2') }}",
+            columns: [
+                {data: 'row', name: 'row'},
+                {data: 'col1', name: 'col1'},
+                {data: 'col2', name: 'col2'},
+                {data: 'col3', name: 'col3'},
+                {data: 'col4', name: 'col4'},
+                {data: 'col6', name: 'col6'},
+                {data: 'col5', name: 'col5'}
+                
+            ],
+            fixedColumns: true
+        });
+		
+		$('#tablebureq3').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('front.datatables.br4') }}",
+            columns: [
+                {data: 'row', name: 'row'},
+                {data: 'col1', name: 'col1'},
+                {data: 'col2', name: 'col2'},
+                {data: 'col3', name: 'col3'},
+                {data: 'col4', name: 'col4'},
+				{data: 'col5', name: 'col5'},
+                {data: 'col6', name: 'col6'},
+                {data: 'aks', name: 'aks'}
+                
                 
             ],
             fixedColumns: true

@@ -19,14 +19,16 @@
 		</div>
 		<div class="form-group col-sm-6">
 			<?php 
-			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
+			$cr = explode(',',$ryu->id_csc_prod);
+				$hitung = count($cr);
+				$semuacat = "";
+				for($a = 0; $a < ($hitung - 1); $a++){
+					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+					$semuacat = $semuacat."- ".$napro."<br>";
+				}
+				echo $semuacat;
 			?>
-			<select class="form-control select2" name="category" id="category" onchange="t1()" >
-			<option value="">-- Select Category --</option>
-			<?php foreach($ms1 as $val1){ ?>
-			<option <?php if($ryu->id_csc_prod_cat == $val1->id){ echo "selected"; }?> value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
-			<?php } ?>
-			</select>
 		</div>
 		
 	</div>
