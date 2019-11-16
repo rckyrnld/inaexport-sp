@@ -32,11 +32,11 @@ class TicketingSupportController extends Controller
 
     public function create()
     {
-        if(Auth::guard('eksmp')->user()){
+        // if(Auth::guard('eksmp')->user()){
             return view('frontend.ticketing.create');
-        }else{
-            return redirect('/front_end');
-        }
+        // }else{
+        //     return redirect('/front_end');
+        // }
     }
 
     public function store(Request $req)
