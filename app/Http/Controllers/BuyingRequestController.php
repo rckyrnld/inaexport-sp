@@ -310,7 +310,7 @@ class BuyingRequestController extends Controller
 	
 	public function br_save_trx(Request $request)
     {
-		
+		if($request->tipekirim
 		$update = DB::select("update csc_buying_request set status_trx='".$request->tipekirim."', type_tracking='".$request->type_tracking."',no_track='".$request->no_track."' where id='".$request->id1."' ");
 		return redirect('br_list');
 	}
