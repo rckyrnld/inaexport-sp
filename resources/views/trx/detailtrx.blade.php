@@ -43,10 +43,9 @@ $q2 = DB::select("select * from csc_buying_request where id='".$id."'");
 foreach($q2 as $p2){
 ?>
 
-<div class="">
-<div class="col-md-12">
-   <div class="box-body">
-   <br><br>
+<div class="col-6">
+   
+   <br>
   
   <div class="form-row">
 		<div class="col-md-6">
@@ -123,7 +122,29 @@ foreach($q2 as $p2){
 		</div>
 	</div>
 	
+	
+	
 	<div class="form-row">
+		
+		<div class="form-group col-sm-5">
+		
+			
+			
+			<a  href="{{url('trx_list')}}" class="btn btn-danger"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
+		</div>
+	</div>
+	
+
+
+
+<?php } ?>
+
+
+			
+            </div>
+<div class="col-6">
+<br>
+<div class="form-row">
 		<div class="form-group col-sm-6">
 			<b>Messages</b>
 		</div>
@@ -154,7 +175,7 @@ foreach($q2 as $p2){
 			<b>Tracking of Type</b>
 		</div>
 		<div class="form-group col-sm-6">
-			<select <?php if($p2->status_trx == 1){ echo "readonly"; }?> class="form-control" name="type_tracking" required>
+			<select <?php if($p2->status_trx == 1){ echo "readonly"; }?> class="form-control" name="type_tracking" required readonly>
 				<option value="">- Select Tracking Type -</option>
 				<option <?php if($p2->type_tracking == "DHL Express"){ echo "selected"; }?> value="DHL Express">DHL Express</option>
 				<option <?php if($p2->type_tracking == "DHL Active Tracing"){ echo "selected"; }?> value="DHL Active Tracing">DHL Active Tracing</option>
@@ -172,30 +193,11 @@ foreach($q2 as $p2){
 			<b>No Tracking</b>
 		</div>
 		<div class="form-group col-sm-6">
-			<input class="form-control" type="text" id="no_track" name="no_track" value="<?php echo $p2->no_track; ?>" <?php if($p2->status_trx == 1){ echo "readonly"; }?> required>
+			<input class="form-control" readonly type="text" id="no_track" name="no_track" value="<?php echo $p2->no_track; ?>" <?php if($p2->status_trx == 1){ echo "readonly"; }?> required>
 			<input class="form-control" type="hidden" id="tipekirim" name="tipekirim" value="" required>
 		</div>
 	</div>
-	
-	<div class="form-row">
-		
-		<div class="form-group col-sm-5">
-		
-			<center>
-			
-			<a style="width:33%;" href="{{url('trx_list')}}" class="btn btn-danger">Back</a></center>
-		</div>
-	</div>
-	</div>
-
 </div>
-
-
-<?php } ?>
-
-
-			
-            </div>
                    
             </div>
         </div>
