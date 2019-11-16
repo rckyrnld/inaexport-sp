@@ -379,7 +379,7 @@ class FrontController extends Controller
         $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
             ->orderby('a.created_at', 'desc')
             ->distinct('a.id_research_corner', 'a.created_at')
-            ->select('b.*', 'a.id_research_corner', 'a.created_at', 'a.cover')
+            ->select('b.*', 'a.id_research_corner', 'a.created_at', 'b.cover')
             ->limit(9)
             ->get();
 
