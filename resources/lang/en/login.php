@@ -16,6 +16,10 @@ return [
     "lbl2" => "Importer Registration",
     "lbl3" => "LOG IN",
 	"lbl4" => "Forget Password",
+	"lbl5" => "EASY SOURCING",
+    "lbl6" => "An easy way to post your sourching request and get quotes.",
+    "lbl7" => "One request multiple quotes Verified suppliers matching Quotes comparison",
+    "lbl8" => "and sample request",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",

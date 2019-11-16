@@ -16,6 +16,10 @@ return [
     "lbl2" => "Pendaftaran Importir",
     "lbl3" => "Masuk",
     "lbl4" => "Lupa Password",
+    "lbl5" => "SUMBER MUDAH",
+    "lbl6" => "Cara mudah untuk mengirim permintaan suram Anda dan mendapatkan penawaran.",
+    "lbl7" => "Satu permintaan beberapa kutipan. Pemasok terverifikasi cocok dengan perbandingan Kutipan",
+    "lbl8" => "dan permintaan sampel",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",

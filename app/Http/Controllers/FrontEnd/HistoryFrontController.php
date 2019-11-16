@@ -280,7 +280,7 @@ class HistoryFrontController extends Controller
             $lct = "en";
         }
         $id_user = Auth::guard('eksmp')->user()->id;
-        $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.* from csc_buying_request a, csc_buying_request_join b where b.id_br = a.id and a.id_pembuat='".$id_user."' order by a.id desc ");
+        $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request  where id_pembuat='".$id_user."' order by id desc ");
       
 
         return DataTables::of($buy)
