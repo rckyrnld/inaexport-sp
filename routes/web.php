@@ -15,9 +15,9 @@ Route::get('locale/{locale}', function ($locale) {
     Session::put('locale', $locale);
     return redirect()->back();
 });
-Route::get('/', function () {
-    return redirect('/login');
-});
+// Route::get('/', function () {
+//     return redirect('/front_end');
+// });
 Route::get('switch/{locale}', function ($locale) {
     App::setLocale($locale);
 });
@@ -36,7 +36,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/list_transaction', 'TransactionFrontController@index');
     Route::get('/front_end/transaction_getdata', 'TransactionFrontController@datanya')->name('front.datatables.transaction');
     //Product
-    Route::get('/front_end', 'FrontController@index');
+    Route::get('/', 'FrontController@index');
     Route::get('/front_end/list_product', 'FrontController@list_product');
     Route::get('/front_end/getCategory', 'FrontController@getCategory')->name('front.product.getCategory');
     Route::get('/front_end/list_product/category/{id}', 'FrontController@product_category')->name('front.product.product_category');
