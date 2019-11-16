@@ -16,6 +16,10 @@ return [
     "lbl2" => "进口商注册",
     "lbl3" => "登入",
 	"lbl4" => "忘记密码",
+	"lbl5" => "轻松采购",
+    "lbl6" => "一种发布您的求购请求并获取报价的简单方法.",
+    "lbl7" => "一个请求多个报价经过验证的供应商匹配报价比较",
+    "lbl8" => "和样品要求",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",

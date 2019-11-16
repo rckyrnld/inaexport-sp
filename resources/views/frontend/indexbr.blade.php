@@ -47,21 +47,16 @@
                         </ul>
                     </div>
 			<div class="form-row" style="font-size:12px;">
-<?php if($r == 2){ ?>
-<div class="col-md-12">
-   <div class="box-body"><br><br>
-<h4><center>This Page Only For Eksportir user !
-Click <a href="{{url('login')}}">here</a> for login as Eksportir
-</center></h4>
-</div><br><br>
-</div>
-<?php }else{ ?>
+
 <div class="col-md-6">
    <div class="box-body">
    <br>
-   <img height="10px" src="{{url('assets')}}/assets/images/07-Form-Request_01.png" alt="." >
+   <img width="100%" height="10px" src="{{url('assets')}}/assets/images/07-Form-Request_01.png" alt="." >
+  <div style="font-size:17px;padding-left:10px;padding-right:10px;"><p><b>@lang("login.lbl5")</b></p>
+  <p style="font-size:16px;">@lang("login.lbl6") <br> @lang("login.lbl7") <br> @lang("login.lbl8")</p>
   
-  <table id="example1" border="0" class="table table-bordered table-striped">
+  </div>
+ <!-- <table id="example1" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                
                                 </thead>
@@ -100,7 +95,7 @@ Click <a href="{{url('login')}}">here</a> for login as Eksportir
 								
 								</tbody>
 
-                            </table>
+                            </table> -->
 	
 	
 	
@@ -275,7 +270,11 @@ Click <a href="{{url('login')}}">here</a> for login as Eksportir
 	</div>
 <div class="form-row">
 		<div class="col-sm-12">
+		<?php if($r==2){ ?>
+		<button disabled onclick="buk()" style="width:100%!important;" class="btn btn-md btn-success"><i class="fa fa-save"></i> @lang("login.btn4")</button>
+		<?php }else{ ?>
 		<button style="width:100%!important;" class="btn btn-md btn-success"><i class="fa fa-save"></i> @lang("login.btn4")</button>
+		<?php } ?>
 		</div>
 		
 		
@@ -309,7 +308,7 @@ Click <a href="{{url('login')}}">here</a> for login as Eksportir
 			<!--<a href="{{ url('br_importir_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add Buying Request</a><br><br> -->
 		
             </div>
- <?php } ?>                  
+                
             </div>
         </div>
     </section>
@@ -318,6 +317,9 @@ Click <a href="{{url('login')}}">here</a> for login as Eksportir
 @include('frontend.layouts.footer')
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script type="text/javascript">
+function buk(){
+	alert('This Form Only For Importir !');
+}
 
 	$(document).ready(function() {
 	$('.select2').select2();
