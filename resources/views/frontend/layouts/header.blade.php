@@ -113,9 +113,15 @@
                                     @else
                                     <li class="top_links"><a href="{{url('login')}}"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")
                                     @endif
-                                    <li class="language">
-                                        <!-- <div id="google_translate_element" style="border-radius:5px;"></div> -->
-                                        <select id="lang" class="form-control" style="
+									
+									<li class="language">
+                                        <a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
+	<a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
+	<a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
+	<!--<div id="google_translate_element" style="border-radius:5px;"></div> -->
+                                    </li>
+                                   <!-- <li class="language">
+                                         <select id="lang" class="form-control" style="
                                            border: 0;
                                            color: black;
                                            background: white;
@@ -133,7 +139,7 @@
                                             <option <?php if(app()->getLocale() == "in"){ echo "selected"; }?> value="in">Indonesia</option>
                                             <option <?php if(app()->getLocale() == "ch"){ echo "selected"; }?> value="ch">China</option>
                                         </select>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                         </div>

@@ -224,7 +224,7 @@ body {font-family: Arial;}
 								</center></td>
 								<td><center>
 								<?php if($ryu->status_join == 1){ ?>
-								<a href="{{url('br_konfirm/'.$ryu->idb.'/'.$id)}}" class="btn btn-success"><i class="fa fa-check"></i> Verifikasi</a>
+								<a href="{{url('br_konfirm2/'.$ryu->idb.'/'.$id)}}" class="btn btn-success"><i class="fa fa-check"></i> Verifikasi</a>
 								<?php }else if($ryu->status_join == 2){ ?>
 								<a href="{{url('br_pw_chat/'.$ryu->idb)}}" class="btn btn-info"><i class="fa fa-comment"></i> Chat</a>
 								<?php }else if($ryu->status_join == 4){ ?>

@@ -47,6 +47,15 @@
                         </ul>
                     </div>
 			<div class="form-row" style="font-size:12px;">
+<?php if($r == 2){ ?>
+<div class="col-md-12">
+   <div class="box-body"><br><br>
+<h4><center>This Page Only For Eksportir user !
+Click <a href="{{url('login')}}">here</a> for login as Eksportir
+</center></h4>
+</div><br><br>
+</div>
+<?php }else{ ?>
 <div class="col-md-6">
    <div class="box-body">
    <br>
@@ -102,6 +111,8 @@
 <div class="col-md-1">
 </div>
 <div class="col-md-5">
+
+
 <div class="box-body">
 <br>
 <form class="form-horizontal" method="POST" action="{{ url('br_importir_save') }}" enctype="multipart/form-data">
@@ -298,7 +309,7 @@
 			<!--<a href="{{ url('br_importir_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add Buying Request</a><br><br> -->
 		
             </div>
-                   
+ <?php } ?>                  
             </div>
         </div>
     </section>

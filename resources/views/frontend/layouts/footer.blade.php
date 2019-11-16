@@ -38,7 +38,7 @@
         </div>
     </section> -->
     <!--shipping area end-->
-
+<?php if(empty($loc)){ $loc = 'en'; } ?>
     <section class="call_to_action">
         <div class="container">
             <div class="row counters">
@@ -51,13 +51,14 @@
                         </li>
                          <li style="padding-left: 20%;">
                             <p class="counters_text" style="font-size: 18px;">
+							
                                 @if($loc == 'ch')
                                 出口商
                                 @elseif($loc == 'in')
                                 Eksportir
                                 @else
                                 Exporters
-                                @endif
+                                @endif 
                             </p>
                         </li>
                     </ul>
