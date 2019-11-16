@@ -23,7 +23,7 @@ class TransactionFrontController extends Controller
         if(Auth::guard('eksmp')->user()->id_role == 3){
             return view('frontend.transaction.index', compact('pageTitle'));
         }else{
-            return redirect('/front_end');
+            return redirect('/');
         }
     }
 

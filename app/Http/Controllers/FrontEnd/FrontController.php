@@ -435,7 +435,7 @@ class FrontController extends Controller
             'to_role' => '1',
         ]);
 
-        return redirect('/front_end');
+        return redirect('/');
     }
 
     public function getSub(Request $request)

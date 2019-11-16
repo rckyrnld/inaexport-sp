@@ -42,7 +42,7 @@ class InquiryFrontController extends Controller
                 ->count();
             return view('frontend.inquiry.create_new', compact('data', 'url', 'id_user', 'coinquiry'));
         }else{
-            return redirect('/front_end');
+            return redirect('/');
         }
     }
 
@@ -138,7 +138,7 @@ class InquiryFrontController extends Controller
 
             return redirect('/front_end/history');
         }else{
-            return redirect('/front_end');
+            return redirect('/');
         }
 
     }
@@ -172,7 +172,7 @@ class InquiryFrontController extends Controller
 
             return redirect('/front_end/history');
         }else{
-            return redirect('/front_end');
+            return redirect('/');
         }
     }
 
@@ -196,7 +196,7 @@ class InquiryFrontController extends Controller
             return view('frontend.inquiry.chatting', compact('inquiry', 'data', 'messages', 'id_user'));
             // return view('frontend.inquiry.chatting');
         }else{
-            return redirect('/front_end');
+            return redirect('/');
         }
     }
 
@@ -270,7 +270,7 @@ class InquiryFrontController extends Controller
 
             return view('frontend.inquiry.view', compact('inquiry', 'data', 'id_user'));
         }else{
-            return redirect('/front_end');
+            return redirect('/');
         }
     }
 
