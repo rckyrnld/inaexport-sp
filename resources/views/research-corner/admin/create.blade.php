@@ -225,7 +225,7 @@
         cache: true
       }
     });
-
+    @isset($data)
     var hscode = {{$data->id_mst_hscodes}};
     if (hscode != null) {
         $.ajax({
@@ -238,5 +238,6 @@
             $('#code').append(option).trigger('change');
         });
     }
+    @endisset
   });
 </script>
