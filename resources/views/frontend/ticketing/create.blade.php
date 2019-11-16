@@ -118,10 +118,8 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $( "#formTicket" ).submit(function( event ) {
-          event.preventDefault();
-          @if(Auth::guard('eksmp')->user())
-            $( "#formTicket" ).submit();
-          @else
+          @if(!Auth::guard('eksmp')->user())
+            event.preventDefault();
             alert("@lang('frontend.lbl6')");
             window.location.href = "{{url('/login')}}";
           @endif

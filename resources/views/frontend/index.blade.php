@@ -141,11 +141,17 @@
                                     if(Auth::guard('eksmp')->user()->id_role == 2){
                                         $url = '/home';
                                     }else if(Auth::guard('eksmp')->user()->id_role == 3){
-                                        $url = '/front_end';
+                                        $url = '/';
                                     }
                                 }
                             ?>
+                                @if(Auth::guard('eksmp')->user())
+                                @if(Auth::guard('eksmp')->user()->id_role == 3)
                                 <a href="{{url($url)}}" class="for-act">
+                                @endif
+                                @else
+                                <a href="{{url($url)}}" class="for-act">
+                                @endif
                                   <img src="{{asset('front/assets/icon/icon_buyer.png')}}" alt="" style="width: 20%;">
                                   <span style="font-size: 27px; color: #37791C;">
                                     @if($loc == 'ch')
@@ -156,12 +162,24 @@
                                     FOR BUYER
                                     @endif
                                   </span>
+                                @if(Auth::guard('eksmp')->user())
+                                @if(Auth::guard('eksmp')->user()->id_role == 3)
                                 </a>
+                                @endif
+                                @else
+                                </a>
+                                @endif
                             </center>
                           </div>
                           <div class="col-md-6">
                             <center>
+                                @if(Auth::guard('eksmp')->user())
+                                @if(Auth::guard('eksmp')->user()->id_role == 2)
                                 <a href="{{url($url)}}" class="for-act">
+                                @endif
+                                @else
+                                <a href="{{url($url)}}" class="for-act">
+                                @endif
                                   <img src="{{asset('front/assets/icon/icon_seller.png')}}" alt="" style="width: 20%;">
                                   <span style="font-size: 27px; color: #EA8125;">
                                     @if($loc == 'ch')
@@ -172,7 +190,13 @@
                                     FOR INDONESIA EXPORTER
                                     @endif
                                   </span>
+                                @if(Auth::guard('eksmp')->user())
+                                @if(Auth::guard('eksmp')->user()->id_role == 2)
                                 </a>
+                                @endif
+                                @else
+                                </a>
+                                @endif
                             </center>
                           </div>
                         </div>
