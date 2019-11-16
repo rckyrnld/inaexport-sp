@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mail;
+use Yajra\DataTables\Facades\DataTables;
 
 class RegistrasiController extends Controller
 {
@@ -187,6 +188,57 @@ class RegistrasiController extends Controller
 
                 });
         return view('auth.waitmail',compact('pageTitle'));
+    }
+	
+	public function data_br2()
+    {
+        
+        $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row,* from csc_buying_request ");
+      
+
+        return DataTables::of($buy)
+            ->addColumn('col1', function ($buy) {
+				 return $buy->subyek;
+            })
+			->addColumn('col2', function ($buy) {
+				$cr = explode(',',$buy->id_csc_prod);
+				$hitung = count($cr);
+				$semuacat = "";
+				for($a = 0; $a < ($hitung - 1); $a++){
+					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+					$semuacat = $semuacat."- ".$napro."<br>";
+				}
+				return $semuacat;
+            })
+			->addColumn('col3', function ($buy) {
+				 return $buy->date;
+            })
+			->addColumn('col4', function ($buy) {
+				 return 'Valid '.$buy->valid." days";
+            })
+			->addColumn('col5', function ($buy) {
+				 if($buy->deal == null || $buy->deal == 0 || empty($buy->deal)){
+					return "Negosiation";
+				 }else{
+					return "Deal";
+				 }
+            })
+			->addColumn('col6', function ($buy) {
+				 if($buy->by_role == 3){
+					return "Importir";
+				 }else if($buy->by_role == 4){
+					return "Perwakilan";
+				 }else if($buy->by_role == 1){
+					return "Admin";
+				 }else{
+					 return "";
+				 }
+            })
+			
+			
+			->rawColumns(['col4','col5','col2','col6'])
+            ->make(true);
     }
 	
 	public function transaksibr()

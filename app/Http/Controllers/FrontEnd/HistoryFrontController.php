@@ -342,6 +342,8 @@ class HistoryFrontController extends Controller
 			->rawColumns(['col7','col4','col5','col2'])
             ->make(true);
     }
+	
+	
 
     public function create($id)
     {

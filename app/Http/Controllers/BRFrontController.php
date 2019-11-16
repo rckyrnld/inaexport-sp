@@ -47,6 +47,8 @@ class BRFrontController extends Controller
 	
 	public function br_importir()
     {
+		if(!empty(Auth::guard('eksmp')->user()->id)){
+		if(Auth::guard('eksmp')->user()->id_role == 3){
         /*$pageTitle = "Buying Request Importer";
         return view('buying-request.br_importir',compact('pageTitle')); */
 		 $product = DB::table('csc_product_single')
@@ -68,6 +70,14 @@ class BRFrontController extends Controller
             ->limit(9)
             ->get();
         return view('frontend.indexbr', compact('product', 'categoryutama'));
+		}else{
+		
+        return view('frontend.indexbr_all', compact('product'));
+		}
+		}else{
+		return view('frontend.indexbr_all', compact('product'));
+		}
+		
     }
 
 	public function br_importir_add()

@@ -65,6 +65,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/history/inquiry_getdata', 'HistoryFrontController@data_inquiry')->name('front.datatables.inquiry');
     //Buying Request
     Route::get('/front_end/history/br_getdata', 'HistoryFrontController@data_br')->name('front.datatables.br');
+   
 
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
@@ -118,6 +119,7 @@ Route::get('/ambilbroad2/{id}', 'BRFrontController@ambilbroad2');
 }); */
 Route::post('/simpan_rpembeli', 'RegistrasiController@simpan_rpembeli');
 Route::get('/verifypembeli/{id}', 'RegistrasiController@verifypembeli');
+ Route::get('/br_getdata2', 'RegistrasiController@data_br2')->name('front.datatables.br2');
 
 Route::get('/registrasi_penjual', 'RegistrasiController@registrasi_penjual');
 Route::post('/simpan_rpenjual', 'RegistrasiController@simpan_rpenjual');
