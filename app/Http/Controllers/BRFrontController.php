@@ -128,6 +128,16 @@ class BRFrontController extends Controller
         return redirect('br_importir_lc/'.$id2);
     }
 	
+	public function br_konfirm2($id,$id2)
+    {
+		$crv = DB::select("select * from csc_buying_request where id='".$id2."'");
+		foreach($crv as $cr){ $vld = $cr->valid; }
+		$dy = $vld." day";
+		$besok = date('Y-m-d', strtotime($dy, strtotime(date("Y-m-d"))));
+		$update = DB::select("update csc_buying_request_join set status_join='2', expired_at='".$besok."' where id='".$id."' ");
+        return redirect('br_pw_lc/'.$id2);
+    }
+	
 	public function br_importir_bc($id)
     {
 		$cariprod = DB::select("select * from csc_buying_request where id='".$id."'");
