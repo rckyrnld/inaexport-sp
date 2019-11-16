@@ -10,6 +10,7 @@ return [
     "lbl3" => "Masuk",
     "lbl4" => "Keluar",
     "lbl5" => "Profil",
+    "lbl6" => "Anda perlu login untuk memproses tiket",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",

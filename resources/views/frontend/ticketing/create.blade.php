@@ -52,7 +52,7 @@
     <!--breadcrumbs area end-->
 
     <!--product details start-->
-    <form action="{{route('front.ticket.store')}}" method="post">
+    <form action="{{route('front.ticket.store')}}" method="post" id="formTicket">
       {{ csrf_field() }}
       <div class="product_details mt-20" style="background-color: #ddeffd; margin-bottom: 0px !important; margin-top: 0px; font-size: 14px;">
           <div class="container">
@@ -99,8 +99,8 @@
                     <!-- <div class="col-md-3"></div> -->
                     <div class="col-md-10">
                       <div style="float: right;">
-                        <a href="{{url('/front_end')}}" class="btn btn-danger" style="font-size: 14px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;@lang('button-name.cancel')</a>
-                        <button type="submit" class="btn btn-primary" name="button" style="font-size: 14px;"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;&nbsp;@lang('button-name.submit')</button>
+                        <a href="{{url('/')}}" class="btn btn-danger" style="font-size: 14px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;@lang('button-name.cancel')</a>
+                        <button type="submit" class="btn btn-primary" name="button" id="button" style="font-size: 14px;"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;&nbsp;@lang('button-name.submit')</button>
                       </div>
                     </div>
                   </div>
@@ -117,6 +117,14 @@
 @include('frontend.layouts.footer')
 <script type="text/javascript">
     $(document).ready(function(){
-        
+        $( "#formTicket" ).submit(function( event ) {
+          event.preventDefault();
+          @if(Auth::guard('eksmp')->user())
+            $( "#formTicket" ).submit();
+          @else
+            alert("@lang('frontend.lbl6')");
+            window.location.href = "{{url('/login')}}";
+          @endif
+        });
     });
 </script>
