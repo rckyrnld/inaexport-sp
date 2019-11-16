@@ -150,16 +150,16 @@
         <!--header top start-->
         <!--header middel start-->
         <div class="header_middle">
-            <div class="container">
+            <div class="container" style="max-width: 1200px!important;">
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-md-6">
                         <div class="logo">
-                            <a href="{{url('/front_end')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>
+                            <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>
                         </div>
                     </div>
                     <div class="col-lg-10 col-md-6">
                         <div class="middel_right">
-                            <div class="search-container">
+                            <div class="search-container" style="margin-right: 48px!important;">
                                 <!-- Nav pills -->
                                 <!-- <ul class="nav nav-pills" role="tablist">
                                     <li class="nav-item"> -->
@@ -178,7 +178,7 @@
                                     <div id="products" class="container tab-pane active"> -->
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_product')}}" id="formsprod">
                                             {{ csrf_field() }}
-                                            <div class="search_box">
+                                            <div class="search_box" style="width:484px!important;">
                                                 <?php
                                                     if(isset($search)){
                                                         $cariprod = $search;
@@ -251,11 +251,50 @@
                                         </tr>
                                     </table>
                                 </div>
+								<a href="{{url('front_end/tracking')}}">
+								<div class="mini_cart_wrapper" style="padding-right: 15px">
+                                    <table style="width: 150px;">
+                                        <tr>
+                                            <td rowspan="2" style="width: 50px">
+                                                <img src="{{asset('front/assets/icon/love.png')}}" alt="" style="width: 50px;">
+                                            </td>
+                                            <td style="">
+                                                <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
+                                                    Tracking
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                @if(Auth::guard('eksmp')->user())
+                                                <span style="color: black; font-weight: 600; font-size: 12px; padding-left: 10px;">
+                                                    @if(Auth::guard('eksmp')->user()->id_role == 3)
+                                                        {{getCompanyNameImportir(Auth::guard('eksmp')->user()->id)}}
+                                                    @elseif(Auth::guard('eksmp')->user()->id_role == 2)
+                                                        {{getCompanyName(Auth::guard('eksmp')->user()->id)}}
+                                                    @endif
+                                                </span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+								</a>
                                 <div class="header_wishlist">
                                     <table style="width: 150px;">
                                         <tr>
                                             <td rowspan="2" style="width: 50px">
-                                                <img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">
+											@if(Auth::guard('eksmp')->user())
+                                                
+                                                    @if(Auth::guard('eksmp')->user()->id_role == 3)
+                                                <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" style="width: 50px;">
+                                                    @elseif(Auth::guard('eksmp')->user()->id_role == 2)
+                                                 <img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">
+                                                    @endif
+											@else	
+												<img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">
+                                            @endif
+                                                
                                             </td>
                                             <td style="">
                                                 <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
