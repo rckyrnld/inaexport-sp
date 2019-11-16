@@ -264,9 +264,13 @@ foreach($q2 as $p2){
 	<div class="form-row">
 		
 		<div class="form-group col-sm-5">
-			<center><button style="width:33%;" onclick="getyou(1)" type="submit" class="btn btn-info">Submit</button>
+		
+			<center>
+			<?php if($p2->status_trx != 1){ ?>
+			<button style="width:33%;" onclick="getyou(1)" type="submit" class="btn btn-info">Submit</button>
 			<button style="width:30%;" onclick="getyou(0)" type="submit" class="btn btn-warning"><font color="white">Draft</font></button>
-			<a style="width:33%;" href="{{url('br_list')}}" class="btn btn-danger">Cancel</a></center>
+			<?php } ?>
+			<a style="width:33%;" href="{{url('trx_list')}}" class="btn btn-danger">Cancel</a></center>
 		</div>
 	</div>
 	</div>
