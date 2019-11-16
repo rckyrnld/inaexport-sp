@@ -13,7 +13,7 @@ class LoginEIController extends Controller
     
 	use AuthenticatesUsers;
     protected $guard = 'eksmp';
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
@@ -28,7 +28,7 @@ class LoginEIController extends Controller
     {
         if (Auth::guard('eksmp')->attempt(['email' => $request->email2, 'password' => $request->password2])) {
 
-            return redirect()->intended('/home');
+            return redirect()->intended('/');
         }
 		
         return back()->withErrors(['email' => 'Email or password are wrong.']);
