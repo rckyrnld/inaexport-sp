@@ -45,7 +45,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="{{url('/front_end')}}">@lang('frontend.proddetail.home')</a></li>
+                            <li><a href="{{url('/')}}">@lang('frontend.proddetail.home')</a></li>
                             <li><a href="{{url('/front_end/history')}}">@lang('frontend.history.title')</a></li>
                             <li>Details Ticketing Support</li>
                         </ul>

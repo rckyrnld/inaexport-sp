@@ -50,7 +50,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="{{url('/front_end')}}">Home</a></li>
+                            <li><a href="{{url('/')}}">Home</a></li>
                             @if($data->id_csc_product == NULL)
                             <li><a href="{{url('/front_end/list_product')}}">Default</a></li>
                             @else

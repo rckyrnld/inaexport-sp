@@ -28,7 +28,7 @@ class HistoryFrontController extends Controller
         if(Auth::guard('eksmp')->user()){
             return view('frontend.history');
         }else{
-            return redirect('/front_end');
+            return redirect('/');
         }
     }
 

@@ -50,7 +50,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="{{url('/front_end')}}">@lang('frontend.proddetail.home')</a></li>
+                            <li><a href="{{url('/')}}">@lang('frontend.proddetail.home')</a></li>
                             @if($data->id_csc_product == NULL)
                             <li><a href="{{url('/front_end/list_product')}}">@lang('frontend.proddetail.dafault')</a></li>
                             @else
@@ -361,7 +361,7 @@
           <div class="row">
             <div class="col-md-11">
               <div style="float: right;">
-                <a class="btn btn-danger" href="{{url('/front_end')}}">@lang('inquiry.cancel')</a>
+                <a class="btn btn-danger" href="{{url('/')}}">@lang('inquiry.cancel')</a>
                 <button type="button" class="btn btn-primary" id="btnsubmit">@lang('inquiry.submit')</button>
               </div>
             </div>

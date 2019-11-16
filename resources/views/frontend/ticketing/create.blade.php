@@ -40,7 +40,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="{{url('/front_end')}}">@lang('frontend.proddetail.home')</a></li>
+                            <li><a href="{{url('/')}}">@lang('frontend.proddetail.home')</a></li>
                             <li><a href="#">@lang('frontend.history.ticket')</a></li>
                             <li>@lang('frontend.ticket_title')</li>
                         </ul>
@@ -118,10 +118,8 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $( "#formTicket" ).submit(function( event ) {
-          event.preventDefault();
-          @if(Auth::guard('eksmp')->user())
-            $( "#formTicket" ).submit();
-          @else
+          @if(!Auth::guard('eksmp')->user())
+            event.preventDefault();
             alert("@lang('frontend.lbl6')");
             window.location.href = "{{url('/login')}}";
           @endif

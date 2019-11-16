@@ -38,7 +38,7 @@ class ImporterController extends Controller
 
             return view('frontend.importir.profile', compact('id_user', 'country', 'profile', 'contact'));
         } else {
-            return redirect('/front_end');
+            return redirect('/');
         }
     }
 
@@ -122,7 +122,7 @@ class ImporterController extends Controller
                 dd($profilenya);
             }
         } else {
-            return redirect('/front_end');
+            return redirect('/');
         }
     }
 
@@ -150,7 +150,7 @@ class ImporterController extends Controller
             return redirect('/profile');
 
         } else {
-            return redirect('/front_end');
+            return redirect('/');
         }
     }
 }
