@@ -217,6 +217,9 @@ Route::get('/ambilt3/{id}', 'BuyingRequestController@ambilt3');
 Route::post('/br_save', 'BuyingRequestController@br_save');
 Route::post('/br_save_trx', 'BuyingRequestController@br_save_trx');
 
+//trx 
+Route::resource('/trx_list', 'TrxController');
+
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/gantipass', 'HomeController@gantipass');
