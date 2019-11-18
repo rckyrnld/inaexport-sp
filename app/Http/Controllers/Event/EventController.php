@@ -17,13 +17,14 @@ class EventController extends Controller
 		if (Auth::guard('eksmp')->user()) {
 			$id_user = strval(Auth::guard('eksmp')->user()->id);
 			// $e_detail = DB::select("SELECT DISTINCT b.id_terkait, a.* FROM event_detail as a LEFT JOIN notif as b on b.id_terkait=a.id::VARCHAR WHERE b.untuk_id='$id_user' and b.url_terkait='event/show/read' ORDER BY a.id desc ");
-            $e_detail = DB::table('event_detail as a')->select('b.id_terkait', 'a.*')
+            $e_detail = DB::table('event_detail as a')->select('a.*')
             ->leftjoin('notif as b', function($join){
                 $join->on(DB::raw('a.id::varchar'), '=', 'b.id_terkait');
-            })->where('b.untuk_id', $id_user)->where(function($query){
+            })->leftjoin('event_company_add as c', 'a.id', '=', 'c.id_event_detail')
+            ->where('b.untuk_id', $id_user)->where(function($query){
                 $query->where('b.url_terkait', 'event/show/read');
-            })->orderby('a.id','desc')->get();
-			// $e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);
+            })->orwhere('c.id_itdp_profil_eks', $id_user)->orderby('a.id','desc')->get();
+
 			return view('Event.index_eksportir', compact('pageTitle','e_detail', 'id_user'));
 		}else{
 			$e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);

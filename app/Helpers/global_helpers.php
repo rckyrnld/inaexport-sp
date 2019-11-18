@@ -339,7 +339,12 @@ if (! function_exists('cekid')) {
 if (! function_exists('StatusJoin')) {
     function StatusJoin($id, $id_user){
         $data = DB::table('notif')->where('untuk_id', $id_user)->where('id_terkait', $id)->first();
-        return $data->status;
+        if($data){
+          return $data->status;
+        } else {
+          $data = DB::table('event_company_add')->where('id_itdp_profil_eks', $id_user)->where('id_event_detail', $id)->first();
+          return $data->status;
+        }
     }
 }
 
