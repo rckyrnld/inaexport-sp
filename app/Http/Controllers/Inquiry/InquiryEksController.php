@@ -433,6 +433,7 @@ class InquiryEksController extends Controller
     public function dealing($id, $status)
     {
         $id_user = Auth::guard('eksmp')->user()->id;
+        $datenow = date('Y-m-d H:i:s');
         if($status == 1){
             $stat = 3;
         }else{
@@ -454,7 +455,7 @@ class InquiryEksController extends Controller
 
             $updatebrm = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->update([
                     'status' => $stat,
-                ]); 
+            ]); 
 
         }else if($inquiry->type == "importir"){
             $update = DB::table('csc_inquiry_br')->where('id', $id)->update([
@@ -462,8 +463,31 @@ class InquiryEksController extends Controller
             ]);
         }
 
+        if($stat == 3){
+            $idn = DB::table('csc_transaksi')->max('id_transaksi');
+            $idnew = $idn + 1;
 
-        return redirect('/inquiry');
+            if($inquiry->type == "admin"){
+                $role = 1;
+            }else if($inquiry->type == "perwakilan"){
+                $role = 4;
+            }else if($inquiry->type == "importir"){
+                $role = 3;
+            }
+            $insert = DB::table('csc_transaksi')->insert([
+                "id_transaksi"=> $idnew,
+                "id_pembuat" => $inquiry->id_pembuat,
+                "by_role" => $role,
+                "id_eksportir" => $id_user,
+                "id_terkait" => $id,
+                "origin" => 1,
+                "created_at" => $datenow,
+                "status_transaksi" => 0,
+            ]);
+            return redirect('/input_transaksi/'.$idnew);
+        }else{
+            return redirect('/inquiry');
+        }
     }
 
     public function view($id)
