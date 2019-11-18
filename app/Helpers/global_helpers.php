@@ -163,12 +163,47 @@ if (! function_exists('checkJoin')) {
     }
 }
 
+if (! function_exists('checkJoinEvent')) {
+    function checkJoinEvent($id_event, $id_user){
+        $cek = DB::table('notif')->where('url_terkait', 'event/show/read')->where(function($param) use ($id_user,$id_event){
+            $param->where('untuk_id', $id_user)
+                  ->where('id_terkait', $id_event);
+        })->first();
+
+        $return = 0;
+        if($cek){
+          if($cek->status == 2){
+            $return = 1;
+          } elseif($cek->status == 1) {
+            $return = 2;
+          } else {
+            $return = 0;
+          }
+        } else {
+          $cek = DB::table('event_company_add')->where('id_event_detail', $id_event)->where('id_itdp_profil_eks', $id_user)->first();
+          if($cek){
+            if($cek->status == 2){
+              $return = 1;
+            } else {
+              $return = 2;
+            }
+          } else {
+            $return = 0;
+          }
+        }
+
+        return $return;
+    }
+}
+
 if (! function_exists('EvenOrgZ')) {
     function EvenOrgZ($id, $lang){
         $data = DB::table('event_organizer')->where('id', $id)->first();
         if ($lang=='in') {
           return $data->name_in;
-        }else{
+        }else if ($lang == 'en'){
+          return $data->name_en;
+        } else {
           return $data->name_chn;
         }
     }
@@ -179,6 +214,8 @@ if (! function_exists('EventPlaceZ')) {
         $data = DB::table('event_place')->where('id', $id)->first();
         if ($lang=='in') {
           return $data->name_in;
+        }elseif($lang == 'en'){
+          return $data->name_en;
         }else{
           return $data->name_chn;
         }

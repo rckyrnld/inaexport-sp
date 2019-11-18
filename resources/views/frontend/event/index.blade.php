@@ -4,34 +4,12 @@
   $loc = app()->getLocale();
   if(Auth::guard('eksmp')->user() || Auth::user()){
     if(Auth::guard('eksmp')->user()->id_role == 2){
-      $for = 'eksportir';
-      $message = '';
       $id_user = Auth::guard('eksmp')->user()->id;
-      $id_profil = cekid(Auth::guard('eksmp')->user()->id);
-      $id_profil = $id_profil->id;
     } else {
-      $id_user = '';
-      $id_profil = '0';
-      $for = 'no akses';
-        if($loc == "ch"){
-          $message = "您无权加入";
-        }elseif($loc == "in"){
-          $message = "Anda Tidak Memiliki Akses untuk Bergabung!";
-        }else{
-          $message = "You do not Have Access to Join!";
-        }
+      $id_user = '0';
     }
   } else {
-    $id_user = '';
-    $id_profil = '0';
-    $for = 'non user';
-      if($loc == "ch"){
-        $message = "请先登录";
-      }elseif($loc == "in"){
-        $message = "Silahkan Login Terlebih Dahulu!";
-      }else{
-        $message = "Please Login to Continue!";
-      }
+    $id_user = '0';
   }
 
 ?>
@@ -62,7 +40,7 @@
 </style>
 <div style="background-color: white;">
   <div class="container">
-    <div class="col-md-12 col-lg-12">
+    <div class="col-md-12 col-lg-12" style="padding-top: 20px">
       <span style="color: #1a70bb; text-align: center;"><h2>@lang("frontend.jdl_event")</h2></span>
     </div>
   </div>
@@ -130,12 +108,15 @@
                             }
                           }
 
-                          $cek = checkJoin($val->id, $id_profil);
+                          $cek = checkJoinEvent($val->id, $id_user);
                           if($cek == 0){
-                            $button = '<button class="btn training join btn-info" onclick="__join('.$val->id.')">'.Lang::get('training.join').'</button>';
+                            $buttonnya = Lang::get('training.join');
+                          } elseif($cek == 2) {
+                            $buttonnya = Lang::get('training.pending');
                           } else {
-                            $button = '<button class="btn training joined btn-info">'.Lang::get('training.joined').'</button>';
+                            $buttonnya = Lang::get('training.joined');
                           }
+                           $button = '<button class="btn training join btn-info" onclick="__join('.$val->id.')">'.$buttonnya.'</button>';
                         ?>
 
                         <div class="col-lg-4 col-md-4 col-12">

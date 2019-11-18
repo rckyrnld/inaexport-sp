@@ -8,5 +8,6 @@ return [
 	"day" => "天",
 	"date" => "日期",
 	"join" => "加入",
+	"pending" => "等待批准",
 	"joined" => "已加入"
 ];
