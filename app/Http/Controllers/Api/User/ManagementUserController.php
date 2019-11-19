@@ -70,7 +70,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -102,7 +102,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -112,7 +112,7 @@ class ManagementUserController extends Controller
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -135,7 +135,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -186,7 +186,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -196,7 +196,7 @@ class ManagementUserController extends Controller
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
