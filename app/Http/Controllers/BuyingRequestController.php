@@ -256,9 +256,21 @@ class BuyingRequestController extends Controller
 	}	
 	public function br_deal($id,$id2,$id3)
     {
+		$maxid = 0;
 		$update = DB::select("update csc_buying_request_join set status_join='4' where id='".$id."' ");
 		$update2 = DB::select("update csc_buying_request set status='4', deal='".$id3."' where id='".$id2."' ");
-		return redirect('br_trx/'.$id2.'/'.$id);
+		$ambildata = DB::select("select * from csc_buying_request where id='".$id2."'");
+		foreach($ambildata as $ad){
+			$isi1 = $ad->id_pembuat;
+			$isi2 = $ad->by_role;
+		}
+		
+		$insert = DB::select("
+			insert into csc_transaksi (id_pembuat,by_role,id_eksportir,id_terkait,origin,created_at,status_transaksi) values
+			('".$isi1."','".$isi2."','".Auth::guard('eksmp')->user()->id."','".$id2."','2','".Date('Y-m-d H:m:s')."','0')");
+		$querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
+		foreach($querymax as $maxquery){ $maxid = $maxquery->maxid;   }
+		return redirect('input_transaksi/'.$maxid);
 	}	
 	public function br_chat($id)
     {
