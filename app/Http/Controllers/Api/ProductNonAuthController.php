@@ -224,7 +224,7 @@ class ProductNonAuthController extends Controller
             ];
 //            $data = data;
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = '';
             return response($res);
         }
     }
@@ -248,7 +248,21 @@ class ProductNonAuthController extends Controller
             ];
 //            $data = $dataProduk;
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            $getJSON = array();
+            foreach ($data as $item) {
+                array_push($getJSON, array(
+                    "id" => $item->id,
+                    "id_csc_product" => $item->id_csc_product,
+                    "id_csc_product_level1" => $item->id_csc_product_level1,
+                    "id_csc_product_level2" => $item->id_csc_product_level2,
+                    "prodname_en" => $item->prodname_en,
+                    "prodname_in" => $item->prodname_in,
+                    "prodname_chn" => $item->prodname_in,
+                    "gambar" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg')
+                ));
+            }
+
+            $res['data'] = $getJSON;
             return response($res);
         } else {
             $meta = [
@@ -258,7 +272,7 @@ class ProductNonAuthController extends Controller
             ];
 //            $data = data;
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = '';
             return response($res);
         }
     }
