@@ -15,8 +15,8 @@ class TrxController extends Controller
     {
 		if(!empty(Auth::guard('eksmp')->user()->id)){
 		if(Auth::guard('eksmp')->user()->id_role == 2){
-		$pageTitle = "Selling Transaction Eksportir";
-		$data = DB::select("select a.*,a.id as ida,a.status as statusa,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where  b.status_join='4' and  a.id = b.id_br and b.id_eks='".Auth::guard('eksmp')->user()->id."' order by b.id desc ");
+		$pageTitle = "Selling Transaction";
+		$data = DB::select("select * from csc_transaksi where  id_eksportir='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc ");
         return view('trx.index_eks', compact('pageTitle','data'));
 		}else if(Auth::guard('eksmp')->user()->id_role == 3){
 		$pageTitle = "Selling Transaction Admin";
@@ -35,6 +35,18 @@ class TrxController extends Controller
 		}
 		}
     }
+	
+	public function input_transaksi($id)
+    {
+		$pageTitle = "Transaksi Selling";
+		return view('trx.trx2', compact('id','pageTitle'));
+	}	
+	
+	public function save_trx(Request $request)
+    {
+		$update = DB::select("update csc_transaksi set status_transaksi='".$request->tipekirim."', type_tracking='".$request->type_tracking."',no_tracking='".$request->no_track."' where id_transaksi='".$request->id_transaksi."' ");
+		return redirect('trx_list');
+	}
 	
 	public function detailtrx($id,$id2)
     {

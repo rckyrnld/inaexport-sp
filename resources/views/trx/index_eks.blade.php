@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Selling Transaction Eksportir</h5>
+                    <h5><i></i> Selling Transaction</h5>
                 </div>
 
                 <div class="box-body bg-light">
@@ -20,28 +20,16 @@
                                 <tr>
                                     <th>No</th>
 									
-                                  
-									
-                                    
-                                   
 									<th>
-                                        <center>Product Name</center>
-                                    </th>
-									<th>
-                                        <center>Quantity</center>
-                                    </th>
-									<th>
-                                        <center>Price</center>
+                                        <center>Origin</center>
                                     </th>
 									<th>
                                         <center>Buyer</center>
                                     </th>
 									<th>
-                                        <center>Subyek</center>
+                                        <center>Eksportir</center>
                                     </th>
-									<!--<th>
-                                        <center>Specification</center>
-                                    </th>-->
+									
 									 <th>
                                         <center>Type Tracking</center>
                                     </th>
@@ -58,37 +46,24 @@
 								<tr>
 									<td><?php echo $nt; ?></td>
 									
-									
-									
-									<td>
-									<?php
-$cr = explode(',',$ruu->id_csc_prod);
-				$hitung = count($cr);
-				$semuacat = "";
-				for($a = 0; $a < ($hitung - 1); $a++){
-					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
-					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
-					$semuacat = $semuacat."- ".$napro."<br>";
-				}
-				echo $semuacat;
-									?>
-									</td>
-									<td><center><?php echo $ruu->eo." ".$ruu->neo; ?></center></td>
-									<td><center><?php echo $ruu->tp." ".$ruu->ntp; ?></center></td>
+									<td><center><?php if($ruu->origin == 1){ echo "Inquiry"; }else if($ruu->origin == 2){ echo "Buying Request"; }?></center></td>
 									<td><center><?php if($ruu->by_role == 1){ echo "Admin"; }else if($ruu->by_role == 4){ echo "Perwakilan"; }else{ echo "Importir"; } ?></center></td>
-									<td><center><?php echo $ruu->subyek; ?></center></td>
+									<td><center><?php 
+									$carieks = DB::select("select * from itdp_company_users where id='".$ruu->id_eksportir."'");
+									foreach($carieks as $eks){ echo $eks->username; }
+									?></center></td>
 									
 									
 									<td><center><?php echo $ruu->type_tracking; ?></center></td>
-									<td><center><?php echo $ruu->no_track; ?></center></td>
+									<td><center><?php echo $ruu->no_tracking; ?></center></td>
 									
 									<td><center>
-									<?php if($ruu->status_trx == 1){ ?>
-									<a href="{{ url('br_trx/'.$ruu->ida.'/'.$ruu->idb) }}" class="btn btn-info"><font color="white"><i class="fa fa-list"></i>&nbsp; View</font></a>
+									<?php if($ruu->status_transaksi == 1){ ?>
+									<a href="{{ url('input_transaksi/'.$ruu->id_transaksi) }}" class="btn btn-info"><font color="white"><i class="fa fa-list"></i>&nbsp; View</font></a>
 									
 									
 									<?php }else { ?>
-									<a href="{{ url('br_trx/'.$ruu->ida.'/'.$ruu->idb) }}" class="btn btn-success"><font color="white"><i class="fa fa-truck"></i>&nbsp; Send</font></a>
+									<a href="{{ url('input_transaksi/'.$ruu->id_transaksi) }}" class="btn btn-success"><font color="white"><i class="fa fa-truck"></i>&nbsp; Send</font></a>
 									
 									<?php } ?>
 									</center></td>

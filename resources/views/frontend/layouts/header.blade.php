@@ -69,6 +69,21 @@
     <script src="{{url('assets')}}/html/scripts/plugins/datatable.js" ></script>
 
 <script src="{{ url('/') }}/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+<style> 
+.main-header .navbar .nav>li>a>.label {
+    position: absolute;
+    top: 9px;
+    right: 7px;
+    text-align: center;
+    font-size: 9px;
+    padding: 2px 3px;
+    line-height: .9;
+}
+
+.bg-yellow, .callout.callout-warning, .alert-warning, .label-warning, .modal-warning .modal-body {
+    background-color: #f39c12 !important;
+}
+</style> 
 </head>
 
 <body>
@@ -128,6 +143,103 @@
                                     <li class="top_links"><a href="{{url('login')}}"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")
                                     @endif
 									
+									<li>
+				 <?php 
+			  if(empty(Auth::user()->name) && empty(Auth::guard('eksmp')->user()->id)){
+				$sao = 0;
+			  }else{
+				$sao = 1;
+			  if(empty(Auth::user()->name)){ 
+			  $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc"); 
+			  $querynotif = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc limit 4"); 
+			  }else{
+				if(Auth::user()->id_group == 1){
+				$querynotifa = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc"); 
+				$querynotif = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc limit 4"); 
+			  }else{
+				$querynotifa = DB::select("select * from notif where untuk_id='".Auth::user()->id."' and status_baca='0' and to_role='4' order by id_notif desc"); 
+				$querynotif = DB::select("select * from notif where untuk_id='".Auth::user()->id."' and status_baca='0' and to_role='4' order by id_notif desc limit 4");
+			  }
+			  }
+			  }
+			  
+			  if($sao == 0) {
+			  ?>
+			   <font color="white"> <i class="fa fa-bell-o"></i></font>
+			 
+			  
+              
+           
+			  <?php }else{ ?>
+									 <ul class="nav flex-row order-lg-2">
+                <li class="dropdown notifications-menu d-flex align-items-center">
+            <a href="#" class="dropdown-toggles" data-toggle="dropdown">
+             <font color="white"> <i class="fa fa-bell-o"></i></font>
+			 
+			  
+              <span class="label label-warning" style="position: absolute!important;
+    color : white!important;
+    right: 7px!important;
+    text-align: center!important;
+    font-size: 9px!important;
+    padding: 2px 3px!important;
+    line-height: .9!important;"><?php if(count($querynotifa) == 0){ echo "0"; }else{ echo count($querynotifa); } ?></span>
+            <i class="ion-ios-arrow-down"></i></a>
+                                        <ul class="dropdown_links" style="min-width: 250px!important;">
+										
+										<?php 
+			  
+			  foreach($querynotif as $ar){
+			  ?>
+			 
+			   @if($ar->id_terkait == NULL)
+        <a onclick="closenotif(<?php echo $ar->id_notif; ?>)" href="{{url($ar->url_terkait)}}">
+		<p style="width:100%; font-size:12px!important;">
+              <?php echo $ar->keterangan; ?><br>
+        <b><?php echo $ar->waktu; ?></b>
+        </p>
+		</a>
+        <hr>
+        @else
+			  <a onclick="closenotif(<?php echo $ar->id_notif; ?>)" href="{{url($ar->url_terkait.'/'.$ar->id_terkait)}}">
+			<p style="width:100%; font-size:12px!important;">
+              <?php echo $ar->keterangan; ?><br>
+			  <b><?php echo $ar->waktu; ?></b>
+			</p>
+			  </a>
+			  <hr>
+        @endif
+			  <?php } ?>
+		<li><center>
+			  <?php if(count($querynotifa) == 0){ echo "<b>Tidak Ada Notifikasi Tersedia Untuk Anda !</b><br><br>"; }else{ ?> 
+			  <a href="{{ url('show_all_notif') }}">View all</a> <?php } ?></center></li>
+			 
+                                            <!-- <li><a href="checkout.html">Checkout </a></li> -->
+                                            <!-- <li><a href="my-account.html">My Account </a></li> -->
+                                            <!-- <li><a href="cart.html">Shopping Cart</a></li> -->
+                                            <!-- <li><a href="wishlist.html">Wishlist</a></li> -->
+                                           <!-- @if(Auth::guard('eksmp')->user()->id_role == 3)
+                                            <li><a href="{{route('profile')}}" style="text-decoration: none">@lang('frontend.lbl5')</a></li>
+                                            
+                                            
+											@endif
+											<li><a href="{{url('front_end/history')}}" style="text-decoration: none">@lang('frontend.lbl7')</a></li>
+											<li><a href="{{url('trx_list')}}" style="text-decoration: none">@lang('frontend.lbl11')</a></li>
+                                            <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('frontend.lbl4')</a></li> -->
+                                        </ul>
+
+		   </li>
+				
+               <!-- Navarbar toggle btn -->
+                <li class="d-lg-none d-flex align-items-center">
+                  <a href="#" class="mx-2" data-toggle="collapse" data-target="#navbarToggler">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 512 512"><path d="M64 144h384v32H64zM64 240h384v32H64zM64 336h384v32H64z"/></svg>
+                  </a>
+                </li>
+              </ul>
+			  <?php } ?>
+             
+									</li>
 									<li class="language">
                                         <a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
 	<a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
