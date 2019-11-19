@@ -8,5 +8,6 @@ return [
   "day" => "Hari",
   "date" => "Tanggal",
   "join" => "Gabung",
+  "pending" => "Menunggu Persetujuan",
   "joined" => "Bergabung"
 ];

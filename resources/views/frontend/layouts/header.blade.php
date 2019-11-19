@@ -27,6 +27,16 @@
     <!-- endbuild -->
     <link rel="stylesheet" href="{{url('assets')}}/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" type="text/css" />
 
+    <style type="text/css">
+        .a-custom:hover{
+            text-decoration: none;
+        }
+
+        .a-custom span:hover{
+            color: #2FB4C2 !important;
+        }
+    </style>
+
     <!-- build:js scripts/app.min.js -->
     <!-- jQuery -->
     <script src="{{url('assets')}}/libs/jquery/dist/jquery.min.js"></script>
@@ -228,34 +238,28 @@
                                 </form> -->
                             </div>
                             <div class="middel_right_info">
-                                <div class="mini_cart_wrapper" style="padding-right: 15px">
-                                    <table style="width: 150px;">
-                                        <tr>
-                                            <td rowspan="2" style="width: 50px">
-                                                <img src="{{asset('front/assets/icon/product1.png')}}" alt="" style="width: 50px;">
-                                            </td>
-                                            <td style="">
-                                                <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
-                                                    @lang("frontend.lbl8")
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                @if(Auth::guard('eksmp')->user())
-                                                <span style="color: black; font-weight: 600; font-size: 12px; padding-left: 10px;">
-                                                    @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                                        {{getCompanyNameImportir(Auth::guard('eksmp')->user()->id)}}
-                                                    @elseif(Auth::guard('eksmp')->user()->id_role == 2)
-                                                        {{getCompanyName(Auth::guard('eksmp')->user()->id)}}
-                                                    @endif
-                                                </span>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-								<a href="{{url('front_end/tracking')}}">
+                                <a href="{{url('/front_end/list_product')}}" class="a-custom">
+                                    <div class="mini_cart_wrapper" style="padding-right: 15px">
+                                        <table style="width: 150px;">
+                                            <tr>
+                                                <td rowspan="2" style="width: 50px">
+                                                    <img src="{{asset('front/assets/icon/product1.png')}}" alt="" style="width: 50px;">
+                                                </td>
+                                                <td style="">
+                                                    <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
+                                                        @lang("frontend.lbl8")
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </a>
+								<a href="{{url('front_end/tracking')}}" class="a-custom">
 								<div class="mini_cart_wrapper" style="padding-right: 15px">
                                     <table style="width: 150px;">
                                         <tr>
@@ -270,15 +274,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                @if(Auth::guard('eksmp')->user())
-                                                <span style="color: black; font-weight: 600; font-size: 12px; padding-left: 10px;">
-                                                    @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                                        {{getCompanyNameImportir(Auth::guard('eksmp')->user()->id)}}
-                                                    @elseif(Auth::guard('eksmp')->user()->id_role == 2)
-                                                        {{getCompanyName(Auth::guard('eksmp')->user()->id)}}
-                                                    @endif
-                                                </span>
-                                                @endif
+                                               
                                             </td>
                                         </tr>
                                     </table>

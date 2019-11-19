@@ -3,11 +3,53 @@
     $loc = app()->getLocale(); 
     if($loc == "ch"){
         $lct = "chn";
+        if($detail->event_name_chn != null){
+          $name = $detail->event_name_chn;
+        } else {
+          $name = $detail->event_name_en;
+        }
+
+        if($detail->event_type_chn != null){
+          $type = $detail->event_type_chn;
+        } else {
+          $type = $detail->event_type_en;
+        }
+
+        if($detail->event_scope_chn != null){
+          $scope = $detail->event_scope_chn;
+        } else {
+          $scope = $detail->event_scope_en;
+        }
     }else if($loc == "in"){
         $lct = "in";
+        
+        if($detail->event_name_in != null){
+          $name = $detail->event_name_in;
+        } else {
+          $name = $detail->event_name_en;
+        }
+
+        if($detail->event_type_in != null){
+          $type = $detail->event_type_in;
+        } else {
+          $type = $detail->event_type_en;
+        }
+
+        if($detail->event_scope_in != null){
+          $scope = $detail->event_scope_in;
+        } else {
+          $scope = $detail->event_scope_en;
+        }
     }else{
         $lct = "en";
+        $type = $detail->event_type_en;
+        $scope = $detail->event_scope_en;
+        $name = $detail->event_name_en;
     }
+
+    $comodity = getEventCom($detail->event_comodity, $loc);
+    $eo = EvenOrgZ($detail->id_event_organizer, $loc);
+    $place = EventPlaceZ($detail->id_event_place, $loc);
 
     //get category
     $cat1 = getCategoryName($detail->id_prod_cat, $lct);
@@ -53,18 +95,22 @@
         }
     }
 
-    if (isset($data)) {
-        $button = '<button class="btn training joined btn-info" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.joined').'</button>';
-    } else {
-        if (Auth::guard('eksmp')->user()) {
-            if (Auth::guard('eksmp')->user()->id_role == 2) {
+    if (Auth::guard('eksmp')->user()) {
+        if (Auth::guard('eksmp')->user()->id_role == 2) {
+            $cek = checkJoinEvent($detail->id, Auth::guard('eksmp')->user()->id);
+            if($cek == 0){
                 $button = '<button class="btn training join btn-info" onclick="__join('.$detail->id.')" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
+                $buttonnya = Lang::get('training.join');
+            } elseif($cek == 2) {
+                $button = '<button class="btn training join btn-info" style="width: 50%;">'.Lang::get('training.pending').'</button>';
             } else {
-                $button = '<button class="btn training join btn-info" onclick="notif()" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
+                $button = '<button class="btn training join btn-info" style="width: 50%;">'.Lang::get('training.joined').'</button>';
             }
         } else {
-            $button = '<button class="btn training join btn-info" onclick="__join('.$detail->id.')" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
+            $button = '<button class="btn training join btn-info" onclick="notif()" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
         }
+    } else {
+        $button = '<button class="btn training join btn-info" onclick="__join('.$detail->id.')" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
     }
 ?>
     <!--breadcrumbs area start-->
@@ -129,12 +175,41 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="product_d_right">
-                            <h1>{{$detail->event_name_in}}</h1>
+                            <h1>{{$name}}</h1>
                             <div class="product_desc">
                                 {{date("d F Y", strtotime($detail->start_date))}} - {{date("d F Y", strtotime($detail->end_date))}}<br>
-                                Jenis Event : {{$detail->jenis_in}}<br>
-                                @lang("training.lokasi") : {{$detail->event_place_text_in}}<br>
-                                Kategori Produk : {{$kategori}}
+                                <table>
+                                    <tr>
+                                        <td>Type</td>
+                                        <td style="padding-left: 5px;padding-right: 10px;">:</td>
+                                        <td>{{$type}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Event Organizer</td>
+                                        <td style="padding-left: 5px;padding-right: 10px;">:</td>
+                                        <td>{{$eo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Comodity</td>
+                                        <td style="padding-left: 5px;padding-right: 10px;">:</td>
+                                        <td>{{$comodity}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Scope</td>
+                                        <td style="padding-left: 5px;padding-right: 10px;">:</td>
+                                        <td>{{$scope}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Place</td>
+                                        <td style="padding-left: 5px;padding-right: 10px;">:</td>
+                                        <td>{{$place}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Website</td>
+                                        <td style="padding-left: 5px;padding-right: 10px;">:</td>
+                                        <td>{{$detail->website}}</td>
+                                    </tr>
+                                </table>
                             </div>
                             <div>
                                 <center>
