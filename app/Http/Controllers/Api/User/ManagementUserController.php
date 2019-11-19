@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Mail;
 
 
 class ManagementUserController extends Controller
@@ -69,7 +70,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -101,7 +102,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -111,7 +112,7 @@ class ManagementUserController extends Controller
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -134,7 +135,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -154,7 +155,7 @@ class ManagementUserController extends Controller
     public function createTicketing(Request $request)
     {
         $store = TicketingSupportModel::create([
-            'id_pembuat' => $request->id_profile,
+            'id_pembuat' => $request->id_user,
             'name' => $request->name,
             'type' => $request->type,
             'email' => $request->email,
@@ -185,7 +186,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -195,7 +196,7 @@ class ManagementUserController extends Controller
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);

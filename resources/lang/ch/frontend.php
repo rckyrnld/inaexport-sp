@@ -16,6 +16,8 @@ return [
     "lbl9" => "追踪",
     "lbl10" => "你好",
     "lbl11" => "交易",
+    "lbl12" => "您需要登录才能处理",
+    "lbl13" => "该活动仅适用于出口商",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",

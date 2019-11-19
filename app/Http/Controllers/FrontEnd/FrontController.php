@@ -468,29 +468,47 @@ class FrontController extends Controller
     }
 
     public function Event(){
-        $e_detail = DB::table('event_detail as a')->join('event_place as b', 'a.id_event_place', '=', 'b.id')->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')->where('a.status_en', 'Verified')->orderby('a.id', 'desc')->paginate(3);
+        $e_detail = DB::table('event_detail as a')->join('event_place as b', 'a.id_event_place', '=', 'b.id')->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')->where('a.status_en', 'Verified')->orderby('a.id', 'desc')->limit(9)->get();
         return view('frontend.event.index', compact('e_detail'));
-    }
-
-    public function search_event(Request $req){
-        $eq = $req->eq;
-        if ($eq!="") {
-            $e_detail = DB::table('event_detail')->where('status_en', 'Verified')->where('event_name_en', 'LIKE', '%'.$eq.'%')->orderby('id', 'asc')->paginate(8)->setPath( '' );
-            $pagination = $e_detail->appends(array('eq' => $req->eq));
-            $e_detail->appends($req->only('eq'));
-            if (count($e_detail) > 0) {
-                return view('frontend.event.index', compact('e_detail'));
-            }else{
-                return view('frontend.event.index', compact('e_detail'))->withMessage('No Details found. Try to search again !');
-            }
-        }else{
-            return redirect('/front_end/event');
-        }
     }
 
     public function join_event($id){
         $detail = DB::table('event_detail')->where('status_en', 'Verified')->where('id', $id)->first();
         return view('frontend.event.detail_event', compact('detail'));
+    }
+
+    public function gabung_event($id)
+    {   
+        $id_user = Auth::guard('eksmp')->user()->id;
+        $cek = DB::table('notif')->where('url_terkait', 'event/show/read')->where(function($param) use ($id_user,$id){
+            $param->where('untuk_id', $id_user)
+                  ->where('id_terkait', $id);
+        })->first();
+        if($cek){
+            DB::table('notif')->where('url_terkait', 'event/show/read')
+            ->where(function($param) use ($id_user,$id){
+                $param->where('untuk_id', $id_user)
+                      ->where('id_terkait', $id);
+            })->update([
+                'status' => 1,
+                'status_baca' => 1
+            ]);
+        } else {
+            $cek = DB::table('event_company_add')->where('id_event_detail', $id)->where('id_itdp_profil_eks', $id_user)->first();
+            if (!$cek) {
+                $data = DB::table('event_company_add')->insert([
+                    'id_itdp_profil_eks' => $id_user,
+                    'id_event_detail' => $id,
+                    'waktu' => date('Y-m-d H:i:s'),
+                    'status' => 1
+                ]);
+            } else {
+                $data = $cek;
+            }
+        }
+
+        $detail = DB::table('event_detail')->where('status_en', 'Verified')->where('id', $id)->first();
+        return view('frontend.event.detail_event', compact('detail', 'data'));
     }
 
     //Front End Training

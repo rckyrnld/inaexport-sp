@@ -64,8 +64,8 @@ class ProfileController extends Controller
                 $idFoto = $rt->foto_profil;
             }
 
-            $path = ($idFoto) ? url('image/fotoprofil/' . $idFoto) : url('image/fotoprofil/aaaa.PNG');
-            $path2 = (string)Image::make($path)->resize(96, 96)->encode('data-url');
+            $path = ($idFoto) ? url('image/fotoprofil/' . $idFoto) : url('image/noimage.jpg');
+//            $path2 = (string)Image::make($path)->resize(96, 96)->encode('data-url');
 //        $path3 = base64_encode(file_get_contents($path2));
             $meta = [
                 'code' => 200,
@@ -83,7 +83,7 @@ class ProfileController extends Controller
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
-            $data = $dataProfil;
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -345,8 +345,8 @@ class ProfileController extends Controller
 
 //        $path = asset('image/fotoprofil/' . $idFoto);
 //        $path2 = base64_encode(file_get_contents($path));
-            $path = ($idaFoto) ? url('image/fotoprofil/' . $idaFoto) : url('image/fotoprofil/aaaa.PNG');
-            $path2 = (string)Image::make($path)->resize(96, 96)->encode('data-url');
+            $path = ($idaFoto) ? url('image/fotoprofil/' . $idaFoto) : url('image/noimage.jpg');
+//            $path2 = (string)Image::make($path)->resize(96, 96)->encode('data-url');
 
             $meta = [
                 'code' => 200,

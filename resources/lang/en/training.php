@@ -8,5 +8,6 @@ return [
 	"day" => "Days",
 	"date" => "Date",
 	"join" => "Join",
+	"pending" => "Waiting for Approval",
 	"joined" => "Joined"
 ];
