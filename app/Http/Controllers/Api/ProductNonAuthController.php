@@ -190,7 +190,7 @@ class ProductNonAuthController extends Controller
             ->inRandomOrder()
             ->limit(6)
             ->get();
-        dd($data);
+//        dd($data);
         if (count($data) > 0) {
             $meta = [
                 'code' => 200,
