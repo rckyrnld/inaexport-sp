@@ -190,7 +190,7 @@ class ProductNonAuthController extends Controller
             ->inRandomOrder()
             ->limit(6)
             ->get();
-//        dd($data);
+        dd($data);
         if (count($data) > 0) {
             $meta = [
                 'code' => 200,
@@ -204,7 +204,13 @@ class ProductNonAuthController extends Controller
             foreach ($data as $item) {
                 array_push($getJSON, array(
                     "id" => $item->id,
-                    "image1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : '',
+                    "id_csc_product" => $item->id_csc_product,
+                    "id_csc_product_level1" => $item->id_csc_product_level1,
+                    "id_csc_product_level2" => $item->id_csc_product_level2,
+                    "prodname_en" => $item->prodname_en,
+                    "prodname_in" => $item->prodname_in,
+                    "prodname_chn" => $item->prodname_in,
+                    "gambar" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg')
                 ));
             }
 
