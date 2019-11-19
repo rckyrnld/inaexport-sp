@@ -154,7 +154,7 @@ class ManagementUserController extends Controller
     public function createTicketing(Request $request)
     {
         $store = TicketingSupportModel::create([
-            'id_pembuat' => $request->id_profile,
+            'id_pembuat' => $request->id_user,
             'name' => $request->name,
             'type' => $request->type,
             'email' => $request->email,
