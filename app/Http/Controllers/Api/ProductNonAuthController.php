@@ -204,7 +204,7 @@ class ProductNonAuthController extends Controller
             foreach ($data as $item) {
                 array_push($getJSON, array(
                     "id" => $item->id,
-                    "image1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/' . $item->id . '/' . $item->image_1) : '',
+                    "image1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : '',
                 ));
             }
 
