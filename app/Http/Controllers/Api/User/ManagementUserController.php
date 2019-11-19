@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Mail;
 
 
 class ManagementUserController extends Controller
