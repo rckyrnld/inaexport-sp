@@ -81,9 +81,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     Route::post('chatImportir', 'Api\User\InquiryController@masukchattingImp');
     Route::post('sendchatImportir', 'Api\User\InquiryController@sendChatimp');
 
-
     Route::post('sendchatFile', 'Api\User\InquiryController@fileChat');
-
 
     //eks
     Route::post('getInquiryeks', 'Api\User\InquiryController@getDataeks');
@@ -92,6 +90,16 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     Route::post('chatEksportir', 'Api\User\InquiryController@masukchattingEks');
     Route::post('sendchatEksportir', 'Api\User\InquiryController@sendChatEks');
     Route::post('dealingEksportir', 'Api\User\InquiryController@dealing');
+    //inquiry end
+    //BR
+    Route::post('impmasukbr', 'Api\User\BuyingreqController@impmasukbr');
+    Route::post('impdata_br', 'Api\User\BuyingreqController@impdata_br');
+    Route::post('br_importir_save', 'Api\User\BuyingreqController@br_importir_save');
+    Route::post('br_importir_bc', 'Api\User\BuyingreqController@br_importir_bc');
+
+    Route::post('ekslistbr', 'Api\User\BuyingreqController@ekslistbr');
+    Route::post('eksjoinbr', 'Api\User\BuyingreqController@eksjoinbr');
+
 
 
 });
