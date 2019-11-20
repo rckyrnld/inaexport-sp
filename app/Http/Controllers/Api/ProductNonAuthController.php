@@ -24,12 +24,16 @@ class ProductNonAuthController extends Controller
     {
         $dataProduk = DB::table('itdp_company_users')
             ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
             ->where('itdp_company_users.status', '=', 1)
             ->where('csc_product_single.status', 2)
+//            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
             ->select('csc_product_single.id', 'csc_product_single.prodname_en',
-                'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type')
+                'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd', 'csc_product.nama_kategori_en')
             ->orderBy('csc_product_single.created_at', 'ASC')
+            ->limit(10)
             ->get();
+//        dd($dataProduk);
         if (count($dataProduk) > 0) {
             $meta = [
                 'code' => 200,
@@ -43,7 +47,8 @@ class ProductNonAuthController extends Controller
                     "prodname_en" => $item->prodname_en,
                     "id_csc_product" => $item->id_csc_product,
                     "type" => $item->type,
-                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg')
+                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
+                    "nama_kategori_en" => $item->nama_kategori_en
                 ));
             }
             $res['meta'] = $meta;
@@ -190,12 +195,23 @@ class ProductNonAuthController extends Controller
 
     public function getRandomProduct()
     {
+//        $dataProduk = DB::table('itdp_company_users')
+//            ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+//            ->where('itdp_company_users.status', '=', 1)
+//            ->where('csc_product_single.status', 2)
+//            ->select('csc_product_single.id', 'csc_product_single.prodname_en',
+//                'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type')
+//            ->inRandomOrder()
+//            ->limit(6)
+//            ->get();
         $dataProduk = DB::table('itdp_company_users')
             ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
             ->where('itdp_company_users.status', '=', 1)
             ->where('csc_product_single.status', 2)
+//            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
             ->select('csc_product_single.id', 'csc_product_single.prodname_en',
-                'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type')
+                'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd', 'csc_product.nama_kategori_en')
             ->inRandomOrder()
             ->limit(6)
             ->get();
@@ -213,7 +229,8 @@ class ProductNonAuthController extends Controller
                     "prodname_en" => $item->prodname_en,
                     "id_csc_product" => $item->id_csc_product,
                     "type" => $item->type,
-                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg')
+                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
+                    "nama_kategori_en" => $item->nama_kategori_en
                 ));
             }
             $res['meta'] = $meta;
@@ -236,10 +253,12 @@ class ProductNonAuthController extends Controller
     {
         $dataProduk = DB::table('itdp_company_users')
             ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
             ->where('itdp_company_users.status', '=', 1)
             ->where('csc_product_single.status', 2)
+//            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
             ->select('csc_product_single.id', 'csc_product_single.prodname_en',
-                'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type')
+                'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd', 'csc_product.nama_kategori_en')
             ->orderBy('csc_product_single.created_at', 'ASC')
             ->limit(6)
             ->get();
@@ -257,7 +276,8 @@ class ProductNonAuthController extends Controller
                     "prodname_en" => $item->prodname_en,
                     "id_csc_product" => $item->id_csc_product,
                     "type" => $item->type,
-                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg')
+                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
+                    "nama_kategori_en" => $item->nama_kategori_en
                 ));
             }
             $res['meta'] = $meta;
