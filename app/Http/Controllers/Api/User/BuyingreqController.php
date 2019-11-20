@@ -329,6 +329,109 @@ class BuyingreqController extends Controller
         }
     }
 
+    public function br_save_join(Request $request)
+    {
+        $id = $request->id_br;
+        $update = DB::select("update csc_buying_request_join set status_join='1' where id='" . $id . "' ");
+        if ($update) {
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+    }
+
+    public function br_importir_lc(Request $request)
+    {
+        $id_br = $request->id_br;
+        $pesan = DB::select("select a.*,b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where b.status_join >= '1' and a.id=b.id_eks and a.id_profil = c.id and id_br='" . $id_br . "'");
+        if ($pesan) {
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $pesan;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+    }
+
+    public function br_konfirm(Request $request)
+    {
+        $id = $request->idb;
+        $id2 = $request->id_br;
+
+        $crv = DB::select("select * from csc_buying_request where id='" . $id2 . "'");
+        foreach ($crv as $cr) {
+            $vld = $cr->valid;
+        }
+        $dy = $vld . " day";
+        $besok = date('Y-m-d', strtotime($dy, strtotime(date("Y-m-d"))));
+        $update = DB::select("update csc_buying_request_join set status_join='2', expired_at='" . $besok . "' where id='" . $id . "' ");
+        if ($update) {
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+
+        }
+    }
+
+    public function br_chat(Request $request)
+    {
+        $id = $request->id_br;
+        $q1 = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
+        foreach ($q1 as $p) {
+            $id_br = $p->id_br;
+        }
+        $qwr = DB::select("select * from csc_buying_request_chat where id_br='".$id_br."' and id_join='".$id."'");
+    }
+
     public function searchListinquiry(Request $request)
     {
         $id_user = $request->id_user;

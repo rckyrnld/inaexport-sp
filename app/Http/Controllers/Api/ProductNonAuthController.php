@@ -39,7 +39,7 @@ class ProductNonAuthController extends Controller
             $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
             $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
-            $jsonResult[$i]["image_1"] = $dataProduk[$i]->image_1;
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
             $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
             $jsonResult[$i]["type"] = $dataProduk[$i]->type;
             $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
@@ -237,7 +237,7 @@ class ProductNonAuthController extends Controller
             $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
             $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
-            $jsonResult[$i]["image_1"] = $dataProduk[$i]->image_1;
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
             $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
             $jsonResult[$i]["type"] = $dataProduk[$i]->type;
             $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
@@ -312,7 +312,7 @@ class ProductNonAuthController extends Controller
             $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
             $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
-            $jsonResult[$i]["image_1"] = $dataProduk[$i]->image_1;
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
             $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
             $jsonResult[$i]["type"] = $dataProduk[$i]->type;
             $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
