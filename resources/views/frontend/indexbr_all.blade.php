@@ -50,31 +50,7 @@
 								<th>Create By</th>
 								<th>Aksi</th>
                                 </thead>
-								<!--<tbody>
 								
-								<?php 
-								$pesan = DB::select("select * from csc_buying_request order by id desc ");
-								foreach($pesan as $ryu){
-								?>
-								<tr>
-								<td><?php echo "<b>".strtoupper($ryu->subyek)."</b><br>";
-								
-				 
-				 
-								?></td>
-				<td><?php $cardata = DB::select("select nama_kategori_en from csc_product where id='".$ryu->id_csc_prod_cat."'");
-				 foreach($cardata as $ct){
-					 echo $ct->nama_kategori_en."";
-				 } ?></td>
-				<td><?php echo $ryu->date; ?></td>
-				<td><?php echo "Valid until ".$ryu->valid." days<br>"; ?></td>
-				<td><?php if($ryu->by_role == 1){ echo "Admin"; }else if($ryu->by_role == 4){ echo "Perwakilan"; }else{ echo "Importir";
-				} ?></td>
-								
-								</tr>
-								<?php } ?>
-								
-								</tbody> -->
 
                             </table>
 			 <?php }else{ ?>
@@ -89,31 +65,7 @@
 								<th>Status</th>
 								<th>Create By</th>
                                 </thead>
-								<!--<tbody>
 								
-								<?php 
-								$pesan = DB::select("select * from csc_buying_request order by id desc ");
-								foreach($pesan as $ryu){
-								?>
-								<tr>
-								<td><?php echo "<b>".strtoupper($ryu->subyek)."</b><br>";
-								
-				 
-				 
-								?></td>
-				<td><?php $cardata = DB::select("select nama_kategori_en from csc_product where id='".$ryu->id_csc_prod_cat."'");
-				 foreach($cardata as $ct){
-					 echo $ct->nama_kategori_en."";
-				 } ?></td>
-				<td><?php echo $ryu->date; ?></td>
-				<td><?php echo "Valid until ".$ryu->valid." days<br>"; ?></td>
-				<td><?php if($ryu->by_role == 1){ echo "Admin"; }else if($ryu->by_role == 4){ echo "Perwakilan"; }else{ echo "Importir";
-				} ?></td>
-								
-								</tr>
-								<?php } ?>
-								
-								</tbody> -->
 
                             </table>
 			 <?php }}else{ ?>
@@ -128,31 +80,7 @@
 								<th>Status</th>
 								<th>Create By</th>
                                 </thead>
-								<!--<tbody>
 								
-								<?php 
-								$pesan = DB::select("select * from csc_buying_request order by id desc ");
-								foreach($pesan as $ryu){
-								?>
-								<tr>
-								<td><?php echo "<b>".strtoupper($ryu->subyek)."</b><br>";
-								
-				 
-				 
-								?></td>
-				<td><?php $cardata = DB::select("select nama_kategori_en from csc_product where id='".$ryu->id_csc_prod_cat."'");
-				 foreach($cardata as $ct){
-					 echo $ct->nama_kategori_en."";
-				 } ?></td>
-				<td><?php echo $ryu->date; ?></td>
-				<td><?php echo "Valid until ".$ryu->valid." days<br>"; ?></td>
-				<td><?php if($ryu->by_role == 1){ echo "Admin"; }else if($ryu->by_role == 4){ echo "Perwakilan"; }else{ echo "Importir";
-				} ?></td>
-								
-								</tr>
-								<?php } ?>
-								
-								</tbody> -->
 
                             </table>
 
