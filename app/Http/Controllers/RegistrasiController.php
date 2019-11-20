@@ -82,7 +82,7 @@ class RegistrasiController extends Controller
 		}
 		$insert2 = DB::select("
 			insert into itdp_company_users (id_profil,username,password,email,status,id_role,type) values
-			('".$id1."','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','3','Luar Negeri')
+			('".$id1."','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','3','Dalam Negeri')
 		");
 		$ambilmaxid2 = DB::select("select max(id) as maxid2 from itdp_company_users");
 		foreach($ambilmaxid2 as $rt2){
