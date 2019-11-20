@@ -28,32 +28,35 @@ class ProductNonAuthController extends Controller
             ->where('itdp_company_users.status', '=', 1)
             ->where('csc_product_single.status', 2)
 //            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
-            ->select('csc_product_single.id', 'csc_product_single.prodname_en',
+            ->select('csc_product_single.id','itdp_company_users.id_profil','itdp_company_users.id_role', 'csc_product_single.prodname_en',
                 'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd', 'csc_product.nama_kategori_en')
             ->orderBy('csc_product_single.created_at', 'ASC')
-            ->limit(10)
             ->get();
-//        dd($dataProduk);
+
+        $jsonResult = array();
+        for($i = 0; $i < count($dataProduk);  $i++){
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
+            $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
+            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
+            $jsonResult[$i]["type"] = $dataProduk[$i]->type;
+            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+            $jsonResult[$i]["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
+            $id_role = $dataProduk[$i]->id_role;
+            $id_profil =  $dataProduk[$i]->id_profil;
+            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+        }
+
         if (count($dataProduk) > 0) {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $getJSON = array();
-            foreach ($dataProduk as $item) {
-                array_push($getJSON, array(
-                    "id" => $item->id,
-                    "prodname_en" => $item->prodname_en,
-                    "id_csc_product" => $item->id_csc_product,
-                    "type" => $item->type,
-                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
-                    "nama_kategori_en" => $item->nama_kategori_en,
-                    "price_usd" => $item->price_usd
-                ));
-            }
             $res['meta'] = $meta;
-            $res['data'] = $getJSON;
+            $res['data'] = $jsonResult;
             return response($res);
         } else {
             $meta = [
@@ -205,17 +208,44 @@ class ProductNonAuthController extends Controller
 //            ->inRandomOrder()
 //            ->limit(6)
 //            ->get();
+//        $dataProduk = DB::table('itdp_company_users')
+//            ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+//            ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
+//            ->where('itdp_company_users.status', '=', 1)
+//            ->where('csc_product_single.status', 2)
+////            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
+//            ->select('csc_product_single.id', 'csc_product_single.prodname_en',
+//                'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd', 'csc_product.nama_kategori_en')
+//            ->inRandomOrder()
+//            ->limit(6)
+//            ->get();
         $dataProduk = DB::table('itdp_company_users')
             ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
             ->where('itdp_company_users.status', '=', 1)
             ->where('csc_product_single.status', 2)
 //            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
-            ->select('csc_product_single.id', 'csc_product_single.prodname_en',
+            ->select('csc_product_single.id','itdp_company_users.id_profil','itdp_company_users.id_role', 'csc_product_single.prodname_en',
                 'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd', 'csc_product.nama_kategori_en')
             ->inRandomOrder()
             ->limit(6)
             ->get();
+
+        $jsonResult = array();
+        for($i = 0; $i < count($dataProduk);  $i++){
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
+            $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
+            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
+            $jsonResult[$i]["type"] = $dataProduk[$i]->type;
+            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+            $jsonResult[$i]["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
+            $id_role = $dataProduk[$i]->id_role;
+            $id_profil =  $dataProduk[$i]->id_profil;
+            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+        }
 //        dd($dataProduk);
         if (count($dataProduk) > 0) {
             $meta = [
@@ -223,20 +253,20 @@ class ProductNonAuthController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $getJSON = array();
-            foreach ($dataProduk as $item) {
-                array_push($getJSON, array(
-                    "id" => $item->id,
-                    "prodname_en" => $item->prodname_en,
-                    "id_csc_product" => $item->id_csc_product,
-                    "type" => $item->type,
-                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
-                    "nama_kategori_en" => $item->nama_kategori_en,
-                    "price_usd" => $item->price_usd
-                ));
-            }
+//            $getJSON = array();
+//            foreach ($dataProduk as $item) {
+//                array_push($getJSON, array(
+//                    "id" => $item->id,
+//                    "prodname_en" => $item->prodname_en,
+//                    "id_csc_product" => $item->id_csc_product,
+//                    "type" => $item->type,
+//                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
+//                    "nama_kategori_en" => $item->nama_kategori_en,
+//                    "price_usd" => $item->price_usd
+//                ));
+//            }
             $res['meta'] = $meta;
-            $res['data'] = $getJSON;
+            $res['data'] = $jsonResult;
             return response($res);
         } else {
             $meta = [
@@ -253,17 +283,44 @@ class ProductNonAuthController extends Controller
 
     public function getprodukBaru()
     {
+//        $dataProduk = DB::table('itdp_company_users')
+//            ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+//            ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
+//            ->where('itdp_company_users.status', '=', 1)
+//            ->where('csc_product_single.status', 2)
+////            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
+//            ->select('csc_product_single.id', 'csc_product_single.prodname_en',
+//                'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd', 'csc_product.nama_kategori_en')
+//            ->orderBy('csc_product_single.created_at', 'ASC')
+//            ->limit(6)
+//            ->get();
         $dataProduk = DB::table('itdp_company_users')
             ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
             ->where('itdp_company_users.status', '=', 1)
             ->where('csc_product_single.status', 2)
 //            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
-            ->select('csc_product_single.id', 'csc_product_single.prodname_en',
+            ->select('csc_product_single.id','itdp_company_users.id_profil','itdp_company_users.id_role', 'csc_product_single.prodname_en',
                 'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd', 'csc_product.nama_kategori_en')
             ->orderBy('csc_product_single.created_at', 'ASC')
             ->limit(6)
             ->get();
+
+        $jsonResult = array();
+        for($i = 0; $i < count($dataProduk);  $i++){
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
+            $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
+            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
+            $jsonResult[$i]["type"] = $dataProduk[$i]->type;
+            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+            $jsonResult[$i]["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
+            $id_role = $dataProduk[$i]->id_role;
+            $id_profil =  $dataProduk[$i]->id_profil;
+            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+        }
 
         if (count($dataProduk) > 0) {
             $meta = [
@@ -272,19 +329,19 @@ class ProductNonAuthController extends Controller
                 'status' => 'OK'
             ];
             $getJSON = array();
-            foreach ($dataProduk as $item) {
-                array_push($getJSON, array(
-                    "id" => $item->id,
-                    "prodname_en" => $item->prodname_en,
-                    "id_csc_product" => $item->id_csc_product,
-                    "type" => $item->type,
-                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
-                    "nama_kategori_en" => $item->nama_kategori_en,
-                    "price_usd" => $item->price_usd
-                ));
-            }
+//            foreach ($dataProduk as $item) {
+//                array_push($getJSON, array(
+//                    "id" => $item->id,
+//                    "prodname_en" => $item->prodname_en,
+//                    "id_csc_product" => $item->id_csc_product,
+//                    "type" => $item->type,
+//                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
+//                    "nama_kategori_en" => $item->nama_kategori_en,
+//                    "price_usd" => $item->price_usd
+//                ));
+//            }
             $res['meta'] = $meta;
-            $res['data'] = $getJSON;
+            $res['data'] = $jsonResult;
             return response($res);
         } else {
             $meta = [

@@ -211,7 +211,7 @@
                     <tbody style="color: black;">
                       @foreach($table_top_training as $key => $value)
                       <tr>
-                        <td>{{$i}}</td>
+                        <td>{{$key+1}}</td>
                         <td>{{getNameTraining($value->id_training_admin, $key)}}</td>
                         <td>{{$value->jumlah}}</td>
                       </tr>
@@ -231,7 +231,7 @@
                     <tbody style="color: black;">
                       @foreach($table_top_join_training as $key => $value)
                       <tr>
-                        <td>{{$i}}</td>
+                        <td>{{$key+1}}</td>
                         <td>{{getCompanyNameRC($value->id_profil_eks, $key, 'null')}}</td>
                         <td>{{$value->jumlah}}</td>
                       </tr>
@@ -543,7 +543,7 @@
         tooltip: {
             useHTML: true,
             headerFormat: '',
-            pointFormat: '<span style="font-size:11px;color:{point.color}">{point.name}</span><br><i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  {point.y} Downloads<br/>'
+            pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">{point.name}</span><br/>'
         }
     });
 
@@ -573,7 +573,7 @@
         tooltip: {
             useHTML: true,
             headerFormat: '',
-            pointFormat: '<span style="font-size:11px;color:{point.color}">{point.name}</span><br><i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  {point.y} Downloads<br/>'
+            pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">{point.name}</span><br/>'
         }
     });
   }

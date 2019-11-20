@@ -90,8 +90,8 @@ if($profile->foto_profil != NULL){
                             <div class="col-lg-3 col-md-3">
                                 <span class="logo">Logo</span>
                                 <br>
-                                <img src="{{asset($img1)}}" style="width: 100%;">
-                                <p style="padding: 6px">
+                                <img id="thumbnail" src="{{asset($img1)}}" style="width: 220px; height: 225px; border-radius: 20px;">
+                                <p style="padding: 6px; padding-top: 10px;">
                                     <span class="btn btn-primary btn-file">
                                         Upload <input type="file" name="avatar" accept="image/*" id="avatar" />
                                     </span>
@@ -103,7 +103,6 @@ if($profile->foto_profil != NULL){
                                     <tr>
                                         <td width="30%">Username</td>
                                         <td>
-                                            <!-- <input type="hidden" class="form-control" name="id_user" value="{{$id_user}}" id="id_user"> -->
                                             <input type="text" class="form-control" name="username" value="{{$profile->username}}" id="username" data-toggle="tooltip" data-trigger="manual" title="Please Fill Username !">
                                         </td>
                                     </tr>
@@ -270,6 +269,10 @@ if($profile->foto_profil != NULL){
                 return value;
             },        removeMaskOnSubmit:true
         });
+
+        $("#avatar").change(function() {
+          thumbnail(this);
+        });
     });
 
     function hapus(id) {
@@ -323,6 +326,18 @@ if($profile->foto_profil != NULL){
         } else {
             $(form).submit();
         }
+    }
+
+    function thumbnail(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+          $('#thumbnail').attr('src', e.target.result);
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+      }
     }
 
     function isEmail(email) {

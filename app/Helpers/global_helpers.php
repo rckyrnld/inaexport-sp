@@ -620,3 +620,28 @@ if (! function_exists('getProductByCategory')) {
       return $product;
     }
 }
+
+if (! function_exists('getPerwakilanCountry2')) {
+    function getPerwakilanCountry2($id){
+        $nama = "-";
+        $data = DB::table('itdp_admin_users')->where('id', $id)->first();
+        if($data){
+          if($data->id_admin_dn || $data->id_admin_ln){
+            if($data->id_admin_dn == 0){
+              $ln = DB::table('itdp_admin_ln')->where('id', $data->id_admin_ln)->first();
+              $country = DB::table('mst_country')->where('id', $ln->id_country)->first(); 
+              if($country){
+                $nama = $country->country;
+            }else if($data->id_admin_ln == 0){
+              $dn = DB::table('itdp_admin_dn')->where('id', $data->id_admin_dn)->first();
+              $country = DB::table('mst_country')->where('id', $dn->id_country)->first(); 
+              }if($country){
+                $nama = $country->country;
+              }
+            }
+          }
+        }
+
+        return $nama;
+    }
+}

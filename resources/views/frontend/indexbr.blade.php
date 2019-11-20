@@ -192,7 +192,7 @@ if ($loc == "ch") {
                                             <select class="form-control select2" name="neo" id="neo">
                                                 <option value="">@lang("login.forms.by14")</option>
 
-                                                <option value="Each">Eachhh</option>
+                                                <option value="Each">Each</option>
                                                 <option value="Foot">Foot</option>
                                                 <option value="Gallons">Gallons</option>
                                                 <option value="Kilograms">Kilograms</option>
@@ -309,7 +309,6 @@ if ($loc == "ch") {
                 </div>
 
 
-                </form>
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
