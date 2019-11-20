@@ -193,7 +193,7 @@ class RegistrasiController extends Controller
 	public function data_br2()
     {
         
-        $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row,* from csc_buying_request ");
+        $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row,* from csc_buying_request");
       
 
         return DataTables::of($buy)
