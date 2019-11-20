@@ -204,6 +204,14 @@
     <!-- <script src="{{asset('front/assets/js/plugins.js')}}"></script> -->
     <!-- Main JS -->
     <script src="{{asset('front/assets/js/main.js')}}"></script>
+	<script>
+function closenotif(x){
+	var token = $('meta[name="csrf-token"]').attr('content');
+		$.get('{{URL::to("bacanotif/")}}/'+x,{_token:token},function(data){
+			
+		 });
+}
+</script>
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({pageLanguage: 'en', layout:google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');

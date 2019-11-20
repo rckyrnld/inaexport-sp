@@ -12,7 +12,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 
-class InquiryController extends Controller
+class BuyingreqController extends Controller
 {
 
     // use AuthenticatesUsers;  
@@ -21,6 +21,10 @@ class InquiryController extends Controller
         auth()->shouldUse('api_user');
     }
 
+    public function impmasukbr()
+    {
+
+    }
     public function getListinquiry(Request $request)
     {
 //        dd($request);

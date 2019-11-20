@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Mail;
 
 
 class ManagementUserController extends Controller
@@ -69,7 +70,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -79,20 +80,20 @@ class ManagementUserController extends Controller
     public function joinTraining(Request $request)
     {
         $store = DB::table('training_join')->insert([
-            'id_training_admin' => $request->id_training_admin,
-            'id_profil_eks' => $request->id_profil,
+            'id_training_admin' => $request->id_training,
+            'id_profil_eks' => $request->id_user,
             'date_join' => date('Y-m-d H:i:s'),
             'status' => 0
         ]);
 
         $notif = DB::table('notif')->insert([
-            'dari_id' => $request->id_profil,
+            'dari_id' => $request->id_user,
             'untuk_id' => 1,
             'keterangan' => '<b>Request To Join Training',
             'waktu' => date('Y-m-d H:i:s'),
             'url_terkait' => 'admin/training/view',
             'status_baca' => 0,
-            'id_terkait' => $request->id_training_admin,
+            'id_terkait' => $request->id_training,
             'to_role' => 1
         ]);
         if (count($store) > 0) {
@@ -101,7 +102,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -111,7 +112,7 @@ class ManagementUserController extends Controller
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -134,7 +135,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -154,7 +155,7 @@ class ManagementUserController extends Controller
     public function createTicketing(Request $request)
     {
         $store = TicketingSupportModel::create([
-            'id_pembuat' => $request->id_profile,
+            'id_pembuat' => $request->id_user,
             'name' => $request->name,
             'type' => $request->type,
             'email' => $request->email,
@@ -185,7 +186,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -195,7 +196,7 @@ class ManagementUserController extends Controller
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
-            $data = '0';
+            $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
