@@ -48,7 +48,8 @@ class ProductNonAuthController extends Controller
                     "id_csc_product" => $item->id_csc_product,
                     "type" => $item->type,
                     "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
-                    "nama_kategori_en" => $item->nama_kategori_en
+                    "nama_kategori_en" => $item->nama_kategori_en,
+                    "price_usd" => $item->price_usd
                 ));
             }
             $res['meta'] = $meta;
@@ -230,7 +231,8 @@ class ProductNonAuthController extends Controller
                     "id_csc_product" => $item->id_csc_product,
                     "type" => $item->type,
                     "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
-                    "nama_kategori_en" => $item->nama_kategori_en
+                    "nama_kategori_en" => $item->nama_kategori_en,
+                    "price_usd" => $item->price_usd
                 ));
             }
             $res['meta'] = $meta;
@@ -277,7 +279,8 @@ class ProductNonAuthController extends Controller
                     "id_csc_product" => $item->id_csc_product,
                     "type" => $item->type,
                     "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
-                    "nama_kategori_en" => $item->nama_kategori_en
+                    "nama_kategori_en" => $item->nama_kategori_en,
+                    "price_usd" => $item->price_usd
                 ));
             }
             $res['meta'] = $meta;
