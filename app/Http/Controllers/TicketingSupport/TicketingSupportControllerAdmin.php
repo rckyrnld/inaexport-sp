@@ -13,6 +13,7 @@ use App\Exports\CityExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Session;
 use Auth;
+use Mail;
 
 class TicketingSupportControllerAdmin extends Controller
 {
@@ -83,12 +84,53 @@ class TicketingSupportControllerAdmin extends Controller
     }
 
 		public function sendchat(Request $req){
+			// echo $req->id;die();
+			$cari1 = DB::select("select * from ticketing_support where id='".$req->id."'");
+			foreach($cari1 as $v1){ $id_company = $v1->id_pembuat; }
+			$cari2 = DB::select("select * from itdp_company_users where id='".$id_company."'");
+			foreach($cari2 as $v2){ 
+			$data1 = $v2->username; 
+			$data2 = $v2->email; 
+			$data3 = $v2->id_role; 
+			$data4 = $v2->id; 
+			}
+			$data = [
+            'email' => "",
+            'email1' => $data2,
+            'username' => "",
+            'main_messages' => $req->messages,
+            'id' => $req->id
+			];
+			
+			$data2 = [
+            'email' => "",
+            'email1' => "kementerianperdagangan.max@gmail.com",
+            'username' => "",
+            'main_messages' => $req->messages,
+            'id' => $req->id
+			];
+			
+			Mail::send('UM.user.sendticketchat2', $data, function ($mail) use ($data) {
+            $mail->to($data['email1'], $data['username']);
+            $mail->subject('Chat Ticketing Support');
+			});
+			
+			Mail::send('UM.user.sendticketchat', $data2, function ($mail) use ($data2) {
+            $mail->to($data2['email1'], $data2['username']);
+            $mail->subject('Chat Ticketing Support');
+			});
+			
+			$ket = "Super Admin Chat Your Ticketing Request !";
+				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+				('".$data3."','Super Admin','1','".$data1."','".$data4."','".$ket."','front_end/ticketing_support/chatview','".$req->id."','".Date('Y-m-d H:m:s')."','0')
+				");
+			
 			$chat = ChatingTicketingSupportModel::insert([
 				'id_ticketing_support' => $req->id,
 				'sender' => $req->sender,
 				'reciver' => $req->reciver,
 				'messages' => $req->messages,
-        'messages_send' => date('Y-m-d H:i:s')
+				'messages_send' => date('Y-m-d H:i:s')
 			]);
 			$update = TicketingSupportModel::where('id', $req->id)->update([
 				'status' => 2
@@ -123,6 +165,46 @@ class TicketingSupportControllerAdmin extends Controller
     }
 
 		public function change(Request $req){
+			$cari1 = DB::select("select * from ticketing_support where id='".$req->id."'");
+			foreach($cari1 as $v1){ $id_company = $v1->id_pembuat; }
+			$cari2 = DB::select("select * from itdp_company_users where id='".$id_company."'");
+			foreach($cari2 as $v2){ 
+			$data1 = $v2->username; 
+			$data2 = $v2->email; 
+			$data3 = $v2->id_role; 
+			$data4 = $v2->id; 
+			}
+			$data = [
+            'email' => "",
+            'email1' => $data2,
+            'username' => "",
+            'main_messages' => "",
+            'id' => $req->id
+			];
+			
+			$data2 = [
+            'email' => "",
+            'email1' => "fahrisafari95@gmail.com",
+            'username' => "",
+            'main_messages' => "",
+            'id' => $req->id
+			];
+			
+			Mail::send('UM.user.sendticketclosed2', $data, function ($mail) use ($data) {
+            $mail->to($data['email1'], $data['username']);
+            $mail->subject('Ticketing Support Closed');
+			});
+			
+			Mail::send('UM.user.sendticketclosed', $data2, function ($mail) use ($data2) {
+            $mail->to($data2['email1'], $data2['username']);
+            $mail->subject('Ticketing Support Closed');
+			});
+			
+			$ket = "Super Admin Closed Your Ticketing Request !";
+				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+				('".$data3."','Super Admin','1','".$data1."','".$data4."','".$ket."','front_end/ticketing_support/chatview','".$req->id."','".Date('Y-m-d H:m:s')."','0')
+				");
+				
 			$update = TicketingSupportModel::where('id', $req->id)->update([
 				'status' => 3
 			]);

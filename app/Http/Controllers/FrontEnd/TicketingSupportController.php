@@ -58,17 +58,42 @@ class TicketingSupportController extends Controller
         $id_ticketing = $store->id;
 
         //Tinggal Ganti Email1 dengan email kemendag
+		//kementerianperdagangan.max@gmail.com
         $data = [
             'email' => $req->email,
-            'email1' => 'yossandiimran02@gmail.com',
+            'email1' => 'kementerianperdagangan.max@gmail.com',
             'username' => $req->name,
             'main_messages' => $req->messages,
             'id' => $id_ticketing
         ];
+		
+		$data2 = [
+            'email' => $req->email,
+            'email1' => Auth::guard('eksmp')->user()->email,
+            'username' => $req->name,
+            'main_messages' => $req->messages,
+            'id' => $id_ticketing
+        ];
+		
+		$ket = "Ticketing was created by ".Auth::guard('eksmp')->user()->username;
+		$ket2 = "You was create ticketing !";
+		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+			('1','".Auth::guard('eksmp')->user()->username."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$id_ticketing."','".Date('Y-m-d H:m:s')."','0')
+		");
+		$insert4 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+			('".Auth::guard('eksmp')->user()->id_role."','Super Admin','1','".Auth::guard('eksmp')->user()->username."','".Auth::guard('eksmp')->user()->id."','".$ket2."','front_end/ticketing_support/view','".$id_ticketing."','".Date('Y-m-d H:m:s')."','0')
+		");
+		
+		
 
         Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
             $mail->to($data['email1'], $data['username']);
             $mail->subject('Requesting Ticketing Support');
+        });
+		
+		Mail::send('UM.user.sendticket2', $data2, function ($mail) use ($data2) {
+            $mail->to($data2['email1'], $data2['username']);
+            $mail->subject('You Requesting Ticketing Support');
         });
 
         return redirect('/front_end/history');
@@ -82,7 +107,7 @@ class TicketingSupportController extends Controller
 
     public function vchat($id)
     {
-        $id_user = Auth::guard('eksmp')->user()->id;
+		$id_user = Auth::guard('eksmp')->user()->id;
         $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
             ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
             ->where('ts.id', $id)
@@ -97,6 +122,44 @@ class TicketingSupportController extends Controller
 
     public function sendchat(Request $req)
     {
+		$cari1 = DB::select("select * from ticketing_support where id='".$req->id."'");
+			foreach($cari1 as $v1){ $id_company = $v1->id_pembuat; }
+			$cari2 = DB::select("select * from itdp_company_users where id='".$id_company."'");
+			foreach($cari2 as $v2){ 
+			$data1 = $v2->username; 
+			$data2 = $v2->email; 
+			$data3 = $v2->id_role; 
+			$data4 = $v2->id; 
+			}
+		$data = [
+            'email' => "",
+            'email1' => $data2,
+            'username' => "",
+            'main_messages' => $req->messages,
+            'id' => $req->id
+			];
+			
+			$data2 = [
+            'email' => "",
+            'email1' => "kementerianperdagangan.max@gmail.com",
+            'username' => "",
+            'main_messages' => $req->messages,
+            'id' => $req->id
+			];
+		Mail::send('UM.user.sendticketchat2', $data, function ($mail) use ($data) {
+            $mail->to($data['email1'], $data['username']);
+            $mail->subject('You Reply Chat on Ticketing Support');
+			});
+			
+			Mail::send('UM.user.sendticketchat', $data2, function ($mail) use ($data2) {
+            $mail->to($data2['email1'], $data2['username']);
+            $mail->subject('User Reply Your Chat On Ticketing Support');
+			});
+		$ket = "User Reply Chat on Ticketing Request !";
+				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+				('1','".$data1."','".$data4."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$req->id."','".Date('Y-m-d H:m:s')."','0')
+				");
+		
         $chat = ChatingTicketingSupportModel::insert([
             'id_ticketing_support' => $req->id,
             'sender' => $req->sender,
