@@ -120,7 +120,7 @@ class TicketingSupportControllerAdmin extends Controller
             $mail->subject('Chat Ticketing Support');
 			});
 			
-			$ket = "Super Admin Chat Your Ticketing Request !";
+			$ket = "Super Admin Respond Your Ticketing Request !";
 				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 				('".$data3."','Super Admin','1','".$data1."','".$data4."','".$ket."','front_end/ticketing_support/chatview','".$req->id."','".Date('Y-m-d H:m:s')."','0')
 				");
@@ -184,7 +184,7 @@ class TicketingSupportControllerAdmin extends Controller
 			
 			$data2 = [
             'email' => "",
-            'email1' => "fahrisafari95@gmail.com",
+            'email1' => "kementerianperdagangan.max@gmail.com",
             'username' => "",
             'main_messages' => "",
             'id' => $req->id
