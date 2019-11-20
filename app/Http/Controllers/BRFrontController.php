@@ -47,6 +47,13 @@ class BRFrontController extends Controller
 	
 	public function br_importir()
     {
+		if(empty(Auth::guard('eksmp')->user()->id) && empty(Auth::user()->name)){
+		// echo "a";die();
+		$r = "2";
+		$categoryutama = "";
+        return view('frontend.indexbr', compact('product', 'categoryutama','r'));
+		
+		}else{
 		if(!empty(Auth::guard('eksmp')->user()->id)){
 		if(Auth::guard('eksmp')->user()->id_role == 3){
         /*$pageTitle = "Buying Request Importer";
@@ -80,6 +87,7 @@ class BRFrontController extends Controller
 		$r = "2";
 		$categoryutama = "";
 		return view('frontend.indexbr', compact('product', 'categoryutama','r'));
+		}
 		}
 		
     }
