@@ -298,7 +298,7 @@ class BuyingreqController extends Controller
 
     public function eksjoinbr(Request $request)
     {
-        $id = $request->id_br;
+        $id = $request->id;
         $q1 = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
         foreach ($q1 as $p) {
             $id_br = $p->id_br;
@@ -331,7 +331,7 @@ class BuyingreqController extends Controller
 
     public function br_save_join(Request $request)
     {
-        $id = $request->id_br;
+        $id = $request->id;
         $update = DB::select("update csc_buying_request_join set status_join='1' where id='" . $id . "' ");
         if ($update) {
 
@@ -422,14 +422,157 @@ class BuyingreqController extends Controller
         }
     }
 
-    public function br_chat(Request $request)
+    public function eks_br_chat(Request $request)
     {
-        $id = $request->id_br;
+        $id = $request->id;
         $q1 = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
         foreach ($q1 as $p) {
             $id_br = $p->id_br;
         }
-        $qwr = DB::select("select * from csc_buying_request_chat where id_br='".$id_br."' and id_join='".$id."'");
+        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id_br . "' and id_join='" . $id . "'");
+        if ($qwr) {
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $qwr;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $qwr;
+            return $res;
+
+        }
+    }
+
+    public function uploadpop(Request $request)
+    {
+        $a = $request->pesan;
+        $id2 = $request->id_br;
+        $id3 = $request->id_role;
+        $id4 = $request->id_user;
+        $id5 = $request->username;
+        $id6 = $request->idb;
+        $file = $request->file('filez')->getClientOriginalName();
+        $destinationPath = public_path() . "/uploads/pop";
+        $request->file('filez')->move($destinationPath, $file);
+        date_default_timezone_set('Asia/Jakarta');
+        $insert = DB::select("
+			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
+			('" . $id2 . "','" . $a . "','" . Date('Y-m-d H:m:s') . "','" . $id4 . "','" . $id3 . "','" . $id5 . "','" . $id6 . "','" . $file . "')");
+        if ($insert) {
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+
+        }
+    }
+
+    public function br_deal(Request $request)
+    {
+        $id = $request->idb;
+        $id2 = $request->id_br;
+        $id3 = $request->id_user;
+        $maxid = 0;
+        $update = DB::select("update csc_buying_request_join set status_join='4' where id='" . $id . "' ");
+        $update2 = DB::select("update csc_buying_request set status='4', deal='" . $id3 . "' where id='" . $id2 . "' ");
+        $ambildata = DB::select("select * from csc_buying_request where id='" . $id2 . "'");
+        foreach ($ambildata as $ad) {
+            $isi1 = $ad->id_pembuat;
+            $isi2 = $ad->by_role;
+        }
+
+        $insert = DB::select("
+			insert into csc_transaksi (id_pembuat,by_role,id_eksportir,id_terkait,origin,created_at,status_transaksi) values
+			('" . $isi1 . "','" . $isi2 . "','" . $id3 . "','" . $id2 . "','2','" . Date('Y-m-d H:m:s') . "','0')");
+        $querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
+        if ($querymax) {
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+
+        }
+    }
+
+    public function simpanchatbr(Request $request)
+    {
+        $a = $request->pesan;
+        $id2 = $request->id_br;
+        $id3 = $request->id_role;
+        $id4 = $request->id_user;
+        $id5 = $request->username;
+        $id6 = $request->idb;
+        date_default_timezone_set('Asia/Jakarta');
+        $insert = DB::select("
+			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join) values
+			('" . $id2 . "','" . $a . "','" . Date('Y-m-d H:m:s') . "','" . $id4 . "','" . $id3 . "','" . $id5 . "','" . $id6 . "')");
+        if ($insert) {
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+
+        }
     }
 
     public function searchListinquiry(Request $request)
