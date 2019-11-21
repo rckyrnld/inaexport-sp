@@ -69,6 +69,28 @@
     <script src="{{url('assets')}}/html/scripts/plugins/datatable.js" ></script>
 
 <script src="{{ url('/') }}/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    <?php
+        if(isset($jenisnya)){
+    ?>
+        $(document).ready(function () {
+            var jenis = "{{$jenisnya}}";
+            if(jenis == "eksportir"){
+                $('#products').removeClass('active');
+                $('#set_products').removeClass('active');
+                $('#eksportir').addClass('active');
+                $('#set_eksportir').addClass('active');
+            }else{
+                $('#eksportir').removeClass('active');
+                $('#set_eksportir').removeClass('active');
+                $('#products').addClass('active');
+                $('#set_products').addClass('active');
+            }
+        });
+    <?php
+        }
+    ?>
+</script>
 <style> 
 .main-header .navbar .nav>li>a>.label {
     position: absolute;
@@ -122,14 +144,8 @@
                                         @endif
                                             <i class="ion-ios-arrow-down"></i></a>
                                         <ul class="dropdown_links">
-                                            <!-- <li><a href="checkout.html">Checkout </a></li> -->
-                                            <!-- <li><a href="my-account.html">My Account </a></li> -->
-                                            <!-- <li><a href="cart.html">Shopping Cart</a></li> -->
-                                            <!-- <li><a href="wishlist.html">Wishlist</a></li> -->
                                             @if(Auth::guard('eksmp')->user()->id_role == 3)
                                             <li><a href="{{route('profile')}}" style="text-decoration: none">@lang('frontend.lbl5')</a></li>
-                                            
-                                            
 											@endif
 											<li><a href="{{url('front_end/history')}}" style="text-decoration: none">@lang('frontend.lbl7')</a></li>
 											<li><a href="{{url('trx_list')}}" style="text-decoration: none">@lang('frontend.lbl11')</a></li>
@@ -140,132 +156,101 @@
                                     {{ csrf_field() }}
                                     </form>
                                     @else
-                                    <li class="top_links"><a href="{{url('login')}}"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")
+                                    <li class="top_links"><a href="{{url('login')}}"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")</a></li>
                                     @endif
-									
-									<li>
-				 <?php 
-			  if(empty(Auth::user()->name) && empty(Auth::guard('eksmp')->user()->id)){
-				$sao = 0;
-			  }else{
-				$sao = 1;
-			  if(empty(Auth::user()->name)){ 
-			  $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc"); 
-			  $querynotif = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc limit 4"); 
-			  }else{
-				if(Auth::user()->id_group == 1){
-				$querynotifa = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc"); 
-				$querynotif = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc limit 4"); 
-			  }else{
-				$querynotifa = DB::select("select * from notif where untuk_id='".Auth::user()->id."' and status_baca='0' and to_role='4' order by id_notif desc"); 
-				$querynotif = DB::select("select * from notif where untuk_id='".Auth::user()->id."' and status_baca='0' and to_role='4' order by id_notif desc limit 4");
-			  }
-			  }
-			  }
-			  
-			  if($sao == 0) {
-			  ?>
-			   <font color="white"> <i class="fa fa-bell-o"></i></font>
-			 
-			  
-              
-           
-			  <?php }else{ ?>
-									 <ul class="nav flex-row order-lg-2">
-                <li class="dropdown notifications-menu d-flex align-items-center">
-            <a href="#" class="dropdown-toggles" data-toggle="dropdown">
-             <font color="white"> <i class="fa fa-bell-o"></i></font>
-			 
-			  
-              <span class="label label-warning" style="position: absolute!important;
-    color : white!important;
-    right: 7px!important;
-    text-align: center!important;
-    font-size: 9px!important;
-    padding: 2px 3px!important;
-    line-height: .9!important;"><?php if(count($querynotifa) == 0){ echo "0"; }else{ echo count($querynotifa); } ?></span>
-            <i class="ion-ios-arrow-down"></i></a>
-                                        <ul class="dropdown_links" style="min-width: 250px!important;">
-										
-										<?php 
-			  
-			  foreach($querynotif as $ar){
-			  ?>
-			 
-			   @if($ar->id_terkait == NULL)
-        <a onclick="closenotif(<?php echo $ar->id_notif; ?>)" href="{{url($ar->url_terkait)}}">
-		<p style="width:100%; font-size:12px!important;">
-              <?php echo $ar->keterangan; ?><br>
-        <b><?php echo $ar->waktu; ?></b>
-        </p>
-		</a>
-        <hr>
-        @else
-			  <a onclick="closenotif(<?php echo $ar->id_notif; ?>)" href="{{url($ar->url_terkait.'/'.$ar->id_terkait)}}">
-			<p style="width:100%; font-size:12px!important;">
-              <?php echo $ar->keterangan; ?><br>
-			  <b><?php echo $ar->waktu; ?></b>
-			</p>
-			  </a>
-			  <hr>
-        @endif
-			  <?php } ?>
-		<li><center>
-			  <?php if(count($querynotifa) == 0){ echo "<b>Tidak Ada Notifikasi Tersedia Untuk Anda !</b><br><br>"; }else{ ?> 
-			  <a href="{{ url('show_all_notif') }}">View all</a> <?php } ?></center></li>
-			 
-                                            <!-- <li><a href="checkout.html">Checkout </a></li> -->
-                                            <!-- <li><a href="my-account.html">My Account </a></li> -->
-                                            <!-- <li><a href="cart.html">Shopping Cart</a></li> -->
-                                            <!-- <li><a href="wishlist.html">Wishlist</a></li> -->
-                                           <!-- @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                            <li><a href="{{route('profile')}}" style="text-decoration: none">@lang('frontend.lbl5')</a></li>
-                                            
-                                            
-											@endif
-											<li><a href="{{url('front_end/history')}}" style="text-decoration: none">@lang('frontend.lbl7')</a></li>
-											<li><a href="{{url('trx_list')}}" style="text-decoration: none">@lang('frontend.lbl11')</a></li>
-                                            <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('frontend.lbl4')</a></li> -->
+                                    <li>
+                                        <?php 
+                            			  if(empty(Auth::user()->name) && empty(Auth::guard('eksmp')->user()->id)){
+                            				$sao = 0;
+                            			  }else{
+                            				$sao = 1;
+                            			  if(empty(Auth::user()->name)){ 
+                            			  $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc"); 
+                            			  $querynotif = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc limit 4"); 
+                            			  }else{
+                            				if(Auth::user()->id_group == 1){
+                            				$querynotifa = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc"); 
+                            				$querynotif = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc limit 4"); 
+                            			  }else{
+                            				$querynotifa = DB::select("select * from notif where untuk_id='".Auth::user()->id."' and status_baca='0' and to_role='4' order by id_notif desc"); 
+                            				$querynotif = DB::select("select * from notif where untuk_id='".Auth::user()->id."' and status_baca='0' and to_role='4' order by id_notif desc limit 4");
+                            			  }
+                            			  }
+                            			  }
+                            			 
+                            			  if($sao == 0) {
+                            			  ?>
+                            			   <font color="white"> <i class="fa fa-bell-o"></i></font>
+                            			<?php 
+                                            }else{ 
+                                        ?>
+                            			<ul class="nav flex-row order-lg-2">
+                                            <li class="dropdown notifications-menu d-flex align-items-center">
+                                                <a href="#" class="dropdown-toggles" data-toggle="dropdown">
+                                                    <font color="white"> <i class="fa fa-bell-o"></i></font>
+                                                    <span class="label label-warning" style="position: absolute!important;
+                                                        color : white!important;
+                                                        right: 7px!important;
+                                                        text-align: center!important;
+                                                        font-size: 9px!important;
+                                                        padding: 2px 3px!important;
+                                                        line-height: .9!important;">
+                                                        <?php 
+                                                            if(count($querynotifa) == 0){ 
+                                                                echo "0"; 
+                                                            }else{ 
+                                                                echo count($querynotifa); 
+                                                            } 
+                                                        ?>
+                                                    </span>
+                                                    <i class="ion-ios-arrow-down"></i>
+                                                </a>
+                                                <ul class="dropdown_links" style="min-width: 250px!important;">
+                            						<?php 
+                            			                 foreach($querynotif as $ar){
+                                                    ?>
+                                                    @if($ar->id_terkait == NULL)
+                                                        <a onclick="closenotif(<?php echo $ar->id_notif; ?>)" href="{{url($ar->url_terkait)}}">
+                                                    		<p style="width:100%; font-size:12px!important;">
+                                                                <?php echo $ar->keterangan; ?><br>
+                                                                <b><?php echo $ar->waktu; ?></b>
+                                                            </p>
+                                                		</a>
+                                                        <hr>
+                                                    @else
+                                                        <a onclick="closenotif(<?php echo $ar->id_notif; ?>)" href="{{url($ar->url_terkait.'/'.$ar->id_terkait)}}">
+                                                            <p style="width:100%; font-size:12px!important;">
+                                                                <?php echo $ar->keterangan; ?><br>
+                                                                <b><?php echo $ar->waktu; ?></b>
+                                                			</p>
+                                        			    </a>
+                                        			    <hr>
+                                                    @endif
+                                                    <?php } ?>
+                                                    <li><center>
+                                                        <?php 
+                                                            if(count($querynotifa) == 0){ 
+                                                                echo "<b>Tidak Ada Notifikasi Tersedia Untuk Anda !</b><br><br>"; 
+                                                            }else{ ?> 
+                                                                <a href="{{ url('show_all_notif') }}">View all</a> 
+                                                        <?php } ?>
+                                                    </center></li>
+                                                   <!-- Navarbar toggle btn -->
+                                                    <li class="d-lg-none d-flex align-items-center">
+                                                      <a href="#" class="mx-2" data-toggle="collapse" data-target="#navbarToggler">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 512 512"><path d="M64 144h384v32H64zM64 240h384v32H64zM64 336h384v32H64z"/></svg>
+                                                      </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
                                         </ul>
-
-		   </li>
-				
-               <!-- Navarbar toggle btn -->
-                <li class="d-lg-none d-flex align-items-center">
-                  <a href="#" class="mx-2" data-toggle="collapse" data-target="#navbarToggler">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 512 512"><path d="M64 144h384v32H64zM64 240h384v32H64zM64 336h384v32H64z"/></svg>
-                  </a>
-                </li>
-              </ul>
-			  <?php } ?>
-             
-									</li>
-									<li class="language">
-                                        <a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
-	<a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
-	<a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
-	<!--<div id="google_translate_element" style="border-radius:5px;"></div> -->
+                            			  <?php } ?>
                                     </li>
-                                   <!-- <li class="language">
-                                         <select id="lang" class="form-control" style="
-                                           border: 0;
-                                           color: black;
-                                           background: white;
-                                           font-size: 12px;
-                                           padding: 0 11px;
-                                           margin-top: 10px;
-                                           width: 100px;
-                                           *
-                                           width: 350px;
-                                           *
-                                           background: #58B14C;
-                                           /*-webkit-appearance: none;*/
-                                           " onchange="ce()">
-                                            <option <?php if(app()->getLocale() == "en"){ echo "selected"; }?> value="en">English</option>
-                                            <option <?php if(app()->getLocale() == "in"){ echo "selected"; }?> value="in">Indonesia</option>
-                                            <option <?php if(app()->getLocale() == "ch"){ echo "selected"; }?> value="ch">China</option>
-                                        </select>
-                                    </li> -->
+                                    <li class="language">
+                                        <a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
+                                    	<a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
+                                    	<a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -287,21 +272,21 @@
                         <div class="middel_right">
                             <div class="search-container" style="margin-right: 48px!important;">
                                 <!-- Nav pills -->
-                                <!-- <ul class="nav nav-pills" role="tablist">
-                                    <li class="nav-item"> -->
-                                    <a class="nav-link active" data-toggle="pill" href="#products">@lang('frontend.home.product')</a>
-                                    <!-- </li>
+                                <ul class="nav nav-pills" role="tablist" id="tab-me">
                                     <li class="nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#suppliers">@lang('frontend.home.supplier')</a>
+                                    <a class="nav-link active" data-toggle="pill" href="#products" id="set_products">@lang('frontend.home.product')</a>
                                     </li>
                                     <li class="nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#eksportir" id="set_eksportir">@lang('frontend.home.eksporter')</a>
+                                    </li>
+                                    <!-- <li class="nav-item">
                                     <a class="nav-link" data-toggle="pill" href="#request">@lang('frontend.home.sourcer')</a>
-                                    </li>
-                                </ul> -->
+                                    </li> -->
+                                </ul>
 
                                 <!-- Tab panes -->
-                                <!-- <div class="tab-content">
-                                    <div id="products" class="container tab-pane active"> -->
+                                <div class="tab-content">
+                                    <div id="products" class="container tab-pane active">
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_product')}}" id="formsprod">
                                             {{ csrf_field() }}
                                             <div class="search_box" style="width:484px!important;">
@@ -321,27 +306,44 @@
                                                 <input placeholder="@lang('frontend.home.cariproduct') ..." type="text" name="cari_product" autocomplete="off" value="{{$cariprod}}" id="cari_product">
                                                 <input type="hidden" name="locnya" value="{{$lct}}" id="locnya">
                                                 <input type="hidden" name="cari_catnya" value="{{$caricat}}" id="cari_catnya">
-                                                <button type="submit">@lang('frontend.home.search')</button>
-                                            </div>
-                                        </form>
-                                    <!-- </div>
-                                    <div id="suppliers" class="container tab-pane fade">
-                                        <form action="#">
-                                            <div class="search_box">
-                                                <input placeholder="Enter a keyword to search suppliers ..." type="text">
-                                                <button type="submit"><i class="ion-ios-search-strong"></i></button>
+                                                <button type="submit"><i class="ion-ios-search-strong" style="font-size: 27px;"></i></button>
                                             </div>
                                         </form>
                                     </div>
-                                    <div id="request" class="container tab-pane fade">
+                                    <div id="eksportir" class="container tab-pane">
+                                        <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_perusahaan')}}" id="formseksportir">
+                                            {{ csrf_field() }}
+                                            <div class="search_box" style="width:484px!important;">
+                                                <?php
+                                                    if(isset($search_eks)){
+                                                        $carieks = $search_eks;
+                                                    }else{
+                                                        $carieks = "";
+                                                    }
+
+                                                    if(isset($get_cat_eks)){
+                                                        $caricateks = $get_cat_eks;
+                                                    }else{
+                                                        $caricateks = "";
+                                                    }
+                                                ?>
+                                                <input placeholder="@lang('frontend.home.carieksporter') ..." type="text" name="cari_eksportir" autocomplete="off" value="{{$carieks}}" id="cari_eksportir">
+                                                <input type="hidden" name="lctnya" value="{{$lct}}" id="lctnya">
+                                                <input type="hidden" name="cat_eks" value="{{$caricateks}}" id="cat_eks">
+                                                <input type="hidden" name="sorteks" id="sorteks" value="">
+                                                <button type="submit"><i class="ion-ios-search-strong" style="font-size: 27px;"></i></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- <div id="request" class="container tab-pane fade">
                                         <form action="#">
                                             <div class="search_box">
                                                 <input placeholder="Enter a keyword to search sourcing request ..." type="text">
                                                 <button type="submit"><i class="ion-ios-search-strong"></i></button>
                                             </div>
                                         </form>
-                                    </div>
-                                </div> -->
+                                    </div> -->
+                                </div>
                                 <!-- <form action="#">
                                     <div class="search_box">
                                         <input placeholder="Search entire store here ..." type="text">

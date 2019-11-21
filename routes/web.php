@@ -65,7 +65,13 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/history/inquiry_getdata', 'HistoryFrontController@data_inquiry')->name('front.datatables.inquiry');
     //Buying Request
     Route::get('/front_end/history/br_getdata', 'HistoryFrontController@data_br')->name('front.datatables.br');
-   
+
+    //List Perusahaan (Eksportir)
+    Route::get('/front_end/list_perusahaan', 'SuppliersFrontController@list_perusahaan')->name('front.eksportir.index');
+    Route::get('/front_end/list_perusahaan/getCategory', 'SuppliersFrontController@getCategory')->name('front.eksportir.getCategory');
+    Route::get('/front_end/list_perusahaan/category/{id}', 'SuppliersFrontController@eksportir_category')->name('front.eksportir.category');
+    Route::get('/front_end/list_perusahaan/view/{id}', 'SuppliersFrontController@view_eksportir')->name('front.eksportir.view');
+
 
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
