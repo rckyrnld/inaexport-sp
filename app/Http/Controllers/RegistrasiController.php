@@ -45,6 +45,15 @@ class RegistrasiController extends Controller
         return view('auth.forget',compact('pageTitle'));
     } 
 	
+	public function cekmail($id)
+    {
+		$cek = DB::select("select * from itdp_company_users where email='".$id."'");
+		if(count($cek) == 0){
+			return "0";
+		}else{
+			return "1";
+		}
+	}
 	public function gantipass1($id)
     {
         $pageTitle = "Forget Password";

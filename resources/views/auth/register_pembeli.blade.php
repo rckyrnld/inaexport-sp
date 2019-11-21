@@ -31,8 +31,8 @@
 		<div class="form-row">
 							
                             <div class="form-group col-sm-5" align="left">
-                                <label>@lang("register.forms.email")</label>
-                                <input type="text" name="email" id="email" class="form-control" style=" color: black; " required>
+                                <label>@lang("register.forms.email")</label>&nbsp;&nbsp;&nbsp;<span id="cekmail"></span>
+                                <input type="text" name="email" id="email" class="form-control" style=" color: black; " required onkeyup="cekmail()">
                             </div>
 							<div class="form-group col-sm-2">
 							&nbsp;
@@ -160,6 +160,23 @@
     </div>
   </div>
  <script>
+ function cekmail(){
+	 var m = $('#email').val();
+	 var token = $('meta[name="csrf-token"]').attr('content');
+        $.get('{{URL::to("cekmail/")}}/' + m, {_token: token}, function (data) {
+            if(data == 0){
+				$('#cekmail').html("<font color='green'>( Avaible )</font>");
+				document.getElementById("buttonx").disabled = false;
+			}else{
+				$('#cekmail').html("<font color='red'>( Has Been Used ! )</font>");
+				document.getElementById("buttonx").disabled = true;
+			}
+			
+
+        })
+	 //alert(m);
+	 //$('#cekmail').html("<font color='red'>( Has Been Used ! )</font>");
+ }
 function simpanpembeli(){
 	var company = $('#company').val();
 	var username = $('#username').val();

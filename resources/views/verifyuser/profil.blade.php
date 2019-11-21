@@ -144,7 +144,18 @@ body {font-family: Arial;}
 		<div class="form-group col-sm-2">
 			<label><b>Name of Company</b></label>
 		</div>
-		<div class="form-group col-sm-4">
+		<div class="form-group col-sm-1">
+		<select name="badanusaha" class="form-control">
+		<option>-</option>
+		<?php 
+		$bns = DB::select("select * from eks_business_entity");
+		foreach($bns as $val){
+		?>
+		<option <?php if($ryu->badanusaha == $val->nmbadanusaha){ echo "selected"; } ?> value="<?php echo $val->nmbadanusaha; ?>"><?php echo $val->nmbadanusaha; ?></option>
+  <?php } ?>
+		</select>
+		</div>
+		<div class="form-group col-sm-3">
 			<input type="text" value="<?php echo $ryu->company; ?>" name="company" id="company" class="form-control" >
 		</div>
 	</div>
