@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Mail;
 
 class VerifyuserController extends Controller
@@ -454,6 +455,16 @@ class VerifyuserController extends Controller
 		$id_role = $request->id_role;
 		$id_user = $request->id_user;
 		$id_user_b = $request->idu;
+
+		$destination= 'uploads\Profile\Eksportir\\'.$id_user;
+        if($request->hasFile('image_1')){ 
+            $file1 = $request->file('image_1');
+            $nama_file1 = time().'_'.$request->file('image_1')->getClientOriginalName();
+            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+            $updfoto = DB::table('itdp_company_users')->where('id', $id_user)->update([
+            	"foto_profil" => $nama_file1,
+            ]);
+        }
 		
 		if(empty($request->file('doc'))){
 			$file = "";
