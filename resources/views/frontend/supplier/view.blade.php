@@ -18,6 +18,11 @@
         background-color: #DDEFFD; 
         border: none;
     }
+
+    .eksporter_img{
+        border-radius: 50%;
+        width: 50%;
+    }
 </style>
 <!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
@@ -27,22 +32,11 @@
                     <div class="breadcrumb_content">
                         <ul>
                             <li><a href="{{url('/')}}">@lang('frontend.proddetail.home')</a></li>
-                            @if($catActive == NULL)
-                            <li><a href="{{url('/front_end/list_product')}}">@lang('frontend.proddetail.default')</a></li>
-                            @else
-                            <?php echo $catActive; ?>
-                            @endif
+                            <li><a href="{{url('/front_end/list_perusahaan')}}">@lang('frontend.home.eksporter')</a></li>
+                            <li>@lang('frontend.liseksportir.detailtitle')</li>
                         </ul>
                     </div>
                 </div>
-                <?php
-                    if(isset($search)){
-                        $cariprod = $search;
-                    }else{
-                        $cariprod = "";
-                    }
-                ?>
-                <input type="hidden" name="pencarian_nama" id="pencarian_nama" value="{{$cariprod}}">
                 <div class="col-2" style="text-align: left;">
                     <div class="breadcrumb_content">
                         <div class="page_amount">
@@ -60,19 +54,20 @@
                 </div>
                 <div class="col-4" style="text-align: left;">
                     <div class="breadcrumb_content">
-                        <b>@lang('frontend.liseksportir.sortby')</b> <select name="orderby" id="short" style="border: none;">
-                                <option value="" @if(isset($sortbyproduct)) @if($sortbyproduct == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
-                                <option value="new" @if(isset($sortbyproduct)) @if($sortbyproduct == "new") selected @endif @endif>@lang('frontend.liseksportir.newest')</option>
-                                <option value="4">Price: low to high</option>
-                                <option value="5">Price: high to low</option>
-                                <option value="asc" @if(isset($sortbyproduct)) @if($sortbyproduct == "asc") selected @endif @endif>@lang('frontend.liseksportir.eksporternm')</option>
+                        <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_perusahaan/view/'.$data->id_user)}}" id="formvekssort">
+                        {{ csrf_field() }}
+                            <b>@lang('frontend.liseksportir.sortby')</b> <select name="shortprodeks" id="shortprodeks" style="border: none;">
+                                <option value="" @if(isset($sortby)) @if($sortby == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
+                                <option value="new" @if(isset($sortby)) @if($sortby == "new") selected @endif @endif>@lang('frontend.liseksportir.newest')</option>
+                                <option value="asc" @if(isset($sortby)) @if($sortby == "asc") selected @endif @endif>@lang('frontend.liseksportir.eksporternm')</option>
                             </select>
+                        </form>
                     </div>
                 </div>
                 <div class="col-1" style="text-align: right;">
                     <div class="breadcrumb_content">
                         <div class="shop_toolbar_btn">
-                            <button data-role="grid_3" type="button" class="active btn-grid-3" data-toggle="tooltip" title="3"></button>
+                            <button data-role="grid_4" type="button" class="active btn-grid-3" data-toggle="tooltip" title="3"></button>
                             <button data-role="grid_list" type="button" class="btn-list" data-toggle="tooltip" title="List"></button>
                         </div>
                     </div>
@@ -81,6 +76,23 @@
         </div>
     </div>
     <!--breadcrumbs area end-->
+
+    <?php
+        //Image
+        $img1 = $data->foto_profil;
+
+        // if($img1 == NULL){
+        //     $isimg1 = '/image/noimage.jpg';
+        // }else{
+        //     $image1 = 'uploads/Eksportir_Product/Image/'.$pro->id.'/'.$img1; 
+        //     if(file_exists($image1)) {
+        //       $isimg1 = '/uploads/Eksportir_Product/Image/'.$pro->id.'/'.$img1;
+        //     }else {
+              $isimg1 = '/front/assets/icon/icon logo.png';
+        //     }  
+        // }
+
+    ?>
 
     <!--shop  area start-->
     <div class="shop_area shop_reverse">
@@ -91,39 +103,52 @@
                     <aside class="sidebar_widget">
                         <div class="widget_inner">
                             <div class="widget_list widget_categories">
-                                <h2>@lang('frontend.liseksportir.category')</h2>
-                                <?php
-                                    if($loc == "ch"){
-                                        $srchcatlang = "搜索类别";
-                                    }else if($loc == "in"){
-                                        $srchcatlang = "Cari Kategori";
-                                    }else{
-                                        $srchcatlang = "Search Category";
-                                    }
-                                ?>
-                                <input type="text" class="form-control" id="cari_kategori" name="cari_kategori" placeholder="{{$srchcatlang}}" style="font-size: 12px;">
+                                <center>
+                                    <img src="{{url('/')}}{{$isimg1}}" alt="" class="eksporter_img">
+                                </center>
                                 <br>
-                                <div class="list-group list-group-flush" id="catlist">
-                                    @foreach($categoryutama as $cu)
-                                        <?php
-                                            $catprod1 = getCategoryLevel(1, $cu->id, "");
-                                            $nk = "nama_kategori_".$lct; 
-                                            if($cu->$nk == NULL){
-                                                $nk = "nama_kategori_en";
-                                            }
-                                        ?>
-                                        @if(count($catprod1) == 0)
-                                            <a href="{{url('/front_end/list_product/category/'.$cu->id)}}" class="list-group-item">{{$cu->$nk}}</a>
-                                        @else
-                                            <a onclick="openCollapse('{{$cu->id}}')" href="#menus{{$cu->id}}" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu"> {{$cu->$nk}} <i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop{{$cu->id}}"></i></a>
-                                                <div class="collapse" id="menus{{$cu->id}}">
-                                                    @foreach($catprod1 as $cat1)
-                                                        <a href="{{url('/front_end/list_product/category/'.$cat1->id)}}" class="list-group-item">{{$cat1->$nk}}</a>
-                                                    @endforeach
-                                                </div>
-                                        @endif
-                                    @endforeach
-                                </div>
+                                <h6 style="text-transform: uppercase;"><b>{{$data->company}}</b></h6>
+                                <br>
+                                <table border="0" style="width: 100%; font-size: 13px;">
+                                    <tr>
+                                        <td>
+                                            <b>@lang('frontend.liseksportir.fax')</b>
+                                        </td>
+                                        <td>:</td>
+                                        <td>{{$data->fax}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>@lang('frontend.liseksportir.website')</b>
+                                        </td>
+                                        <td>:</td>
+                                        <td>{{$data->website}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>@lang('frontend.liseksportir.phone')</b>
+                                        </td>
+                                        <td>:</td>
+                                        <td>{{$data->phone}}</td>
+                                    </tr>
+                                </table>
+                                <hr>
+                                <h6 style="text-transform: uppercase;"><b>@lang('frontend.liseksportir.address')</b></h6>
+                                <p style="font-size: 13px;">
+                                    {{$data->addres}}, {{$data->city}}, {{getProvinceName($data->id_mst_province, $lct)}}
+                                </p>
+                                <hr>
+                                <span style="font-size: 13px;">
+                                    @if($loc == "ch")
+                                        或通过电子邮件与出口商联系：
+                                    @elseif($loc == "in")
+                                        Atau hubungi eksportir melalui email:
+                                    @else
+                                        Or contact exporter via email :
+                                    @endif
+                                    <br>
+                                    <span style="color: #007bff;">{{$data->email}}</span>
+                                </span>
                             </div>
                         </div>
                     </aside>
@@ -132,21 +157,60 @@
                     <aside class="sidebar_widget">
                         <div class="widget_inner">
                             <div class="widget_list widget_categories">
-                                <h2>By Manufacturer</h2>
-                                <input type="text" class="form-control" id="cari_eksportir" name="cari_eksportir" placeholder="Search Manufacturer" style="font-size: 12px;">
+                                <span style="text-transform: uppercase;"><b>@lang("frontend.cu-cu")</b></span><br>
+                                <span style="font-size: 13px;">
+                                    @if($loc == "ch")
+                                        你需要更多信息？
+                                    @elseif($loc == "in")
+                                        Apakah Anda memerlukan informasi lebih lanjut?
+                                    @else
+                                        Do you need more information?
+                                    @endif
+                                </span>
                                 <br>
-                                <ul id="manufacturlist">
-                                    @foreach($manufacturer as $man)
-                                        <li>
-                                            <input type="checkbox" name="checkexp" value="{{$man->id}}">
-                                            <a href="#">{{$man->company}}({{getCountProduct('company', $man->id)}})</a>
-                                            <span class="checkmark"></span>
-                                        </li>
-                                    @endforeach
-                                    <li>
-                                        <a href="#">View All</a>
-                                    </li>
-                                </ul>
+                                <span style="color: red; font-size: 13px;">
+                                    @if($loc == "ch")
+                                        给我们发信息！
+                                    @elseif($loc == "in")
+                                        Kirim pesan kepada kami!
+                                    @else
+                                        Send us a message!
+                                    @endif
+                                </span>
+                                <br><br>
+                                <form action="{{url('/contact-us/send/')}}" method="POST">
+                                    {{ csrf_field() }}
+                                   <div class="form-group row">
+                                       <div class="col-md-12">
+                                           <input type="text" id="id" class="form-control integer" name="name" autocomplete="off" placeholder="@lang("frontend.cu-fullname")" style="font-size: 13px;" required>
+                                           <input type="hidden" name="urlnya" id="urlnya" value="/front_end/list_perusahaan/view/{{$data->id_user}}">
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                       <div class="col-md-12">
+                                           <input type="email" class="form-control" name="email" autocomplete="off" placeholder="@lang("frontend.cu-email")" style="font-size: 13px;" required>
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                       <div class="col-md-12">
+                                           <input type="text" class="form-control" name="subyek" autocomplete="off" placeholder="@lang("frontend.cu-subyek")" style="font-size: 13px;" required>
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                       <div class="col-md-12">
+                                           <textarea class="form-control" name="message" id="message" placeholder="@lang("frontend.cu-message")" style="font-size: 13px;" rows="3"></textarea>
+                                       </div>
+                                   </div>
+                              
+                                   <div class="form-group row">
+                                      <div class="col-md-12">
+                                          <button class="btn btn-primary button_form" type="submit" style="font-size: 13px; width: 100%;">@lang("button-name.submit")</button>
+                                      </div>
+                                   </div>
+                                </form>
                             </div>
                         </div>
                     </aside>
@@ -207,11 +271,11 @@
                                     }  
                                 }
                             ?>
-                            <div class="col-lg-4 col-md-4 col-12 ">
+                            <div class="col-lg-3 col-md-4 col-12 ">
                                 <div class="single_product">
                                     <div class="pro-type" style="{{$dis}}">
                                         <span class="pro-type-content">
-                                             @if($loc == "ch")
+                                            @if($loc == "ch")
                                                 新
                                             @elseif($loc == "in")
                                                 BARU
@@ -227,13 +291,6 @@
                                     <div class="product_thumb">
                                         <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
                                         <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a>
-                                        <!-- <div class="action_links">
-                                            <ul>
-                                                <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box" title="quick view"> <span class="lnr lnr-magnifier"></span></a></li>
-                                                <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="lnr lnr-heart"></span></a></li>
-                                                <li class="compare"><a href="compare.html" title="compare"><span class="lnr lnr-sync"></span></a></li>
-                                            </ul>
-                                        </div> -->
                                     </div>
                                     <div class="product_content grid_content">
                                         <div class="content_inner">
@@ -269,9 +326,9 @@
                                                     @if($loc == "ch")
                                                         <span>库存{{$pro->capacity}}件</span>
                                                     @elseif($loc == "in")
-                                                        <span>{{$pro->capacity}} in stock</span>
-                                                    @else
                                                         <span>{{$pro->capacity}} dalam persediaan</span>
+                                                    @else
+                                                        <span>{{$pro->capacity}} in stock</span>
                                                     @endif
                                                 </p>
                                             </div>
@@ -319,77 +376,9 @@
 @include('frontend.layouts.footer')
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#cari_kategori").keyup(function(){
-            var isi = this.value;
-            $.ajax({
-                url: "{{route('front.product.getCategory')}}",
-                type: 'get',
-                data: {name:isi, loc: "{{$lct}}"},
-                success:function(response){
-                    $("#catlist").html("");
-                    // console.log(response);
-                    $("#catlist").html(response);
-                }
-            });
-        });
 
-        $("#cari_eksportir").keyup(function(){
-            var isi = this.value;
-            $.ajax({
-                url: "{{route('front.product.getManufactur')}}",
-                type: 'get',
-                data: {name:isi},
-                success:function(response){
-                    $("#manufacturlist").html("");
-                    // console.log(response);
-                    $("#manufacturlist").html(response);
-                }
-            });
-        });
-
-        $("#short").on('change', function () {
-            var search = $('#cari_product').val();
-            var lct = $('#locnya').val();
-            var category = $('#cari_catnya').val();
-            var exportir = [];
-            $.each($("input[name='checkexp']:checked"), function(){
-                exportir.push($(this).val());
-            });
-
-            if(search == ""){
-                search = null;
-            }
-
-            if(lct == ""){
-                lct = null;
-            }
-
-            if(category == ""){
-                category = null;
-            }
-
-            if(exportir.length == 0){
-                exportir = null;
-            }
-            
-            // $.ajax({
-            //     url: "{{url('/front_end/list_product')}}",
-            //     type: 'get',
-            //     data: {cari_catnya:category, cari_product: search, locnya: lct, isieks: exportir},
-            //     success:function(response){
-                    
-            //     }
-            // });
+        $("#shortprodeks").on('change', function () {
+            $('#formvekssort').submit();
         })
     })
-
-    function openCollapse(col) {
-        if($("#fontdrop"+col).hasClass("fa-chevron-down")){
-            $('#fontdrop'+col).removeClass('fa-chevron-down');
-            $('#fontdrop'+col).addClass('fa-chevron-up');
-        }else{
-            $('#fontdrop'+col).removeClass('fa-chevron-up');
-            $('#fontdrop'+col).addClass('fa-chevron-down');
-        }
-    }
 </script>

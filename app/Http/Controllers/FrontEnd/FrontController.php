@@ -295,7 +295,14 @@ class FrontController extends Controller
 
     public function product_category($id)
     {
-        $lct = app()->getLocale();
+        $loc = app()->getLocale();
+        if($loc == "ch"){
+            $lct = "chn";
+        }else if($loc == "in"){
+            $lct = "in";
+        }else{
+            $lct = "en";
+        }
         //Category Product
         $catdata = DB::table('csc_product')->where('id', $id)->first();
 
@@ -435,7 +442,11 @@ class FrontController extends Controller
             'to_role' => '1',
         ]);
 
-        return redirect('/');
+        if($req->urlnya){
+            return redirect($req->urlnya);
+        }else{
+            return redirect('/');
+        }
     }
 
     public function getSub(Request $request)
