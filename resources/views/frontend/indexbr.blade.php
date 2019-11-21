@@ -61,48 +61,7 @@ if ($loc == "ch") {
                                 <br> @lang("login.lbl8")</p>
 
                         </div>
-                    <!-- <table id="example1" border="0" class="table table-bordered table-striped">
-                                <thead class="text-white" style="background-color: #1089ff;">
-                               
-                                </thead>
-								<tbody>
-								<?php
-                    $pesan = DB::select("select * from csc_buying_request where by_role='3' and id_pembuat='" . Auth::guard('eksmp')->user()->id . "' order by id desc ");
-                    foreach($pesan as $ryu){
-                    ?>
-                            <tr>
-                            <td><?php echo "<b>" . strtoupper($ryu->subyek) . "</b><br>";
-
-                    $cr = explode(',', $ryu->id_csc_prod);
-                    $hitung = count($cr);
-                    $semuacat = "";
-                    for ($a = 0; $a < ($hitung - 1); $a++) {
-                        $namaprod = DB::select("select * from csc_product where id='" . $cr[$a] . "' ");
-                        foreach ($namaprod as $prod) {
-                            $napro = $prod->nama_kategori_en;
-                        }
-                        $semuacat = $semuacat . "- " . $napro . "<br>";
-                    }
-                    echo $semuacat . "<br>";
-
-                    echo "Valid until " . $ryu->valid . " days<br>";
-                    echo $ryu->date;
-                    ?></td>
-								<td width="20%"><center>
-								<?php if($ryu->status == 0 || $ryu->status == null){ ?>
-                            <br><a title="Broadcast" onclick="xy(<?php echo $ryu->id; ?>)" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i></font></a><a title="Detail" href="{{ url('br_importir_detail/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-pencil"></i></a>
-								<?php }else if($ryu->status == 1 ){ ?>
-                            <br><a title="Detail" href="{{ url('br_importir_lc/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-comment"></i></a>
-								<?php } else if($ryu->status == 4){ ?>
-                            <br><a title="Detail" href="{{ url('br_importir_lc/'.$ryu->id) }}" class="btn btn-info"><i class="fa fa-comment"></i></a>
-								<?php } ?>
-                            </center></td>
-                            </tr>
-<?php } ?>
-
-                            </tbody>
-
-                        </table> -->
+                    
 
 
                     </div>

@@ -57,7 +57,7 @@ return [
     "service-title"    => "Membership Service",
     "home" => [
         "product" => "Products",
-        "supplier" => "Suppliers",
+        "eksporter" => "Exporters",
         "sourcer" => "Sourcing Request",
         "wishlist" => "Wish List",
         "mycart" => "My Cart",
@@ -66,6 +66,7 @@ return [
         "morecategory" => "More Categories",
         "search" => "Search",
         "cariproduct" => "Enter a keyword to search product",
+        "carieksporter" => "Enter a keyword to search exporter",
     ],
     "proddetail" => [
         "home" => "Home",
@@ -95,5 +96,20 @@ return [
         "email" => "E-mail",
         "compeksp" => "Company Exporter",
         "validasi" => "Validation",
+    ],
+    "available" => "Available",
+    "liseksportir" =>[
+        "default" => "Default",
+        "newest" => "Newest",
+        "eksporternm" => "Exporter Name : A-Z",
+        "detailtitle" => "Details Exporter",
+        "category" => "Categories",
+        "sortby" => "Sort By",
+        "prodnotfound" => "Product not found",
+        "moredetail" => "More Details",
+        "fax" => "Fax",
+        "website" => "Website",
+        "phone" => "Phone",
+        "address" => "Address",
     ],
 ];

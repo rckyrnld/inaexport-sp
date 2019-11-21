@@ -69,6 +69,28 @@
     <script src="{{url('assets')}}/html/scripts/plugins/datatable.js" ></script>
 
 <script src="{{ url('/') }}/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    <?php
+        if(isset($jenisnya)){
+    ?>
+        $(document).ready(function () {
+            var jenis = "{{$jenisnya}}";
+            if(jenis == "eksportir"){
+                $('#products').removeClass('active');
+                $('#set_products').removeClass('active');
+                $('#eksportir').addClass('active');
+                $('#set_eksportir').addClass('active');
+            }else{
+                $('#eksportir').removeClass('active');
+                $('#set_eksportir').removeClass('active');
+                $('#products').addClass('active');
+                $('#set_products').addClass('active');
+            }
+        });
+    <?php
+        }
+    ?>
+</script>
 <style> 
 .main-header .navbar .nav>li>a>.label {
     position: absolute;
@@ -287,21 +309,21 @@
                         <div class="middel_right">
                             <div class="search-container" style="margin-right: 48px!important;">
                                 <!-- Nav pills -->
-                                <!-- <ul class="nav nav-pills" role="tablist">
-                                    <li class="nav-item"> -->
-                                    <a class="nav-link active" data-toggle="pill" href="#products">@lang('frontend.home.product')</a>
-                                    <!-- </li>
+                                <ul class="nav nav-pills" role="tablist" id="tab-me">
                                     <li class="nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#suppliers">@lang('frontend.home.supplier')</a>
+                                    <a class="nav-link active" data-toggle="pill" href="#products" id="set_products">@lang('frontend.home.product')</a>
                                     </li>
                                     <li class="nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#eksportir" id="set_eksportir">@lang('frontend.home.eksporter')</a>
+                                    </li>
+                                    <!-- <li class="nav-item">
                                     <a class="nav-link" data-toggle="pill" href="#request">@lang('frontend.home.sourcer')</a>
-                                    </li>
-                                </ul> -->
+                                    </li> -->
+                                </ul>
 
                                 <!-- Tab panes -->
-                                <!-- <div class="tab-content">
-                                    <div id="products" class="container tab-pane active"> -->
+                                <div class="tab-content">
+                                    <div id="products" class="container tab-pane active">
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_product')}}" id="formsprod">
                                             {{ csrf_field() }}
                                             <div class="search_box" style="width:484px!important;">
@@ -321,27 +343,44 @@
                                                 <input placeholder="@lang('frontend.home.cariproduct') ..." type="text" name="cari_product" autocomplete="off" value="{{$cariprod}}" id="cari_product">
                                                 <input type="hidden" name="locnya" value="{{$lct}}" id="locnya">
                                                 <input type="hidden" name="cari_catnya" value="{{$caricat}}" id="cari_catnya">
-                                                <button type="submit">@lang('frontend.home.search')</button>
-                                            </div>
-                                        </form>
-                                    <!-- </div>
-                                    <div id="suppliers" class="container tab-pane fade">
-                                        <form action="#">
-                                            <div class="search_box">
-                                                <input placeholder="Enter a keyword to search suppliers ..." type="text">
-                                                <button type="submit"><i class="ion-ios-search-strong"></i></button>
+                                                <button type="submit"><i class="ion-ios-search-strong" style="font-size: 27px;"></i></button>
                                             </div>
                                         </form>
                                     </div>
-                                    <div id="request" class="container tab-pane fade">
+                                    <div id="eksportir" class="container tab-pane">
+                                        <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_perusahaan')}}" id="formseksportir">
+                                            {{ csrf_field() }}
+                                            <div class="search_box" style="width:484px!important;">
+                                                <?php
+                                                    if(isset($search_eks)){
+                                                        $carieks = $search_eks;
+                                                    }else{
+                                                        $carieks = "";
+                                                    }
+
+                                                    if(isset($get_cat_eks)){
+                                                        $caricateks = $get_cat_eks;
+                                                    }else{
+                                                        $caricateks = "";
+                                                    }
+                                                ?>
+                                                <input placeholder="@lang('frontend.home.carieksporter') ..." type="text" name="cari_eksportir" autocomplete="off" value="{{$carieks}}" id="cari_eksportir">
+                                                <input type="hidden" name="lctnya" value="{{$lct}}" id="lctnya">
+                                                <input type="hidden" name="cat_eks" value="{{$caricateks}}" id="cat_eks">
+                                                <input type="hidden" name="sorteks" id="sorteks" value="">
+                                                <button type="submit"><i class="ion-ios-search-strong" style="font-size: 27px;"></i></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- <div id="request" class="container tab-pane fade">
                                         <form action="#">
                                             <div class="search_box">
                                                 <input placeholder="Enter a keyword to search sourcing request ..." type="text">
                                                 <button type="submit"><i class="ion-ios-search-strong"></i></button>
                                             </div>
                                         </form>
-                                    </div>
-                                </div> -->
+                                    </div> -->
+                                </div>
                                 <!-- <form action="#">
                                     <div class="search_box">
                                         <input placeholder="Search entire store here ..." type="text">

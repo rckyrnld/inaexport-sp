@@ -96,9 +96,16 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     Route::post('impdata_br', 'Api\User\BuyingreqController@impdata_br');
     Route::post('br_importir_save', 'Api\User\BuyingreqController@br_importir_save');
     Route::post('br_importir_bc', 'Api\User\BuyingreqController@br_importir_bc');
+    Route::post('br_importir_lc', 'Api\User\BuyingreqController@br_importir_lc');
+    Route::post('br_konfirm', 'Api\User\BuyingreqController@br_konfirm');
+    Route::post('eks_br_chat', 'Api\User\BuyingreqController@eks_br_chat');
+    Route::post('simpanchatbr', 'Api\User\BuyingreqController@simpanchatbr');
+    Route::post('uploadpop', 'Api\User\BuyingreqController@uploadpop');
 
     Route::post('ekslistbr', 'Api\User\BuyingreqController@ekslistbr');
     Route::post('eksjoinbr', 'Api\User\BuyingreqController@eksjoinbr');
+    Route::post('br_save_join', 'Api\User\BuyingreqController@br_save_join');
+    Route::post('br_deal', 'Api\User\BuyingreqController@br_deal');
 
 
 

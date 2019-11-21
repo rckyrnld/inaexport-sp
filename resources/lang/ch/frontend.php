@@ -58,7 +58,7 @@ return [
     "service-title"    => "会员服务",
     "home" => [
         "product" => "产品展示",
-        "supplier" => "供应商",
+        "eksporter" => "出口商",
         "sourcer" => "采购请求",
         "wishlist" => "Wish List",
         "mycart" => "My Cart",
@@ -67,6 +67,7 @@ return [
         "morecategory" => "更多分类",
         "search" => "搜索",
         "cariproduct" => "输入关键字以搜索产品",
+        "carieksporter" => "输入关键字以搜索导出器",
     ],
     "proddetail" => [
         "home" => "家",
@@ -96,5 +97,20 @@ return [
         "email" => "电子邮件",
         "compeksp" => "公司出口商",
         "validasi" => "验证方式",
+    ],
+    "available" => "可得到",
+    "liseksportir" =>[
+        "default" => "默认",
+        "newest" => "最新",
+        "eksporternm" => "出口商名称：A-Z",
+        "detailtitle" => "详细资料出口商",
+        "category" => "类别",
+        "sortby" => "排序方式",
+        "prodnotfound" => "找不到产品",
+        "moredetail" => "更多详情",
+        "fax" => "传真",
+        "website" => "网站",
+        "phone" => "电话",
+        "address" => "地址",
     ],
 ];
