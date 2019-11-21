@@ -166,10 +166,11 @@
         $.get('{{URL::to("cekmail/")}}/' + m, {_token: token}, function (data) {
             if(data == 0){
 				$('#cekmail').html("<font color='green'>( Avaible )</font>");
-				document.getElementById("buttonx").disabled = false;
+				
 			}else{
 				$('#cekmail').html("<font color='red'>( Has Been Used ! )</font>");
-				document.getElementById("buttonx").disabled = true;
+				$('#email').val("");
+				alert("Sorry The Mail Has Been Used");
 			}
 			
 
