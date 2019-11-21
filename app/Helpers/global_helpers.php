@@ -645,3 +645,58 @@ if (! function_exists('getPerwakilanCountry2')) {
         return $nama;
     }
 }
+
+
+if (! function_exists('getProductbyEksportir')) {
+    function getProductbyEksportir($user, $limit, $order, $lct){
+      if($order == NULL){
+        $product = DB::table('csc_product_single')
+              // ->where('status', 2)
+              ->where('id_itdp_company_user', $user)
+              ->inRandomOrder()
+              ->limit($limit)
+              ->get();
+      }else{
+        if($order == ""){
+          $product = DB::table('csc_product_single')
+                // ->where('status', 2)
+                ->where('id_itdp_company_user', $user)
+                ->inRandomOrder()
+                ->limit($limit)
+                ->get();
+        }else{
+          if($order == "new"){
+              $col = "created_at";
+              $urut = "DESC";
+          }else if($order == "asc"){
+              $col = "prodname_".$lct;  
+              $urut = "ASC";
+          }
+          $product = DB::table('csc_product_single')
+                // ->where('status', 2)
+                ->where('id_itdp_company_user', $user)
+                ->orderBy($col, $urut)
+                ->limit($limit)
+                ->get();
+        }
+      }
+
+      return $product;
+    }
+}
+
+if (! function_exists('getProvinceName')) {
+    function getProvinceName($id, $loc){
+      $nama = "-";
+      $product = DB::table('mst_province')
+            ->where('id', $id)
+            ->first();
+
+      if($product != NULL){
+        $nbhs = "province_".$loc;
+        $nama = $product->$nbhs;
+      }
+
+      return $nama;
+    }
+}
