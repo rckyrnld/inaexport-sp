@@ -614,7 +614,7 @@ if (! function_exists('getProductByCategory')) {
             ->where('csc_product_single.status', 2)
             ->where('csc_product_single.id_csc_product', $category)
             ->inRandomOrder()
-            ->limit(10)
+            ->limit(6)
             ->get();
 
       return $product;
@@ -651,7 +651,7 @@ if (! function_exists('getProductbyEksportir')) {
     function getProductbyEksportir($user, $limit, $order, $lct){
       if($order == NULL){
         $product = DB::table('csc_product_single')
-              // ->where('status', 2)
+              ->where('status', 2)
               ->where('id_itdp_company_user', $user)
               ->inRandomOrder()
               ->limit($limit)
@@ -659,7 +659,7 @@ if (! function_exists('getProductbyEksportir')) {
       }else{
         if($order == ""){
           $product = DB::table('csc_product_single')
-                // ->where('status', 2)
+                ->where('status', 2)
                 ->where('id_itdp_company_user', $user)
                 ->inRandomOrder()
                 ->limit($limit)
@@ -673,7 +673,7 @@ if (! function_exists('getProductbyEksportir')) {
               $urut = "ASC";
           }
           $product = DB::table('csc_product_single')
-                // ->where('status', 2)
+                ->where('status', 2)
                 ->where('id_itdp_company_user', $user)
                 ->orderBy($col, $urut)
                 ->limit($limit)

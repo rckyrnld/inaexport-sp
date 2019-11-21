@@ -81,16 +81,16 @@
         //Image
         $img1 = $data->foto_profil;
 
-        // if($img1 == NULL){
-        //     $isimg1 = '/image/noimage.jpg';
-        // }else{
-        //     $image1 = 'uploads/Eksportir_Product/Image/'.$pro->id.'/'.$img1; 
-        //     if(file_exists($image1)) {
-        //       $isimg1 = '/uploads/Eksportir_Product/Image/'.$pro->id.'/'.$img1;
-        //     }else {
+        if($img1 == NULL){
+            $isimg1 = '/front/assets/icon/icon logo.png';
+        }else{
+            $image1 = 'uploads/Profile/Eksportir/'.$data->id_user.'/'.$img1; 
+            if(file_exists($image1)) {
+              $isimg1 = '/uploads/Profile/Eksportir/'.$data->id_user.'/'.$img1; 
+            }else {
               $isimg1 = '/front/assets/icon/icon logo.png';
-        //     }  
-        // }
+            }  
+        }
 
     ?>
 
