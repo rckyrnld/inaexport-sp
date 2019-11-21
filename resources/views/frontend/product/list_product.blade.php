@@ -222,18 +222,14 @@
                                     </div>
                                     <div class="product_name grid_name">
                                         <h3><a href="{{url('front_end/product/'.$pro->id)}}">{{getProductAttr($pro->id, 'prodname', $lct)}}</a></h3>
-                                        <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}">{{$categorynya}}</a></p>
+                                        <p class="manufacture_product"><a href="{{url('front_end/list_perusahaan/View/'.$pro->id_itdp_company_user)}}">{{getCompanyName($pro->id_itdp_company_user)}}</a></p>
                                     </div>
                                     <div class="product_thumb">
                                         <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
                                         <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a>
-                                        <!-- <div class="action_links">
-                                            <ul>
-                                                <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box" title="quick view"> <span class="lnr lnr-magnifier"></span></a></li>
-                                                <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="lnr lnr-heart"></span></a></li>
-                                                <li class="compare"><a href="compare.html" title="compare"><span class="lnr lnr-sync"></span></a></li>
-                                            </ul>
-                                        </div> -->
+                                    </div>
+                                    <div class="product_name grid_name">
+                                        <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}">{{$categorynya}}</a></p>
                                     </div>
                                     <div class="product_content grid_content">
                                         <div class="content_inner">
