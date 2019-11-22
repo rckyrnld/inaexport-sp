@@ -378,7 +378,7 @@
                                     <table style="width: 150px;">
                                         <tr>
                                             <td rowspan="2" style="width: 50px">
-                                                <img src="{{asset('front/assets/icon/love.png')}}" alt="" style="width: 50px;">
+                                                <img src="{{asset('front/assets/icon/tracking.png')}}" alt="" style="width: 50px;">
                                             </td>
                                             <td style="">
                                                 <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
@@ -401,7 +401,12 @@
 											@if(Auth::guard('eksmp')->user())
                                                 
                                                     @if(Auth::guard('eksmp')->user()->id_role == 3)
+														
+												<?php if(empty(Auth::guard('eksmp')->user()->foto_profil) || Auth::guard('eksmp')->user()->foto_profil =" " || Auth::guard('eksmp')->user()->foto_profil == null){ ?>
+												<img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">
+												<?php }else{ ?>
                                                 <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" style="width: 50px;">
+												<?php } ?>
                                                     @elseif(Auth::guard('eksmp')->user()->id_role == 2)
                                                  <img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">
                                                     @endif

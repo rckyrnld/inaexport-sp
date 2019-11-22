@@ -102,6 +102,7 @@ class ImporterController extends Controller
             if($users){
                 $profilenya = DB::table('itdp_profil_imp')->where('id', $id_profil)->update([
                     'id_mst_country' => $req->country,
+                    'badanusaha' => $req->badanusaha,
                     'company' => $req->name_company,
                     'addres' => $req->address,
                     'city' => $req->city,

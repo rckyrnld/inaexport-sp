@@ -27,7 +27,7 @@
                     <th>Duration</th>
                     <th>Topic</th>
                     <th>Location</th>
-                    <th>Status</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
               </table>
@@ -46,11 +46,11 @@
             serverSide: true,
             ajax: "{{ route('training.getData')}}",
             columns: [
-							{data: 'training_in', name: 'training_in'},
+							{data: 'training_en', name: 'training_en'},
 							{data: 'start_date', name: 'start_date'},
               {data: 'duration', name: 'duration'},
-              {data: 'topic_in', name: 'topic_in'},
-							{data: 'location_in', name: 'location_in'},
+              {data: 'topic_en', name: 'topic_en'},
+							{data: 'location_en', name: 'location_en'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });

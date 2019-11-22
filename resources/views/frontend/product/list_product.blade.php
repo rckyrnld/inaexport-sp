@@ -146,6 +146,9 @@
                                     <li>
                                         <a href="#">View All</a>
                                     </li>
+									<li>
+                                        <a href="{{url('front_end/list_perusahaan')}}">List All Company</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

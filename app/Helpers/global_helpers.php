@@ -448,21 +448,25 @@ if (! function_exists('changeStatusInquiry')) {
           if($key->status == 2){
             $date = [];
             if($key->type == "importir"){
-              if($datenow >= strtotime($key->due_date)){
-                $updstat = DB::table('csc_inquiry_br')->where('id', $key->id)->update([
-                  'status' => 5,
-                ]);
+              if($key->due_date != NULL){
+                if($datenow >= strtotime($key->due_date)){
+                  $updstat = DB::table('csc_inquiry_br')->where('id', $key->id)->update([
+                    'status' => 5,
+                  ]);
+                }
               }
             }else{
               $broadcast = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $key->id)->get();
               $brostat = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $key->id)->where('status', 5)->get();
               foreach ($broadcast as $key2) {
                 if($key2->status == 2){
-                  if($datenow >= strtotime($key2->due_date)){
-                    // array_push($date, $key2->id);
-                    $updstat = DB::table('csc_inquiry_broadcast')->where('id', $key2->id)->update([
-                      'status' => 5,
-                    ]);
+                  if($key2->due_date != NULL){
+                    if($datenow >= strtotime($key2->due_date)){
+                      // array_push($date, $key2->id);
+                      $updstat = DB::table('csc_inquiry_broadcast')->where('id', $key2->id)->update([
+                        'status' => 5,
+                      ]);
+                    }
                   }
                 }
               }
@@ -698,5 +702,21 @@ if (! function_exists('getProvinceName')) {
       }
 
       return $nama;
+    }
+}
+
+if (! function_exists('getContactPerson')) {
+    function getContactPerson($id, $param){
+      $return = '-';
+      $cp = DB::table('contact_person')
+            ->where('id_type', $id)
+            ->where('type', $param)
+            ->first();
+            
+      if($cp != NULL){
+        $return = $cp->name.'|'.$cp->phone.'|'.$cp->email;
+      }
+
+      return $return;
     }
 }

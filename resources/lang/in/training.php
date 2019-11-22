@@ -6,8 +6,10 @@ return [
   "durasi"=> "Durasi",
   "cari" => "cari",
   "day" => "Hari",
+  "week" => "Minggu",
   "date" => "Tanggal",
   "join" => "Gabung",
+  "minat" => "Tertarik ?",
   "pending" => "Menunggu Persetujuan",
   "joined" => "Bergabung"
 ];

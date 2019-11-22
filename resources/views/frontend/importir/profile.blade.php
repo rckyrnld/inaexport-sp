@@ -135,8 +135,23 @@ if($profile->foto_profil != NULL){
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td width="30%">Business Entity</td>
+                                        <td>
+										<select name="badanusaha" class="form-control">
+		<option>-</option>
+		<?php 
+		$bns = DB::select("select * from eks_business_entity");
+		foreach($bns as $val){
+		?>
+		<option <?php if($profile->badanusaha == $val->nmbadanusaha){ echo "selected"; } ?> value="<?php echo $val->nmbadanusaha; ?>"><?php echo $val->nmbadanusaha; ?></option>
+  <?php } ?>
+		</select></td>
+                                    </tr>
+									<tr>
                                         <td width="30%">Name of Company</td>
-                                        <td><input type="text" class="form-control" name="name_company" value="{{$profile->company}}" id="name_company" data-toggle="tooltip" data-trigger="manual" title="Please Fill Name of Company !"></td>
+                                        <td>
+										<input type="text" class="form-control" name="name_company" value="{{$profile->company}}" id="name_company" data-toggle="tooltip" data-trigger="manual" title="Please Fill Name of Company !">
+										</td>
                                     </tr>
                                     <tr>
                                         <td width="30%">Address</td>

@@ -56,6 +56,7 @@ return [
     "cu-cu"    => "联系我们",
     "cu-submit"    => "发送",
     "service-title"    => "会员服务",
+    "contact-person"    => "联系人",
     "home" => [
         "product" => "产品展示",
         "eksporter" => "出口商",

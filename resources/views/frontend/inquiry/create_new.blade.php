@@ -171,18 +171,16 @@
                                 <tr>
                                   <td width="30%">@lang('inquiry.kos')</td>
                                   <td width="60%">
-                                    <select class="form-control" name="kos" id="kos" style="font-size: 14px;">
-                                      <option value="" style="display: none;"> - @lang('inquiry.selectkos') - </option>
-                                      <option value="offer to sell">@lang('inquiry.ots')</option>
-                                      <option value="offer to buy">@lang('inquiry.otb')</option>
-                                      <option value="consultation">@lang('inquiry.consul')</option>
-                                    </select>
+                                    @lang('inquiry.otb')
+                                    <input type="hidden" name="kos" id="kos" class="form-control" value="offer to buy">
                                   </td>
                                 </tr>
                                 <tr>
                                   <td width="30%">@lang('inquiry.company')</td>
                                   <td width="60%">
-                                    <span style="color: #326BA2; text-transform: capitalize;">{{getCompanyName($data->id_itdp_company_user)}}</span>
+                                    <a href="{{url('/front_end/list_perusahaan/view/'.$data->id_itdp_company_user)}}" style="text-transform: uppercase;">
+                                      {{getCompanyName($data->id_itdp_company_user)}}
+                                    </a>
                                   </td>
                                 </tr>
                                 <tr>
@@ -299,8 +297,6 @@
               alert("<?php echo $alertmsg; ?>");
           }else if ($('#filedo').val() == "") {
               alert("<?php echo $alertfile; ?>");
-          }else if ($('#duration').val() == "") {
-              alert("<?php echo $alertdurasi; ?>");
           }else {
               $('#formnya').submit();
           }

@@ -137,6 +137,7 @@ Route::get('/verifypenjual/{id}', 'RegistrasiController@verifypenjual');
 Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');
 Route::get('/admin', 'RegistrasiController@loginadmin');
 Route::get('/pilihregister', 'RegistrasiController@pilihregister');
+Route::get('/cekmail/{id}', 'RegistrasiController@cekmail');
 
 
 //////////////////////////////////// END FRONTEND ////////////////////////////////////////////////////////////

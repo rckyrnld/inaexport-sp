@@ -18,15 +18,17 @@ class TrainingControllerEksportir extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'Training';
-			$data = DB::table('training_admin')->where('status', 1)->paginate(5);
-			$id_user = Auth::guard('eksmp')->user()->id;
-			$id = DB::table('itdp_company_users as icu')
-			->selectRaw('ipe.id')
-			->leftJoin('itdp_profil_eks as ipe','icu.id_profil','=','ipe.id')
-			->where('icu.id', $id_user)
-			->first();
-      return view('training.eksportir.index', compact('pageTitle','data','id'));
+	  	$pageTitle = 'Training';
+		return view('training.eksportir.view', compact('pageTitle'));
+   //    	$pageTitle = 'Training';
+			// $data = DB::table('training_admin')->where('status', 1)->paginate(5);
+			// $id_user = Auth::guard('eksmp')->user()->id;
+			// $id = DB::table('itdp_company_users as icu')
+			// ->selectRaw('ipe.id')
+			// ->leftJoin('itdp_profil_eks as ipe','icu.id_profil','=','ipe.id')
+			// ->where('icu.id', $id_user)
+			// ->first();
+   //    	return view('training.eksportir.index', compact('pageTitle','data','id'));
     }
 
     public function create(){
@@ -75,17 +77,8 @@ class TrainingControllerEksportir extends Controller
 	}
 
     public function getData(){
-			$id = DB::table('itdp_company_users as icu')
-			->selectRaw('ipe.id')
-			->leftJoin('itdp_profil_eks as ipe','icu.id_profil','=','ipe.id')
-			->where('icu.id', Auth::guard('eksmp')->user()->id)
-			->first();
+		$tick = DB::table('training_admin as ts')->orderby('id', 'DESC')->get();
 
-      $tick = DB::table('training_join as tj')
-			->selectRaw('tj.*,ta.start_date,ta.end_date,ta.param,ta.duration,ta.topic_in,ta.location_in,ta.training_in')
-			->leftJoin('training_admin as ta','ta.id','=','tj.id_training_admin')
-			->where('tj.id_profil_eks',$id->id)
-			->get();
       return \Yajra\DataTables\DataTables::of($tick)
           ->addColumn('start_date', function($data){
 						$date = date("Y/m/d", strtotime($data->start_date));
@@ -96,23 +89,9 @@ class TrainingControllerEksportir extends Controller
              return ''.$data->duration.' '.$data->param.'';
 					})
           ->addColumn('action', function ($data) {
-						if ($data->status == 0){
-							return '
-              <center>
-              <div class="btn-group">
-                <button class="btn btn-danger"><span class="fa fa-close"></span> Not Verified</button>
-              </div>
-              </center>
-              ';
-						}else if ($data->status == 1){
-							return '
-              <center>
-              <div class="btn-group">
-								<button class="btn btn-success"><span class="fa fa-check"></span> Already verified</button>
-              </div>
-              </center>
-              ';
-						}
+          		return '<center>
+                  <button onclick="contact_person()" id="button" class="btn btn-sm btn-info text-white">&nbsp;View&nbsp;</button>
+                  </center>';
           })
           ->rawColumns(['action'])
           ->make(true);
@@ -127,7 +106,7 @@ class TrainingControllerEksportir extends Controller
 			$cari = $request->cari;
 
 			$data = DB::table('training_admin')
-			->where('training_in','like',"%".$cari."%")
+			->where('training_in','ilike',"%".$cari."%")
 			->paginate(10);
 
 			$pageTitle = 'Training';

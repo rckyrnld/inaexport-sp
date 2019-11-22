@@ -55,6 +55,7 @@ return [
     "cu-cu"    => "Hubungi Kami",
     "cu-submit"    => "Kirim",
     "service-title"    => "Layanan Keanggotaan",
+    "contact-person"    => "Contact Person",
     "home" => [
         "product" => "Produk",
         "eksporter" => "Eksportir",

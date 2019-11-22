@@ -134,6 +134,19 @@ class InquiryFrontController extends Controller
                     $mail->to($data['email'], $data['username']);
                     $mail->subject('Inquiry Information');
                 });
+				
+				$data22 = [
+                    'email' => "kementerianperdagangan.max@gmail.com",
+                    'username' => $untuk->username,
+                    'type' => "eksportir",
+                    'company' => getCompanyName($dtproduct->id_itdp_company_user),
+                    'dari' => "Importer"
+                ];
+
+                Mail::send('inquiry.mail.sendToPembuat', $data22, function ($mail) use ($data22) {
+                    $mail->to($data22['email'], $data22['username']);
+                    $mail->subject('Inquiry Information');
+                });
             }
 
             return redirect('/front_end/history');
@@ -150,25 +163,29 @@ class InquiryFrontController extends Controller
             $datenow = date('Y-m-d H:i:s');
             $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
-            $durasi = 0;
             if($data){
-                if($data->duration != NULL){
-                    $jn = explode(' ', $data->duration);
-                    if($jn[1] == "week" || $jn[1] == "weeks"){
-                        $durasi = (int)$jn[0] * 7;
-                    }else if($jn[1] == "month" || $jn[1] == "months"){
-                        $durasi = (int)$jn[0] * 30;
+                    if($data->duration != NULL){
+                        $durasi = 0;
+                        $jn = explode(' ', $data->duration);
+                        if($jn[1] == "week" || $jn[1] == "weeks"){
+                            $durasi = (int)$jn[0] * 7;
+                        }else if($jn[1] == "month" || $jn[1] == "months"){
+                            $durasi = (int)$jn[0] * 30;
+                        }
+
+                        $date = strtotime("+".$durasi." days", strtotime($datenow));
+                        $duedate = date('Y-m-d H:i:s', $date);
+
+                        $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->update([
+                            'status' => 2,
+                            'due_date' => $duedate,
+                        ]);
+                    }else{
+                        $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->update([
+                            'status' => 2,
+                        ]);
                     }
                 }
-            }
-
-            $date = strtotime("+".$durasi." days", strtotime($datenow));
-            $duedate = date('Y-m-d H:i:s', $date);
-
-            $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->update([
-                'status' => 2,
-                'due_date' => $duedate,
-            ]);
 
             return redirect('/front_end/history');
         }else{
