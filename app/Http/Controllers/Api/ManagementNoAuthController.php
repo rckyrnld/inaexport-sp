@@ -477,3 +477,4 @@ class ManagementNoAuthController extends Controller
             return response($res);
         }
     }
+}
