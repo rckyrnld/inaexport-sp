@@ -134,6 +134,19 @@ class InquiryFrontController extends Controller
                     $mail->to($data['email'], $data['username']);
                     $mail->subject('Inquiry Information');
                 });
+				
+				$data22 = [
+                    'email' => "kementerianperdagangan.max@gmail.com",
+                    'username' => $untuk->username,
+                    'type' => "eksportir",
+                    'company' => getCompanyName($dtproduct->id_itdp_company_user),
+                    'dari' => "Importer"
+                ];
+
+                Mail::send('inquiry.mail.sendToPembuat', $data22, function ($mail) use ($data22) {
+                    $mail->to($data22['email'], $data22['username']);
+                    $mail->subject('Inquiry Information');
+                });
             }
 
             return redirect('/front_end/history');

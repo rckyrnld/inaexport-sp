@@ -390,12 +390,12 @@ class BuyingRequestController extends Controller
 		$ket = Auth::guard('eksmp')->user()->username." Deal Buying Request!";
 		$it = $id2."/".$id;
 		$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('2','Eksportir','".Auth::guard('eksmp')->user()->id."','Importir','".$data1."','".$ket."','br_importir_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+		('3','Eksportir','".Auth::guard('eksmp')->user()->id."','Importir','".$data1."','".$ket."','br_importir_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
 		");
 		
 		$ket2 = Auth::guard('eksmp')->user()->username." Deal Buying Request!";
 		$insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('2','Eksportir','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_pw_chat','".$id."','".Date('Y-m-d H:m:s')."','0')
+		('1','Eksportir','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_pw_chat','".$id."','".Date('Y-m-d H:m:s')."','0')
 		");
 		
 		$data = [
