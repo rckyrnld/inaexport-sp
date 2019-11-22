@@ -377,6 +377,64 @@ class BuyingRequestController extends Controller
 	}	
 	public function br_deal($id,$id2,$id3)
     {
+		
+		$cari1 = DB::select("select id_pembuat from csc_buying_request where id='".$id2."'");
+		foreach($cari1 as $aja1){
+			$data1 = $aja1->id_pembuat;
+		}
+		$cari2 = DB::select("select email from itdp_company_users where id='".$data1."'");
+		foreach($cari2 as $aja2){
+			$data2 = $aja2->email;
+		}
+		
+		$ket = Auth::guard('eksmp')->user()->username." Deal Buying Request!";
+		$it = $id2."/".$id;
+		$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+		('2','Eksportir','".Auth::guard('eksmp')->user()->id."','Importir','".$data1."','".$ket."','br_importir_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+		");
+		
+		$ket2 = Auth::guard('eksmp')->user()->username." Deal Buying Request!";
+		$insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+		('2','Eksportir','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_pw_chat','".$id."','".Date('Y-m-d H:m:s')."','0')
+		");
+		
+		$data = [
+            'email' => "",
+            'email1' => $data2,
+            'username' => Auth::guard('eksmp')->user()->username,
+            'main_messages' => "",
+            'id' => $it
+			];
+		Mail::send('UM.user.sendbrdeal', $data, function ($mail) use ($data) {
+        $mail->to($data['email1'], $data['username']);
+        $mail->subject('Eksportir Deal Buying Request');
+		});
+		
+		$data22 = [
+            'email' => "",
+            'email1' => Auth::guard('eksmp')->user()->email,
+            'username' => Auth::guard('eksmp')->user()->username,
+            'main_messages' => "",
+            'id' => $id
+			];
+		Mail::send('UM.user.sendbrdeal2', $data22, function ($mail) use ($data22) {
+        $mail->to($data22['email1'], $data22['username']);
+        $mail->subject('You Was Deal Buying Request');
+		});
+		
+		$data33 = [
+            'email' => "",
+            'email1' => "fahrisafari95@gmail.com",
+            'username' => Auth::guard('eksmp')->user()->username,
+            'main_messages' => "",
+            'id' => $id
+			];
+		Mail::send('UM.user.sendbrdeal3', $data33, function ($mail) use ($data33) {
+        $mail->to($data33['email1'], $data33['username']);
+        $mail->subject('Eksportir Was Deal Buying Request');
+		});
+		
+		
 		$maxid = 0;
 		$update = DB::select("update csc_buying_request_join set status_join='4' where id='".$id."' ");
 		$update2 = DB::select("update csc_buying_request set status='4', deal='".$id3."' where id='".$id2."' ");
