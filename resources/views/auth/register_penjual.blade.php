@@ -42,7 +42,7 @@
 							
                             <div class="form-group col-sm-5" align="left">
                                 <label>@lang("register2.forms.email")</label> &nbsp;&nbsp;&nbsp;<span id="cekmail"></span>
-                                <input type="text" name="email" id="email" class="form-control" style=" color: black; " required>
+                                <input type="text" onkeyup="cekmail()" name="email" id="email" class="form-control" style=" color: black; " required>
                             </div>
 							<div class="form-group col-sm-2">
 							&nbsp;
