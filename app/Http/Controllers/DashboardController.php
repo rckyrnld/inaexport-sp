@@ -118,12 +118,14 @@ class DashboardController extends Controller
             $id_user = Auth::user()->id;
             if(Auth::user()->id_admin_ln == 0){
                 $ambil = DB::table('itdp_admin_dn')->where('id', Auth::user()->id_admin_dn)->first();
+                $type = 'dn';
             } else {
                 $ambil = DB::table('itdp_admin_ln')->where('id', Auth::user()->id_admin_ln)->first();
+                $type = 'ln';
             }
             $country = $ambil->id_country;
 
-            $member = $this->getMemberPerwakilan($country);
+            $member = $this->getMemberPerwakilan($country,$type);
             $inquiry = $this->getInquiryPerwakilan($id_user);
             $buying = $this->getBuyingPerwakilan($id_user);
 
@@ -767,7 +769,7 @@ class DashboardController extends Controller
 // End Data Dashboard Admin
 
 // Start Data Dashboard Perwakilan
-    private function getMemberPerwakilan($country){
+    private function getMemberPerwakilan($country, $jenis){
         $fetch_data_new_user = '';
         $fetch_sub_data = '';
         $tampung_tahun = [];
@@ -781,15 +783,25 @@ class DashboardController extends Controller
             4 => '#789ec5',
         );
 
+        if($jenis == 'dn'){
+            $param = 'id_mst_province';
+            $profil = 'eks';
+            $nama = 'Exporter';
+        } else {
+            $param = 'id_mst_country';
+            $profil = 'imp';
+            $nama = 'Buyer';
+        }
+
         $new_user = DB::table('itdp_company_users as a')->selectRaw('extract(year from created_at) as year, count(b.id) as jumlah')
-            ->leftjoin('itdp_profil_imp as b', 'a.id_profil', '=', 'b.id')
-            ->where('b.id_mst_country', $country)
+            ->leftjoin('itdp_profil_'.$profil.' as b', 'a.id_profil', '=', 'b.id')
+            ->where('b.'.$param, $country)
             ->whereRaw('extract(year from created_at) in ('.$tahun.')')
             ->groupby('year')
             ->limit(5)->get();
 
         if(count($new_user) > 0){
-            $fetch_data_new_user .= '[{"name": "Buyer", "data": [';
+            $fetch_data_new_user .= '[{"name": "'.$nama.'", "data": [';
                 foreach ($new_user as $key => $value) {
                     if(!in_array($value->year, $tampung_tahun)){
                         array_push($tampung_tahun, $value->year);
@@ -804,13 +816,13 @@ class DashboardController extends Controller
                     }
                     // Data Drilldown
                     if($value->year == min($tampung_tahun)){
-                        $fetch_sub_data .= '[{"name": "Buyer", "id": "'.$value->year.'", "data": [';
+                        $fetch_sub_data .= '[{"name": "'.$nama.'", "id": "'.$value->year.'", "data": [';
                     } else {
-                        $fetch_sub_data .= '{"name": "Buyer", "id": "'.$value->year.'", "data": [';
+                        $fetch_sub_data .= '{"name": "'.$nama.'", "id": "'.$value->year.'", "data": [';
                     }
 
                     for ($m=1; $m < 13; $m++) { 
-                        $fetch_sub_data .= $this->getDataSubPerwakilan($m, $value->year, $country, 'user', 0);
+                        $fetch_sub_data .= $this->getDataSubPerwakilan($m, $value->year, $country, 'user', $jenis);
                         if($m != 12){
                             $fetch_sub_data .= ',';
                         }
@@ -1029,9 +1041,16 @@ class DashboardController extends Controller
 
     private function getDataSubPerwakilan($month, $year, $param, $jenis, $jenis2){
         if($jenis == 'user'){
+            if($jenis2 == 'dn'){
+                $country = 'id_mst_province';
+                $profil = 'eks';
+            } else {
+                $country = 'id_mst_country';
+                $profil = 'imp';
+            }
             $data = DB::table('itdp_company_users as a')->selectRaw('extract(month from created_at) as month, count(b.id) as jumlah')
-                ->leftjoin('itdp_profil_imp as b', 'a.id_profil', '=', 'b.id')
-                ->where('b.id_mst_country', $param)
+                ->leftjoin('itdp_profil_'.$profil.' as b', 'a.id_profil', '=', 'b.id')
+                ->where('b.'.$country.'', $param)
                 ->whereRaw('extract(year from created_at) in ('.$year.')')
                 ->whereRaw('extract(month from created_at) in ('.$month.')')
                 ->groupby('month')
