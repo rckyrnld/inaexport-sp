@@ -19,23 +19,25 @@
                         </div><br><br>
                         <div class="row">
                             <div class="col-md-3">
-                                <label><b>Product Name</b></label>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" id="prodname" name="prodname" autocomplete="off" @if($data != NULL) value="{{$data->prodname}}" @endif required>
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-md-3">
                                 <label><b>Kind of Subject</b></label>
                             </div>
                             <div class="col-md-4">
-                                <select class="form-control" name="kos" id="kos" required>
+                                <!-- <select class="form-control" name="kos" id="kos" required>
                                     <option value="" style="display: none;"> - Select Kind of Subject - </option>
                                     <option value="offer to sell" @if($data != NULL)@if($data->jenis_perihal_en == "offer to sell") selected @endif @endif>Offer to Sell</option>
                                     <option value="offer to buy" @if($data != NULL)@if($data->jenis_perihal_en == "offer to buy") selected @endif @endif>Offer to Buy</option>
                                     <option value="consultation" @if($data != NULL)@if($data->jenis_perihal_en == "consultation") selected @endif @endif>Consultation</option>
-                                </select>
+                                </select> -->
+                                <b>Offer to Buy</b>
+                                <input type="hidden" name="kos" id="kos" value="offer to buy" class="form-control" required>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label><b>Product Name</b></label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="prodname" name="prodname" autocomplete="off" @if($data != NULL) value="{{$data->prodname}}" @endif required>
                             </div>
                         </div><br>
                         <div class="row">
@@ -150,8 +152,6 @@
                 alert("Messages is empty, Please fill in!");
             }else if(file == ""){
                 alert("File is empty, Please fill in!");
-            }else if(duration == ""){
-                alert("Duration is empty, Please fill in!");
             }else{
                 $('#formnya').submit();
             }

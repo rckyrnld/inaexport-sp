@@ -918,30 +918,39 @@ class InquiryAdminController extends Controller
                 $datenow = date('Y-m-d H:i:s');
                 $inquiry = DB::table('csc_inquiry_br')->where('id', $data->id_inquiry)->first();
 
-                $durasi = 0;
                 if($inquiry){
                     if($inquiry->duration != NULL){
+                        $durasi = 0;
                         $jn = explode(' ', $inquiry->duration);
                         if($jn[1] == "week" || $jn[1] == "weeks"){
                             $durasi = (int)$jn[0] * 7;
                         }else if($jn[1] == "month" || $jn[1] == "months"){
                             $durasi = (int)$jn[0] * 30;
                         }
+
+                        $date = strtotime("+".$durasi." days", strtotime($datenow));
+                        $duedate = date('Y-m-d H:i:s', $date);
+
+                        $inquirynya = DB::table('csc_inquiry_br')->where('id', $data->id_inquiry)->update([
+                            'status' => 2,
+                        ]);
+
+                        $inquirybroadcast = DB::table('csc_inquiry_broadcast')->where('id', $id)->update([
+                            'status' => 2,
+                            'date' => $datenow,
+                            'due_date' => $duedate,
+                        ]);
+                    }else{
+                        $inquirynya = DB::table('csc_inquiry_br')->where('id', $data->id_inquiry)->update([
+                            'status' => 2,
+                        ]);
+
+                        $inquirybroadcast = DB::table('csc_inquiry_broadcast')->where('id', $id)->update([
+                            'status' => 2,
+                            'date' => $datenow,
+                        ]);
                     }
                 }
-
-                $date = strtotime("+".$durasi." days", strtotime($datenow));
-                $duedate = date('Y-m-d H:i:s', $date);
-
-                $inquiry = DB::table('csc_inquiry_br')->where('id', $data->id_inquiry)->update([
-                    'status' => 2,
-                ]);
-
-                $inquirybroadcast = DB::table('csc_inquiry_broadcast')->where('id', $id)->update([
-                    'status' => 2,
-                    'date' => $datenow,
-                    'due_date' => $duedate,
-                ]);
 
                 return redirect('/inquiry_admin/view/'.$data->id_inquiry);
             }else{
