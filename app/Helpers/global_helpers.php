@@ -704,3 +704,19 @@ if (! function_exists('getProvinceName')) {
       return $nama;
     }
 }
+
+if (! function_exists('getContactPerson')) {
+    function getContactPerson($id, $param){
+      $return = '-';
+      $cp = DB::table('contact_person')
+            ->where('id_type', $id)
+            ->where('type', $param)
+            ->first();
+            
+      if($cp != NULL){
+        $return = $cp->name.'|'.$cp->phone.'|'.$cp->email;
+      }
+
+      return $return;
+    }
+}

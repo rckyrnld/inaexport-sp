@@ -29,15 +29,17 @@ class TrainingControllerAdmin extends Controller
     }
 
 		public function store(Request $req){
-
+      //Input Training
+      $idt = DB::table('training_admin')->max('id') + 1;
 			$store = DB::table('training_admin')->insert([
+        'id' => $idt,
         'training_en'  => $req->training_en,
         'training_in'  => $req->training_in,
 				'training_chn' => $req->training_chn,
         'start_date'   => $req->start_date,
         'end_date'     => $req->end_date,
         'duration'     => $req->duration,
-				'param'    => $req->param,
+				'param'        => $req->param,
         'topic_en'     => $req->topic_en,
         'topic_in'     => $req->topic_in,
         'topic_chn'    => $req->topic_chn,
@@ -46,6 +48,17 @@ class TrainingControllerAdmin extends Controller
         'location_chn' => $req->location_chn,
 				'status' => 0
       ]);
+      //Input Contact Person
+      $idp = DB::table('contact_person')->max('id') + 1;
+      DB::table('contact_person')->insert([
+        'id' => $idp,
+        'name' => $req->cp_name,
+        'email' => $req->cp_email,
+        'phone' => $req->cp_phone,
+        'type' => 'training',
+        'id_type' => $idt,
+      ]);
+
 
 			return redirect('/admin/training');
 		}
@@ -59,13 +72,19 @@ class TrainingControllerAdmin extends Controller
         'start_date'   => $req->start_date,
         'end_date'     => $req->end_date,
         'duration'     => $req->duration,
-				'param'    => $req->param,
+				'param'        => $req->param,
         'topic_en'     => $req->topic_en,
         'topic_in'     => $req->topic_in,
         'topic_chn'    => $req->topic_chn,
         'location_en'  => $req->location_en,
         'location_in'  => $req->location_in,
         'location_chn' => $req->location_chn,
+      ]);
+
+      DB::table('contact_person')->where('type', 'training')->where('id_type', $id)->update([
+        'name' => $req->cp_name,
+        'email' => $req->cp_email,
+        'phone' => $req->cp_phone,
       ]);
 
 			return redirect('/admin/training');
@@ -117,22 +136,20 @@ class TrainingControllerAdmin extends Controller
     }
 
 		public function view($id){
-			$data = DB::table('training_admin')->where('id', $id)->first();
-
-      $join = DB::table('training_join as tj')
-        ->selectRaw('tj.*, ipe.company')
-        ->leftJoin('itdp_profil_eks as ipe','tj.id_profil_eks','=','ipe.id')
-        ->where('id_training_admin', $id)
-        ->paginate(10);
+			$data = DB::table('training_admin as a')->leftjoin('contact_person as b', 'a.id', '=', 'b.id_type')
+      ->where('b.type', 'training')->where('a.id', $id)
+      ->selectRaw('a.*, b.name, b.phone, b.email')->first();
 
       $pageTitle = 'Training';
 			$page = 'view';
 
-			return view('training.create',compact('page','pageTitle','data','join'));
+			return view('training.create',compact('page','pageTitle','data'));
     }
 
     public function edit($id){
-			$data = DB::table('training_admin')->where('id', $id)->first();
+			$data = DB::table('training_admin as a')->leftjoin('contact_person as b', 'a.id', '=', 'b.id_type')
+      ->where('b.type', 'training')->where('a.id', $id)
+      ->selectRaw('a.*, b.name, b.phone, b.email')->first();
 
 			$pageTitle = 'Training';
 			$page = 'edit';
