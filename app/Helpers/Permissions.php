@@ -6,11 +6,15 @@ use Auth;
 class Permissions {
     public static function get() { 
 	
+	if(empty(Auth::user()->id_group) && empty(Auth::guard('eksmp')->user()->id_role)) {
+		
+	}else{
 		if(empty(Auth::user()->id_group)){
 			$id_group = Auth::guard('eksmp')->user()->id_role; 
 		}else{
 			$id_group = Auth::user()->id_group; 
 		}
+	}
     	
 
         // $menu = DB::table('permissions')->where('id_group',$id_group)->join('menu','menu.id_menu','=','permissions.id_menu')->orderBy('order','ASC')->get();

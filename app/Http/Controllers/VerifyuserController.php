@@ -483,11 +483,11 @@ class VerifyuserController extends Controller
 		}
 		//UPDATE TAB 2
 		if($id_role == 2){
-		$updatetab2 = DB::select("update itdp_profil_eks set company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
+		$updatetab2 = DB::select("update itdp_profil_eks set badanusaha='".$request->badanusaha."', company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
 		, id_mst_province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."' 
 		where id='".$id_user_b."'");
 		}else{
-		$updatetab2 = DB::select("update itdp_profil_imp set company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
+		$updatetab2 = DB::select("update itdp_profil_imp set badanusaha='".$request->badanusaha."', company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
 		, province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."' 
 		where id='".$id_user_b."'");
 		}

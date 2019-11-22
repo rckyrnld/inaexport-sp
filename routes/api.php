@@ -68,6 +68,10 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
 
     //tiketing
     Route::post('createTicket', 'Api\User\ManagementUserController@createTicketing');
+    Route::post('data_ticketing', 'Api\User\ManagementUserController@data_ticketing');
+    Route::post('vchat', 'Api\User\ManagementUserController@vchat');
+    Route::post('sendchat', 'Api\User\ManagementUserController@sendchat');
+    Route::post('destroytiketing', 'Api\User\ManagementUserController@destroytiketing');
 
     //RC
     Route::post('downloadResearch', 'Api\User\ManagementUserController@downloadResearch');

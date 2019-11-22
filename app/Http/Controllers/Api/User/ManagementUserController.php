@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\User;
 
+use App\Models\ChatingTicketingSupportModel;
 use App\Models\TicketingSupportModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -189,6 +190,134 @@ class ManagementUserController extends Controller
             $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
+    public function data_ticketing(Request $request)
+    {
+        $id_user = $request->id_user;
+        $tick = TicketingSupportModel::from('ticketing_support as ts')
+            ->where('ts.id_pembuat', $id_user)
+            ->get();
+
+        if (count($tick) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $tick;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $tick;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
+    public function vchat(Request $request)
+    {
+        $id = $request->id_tiketing;
+        $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
+            ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
+            ->where('ts.id', $id)
+            ->orderby('cts.messages_send', 'asc')
+            ->get();
+
+        $users = TicketingSupportModel::where('id', $id)->first();
+
+        if (count($messages) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $data = array();
+            array_push($data, array(
+                'id_pembuat' => $users->id_pembuat,
+                'items' => $messages
+            ));
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $messages;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
+    public function sendchat(Request $req)
+    {
+        $chat = ChatingTicketingSupportModel::insert([
+            'id_ticketing_support' => $req->id_tiketing,
+            'sender' => $req->id_pembuat,
+            'reciver' => '0',
+            'messages' => $req->messages,
+            'messages_send' => date('Y-m-d H:i:s')
+        ]);
+        if ($chat) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+    public function destroytiketing(Request $request)
+    {
+        $id = $request->id_tiketing;
+        $data2 = ChatingTicketingSupportModel::where('id_ticketing_support', $id)->delete();
+        $data = TicketingSupportModel::where('id', $id)->delete();
+        if ($data) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
             return response($res);
         } else {
             $meta = [
