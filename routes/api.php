@@ -138,6 +138,7 @@ Route::namespace('Api')->group(function () {
     //country province
     Route::get('getCountry', 'ManagementNoAuthController@getCountry');
     Route::get('getProvince', 'ManagementNoAuthController@getProvince');
+    Route::get('getCategory', 'ManagementNoAuthController@getKategori');
 
     //RC
     Route::get('getResearchc', 'ManagementNoAuthController@getResearchchor');
