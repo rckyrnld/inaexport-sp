@@ -150,25 +150,29 @@ class InquiryFrontController extends Controller
             $datenow = date('Y-m-d H:i:s');
             $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
-            $durasi = 0;
             if($data){
-                if($data->duration != NULL){
-                    $jn = explode(' ', $data->duration);
-                    if($jn[1] == "week" || $jn[1] == "weeks"){
-                        $durasi = (int)$jn[0] * 7;
-                    }else if($jn[1] == "month" || $jn[1] == "months"){
-                        $durasi = (int)$jn[0] * 30;
+                    if($data->duration != NULL){
+                        $durasi = 0;
+                        $jn = explode(' ', $data->duration);
+                        if($jn[1] == "week" || $jn[1] == "weeks"){
+                            $durasi = (int)$jn[0] * 7;
+                        }else if($jn[1] == "month" || $jn[1] == "months"){
+                            $durasi = (int)$jn[0] * 30;
+                        }
+
+                        $date = strtotime("+".$durasi." days", strtotime($datenow));
+                        $duedate = date('Y-m-d H:i:s', $date);
+
+                        $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->update([
+                            'status' => 2,
+                            'due_date' => $duedate,
+                        ]);
+                    }else{
+                        $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->update([
+                            'status' => 2,
+                        ]);
                     }
                 }
-            }
-
-            $date = strtotime("+".$durasi." days", strtotime($datenow));
-            $duedate = date('Y-m-d H:i:s', $date);
-
-            $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->update([
-                'status' => 2,
-                'due_date' => $duedate,
-            ]);
 
             return redirect('/front_end/history');
         }else{
