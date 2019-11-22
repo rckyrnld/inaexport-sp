@@ -378,7 +378,7 @@
                                     <table style="width: 150px;">
                                         <tr>
                                             <td rowspan="2" style="width: 50px">
-                                                <img src="{{asset('front/assets/icon/track.png')}}" alt="" style="width: 50px;">
+                                                <img src="{{asset('front/assets/icon/tracking.png')}}" alt="" style="width: 50px;">
                                             </td>
                                             <td style="">
                                                 <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
