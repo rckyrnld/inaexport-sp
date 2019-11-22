@@ -43,6 +43,9 @@ class AdminResearchController extends Controller
               return 'Type Not Found';
             }
           })
+          ->addColumn('download', function ($value) {
+            return getDataDownload($value->id);
+          })
           ->addColumn('date', function ($data) {
             return date('d F Y', strtotime($data->publish_date)).' ( '.date('H:i', strtotime($data->publish_date)).' )';
           })

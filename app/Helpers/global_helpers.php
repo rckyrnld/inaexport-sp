@@ -720,3 +720,17 @@ if (! function_exists('getContactPerson')) {
       return $return;
     }
 }
+
+if (! function_exists('getDataDownload')) {
+    function getDataDownload($id){
+      $download = DB::table('csc_download_research_corner')
+            ->where('id_research_corner', $id)
+            ->select('id_itdp_profil_eks')
+            ->groupby('id_itdp_profil_eks')
+            ->get();
+
+      $return = count($download);
+      
+      return $return;
+    }
+}
