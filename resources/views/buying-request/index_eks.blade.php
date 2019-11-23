@@ -31,10 +31,10 @@
                                     
                                    
 									<th>
-                                        <center>Category</center>
+                                        <center>Subyek</center>
                                     </th>
 									<th>
-                                        <center>Address</center>
+                                        <center>Category</center>
                                     </th>
 									 <th>
                                         <center>Expired at</center>
@@ -67,7 +67,7 @@
 								}else if($ruu->by_role == 3){
 									$usre = DB::select("select b.company from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
 									foreach($usre as $imp){ 
-									echo "Importir - ".$imp->company; 
+									echo $imp->company; 
 									}
 								}
 									?></td>
