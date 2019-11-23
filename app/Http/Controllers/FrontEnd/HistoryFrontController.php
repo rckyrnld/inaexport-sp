@@ -302,7 +302,11 @@ class HistoryFrontController extends Controller
 				 return $buy->date;
             })
 			->addColumn('col4', function ($buy) {
+				if($buy->valid == 0){
+					return 'No Limit';
+				}else{
 				 return 'Valid '.$buy->valid." days";
+				}
             })
 			->addColumn('col5', function ($buy) {
 				 if($buy->deal == null || $buy->deal == 0 || empty($buy->deal)){

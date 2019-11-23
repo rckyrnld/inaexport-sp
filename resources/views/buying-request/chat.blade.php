@@ -130,7 +130,7 @@ body {font-family: Arial;}
            {{ csrf_field() }}
 <?php 
 $q1 = DB::select("select * from csc_buying_request_join where id='".$id."'");
-foreach($q1 as $p){ $id_br = $p->id_br; }
+foreach($q1 as $p){ $id_br = $p->id_br; $ij = $p->status_join;}
 $q2 = DB::select("select * from csc_buying_request where id='".$id_br."'");
 foreach($q2 as $p2){
 ?>
@@ -142,6 +142,52 @@ foreach($q2 as $p2){
   
 	<div class="form-row">
 		<div class="form-group col-sm-2">
+			<b>Created By</b>
+		</div>
+		<div class="form-group col-sm-4">
+			<?php 
+			if($p2->by_role == 1){
+				echo "Admin";
+			}else if($p2->by_role == 4){
+				echo "Perwakilan";
+			}else if($p2->by_role == 3){
+				$usre = DB::select("select b.company,b.badanusaha from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$p2->id_pembuat."'"); 
+									foreach($usre as $imp){ 
+									echo "Importir - ".$imp->badanusaha." ".$imp->company; 
+									}
+			}
+			?>
+		</div>
+		<div class="form-group col-sm-6" align="right">
+		<?php if($ij == 4){ ?>
+		
+		<?php }else{ ?>
+		<a data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-hand-o-right "></i> Deal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></a>
+		<?php } ?>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="form-group col-sm-2">
+			<b>Address</b>
+		</div>
+		<div class="form-group col-sm-4">
+			<?php 
+			if($p2->by_role == 1){
+				
+			}else if($p2->by_role == 4){
+				
+			}else if($p2->by_role == 3){
+				$usre = DB::select("select b.addres,b.city from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$p2->id_pembuat."'"); 
+									foreach($usre as $imp){ 
+									echo $imp->addres." , ".$imp->city; 
+									}
+			}
+			?>
+		</div>
+		
+	</div>
+	<div class="form-row">
+		<div class="form-group col-sm-2">
 			<b>Category Product</b>
 		</div>
 		<div class="form-group col-sm-4">
@@ -150,13 +196,7 @@ foreach($q2 as $p2){
 			foreach($ms1 as $kc1){ echo $kc1->nama_kategori_en; }
 			?>
 		</div>
-		<div class="form-group col-sm-6" align="right">
-		<?php if($p2->status == 4){ ?>
 		
-		<?php }else{ ?>
-		<a data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-hand-o-right "></i> Deal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></a>
-		<?php } ?>
-		</div>
 	</div>
 	
 	

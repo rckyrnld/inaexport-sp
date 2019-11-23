@@ -23,19 +23,19 @@
                                         <center>Duration</center>
                                     </th>
                                     <th>
-                                        <center>Importir</center>
+                                        <center>Created By</center>
                                     </th>
 									<th>
-                                        <center>Subyek</center>
+                                        <center>Address</center>
                                     </th>
                                     
                                    
 									<th>
                                         <center>Category</center>
                                     </th>
-									<!--<th>
-                                        <center>Specification</center>
-                                    </th>-->
+									<th>
+                                        <center>Address</center>
+                                    </th>
 									 <th>
                                         <center>Expired at</center>
                                     </th>
@@ -51,14 +51,38 @@
 								<?php $nt = 1; foreach($data as $ruu){ ?>
 								<tr>
 									<td><?php echo $nt; ?></td>
-									<td><center>Valid for <?php echo $ruu->valid; ?> days</center></td>
 									<td><center>
-									<?php $usre = DB::select("select b.company from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
-									foreach($usre as $imp){ 
-									echo $imp->company; 
-									}
-									?>
+									<?php 
+									
+									if($ruu->valid == 0){ echo "No Limit"; }else{ ?>
+									Valid for <?php echo $ruu->valid; ?> days
+									<?php } ?>
 									</center></td>
+									<td>
+									<?php 
+								if($ruu->by_role == 1){
+									echo "Admin";
+								}else if($ruu->by_role == 4){
+									echo "Perwakilan";
+								}else if($ruu->by_role == 3){
+									$usre = DB::select("select b.company from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
+									foreach($usre as $imp){ 
+									echo "Importir - ".$imp->company; 
+									}
+								}
+									?></td>
+									<td><?php 
+									if($ruu->by_role == 1){
+									echo "";
+								}else if($ruu->by_role == 4){
+									echo "";
+								}else if($ruu->by_role == 3){
+									$usre = DB::select("select b.company,b.addres,b.city from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
+									foreach($usre as $imp){ 
+									echo  $imp->addres." , ".$imp->city; 
+									}
+								}
+									?></td>
 									<td><center><?php echo $ruu->subyek; ?></center></td>
 									
 									
@@ -81,18 +105,18 @@ $cr = explode(',',$ruu->id_csc_prod);
 									*/
 									?>
 									</td>
-									<td><center><?php echo $ruu->expired_at; ?></center></td>
 									<td><center>
-									<?php if($ruu->statusa !=4){ if($ruu->status_join == "1"){ echo "Wait Importir Verification"; }else if($ruu->status_join == "2"){ echo "Negosiation"; }
+									<?php if($ruu->valid == 0){ echo "No Limit"; }else{ ?>
+									<?php echo $ruu->expired_at; } ?>
+									</center></td>
+									<td><center>
+									<?php  if($ruu->status_join == "1"){ echo "Wait Importir Verification"; }else if($ruu->status_join == "2"){ echo "Negosiation"; }
 									else if($ruu->status_join == "4"){ echo "Deal"; }else{ echo "-"; } 
-									}else{
-										if($ruu->status_join == "4"){ echo "<font color='green'>Deal</font>";
-										}else{ echo "<font color='red'>Expired</font>"; }
-									}
+									
 									?>
 									</center></td>
 									<td><center>
-									<?php if($ruu->statusa !=4){ if($ruu->status_join == null){ ?>
+									<?php  if($ruu->status_join == null){ ?>
 									<a href="{{ url('br_join/'.$ruu->idb) }}" class="btn btn-success"><font color="white"><i class="fa fa-plus"></i> Join</font></a>
 									<?php }else if($ruu->status_join == 1){ ?>
 									Wait Verification
@@ -100,13 +124,7 @@ $cr = explode(',',$ruu->id_csc_prod);
 									<a href="{{ url('br_chat/'.$ruu->idb) }}" class="btn btn-info"><font color="white"><i class="fa fa-comment"></i> Chat</font></a>
 									<?php }else if($ruu->status_join == 4){ ?>
 									<a href="{{ url('br_chat/'.$ruu->idb) }}" class="btn btn-success"><font color="white"><i class="fa fa-list"></i> View</font></a>
-									<?php }}else{  if($ruu->status_join == "4"){  ?>
-									<a href="{{ url('br_chat/'.$ruu->idb) }}" class="btn btn-success"><font color="white"><i class="fa fa-list"></i> Detail</font></a>
-									<a href="{{ url('br_trx/'.$ruu->ida.'/'.$ruu->idb) }}" class="btn btn-info"><font color="white">&nbsp;&nbsp;<i class="fa fa-truck"></i> Trx &nbsp;&nbsp;</font></a>
-									
-									<?php }else { ?>
-									
-									<?php }} ?>
+									<?php } ?>
 									</center></td>
 								</tr>
 								<?php $nt++; } ?>

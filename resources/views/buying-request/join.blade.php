@@ -80,6 +80,45 @@ foreach($q2 as $p2){
   
 	<div class="form-row">
 		<div class="form-group col-sm-2">
+			<b>Created By</b>
+		</div>
+		<div class="form-group col-sm-4">
+			<?php 
+			if($p2->by_role == 1){
+				echo "Admin";
+			}else if($p2->by_role == 4){
+				echo "Perwakilan";
+			}else if($p2->by_role == 3){
+				$usre = DB::select("select b.company,b.badanusaha from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$p2->id_pembuat."'"); 
+									foreach($usre as $imp){ 
+									echo "Importir - ".$imp->badanusaha." ".$imp->company; 
+									}
+			}
+			?>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="form-group col-sm-2">
+			<b>Address</b>
+		</div>
+		<div class="form-group col-sm-4">
+			<?php 
+			if($p2->by_role == 1){
+				echo "";
+			}else if($p2->by_role == 4){
+				echo "";
+			}else if($p2->by_role == 3){
+				$usre = DB::select("select b.addres,b.city from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$p2->id_pembuat."'"); 
+									foreach($usre as $imp){ 
+									echo $imp->addres." , ".$imp->city; 
+									}
+			}
+			?>
+		</div>
+	</div>
+	
+	<div class="form-row">
+		<div class="form-group col-sm-2">
 			<b>Category Product</b>
 		</div>
 		<div class="form-group col-sm-4">

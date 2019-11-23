@@ -107,12 +107,20 @@
                             <li>@lang("login.forms.br")</li>
                         </ul>
                     </div>
+					
+<?php 
+$nyariek = DB::select("select * from csc_buying_request_join where id='".$idb."'");
+foreach($nyariek as $ek1){ $id_eks = $ek1->id_eks; }
+$nyariek2 = DB::select("select b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='".$id_eks."'");
+foreach($nyariek2 as $ek2){ $company = $ek2->company; $addres = $ek2->addres; $city = $ek2->city;  }
+//echo $company;die();
+?>
 			<div class="form-row" style="font-size:12px;">
  <div id="content-body" style="color: #ffffff" >
     <div class="py-2 w-100">
 	
 	
-      <div class="" style="text-color:black;padding-left:10px; padding-right:10px; border-radius: 3px;">
+      <div class="" style="color:black;padding-left:10px; padding-right:10px; border-radius: 3px;">
 	  <br>
 	 
 
@@ -125,6 +133,16 @@
    <div class="box-body">
    <br><br>
   
+	<div class="form-row">
+		<div class="col-sm-12">
+		<label><b>Eksportir</b></label>
+		</div>
+		<div class="form-group col-sm-12">
+		<input type="text" readonly class="form-control" value="<?php echo $company;?>">
+			</div>
+		
+	</div>
+	
 	<div class="form-row">
 		<div class="col-sm-12">
 		<label><b>What are you looking for</b></label>
@@ -207,6 +225,15 @@
 <div class="col-md-6">
 <div class="box-body">
 <br><br>
+<div class="form-row">
+		<div class="col-sm-12">
+		<label><b>Address Eksportir</b></label>
+		</div>
+		<div class="form-group col-sm-12">
+		<textarea readonly class="form-control"><?php echo $addres." ,".$city;?></textarea>
+			</div>
+		
+	</div>
 <div class="form-row">
 		<div class="col-sm-12">
 		<label><b>Location of delivery</b></label>

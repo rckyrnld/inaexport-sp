@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Mail;
 
 class TrxController extends Controller
 {
@@ -20,7 +21,7 @@ class TrxController extends Controller
         return view('trx.index_eks', compact('pageTitle','data'));
 		}else if(Auth::guard('eksmp')->user()->id_role == 3){
 		$pageTitle = "Selling Transaction Admin";
-		$data = DB::select("select a.*,a.id as ida,a.status as statusa,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where   b.status_join='4' and  a.id = b.id_br order by b.id desc ");
+		$data = DB::select("select * from csc_transaksi where  id_pembuat='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc");
         return view('trx.index_imp', compact('pageTitle','data'));	
 		}
 		}else{
@@ -30,8 +31,8 @@ class TrxController extends Controller
         return view('trx.index_adm', compact('pageTitle','data'));
 		}else{
 		$pageTitle = "Selling Transaction Admin";
-		$data = DB::select("select a.*,a.id as ida,a.status as statusa,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where   b.status_join='4' and  a.id = b.id_br order by b.id desc ");
-        return view('trx.index_adm', compact('pageTitle','data'));
+		$data = DB::select("select * from csc_transaksi  order by id_transaksi desc "); 
+		return view('trx.index_adm', compact('pageTitle','data'));
 		}
 		}
     }
@@ -44,14 +45,98 @@ class TrxController extends Controller
 	
 	public function save_trx(Request $request)
     {
+		if($request->origin == 2){
+			$update = DB::select("update csc_buying_request set eo='".$request->eo."', neo='".$request->neo."',tp='".$request->tp."',ntp='".$request->ntp."' where id='".$request->id_br."' ");
+		
+		}
+		if($request->tipekirim == 1){
+			if($request->by_role == 3){
+			$caripembuat = DB::select("select * from itdp_company_users where id='".$request->id_pembuat."'");
+			foreach($caripembuat as $cp){ $mailimp = $cp->email; }
+			$ket = "Transaction Created by ".Auth::guard('eksmp')->user()->username;
+			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('3','Eksportir','".Auth::guard('eksmp')->user()->id."','Importir','".$request->id_pembuat."','".$ket."','detailtrx','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
+			");
+			
+			$ket2 = "Transaction Created by ".Auth::guard('eksmp')->user()->username;
+			$insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('1','Eksportir','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_trx2','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
+			");
+			
+			$data = [
+            'email' => "",
+            'email1' => $mailimp,
+            'username' => Auth::guard('eksmp')->user()->username,
+            'main_messages' => "",
+            'id' => $request->id_transaksi
+			];
+			Mail::send('UM.user.sendtrx', $data, function ($mail) use ($data) {
+			$mail->to($data['email1'], $data['username']);
+			$mail->subject('Transaction Created By '.Auth::guard('eksmp')->user()->username);
+			});
+			
+			$data22 = [
+            'email' => "",
+            'email1' => "kementerianperdagangan.max@gmail.com",
+            'username' => Auth::guard('eksmp')->user()->username,
+            'main_messages' => "",
+            'id' => $request->id_transaksi
+			];
+			Mail::send('UM.user.sendtrx2', $data22, function ($mail) use ($data22) {
+			$mail->to($data22['email1'], $data22['username']);
+			$mail->subject('Transaction Created By '.Auth::guard('eksmp')->user()->username);
+			});
+			
+			
+			}else{
+			$ket2 = "Transaction Created by ".Auth::guard('eksmp')->user()->username;
+			$insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('1','Eksportir','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_trx2','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
+			");
+			
+			$data22 = [
+            'email' => "",
+            'email1' => "kementerianperdagangan.max@gmail.com",
+            'username' => Auth::guard('eksmp')->user()->username,
+            'main_messages' => "",
+            'id' => $request->id_transaksi
+			];
+			Mail::send('UM.user.sendtrx2', $data22, function ($mail) use ($data22) {
+			$mail->to($data22['email1'], $data22['username']);
+			$mail->subject('Transaction Created By '.Auth::guard('eksmp')->user()->username);
+			});
+				
+			}
+			
+			$ket3 = "Transaction Created By You";
+			$insertnotif3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('2','Eksportir','".Auth::guard('eksmp')->user()->id."','Eksportir','".Auth::guard('eksmp')->user()->id."','".$ket3."','input_transaksi','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
+			");
+			
+			$data33 = [
+            'email' => "",
+            'email1' => Auth::guard('eksmp')->user()->email,
+            'username' => Auth::guard('eksmp')->user()->username,
+            'main_messages' => "",
+            'id' => $request->id_transaksi
+			];
+			Mail::send('UM.user.sendtrx3', $data33, function ($mail) use ($data33) {
+			$mail->to($data33['email1'], $data33['username']);
+			$mail->subject('Transaction Created By '.Auth::guard('eksmp')->user()->username);
+			});
+			
+			
+			
+		}
 		$update = DB::select("update csc_transaksi set status_transaksi='".$request->tipekirim."', type_tracking='".$request->type_tracking."',no_tracking='".$request->no_track."' where id_transaksi='".$request->id_transaksi."' ");
 		return redirect('trx_list');
+		
 	}
 	
-	public function detailtrx($id,$id2)
+	public function detailtrx($id)
     {
 		$pageTitle = "";
-		return view('trx.detailtrx', compact('pageTitle','id','id2'));
+		return view('trx.detailtrx', compact('pageTitle','id'));
 	}
 	
 	public function joineks($id,$id2)

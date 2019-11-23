@@ -59,6 +59,7 @@
                                 <thead class="text-white" style="background-color: #1089ff;">
 									<th width="5%">No</th>
 									<th><center>Company Name</center></th>
+									<th><center>Address</center></th>
 									<th><center>Email</center></th>
 									<th><center>Status</center></th>
 									<th><center>Aksi</center></th>
@@ -72,6 +73,7 @@
 								<tr>
 								<td><?php echo $na; ?></td>
 								<td><?php echo $ryu->company; ?></td>
+								<td><?php echo $ryu->addres." ,".$ryu->city; ?></td>
 								<td><?php echo $ryu->oemail; ?></td>
 								<td><center>
 								<?php if($ryu->status_join == "1"){ echo "Menunggu Verifikasi Importir"; }else if($ryu->status_join == "2"){ echo "Negosiation"; }

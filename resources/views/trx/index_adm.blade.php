@@ -58,23 +58,13 @@ body {font-family: Arial;}
 
 <div id="London" class="tabcontent" style="display:block;">
    <div class="box-body">
-    <table id="example1" class="table table-bordered table-striped">
+     <table id="example1" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>
                                     <th>No</th>
 									
-                                  
-									
-                                    
-                                   
 									<th>
-                                        <center>Product Name</center>
-                                    </th>
-									<th>
-                                        <center>Quantity</center>
-                                    </th>
-									<th>
-                                        <center>Price</center>
+                                        <center>Origin</center>
                                     </th>
 									<th>
                                         <center>Buyer</center>
@@ -82,12 +72,7 @@ body {font-family: Arial;}
 									<th>
                                         <center>Eksportir</center>
                                     </th>
-									<th>
-                                        <center>Subyek</center>
-                                    </th>
-									<!--<th>
-                                        <center>Specification</center>
-                                    </th>-->
+									
 									 <th>
                                         <center>Type Tracking</center>
                                     </th>
@@ -107,48 +92,30 @@ body {font-family: Arial;}
 								<tr>
 									<td><?php echo $nt; ?></td>
 									
-									
-									
-									<td>
-									<?php
-$cr = explode(',',$ruu->id_csc_prod);
-				$hitung = count($cr);
-				$semuacat = "";
-				for($a = 0; $a < ($hitung - 1); $a++){
-					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
-					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
-					$semuacat = $semuacat."- ".$napro."<br>";
-				}
-				echo $semuacat;
-									?>
-									</td>
-									<td><center><?php echo $ruu->eo." ".$ruu->neo; ?></center></td>
-									<td><center><?php echo $ruu->tp." ".$ruu->ntp; ?></center></td>
-									<td><center><?php if($ruu->by_role == 1){ echo "Admin"; }else if($ruu->by_role == 4){ echo "Perwakilan"; }else{ echo "Importir"; } ?></center></td>
+									<td><center><?php if($ruu->origin == 1){ echo "Inquiry"; }else if($ruu->origin == 2){ echo "Buying Request"; }?></center></td>
+									<td><center><?php if($ruu->by_role == 1){ echo "Admin"; }else if($ruu->by_role == 4){ echo "Perwakilan"; }else{ 
+									$usre = DB::select("select b.company,b.badanusaha from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
+									foreach($usre as $imp){ 
+									echo "Importir - ".$imp->badanusaha." ".$imp->company; 
+									}
+									} ?></center></td>
 									<td><center><?php 
-									$carieks = DB::select("select * from itdp_company_users where id='".$ruu->id_eks."'"); 
+									$carieks = DB::select("select * from itdp_company_users where id='".$ruu->id_eksportir."'");
 									foreach($carieks as $eks){ echo $eks->username; }
 									?></center></td>
-									<td><center><?php echo $ruu->subyek; ?></center></td>
 									
 									
 									<td><center><?php echo $ruu->type_tracking; ?></center></td>
-									<td><center><?php echo $ruu->no_track; ?></center></td>
+									<td><center><?php echo $ruu->no_tracking; ?></center></td>
+									<td><center><?php if($ruu->status_transaksi == 1){ echo "<font color='green'>Already Sent</font>"; }else{ echo "<font color='red'>On Process</font>"; } ?></center></td>
 									
 									<td><center>
-									<?php if($ruu->status_trx == 1){ ?>
-									<center><font color="green">Already Sent</font></center>
-									<?php }else { ?>
-									<center><font color="orange">On Process</font></center>
-									<?php } ?>
-									</center></td>
-									<td><center>
-									<?php if($ruu->status_trx == 1){ ?>
-									<a href="{{ url('br_trx2/'.$ruu->ida.'/'.$ruu->idb) }}" class="btn btn-info"><font color="white"><i class="fa fa-list"></i>&nbsp; View</font></a>
+									<?php if($ruu->status_transaksi == 1){ ?>
+									<a href="{{ url('br_trx2/'.$ruu->id_transaksi) }}" class="btn btn-info"><font color="white"><i class="fa fa-list"></i>&nbsp; View</font></a>
 									
 									
 									<?php }else { ?>
-									<a href="{{ url('br_trx2/'.$ruu->ida.'/'.$ruu->idb) }}" class="btn btn-success"><font color="white"><i class="fa fa-list"></i>&nbsp; View</font></a>
+									<a href="{{ url('br_trx2/'.$ruu->id_transaksi) }}" class="btn btn-success"><font color="white"><i class="fa fa-truck"></i>&nbsp; Send</font></a>
 									
 									<?php } ?>
 									</center></td>
