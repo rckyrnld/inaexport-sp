@@ -1,5 +1,5 @@
 <p>Dear Importir, </P>
-<p>{{$username}} Was Deal Buying Request !</p>
+<p>You Had Uploaded Invoice On Buying Request !</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>

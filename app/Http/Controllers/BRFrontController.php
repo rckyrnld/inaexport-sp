@@ -332,6 +332,34 @@ class BRFrontController extends Controller
 	
 	public function uploadpop(Request $request)
     {		
+			$cari = DB::select("select * from csc_buying_request_join where id='".$request->idb."'");
+			foreach($cari as $cr1){
+				$data1 = $cr1->id_eks;
+			}
+			$cari2 = DB::select("select * from itdp_company_users where id='".$data1."'");
+			foreach($cari2 as $cr2){
+				$data2 = $cr2->email;
+			}
+			
+			$ket = "Importir ".Auth::guard('eksmp')->user()->username." Upload Invoice On Buying Request !";
+			$it = $request->idb;
+			$it2 = $request->idq."/".$request->idb;
+			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('2','Importir','".Auth::guard('eksmp')->user()->id."','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+			");
+		
+			$ket2 = "Impotir ".Auth::guard('eksmp')->user()->username." Upload Invoice On Buying Request !";
+			$insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('1','Importir','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_pw_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+			");
+			
+			$ket3 = "You Had Uploaded Invoice On Buying Request !";
+			$insertnotif3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('3','Importir','".Auth::guard('eksmp')->user()->id."','Importir','".Auth::guard('eksmp')->user()->id."','".$ket3."','br_importir_chat','".$it2."','".Date('Y-m-d H:m:s')."','0')
+			");
+			
+			// echo "die";die();
+			
 			$idq = $request->idq;
 			$idb = $request->idb;
 			$idc = $request->idc;
