@@ -102,6 +102,7 @@ class TicketingSupportControllerAdmin extends Controller
             'id' => $req->id
 			];
 			
+			/*
 			$data2 = [
             'email' => "",
             'email1' => "kementerianperdagangan.max@gmail.com",
@@ -109,16 +110,20 @@ class TicketingSupportControllerAdmin extends Controller
             'main_messages' => $req->messages,
             'id' => $req->id
 			];
+			*/
 			
 			Mail::send('UM.user.sendticketchat2', $data, function ($mail) use ($data) {
             $mail->to($data['email1'], $data['username']);
             $mail->subject('Chat Ticketing Support');
 			});
 			
+			/*
 			Mail::send('UM.user.sendticketchat', $data2, function ($mail) use ($data2) {
             $mail->to($data2['email1'], $data2['username']);
             $mail->subject('Chat Ticketing Support');
 			});
+			*/
+			
 			
 			$ket = "Super Admin Respond Your Ticketing Request !";
 				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
@@ -182,6 +187,7 @@ class TicketingSupportControllerAdmin extends Controller
             'id' => $req->id
 			];
 			
+			/*
 			$data2 = [
             'email' => "",
             'email1' => "kementerianperdagangan.max@gmail.com",
@@ -189,16 +195,19 @@ class TicketingSupportControllerAdmin extends Controller
             'main_messages' => "",
             'id' => $req->id
 			];
+			*/
 			
 			Mail::send('UM.user.sendticketclosed2', $data, function ($mail) use ($data) {
             $mail->to($data['email1'], $data['username']);
             $mail->subject('Ticketing Support Closed');
 			});
 			
+			/*
 			Mail::send('UM.user.sendticketclosed', $data2, function ($mail) use ($data2) {
             $mail->to($data2['email1'], $data2['username']);
             $mail->subject('Ticketing Support Closed');
 			});
+			*/
 			
 			$ket = "Super Admin Closed Your Ticketing Request !";
 				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
