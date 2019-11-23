@@ -123,8 +123,16 @@ foreach($q2 as $p2){
 		</div>
 		<div class="form-group col-sm-4">
 			<?php 
-			$ms1 = DB::select("select id,nama_kategori_en from csc_product where id='".$p2->id_csc_prod_cat."'");
-			foreach($ms1 as $kc1){ echo $kc1->nama_kategori_en; }
+			$cr = explode(',',$p2->id_csc_prod);
+				$hitung = count($cr);
+				$semuacat = "";
+				for($a = 0; $a < ($hitung - 1); $a++){
+					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+					$semuacat = $semuacat."- ".$napro."<br>";
+				}
+				echo $semuacat;
+			
 			?>
 		</div>
 	</div>

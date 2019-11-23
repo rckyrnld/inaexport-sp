@@ -167,14 +167,18 @@ foreach($nyariek2 as $ek2){ $company = $ek2->company; $addres = $ek2->addres; $c
 		</div>
 		<div class="form-group col-sm-12">
 			<?php 
-			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
+			$cr = explode(',',$ryu->id_csc_prod);
+				$hitung = count($cr);
+				$semuacat = "";
+				for($a = 0; $a < ($hitung - 1); $a++){
+					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+					$semuacat = $semuacat."- ".$napro." ";
+					echo "<input class='form-control' type='text' value='- ".$napro."' readonly><br>";
+				}
+				// echo $semuacat;
 			?>
-			<select disabled style="color:black;" class="form-control select2" name="category" id="category" onchange="t1()">
-			<option value="">-- Select Category --</option>
-			<?php foreach($ms1 as $val1){ ?>
-			<option <?php if($ryu->id_csc_prod_cat == $val1->id){ echo "selected"; }?>  value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
-			<?php } ?>
-			</select>
+			<!--<textarea class="form-control"><?php echo $semuacat; ?></textarea> -->
 		</div>
 		
 	</div>
