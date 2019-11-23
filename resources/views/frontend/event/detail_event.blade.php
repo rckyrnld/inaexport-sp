@@ -96,23 +96,20 @@
     }
 
     if (Auth::guard('eksmp')->user()) {
-        if (Auth::guard('eksmp')->user()->id_role == 2) {
-            $cek = checkJoinEvent($detail->id, Auth::guard('eksmp')->user()->id);
-            if($cek == 0){
-                $button = '<button class="btn training join btn-info" onclick="__join('.$detail->id.')" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
-                $buttonnya = Lang::get('training.join');
-            } elseif($cek == 2) {
-                $button = '<button class="btn training join btn-info" style="width: 50%;">'.Lang::get('training.pending').'</button>';
-            } else {
-                $button = '<button class="btn training join btn-info" style="width: 50%;">'.Lang::get('training.joined').'</button>';
-            }
-        } else {
-            $button = '<button class="btn training join btn-info" onclick="notif()" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
-        }
+        $button = '<button class="btn training join btn-info" style="width:30%;" onclick="__join(\''.getContactPerson($detail->id, 'event').'\')">'.Lang::get('training.minat').'</button>';
     } else {
-        $button = '<button class="btn training join btn-info" onclick="__join('.$detail->id.')" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
+        $button = '<button class="btn training join btn-info" onclick="__join()" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
     }
 ?>
+<style type="text/css">
+    .modal-header { background-color: #2385d4; color: white; font-size: 20px; text-align: center;}
+    .modal-body{ height: 300px; }
+    .modal-content { border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; overflow: hidden;}
+    .modal-footer { background-color: #2385d4; color: white; font-size: 20px; text-align: center;}
+    #Tablemodal td {text-align: left !important;}
+    .cp{padding-left: 25px;font-weight: 600;}
+    i.mod:hover{color: red;}
+</style>
     <!--breadcrumbs area start-->
    <div class="breadcrumbs_area">
         <div class="container">
@@ -213,7 +210,8 @@
                             </div>
                             <div>
                                 <center>
-                                    <?php echo $button; ?>
+                                    <?php echo $button; ?>&nbsp;
+                                    <a href="{{url('/front_end/event/')}}" class="btn training join btn-danger" style="width:20%;">@lang('button-name.back')</a>
                                 </center>
                             </div>
                         <!-- </form> -->
@@ -223,6 +221,53 @@
         </div>
     </div>
     <!--product details end-->
+    @if(Auth::guard('eksmp')->user())
+    <!-- Modal Contact Person -->
+    <div class="modal fade" id="modal_cp" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <table width="100%">
+                    <tr>
+                      <td width="20%"></td>
+                      <td width="60%"><span class="modal-title" id="exampleModalLabel"><b>@lang("frontend.contact-person")</b></span></td>
+                      <td width="20%" align="right">
+                        <i class="fa fa-times mod" data-dismiss="modal"></i>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="modal-body" style="height: auto;">
+                  <table width="80%" style="font-size: 15px;" id="Tablemodal" cellpadding="10px">
+                    <tr>
+                      <td class="cp" width="40%">@lang("service.nama")</td>
+                      <td width="5%">:</td>
+                      <td style="padding-left: 20px;" colspan="2"><span id="cp_name"></span></td>
+                    </tr>
+                    <tr>
+                      <td class="cp" width="40%">@lang("register2.forms.phone")</td>
+                      <td width="5%">:</td>
+                      <td style="padding-left: 20px;" colspan="2"><span id="cp_phone"></span></td>
+                    </tr>
+                    <tr>
+                      <td class="cp" width="40%">@lang("register2.forms.email")</td>
+                      <td width="5%">:</td>
+                      <td style="padding-left: 20px;" colspan="2"><span id="cp_email"></span></td>
+                    </tr>
+                  </table>
+                  <br>
+                </div>
+                <div class="modal-footer">
+                  <table width="100%">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 <!-- Plugins JS -->
 <script src="{{asset('front/assets/js/plugins.js')}}"></script>
 <script type="text/javascript">
@@ -231,7 +276,17 @@
             alert("@lang('frontend.lbl12')");
             window.location.href = "{{url('/login')}}";
         @else
-            window.location.href = "{{url('/front_end/gabung_event')}}/"+id;
+            if(id != '-'){
+                var pecah = id.split('|');
+                $('#cp_name').html(pecah[0]);
+                $('#cp_phone').html(pecah[1]);
+                $('#cp_email').html(pecah[2]);
+            } else {
+                $('#cp_name').html('No Contact');
+                $('#cp_phone').html('No Contact');
+                $('#cp_email').html('No Contact');
+            } 
+              $('#modal_cp').modal('show'); 
         @endif
     }
 

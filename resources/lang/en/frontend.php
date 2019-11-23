@@ -55,6 +55,7 @@ return [
     "cu-submit"    => "Send",
     "cu-cu"    => "Contact Us",
     "service-title"    => "Membership Service",
+    "contact-person"    => "Contact Person",
     "home" => [
         "product" => "Products",
         "eksporter" => "Exporters",

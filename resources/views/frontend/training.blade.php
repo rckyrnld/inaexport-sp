@@ -3,27 +3,9 @@
 <?php
   $loc = app()->getLocale();
   if(Auth::guard('eksmp')->user() || Auth::user()){
-    if(Auth::guard('eksmp')->user()->id_role == 2){
-      $for = 'eksportir';
-      $message = '';
-      $id_user = Auth::guard('eksmp')->user()->id;
-      $id_profil = cekid(Auth::guard('eksmp')->user()->id);
-      $id_profil = $id_profil->id;
-    } else {
-      $id_user = '';
-      $id_profil = '0';
-      $for = 'no akses';
-        if($loc == "ch"){
-          $message = "您无权加入";
-        }elseif($loc == "in"){
-          $message = "Anda Tidak Memiliki Akses untuk Bergabung!";
-        }else{
-          $message = "You do not Have Access to Join!";
-        }
-    }
+    $for = "user";
+    $message = '';
   } else {
-    $id_user = '';
-    $id_profil = '0';
     $for = 'non user';
       if($loc == "ch"){
         $message = "请先登录";
@@ -36,6 +18,17 @@
 
 ?>
 <style type="text/css">
+  .modal-header { background-color: #2385d4; color: white; font-size: 20px; text-align: center;}
+  .modal-body{ height: 300px; }
+  .modal-content { border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; overflow: hidden;}
+  .modal-footer { background-color: #2385d4; color: white; font-size: 20px; text-align: center;}
+  #Tablemodal td {
+    text-align: left !important;
+  }
+  .cp{
+    padding-left: 25px;
+    font-weight: 600;
+  }
   .training{
     color : #edf1f5;
     font-weight: 500;
@@ -58,6 +51,9 @@
   .btn.training.joined{
     background-color: #edf1f5;
     color: #2385d4; 
+  }
+  i.mod:hover{
+    color: red;
   }
 </style>
 <div class="container">
@@ -118,16 +114,25 @@
                             }
                           }
 
-                          $cek = checkJoin($val->id, $id_profil);
-                          if($cek == 0){
-                            $button = '<button class="btn training join btn-info" onclick="__join('.$val->id.')">'.Lang::get('training.join').'</button>';
+                          if($val->param){
+                            if($val->param == 'Days'){
+                              $duration = Lang::get('training.day');
+                            } else {
+                              $duration = Lang::get('training.week');
+                            }
                           } else {
-                            $button = '<button class="btn training joined btn-info">'.Lang::get('training.joined').'</button>';
+                            $duration = '';
+                          }
+
+                          if($for == 'user'){
+                            $button = '<button class="btn training join btn-info" onclick="__join(\''.getContactPerson($val->id, 'training').'\')">'.Lang::get('training.minat').'</button>';
+                          } else {
+                            $button = '<button class="btn training join btn-info" onclick="__join()">'.Lang::get('training.minat').'</button>';
                           }
                         ?>
 
-                        <div class="col-lg-4 col-md-4 col-12">
-                          <div style="background-color: #2385d4; border-radius: 10px; vertical-align: top">
+                        <div class="col-lg-4 col-md-4 col-12" style="padding-top: 20px;">
+                          <div style="background-color: #2385d4; border-radius: 10px; vertical-align: top; height: 100%;">
                             <div class="col" style="height: 100%; padding-top: 15px;">
                               <span style="color: #edf1f5; font-weight: 600; font-size: 20px;">{{$training}}</span><br>
 
@@ -151,7 +156,7 @@
                                 <i class="fa fa-clock-o"></i>&nbsp;&nbsp;@lang("training.durasi")
                               </span><br>
                               <span class="training_topic">
-                                {{$val->duration}} @lang("training.day")
+                                {{$val->duration}} {{$duration}}
                               </span>
                               <br>
 
@@ -162,7 +167,6 @@
                                 {{$location}}
                               </span>
                               <br><br>
-
                               <?php echo $button;?><br><br>
                             </div>
                           </div>
@@ -181,40 +185,71 @@
         </div>
     </div>
     <!--Training end-->
+
+    @if($for == 'user')
+    <!-- Modal Contact Person -->
+    <div class="modal fade" id="modal_cp" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <table width="100%">
+                    <tr>
+                      <td width="20%"></td>
+                      <td width="60%"><span class="modal-title" id="exampleModalLabel"><b>@lang("frontend.contact-person")</b></span></td>
+                      <td width="20%" align="right">
+                        <i class="fa fa-times mod" data-dismiss="modal"></i>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="modal-body" style="height: auto;">
+                  <table width="80%" style="font-size: 15px;" id="Tablemodal" cellpadding="10px">
+                    <tr>
+                      <td class="cp" width="40%">@lang("service.nama")</td>
+                      <td width="5%">:</td>
+                      <td style="padding-left: 20px;" colspan="2"><span id="cp_name"></span></td>
+                    </tr>
+                    <tr>
+                      <td class="cp" width="40%">@lang("register2.forms.phone")</td>
+                      <td width="5%">:</td>
+                      <td style="padding-left: 20px;" colspan="2"><span id="cp_phone"></span></td>
+                    </tr>
+                    <tr>
+                      <td class="cp" width="40%">@lang("register2.forms.email")</td>
+                      <td width="5%">:</td>
+                      <td style="padding-left: 20px;" colspan="2"><span id="cp_email"></span></td>
+                    </tr>
+                  </table>
+                  <br>
+                </div>
+                <div class="modal-footer">
+                  <table width="100%">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 @include('frontend.layouts.footer')
 <script type="text/javascript">
-  $(document).ready(function () {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-  });
-
   function __join(id){
     var login = "{{$for}}";
-    var id_user = "{{$id_user}}";
-    var _token = $('meta[name=csrf-token]').attr('content');
+    if(login == 'user'){
+      if(id != '-'){
+        var pecah = id.split('|');
+        $('#cp_name').html(pecah[0]);
+        $('#cp_phone').html(pecah[1]);
+        $('#cp_email').html(pecah[2]);
+      } else {
+        $('#cp_name').html('No Contact');
+        $('#cp_phone').html('No Contact');
+        $('#cp_email').html('No Contact');
+      }
 
-    if(login == 'eksportir'){
-      var result = confirm("Are You Sure?"); 
-      if (result == true) { 
-        $.ajax({
-            url: "{{route('training.join')}}",
-            type: 'post',
-            data: { _token : _token, id_training_admin:id, id_user:id_user},
-            dataType: 'json',
-            success: function(data) {
-              if(data == 'Success'){
-                window.location = "{{url('/training/view')}}";
-              } else {
-                location.reload();
-              }
-            }
-        });
-      } else { 
-        return false; 
-      } 
+      $('#modal_cp').modal('show'); 
     } else {
       alert("{{$message}}");
     }

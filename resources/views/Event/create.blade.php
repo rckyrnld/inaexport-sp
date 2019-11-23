@@ -21,14 +21,7 @@
             width: 15% !important;   
         }
     </style>
-    @if($page=='show')
-        <style type="text/css">
-            div{
-                pointer-events: none; 
-            }
-        </style>
-    @endif
-    <div class="row">
+    <div class="row" id="show">
         <div class="col-md-12">
             <form class="form-horizontal" enctype="multipart/form-data" method="POST" @if($page=='add') action="{{url($url_store)}}" @elseif($page=='edit') action="{{url($url_update)}}" @endif id="formnya">
                 {{ csrf_field() }}
@@ -55,7 +48,7 @@
                                     <div class="row">
                                         <label for="s_date" class="col-md-3"><b>Start Date</b></label>
                                         <div class="col-md-3">
-                                            <input type="Date" class="form-control" name="s_date" id="s_date" autocomplete="off" @if($page!=='add') value="{{$sd}}" @endif>
+                                            <input type="Date" class="form-control" name="s_date" id="s_date" autocomplete="off" @if($page!=='add') value="{{$sd}}" @endif required>
                                         </div>
                                         <div class="col-md-3"></div>
                                         <div class="col-md-3"></div>
@@ -63,7 +56,7 @@
                                     <div class="row">
                                         <label for="e_date" class="col-md-3"><b>End Date</b></label>
                                         <div class="col-md-3">
-                                            <input type="Date" class="form-control" name="e_date" id="e_date" autocomplete="off" @if($page!=='add') value="{{$se}}" @endif>
+                                            <input type="Date" class="form-control" name="e_date" id="e_date" autocomplete="off" @if($page!=='add') value="{{$se}}" @endif required>
                                         </div>
                                         <div class="col-md-3"></div>
                                         <div class="col-md-3"></div>
@@ -302,17 +295,51 @@
                                         <div class="col-md-3"></div>
                                         <div class="col-md-3"></div>
                                     </div><br>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div style="float: right;">
-                                                @if($page=='show')
-                                                    <a href="{{url('/event')}}" class="btn btn-danger" style="pointer-events: stroke;">Kembali</a>
-                                                @else
-                                                    <button type="submit" class="btn btn-primary">Save</button>
-                                                    <a href="{{url('/event')}}" class="btn btn-danger">Cancel</a>
-                                                @endif
-                                            </div>
-                                        </div>
+                                </div>
+                            </div>
+                        </div><br>
+                        <h4>Contact Person</h4><hr>
+                        <div class="container">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <b>Full Name</b>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <input type="text" autocomplete="off" class="form-control" name="cp_name" @if($page != 'add')  value="{{$e_detail->name}}" @endif required>
+                                  </div>
+                                </div><br>
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <b>Email</b>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <input type="email" autocomplete="off" class="form-control" name="cp_email" @if($page != 'add')  value="{{$e_detail->email}}" @endif required>
+                                  </div>
+                                </div><br>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="row">
+                                  <div class="col-md-2"></div>
+                                  <div class="col-md-4">
+                                    <b>Phone</b>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <input type="text" autocomplete="off" class="form-control" name="cp_phone" maxlength="15" @if($page != 'add')  value="{{$e_detail->phone}}" @endif required>
+                                  </div>
+                                </div><br>
+                              </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div style="float: right;">
+                                        @if($page=='show')
+                                            <a href="{{url('/event')}}" class="btn btn-danger" style="pointer-events: stroke;">Kembali</a>
+                                        @else
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <a href="{{url('/event')}}" class="btn btn-danger">Cancel</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -381,6 +408,10 @@
             }
         }
         $(document).ready(function () {
+            var page = '{{$page}}';
+            if(page == 'show'){
+                $('#show :input').prop('disabled', true);
+            }
             $("#img_1").click(function() {
                 $("input[id='image_1']").click();
             });

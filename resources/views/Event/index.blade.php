@@ -92,7 +92,7 @@
                                                     <tr><td><b>Comodity</b></td></tr>
                                                     <tr><td>{{getEventComodity($ed->event_comodity)}}</td></tr>
                                                 </table>
-                                                <a href="{{url('/')}}/event/show_company/{{$ed->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a> 
+                                                <a href="{{url('/')}}/event/show/read/{{$ed->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a> 
                                                 <a href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                                 <a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                                </div>

@@ -47,14 +47,14 @@
                 <h3>No Member in This Country</h3>
                 @endif
               </div><br><br><br>
-              <div class="row">
+              <div class="row justify-content-center">
                 @if($Inquiry != null)
                 <div id="inquiry" style="min-width: 100%; height: 400px; margin: 0 auto;"></div>
                 @else
                 <h3>No Inquiry in This Account</h3>
                 @endif
               </div><br><br><br>
-              <div class="row">
+              <div class="row justify-content-center">
                 @if($Buying != null)
                 <div id="buying" style="min-width: 100%; height: 400px; margin: 0 auto;"></div>
                 @else
@@ -93,8 +93,12 @@
 if("{{$user}}" == 1){
   function user() {
     var data = JSON.parse('<?php echo addcslashes(json_encode($User),'\'\\'); ?>');
-    var negara = "{{getPerwakilanCountry2(Auth::user()->id)}}";
-    var defaultTitle = "The Number of Members Each Year in "+negara;
+    if("{{Auth::user()->id_admin_dn}}" == 0){
+      var negara = " in {{getPerwakilanCountry2(Auth::user()->id)}}";
+    } else {
+      var negara = "";
+    }
+    var defaultTitle = "The Number of Members Each Year"+negara;
     var drilldownTitle = "The Number of Members Year ";
     
     var chart = Highcharts.chart('user_year', {

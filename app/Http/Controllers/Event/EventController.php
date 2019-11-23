@@ -55,8 +55,7 @@ class EventController extends Controller
         $nama_file3 = NULL;
         $nama_file4 = NULL;
 
-        $id=DB::table('event_detail')->max('id');
-    	if($id){ $id = $id+1; } else { $id = 1; }
+        $id=DB::table('event_detail')->max('id') + 1;
 
         $destination= 'uploads\Event\Image\\'.$id;
         if($req->hasFile('image_1')){ 
@@ -123,6 +122,16 @@ class EventController extends Controller
         	'created_at' => $datenow
         ]);
 
+        $idp = DB::table('contact_person')->max('id') + 1;
+          DB::table('contact_person')->insert([
+            'id' => $idp,
+            'name' => $req->cp_name,
+            'email' => $req->cp_email,
+            'phone' => $req->cp_phone,
+            'type' => 'event',
+            'id_type' => $id,
+          ]);
+
         for ($i=0; $i < count($req->id_prod_cat) ; $i++) { 
         	$var=$req->id_prod_cat[$i];
         	$idn=DB::table('event_detail_kategori')->max('id');
@@ -178,7 +187,9 @@ class EventController extends Controller
 		$url_update = '/event/update/'.$id;
 		$pageTitle = 'Edit Event';
 		$page='edit';
-		$e_detail = DB::table('event_detail')->where('id', $id)->first();
+		$e_detail = DB::table('event_detail as a')->leftjoin('contact_person as b', 'a.id', '=', 'b.id_type')
+          ->where('b.type', 'event')->where('a.id', $id)
+          ->selectRaw('a.*, b.name, b.phone, b.email')->first();
 		$ex = explode(' ', $e_detail->start_date);
 		$sd = $ex[0];
 		$ex2 = explode(' ', $e_detail->end_date);
@@ -269,6 +280,13 @@ class EventController extends Controller
             'updated_at' => $datenow,
         ]);
 
+        DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->update([
+            'name' => $req->cp_name,
+            'email' => $req->cp_email,
+            'phone' => $req->cp_phone,
+        ]);
+
+
         DB::table('event_detail_kategori')->where('id_event_detail', $id)->delete();
         for ($i=0; $i < count($req->id_prod_cat) ; $i++) {
         	$idn=DB::table('event_detail_kategori')->max('id');
@@ -294,7 +312,9 @@ class EventController extends Controller
     public function show($id){
 		$pageTitle = 'Show Event';
 		$page='show';
-		$e_detail = DB::table('event_detail')->where('id', $id)->first();
+		$e_detail = DB::table('event_detail as a')->leftjoin('contact_person as b', 'a.id', '=', 'b.id_type')
+          ->where('b.type', 'event')->where('a.id', $id)
+          ->selectRaw('a.*, b.name, b.phone, b.email')->first();
 		$ex = explode(' ', $e_detail->start_date);
 		$sd = $ex[0];
 		$ex2 = explode(' ', $e_detail->end_date);
