@@ -1,5 +1,5 @@
 <p>Dear Admin, </P>
-<p>{{$username}} Join To Buying Request !</p>
+<p>{{$username}} Had Joined To Buying Request !</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>

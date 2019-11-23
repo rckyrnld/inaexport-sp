@@ -1,5 +1,5 @@
 <p>Dear Importir, </P>
-<p>{{$username}} Join To Your Buying Request !</p>
+<p>{{$username}} Had Joined To Your Buying Request !</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>

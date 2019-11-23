@@ -1,5 +1,5 @@
-<p>Dear Eksportir, </P>
-<p>You Had Joined To Buying Request !</p>
+<p>Dear Admin, </P>
+<p>{{$username}} Was Deal Buying Request !</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>
@@ -9,4 +9,4 @@
 <p>
   <!-- {{$main_messages}} -->
 </p>
-click <a href="{{url('br_list')}}">Here</a>.
+click <a href="{{url('br_pw_chat', $id)}}">Here</a>.

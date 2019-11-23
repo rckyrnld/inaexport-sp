@@ -1,5 +1,5 @@
 <p>Dear Admin, </P>
-<p>You was create Ticketing</p>
+<p>You Had Created Ticketing</p>
 <hr>
 <ol>
     <ul>Name : {{$username}}</ul>
