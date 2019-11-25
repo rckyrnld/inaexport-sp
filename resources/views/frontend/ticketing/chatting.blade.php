@@ -107,7 +107,12 @@
                         <div class="col-md-4" style="padding-left: 0px;">
                           <span class="chat-user" style=""><b>Chat</b></span>
                           <br>
-                          <span class="chat-user" style="text-transform: capitalize;"><b>Super Admin</b></span>
+                          <span class="chat-user" style="text-transform: capitalize;"><b>Super Admin 
+						  @if(Cache::has('user-is-online-' . 1))
+    <span class="text-success">Online</span>
+@else
+    <span class="text-secondary">Offline</span>
+@endif</b></span>
                         </div>
                       </div>
                     </div>
