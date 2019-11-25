@@ -478,4 +478,56 @@ class ManagementNoAuthController extends Controller
             return response($res);
         }
     }
+
+    public function getSub(Request $request)
+    {
+        $level = $request->level;
+        if ($level == 1) {
+            $catprod = DB::table('csc_product')->where('level_1', $request->idparent)->get();
+            if (count($catprod) > 0) {
+                $meta = [
+                    'code' => '200',
+                    'message' => 'Success',
+                    'status' => 'OK'
+                ];
+                $data = $catprod;
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            } else {
+                $meta = [
+                    'code' => '204',
+                    'message' => 'Data Not Found',
+                    'status' => 'No Content'
+                ];
+                $data = '';
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            }
+        } else {
+            $catprod = DB::table('csc_product')->where('level_2', $request->idparent)->where('level_1', $request->idsub)->get();
+            if (count($catprod) > 0) {
+                $meta = [
+                    'code' => '200',
+                    'message' => 'Success',
+                    'status' => 'OK'
+                ];
+                $data = $catprod;
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            } else {
+                $meta = [
+                    'code' => '204',
+                    'message' => 'Data Not Found',
+                    'status' => 'No Content'
+                ];
+                $data = '';
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            }
+        }
+    }
 }

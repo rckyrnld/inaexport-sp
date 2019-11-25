@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Api\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Mail;
 
 class ProductController extends Controller
 {
