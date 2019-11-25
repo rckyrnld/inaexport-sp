@@ -354,4 +354,11 @@ class ProductController extends Controller
             return response($res);
         }
     }
+
+    function setValue($value)
+    {
+        $value = str_replace('.', '', $value);
+
+        return (int)$value;
+    }
 }
