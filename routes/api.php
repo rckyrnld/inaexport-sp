@@ -139,6 +139,7 @@ Route::namespace('Api')->group(function () {
     Route::get('getCountry', 'ManagementNoAuthController@getCountry');
     Route::get('getProvince', 'ManagementNoAuthController@getProvince');
     Route::get('getCategory', 'ManagementNoAuthController@getKategori');
+    Route::post('getSub', 'ManagementNoAuthController@getSub');
 
     //RC
     Route::get('getResearchc', 'ManagementNoAuthController@getResearchchor');
@@ -149,5 +150,9 @@ Route::namespace('Api')->group(function () {
 
     //event
     Route::get('getDataEvent', 'ManagementNoAuthController@getEvent');
+
+    //hscode
+    Route::get('getHscode', 'ManagementNoAuthController@getHscode');
+
 });
 // });

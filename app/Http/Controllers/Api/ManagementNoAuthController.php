@@ -354,7 +354,7 @@ class ManagementNoAuthController extends Controller
             ->orderby('a.created_at', 'desc')
             ->distinct('a.id_research_corner', 'a.created_at')
             ->select('b.*', 'a.id_research_corner', 'a.created_at')
-            ->limit(10)
+//            ->limit(10)
             ->get();
         if (count($research) > 0) {
             $meta = [
@@ -452,7 +452,8 @@ class ManagementNoAuthController extends Controller
         }
     }
 
-    public function getKategori(){
+    public function getKategori()
+    {
         $dataTraining = DB::table('csc_product')
             ->get();
         if (count($dataTraining) > 0) {
@@ -472,6 +473,85 @@ class ManagementNoAuthController extends Controller
                 'status' => 'No Content'
             ];
             $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
+    public function getSub(Request $request)
+    {
+        $level = $request->level;
+        if ($level == 1) {
+            $catprod = DB::table('csc_product')->where('level_1', $request->idparent)->get();
+            if (count($catprod) > 0) {
+                $meta = [
+                    'code' => '200',
+                    'message' => 'Success',
+                    'status' => 'OK'
+                ];
+                $data = $catprod;
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            } else {
+                $meta = [
+                    'code' => '204',
+                    'message' => 'Data Not Found',
+                    'status' => 'No Content'
+                ];
+                $data = '';
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            }
+        } else {
+            $catprod = DB::table('csc_product')->where('level_2', $request->idparent)->where('level_1', $request->idsub)->get();
+            if (count($catprod) > 0) {
+                $meta = [
+                    'code' => '200',
+                    'message' => 'Success',
+                    'status' => 'OK'
+                ];
+                $data = $catprod;
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            } else {
+                $meta = [
+                    'code' => '204',
+                    'message' => 'Data Not Found',
+                    'status' => 'No Content'
+                ];
+                $data = '';
+                $res['meta'] = $meta;
+                $res['data'] = $data;
+                return response($res);
+            }
+        }
+    }
+
+    public function getHscode()
+    {
+        $research = DB::table('mst_hscodes')
+            ->get();
+        if (count($research) > 0) {
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $research;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);

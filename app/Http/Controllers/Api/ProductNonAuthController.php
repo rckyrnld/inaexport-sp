@@ -30,7 +30,7 @@ class ProductNonAuthController extends Controller
 //            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
             ->select('csc_product_single.id','itdp_company_users.id_profil','itdp_company_users.id_role', 'csc_product_single.prodname_en',
                 'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd', 'csc_product.nama_kategori_en')
-            ->orderBy('csc_product_single.created_at', 'ASC')
+            ->orderBy('csc_product_single.id', 'desc')
             ->get();
 
         $jsonResult = array();
@@ -302,7 +302,7 @@ class ProductNonAuthController extends Controller
 //            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
             ->select('csc_product_single.id','itdp_company_users.id_profil','itdp_company_users.id_role', 'csc_product_single.prodname_en',
                 'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd', 'csc_product.nama_kategori_en')
-            ->orderBy('csc_product_single.created_at', 'ASC')
+            ->orderBy('csc_product_single.id', 'desc')
             ->limit(6)
             ->get();
 

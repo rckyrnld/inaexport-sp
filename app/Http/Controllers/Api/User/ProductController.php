@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Api\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Mail;
 
 class ProductController extends Controller
 {
@@ -147,6 +148,7 @@ class ProductController extends Controller
                 'product_description_en' => $request->product_description_en,
                 'product_description_in' => $request->product_description_in,
                 'product_description_chn' => $request->product_description_chn,
+                'id_hscode' => $request->id_hscode,
                 'status' => $request->status,
                 'created_at' => $datenow,
             ]);
@@ -352,5 +354,12 @@ class ProductController extends Controller
             $res['message'] = "Failed";
             return response($res);
         }
+    }
+
+    function setValue($value)
+    {
+        $value = str_replace('.', '', $value);
+
+        return (int)$value;
     }
 }

@@ -102,12 +102,11 @@
     }
 ?>
 <style type="text/css">
-    .modal-header { background-color: #2385d4; color: white; font-size: 20px; text-align: center;}
-    .modal-body{ height: 300px; }
-    .modal-content { border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; overflow: hidden;}
-    .modal-footer { background-color: #2385d4; color: white; font-size: 20px; text-align: center;}
-    #Tablemodal td {text-align: left !important;}
-    .cp{padding-left: 25px;font-weight: 600;}
+    .modal-body {background-image: url('{{url('/')}}/front/assets/img/cp/bg.png');background-size: cover;background-repeat: no-repeat;width: 100%; margin: 0px; background-color: transparent; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; height: 380px;}
+    .modal-content{ background-color: transparent; border:none; }
+    .icon{ width:15%;}
+    .cp-data{padding-left: 25px;color: white;font-size: 20px; font-family: arial;}
+    i.mod{color: white; font-size: 24px;}
     i.mod:hover{color: red;}
 </style>
     <!--breadcrumbs area start-->
@@ -226,41 +225,45 @@
     <div class="modal fade" id="modal_cp" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                  <table width="100%">
+                <div class="modal-body" >
+                  <table border="0" width="90%" align="center" height="30%">
                     <tr>
-                      <td width="20%"></td>
-                      <td width="60%"><span class="modal-title" id="exampleModalLabel"><b>@lang("frontend.contact-person")</b></span></td>
-                      <td width="20%" align="right">
-                        <i class="fa fa-times mod" data-dismiss="modal"></i>
+                      <td align="right"><i class="fa fa-times mod" data-dismiss="modal" style=""></i></td>
+                    </tr>
+                  </table>
+                  <table border="0" width="80%" align="center" style="margin-top: 10px;">
+                    <tr>
+                      <td class="icon" align="center"><img src="{{url('/')}}/front/assets/img/cp/nama.png" height="100%"></td>
+                      <td class="cp-data" style="text-transform: capitalize;"><span id="cp_name"></span></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <div style="height: 8px;">
+                          <img src="{{url('/')}}/front/assets/img/cp/line.png" width="100%" height="100%" style="vertical-align: top;">
+                        </div>
                       </td>
                     </tr>
-                  </table>
-                </div>
-                <div class="modal-body" style="height: auto;">
-                  <table width="80%" style="font-size: 15px;" id="Tablemodal" cellpadding="10px">
                     <tr>
-                      <td class="cp" width="40%">@lang("service.nama")</td>
-                      <td width="5%">:</td>
-                      <td style="padding-left: 20px;" colspan="2"><span id="cp_name"></span></td>
+                      <td class="icon" align="center"><img src="{{url('/')}}/front/assets/img/cp/phone.png" height="100%"></td>
+                      <td class="cp-data"><span id="cp_phone"></span></td>
                     </tr>
                     <tr>
-                      <td class="cp" width="40%">@lang("register2.forms.phone")</td>
-                      <td width="5%">:</td>
-                      <td style="padding-left: 20px;" colspan="2"><span id="cp_phone"></span></td>
+                      <td colspan="2">
+                        <div style="height: 8px;">
+                          <img src="{{url('/')}}/front/assets/img/cp/line.png" width="100%" height="100%" style="vertical-align: top;">
+                        </div>
+                      </td>
                     </tr>
                     <tr>
-                      <td class="cp" width="40%">@lang("register2.forms.email")</td>
-                      <td width="5%">:</td>
-                      <td style="padding-left: 20px;" colspan="2"><span id="cp_email"></span></td>
+                      <td class="icon" align="center"><img src="{{url('/')}}/front/assets/img/cp/email.png" height="100%" height="100%"></td>
+                      <td class="cp-data"><span id="cp_email"></span></td>
                     </tr>
-                  </table>
-                  <br>
-                </div>
-                <div class="modal-footer">
-                  <table width="100%">
                     <tr>
-                      <td>&nbsp;</td>
+                      <td colspan="2">
+                        <div style="height: 8px;">
+                          <img src="{{url('/')}}/front/assets/img/cp/line.png" width="100%" style="vertical-align: top;">
+                        </div>
+                      </td>
                     </tr>
                   </table>
                 </div>
