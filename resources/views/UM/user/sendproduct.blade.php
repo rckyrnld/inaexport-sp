@@ -1,5 +1,5 @@
 <p>Dear Eksportir, </P>
-<p>You Had Joined To Buying Request !</p>
+<p>Your Product {{$username}} Got Verified !</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>
@@ -9,4 +9,4 @@
 <p>
   <!-- {{$main_messages}} -->
 </p>
-click <a href="{{url('br_list')}}">Here</a>.
+click <a href="{{url('product_view', $id)}}">Here</a>.

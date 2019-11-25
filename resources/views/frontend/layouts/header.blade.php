@@ -402,13 +402,21 @@
                                                 
                                                     @if(Auth::guard('eksmp')->user()->id_role == 3)
 														
-												<?php if(empty(Auth::guard('eksmp')->user()->foto_profil) || Auth::guard('eksmp')->user()->foto_profil =" " || Auth::guard('eksmp')->user()->foto_profil == null){ ?>
+												<?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
+												
 												<img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">
 												<?php }else{ ?>
+												
                                                 <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" style="width: 50px;">
 												<?php } ?>
                                                     @elseif(Auth::guard('eksmp')->user()->id_role == 2)
-                                                 <img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">
+													
+                                                 <?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
+												<img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">
+												<?php }else{ ?>
+												
+                                                <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" style="width: 50px;">
+												<?php } ?>
                                                     @endif
 											@else	
 												<img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">

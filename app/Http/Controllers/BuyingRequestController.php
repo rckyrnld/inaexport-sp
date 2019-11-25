@@ -12,6 +12,7 @@ use Mail;
 
 class BuyingRequestController extends Controller
 {
+	
     public function index()
     {
 		if(!empty(Auth::guard('eksmp')->user()->id)){
@@ -41,7 +42,22 @@ class BuyingRequestController extends Controller
 				 return $pesan->subyek;
             })
 			->addColumn('f2', function ($pesan) {
+				if($pesan->valid == 0){
+					return "No Limit";
+				}else{
 				 return "Valid until ".$pesan->valid." days";
+				}
+            })
+			->addColumn('f6', function ($pesan) {
+				if($pesan->by_role == 4){
+					return "Perwakilan";
+				}else if($pesan->by_role == 3){
+					$usre = DB::select("select b.company from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$pesan->id_pembuat."'"); 
+									foreach($usre as $imp){ 
+									$impz =$imp->company; 
+									}
+					return "Importir - ".$impz;
+				}
             })
 			->addColumn('f3', function ($pesan) {
 				 return $pesan->date;
@@ -57,13 +73,7 @@ class BuyingRequestController extends Controller
 				}
 				return $semuacat;
             })
-			->addColumn('f6', function ($pesan) {
-				if($pesan->by_role == 4){
-					return "Perwakilan";
-				}else if($pesan->by_role == 3){
-					return "Importir";
-				}
-            })
+			
 			->addColumn('f7', function ($pesan) {
 				if($pesan->status == 1){
 					return "Negosiation";
@@ -101,7 +111,11 @@ class BuyingRequestController extends Controller
 				 return $pesan->subyek;
             })
 			->addColumn('f2', function ($pesan) {
+				if($pesan->valid == 0){
+					return "No Limit";
+				}else{
 				 return "Valid until ".$pesan->valid." days";
+				}
             })
 			->addColumn('f3', function ($pesan) {
 				 return $pesan->date;
@@ -370,10 +384,10 @@ class BuyingRequestController extends Controller
 		return view('buying-request.trx', compact('id','pageTitle','id2'));
 	}
 	
-	public function br_trx2($id,$id2)
+	public function br_trx2($id)
     {
 		$pageTitle = "Transaksi Buying Request";
-		return view('trx.trx', compact('id','pageTitle','id2'));
+		return view('trx.trx', compact('id','pageTitle'));
 	}	
 	public function br_deal($id,$id2,$id3)
     {

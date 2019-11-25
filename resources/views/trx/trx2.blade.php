@@ -140,12 +140,56 @@ foreach($q2 as $p2){
 		</div>
 		<div class="form-group col-sm-4">
 			<?php if($p2->origin == 1){ echo "Inquiry"; }else{ echo "Buying Request"; } ?>
+			<input type="hidden" name="origin" value="<?php echo $p2->origin; ?>">
+			<input type="hidden" name="by_role" value="<?php echo $p2->by_role; ?>">
+			<input type="hidden" name="id_pembuat" value="<?php echo $p2->id_pembuat; ?>">
+			<input type="hidden" name="id_eksportir" value="<?php echo $p2->id_eksportir; ?>">
 		</div>
 	</div>
 	<?php if($p2->origin == 2){ ?>
 	<?php $q3 = DB::select("select * from csc_buying_request where id='".$p2->id_terkait."'");
 	foreach($q3 as $p3){
 	?>
+	
+	<div class="form-row">
+		<div class="form-group col-sm-2">
+			<b>Created By</b>
+		</div>
+		<div class="form-group col-sm-4">
+			<?php 
+			$r1 = DB::select("select * from csc_buying_request where id='".$p2->id_terkait."'");
+			foreach($r1 as $ip1){ $by_role = $ip1->by_role; $id_pembuat = $ip1->id_pembuat; }
+			if($by_role == 1){
+				$addres = "";
+				echo "Admin";
+			}else if($by_role == 4){
+				$addres = "";
+				echo "Perwakilan";
+			}else if($by_role == 3){
+$usre = DB::select("select b.company,b.badanusaha,b.addres,b.city from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$id_pembuat."'"); 
+									foreach($usre as $imp){ 
+									$addres = $imp->addres." , ".$imp->city;
+									echo "Importir - ".$imp->badanusaha." ".$imp->company; 
+									}	
+			}
+									?>
+		</div>
+		
+	</div>
+	
+	<div class="form-row">
+		<div class="form-group col-sm-2">
+			<b>Address</b>
+		</div>
+		<div class="form-group col-sm-4">
+			<?php 
+			
+									echo $addres;
+									
+									?>
+		</div>
+		
+	</div>
 	
 	<div class="form-row">
 		<div class="form-group col-sm-2">
@@ -194,11 +238,48 @@ $cr = explode(',',$p3->id_csc_prod);
 			<b>Quantity</b>
 		</div>
 		<div class="form-group col-sm-2">
-			<input type="number" class="form-control" value="<?php  echo $p3->eo; ?>" readonly>
+			<input type="number" name="eo" class="form-control" value="<?php  echo $p3->eo; ?>">
 		</div>
 		<div class="form-group col-sm-1">
-			<input type="hidden" name="id1" class="form-control" value="<?php echo $id; ?>">
-			<input type="text" class="form-control" value="<?php  echo $p3->neo; ?>" readonly>
+			<input type="hidden" name="id_br" class="form-control" value="<?php echo $p2->id_terkait; ?>">
+			 <select class="form-control select2" name="neo" id="neo">
+                                                <option value="">- Choose -</option>
+
+                                                <option <?php if($p3->neo == "Each"){ echo "selected"; }?> value="Each">Each</option>
+                                                <option <?php if($p3->neo == "Foot"){ echo "selected"; }?> value="Foot">Foot</option>
+                                                <option <?php if($p3->neo == "Gallons"){ echo "selected"; }?> value="Gallons">Gallons</option>
+                                                <option <?php if($p3->neo == "Kilograms"){ echo "selected"; }?>value="Kilograms">Kilograms</option>
+                                                <option <?php if($p3->neo == "Liters"){ echo "selected"; }?> value="Liters">Liters</option>
+                                                <option <?php if($p3->neo == "Packs"){ echo "selected"; }?>value="Packs">Packs</option>
+                                                <option <?php if($p3->neo == "Pairs"){ echo "selected"; }?> value="Pairs">Pairs</option>
+                                                <option <?php if($p3->neo == "Pieces"){ echo "selected"; }?> value="Pieces">Pieces</option>
+                                                <option <?php if($p3->neo == "Reams"){ echo "selected"; }?> value="Reams">Reams</option>
+                                                <option <?php if($p3->neo == "Rods"){ echo "selected"; }?> value="Rods">Rods</option>
+                                                <option <?php if($p3->neo == "Rolls"){ echo "selected"; }?> value="Rolls">Rolls</option>
+                                                <option <?php if($p3->neo == "Sets"){ echo "selected"; }?> value="Sets">Sets</option>
+                                                <option <?php if($p3->neo == "Sheets"){ echo "selected"; }?>value="Sheets">Sheets</option>
+                                                <option <?php if($p3->neo == "Square Meters"){ echo "selected"; }?> value="Square Meters">Square Meters</option>
+                                                <option <?php if($p3->neo == "Tons"){ echo "selected"; }?> value="Tons">Tons</option>
+                                                <option <?php if($p3->neo == "Unit"){ echo "selected"; }?> value="Unit">Unit</option>
+                                                <option <?php if($p3->neo == "令"){ echo "selected"; }?> value="令">令</option>
+                                                <option <?php if($p3->neo == "件"){ echo "selected"; }?> value="件">件</option>
+                                                <option <?php if($p3->neo == "加仑"){ echo "selected"; }?> value="加仑">加仑</option>
+                                                <option <?php if($p3->neo == "包"){ echo "selected"; }?> value="包">包</option>
+                                                <option <?php if($p3->neo == "千克"){ echo "selected"; }?> value="千克">千克</option>
+                                                <option <?php if($p3->neo == "升"){ echo "selected"; }?> value="升">升</option>
+                                                <option <?php if($p3->neo == "单位"){ echo "selected"; }?> value="单位">单位</option>
+                                                <option <?php if($p3->neo == "卷"){ echo "selected"; }?> value="卷">卷</option>
+                                                <option <?php if($p3->neo == "吨"){ echo "selected"; }?> value="吨">吨</option>
+                                                <option <?php if($p3->neo == "套"){ echo "selected"; }?> value="套">套</option>
+                                                <option <?php if($p3->neo == "对"){ echo "selected"; }?> value="对">对</option>
+                                                <option <?php if($p3->neo == "平方米"){ echo "selected"; }?> value="平方米">平方米</option>
+                                                <option <?php if($p3->neo == "张"){ echo "selected"; }?> value="张">张</option>
+                                                <option <?php if($p3->neo == "根"){ echo "selected"; }?> value="根">根</option>
+                                                <option <?php if($p3->neo == "每个"){ echo "selected"; }?> value="每个">每个</option>
+                                                <option <?php if($p3->neo == "英尺"){ echo "selected"; }?> value="英尺">英尺</option>
+                                                <option <?php if($p3->neo == "集装箱"){ echo "selected"; }?> value="集装箱">集装箱</option>
+
+                                            </select>
 		</div>
 	</div>
 	
@@ -207,10 +288,10 @@ $cr = explode(',',$p3->id_csc_prod);
 			<b>Price</b>
 		</div>
 		<div class="form-group col-sm-2">
-			<input type="number" class="form-control" value="<?php  echo $p3->tp; ?>" readonly>
+			<input type="number" name="tp" class="form-control" value="<?php  echo $p3->tp; ?>">
 		</div>
 		<div class="form-group col-sm-1">
-			<input type="text" class="form-control" value="<?php  echo $p3->ntp; ?>" readonly>
+			<select style="color:black;" class="form-control" name="ntp" id="ntp"><option <?php if($p3->ntp == "IDR"){ echo "selected"; }?> value="IDR">IDR</option><option <?php if($p3->ntp == "THB"){ echo "selected"; }?> value="THB">THB</option><option <?php if($p3->ntp == "USD"){ echo "selected"; }?> value="USD">USD</option></select>
 		</div>
 	</div>
 	
@@ -251,7 +332,7 @@ $cr = explode(',',$p3->id_csc_prod);
 			<b>Tracking of Type</b>
 		</div>
 		<div class="form-group col-sm-3">
-			<select <?php if($p2->status_transaksi == 1){ echo "readonly"; }?> class="form-control" name="type_tracking" required>
+			<select <?php if($p2->status_transaksi == 1){ echo "readonly"; }?> class="form-control" name="type_tracking">
 				<option value="">- Select Tracking Type -</option>
 				<option <?php if($p2->type_tracking == "DHL Express"){ echo "selected"; }?> value="DHL Express">DHL Express</option>
 				<option <?php if($p2->type_tracking == "DHL Active Tracing"){ echo "selected"; }?> value="DHL Active Tracing">DHL Active Tracing</option>
@@ -261,6 +342,7 @@ $cr = explode(',',$p3->id_csc_prod);
 				<option <?php if($p2->type_tracking == "FedEx Ground"){ echo "selected"; }?> value="FedEx Ground">FedEx Ground</option>
 				<option <?php if($p2->type_tracking == "China EMS"){ echo "selected"; }?> value="China EMS">China EMS</option>
 				<option <?php if($p2->type_tracking == "Deutsche Post DHL"){ echo "selected"; }?> value="Deutsche Post DHL">Deutsche Post DHL</option>
+				<option <?php if($p2->type_tracking == "Other"){ echo "selected"; }?> value="Other">Other</option>
 			</select>
 		</div>
 	</div>
@@ -270,9 +352,9 @@ $cr = explode(',',$p3->id_csc_prod);
 			<b>No Tracking</b>
 		</div>
 		<div class="form-group col-sm-3">
-			<input class="form-control" type="text" id="no_track" name="no_track" value="<?php echo $p2->no_tracking; ?>" <?php if($p2->status_transaksi == 1){ echo "readonly"; }?> required>
-			<input class="form-control" type="hidden" id="tipekirim" name="tipekirim" value="0" required>
-			<input class="form-control" type="hidden" id="id_transaksi" name="id_transaksi" value="<?php echo $p2->id_transaksi;?>" required>
+			<input class="form-control" type="text" id="no_track" name="no_track" value="<?php echo $p2->no_tracking; ?>" <?php if($p2->status_transaksi == 1){ echo "readonly"; }?>>
+			<input class="form-control" type="hidden" id="tipekirim" name="tipekirim" value="0">
+			<input class="form-control" type="hidden" id="id_transaksi" name="id_transaksi" value="<?php echo $p2->id_transaksi;?>">
 		</div>
 	</div>
 	

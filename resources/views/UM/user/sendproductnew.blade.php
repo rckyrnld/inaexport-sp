@@ -1,5 +1,5 @@
 <p>Dear Admin, </P>
-<p>{{$username}} Had Joined To Buying Request !</p>
+<p>New Product {{$username}} Had Created By Importir !</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>
@@ -9,4 +9,4 @@
 <p>
   <!-- {{$main_messages}} -->
 </p>
-click <a href="{{url('br_pw_lc', $id)}}">Here</a>.
+click <a href="{{url('verifikasi_product', $id)}}">Here</a>.

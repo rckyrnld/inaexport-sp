@@ -153,12 +153,15 @@ body {font-family: Arial;}
     }
   ?>
   <input type="hidden" name="idu" value="<?php echo $ryu->id; ?>">
-<<<<<<< HEAD
-	<div class="form-row">
-		<div class="form-group col-sm-2">
-			<label><b>Name of Company</b></label>
-		</div>
-		<div class="form-group col-sm-1">
+
+  	<div class="row">
+  		<div class="col-md-6">
+  			<div class="form-row">
+				<div class="form-group col-sm-4">
+					<label><b>Name of Company</b></label>
+				</div>
+				
+				<div class="form-group col-sm-2">
 		<select name="badanusaha" class="form-control">
 		<option>-</option>
 		<?php 
@@ -169,32 +172,8 @@ body {font-family: Arial;}
   <?php } ?>
 		</select>
 		</div>
-		<div class="form-group col-sm-3">
-			<input type="text" value="<?php echo $ryu->company; ?>" name="company" id="company" class="form-control" >
-		</div>
-	</div>
-	<div class="form-row">
-		<div class="form-group col-sm-2">
-			<label><b>Address</b></label>
-		</div>
-		<div class="form-group col-sm-4">
-			<textarea name="addres" id="addres" class="form-control" ><?php echo $ryu->addres; ?></textarea>
-		</div>
-	</div>
-	<div class="form-row">
-		<div class="form-group col-sm-2">
-			<label><b>City</b></label>
-		</div>
-		<div class="form-group col-sm-4">
-			<textarea name="city" id="city" class="form-control" ><?php echo $ryu->city; ?></textarea>
-=======
-  	<div class="row">
-  		<div class="col-md-6">
-  			<div class="form-row">
-				<div class="form-group col-sm-4">
-					<label><b>Name of Company</b></label>
-				</div>
-				<div class="form-group col-sm-8">
+				
+				<div class="form-group col-sm-6">
 					<input type="text" value="<?php echo $ryu->company; ?>" name="company" id="company" class="form-control" >
 				</div>
 			</div>
@@ -215,8 +194,7 @@ body {font-family: Arial;}
 					
 				</div>
 			</div>
->>>>>>> 52561af90288e00b13bf3d33d7ab08720a93cd62
-			
+	
 			<div class="form-row">
 				<div class="form-group col-sm-4">
 					<label><b>Province</b></label>

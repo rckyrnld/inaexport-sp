@@ -8,6 +8,7 @@ use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Mail;
 
 class EksProductController extends Controller
 {
@@ -486,13 +487,32 @@ class EksProductController extends Controller
             $datenow = date("Y-m-d H:i:s");
 
             $data = DB::table('csc_product_single')->where('id', $id)->first();
-
+			$carieks = DB::select("select email from itdp_company_users where id='".$data->id_itdp_company_user."'");
+			foreach($carieks as $teks){
+				$maileks = $teks->email;
+			}
             $verifikasi = $request->verifikasi;
             // var_dump($verifikasi);
             if($verifikasi == '1'){
                 $status = 2;
                 $ket = "This product has been added on the front page";
                 $notifnya = "has been accepted";
+				$ket = "Your product ".$data->prodname_en." got verified !";
+				$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+				('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
+				");
+			$data33 = [
+            'email' => "",
+            'email1' => $maileks,
+            'username' => $data->prodname_en,
+            'main_messages' => "",
+            'id' => $id
+			];
+			Mail::send('UM.user.sendproduct', $data33, function ($mail) use ($data33) {
+			$mail->to($data33['email1'], $data33['username']);
+			$mail->subject("Your product got verified !");
+			});
+			// echo $data->prodname_en;die();
             }else{
                 $keterangan = $request->keterangan;
                 // var_dump($keterangan);

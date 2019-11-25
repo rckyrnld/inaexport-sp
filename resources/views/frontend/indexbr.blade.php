@@ -93,6 +93,7 @@ if ($loc == "ch") {
                                 <div class="form-group col-sm-4">
                                     <select style="color:black;" class="form-control" name="valid" id="valid" required>
                                         <option value="">@lang("login.forms.by10")</option>
+                                        <option value="0">Nan</option>
                                         <option value="1">Valid within 1 day</option>
                                         <option value="3">Valid within 3 day</option>
                                         <option value="5">Valid within 5 day</option>

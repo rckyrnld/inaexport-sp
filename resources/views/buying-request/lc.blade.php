@@ -74,6 +74,29 @@ body {font-family: Arial;}
    <br><br>
   
 	<div class="form-row">
+		<div class="form-group col-sm-12">
+			<b>Created By</b>
+		</div>
+		<div class="form-group col-sm-12">
+		<?php 
+			if($ryu->by_role == 1){
+				$t = "Admin";
+			}else if($ryu->by_role == 4){
+				$t =  "Perwakilan";
+			}else if($ryu->by_role == 3){
+				$usre = DB::select("select b.company,b.badanusaha from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ryu->id_pembuat."'"); 
+									foreach($usre as $imp){ 
+									$t = "Importir - ".$imp->badanusaha." ".$imp->company; 
+									}
+			}
+			?>
+		<input type="text" class="form-control" value="<?php echo $t; ?>" readonly>
+			
+		
+		</div>
+		
+	</div>
+	<div class="form-row">
 		<div class="col-sm-12">
 		<label><b>What are you looking for</b></label>
 		</div>
@@ -204,6 +227,7 @@ body {font-family: Arial;}
                                 <thead class="text-white" style="background-color: #1089ff;">
 									<th width="5%">No</th>
 									<th><center>Company Name</center></th>
+									<th><center>Adress</center></th>
 									<th><center>Email</center></th>
 									<th><center>Status</center></th>
 									<th><center>Aksi</center></th>
@@ -217,6 +241,7 @@ body {font-family: Arial;}
 								<tr>
 								<td><?php echo $na; ?></td>
 								<td><?php echo $ryu->company; ?></td>
+								<td><?php echo $ryu->addres." , ".$ryu->city; ?></td>
 								<td><?php echo $ryu->oemail; ?></td>
 								<td><center>
 								<?php if($ryu->status_join == "1"){ echo "Menunggu Verifikasi Importir"; }else if($ryu->status_join == "2"){ echo "Negosiation"; }

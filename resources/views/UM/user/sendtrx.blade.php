@@ -1,5 +1,5 @@
-<p>Dear Eksportir, </P>
-<p>You Had Joined To Buying Request !</p>
+<p>Dear Importir, </P>
+<p>{{$username}} Had Created Transaction !</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>
@@ -9,4 +9,4 @@
 <p>
   <!-- {{$main_messages}} -->
 </p>
-click <a href="{{url('br_list')}}">Here</a>.
+click <a href="{{url('detailtrx', $id)}}">Here</a>.

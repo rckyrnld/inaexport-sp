@@ -38,14 +38,47 @@
   <table id="tablebureq" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
 								<th>No</th>
-								<th>Product Name</th>
-								<th>Exporter</th>
-								<th>Date Transaction</th>
-								<th>Status</th>
+								<th>Origin</th>
+								<th>Buyer</th>
+								<th>Eksportir</th>
+								<th>Type Tracking</th>
 								<th>No Tracking</th>
+								<th>Status</th>
 								<th>Action</th>
                                 </thead>
+								<tbody>
+								<?php $nt = 1; foreach($data as $ruu){ ?>
+								<tr>
+									<td><?php echo $nt; ?></td>
+									
+									<td><center><?php if($ruu->origin == 1){ echo "Inquiry"; }else if($ruu->origin == 2){ echo "Buying Request"; }?></center></td>
+									<td><center><?php if($ruu->by_role == 1){ echo "Admin"; }else if($ruu->by_role == 4){ echo "Perwakilan"; }else{ 
+									$usre = DB::select("select b.company,b.badanusaha from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
+									foreach($usre as $imp){ 
+									echo "Importir - ".$imp->badanusaha." ".$imp->company; 
+									}
+									} ?></center></td>
+									<td><center><?php 
+									$carieks = DB::select("select b.* from itdp_company_users a, itdp_profil_eks b where a.id='".$ruu->id_eksportir."' and a.id_profil = b.id");
+									foreach($carieks as $eks){ echo $eks->badanusaha." ".$eks->company; }
+									?></center></td>
+									
+									
+									<td><center><?php echo $ruu->type_tracking; ?></center></td>
+									<td><center><?php echo $ruu->no_tracking; ?></center></td>
+									<td><center><?php if($ruu->status_transaksi == 1){ echo "<font color='green'>Already Sent</font>"; }else{ echo "<font color='red'>On Process</font>"; } ?></center></td>
+									
+									<td><center>
+									
+									<a href="{{ url('detailtrx/'.$ruu->id_transaksi) }}" class="btn btn-success"><font color="white"><i class="fa fa-list"></i>&nbsp; Detail</font></a>
+									
+									
+									</center></td>
+								</tr>
+								<?php $nt++; } ?>
 								
+								</tbody>
+
 
                             </table>
 
@@ -65,7 +98,7 @@
     $('#example').DataTable();
 	
 	$('#tablebureq').DataTable({
-            processing: true,
+           /* processing: true,
             serverSide: true,
             ajax: "{{ route('front.datatables.br3') }}",
             columns: [
@@ -78,7 +111,7 @@
                 {data: 'col6', name: 'col6'}
                 
             ],
-            fixedColumns: true
+            fixedColumns: true */
         });
 } );
 </script>

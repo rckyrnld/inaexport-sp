@@ -26,15 +26,16 @@
                                     <th>
                                         <center>Duration</center>
                                     </th>
+									<th>
+                                        <center>Created By</center>
+                                    </th>
                                     <th>
-                                        <center>Date</center>
+                                        <center>Created Date</center>
                                     </th>
 									<th>
                                         <center>Category</center>
                                     </th>
-									<th>
-                                        <center>Create By</center>
-                                    </th>
+									
                                     <th>
                                         <center>Status</center>
                                     </th>
@@ -93,11 +94,12 @@ function xy(a){
                 {data: 'row', name: 'row'},
                 {data: 'f1', name: 'f1'},
                 {data: 'f2', name: 'f2'},
-                {data: 'f3', name: 'f3'},
-                {data: 'f4', name: 'f4'},
-                {
+				{
 					data: 'f6', name: 'f6', orderable: false, searchable: false
 				},
+                {data: 'f3', name: 'f3'},
+                {data: 'f4', name: 'f4'},
+                
 				{
 					data: 'f7', name: 'f7', orderable: false, searchable: false
 				},

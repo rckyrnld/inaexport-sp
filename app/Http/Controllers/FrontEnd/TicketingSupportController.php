@@ -67,6 +67,7 @@ class TicketingSupportController extends Controller
             'id' => $id_ticketing
         ];
 		
+		/*
 		$data2 = [
             'email' => $req->email,
             'email1' => Auth::guard('eksmp')->user()->email,
@@ -74,15 +75,18 @@ class TicketingSupportController extends Controller
             'main_messages' => $req->messages,
             'id' => $id_ticketing
         ];
+		*/
 		
 		$ket = "Ticketing was created by ".Auth::guard('eksmp')->user()->username;
 		$ket2 = "You was create ticketing !";
 		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 			('1','".Auth::guard('eksmp')->user()->username."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$id_ticketing."','".Date('Y-m-d H:m:s')."','0')
 		");
+		/*
 		$insert4 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 			('".Auth::guard('eksmp')->user()->id_role."','Super Admin','1','".Auth::guard('eksmp')->user()->username."','".Auth::guard('eksmp')->user()->id."','".$ket2."','front_end/ticketing_support/view','".$id_ticketing."','".Date('Y-m-d H:m:s')."','0')
 		");
+		*/
 		
 		
 
@@ -91,10 +95,12 @@ class TicketingSupportController extends Controller
             $mail->subject('Requesting Ticketing Support');
         });
 		
+		/*
 		Mail::send('UM.user.sendticket2', $data2, function ($mail) use ($data2) {
             $mail->to($data2['email1'], $data2['username']);
             $mail->subject('You Requesting Ticketing Support');
         });
+		*/
 
         return redirect('/front_end/history');
     }
@@ -131,14 +137,14 @@ class TicketingSupportController extends Controller
 			$data3 = $v2->id_role; 
 			$data4 = $v2->id; 
 			}
-		$data = [
+		/* $data = [
             'email' => "",
             'email1' => $data2,
             'username' => "",
             'main_messages' => $req->messages,
             'id' => $req->id
 			];
-			
+		*/	
 			$data2 = [
             'email' => "",
             'email1' => "kementerianperdagangan.max@gmail.com",
@@ -146,11 +152,13 @@ class TicketingSupportController extends Controller
             'main_messages' => $req->messages,
             'id' => $req->id
 			];
-		Mail::send('UM.user.sendticketchat2', $data, function ($mail) use ($data) {
-            $mail->to($data['email1'], $data['username']);
+		     /*
+			 Mail::send('UM.user.sendticketchat2', $data, function ($mail) use ($data) {
+            
+			$mail->to($data['email1'], $data['username']);
             $mail->subject('You Reply Chat on Ticketing Support');
 			});
-			
+			*/
 			Mail::send('UM.user.sendticketchat', $data2, function ($mail) use ($data2) {
             $mail->to($data2['email1'], $data2['username']);
             $mail->subject('User Reply Your Chat On Ticketing Support');
