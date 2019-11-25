@@ -74,6 +74,7 @@ if ($loc == "ch") {
 
                     <div class="box-body">
                         <br>
+						
                         <form class="form-horizontal" method="POST" action="{{ url('br_importir_save') }}"
                               enctype="multipart/form-data">
                             {{ csrf_field() }}

@@ -47,11 +47,32 @@
             <div class="row">
 	            <div class="col-md-2">
 	              <b>Messages</b>
+				  
 	            </div>
 	            <div class="col-md-4">
 	              : {{$users->main_messages}}
 	            </div>
 	          </div><br>
+			  <div class="row">
+	            <div class="col-md-2">
+	              <b>Create By</b>
+				  
+	            </div>
+	            <div class="col-md-4">
+	              : <?php $ip = $users->id_pembuat; 
+				  $cari1 = DB::select("select * from itdp_company_users where id='".$ip."' limit 1");
+				  foreach($cari1 as $cr1){ echo $cr1->username; ?> 
+				  @if(Cache::has('user-is-eksmp-' . $cr1->id))
+    (<span class="text-success">Online</span>)
+@else
+    (<span class="text-secondary">Offline</span>)
+@endif
+				  <?php }
+				  ?>
+	            </div>
+	          </div>
+			  
+			  <br>
             <form class="" action="{{url('admin/ticketing/sendchat')}}" method="post">
               <div class="row">
                 <div class="col-md-12">
@@ -79,7 +100,16 @@
                         <div class="row">
                           <div class="col-md-10">
                             <label class="label" style="background:aqua; border-radius:10px; width:300px">
-                            &nbsp;&nbsp<b>{{$msg->name}}</b> :
+                            &nbsp;&nbsp<b><?php $ip = $users->id_pembuat; 
+				  $cari1 = DB::select("select * from itdp_company_users where id='".$ip."' limit 1");
+				  foreach($cari1 as $cr1){ echo $cr1->username; ?> 
+				  @if(Cache::has('user-is-eksmp-' . $cr1->id))
+    (<span class="text-success">Online</span>)
+@else
+    (<span class="text-secondary">Offline</span>)
+@endif
+				  <?php }
+				  ?> </b> :
                             &nbsp;&nbsp{{$msg->messages}}<br>
                             &nbsp;&nbsp<i>{{$msg->messages_send}}</i>
                             </label>

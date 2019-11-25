@@ -29,6 +29,8 @@ Route::post('/updatepass1/{id}', 'RegistrasiController@updatepass1');
 Route::post('/updatepass2/{id}', 'RegistrasiController@updatepass2');
 Route::post('/resetpass', 'RegistrasiController@resetpass');
 Route::post('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
+Route::get('/check', 'UserController@userOnlineStatus');
+Route::get('/check2', 'UserEksmpController@usereksmpOnlineStatus');
 
 Route::namespace('FrontEnd')->group(function () {
     /* Created by Meidiyanah */

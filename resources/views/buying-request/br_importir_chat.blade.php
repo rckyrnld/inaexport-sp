@@ -112,7 +112,7 @@
 $nyariek = DB::select("select * from csc_buying_request_join where id='".$idb."'");
 foreach($nyariek as $ek1){ $id_eks = $ek1->id_eks; }
 $nyariek2 = DB::select("select b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='".$id_eks."'");
-foreach($nyariek2 as $ek2){ $company = $ek2->company; $addres = $ek2->addres; $city = $ek2->city;  }
+foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres = $ek2->addres; $city = $ek2->city;  }
 //echo $company;die();
 ?>
 			<div class="form-row" style="font-size:12px;">
@@ -135,10 +135,10 @@ foreach($nyariek2 as $ek2){ $company = $ek2->company; $addres = $ek2->addres; $c
   
 	<div class="form-row">
 		<div class="col-sm-12">
-		<label><b>Eksportir</b></label>
+		<label><b>Eksportir </b></label>
 		</div>
 		<div class="form-group col-sm-12">
-		<input type="text" readonly class="form-control" value="<?php echo $company;?>">
+		<input type="text" readonly class="form-control" value="<?php echo $company;?> <?php if(Cache::has('user-is-eksmp-' . $idu)){ ?>(Online)<?php }else{ ?>(Offline)<?php } ?>">
 			</div>
 		
 	</div>
@@ -345,7 +345,11 @@ foreach($nyariek2 as $ek2){ $company = $ek2->company; $addres = $ek2->addres; $c
                         </span>
                             <div class="chat-body clearfix pull-right">
                                 <div class="header">
-                                    <strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo $r->username_pengirim; ?></b></strong>
+                                    <strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo $r->username_pengirim; ?>
+									 
+				  
+				 
+									</b></strong>
 									<small class="glyphicon glyphicon-time"> (<?php echo $r->tanggal; ?>)</small>
                                 </div>
                                 <p>
@@ -365,7 +369,13 @@ foreach($nyariek2 as $ek2){ $company = $ek2->company; $addres = $ek2->addres; $c
                         </span>
                             <div class="chat-body clearfix">
                                 <div class="header">
-									<strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo $r->username_pengirim; ?></b></strong>
+									<strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo $r->username_pengirim; ?>
+									@if(Cache::has('user-is-eksmp-' . $r->id_pengirim))
+    (<span class="text-success">Online</span>)
+@else
+    (<span class="text-secondary">Offline</span>)
+@endif
+									</b></strong>
 									<small class="glyphicon glyphicon-time"> (<?php echo $r->tanggal; ?>)</small>
                                 </div>
                                  <p>
