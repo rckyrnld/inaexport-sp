@@ -452,7 +452,8 @@ class ManagementNoAuthController extends Controller
         }
     }
 
-    public function getKategori(){
+    public function getKategori()
+    {
         $dataTraining = DB::table('csc_product')
             ->get();
         if (count($dataTraining) > 0) {
