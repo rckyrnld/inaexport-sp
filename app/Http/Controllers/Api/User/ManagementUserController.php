@@ -41,6 +41,18 @@ class ManagementUserController extends Controller
             $res['data'] = $data;
             return response($res);
         } else {
+            $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
+                ->orderby('a.created_at', 'desc')
+                ->distinct('a.id_research_corner', 'a.created_at')
+                ->select('b.*', 'a.id_research_corner', 'a.created_at')
+                ->where('a.id_research_corner', '=', $id_reseach)
+//            ->limit(10)
+                ->get();
+            foreach ($research as $img) {
+                $coba = $img->exum;
+            }
+            $path = ($coba) ? url('uploads/Research Corner/File/' . $coba) : url('image/noimage.jpg');
+//            dd($path);
             $id = DB::table('csc_download_research_corner')->orderby('id', 'desc')->first();
             if ($id) {
                 $id = $id->id + 1;
@@ -71,7 +83,7 @@ class ManagementUserController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '';
+            $data = $path;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -304,6 +316,7 @@ class ManagementUserController extends Controller
             return response($res);
         }
     }
+
     public function destroytiketing(Request $request)
     {
         $id = $request->id_tiketing;

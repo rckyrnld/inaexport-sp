@@ -150,5 +150,9 @@ Route::namespace('Api')->group(function () {
 
     //event
     Route::get('getDataEvent', 'ManagementNoAuthController@getEvent');
+
+    //hscode
+    Route::get('getHscode', 'ManagementNoAuthController@getHscode');
+
 });
 // });

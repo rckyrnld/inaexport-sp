@@ -148,6 +148,7 @@ class ProductController extends Controller
                 'product_description_en' => $request->product_description_en,
                 'product_description_in' => $request->product_description_in,
                 'product_description_chn' => $request->product_description_chn,
+                'id_hscode' => $request->id_hscode,
                 'status' => $request->status,
                 'created_at' => $datenow,
             ]);

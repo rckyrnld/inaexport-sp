@@ -354,7 +354,7 @@ class ManagementNoAuthController extends Controller
             ->orderby('a.created_at', 'desc')
             ->distinct('a.id_research_corner', 'a.created_at')
             ->select('b.*', 'a.id_research_corner', 'a.created_at')
-            ->limit(10)
+//            ->limit(10)
             ->get();
         if (count($research) > 0) {
             $meta = [
@@ -528,6 +528,33 @@ class ManagementNoAuthController extends Controller
                 $res['data'] = $data;
                 return response($res);
             }
+        }
+    }
+
+    public function getHscode()
+    {
+        $research = DB::table('mst_hscodes')
+            ->get();
+        if (count($research) > 0) {
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
         }
     }
 }
