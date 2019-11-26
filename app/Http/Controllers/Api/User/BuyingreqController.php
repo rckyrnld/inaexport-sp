@@ -441,7 +441,7 @@ class BuyingreqController extends Controller
             } else if ($data[$i]->status_join == 4) {
                 $jsonResult[$i]["status_join_desc"] = "Deal";
             } else {
-                $jsonResult[$i]["status_join"] = "-";
+                $jsonResult[$i]["status_join_desc"] = "-";
             }
             $jsonResult[$i]["expired_at"] = $data[$i]->expired_at;
             $jsonResult[$i]["idb"] = $data[$i]->idb;
