@@ -51,16 +51,30 @@ class ProductController extends Controller
             ->where('itdp_company_users.status', '=', 1)
             ->where('csc_product_single.id_itdp_company_user', '=', $request->id_user)
             ->select('csc_product_single.id', 'csc_product_single.prodname_en',
-                'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type')
+                'csc_product_single.image_1','csc_product_single.image_2','csc_product_single.image_3','csc_product_single.image_4', 'csc_product_single.id_csc_product', 'itdp_company_users.type')
             ->orderBy('csc_product_single.prodname_en', 'asc')
             ->get();
+//        dd($dataProduk);
+        $jsonResult = array();
+        for($i = 0; $i < count($dataProduk);  $i++){
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
+            $jsonResult[$i]["type"] = $dataProduk[$i]->type;
+
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+        }
         if (count($dataProduk) > 0) {
             $meta = [
                 'code' => '200',
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = $dataProduk;
+            $data = $jsonResult;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
