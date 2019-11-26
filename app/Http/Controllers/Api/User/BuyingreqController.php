@@ -287,7 +287,7 @@ class BuyingreqController extends Controller
     {
         $coba = str_replace('"', '', $request->id_csc_buying_request);
         $id = (int)$coba;
-        dd($id);
+//        dd($id);
         $cariprod = DB::select("select * from csc_buying_request where id='" . $id . "'");
         foreach ($cariprod as $prodcari) {
             $rrr = $prodcari->id_csc_prod;
