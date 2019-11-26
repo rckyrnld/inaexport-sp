@@ -290,12 +290,13 @@
                                     </div>
                                     <div class="product_thumb">
                                         <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
-                                        <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a>
+                                        <!-- <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
                                     </div>
                                     <div class="product_content grid_content">
                                         <div class="content_inner">
                                             <div class="product_footer d-flex align-items-center">
                                                 <div class="price_box">
+                                                    @if(Auth::guard('eksmp')->user())
                                                     <span class="current_price">
                                                         @if(is_numeric($pro->price_usd))
                                                             $ {{$pro->price_usd}}
@@ -305,6 +306,7 @@
                                                             </span>
                                                         @endif
                                                     </span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -333,6 +335,7 @@
                                                 </p>
                                             </div>
                                             <div class="price_box">
+                                                @if(Auth::guard('eksmp')->user())
                                                 <span class="current_price">
                                                     @if(is_numeric($pro->price_usd))
                                                         $ {{$pro->price_usd}}
@@ -342,6 +345,7 @@
                                                         </span>
                                                     @endif
                                                 </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

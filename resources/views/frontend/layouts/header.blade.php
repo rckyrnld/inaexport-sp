@@ -302,10 +302,18 @@
                                                     }else{
                                                         $caricat = "";
                                                     }
+
+                                                    if(isset($getEks)){
+                                                        $eksprod = $getEks;
+                                                    }else{
+                                                        $eksprod = "";
+                                                    }
                                                 ?>
                                                 <input placeholder="@lang('frontend.home.cariproduct') ..." type="text" name="cari_product" autocomplete="off" value="{{$cariprod}}" id="cari_product">
                                                 <input type="hidden" name="locnya" value="{{$lct}}" id="locnya">
                                                 <input type="hidden" name="cari_catnya" value="{{$caricat}}" id="cari_catnya">
+                                                <input type="hidden" name="eks_prod" value="{{$eksprod}}" id="eks_prod">
+                                                <input type="hidden" name="sort_prod" value="" id="sort_prod">
                                                 <button type="submit"><i class="ion-ios-search-strong" style="font-size: 27px;"></i></button>
                                             </div>
                                         </form>

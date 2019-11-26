@@ -305,6 +305,7 @@
                                                                         }
                                                                     ?>
                                                                     </b>
+                                                                    @if(Auth::guard('eksmp')->user())
                                                                     <br>
                                                                     Price : 
                                                                     <?php
@@ -325,6 +326,7 @@
                                                                             }
                                                                         }
                                                                     ?>
+                                                                    @endif
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -353,7 +355,7 @@
                                         <div class="left_caption" style="width: 250px; height: 100%;">
                                             <div class="eksporter-logo2">
                                                 <center>
-                                                    <a href="{{url('front_end/eksporter/'.$eks->id_user)}}" class="a-eksporter">
+                                                    <a href="{{url('/front_end/list_perusahaan/view/'.$eks->id_user)}}" class="a-eksporter">
                                                         <img src="{{url('/')}}{{$isimg1}}" alt="" class="eksporter_img">
                                                         <br>
                                                         <span class="name-eksporter">
@@ -426,6 +428,7 @@
                                                                             // }
                                                                         ?>
                                                                         </b>
+                                                                        @if(Auth::guard('eksmp')->user())
                                                                         <br>
                                                                         Price : 
                                                                         <?php
@@ -446,6 +449,7 @@
                                                                                 }
                                                                             }
                                                                         ?>
+                                                                        @endif
                                                                     </td>
                                                                 </tr>
                                                             </table>
