@@ -285,7 +285,9 @@ class BuyingreqController extends Controller
 
     public function br_importir_bc(Request $request)
     {
-        $id = (int)$request->id_csc_buying_request;
+        $coba = str_replace('"', '', $request->id_csc_buying_request);
+        $id = (int)$coba;
+        dd($id);
         $cariprod = DB::select("select * from csc_buying_request where id='" . $id . "'");
         foreach ($cariprod as $prodcari) {
             $rrr = $prodcari->id_csc_prod;
