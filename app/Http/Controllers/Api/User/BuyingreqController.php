@@ -204,9 +204,9 @@ class BuyingreqController extends Controller
                 $jsonResult[$i]["valid_desc"] = 'Valid ' . $buy[$i]->valid . " days";
             }
             $jsonResult[$i]["status"] = $buy[$i]->status;
-            if ($buy[$i]->status == null || $buy[$i]->status == 0 || empty($buy[$i]->status)) {
+            if ($buy[$i]->status == null || $buy[$i]->status == 0 || empty($buy[$i]->status) || $buy[$i]->status == 1) {
                 $jsonResult[$i]["status_desc"] = "Negosiation";
-            } else {
+            } else if ($buy[$i]->status == 4) {
                 $jsonResult[$i]["status_desc"] = "Deal";
             }
             $jsonResult[$i]["jenis_perihal_in"] = $buy[$i]->jenis_perihal_in;
