@@ -436,14 +436,14 @@ class BuyingreqController extends Controller
             $jsonResult[$i]["id_br"] = $data[$i]->id_br;
             $jsonResult[$i]["id_eks"] = $data[$i]->id_eks;
             $jsonResult[$i]["status_join"] = $data[$i]->status_join;
-            if ($data[$i]->status_join == 1) {
-                $jsonResult[$i]["status_join_desc"] = "Wait verification";
-            } else if ($data[$i]->status_join == 2) {
-                $jsonResult[$i]["status_join_desc"] = "Negosiation";
+            if ($data[$i]->status_join == null) {
+                $jsonResult[$i]["status_join_desc"] = "-";
+            } else if ($data[$i]->status_join == 1) {
+                $jsonResult[$i]["status_join_desc"] = "Wait Importir Verification";
             } else if ($data[$i]->status_join == 4) {
                 $jsonResult[$i]["status_join_desc"] = "Deal";
             } else {
-                $jsonResult[$i]["status_join_desc"] = "-";
+                $jsonResult[$i]["status_join_desc"] = "Negosiation";
             }
             $jsonResult[$i]["expired_at"] = $data[$i]->expired_at;
             $jsonResult[$i]["idb"] = $data[$i]->idb;
