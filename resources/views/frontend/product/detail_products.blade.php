@@ -17,9 +17,9 @@
     $arrimg = [];
 
     $img1 = "image/noimage.jpg";
-    $img2 = "image/noimage.jpg";
-    $img3 = "image/noimage.jpg";
-    $img4 = "image/noimage.jpg";
+    // $img2 = "image/noimage.jpg";
+    // $img3 = "image/noimage.jpg";
+    // $img4 = "image/noimage.jpg";
     if($data->image_1 != NULL){
         $imge1 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_1;
         if(file_exists($imge1)) {
@@ -150,35 +150,62 @@
                                 </span>
                                 @endif
                                 @if(Auth::guard('eksmp')->user())
-                                        <div class="list-group" id="kurslist">
-                                            <a onclick="openKurs('kurs')" href="#kurs" class="list-group-item" data-toggle="collapse" data-parent="#MainMenus" style="color: black; border: none; text-align: right"><span class="badge badge-secondary">$</span>&nbsp;&nbsp;USD&nbsp;&nbsp;<i class="fa fa-chevron-down" aria-hidden="true" id="icon-kurs"></i></a>
-                                            
-                                            <div class="collapse" id="kurs">
-                                                <div class="row" style="border: 1px solid silver; border-radius: 3px;">
+                                    <div class="list-group" id="kurslist">
+                                        <a onclick="openKurs('kurs')" href="#kurs" class="list-group-item" data-toggle="collapse" data-parent="#MainMenus" style="color: black; border: none; text-align: right"><span class="badge badge-secondary">$</span>&nbsp;&nbsp;USD&nbsp;&nbsp;<i class="fa fa-chevron-down" aria-hidden="true" id="icon-kurs"></i></a>
+                                        
+                                        <div class="collapse" id="kurs">
+                                            <div class="row" style="border: 1px solid silver; border-radius: 3px; background-color: #efefef;">
+                                                @if($usd != NULL)
                                                     <?php
                                                         for ($n=0; $n < count($imgarr); $n++) { 
                                                     ?>
                                                     @if($n == 0 || $n == 6)
                                                     <div class="col-md-6" style="padding-left: 0px; padding-right: 0px;">
                                                     @endif
-                                                        <a href="#" class="list-group-item kurs-coll">
+                                                        <div class="list-group-item kurs-coll">
                                                             <table border="0" style="width: 100%; font-size: 12px;" cellspacing="5" cellpadding="5">
                                                                 <tr>
                                                                     <td width="15%"><img src="{{asset('front/assets/icon/negara/'.$imgarr[$n])}}"></td>
                                                                     <td width="55%">{{$smtarr[$n]}} {{$nmtarr[$n]}}</td>
-                                                                    <td width="55%">{{$usd}}</td>
+                                                                    <td width="30%" style="text-align: right;">
+                                                                        <?php
+                                                                            $mtuang = $smtarr[$n];
+                                                                            $konver = $rates->$mtuang;
+                                                                            $convert = round($usd * $konver, 2);
+                                                                            echo number_format($convert,2,",",".");
+                                                                        ?>
+                                                                    </td>
                                                                 </tr>
                                                             </table>
-                                                        </a>
+                                                        </div>
                                                     @if($n == 5 || $n == 11)
                                                     </div>
                                                     @endif
                                                     <?php
                                                         }
                                                     ?>
-                                                </div>
+                                                @else
+                                                    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px;">
+                                                        <div class="list-group-item kurs-coll">
+                                                            <table border="0" style="width: 100%; font-size: 15px;" cellspacing="5" cellpadding="5">
+                                                                <tr>
+                                                                    <td width="100%" style="vertical-align: middle; text-align: center;">
+                                                                            @if($loc == "ch")
+                                                                            - 无法使用 -
+                                                                            @elseif($loc == "in")
+                                                                            - Tidak Tersedia -
+                                                                            @else
+                                                                            - Not Available -
+                                                                            @endif
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
+                                    </div>
                                 @endif
                             </div>
                             <div class="product_desc">
@@ -191,7 +218,19 @@
                             </div><br>
                             <div class="">
                                 <center>
-                                    <a href="{{url('/front_end/inquiry_product')}}/{{$data->id}}" class="btn btn-primary" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('product.inquiry')</a>
+                                <?php
+                                    if(Auth::guard('eksmp')->user()){
+                                        if(Auth::guard('eksmp')->user()->id_role == 2){
+                                            $jns = "eksportir";
+                                        }else if(Auth::guard('eksmp')->user()->id_role == 3){
+                                            $jns = "importir";
+                                        }
+                                    }else{
+                                        $jns = "not login";
+                                    }
+                                ?>
+                                    <!-- <a href="{{url('/front_end/inquiry_product')}}/{{$data->id}}" class="btn btn-primary" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('product.inquiry')</a> -->
+                                    <button class="btn btn-primary" style="width: 50%;" onclick="openInquiry('{{$jns}}')"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('product.inquiry')</button>
                                 </center>
                             </div>
                         <!-- </form> -->
@@ -347,6 +386,18 @@
         </div>
     </section>
     <!--product area end-->
+<?php
+    if($loc == "ch"){
+        $alertnot = "请登录进行查询！";
+        $alerteks = "只有买家可以查询！";
+    }else if($loc == "in"){
+        $alertnot = "Silahkan Login untuk melakukan Inquiry!";
+        $alerteks = "Hanya pembeli yang dapat melakukan Inquiry!";
+    }else{
+        $alertnot = "Please Sign In to do an Inquiry!";
+        $alerteks = "Only buyers can make an Inquiry!";
+    }
+?>
 <!-- Plugins JS -->
 <script src="{{asset('front/assets/js/plugins.js')}}"></script>
 @include('frontend.layouts.footer')
@@ -358,6 +409,16 @@
         }else{
             $('#icon-'+col).removeClass('fa-chevron-up');
             $('#icon-'+col).addClass('fa-chevron-down');
+        }
+    }
+
+    function openInquiry(bagian) {
+        if(bagian == "not login"){
+            alert("{{$alertnot}}");
+        }else if(bagian == "eksportir"){
+            alert("{{$alerteks}}");
+        }else{
+            window.location = "{{url('/front_end/inquiry_product/'.$data->id)}}";
         }
     }
 </script>

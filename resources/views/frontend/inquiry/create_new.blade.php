@@ -14,32 +14,38 @@
     $cat2 = getCategoryName($data->id_csc_product_level1, $lct);
     $cat3 = getCategoryName($data->id_csc_product_level2, $lct);
 
+    $arrimg = [];
+
     $img1 = "image/noimage.jpg";
-    $img2 = "image/noimage.jpg";
-    $img3 = "image/noimage.jpg";
-    $img4 = "image/noimage.jpg";
+    // $img2 = "image/noimage.jpg";
+    // $img3 = "image/noimage.jpg";
+    // $img4 = "image/noimage.jpg";
     if($data->image_1 != NULL){
         $imge1 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_1;
         if(file_exists($imge1)) {
           $img1 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_1;
+          array_push($arrimg, $img1);
         }
     }
     if($data->image_2 != NULL){
         $imge2 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_2;
         if(file_exists($imge2)) {
           $img2 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_2;
+          array_push($arrimg, $img2);
         }
     }
     if($data->image_3 != NULL){
         $imge3 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_3;
         if(file_exists($imge3)) {
           $img3 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_3;
+          array_push($arrimg, $img3);
         }
     }
     if($data->image_4 != NULL){
         $imge4 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_4;
         if(file_exists($imge4)) {
           $img4 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_4;
+          array_push($arrimg, $img4);
         }
     }
 ?>
@@ -95,34 +101,24 @@
                             </a>
                         </div>
 
+                        @if(count($arrimg) != 0)
                         <div class="single-zoom-thumb">
                             <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}">
-                                        <img src="{{url('/')}}/{{$img1}}" alt="zo-th-1" />
-                                    </a>
+                                <?php
+                                    for ($m=0; $m < count($arrimg); $m++) { 
+                                ?>
+                                        <li>
+                                            <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$arrimg[$m]}}" data-zoom-image="{{url('/')}}/{{$arrimg[$m]}}">
+                                                <img src="{{url('/')}}/{{$arrimg[$m]}}" alt="zo-th-1" />
+                                            </a>
 
-                                </li>
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img2}}" data-zoom-image="{{url('/')}}/{{$img2}}">
-                                        <img src="{{url('/')}}/{{$img2}}" alt="zo-th-1" />
-                                    </a>
-
-                                </li>
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img3}}" data-zoom-image="{{url('/')}}/{{$img3}}">
-                                        <img src="{{url('/')}}/{{$img3}}" alt="zo-th-1" />
-                                    </a>
-
-                                </li>
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img4}}" data-zoom-image="{{url('/')}}/{{$img4}}">
-                                        <img src="{{url('/')}}/{{$img4}}" alt="zo-th-1" />
-                                    </a>
-
-                                </li>
+                                        </li>
+                                <?php
+                                    }
+                                ?>
                             </ul>
                         </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
