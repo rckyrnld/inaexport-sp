@@ -31,5 +31,6 @@ return [
         "training" => "Training",
         "research" => "Research Corner",
         "inquiry" => "Inquiry Online",
+        "trade-expo" => "Trade Expo",
     ]
 ];
