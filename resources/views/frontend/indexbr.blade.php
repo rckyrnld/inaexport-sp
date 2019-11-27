@@ -35,7 +35,7 @@ if ($loc == "ch") {
         <div class="tab-content" id="tabing-product">
             <div class="breadcrumb_content">
                 <ul>
-                    <li><a href="{{url('front_end')}}">@lang("login.forms.home")</a></li>
+                    <li><a href="{{url('')}}">@lang("login.forms.home")</a></li>
                     <li>@lang("login.forms.br")</li>
                 </ul>
             </div>

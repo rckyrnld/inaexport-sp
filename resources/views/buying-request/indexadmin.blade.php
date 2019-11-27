@@ -60,8 +60,8 @@ body {font-family: Arial;}
 							<select id="bct" class="form-control" onchange="ganti()">
 				<option value="0">All</option>
 				<option value="1">Admin</option>
-				<option value="4">Perwakilan</option>
-				<option value="3">Importir</option>
+				<option value="4">Representative</option>
+				<option value="3">Importer</option>
 				</select>
 						</div>
 						<div class="form-group col-sm-2">

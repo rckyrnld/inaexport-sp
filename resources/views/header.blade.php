@@ -121,7 +121,7 @@
    <div class="navbar lt" style="background-color:  #1a7688 ; color: #ffffff">
     
             <!-- brand -->
-            <a href="../index.html" class="navbar-brand">
+            <a href="{{url('/')}}" class="navbar-brand">
                
                 <img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." >
                 <span class="hidden-folded d-inline"><font size="3px">Ministry Of Trade </font></span>

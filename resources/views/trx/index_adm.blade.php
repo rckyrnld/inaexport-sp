@@ -139,8 +139,8 @@ body {font-family: Arial;}
 			<select id="buyer" name="buyer" class="form-control">
 				<option value="0">- All -</option>
 				<option value="1">Admin</option>
-				<option value="4">Perwakilan</option>
-				<option value="3">Importir</option>
+				<option value="4">Representative</option>
+				<option value="3">Importer</option>
 			</select>
 		</div>
 		
