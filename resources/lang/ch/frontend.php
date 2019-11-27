@@ -54,9 +54,13 @@ return [
     "cu-subyek"    => "主题",
     "cu-message"    => "信息",
     "cu-cu"    => "联系我们",
+    "cu-add-email"    => "给我们发电子邮件",
+    "cu-add-call"    => "给我们打电话",
+    "cu-add-visit"    => "探望我们",
     "cu-submit"    => "发送",
     "service-title"    => "会员服务",
     "contact-person"    => "联系人",
+    "about"    => "关于",
     "home" => [
         "product" => "产品展示",
         "eksporter" => "出口商",

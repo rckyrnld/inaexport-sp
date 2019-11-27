@@ -161,7 +161,7 @@
                     <b>Full Name</b>
                   </div>
                   <div class="col-md-6">
-                    <input type="text" autocomplete="off" class="form-control" name="cp_name" @if($page != 'create')  value="{{$data->name}}" @endif required>
+                    <input type="text" autocomplete="off" class="form-control" name="cp_name" @if($page != 'create') @if($cp) value="{{$cp->name}}" @endif @endif required>
                   </div>
                 </div><br>
                 <div class="row">
@@ -170,7 +170,7 @@
                     <b>Email</b>
                   </div>
                   <div class="col-md-6">
-                    <input type="email" autocomplete="off" class="form-control" name="cp_email" @if($page != 'create')  value="{{$data->email}}" @endif required>
+                    <input type="email" autocomplete="off" class="form-control" name="cp_email" @if($page != 'create') @if($cp) value="{{$cp->email}}" @endif @endif required>
                   </div>
                 </div><br>
               </div><div class="col-md-6">
@@ -179,7 +179,7 @@
                     <b>Phone</b>
                   </div>
                   <div class="col-md-6">
-                    <input type="text" autocomplete="off" class="form-control" name="cp_phone" maxlength="15" @if($page != 'create')  value="{{$data->phone}}" @endif required>
+                    <input type="text" onblur="this.value=removeSpaces(this.value);" autocomplete="off" class="form-control" name="cp_phone" maxlength="15" @if($page != 'create') @if($cp) value="{{$cp->phone}}" @endif @endif required>
                   </div>
                 </div><br>
               </div>
@@ -204,9 +204,12 @@
 <script type="text/javascript">
   $(document).ready(function (){
     var type = '{{$page}}';
-    console.log(type);
     if(type == "view"){
       $('#form :input').prop('disabled', true);
     } 
   })
+
+  function removeSpaces(string) {
+   return string.split(' ').join('');
+  }
 </script>

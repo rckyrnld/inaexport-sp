@@ -17,5 +17,19 @@ return [
 	"analisapasar" => "Market Analysis of Export Objectives",
 	"even" => "Our events",
 	"cc" => "Copyright",
-	"joined" => "已加入"
+	"joined" => "已加入",
+	"foot" => [
+        "contact" => "CONTACT",
+        "with-us" => "WITH US",
+        "about" => "ABOUT",
+        "membership" => "MEMBERSHIP SERVICE",
+        "our" => "OUR",
+        "service" => "SERVICES",
+        "ministry" => "Ministry of Trade Republic of Indonesia",
+        "directorate" => "Directorate General for National Export Development",
+        "event" => "Event",
+        "training" => "Training",
+        "research" => "Research Corner",
+        "inquiry" => "Inquiry Online",
+    ]
 ];
