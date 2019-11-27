@@ -19,10 +19,13 @@ class RekapPendapatanController extends Controller
 	
     public function index()
     {
-		
+		if(empty(Auth::guard('eksmp')->user()->id)){
 		$pageTitle = "Rekap Pendapatan";
 		$data = "";
         return view('rekap-pendapatan.index', compact('pageTitle','data'));
+		}else{
+			echo "abc";
+		}
 		
     } 
 	
