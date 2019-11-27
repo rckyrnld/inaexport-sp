@@ -499,7 +499,7 @@ class SuppliersFrontController extends Controller
               $col = "created_at";
               $urut = "DESC";
               $service = DB::table('itdp_service_eks')
-                        // ->where('id_itdp_profil_eks', $data->id)
+                        ->where('id_itdp_profil_eks', $data->id)
                         ->where('status', 2)
                         ->orderBy($col, $urut)
                         ->get();
@@ -507,13 +507,13 @@ class SuppliersFrontController extends Controller
               $col = "nama_".$lcts;  
               $urut = "ASC";
               $service = DB::table('itdp_service_eks')
-                        // ->where('id_itdp_profil_eks', $data->id)
+                        ->where('id_itdp_profil_eks', $data->id)
                         ->where('status', 2)
                         ->orderBy($col, $urut)
                         ->get();
             }else{
                 $service = DB::table('itdp_service_eks')
-                        // ->where('id_itdp_profil_eks', $data->id)
+                        ->where('id_itdp_profil_eks', $data->id)
                         ->where('status', 2)
                         ->inRandomOrder()
                         ->get();
@@ -521,7 +521,7 @@ class SuppliersFrontController extends Controller
             $sortbysrv = $request->shortsrveks;
         }else{
             $service = DB::table('itdp_service_eks')
-                        // ->where('id_itdp_profil_eks', $data->id)
+                        ->where('id_itdp_profil_eks', $data->id)
                         ->where('status', 2)
                         ->inRandomOrder()
                         ->get();
