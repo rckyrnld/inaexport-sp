@@ -74,8 +74,8 @@ body {font-family: Arial;}
                           
                    <div class="tab">
   <button class="tablinks active" onclick="openCity(event, 'London')"><font size="3px">Admin</font></button>
-  <button class="tablinks" onclick="openCity(event, 'Paris')"><font size="3px">Perwakilan</font></button>
-  <button class="tablinks" onclick="openCity(event, 'Tokyo')"><font size="3px">Importir</font></button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')"><font size="3px">Representative</font></button>
+  <button class="tablinks" onclick="openCity(event, 'Tokyo')"><font size="3px">Importer</font></button>
 </div>
 
 <div id="London" class="tabcontent" style="display:block;">

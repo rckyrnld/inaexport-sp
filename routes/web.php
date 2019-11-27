@@ -243,6 +243,8 @@ Route::get('/br_getdata4', 'TrxController@data_br4')->name('front.datatables.br4
 Route::get('/detailtrx/{id}', 'TrxController@detailtrx');
 Route::get('/allgr/{id}', 'TrxController@allgr');
 Route::get('/joineks/{id}/{id2}', 'TrxController@joineks');
+Route::get('/caritab/{id}/{id2}', 'TrxController@caritab');
+Route::get('/cetaktrx/{id}/{id2}', 'TrxController@cetaktrx');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

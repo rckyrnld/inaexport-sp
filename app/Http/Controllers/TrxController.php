@@ -36,8 +36,8 @@ class TrxController extends Controller
 		}else{
 		if(Auth::user()->id_group == 4){
         $pageTitle = "Selling Transaction Perwakilan";
-		$data = DB::select("select a.*,a.id as ida,a.status as statusa,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where   b.status_join='4' and  a.id = b.id_br order by b.id desc ");
-        return view('trx.index_adm', compact('pageTitle','data'));
+		$data = DB::select("select * from csc_transaksi  order by id_transaksi desc "); 
+		return view('trx.index_adm', compact('pageTitle','data'));
 		}else{
 		$pageTitle = "Selling Transaction Admin";
 		$data = DB::select("select * from csc_transaksi  order by id_transaksi desc "); 
@@ -45,6 +45,36 @@ class TrxController extends Controller
 		}
 		}
     }
+	
+	public function caritab($id,$id2)
+    {
+		$pageTitle = "";
+		if($id == 0 && $id2 == 0){
+			$data = DB::select("select * from csc_transaksi order by id_transaksi desc");
+		}else if ($id == 0 && $id2 != 0){
+			$data = DB::select("select * from csc_transaksi where origin='".$id2."' order by id_transaksi desc");
+		}else if ($id != 0 && $id2 == 0){
+			$data = DB::select("select * from csc_transaksi where by_role='".$id."' order by id_transaksi desc");
+		}else if($id != 0 && $id2 != 0){
+			$data = DB::select("select * from csc_transaksi where by_role='".$id."' and origin='".$id2."' order by id_transaksi desc");
+		}
+		return view('trx.caritab', compact('id','id2','data','pageTitle'));
+	}
+	
+	public function cetaktrx($id,$id2)
+    {
+		$pageTitle = "";
+		if($id == 0 && $id2 == 0){
+			$data = DB::select("select * from csc_transaksi order by id_transaksi desc");
+		}else if ($id == 0 && $id2 != 0){
+			$data = DB::select("select * from csc_transaksi where origin='".$id2."' order by id_transaksi desc");
+		}else if ($id != 0 && $id2 == 0){
+			$data = DB::select("select * from csc_transaksi where by_role='".$id."' order by id_transaksi desc");
+		}else if($id != 0 && $id2 != 0){
+			$data = DB::select("select * from csc_transaksi where by_role='".$id."' and origin='".$id2."' order by id_transaksi desc");
+		}
+		return view('trx.cetaktrx2', compact('id','id2','data','pageTitle'));
+	}
 	
 	public function input_transaksi($id)
     {
