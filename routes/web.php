@@ -31,6 +31,11 @@ Route::post('/resetpass', 'RegistrasiController@resetpass');
 Route::post('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
 Route::get('/check', 'UserController@userOnlineStatus');
 Route::get('/check2', 'UserEksmpController@usereksmpOnlineStatus');
+Route::get('/pendapatan_list', 'RekapPendapatanController@index');
+Route::get('/exportpendapatanall', 'RekapPendapatanController@exportpendapatanall');
+Route::get('/cetakrc', 'RekapPendapatanController@cetakrc');
+Route::get('/exportpendapatandetail/{id}', 'RekapPendapatanController@exportpendapatandetail');
+Route::get('/detailpendapatan/{id}', 'RekapPendapatanController@detailpendapatan');
 
 Route::namespace('FrontEnd')->group(function () {
     /* Created by Meidiyanah */
@@ -235,6 +240,7 @@ Route::post('/save_trx', 'TrxController@save_trx');
 Route::get('/br_getdata3', 'TrxController@data_br3')->name('front.datatables.br3');
 Route::get('/br_getdata4', 'TrxController@data_br4')->name('front.datatables.br4');
 Route::get('/detailtrx/{id}', 'TrxController@detailtrx');
+Route::get('/allgr/{id}', 'TrxController@allgr');
 Route::get('/joineks/{id}/{id2}', 'TrxController@joineks');
 
 Auth::routes();

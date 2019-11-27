@@ -47,8 +47,29 @@ body {font-family: Arial;}
                 <div class="box-header bg-light">
                     <h5><i></i> Buying Request</h5>
                 </div>
-
+				
+				
+				
+				
                 <div class="box-body bg-light">
+				<div class="form-row">
+						<div class="form-group col-sm-2">
+							<b>Created By</b>
+						</div>
+						<div class="form-group col-sm-4">
+							<select id="bct" class="form-control" onchange="ganti()">
+				<option value="0">All</option>
+				<option value="1">Admin</option>
+				<option value="4">Perwakilan</option>
+				<option value="3">Importir</option>
+				</select>
+						</div>
+						<div class="form-group col-sm-2">
+							<div id="cb"><a href="{{url('allgr/0')}}" class="btn btn-info" download><i class="fa fa-download"></i> Cetak</a></div>
+						</div>
+					</div>
+				<hr>
+				<br>
 				<a href="{{ url('br_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add</a><br><br>
                           
                    <div class="tab">
@@ -195,6 +216,20 @@ body {font-family: Arial;}
 $(document).ready(function () {
         $('.select2').select2();
 });
+
+function ganti(){
+	var a = $('#bct').val();
+	// alert(a);
+	if(a == 0){
+		$('#cb').html('<a href="{{url('allgr/0')}}" class="btn btn-info"><i class="fa fa-download"></i> Cetak</a>');
+	}else if(a == 1){
+		$('#cb').html('<a href="{{url('allgr/1')}}" class="btn btn-info"><i class="fa fa-download"></i> Cetak</a>');
+	}else if(a == 4){
+		$('#cb').html('<a href="{{url('allgr/4')}}" class="btn btn-info"><i class="fa fa-download"></i> Cetak</a>');
+	}else if(a == 3){
+		$('#cb').html('<a href="{{url('allgr/3')}}" class="btn btn-info"><i class="fa fa-download"></i> Cetak</a>');
+	}
+}
 function openCity(evt, cityName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
