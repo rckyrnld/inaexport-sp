@@ -81,11 +81,24 @@ class TrainingControllerAdmin extends Controller
         'location_chn' => $req->location_chn,
       ]);
 
-      DB::table('contact_person')->where('type', 'training')->where('id_type', $id)->update([
-        'name' => $req->cp_name,
-        'email' => $req->cp_email,
-        'phone' => $req->cp_phone,
-      ]);
+      $cp = DB::table('contact_person')->where('type', 'training')->where('id_type', $id)->first();
+      if($cp){
+        DB::table('contact_person')->where('type', 'training')->where('id_type', $id)->update([
+          'name' => $req->cp_name,
+          'email' => $req->cp_email,
+          'phone' => $req->cp_phone,
+        ]);
+      } else {
+        $idp = DB::table('contact_person')->max('id') + 1;
+        DB::table('contact_person')->insert([
+          'id' => $idp,
+          'name' => $req->cp_name,
+          'email' => $req->cp_email,
+          'phone' => $req->cp_phone,
+          'type' => 'training',
+          'id_type' => $id,
+        ]);
+      }
 
 			return redirect('/admin/training');
 		}
@@ -136,25 +149,23 @@ class TrainingControllerAdmin extends Controller
     }
 
 		public function view($id){
-			$data = DB::table('training_admin as a')->leftjoin('contact_person as b', 'a.id', '=', 'b.id_type')
-      ->where('b.type', 'training')->where('a.id', $id)
-      ->selectRaw('a.*, b.name, b.phone, b.email')->first();
+			$data = DB::table('training_admin')->where('id', $id)->first();
+      $cp = DB::table('contact_person')->where('type', 'training')->where('id_type', $id)->first();
 
       $pageTitle = 'Training';
 			$page = 'view';
 
-			return view('training.create',compact('page','pageTitle','data'));
+			return view('training.create',compact('page','pageTitle','data','cp'));
     }
 
     public function edit($id){
-			$data = DB::table('training_admin as a')->leftjoin('contact_person as b', 'a.id', '=', 'b.id_type')
-      ->where('b.type', 'training')->where('a.id', $id)
-      ->selectRaw('a.*, b.name, b.phone, b.email')->first();
+      $data = DB::table('training_admin')->where('id', $id)->first();
+      $cp = DB::table('contact_person')->where('type', 'training')->where('id_type', $id)->first();
 
 			$pageTitle = 'Training';
 			$page = 'edit';
 
-			return view('training.create',compact('page','pageTitle','data'));
+			return view('training.create',compact('page','pageTitle','data','cp'));
     }
 
 		public function destroy($id){

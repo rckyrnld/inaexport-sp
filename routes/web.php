@@ -83,7 +83,8 @@ Route::namespace('FrontEnd')->group(function () {
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
     Route::get('/front_end/tracking', 'FrontController@tracking');
-    Route::get('/front_end/contact-us', 'FrontController@contact_us');
+    Route::get('/about/', 'FrontController@about');
+    Route::get('/contact-us', 'FrontController@contact_us');
     Route::post('/contact-us/send', 'FrontController@contact_us_send');
     Route::get('/front_end/service-detail/{id}', 'FrontController@service');
     Route::get('/profile/getCity/{param}', 'ImporterController@getCity')->name('ajax-city');

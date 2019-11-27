@@ -211,8 +211,9 @@ class EksProductController extends Controller
         if(Auth::guard('eksmp')->user()){
             $url = '/eksportir/product_save';
             $pageTitle = 'Tambah Product';
+            $hsco = DB::table('mst_hscodes')->orderBy('desc_eng', 'ASC')->get();
             $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
-            return view('eksportir.eksproduct.tambah', compact('pageTitle', 'url', 'catprod'));
+            return view('eksportir.eksproduct.tambah', compact('pageTitle', 'url', 'catprod', 'hsco'));
         }else{
             return redirect('eksportir/product');
         }
@@ -281,6 +282,7 @@ class EksProductController extends Controller
                 'raw_material_chn' => $request->raw_material_chn,
                 'capacity' => $request->capacity,
                 'price_usd' => $request->price_usd,
+                'id_mst_hscodes' => $request->hscode,
                 'image_1' => $nama_file1,
                 'image_2' => $nama_file2,
                 'image_3' => $nama_file3,
@@ -329,7 +331,8 @@ class EksProductController extends Controller
             $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
             $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
             $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
-            return view('eksportir.eksproduct.edit', compact('pageTitle', 'data', 'url', 'catprod', 'catprod2', 'catprod3'));
+            $hsco = DB::table('mst_hscodes')->orderBy('desc_eng', 'ASC')->get();
+            return view('eksportir.eksproduct.edit', compact('pageTitle', 'data', 'url', 'catprod', 'catprod2', 'catprod3', 'hsco'));
         }else{
             return redirect('eksportir/product');
         }
@@ -363,7 +366,8 @@ class EksProductController extends Controller
         $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
         $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
         $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
-        return view('eksportir.eksproduct.view', compact('pageTitle', 'data', 'catprod', 'catprod2', 'catprod3', 'jenis', 'id_profil'));
+        $hsco = DB::table('mst_hscodes')->where('id', $data->id_mst_hscodes)->first();
+        return view('eksportir.eksproduct.view', compact('pageTitle', 'data', 'catprod', 'catprod2', 'catprod3', 'jenis', 'id_profil', 'hsco'));
     }
 
     public function delete($id)
@@ -441,6 +445,7 @@ class EksProductController extends Controller
                 'raw_material_chn' => $request->raw_material_chn,
                 'capacity' => $request->capacity,
                 'price_usd' => $request->price_usd,
+                'id_mst_hscodes' => $request->hscode,
                 'image_1' => $nama_file1,
                 'image_2' => $nama_file2,
                 'image_3' => $nama_file3,
@@ -474,7 +479,8 @@ class EksProductController extends Controller
             $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
             $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
             $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
-            return view('eksportir.eksproduct.verifikasi', compact('pageTitle', 'data', 'url', 'catprod', 'catprod2', 'catprod3', 'jenis'));
+            $hsco = DB::table('mst_hscodes')->where('id', $data->id_mst_hscodes)->first();
+            return view('eksportir.eksproduct.verifikasi', compact('pageTitle', 'data', 'url', 'catprod', 'catprod2', 'catprod3', 'jenis', 'hsco'));
         }else{
             return redirect('eksportir/product');
         }

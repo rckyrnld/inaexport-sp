@@ -17,5 +17,19 @@ return [
 	"analisapasar" => "Analisa Pasar Tuj Ekspor",
 	"even" => "Even - even Kami",
 	"cc" => "Hak Cipta",
-	"joined" => "已加入"
+	"joined" => "已加入",
+	"foot" => [
+        "contact" => "HUBUNGI",
+        "with-us" => "KAMI",
+        "about" => "TENTANG LAYANAN",
+        "membership" => "KEANGGOTAAN",
+        "our" => "PELAYANAN",
+        "service" => "KAMI",
+        "ministry" => "Kementerian Perdagangan Republik Indonesia",
+        "directorate" => "Direktorat Jenderal Pengembangan Ekspor Nasional",
+        "event" => "Event",
+        "training" => "Training",
+        "research" => "Research Corner",
+        "inquiry" => "Inquiry Online",
+    ]
 ];

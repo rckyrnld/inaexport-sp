@@ -54,8 +54,12 @@ return [
     "cu-message"    => "Message",
     "cu-submit"    => "Send",
     "cu-cu"    => "Contact Us",
+    "cu-add-email"    => "Send us an email",
+    "cu-add-call"    => "Give us a call",
+    "cu-add-visit"    => "Visit us",
     "service-title"    => "Membership Service",
     "contact-person"    => "Contact Person",
+    "about"    => "About",
     "home" => [
         "product" => "Products",
         "eksporter" => "Exporters",

@@ -53,9 +53,13 @@ return [
     "cu-subyek"    => "Subyek",
     "cu-message"    => "Pesan",
     "cu-cu"    => "Hubungi Kami",
+    "cu-add-email"    => "Kirimkan email kepada kami",
+    "cu-add-call"    => "Hubungi kami",
+    "cu-add-visit"    => "Kunjungi kami",
     "cu-submit"    => "Kirim",
     "service-title"    => "Layanan Keanggotaan",
     "contact-person"    => "Contact Person",
+    "about"    => "Tentang",
     "home" => [
         "product" => "Produk",
         "eksporter" => "Eksportir",
