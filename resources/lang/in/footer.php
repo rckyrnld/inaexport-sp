@@ -27,9 +27,10 @@ return [
         "service" => "KAMI",
         "ministry" => "Kementerian Perdagangan Republik Indonesia",
         "directorate" => "Direktorat Jenderal Pengembangan Ekspor Nasional",
-        "event" => "Event",
-        "training" => "Training",
-        "research" => "Research Corner",
-        "inquiry" => "Inquiry Online",
+        "event" => "Pameran",
+        "training" => "Pelatihan",
+        "research" => "Hasil Analisan",
+        "inquiry" => "Penyelidikan Online",
+        "trade-expo" => "Pameran Dagang",
     ]
 ];

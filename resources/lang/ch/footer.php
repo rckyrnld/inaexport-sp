@@ -27,9 +27,10 @@ return [
         "service" => "我们的服务",
         "ministry" => "印尼贸易部",
         "directorate" => "国家出口发展总局",
-        "event" => "Event",
-        "training" => "Training",
-        "research" => "Research Corner",
-        "inquiry" => "Inquiry Online",
+        "event" => "展览会",
+        "training" => "训练",
+        "research" => "研究成果",
+        "inquiry" => "在线查询",
+        "trade-expo" => "贸易博览会",
     ]
 ];

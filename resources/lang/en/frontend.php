@@ -57,6 +57,8 @@ return [
     "cu-add-email"    => "Send us an email",
     "cu-add-call"    => "Give us a call",
     "cu-add-visit"    => "Visit us",
+    "cu-add-free"    => "Feel free to send Us message",
+    "cu-add-kontak"    => "Contact",
     "service-title"    => "Membership Service",
     "contact-person"    => "Contact Person",
     "about"    => "About",

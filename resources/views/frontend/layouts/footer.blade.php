@@ -149,7 +149,7 @@
                                     <li><a href="{{url('/about/')}}" class="third-child">@lang("footer.tentangkami")</a></li>
                                     <li><a href="{{url('/contact-us/')}}" class="third-child">@lang("footer.hubungikami")</a></li>
                                     <li><a href="#" class="third-child">DGNED CSC</a></li>
-                                    <li><a href="#" class="third-child">Trade Expo</a></li>
+                                    <li><a href="#" class="third-child">@lang("footer.foot.trade-expo")</a></li>
                                 </ul>
                             </div>
                         </div>

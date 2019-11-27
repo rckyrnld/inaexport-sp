@@ -57,6 +57,8 @@ return [
     "cu-add-email"    => "给我们发电子邮件",
     "cu-add-call"    => "给我们打电话",
     "cu-add-visit"    => "探望我们",
+    "cu-add-free"    => "随时向我们发送消息",
+    "cu-add-kontak"    => "联系",
     "cu-submit"    => "发送",
     "service-title"    => "会员服务",
     "contact-person"    => "联系人",

@@ -56,6 +56,8 @@ return [
     "cu-add-email"    => "Kirimkan email kepada kami",
     "cu-add-call"    => "Hubungi kami",
     "cu-add-visit"    => "Kunjungi kami",
+    "cu-add-free"    => "Kirimkan pesan kepada kami",
+    "cu-add-kontak"    => "Kontak",
     "cu-submit"    => "Kirim",
     "service-title"    => "Layanan Keanggotaan",
     "contact-person"    => "Contact Person",

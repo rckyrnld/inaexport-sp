@@ -8,8 +8,13 @@
 <div style="background-color: #f2f2f2">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-10 col-12" style="padding-top: 20px; padding-bottom: 20px; height: 100%;">
-            	
+            <div class="col-md-12 col-lg-12 col-12" style="padding-top: 20px; padding-bottom: 20px; height: 100%;">
+            	<div class="mapouter">
+                    <div class="gmap_canvas">
+                        <iframe width="100%" height="400px" id="gmap_canvas" src="https://maps.google.com/maps?q=Ministry%20of%20Trade%20of%20The%20Republic%20of%20Indonesia&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="border-radius: 20px;"></iframe><a href="https://www.embedgooglemap.net/blog/torguard-promo-code/"></a>
+                    </div>
+                    <style>.mapouter{position:relative;text-align:right;width:100%;}.gmap_canvas {overflow:hidden;background:none!important;width:100%;}</style>
+                </div>
             </div>
         </div>
     </div>
@@ -22,9 +27,9 @@
 				<span style="color: #f2f2f2; font-size: 23px; font-weight: 500;">
                     <div class="form-group row">
                         <div class="col-md-8 col-lg-8 col-12" style="padding-bottom: 30px;">
-                            Contact<br>
-                            <span style="font-size: 46px">Feel free to send Us message</span><br>
-                            <span style="font-size: 18px;line-height:2px;">DGNED Membership Service<br>@lang("footer.foot.directorate")</span><br><br>
+                            @lang("frontend.cu-add-kontak")<br>
+                            <span style="font-size: 46px">@lang("frontend.cu-add-free")</span><br>
+                            <span style="font-size: 18px;line-height:2px;">DGNED @lang("frontend.service-title")<br>@lang("footer.foot.directorate")</span><br><br>
                     <form action="{{url('/contact-us/send/')}}" method="POST">
                         {{ csrf_field() }}
                             <table width="100%" border="0" cellpadding="5">
