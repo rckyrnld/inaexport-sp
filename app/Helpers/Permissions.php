@@ -7,7 +7,7 @@ class Permissions {
     public static function get() { 
 	
 	if(empty(Auth::user()->id_group) && empty(Auth::guard('eksmp')->user()->id_role)) {
-		redirect('/');
+		// return redirect()->route('front_end_goh');
 	}else{
 		if(empty(Auth::user()->id_group)){
 			$id_group = Auth::guard('eksmp')->user()->id_role; 

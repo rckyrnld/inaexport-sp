@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use Illuminate\Support\Facades\Storage;
+use phpDocumentor\Reflection\Types\Null_;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Yajra\DataTables\Facades\DataTables;
@@ -158,7 +159,98 @@ class BuyingreqController extends Controller
     public function impdata_br(Request $request)
     {
         $id_user = $request->id_user;
-        $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request  where id_pembuat='" . $id_user . "' order by id desc ");
+        $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request  
+                           where id_pembuat='" . $id_user . "' order by id desc ");
+
+//        for($i = 0; $i < count($buy);  $i++){
+//
+//        }
+//
+//        foreach ($buy as $datanya) {
+//            $coba = explode(",", $datanya->id_csc_prod);
+//        }
+//        dd($jsonResult);
+        $jsonResult = array();
+        for ($i = 0; $i < count($buy); $i++) {
+            $jsonResult[$i]["row"] = $buy[$i]->row;
+            $jsonResult[$i]["id"] = $buy[$i]->id;
+            $jsonResult[$i]["id_mst_country"] = $buy[$i]->id_mst_country;
+            $jsonResult[$i]["id_csc_prod_cat"] = $buy[$i]->id_csc_prod_cat;
+            $jsonResult[$i]["id_csc_prod_cat_level1"] = $buy[$i]->id_csc_prod_cat_level1;
+            $jsonResult[$i]["id_csc_prod_cat_level2"] = $buy[$i]->id_csc_prod_cat_level2;
+            $jsonResult[$i]["jenis_perihal_en"] = $buy[$i]->jenis_perihal_en;
+            $jsonResult[$i]["subyek"] = $buy[$i]->subyek;
+            $jsonResult[$i]["message"] = $buy[$i]->message;
+            $jsonResult[$i]["files"] = $buy[$i]->files;
+            $jsonResult[$i]["message_answer"] = $buy[$i]->message_answer;
+            $jsonResult[$i]["file_answer"] = $buy[$i]->file_answer;
+            $jsonResult[$i]["date"] = $buy[$i]->date;
+            $jsonResult[$i]["st_approve"] = $buy[$i]->st_approve;
+            $jsonResult[$i]["date_approve"] = $buy[$i]->date_approve;
+            $jsonResult[$i]["date_answer"] = $buy[$i]->date_answer;
+            $jsonResult[$i]["by_role"] = $buy[$i]->by_role;
+            $jsonResult[$i]["id_pembuat"] = $buy[$i]->id_pembuat;
+            $jsonResult[$i]["city"] = $buy[$i]->city;
+            $jsonResult[$i]["shipping"] = $buy[$i]->shipping;
+            $jsonResult[$i]["spec"] = $buy[$i]->spec;
+            $jsonResult[$i]["eo"] = $buy[$i]->eo;
+            $jsonResult[$i]["neo"] = $buy[$i]->neo;
+            $jsonResult[$i]["tp"] = $buy[$i]->tp;
+            $jsonResult[$i]["ntp"] = $buy[$i]->ntp;
+            $jsonResult[$i]["valid"] = $buy[$i]->valid;
+            if ($buy[$i]->valid == 0) {
+                $jsonResult[$i]["valid_desc"] = 'No Limit';
+            } else {
+                $jsonResult[$i]["valid_desc"] = 'Valid ' . $buy[$i]->valid . " days";
+            }
+            $jsonResult[$i]["status"] = $buy[$i]->status;
+            if ($buy[$i]->status == null || $buy[$i]->status == 0 || empty($buy[$i]->status) || $buy[$i]->status == 1) {
+                $jsonResult[$i]["status_desc"] = "Negosiation";
+            } else if ($buy[$i]->status == 4) {
+                $jsonResult[$i]["status_desc"] = "Deal";
+            }
+            $jsonResult[$i]["jenis_perihal_in"] = $buy[$i]->jenis_perihal_in;
+            $jsonResult[$i]["jenis_perihal_chn"] = $buy[$i]->jenis_perihal_chn;
+            $jsonResult[$i]["message_perihal_en"] = $buy[$i]->message_perihal_en;
+            $jsonResult[$i]["message_perihal_in"] = $buy[$i]->message_perihal_in;
+            $jsonResult[$i]["message_perihal_chn"] = $buy[$i]->message_perihal_chn;
+            $jsonResult[$i]["subyek_en"] = $buy[$i]->subyek_en;
+            $jsonResult[$i]["subyek_in"] = $buy[$i]->subyek_in;
+            $jsonResult[$i]["subyek_chn"] = $buy[$i]->subyek_chn;
+            $jsonResult[$i]["deal"] = $buy[$i]->deal;
+            $jsonResult[$i]["id_csc_prod"] = $buy[$i]->id_csc_prod;
+            $jsonResult[$i]["type_tracking"] = $buy[$i]->type_tracking;
+            $jsonResult[$i]["no_track"] = $buy[$i]->no_track;
+            $jsonResult[$i]["status_trx"] = $buy[$i]->status_trx;
+            $id_csc = explode(",", $buy[$i]->id_csc_prod);
+            $list_k = array();
+
+            for ($a = 0; $a < count($id_csc); $a++) {
+                if (!empty($id_csc[$a]) || $id_csc[$a] != null) {
+                    //$getNama = DB::table('csc_product')->where('id', $id_csc[$a])->select("nama_kategori_en")->first();
+                    $list_k[] = $id_csc[$a];
+                }
+            }
+
+            $getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
+            $jsonResult[$i]["kategori_desc"] = $getName;
+
+//
+//            $jsonResult[$i]["tes"] = $namas;
+//            for($x=0;$x<count($namas);$x++){
+//
+//            }
+//            $nama = $namas;
+
+//            $jsonResult[$i]["csc_product_name"] = (!empty($id_csc[$i])) ? DB::table('csc_product')->where('id', $id_csc[$i])->first()->nama_kategori_en : "";
+
+//            print_r($id_csc);
+
+
+//            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+//
+//            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+        }
 //        dd($buy);
         if ($buy) {
 
@@ -167,7 +259,7 @@ class BuyingreqController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = $buy;
+            $data = $jsonResult;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -185,9 +277,17 @@ class BuyingreqController extends Controller
 
     }
 
+    public function get_csc($id)
+    {
+
+        return DB::table('csc_product')->where('id', $id)->first()->nama_kategori_en;
+    }
+
     public function br_importir_bc(Request $request)
     {
-        $id = $request->id_csc_buying_request;
+        $coba = str_replace('"', '', $request->id_csc_buying_request);
+        $id = (int)$coba;
+//        dd($id);
         $cariprod = DB::select("select * from csc_buying_request where id='" . $id . "'");
         foreach ($cariprod as $prodcari) {
             $rrr = $prodcari->id_csc_prod;
@@ -270,7 +370,84 @@ class BuyingreqController extends Controller
     {
         $iduser = $request->id_user;
         $data = DB::select("select a.*,a.id as ida,a.status as statusa,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where a.id = b.id_br and b.id_eks='" . $iduser . "' order by b.id desc ");
-
+        $jsonResult = array();
+        for ($i = 0; $i < count($data); $i++) {
+            $jsonResult[$i]["id"] = $data[$i]->id;
+            $jsonResult[$i]["id_mst_country"] = $data[$i]->id_mst_country;
+            $jsonResult[$i]["id_csc_prod_cat"] = $data[$i]->id_csc_prod_cat;
+            $jsonResult[$i]["id_csc_prod_cat_level1"] = $data[$i]->id_csc_prod_cat_level1;
+            $jsonResult[$i]["id_csc_prod_cat_level2"] = $data[$i]->id_csc_prod_cat_level2;
+            $jsonResult[$i]["jenis_perihal_en"] = $data[$i]->jenis_perihal_en;
+            $jsonResult[$i]["subyek"] = $data[$i]->subyek;
+            $jsonResult[$i]["message"] = $data[$i]->message;
+            $jsonResult[$i]["files"] = $data[$i]->files;
+            $jsonResult[$i]["message_answer"] = $data[$i]->message_answer;
+            $jsonResult[$i]["file_answer"] = $data[$i]->file_answer;
+            $jsonResult[$i]["date"] = $data[$i]->date;
+            $jsonResult[$i]["st_approve"] = $data[$i]->st_approve;
+            $jsonResult[$i]["date_approve"] = $data[$i]->date_approve;
+            $jsonResult[$i]["date_answer"] = $data[$i]->date_answer;
+            $jsonResult[$i]["by_role"] = $data[$i]->by_role;
+            $jsonResult[$i]["id_pembuat"] = $data[$i]->id_pembuat;
+            $jsonResult[$i]["city"] = $data[$i]->city;
+            $jsonResult[$i]["shipping"] = $data[$i]->shipping;
+            $jsonResult[$i]["spec"] = $data[$i]->spec;
+            $jsonResult[$i]["eo"] = $data[$i]->eo;
+            $jsonResult[$i]["neo"] = $data[$i]->neo;
+            $jsonResult[$i]["tp"] = $data[$i]->tp;
+            $jsonResult[$i]["ntp"] = $data[$i]->ntp;
+            $jsonResult[$i]["valid"] = $data[$i]->valid;
+            if ($data[$i]->valid == 0) {
+                $jsonResult[$i]["valid_desc"] = 'No Limit';
+            } else {
+                $jsonResult[$i]["valid_desc"] = 'Valid ' . $data[$i]->valid . " days";
+            }
+            $jsonResult[$i]["status"] = $data[$i]->status;
+            if ($data[$i]->status == null || $data[$i]->status == 0 || empty($data[$i]->status)) {
+                $jsonResult[$i]["status_desc"] = "Negosiation";
+            } else {
+                $jsonResult[$i]["status_desc"] = "Deal";
+            }
+            $jsonResult[$i]["jenis_perihal_in"] = $data[$i]->jenis_perihal_in;
+            $jsonResult[$i]["jenis_perihal_chn"] = $data[$i]->jenis_perihal_chn;
+            $jsonResult[$i]["message_perihal_en"] = $data[$i]->message_perihal_en;
+            $jsonResult[$i]["message_perihal_in"] = $data[$i]->message_perihal_in;
+            $jsonResult[$i]["message_perihal_chn"] = $data[$i]->message_perihal_chn;
+            $jsonResult[$i]["subyek_en"] = $data[$i]->subyek_en;
+            $jsonResult[$i]["subyek_in"] = $data[$i]->subyek_in;
+            $jsonResult[$i]["subyek_chn"] = $data[$i]->subyek_chn;
+            $jsonResult[$i]["deal"] = $data[$i]->deal;
+            $jsonResult[$i]["id_csc_prod"] = $data[$i]->id_csc_prod;
+            $id_csc = explode(",", $data[$i]->id_csc_prod);
+            $list_k = array();
+            for ($a = 0; $a < count($id_csc); $a++) {
+                if (!empty($id_csc[$a]) || $id_csc[$a] != null) {
+                    //$getNama = DB::table('csc_product')->where('id', $id_csc[$a])->select("nama_kategori_en")->first();
+                    $list_k[] = $id_csc[$a];
+                }
+            }
+            $getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
+            $jsonResult[$i]["kategori_desc"] = $getName;
+            $jsonResult[$i]["type_tracking"] = $data[$i]->type_tracking;
+            $jsonResult[$i]["no_track"] = $data[$i]->no_track;
+            $jsonResult[$i]["status_trx"] = $data[$i]->status_trx;
+            $jsonResult[$i]["ida"] = $data[$i]->ida;
+            $jsonResult[$i]["statusa"] = $data[$i]->statusa;
+            $jsonResult[$i]["id_br"] = $data[$i]->id_br;
+            $jsonResult[$i]["id_eks"] = $data[$i]->id_eks;
+            $jsonResult[$i]["status_join"] = $data[$i]->status_join;
+            if ($data[$i]->status_join == null) {
+                $jsonResult[$i]["status_join_desc"] = "-";
+            } else if ($data[$i]->status_join == 1) {
+                $jsonResult[$i]["status_join_desc"] = "Wait Importir Verification";
+            } else if ($data[$i]->status_join == 4) {
+                $jsonResult[$i]["status_join_desc"] = "Deal";
+            } else {
+                $jsonResult[$i]["status_join_desc"] = "Negosiation";
+            }
+            $jsonResult[$i]["expired_at"] = $data[$i]->expired_at;
+            $jsonResult[$i]["idb"] = $data[$i]->idb;
+        }
         if ($data) {
 
             $meta = [
@@ -280,7 +457,7 @@ class BuyingreqController extends Controller
             ];
 
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = $jsonResult;
             return response($res);
         } else {
             $meta = [

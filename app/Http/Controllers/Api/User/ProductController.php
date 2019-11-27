@@ -29,19 +29,68 @@ class ProductController extends Controller
             ->where('id_itdp_company_user', '=', $request->id_user)
             ->orderBy('product_description_en', 'ASC')
             ->get();
+        $jsonResult = array();
+        for($i = 0; $i < count($dataProduk);  $i++){
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
+            $jsonResult[$i]["id_csc_product_level1"] = $dataProduk[$i]->id_csc_product_level1;
+            $jsonResult[$i]["id_csc_product_level2"] = $dataProduk[$i]->id_csc_product_level2;
+            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
+            $jsonResult[$i]["prodname_in"] = $dataProduk[$i]->prodname_in;
+            $jsonResult[$i]["prodname_chn"] = $dataProduk[$i]->prodname_chn;
+            $jsonResult[$i]["code_en"] = $dataProduk[$i]->code_en;
+            $jsonResult[$i]["code_in"] = $dataProduk[$i]->code_in;
+            $jsonResult[$i]["code_chn"] = $dataProduk[$i]->code_chn;
+            $jsonResult[$i]["color_en"] = $dataProduk[$i]->color_en;
+            $jsonResult[$i]["color_in"] = $dataProduk[$i]->color_in;
+            $jsonResult[$i]["color_chn"] = $dataProduk[$i]->color_chn;
+            $jsonResult[$i]["size_en"] = $dataProduk[$i]->size_en;
+            $jsonResult[$i]["size_in"] = $dataProduk[$i]->size_in;
+            $jsonResult[$i]["size_chn"] = $dataProduk[$i]->size_chn;
+            $jsonResult[$i]["raw_material_en"] = $dataProduk[$i]->raw_material_en;
+            $jsonResult[$i]["raw_material_in"] = $dataProduk[$i]->raw_material_in;
+            $jsonResult[$i]["raw_material_chn"] = $dataProduk[$i]->raw_material_chn;
+            $jsonResult[$i]["capacity"] = $dataProduk[$i]->capacity;
+            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+            $jsonResult[$i]["id_itdp_profil_eks"] = $dataProduk[$i]->id_itdp_profil_eks;
+            $jsonResult[$i]["id_itdp_company_user"] = $dataProduk[$i]->id_itdp_company_user;
+            $jsonResult[$i]["minimum_order"] = $dataProduk[$i]->minimum_order;
+            $jsonResult[$i]["product_description_en"] = $dataProduk[$i]->product_description_en;
+            $jsonResult[$i]["product_description_in"] = $dataProduk[$i]->product_description_in;
+            $jsonResult[$i]["product_description_chn"] = $dataProduk[$i]->product_description_chn;
+            $jsonResult[$i]["status"] = $dataProduk[$i]->status;
+            $jsonResult[$i]["size_en"] = $dataProduk[$i]->size_en;
+            $jsonResult[$i]["created_at"] = $dataProduk[$i]->created_at;
+            $jsonResult[$i]["updated_at"] = $dataProduk[$i]->updated_at;
+            $jsonResult[$i]["keterangan"] = $dataProduk[$i]->keterangan;
+            $jsonResult[$i]["id_mst_hscodes"] = $dataProduk[$i]->id_mst_hscodes;
 
+        }
         if (count($dataProduk) > 0) {
-            $res['message'] = "Success";
-            $res['data'] = $dataProduk;
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $jsonResult;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         } else {
-            $res['message'] = "Failed, No data.";
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         }
-        // }else{
-        // 	$res['message'] = "Failed";
-        // 	return response($res);
-        // }
     }
 
     public function browseProduct(Request $request)
@@ -51,16 +100,30 @@ class ProductController extends Controller
             ->where('itdp_company_users.status', '=', 1)
             ->where('csc_product_single.id_itdp_company_user', '=', $request->id_user)
             ->select('csc_product_single.id', 'csc_product_single.prodname_en',
-                'csc_product_single.image_1', 'csc_product_single.id_csc_product', 'itdp_company_users.type')
+                'csc_product_single.image_1','csc_product_single.image_2','csc_product_single.image_3','csc_product_single.image_4', 'csc_product_single.id_csc_product', 'itdp_company_users.type')
             ->orderBy('csc_product_single.prodname_en', 'asc')
             ->get();
+//        dd($dataProduk);
+        $jsonResult = array();
+        for($i = 0; $i < count($dataProduk);  $i++){
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
+            $jsonResult[$i]["type"] = $dataProduk[$i]->type;
+
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+        }
         if (count($dataProduk) > 0) {
             $meta = [
                 'code' => '200',
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = $dataProduk;
+            $data = $jsonResult;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);

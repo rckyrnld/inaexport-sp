@@ -210,6 +210,21 @@
                                         <div class="col-md-3">
                                         </div>
                                     </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-2"><b>HS Code</b></label>
+                                        <div class="col-md-3">
+                                            <select class="form-control select2" name="hscode" id="hscode" style="width: 100%;">
+                                               <option value=""></option>
+                                               @foreach($hsco as $val)
+                                                <option value="{{$val->id}}">{{$val->desc_eng}}</option>
+                                               @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-3">
+                                        </div>
+                                    </div><br>
                                     <hr>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -344,6 +359,10 @@
         // $("#img_utama").click(function() {
         //     $("input[id='image_utama']").click();
         // });
+
+        $('.select2').select2({
+          placeholder: 'Select HS Code'
+        });
 
         $("#img_1").click(function() {
             $("input[id='image_1']").click();

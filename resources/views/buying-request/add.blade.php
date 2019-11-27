@@ -82,7 +82,7 @@ body {font-family: Arial;}
 		</div>
 		<div class="form-group col-sm-4">
 			<select class="form-control" name="valid" id="valid">
-			<option value="0">Nan</option>
+			<option value="0">None</option>
 			<option value="1">Valid within 1 day</option>
 			<option value="3">Valid within 3 day</option>
 			<option value="5">Valid within 5 day</option>

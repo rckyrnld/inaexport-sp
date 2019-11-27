@@ -8,6 +8,7 @@ use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use GuzzleHttp\Client;
 
 class FrontController extends Controller
 {
@@ -378,7 +379,34 @@ class FrontController extends Controller
             ->inRandomOrder()
             ->limit(10)
             ->get();
-        return view('frontend.product.detail_products', compact('data', 'product'));
+
+        //get API Kurs
+        $datenow = date('Y-m-d');
+        $client = new Client();
+        // $res = $client->request('GET', 'https://api.ratesapi.io/api/'.$datenow, [
+        //     'verify' => false,
+        //     'headers' => [
+        //         'Content-Type'          => 'application/json',
+        //         'Accept'                => 'application/json'
+        //     ],
+        //     'query' => ['base' =>  'USD']
+        // ]);
+        $res = $client->request('GET', 'https://api.ratesapi.io/api/'.$datenow, [
+            'headers' => [
+                'Content-Type'          => 'application/json',
+                'Accept'                => 'application/json'
+            ],
+            'query' => ['base' =>  'USD']
+        ]);
+
+        $bdy = $res->getBody();
+        $content = json_decode($bdy->getContents());
+        $rates = $content->rates;
+
+        $imgarr = ['en.png', 'us.png', 'ch.png', 'in.png', 'jp.png', 'ks.png', 'sg.png', 'aus.png', 'mly.jpg', 'ue.png', 'thai.png', 'hk.png'];
+        $smtarr = ['GBP', 'USD', 'CNY', 'IDR', 'JPY', 'KRW', 'SGD', 'AUD', 'MYR', 'EUR', 'THB', 'HKD'];
+        $nmtarr = ['British Pound', 'US Dollar', 'Chinese Yuan', 'Indonesian Rupiah', 'Japanese Yen', 'South Korean Won', 'Singapore Dollar', 'Australian Dollar', 'Malaysian Ringgit', 'Euro', 'Thai Baht', 'Hong Kong Dollar'];
+        return view('frontend.product.detail_products', compact('data', 'product', 'imgarr', 'smtarr', 'nmtarr', 'rates'));
     }
 
     public function research_corner(){

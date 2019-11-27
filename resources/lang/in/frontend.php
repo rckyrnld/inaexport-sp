@@ -81,6 +81,11 @@ return [
         "desc" => "Deskripsi",
         "specs" => "Spesifikasi",
         "relprod" => "Produk Terkait",
+        "pricelh" => "Harga: Rendah ke Tinggi",
+        "pricehl" => "Harga: Tinggi ke Rendah",
+        "bymanufacture" => "Oleh Produsen",
+        "viewall" => "Lihat semua",
+        "listcompany" => "Daftar Semua Perusahaan",
     ],
     "tracking" => [
         "goods" => "Pelacakan Barang",

@@ -82,6 +82,11 @@ return [
         "desc" => "描述",
         "specs" => "规格规格",
         "relprod" => "相关产品",
+        "pricelh" => "价格：从低到高",
+        "pricehl" => "价格：从高到低",
+        "bymanufacture" => "按制造商",
+        "viewall" => "查看全部",
+        "listcompany" => "列出所有公司",
     ],
     "tracking" => [
         "goods" => "货物追踪",

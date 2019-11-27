@@ -14,35 +14,50 @@
     $cat2 = getCategoryName($data->id_csc_product_level1, $lct);
     $cat3 = getCategoryName($data->id_csc_product_level2, $lct);
 
+    $arrimg = [];
+
     $img1 = "image/noimage.jpg";
-    $img2 = "image/noimage.jpg";
-    $img3 = "image/noimage.jpg";
-    $img4 = "image/noimage.jpg";
+    // $img2 = "image/noimage.jpg";
+    // $img3 = "image/noimage.jpg";
+    // $img4 = "image/noimage.jpg";
     if($data->image_1 != NULL){
         $imge1 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_1;
         if(file_exists($imge1)) {
           $img1 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_1;
+          array_push($arrimg, $img1);
         }
     }
     if($data->image_2 != NULL){
         $imge2 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_2;
         if(file_exists($imge2)) {
           $img2 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_2;
+          array_push($arrimg, $img2);
         }
     }
     if($data->image_3 != NULL){
         $imge3 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_3;
         if(file_exists($imge3)) {
           $img3 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_3;
+          array_push($arrimg, $img3);
         }
     }
     if($data->image_4 != NULL){
         $imge4 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_4;
         if(file_exists($imge4)) {
           $img4 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_4;
+          array_push($arrimg, $img4);
         }
     }
 ?>
+
+<style type="text/css">
+    .kurs-coll{
+        color: black; 
+        border: none;
+        background-color: #efefef;
+    }
+</style>
+
     <!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
         <div class="container">
@@ -50,12 +65,12 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="{{url('/')}}">Home</a></li>
+                            <li><a href="{{url('/')}}">@lang('frontend.proddetail.home')</a></li>
                             @if($data->id_csc_product == NULL)
-                            <li><a href="{{url('/front_end/list_product')}}">Default</a></li>
+                            <li><a href="{{url('/front_end/list_product')}}">@lang('frontend.proddetail.default')</a></li>
                             @else
                                 @if($cat1 == "-")
-                                    <li><a href="{{url('/front_end/list_product')}}">Default</a></li>
+                                    <li><a href="{{url('/front_end/list_product')}}">@lang('frontend.proddetail.default')</a></li>
                                 @else
                                     @if($cat2 == "-")
                                         <li><a href="{{url('/front_end/list_product/category/'.$data->id_csc_product_level1)}}">{{$cat1}}</a></li>
@@ -93,40 +108,39 @@
                             </a>
                         </div>
 
+                        @if(count($arrimg) != 0)
                         <div class="single-zoom-thumb">
                             <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}">
-                                        <img src="{{url('/')}}/{{$img1}}" alt="zo-th-1" />
-                                    </a>
+                                <?php
+                                    for ($m=0; $m < count($arrimg); $m++) { 
+                                ?>
+                                        <li>
+                                            <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$arrimg[$m]}}" data-zoom-image="{{url('/')}}/{{$arrimg[$m]}}">
+                                                <img src="{{url('/')}}/{{$arrimg[$m]}}" alt="zo-th-1" />
+                                            </a>
 
-                                </li>
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img2}}" data-zoom-image="{{url('/')}}/{{$img2}}">
-                                        <img src="{{url('/')}}/{{$img2}}" alt="zo-th-1" />
-                                    </a>
-
-                                </li>
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img3}}" data-zoom-image="{{url('/')}}/{{$img3}}">
-                                        <img src="{{url('/')}}/{{$img3}}" alt="zo-th-1" />
-                                    </a>
-
-                                </li>
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img4}}" data-zoom-image="{{url('/')}}/{{$img4}}">
-                                        <img src="{{url('/')}}/{{$img4}}" alt="zo-th-1" />
-                                    </a>
-
-                                </li>
+                                        </li>
+                                <?php
+                                    }
+                                ?>
                             </ul>
                         </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="product_d_right">
                             <h1>{{getProductAttr($data->id, 'prodname', $lct)}}</h1>
                             <div class="price_box">
+                                <?php
+                                    $usd = NULL;
+                                    if(is_numeric($data->price_usd)){
+                                        $usd = $data->price_usd;
+                                    }else{
+
+                                    }
+                                ?>
+                                @if(Auth::guard('eksmp')->user())
                                 <span class="current_price">
                                     @if(is_numeric($data->price_usd))
                                         $ {{$data->price_usd}}
@@ -134,6 +148,65 @@
                                         {{$data->price_usd}}
                                     @endif
                                 </span>
+                                @endif
+                                @if(Auth::guard('eksmp')->user())
+                                    <div class="list-group" id="kurslist">
+                                        <a onclick="openKurs('kurs')" href="#kurs" class="list-group-item" data-toggle="collapse" data-parent="#MainMenus" style="color: black; border: none; text-align: right"><span class="badge badge-secondary">$</span>&nbsp;&nbsp;USD&nbsp;&nbsp;<i class="fa fa-chevron-down" aria-hidden="true" id="icon-kurs"></i></a>
+                                        
+                                        <div class="collapse" id="kurs">
+                                            <div class="row" style="border: 1px solid silver; border-radius: 3px; background-color: #efefef;">
+                                                @if($usd != NULL)
+                                                    <?php
+                                                        for ($n=0; $n < count($imgarr); $n++) { 
+                                                    ?>
+                                                    @if($n == 0 || $n == 6)
+                                                    <div class="col-md-6" style="padding-left: 0px; padding-right: 0px;">
+                                                    @endif
+                                                        <div class="list-group-item kurs-coll">
+                                                            <table border="0" style="width: 100%; font-size: 12px;" cellspacing="5" cellpadding="5">
+                                                                <tr>
+                                                                    <td width="15%"><img src="{{asset('front/assets/icon/negara/'.$imgarr[$n])}}"></td>
+                                                                    <td width="55%">{{$smtarr[$n]}} {{$nmtarr[$n]}}</td>
+                                                                    <td width="30%" style="text-align: right;">
+                                                                        <?php
+                                                                            $mtuang = $smtarr[$n];
+                                                                            $konver = $rates->$mtuang;
+                                                                            $convert = round($usd * $konver, 2);
+                                                                            echo number_format($convert,2,",",".");
+                                                                        ?>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    @if($n == 5 || $n == 11)
+                                                    </div>
+                                                    @endif
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                @else
+                                                    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px;">
+                                                        <div class="list-group-item kurs-coll">
+                                                            <table border="0" style="width: 100%; font-size: 15px;" cellspacing="5" cellpadding="5">
+                                                                <tr>
+                                                                    <td width="100%" style="vertical-align: middle; text-align: center;">
+                                                                            @if($loc == "ch")
+                                                                            - 无法使用 -
+                                                                            @elseif($loc == "in")
+                                                                            - Tidak Tersedia -
+                                                                            @else
+                                                                            - Not Available -
+                                                                            @endif
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                             <div class="product_desc">
                                 <?php echo getProductAttr($data->id, 'product_description', $lct); ?>
@@ -145,7 +218,19 @@
                             </div><br>
                             <div class="">
                                 <center>
-                                    <a href="{{url('/front_end/inquiry_product')}}/{{$data->id}}" class="btn btn-primary" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('product.inquiry')</a>
+                                <?php
+                                    if(Auth::guard('eksmp')->user()){
+                                        if(Auth::guard('eksmp')->user()->id_role == 2){
+                                            $jns = "eksportir";
+                                        }else if(Auth::guard('eksmp')->user()->id_role == 3){
+                                            $jns = "importir";
+                                        }
+                                    }else{
+                                        $jns = "not login";
+                                    }
+                                ?>
+                                    <!-- <a href="{{url('/front_end/inquiry_product')}}/{{$data->id}}" class="btn btn-primary" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('product.inquiry')</a> -->
+                                    <button class="btn btn-primary" style="width: 50%;" onclick="openInquiry('{{$jns}}')"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('product.inquiry')</button>
                                 </center>
                             </div>
                         <!-- </form> -->
@@ -223,7 +308,6 @@
                     <div class="product_carousel product_column5 owl-carousel">
                         @foreach($product as $p)
                             <?php
-                                $nprod = "prodname_".$lct;
                                 $cat1 = getCategoryName($p->id_csc_product, $lct);
                                 $cat2 = getCategoryName($p->id_csc_product_level1, $lct);
                                 $cat3 = getCategoryName($p->id_csc_product_level2, $lct);
@@ -231,11 +315,14 @@
                                 if($cat3 == "-"){
                                     if($cat2 == "-"){
                                         $categorynya = $cat1;
+                                        $idcategory = $p->id_csc_product;
                                     }else{
                                         $categorynya = $cat2;
+                                        $idcategory = $p->id_csc_product_level1;
                                     }
                                 }else{
                                     $categorynya = $cat3;
+                                    $idcategory = $p->id_csc_product_level2;
                                 }
 
                                 $img1 = $p->image_1;
@@ -265,32 +352,20 @@
                             ?>
                             <div class="single_product">
                                 <div class="product_name">
-                                    <h3><a href="{{url('/front_end/product/'.$p->id)}}">{{getProductAttr($p->id, 'prodname', $lct)}}</a></h3>
-                                    <p class="manufacture_product"><a href="#">{{$categorynya}}</a></p>
+                                    <h3><a href="{{url('front_end/product/'.$p->id)}}">{{getProductAttr($p->id, 'prodname', $lct)}}</a></h3>
                                 </div>
+                                <h3 style="text-transform: uppercase; font-size: 14px; font-weight: 400; font-family: "Open Sans", sans-serif;"><a href="{{url('front_end/list_perusahaan/View/'.$p->id_itdp_company_user)}}">{{getCompanyName($p->id_itdp_company_user)}}</a></h3>
                                 <div class="product_thumb">
                                     <a class="primary_img" href="{{url('/front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
-                                    <a class="secondary_img" href="{{url('/front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a>
-                                    <!-- <div class="action_links">
-                                        <ul>
-                                            <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box" title="quick view"> <span class="lnr lnr-magnifier"></span></a></li>
-                                            <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="lnr lnr-heart"></span></a></li>
-                                            <li class="compare"><a href="compare.html" title="compare"><span class="lnr lnr-sync"></span></a></li>
-                                        </ul>
-                                    </div> -->
+                                    <!-- <a class="secondary_img" href="{{url('/front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
+                                </div>
+                                <div class="product_name grid_name">
+                                    <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}">{{$categorynya}}</a></p>
                                 </div>
                                 <div class="product_content">
-                                    <!-- <div class="product_ratings">
-                                        <ul>
-                                            <li><a href="#"><i class="ion-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-star"></i></a></li>
-                                        </ul>
-                                    </div> -->
                                     <div class="product_footer d-flex align-items-center">
                                         <div class="price_box">
+                                            @if(Auth::guard('eksmp')->user())
                                             <span class="regular_price">
                                                 @if(is_numeric($p->price_usd))
                                                     $ {{$p->price_usd}}
@@ -298,6 +373,7 @@
                                                     {{$p->price_usd}}
                                                 @endif
                                             </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -310,6 +386,39 @@
         </div>
     </section>
     <!--product area end-->
+<?php
+    if($loc == "ch"){
+        $alertnot = "请登录进行查询！";
+        $alerteks = "只有买家可以查询！";
+    }else if($loc == "in"){
+        $alertnot = "Silahkan Login untuk melakukan Inquiry!";
+        $alerteks = "Hanya pembeli yang dapat melakukan Inquiry!";
+    }else{
+        $alertnot = "Please Sign In to do an Inquiry!";
+        $alerteks = "Only buyers can make an Inquiry!";
+    }
+?>
 <!-- Plugins JS -->
 <script src="{{asset('front/assets/js/plugins.js')}}"></script>
 @include('frontend.layouts.footer')
+<script type="text/javascript">
+    function openKurs(col) {
+        if($("#icon-"+col).hasClass("fa-chevron-down")){
+            $('#icon-'+col).removeClass('fa-chevron-down');
+            $('#icon-'+col).addClass('fa-chevron-up');
+        }else{
+            $('#icon-'+col).removeClass('fa-chevron-up');
+            $('#icon-'+col).addClass('fa-chevron-down');
+        }
+    }
+
+    function openInquiry(bagian) {
+        if(bagian == "not login"){
+            alert("{{$alertnot}}");
+        }else if(bagian == "eksportir"){
+            alert("{{$alerteks}}");
+        }else{
+            window.location = "{{url('/front_end/inquiry_product/'.$data->id)}}";
+        }
+    }
+</script>

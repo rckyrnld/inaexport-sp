@@ -81,6 +81,11 @@ return [
         "desc" => "Description",
         "specs" => "Specification",
         "relprod" => "Related Products",
+        "pricelh" => "Price : Low to High",
+        "pricehl" => "Price : High to Low",
+        "bymanufacture" => "By Manufacturer",
+        "viewall" => "View All",
+        "listcompany" => "List All Company",
     ],
     "tracking" => [
         "goods" => "Tracking of Goods",
