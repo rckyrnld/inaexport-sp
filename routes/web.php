@@ -31,6 +31,11 @@ Route::post('/resetpass', 'RegistrasiController@resetpass');
 Route::post('/api-tracking/', 'Api\TrackingController@tracking')->name('api.tracking');
 Route::get('/check', 'UserController@userOnlineStatus');
 Route::get('/check2', 'UserEksmpController@usereksmpOnlineStatus');
+Route::get('/pendapatan_list', 'RekapPendapatanController@index');
+Route::get('/exportpendapatanall', 'RekapPendapatanController@exportpendapatanall');
+Route::get('/cetakrc', 'RekapPendapatanController@cetakrc');
+Route::get('/exportpendapatandetail/{id}', 'RekapPendapatanController@exportpendapatandetail');
+Route::get('/detailpendapatan/{id}', 'RekapPendapatanController@detailpendapatan');
 
 Route::namespace('FrontEnd')->group(function () {
     /* Created by Meidiyanah */
@@ -78,7 +83,8 @@ Route::namespace('FrontEnd')->group(function () {
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
     Route::get('/front_end/tracking', 'FrontController@tracking');
-    Route::get('/front_end/contact-us', 'FrontController@contact_us');
+    Route::get('/about/', 'FrontController@about');
+    Route::get('/contact-us', 'FrontController@contact_us');
     Route::post('/contact-us/send', 'FrontController@contact_us_send');
     Route::get('/front_end/service-detail/{id}', 'FrontController@service');
     Route::get('/profile/getCity/{param}', 'ImporterController@getCity')->name('ajax-city');
@@ -235,7 +241,10 @@ Route::post('/save_trx', 'TrxController@save_trx');
 Route::get('/br_getdata3', 'TrxController@data_br3')->name('front.datatables.br3');
 Route::get('/br_getdata4', 'TrxController@data_br4')->name('front.datatables.br4');
 Route::get('/detailtrx/{id}', 'TrxController@detailtrx');
+Route::get('/allgr/{id}', 'TrxController@allgr');
 Route::get('/joineks/{id}/{id2}', 'TrxController@joineks');
+Route::get('/caritab/{id}/{id2}', 'TrxController@caritab');
+Route::get('/cetaktrx/{id}/{id2}', 'TrxController@cetaktrx');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

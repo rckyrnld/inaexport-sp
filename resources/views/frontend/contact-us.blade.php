@@ -1,74 +1,83 @@
-@include('frontend.layout.header')
+@include('frontend.layouts.header')
 <style type="text/css">
-  .button_form{width: 80px}
+    td span{
+        font-size: 18px;font-weight: 400; padding-left: 8px;
+    }
 </style>
-<div class="d-flex flex-column flex" style="">
-  <div class="light bg pos-rlt box-shadow" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px;    background-color: #2791a6 ; color: #ffffff">
-    <div class="mx-auto">
-      <table border="0" width="100%">
-        <tr>
-        <td width="30%" style="font-size:13px;padding-left:10px"><img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ><b>&nbsp;&nbsp;&nbsp; Ministry Of Trade</b></td>
-        <td width="30%"></td>
-        <td width="40%" align="right" style="padding-right:10px;">
-          <a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
-          <a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
-          <a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
-          <a href="{{url('login')}}"><font color="white"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")</font></a>
-        </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  <div id="content-body">
-    <div class="py-5 text-center w-100">
-      <h4><b>@lang("frontend.cu-cu")</b></h4><br>
-      <center>
-        <div class="col-md-8">
-         {!! Form::open(['url' => $url, 'class' => 'form-horizontal', 'files' => true]) !!}
-           <div class="form-group row">
-            <div class="col-md-1"></div>
-               <label class="control-label col-md-3">@lang("frontend.cu-fullname")</label>
-               <div class="col-md-6">
-                   <input type="text" id="id" class="form-control integer" name="name" autocomplete="off" required>
-               </div>
-           </div>
-
-           <div class="form-group row">
-            <div class="col-md-1"></div>
-               <label class="control-label col-md-3">@lang("frontend.cu-email")</label>
-               <div class="col-md-6">
-                   <input type="email" class="form-control" name="email" autocomplete="off" required>
-               </div>
-           </div>
-
-           <div class="form-group row">
-            <div class="col-md-1"></div>
-               <label class="control-label col-md-3">@lang("frontend.cu-subyek")</label>
-               <div class="col-md-6">
-                   <input type="text" class="form-control" name="subyek" autocomplete="off" required>
-               </div>
-           </div>
-
-           <div class="form-group row">
-            <div class="col-md-1"></div>
-               <label class="control-label col-md-3">@lang("frontend.cu-message")</label>
-               <div class="col-md-6">
-                   <textarea class="form-control" name="message" id="message" style="height: 150px"></textarea>
-               </div>
-           </div>
-      
-           <div class="form-group row">
-              <div class="col-md-10">
-                <div align="right">
-                  <button class="btn btn-primary button_form" type="submit">@lang("frontend.cu-submit")</button>
+<!-- Kontent 1-->
+<div style="background-color: #f2f2f2">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-12 col-12" style="padding-top: 20px; padding-bottom: 20px; height: 100%;">
+            	<div class="mapouter">
+                    <div class="gmap_canvas">
+                        <iframe width="100%" height="400px" id="gmap_canvas" src="https://maps.google.com/maps?q=Ministry%20of%20Trade%20of%20The%20Republic%20of%20Indonesia&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="border-radius: 20px;"></iframe><a href="https://www.embedgooglemap.net/blog/torguard-promo-code/"></a>
+                    </div>
+                    <style>.mapouter{position:relative;text-align:right;width:100%;}.gmap_canvas {overflow:hidden;background:none!important;width:100%;}</style>
                 </div>
-              </div>
-           </div>
-          {!! Form::close() !!}
+            </div>
         </div>
-      </center>
-      </div>
     </div>
-  </div>
 </div>
-@include('frontend.layout.footer')
+<!-- Kontent 3 -->
+<div style="background-color: #2492eb">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-12 col-12" style="padding-top: 10px; padding-bottom: 20px; height: 100%;">
+				<span style="color: #f2f2f2; font-size: 23px; font-weight: 500;">
+                    <div class="form-group row">
+                        <div class="col-md-8 col-lg-8 col-12" style="padding-bottom: 30px;">
+                            @lang("frontend.cu-add-kontak")<br>
+                            <span style="font-size: 46px">@lang("frontend.cu-add-free")</span><br>
+                            <span style="font-size: 18px;line-height:2px;">DGNED @lang("frontend.service-title")<br>@lang("footer.foot.directorate")</span><br><br>
+                    <form action="{{url('/contact-us/send/')}}" method="POST">
+                        {{ csrf_field() }}
+                            <table width="100%" border="0" cellpadding="5">
+                                <tr>
+                                    <td width="48%">
+                                        <span>@lang("frontend.cu-fullname")</span>
+                                        <input type="text" class="form-control" name="name" autocomplete="off" required/>
+                                        <input type="hidden" name="urlnya" value="/contact-us/">
+                                    </td>
+                                    <td width="4%">&nbsp;</td>
+                                    <td width="48%">
+                                        <span>@lang("frontend.cu-email")</span>
+                                        <input type="email" class="form-control" name="email" autocomplete="off" required/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <span>@lang("frontend.cu-subyek")</span>
+                                        <input type="text" class="form-control" name="subyek" autocomplete="off" required/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <span>@lang("frontend.cu-message")</span>
+                                        <textarea style="resize: none;" name="message" autocomplete="off" required class="form-control" rows="5"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button type="submit" class="btn btn-danger" style="width: 100%; background-color: #fe0000; font-size: 24px; font-weight: 600;">@lang("button-name.submit")</button>
+                                    </td>
+                                </tr>
+                            </table>
+                    </form>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-12">
+                            @lang("frontend.cu-add-email")<br>
+                            <span style="font-size:20px; font-weight: 400; ">csm@kemendag.go.id</span><br><br>
+                            @lang("frontend.cu-add-call")<br>
+                            <span style="font-size:21px; font-weight: 400; ">+62 21 385 8171<br>+62 21 385 8171</span><br><br>
+                            @lang("frontend.cu-add-visit")<br><i style="font-size:21px; font-weight: 500;">@lang("footer.foot.directorate")<br>@lang("footer.foot.ministry")</i><br>
+                            <span style="font-size:21px; font-weight: 400; ">Jl. M.I. Ridwan Rais No.5, RT.7/RW.1, Gambir, Kecamatan Gambir, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10110, Indonesia</span><br><br>
+                        </div>
+                    </div>
+				</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+@include('frontend.layouts.footer')

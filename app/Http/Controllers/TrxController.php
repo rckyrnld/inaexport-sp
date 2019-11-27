@@ -12,6 +12,15 @@ use Mail;
 
 class TrxController extends Controller
 {
+	/*
+	public function __construct()
+        {
+            $this->middleware('auth:web');
+            $this->middleware('auth:eksmp');
+        }
+	*/
+	
+		
     public function index()
     {
 		if(!empty(Auth::guard('eksmp')->user()->id)){
@@ -27,8 +36,8 @@ class TrxController extends Controller
 		}else{
 		if(Auth::user()->id_group == 4){
         $pageTitle = "Selling Transaction Perwakilan";
-		$data = DB::select("select a.*,a.id as ida,a.status as statusa,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where   b.status_join='4' and  a.id = b.id_br order by b.id desc ");
-        return view('trx.index_adm', compact('pageTitle','data'));
+		$data = DB::select("select * from csc_transaksi  order by id_transaksi desc "); 
+		return view('trx.index_adm', compact('pageTitle','data'));
 		}else{
 		$pageTitle = "Selling Transaction Admin";
 		$data = DB::select("select * from csc_transaksi  order by id_transaksi desc "); 
@@ -36,6 +45,36 @@ class TrxController extends Controller
 		}
 		}
     }
+	
+	public function caritab($id,$id2)
+    {
+		$pageTitle = "";
+		if($id == 0 && $id2 == 0){
+			$data = DB::select("select * from csc_transaksi order by id_transaksi desc");
+		}else if ($id == 0 && $id2 != 0){
+			$data = DB::select("select * from csc_transaksi where origin='".$id2."' order by id_transaksi desc");
+		}else if ($id != 0 && $id2 == 0){
+			$data = DB::select("select * from csc_transaksi where by_role='".$id."' order by id_transaksi desc");
+		}else if($id != 0 && $id2 != 0){
+			$data = DB::select("select * from csc_transaksi where by_role='".$id."' and origin='".$id2."' order by id_transaksi desc");
+		}
+		return view('trx.caritab', compact('id','id2','data','pageTitle'));
+	}
+	
+	public function cetaktrx($id,$id2)
+    {
+		$pageTitle = "";
+		if($id == 0 && $id2 == 0){
+			$data = DB::select("select * from csc_transaksi order by id_transaksi desc");
+		}else if ($id == 0 && $id2 != 0){
+			$data = DB::select("select * from csc_transaksi where origin='".$id2."' order by id_transaksi desc");
+		}else if ($id != 0 && $id2 == 0){
+			$data = DB::select("select * from csc_transaksi where by_role='".$id."' order by id_transaksi desc");
+		}else if($id != 0 && $id2 != 0){
+			$data = DB::select("select * from csc_transaksi where by_role='".$id."' and origin='".$id2."' order by id_transaksi desc");
+		}
+		return view('trx.cetaktrx2', compact('id','id2','data','pageTitle'));
+	}
 	
 	public function input_transaksi($id)
     {
@@ -128,7 +167,7 @@ class TrxController extends Controller
 			
 			
 		}
-		$update = DB::select("update csc_transaksi set status_transaksi='".$request->tipekirim."', type_tracking='".$request->type_tracking."',no_tracking='".$request->no_track."' where id_transaksi='".$request->id_transaksi."' ");
+		$update = DB::select("update csc_transaksi set total='".($request->eo * $request->tp)."' , eo='".$request->eo."', neo='".$request->neo."',tp='".$request->tp."',ntp='".$request->ntp."', status_transaksi='".$request->tipekirim."', type_tracking='".$request->type_tracking."',no_tracking='".$request->no_track."' where id_transaksi='".$request->id_transaksi."' ");
 		return redirect('trx_list');
 		
 	}
@@ -137,6 +176,27 @@ class TrxController extends Controller
     {
 		$pageTitle = "";
 		return view('trx.detailtrx', compact('pageTitle','id'));
+	}
+	
+	public function allgr($id)
+    {
+		$pageTitle = "";
+		if($id == 0){
+			$pembuat = "All";
+		}else if($id == 1){
+			$pembuat = "Admin";
+		}else if($id == 4){
+			$pembuat = "Perwakilan";
+		}else if($id == 0){
+			$pembuat = "Importir";
+		}
+		if($id == 0){
+		$data = DB::select("select * from csc_buying_request  order by id desc ");
+        }else{
+		$data = DB::select("select * from csc_buying_request where id_pembuat='".$id."' order by id desc ");
+			
+		}
+		return view('trx.cetaktrx', compact('pageTitle','id','pembuat','data'));
 	}
 	
 	public function joineks($id,$id2)

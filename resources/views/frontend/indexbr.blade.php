@@ -13,21 +13,12 @@ if ($loc == "ch") {
 }
 ?>
 <style>
-
-    .table-striped > tbody > tr:nth-child(odd) {
-        background-color: white !important;
-        background-clip: padding-box !important;
-    }
-
-    .table-striped > tbody > tr:nth-child(even) {
-        background-color: white !important;
-        background-clip: padding-box !important;
-    }
-
-    .table-bordered td, .table-bordered th {
-        border: transparent;
-    }
-
+.select-dropdown {
+  position: static;
+}
+.select-dropdown .select-dropdown--above {
+      margin-top: 336px;
+}
 </style>
 <!--product area start-->
 <section class="product_area mb-50">
@@ -44,7 +35,7 @@ if ($loc == "ch") {
         <div class="tab-content" id="tabing-product">
             <div class="breadcrumb_content">
                 <ul>
-                    <li><a href="{{url('front_end')}}">@lang("login.forms.home")</a></li>
+                    <li><a href="{{url('')}}">@lang("login.forms.home")</a></li>
                     <li>@lang("login.forms.br")</li>
                 </ul>
             </div>
@@ -94,7 +85,7 @@ if ($loc == "ch") {
                                 <div class="form-group col-sm-4">
                                     <select style="color:black;" class="form-control" name="valid" id="valid" required>
                                         <option value="">@lang("login.forms.by10")</option>
-                                        <option value="0">Nan</option>
+                                        <option value="0">None</option>
                                         <option value="1">Valid within 1 day</option>
                                         <option value="3">Valid within 3 day</option>
                                         <option value="5">Valid within 5 day</option>
@@ -198,7 +189,7 @@ if ($loc == "ch") {
                                     <div class="form-row">
                                         <div class="col-sm-7"><input style="color:black;" type="number" min="1" value=""
                                                                      name="tp" id="tp" class="form-control"></div>
-                                        <div class="col-sm-5"><select style="color:black;" class="form-control"
+                                        <div class="col-sm-5"><select style="color:black; font-size:10px;" class="form-control"
                                                                       name="ntp" id="ntp">
                                                 <option value="">@lang("login.forms.by14")</option>
                                                 <option value="IDR">IDR</option>
@@ -306,8 +297,10 @@ if ($loc == "ch") {
     }
 
     $(document).ready(function () {
-        $('.select2').select2();
-        $('#example').DataTable();
+        $('.select2').select2({
+    dropdownPosition: 'below'
+  });
+        
     });
 </script>
 <script>

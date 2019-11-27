@@ -29,6 +29,7 @@
 
                 <div class="box-body bg-light">
                 	<a id="tambah" href="{{route('admin.research-corner.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
+                	<a href="{{url('cetakrc')}}" class="btn btn-success">   <i class="fa fa-download"></i>  Export Excel   </a>
                     <div class="col-md-14"><br>
 		          	 <div class="table-responsive">
 					    <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable">

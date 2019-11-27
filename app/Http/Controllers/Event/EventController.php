@@ -187,9 +187,8 @@ class EventController extends Controller
 		$url_update = '/event/update/'.$id;
 		$pageTitle = 'Edit Event';
 		$page='edit';
-		$e_detail = DB::table('event_detail as a')->leftjoin('contact_person as b', 'a.id', '=', 'b.id_type')
-          ->where('b.type', 'event')->where('a.id', $id)
-          ->selectRaw('a.*, b.name, b.phone, b.email')->first();
+		$e_detail = DB::table('event_detail')->where('id', $id)->first();
+        $cp = DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->first();
 		$ex = explode(' ', $e_detail->start_date);
 		$sd = $ex[0];
 		$ex2 = explode(' ', $e_detail->end_date);
@@ -200,7 +199,7 @@ class EventController extends Controller
 		$e_comodity = DB::table('event_comodity')->orderby('id', 'asc')->get();
 		// $prod_cat = DB::table('csc_product')->orderby('id', 'asc')->get();
 
-		return view('Event.create', compact('pageTitle', 'url_update', 'page', 'e_detail', 'e_organizer','e_palce','e_comodity','sd', 'se'));
+		return view('Event.create', compact('pageTitle', 'url_update', 'page', 'e_detail', 'e_organizer','e_palce','e_comodity','sd', 'se','cp'));
 	}
 
 	public function update($id, Request $req)
@@ -280,11 +279,24 @@ class EventController extends Controller
             'updated_at' => $datenow,
         ]);
 
-        DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->update([
-            'name' => $req->cp_name,
-            'email' => $req->cp_email,
-            'phone' => $req->cp_phone,
-        ]);
+        $cp = DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->first();
+          if($cp){
+            DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->update([
+              'name' => $req->cp_name,
+              'email' => $req->cp_email,
+              'phone' => $req->cp_phone,
+            ]);
+          } else {
+            $idp = DB::table('contact_person')->max('id') + 1;
+            DB::table('contact_person')->insert([
+              'id' => $idp,
+              'name' => $req->cp_name,
+              'email' => $req->cp_email,
+              'phone' => $req->cp_phone,
+              'type' => 'event',
+              'id_type' => $id,
+            ]);
+          }
 
 
         DB::table('event_detail_kategori')->where('id_event_detail', $id)->delete();
@@ -312,9 +324,8 @@ class EventController extends Controller
     public function show($id){
 		$pageTitle = 'Show Event';
 		$page='show';
-		$e_detail = DB::table('event_detail as a')->leftjoin('contact_person as b', 'a.id', '=', 'b.id_type')
-          ->where('b.type', 'event')->where('a.id', $id)
-          ->selectRaw('a.*, b.name, b.phone, b.email')->first();
+        $e_detail = DB::table('event_detail')->where('id', $id)->first();
+        $cp = DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->first();
 		$ex = explode(' ', $e_detail->start_date);
 		$sd = $ex[0];
 		$ex2 = explode(' ', $e_detail->end_date);
@@ -325,7 +336,7 @@ class EventController extends Controller
 		$e_comodity = DB::table('event_comodity')->orderby('id', 'asc')->get();
 		$prod_cat = DB::table('csc_product')->orderby('id', 'asc')->get();
 
-		return view('Event.create', compact('pageTitle', 'page', 'e_detail', 'e_organizer','e_palce','e_comodity', 'prod_cat','sd', 'se'));
+		return view('Event.create', compact('pageTitle', 'page', 'e_detail', 'e_organizer','e_palce','e_comodity', 'prod_cat','sd', 'se', 'cp'));
     }
 
     public function show_company($id){

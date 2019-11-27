@@ -569,4 +569,8 @@ class FrontController extends Controller
 			return view('training.frontend.index',compact('data','pageTitle'));
 		}
     //End Training Front End
+    public function about()
+    {
+        return view('frontend.about');
+    }
 }

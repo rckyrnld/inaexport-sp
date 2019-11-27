@@ -392,9 +392,10 @@ class BuyingRequestController extends Controller
 	public function br_deal($id,$id2,$id3)
     {
 		
-		$cari1 = DB::select("select id_pembuat from csc_buying_request where id='".$id2."'");
+		$cari1 = DB::select("select id_pembuat,by_role from csc_buying_request where id='".$id2."'");
 		foreach($cari1 as $aja1){
 			$data1 = $aja1->id_pembuat;
+			$data3 = $aja1->by_role;
 		}
 		$cari2 = DB::select("select email from itdp_company_users where id='".$data1."'");
 		foreach($cari2 as $aja2){
@@ -412,6 +413,7 @@ class BuyingRequestController extends Controller
 		('1','Eksportir','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_pw_chat','".$id."','".Date('Y-m-d H:m:s')."','0')
 		");
 		
+		if($data3 == 3){
 		$data = [
             'email' => "",
             'email1' => $data2,
@@ -423,7 +425,7 @@ class BuyingRequestController extends Controller
         $mail->to($data['email1'], $data['username']);
         $mail->subject('Eksportir Deal Buying Request');
 		});
-		
+		}
 		$data22 = [
             'email' => "",
             'email1' => Auth::guard('eksmp')->user()->email,
@@ -480,6 +482,11 @@ class BuyingRequestController extends Controller
 	public function br_save_join($id)
     {
 		$id_user = Auth::guard('eksmp')->user()->id;
+		$data1 ="";
+		$data2 ="";
+		$data3 ="";
+		$data4 ="";
+		$data5 ="";
 		$caribrsl = DB::select("select * from csc_buying_request_join where id='".$id."'");
 		foreach($caribrsl as $val1){
 			$data1 = $val1->id_eks;
@@ -488,11 +495,13 @@ class BuyingRequestController extends Controller
 		$caribrs2 = DB::select("select * from csc_buying_request where id='".$data2."'");
 		foreach($caribrs2 as $val2){
 			$data3 = $val2->id_pembuat;
+			$data5 = $val2->by_role;
 		}
 		$caribrs3 = DB::select("select * from itdp_company_users where id='".$data3."'");
 		foreach($caribrs3 as $val3){
 			$data4 = $val3->email;
 		}
+		
 		
 		$ket = Auth::guard('eksmp')->user()->username." Join to your Buying Request!";
 		$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
@@ -504,6 +513,7 @@ class BuyingRequestController extends Controller
 		('1','Eksportir','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_pw_lc','".$data2."','".Date('Y-m-d H:m:s')."','0')
 		");
 		
+		if($data5 == 3){
 		$data = [
             'email' => "",
             'email1' => $data4,
@@ -515,6 +525,8 @@ class BuyingRequestController extends Controller
         $mail->to($data['email1'], $data['username']);
         $mail->subject('Eksportir Join to Your Buying Request');
 		});
+		
+		}
 			
 		$data22 = [
             'email' => "",

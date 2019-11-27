@@ -132,68 +132,81 @@ body {font-family: Arial;}
   <div class="box-body">
 						
     <div class="form-row">
-		<div class="form-group col-sm-1">
+		<div class="form-group col-sm-2">
 			<b>Buyer</b>
 		</div>
-		<div class="form-group col-sm-2">
-			<select name="buyer" class="form-control">
-				<option value="">- Select Buyer -</option>
+		<div class="form-group col-sm-3">
+			<select id="buyer" name="buyer" class="form-control">
+				<option value="0">- All -</option>
 				<option value="1">Admin</option>
-				<option value="4">Perwakilan</option>
-				<option value="3">Importir</option>
+				<option value="4">Representative</option>
+				<option value="3">Importer</option>
 			</select>
-		</div>
-		<div class="form-group col-sm-1">
-			
 		</div>
 		
-		<div class="form-group col-sm-1">
+		
+		
+	</div>
+	
+	<div class="form-row">
+		<div class="form-group col-sm-2">
 			<b>Source</b>
 		</div>
-		<div class="form-group col-sm-2">
-			<select name="buyer" class="form-control">
-				<option value="br">Buying Request</option>
+		<div class="form-group col-sm-3">
+			<select id="origin" name="origin" class="form-control">
+				<option value="0">- All -</option>
+				<option value="2">Buying Request</option>
+				<option value="1">Inquiry</option>
 			</select>
 		</div>
+		
+		
+		
 	</div>
 	<div class="form-row">
-		<div class="form-group col-sm-1">
-			<a onclick="ambillist()" class="btn btn-success"><font color="white">&nbsp;Search&nbsp;&nbsp;</font></a>
+		<div class="form-group col-sm-2">
+			<b></b>
 		</div>
 		<div class="form-group col-sm-2">
-			
+			<a onclick="ambillist()" class="btn btn-info"><font color="white">&nbsp;Search&nbsp;&nbsp;</font></a>
 		</div>
+		
+		
+		
 	</div>
+	<hr>
+	<br>
+	<div align="right">
+	<center><h5>List Data Transaksi</h5></center><div id="btx"><!-- <a class="btn btn-success" style="font-align:right;"><font color="white"><i class="fa fa-download"></i> Export Excel</font></a>--></div>
+	</div>
+	<br>
 	<div class="form-row"><br>
-		<table id="example2" class="table table-bordered table-striped">
+	
+	<br>
+	
+		<table id="example2s" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>
                                     <th>No</th>
 									
-                                  
-									
-                                    
-                                   
+									<th>
+                                        <center>Origin</center>
+                                    </th>
+									<th>
+                                        <center>Buyer</center>
+                                    </th>
 									<th>
                                         <center>Eksportir</center>
                                     </th>
-									<th>
-                                        <center>Product Name</center>
+									
+									 <th>
+                                        <center>Type Tracking</center>
                                     </th>
 									<th>
-                                        <center>Date</center>
+                                        <center>No Tracking</center>
                                     </th>
 									<th>
-                                        <center>Quantity</center>
-                                    </th>
-									<th>
-                                        <center>Price</center>
-                                    </th>
-									<th>
-                                        <center>Seller</center>
-                                    </th>
-									<th>
-                                        <center>Source</center>
+                                        <center>Status</center>
                                     </th>
 									
                                 </tr>
@@ -246,10 +259,14 @@ function openCity(evt, cityName) {
 }
 </script>
  <script type="text/javascript">
-function xy(a){
+function ambillist(){
+	var buyer = $('#buyer').val();
+	var origin = $('#origin').val();
+	var cetakurl = '{{URL::to("cetaktrx/")}}/'+buyer+'/'+origin;
+	$("#btx").html('<a href="'+cetakurl+'" class="btn btn-success" style="font-align:right;"><font color="white"><i class="fa fa-download"></i> Export Excel</font></a>');
 	var token = $('meta[name="csrf-token"]').attr('content');
-		$.get('{{URL::to("ambilbroad2/")}}/'+a,{_token:token},function(data){
-			$("#isibroadcast").html(data);
+		$.get('{{URL::to("caritab/")}}/'+buyer+'/'+origin,{_token:token},function(data){
+			$("#ambillist").html(data);
 			
 		 })
 }
