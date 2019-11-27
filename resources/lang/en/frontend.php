@@ -124,4 +124,5 @@ return [
         "phone" => "Phone",
         "address" => "Address",
     ],
+    "title-services" => "Services",
 ];

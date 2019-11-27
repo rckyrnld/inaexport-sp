@@ -125,4 +125,5 @@ return [
         "phone" => "电话",
         "address" => "地址",
     ],
+    "title-services" => "服务",
 ];
