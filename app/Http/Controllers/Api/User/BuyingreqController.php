@@ -389,6 +389,15 @@ class BuyingreqController extends Controller
             $jsonResult[$i]["date_answer"] = $data[$i]->date_answer;
             $jsonResult[$i]["by_role"] = $data[$i]->by_role;
             $jsonResult[$i]["id_pembuat"] = $data[$i]->id_pembuat;
+            $id_role = $data[$i]->by_role;
+            if ($id_role == 3) {
+                $id_profile = DB::table('itdp_company_users')->where('id', $data[$i]->id_pembuat)->first()->id_profil;
+                $jsonResult[$i]["company_name"] = DB::table('itdp_profil_imp')->where('id', $id_profile)->first()->company;
+            }else if ($id_role == 1) {
+                $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $data[$i]->id_pembuat)->first()->name;
+            } else {
+                $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $data[$i]->id_pembuat)->first()->name;
+            }
             $jsonResult[$i]["city"] = $data[$i]->city;
             $jsonResult[$i]["shipping"] = $data[$i]->shipping;
             $jsonResult[$i]["spec"] = $data[$i]->spec;
@@ -448,6 +457,7 @@ class BuyingreqController extends Controller
             $jsonResult[$i]["expired_at"] = $data[$i]->expired_at;
             $jsonResult[$i]["idb"] = $data[$i]->idb;
         }
+//        dd($jsonResult);
         if ($data) {
 
             $meta = [
