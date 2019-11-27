@@ -35,14 +35,6 @@
                         </ul>
                     </div>
                 </div>
-                <?php
-                    if(isset($search)){
-                        $cariprod = $search;
-                    }else{
-                        $cariprod = "";
-                    }
-                ?>
-                <input type="hidden" name="pencarian_nama" id="pencarian_nama" value="{{$cariprod}}">
                 <div class="col-2" style="text-align: left;">
                     <div class="breadcrumb_content">
                         <div class="page_amount">
@@ -63,8 +55,8 @@
                         <b>@lang('frontend.liseksportir.sortby')</b> <select name="orderby" id="short" style="border: none;">
                                 <option value="" @if(isset($sortbyproduct)) @if($sortbyproduct == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
                                 <option value="new" @if(isset($sortbyproduct)) @if($sortbyproduct == "new") selected @endif @endif>@lang('frontend.liseksportir.newest')</option>
-                                <option value="4">Price: low to high</option>
-                                <option value="5">Price: high to low</option>
+                                <option value="lowhigh" @if(isset($sortbyproduct)) @if($sortbyproduct == "lowhigh") selected @endif @endif>@lang('frontend.proddetail.pricelh')</option>
+                                <option value="highlow" @if(isset($sortbyproduct)) @if($sortbyproduct == "highlow") selected @endif @endif>@lang('frontend.proddetail.pricehl')</option>
                                 <option value="asc" @if(isset($sortbyproduct)) @if($sortbyproduct == "asc") selected @endif @endif>@lang('frontend.liseksportir.eksporternm')</option>
                             </select>
                     </div>
@@ -132,8 +124,17 @@
                     <aside class="sidebar_widget">
                         <div class="widget_inner">
                             <div class="widget_list widget_categories">
-                                <h2>By Manufacturer</h2>
-                                <input type="text" class="form-control" id="cari_eksportir" name="cari_eksportir" placeholder="Search Manufacturer" style="font-size: 12px;">
+                                <h2>@lang('frontend.proddetail.bymanufacture')</h2>
+                                <?php
+                                    if($loc == "ch"){
+                                        $srchmanlang = "搜索制造商";
+                                    }else if($loc == "in"){
+                                        $srchmanlang = "Cari Produsen";
+                                    }else{
+                                        $srchmanlang = "Search Manufacturer";
+                                    }
+                                ?>
+                                <input type="text" class="form-control" id="cari_eksportir" name="cari_eksportir" placeholder="{{$srchmanlang}}" style="font-size: 12px;">
                                 <br>
                                 <ul id="manufacturlist">
                                     @foreach($manufacturer as $man)
@@ -143,11 +144,8 @@
                                             <span class="checkmark"></span>
                                         </li>
                                     @endforeach
-                                    <li>
-                                        <a href="#">View All</a>
-                                    </li>
 									<li>
-                                        <a href="{{url('front_end/list_perusahaan')}}">List All Company</a>
+                                        <a href="{{url('front_end/list_perusahaan')}}">@lang('frontend.proddetail.listcompany')</a>
                                     </li>
                                 </ul>
                             </div>
@@ -225,11 +223,11 @@
                                     </div>
                                     <div class="product_name grid_name">
                                         <h3><a href="{{url('front_end/product/'.$pro->id)}}">{{getProductAttr($pro->id, 'prodname', $lct)}}</a></h3>
-                                        <p class="manufacture_product"><a href="{{url('front_end/list_perusahaan/View/'.$pro->id_itdp_company_user)}}">{{getCompanyName($pro->id_itdp_company_user)}}</a></p>
                                     </div>
+                                    <h3 style="text-transform: uppercase; font-size: 14px; font-weight: 400; font-family: "Open Sans", sans-serif;"><a href="{{url('front_end/list_perusahaan/View/'.$pro->id_itdp_company_user)}}">{{getCompanyName($pro->id_itdp_company_user)}}</a></h3>
                                     <div class="product_thumb">
                                         <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
-                                        <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a>
+                                        <!-- <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
                                     </div>
                                     <div class="product_name grid_name">
                                         <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}">{{$categorynya}}</a></p>
@@ -238,6 +236,7 @@
                                         <div class="content_inner">
                                             <div class="product_footer d-flex align-items-center">
                                                 <div class="price_box">
+                                                    @if(Auth::guard('eksmp')->user())
                                                     <span class="current_price">
                                                         @if(is_numeric($pro->price_usd))
                                                             $ {{$pro->price_usd}}
@@ -247,6 +246,7 @@
                                                             </span>
                                                         @endif
                                                     </span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -268,13 +268,14 @@
                                                     @if($loc == "ch")
                                                         <span>库存{{$pro->capacity}}件</span>
                                                     @elseif($loc == "in")
-                                                        <span>{{$pro->capacity}} in stock</span>
-                                                    @else
                                                         <span>{{$pro->capacity}} dalam persediaan</span>
+                                                    @else
+                                                        <span>{{$pro->capacity}} in stock</span>
                                                     @endif
                                                 </p>
                                             </div>
                                             <div class="price_box">
+                                                @if(Auth::guard('eksmp')->user())
                                                 <span class="current_price">
                                                     @if(is_numeric($pro->price_usd))
                                                         $ {{$pro->price_usd}}
@@ -284,6 +285,7 @@
                                                         </span>
                                                     @endif
                                                 </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
