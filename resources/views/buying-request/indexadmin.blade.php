@@ -85,7 +85,7 @@ body {font-family: Arial;}
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Product Name</center>
+                                        <center>Subyek</center>
                                     </th>
                                     <th>
                                         <center>Duration</center>
@@ -123,7 +123,7 @@ body {font-family: Arial;}
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Product Name</center>
+                                        <center>Subyek</center>
                                     </th>
                                     <th>
                                         <center>Duration</center>
@@ -160,7 +160,7 @@ body {font-family: Arial;}
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Product Name</center>
+                                        <center>Subyek</center>
                                     </th>
                                     <th>
                                         <center>Duration</center>

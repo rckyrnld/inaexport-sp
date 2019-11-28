@@ -491,7 +491,6 @@ class InquiryWakilController extends Controller
 
             $user = DB::table('csc_inquiry_broadcast')
                 ->where('id_inquiry', '=', $id)
-                ->where('status', '!=', 1)
                 ->orderBy('id_itdp_company_users', 'ASC')
                 ->get();
 
@@ -515,6 +514,10 @@ class InquiryWakilController extends Controller
                         $statnya = Lang::get('inquiry.stat'.$stat);
                     }
 
+                    if($mjl->status == 1){
+                        $statnya = 'pending';
+                    }
+
                     return $statnya;
                 })
                 ->addColumn('date', function ($mjl) {
@@ -532,11 +535,7 @@ class InquiryWakilController extends Controller
                             <a href="'.url('/inquiry_perwakilan/verifikasi').'/'.$mjl->id.'" class="btn btn-sm btn-success">'.Lang::get('button-name.verified').'</a>
                             </center>';
                     }else if($mjl->status == 1){
-                        return '
-                            <center>
-                            <button type="button" class="btn btn-warning" style="color: white;" onclick="broadcastInquiry(\''.$mjl->subyek_en.'|'.$mjl->id.'\')"><i class="fa fa-bullhorn" aria-hidden="true"></i> Broadcast</button>
-                            <a href="'.url('/inquiry_perwakilan/edit').'/'.$mjl->id.'" class="btn btn-sm btn-success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
-                            </center>';
+                        return '';
                     }else if($mjl->status == 2){
                         return '
                             <center>

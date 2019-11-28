@@ -298,7 +298,6 @@ class InquiryAdminController extends Controller
 
             $user = DB::table('csc_inquiry_broadcast')
                 ->where('id_inquiry', '=', $id)
-                ->where('status', '!=', 1)
                 ->orderBy('id_itdp_company_users', 'ASC')
                 ->get();
 
@@ -322,6 +321,10 @@ class InquiryAdminController extends Controller
                         $statnya = Lang::get('inquiry.stat'.$stat);
                     }
 
+                    if($mjl->status == 1){
+                        $statnya = 'pending';
+                    }
+
                     return $statnya;
                 })
                 ->addColumn('date', function ($mjl) {
@@ -333,10 +336,14 @@ class InquiryAdminController extends Controller
                     return $datenya;
                 })
                 ->addColumn('action', function ($mjl) use($id_user) {
-                    return '
-                        <center>
-                        <a href="'.url('/inquiry_admin/view_inquiry').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> View</a>
-                        </center>';
+                    if($mjl->status == 1){
+                        return '';
+                    } else {
+                        return '
+                            <center>
+                            <a href="'.url('/inquiry_admin/view_inquiry').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> View</a>
+                            </center>';
+                    }
                 })
                 ->rawColumns(['action', 'msg'])
                 ->make(true);
@@ -829,7 +836,6 @@ class InquiryAdminController extends Controller
 
             $user = DB::table('csc_inquiry_broadcast')
                 ->where('id_inquiry', '=', $id)
-                ->where('status', '!=', 1)
                 ->orderBy('id_itdp_company_users', 'ASC')
                 ->get();
 
@@ -851,6 +857,10 @@ class InquiryAdminController extends Controller
                             $stat = $mjl->status;
                         }
                         $statnya = Lang::get('inquiry.stat'.$stat);
+                    } 
+
+                    if($mjl->status == 1){
+                        $statnya = 'pending';
                     }
 
                     return $statnya;
@@ -870,11 +880,7 @@ class InquiryAdminController extends Controller
                             <a href="'.url('/inquiry_admin/verifikasi').'/'.$mjl->id.'" class="btn btn-sm btn-success">'.Lang::get('button-name.verified').'</a>
                             </center>';
                     }else if($mjl->status == 1){
-                        return '
-                            <center>
-                            <button type="button" class="btn btn-warning" style="color: white;" onclick="broadcastInquiry(\''.$mjl->subyek_en.'|'.$mjl->id.'\')"><i class="fa fa-bullhorn" aria-hidden="true"></i> Broadcast</button>
-                            <a href="'.url('/inquiry_admin/edit').'/'.$mjl->id.'" class="btn btn-sm btn-success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
-                            </center>';
+                        return '';
                     }else if($mjl->status == 2){
                         return '
                             <center>

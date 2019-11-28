@@ -1,11 +1,11 @@
 @include('headerlog')
   <div id="content-body" style="background-color: #c5e1f8 ; color: black" >
-  <center><br><img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center>
+  <a href="{{url('/')}}"><center><br><img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center></a>
     <div class="py-1 text-center w-100">
 	
 	<h3><b>@lang("login.title3")</b></h3>
 	<br>
-      <div class="mx-auto" style="width:700px;background: white; border-radius: 0px;">
+      <div class="mx-auto col-sm-7" style="background: white; border-radius: 0px;">
 	  <br>
 	  <!-- <h5>LOGIN</h5> -->
 	   <h5><center><b>@lang("register2.title")</b></center></h5>

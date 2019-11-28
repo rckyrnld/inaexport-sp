@@ -126,8 +126,7 @@ body {font-family: Arial;}
 
 
 
-<form class="form-horizontal" method="POST" action="{{ url('br_save') }}" enctype="multipart/form-data">
-           {{ csrf_field() }}
+
 <?php 
 
 $q1 = DB::select("select * from csc_buying_request_join where id='".$id."'");
@@ -371,7 +370,7 @@ foreach($q2 as $p2){
 </div>
 </div>
 <?php } ?>
-</form>
+
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
