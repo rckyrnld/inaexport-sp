@@ -56,7 +56,7 @@ class ProductNonAuthController extends Controller
             $list_k = array();
             $list_k["code_en"] = $dataProduk[$i]->code_en;
             $list_k["color_en"] = $dataProduk[$i]->color_en;
-            $list_k["size_en"] = $dataProduk[$i]->nama_kategori_en;
+            $list_k["size_en"] = $dataProduk[$i]->size_en;
             $list_k["raw_material_en"] = $dataProduk[$i]->raw_material_en;
             $list_k["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
             $jsonResult[$i]["product_information"] = $list_k;
@@ -154,18 +154,46 @@ class ProductNonAuthController extends Controller
 
     public function detailProduk(Request $request)
     {
+//        dd("hahaha");
         //Product
-        $data = DB::table('csc_product_single')
+        $dataProduk = DB::table('csc_product_single')
             ->where('id', '=', $request->id)
-            ->first();
+            ->get();
         // dd($data);
-        if (count($data) > 0) {
+        $jsonResult = array();
+        for ($i = 0; $i < count($dataProduk); $i++) {
+            $jsonResult[$i]["id_product"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["id_profil_eks"] = $dataProduk[$i]->id_itdp_profil_eks;
+            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
+            $jsonResult[$i]["company_name"] = DB::table('itdp_profil_eks')->where('id', $dataProduk[$i]->id_itdp_profil_eks)->first()->company;
+//            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
+            $jsonResult[$i]["id_csc_product_level1"] = $dataProduk[$i]->id_csc_product_level1;
+            $jsonResult[$i]["id_csc_product_level2"] = $dataProduk[$i]->id_csc_product_level2;
+            $jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $dataProduk[$i]->id_csc_product)->first()->nama_kategori_en;
+            $jsonResult[$i]["csc_product_level1_desc"] = ($dataProduk[$i]->id_csc_product_level1) ? DB::table('csc_product')->where('id', $dataProduk[$i]->id_csc_product_level1)->first()->nama_kategori_en : null;
+            $jsonResult[$i]["csc_product_level2_desc"] = ($dataProduk[$i]->id_csc_product_level2) ? DB::table('csc_product')->where('id', $dataProduk[$i]->id_csc_product_level2)->first()->nama_kategori_en : null;
+//            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+//            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
+//            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
+//            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+//            $jsonResult[$i]["product_description_en"] = $dataProduk[$i]->product_description_en;
+//            $list_k = array();
+//            $list_k["code_en"] = $dataProduk[$i]->code_en;
+//            $list_k["color_en"] = $dataProduk[$i]->color_en;
+//            $list_k["size_en"] = $dataProduk[$i]->size_en;
+//            $list_k["raw_material_en"] = $dataProduk[$i]->raw_material_en;
+//            $list_k["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
+//            $jsonResult[$i]["product_information"] = $list_k;
+
+        }
+        if (count($jsonResult) > 0) {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-//            $data = $dataProduk;
+            $data = $jsonResult;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -268,7 +296,7 @@ class ProductNonAuthController extends Controller
             $list_k = array();
             $list_k["code_en"] = $dataProduk[$i]->code_en;
             $list_k["color_en"] = $dataProduk[$i]->color_en;
-            $list_k["size_en"] = $dataProduk[$i]->nama_kategori_en;
+            $list_k["size_en"] = $dataProduk[$i]->size_en;
             $list_k["raw_material_en"] = $dataProduk[$i]->raw_material_en;
             $list_k["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
             $jsonResult[$i]["product_information"] = $list_k;
@@ -357,7 +385,7 @@ class ProductNonAuthController extends Controller
             $list_k = array();
             $list_k["code_en"] = $dataProduk[$i]->code_en;
             $list_k["color_en"] = $dataProduk[$i]->color_en;
-            $list_k["size_en"] = $dataProduk[$i]->nama_kategori_en;
+            $list_k["size_en"] = $dataProduk[$i]->size_en;
             $list_k["raw_material_en"] = $dataProduk[$i]->raw_material_en;
             $list_k["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
             $jsonResult[$i]["product_information"] = $list_k;
