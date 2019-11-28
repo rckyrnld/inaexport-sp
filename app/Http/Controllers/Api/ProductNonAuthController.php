@@ -156,23 +156,24 @@ class ProductNonAuthController extends Controller
     {
 //        dd("hahaha");
         //Product
-        $dataProduk = DB::table('csc_product_single')
+        $dataProduka = DB::table('csc_product_single')
+            ->select('id', 'id_itdp_profil_eks','prodname_en','id_csc_product','id_csc_product_level1','id_csc_product_level2')
             ->where('id', '=', $request->id)
-            ->get();
+            ->first();
         // dd($data);
-        $jsonResult = array();
-        for ($i = 0; $i < count($dataProduk); $i++) {
-            $jsonResult[$i]["id_product"] = $dataProduk[$i]->id;
-            $jsonResult[$i]["id_profil_eks"] = $dataProduk[$i]->id_itdp_profil_eks;
-            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
-            $jsonResult[$i]["company_name"] = DB::table('itdp_profil_eks')->where('id', $dataProduk[$i]->id_itdp_profil_eks)->first()->company;
-//            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
-            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
-            $jsonResult[$i]["id_csc_product_level1"] = $dataProduk[$i]->id_csc_product_level1;
-            $jsonResult[$i]["id_csc_product_level2"] = $dataProduk[$i]->id_csc_product_level2;
-            $jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $dataProduk[$i]->id_csc_product)->first()->nama_kategori_en;
-            $jsonResult[$i]["csc_product_level1_desc"] = ($dataProduk[$i]->id_csc_product_level1) ? DB::table('csc_product')->where('id', $dataProduk[$i]->id_csc_product_level1)->first()->nama_kategori_en : null;
-            $jsonResult[$i]["csc_product_level2_desc"] = ($dataProduk[$i]->id_csc_product_level2) ? DB::table('csc_product')->where('id', $dataProduk[$i]->id_csc_product_level2)->first()->nama_kategori_en : null;
+//        $dataProduk = array();
+//        foreach ($dataProduka as $dataProduk) {
+//        $dataProduka->id;
+//        $dataProduka->id_itdp_profil_eks;
+//        $dataProduka->prodname_en;
+        $dataProduka->company_name = DB::table('itdp_profil_eks')->where('id', $dataProduka->id_itdp_profil_eks)->first()->company;
+////            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+//        $dataProduka->id_csc_product;
+//        $dataProduka->id_csc_product_level1;
+//        $dataProduka->id_csc_product_level2;
+        $dataProduka->csc_product_desc = DB::table('csc_product')->where('id', $dataProduka->id_csc_product)->first()->nama_kategori_en;
+        $dataProduka->csc_product_level1_desc = ($dataProduka->id_csc_product_level1) ? DB::table('csc_product')->where('id', $dataProduka->id_csc_product_level1)->first()->nama_kategori_en : null;
+        $dataProduka->csc_product_level2_desc = ($dataProduka->id_csc_product_level2) ? DB::table('csc_product')->where('id', $dataProduka->id_csc_product_level2)->first()->nama_kategori_en : null;
 //            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
 //            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
 //            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
@@ -186,14 +187,14 @@ class ProductNonAuthController extends Controller
 //            $list_k["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
 //            $jsonResult[$i]["product_information"] = $list_k;
 
-        }
-        if (count($jsonResult) > 0) {
+//        }
+        if (count($dataProduka) > 0) {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = $jsonResult;
+            $data = $dataProduka;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -203,7 +204,7 @@ class ProductNonAuthController extends Controller
                 'message' => 'Data Not Found',
                 'status' => 'Failed'
             ];
-//            $data = data;
+            $data = "";
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
