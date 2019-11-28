@@ -654,20 +654,34 @@ if (! function_exists('getPerwakilanCountry2')) {
 if (! function_exists('getProductbyEksportir')) {
     function getProductbyEksportir($user, $limit, $order, $lct){
       if($order == NULL){
-        $product = DB::table('csc_product_single')
+        if($limit == NULL){
+          $product = DB::table('csc_product_single')
               ->where('status', 2)
               ->where('id_itdp_company_user', $user)
               ->inRandomOrder()
-              ->limit($limit)
               ->get();
-      }else{
-        if($order == ""){
+        }else{
           $product = DB::table('csc_product_single')
                 ->where('status', 2)
                 ->where('id_itdp_company_user', $user)
                 ->inRandomOrder()
-                ->limit($limit)
+                ->paginate($limit);
+        }
+      }else{
+        if($order == ""){
+          if($limit == NULL){
+            $product = DB::table('csc_product_single')
+                ->where('status', 2)
+                ->where('id_itdp_company_user', $user)
+                ->inRandomOrder()
                 ->get();
+          }else{
+            $product = DB::table('csc_product_single')
+                  ->where('status', 2)
+                  ->where('id_itdp_company_user', $user)
+                  ->inRandomOrder()
+                  ->paginate($limit);
+          }
         }else{
           if($order == "new"){
               $col = "created_at";
@@ -676,12 +690,19 @@ if (! function_exists('getProductbyEksportir')) {
               $col = "prodname_".$lct;  
               $urut = "ASC";
           }
-          $product = DB::table('csc_product_single')
+          if($limit == NULL){
+            $product = DB::table('csc_product_single')
                 ->where('status', 2)
                 ->where('id_itdp_company_user', $user)
                 ->orderBy($col, $urut)
-                ->limit($limit)
                 ->get();
+          }else{
+            $product = DB::table('csc_product_single')
+                  ->where('status', 2)
+                  ->where('id_itdp_company_user', $user)
+                  ->orderBy($col, $urut)
+                  ->paginate($limit);
+          }
         }
       }
 
@@ -732,5 +753,25 @@ if (! function_exists('getDataDownload')) {
       $return = count($download);
       
       return $return;
+    }
+}
+
+if (! function_exists('getServiceAttribute')) {
+    function getServiceAttribute($id, $col, $lang){
+        $data = DB::table('itdp_service_eks')->where('id', $id)->first();
+
+        if($lang != ""){
+          $dt = $col.'_'.$lang;
+          if($data->$dt != NULL){
+            $isi = $data->$dt;
+          } else {
+            $dt = $col.'_en';
+            $isi = $data->$dt;
+          }
+        } else {
+          $isi = $data->$col;
+        }
+
+        return $isi;
     }
 }

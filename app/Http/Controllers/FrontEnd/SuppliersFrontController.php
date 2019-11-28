@@ -464,10 +464,13 @@ class SuppliersFrontController extends Controller
         $loc = app()->getLocale(); 
         if($loc == "ch"){
             $lct = "chn";
+            $lcts = "chn";
         }else if($loc == "in"){
             $lct = "in";
+            $lcts = "ind";
         }else{
             $lct = "en";
+            $lcts = "en";
         }
         //Eksportir yg di Pilih
         $data = DB::table('itdp_company_users')
@@ -490,9 +493,44 @@ class SuppliersFrontController extends Controller
             $sortby = "";
         }
 
+        //get service
+        if($request->shortsrveks){
+            if($request->shortsrveks == "new"){
+              $col = "created_at";
+              $urut = "DESC";
+              $service = DB::table('itdp_service_eks')
+                        ->where('id_itdp_profil_eks', $data->id)
+                        ->where('status', 2)
+                        ->orderBy($col, $urut)
+                        ->get();
+            }else if($request->shortsrveks == "asc"){
+              $col = "nama_".$lcts;  
+              $urut = "ASC";
+              $service = DB::table('itdp_service_eks')
+                        ->where('id_itdp_profil_eks', $data->id)
+                        ->where('status', 2)
+                        ->orderBy($col, $urut)
+                        ->get();
+            }else{
+                $service = DB::table('itdp_service_eks')
+                        ->where('id_itdp_profil_eks', $data->id)
+                        ->where('status', 2)
+                        ->inRandomOrder()
+                        ->get();
+            }
+            $sortbysrv = $request->shortsrveks;
+        }else{
+            $service = DB::table('itdp_service_eks')
+                        ->where('id_itdp_profil_eks', $data->id)
+                        ->where('status', 2)
+                        ->inRandomOrder()
+                        ->get();
+            $sortbysrv = "";
+        }
+
         //jenis halaman
         $jenisnya = "eksportir";
         
-        return view('frontend.supplier.view', compact('data', 'product', 'coproduct', 'id', 'jenisnya', 'sortby'));
+        return view('frontend.supplier.view', compact('data', 'product', 'coproduct', 'id', 'jenisnya', 'sortby', 'service', 'sortbysrv'));
     }
 }
