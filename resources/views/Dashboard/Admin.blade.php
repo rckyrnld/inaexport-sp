@@ -12,6 +12,18 @@
     min-width: 50%;
   }
 </style>
+<style>
+    #set_admin.nav-link.active, #set_perwakilan.nav-link.active, #set_importir.nav-link.active {
+        background-color: #40bad2 !important;
+        color: white !important;
+    }
+    /*CSS MODAL*/
+    .modal-lg{ width: 700px; }
+    .modal-header { background-color: #84afd4; color: white; font-size: 20px; text-align: center;}
+    .modal-body{ height: 300px; }
+    .modal-content { border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; overflow: hidden;}
+    .modal-footer { background-color: #84afd4; color: white; font-size: 20px; text-align: center;}
+</style>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -21,12 +33,24 @@
         <div class="box-divider m-0"></div>
       
         <div class="box-body">
-          <div class="tab-content p-3 mb-3">
-            <div class="tab-pane animate fadeIn text-muted active show" id="tab4">
-              <div class="row">
+		<div id="exTab2" class="container"> 
+                             <ul class="nav nav-tabs">
+                                <li class="nav-item"><a class="nav-link active" href="#admin" id="set_admin" data-toggle="tab"><h6><b>Member</b></h6></a></li>
+                                <li class="nav-item"><a class="nav-link" href="#rc" id="set_perwakilan" data-toggle="tab"><h6><b>Research Corner</b></h6></a></li>
+                                <li class="nav-item"><a class="nav-link" href="#in" id="set_importir" data-toggle="tab"><h6><b>Inquiry</b></h6></a></li>
+                                <li class="nav-item"><a class="nav-link" href="#by" id="set_importir" data-toggle="tab"><h6><b>Buying Request</b></h6></a></li>
+                                <li class="nav-item"><a class="nav-link" href="#ev" id="set_importir" data-toggle="tab"><h6><b>Event</b></h6></a></li>
+                                <li class="nav-item"><a class="nav-link" href="#tr" id="set_importir" data-toggle="tab"><h6><b>Training</b></h6></a></li>
+                            </ul>
+                            <div class="tab-content">
+							<br><br><br>
+                                <div class="tab-pane active" id="admin">
+								<div class="row">
                 <div id="user_year" style="min-width: 100%; height: 400px; margin: 0 auto;"></div>
-              </div><br><br><br>
-              <div class="row">
+              </div>
+								</div>
+								<div class="tab-pane" id="rc">
+								<div class="row">
                 <div class="col-md-6" style="float: left;">
                   <table class="table table-bordered table-hover" style="width: 100%; height: 300px; float: left;">
                     <thead style="background-color: #789ec5; color: white;">
@@ -51,8 +75,8 @@
                   <div id="top_downloader" class="top_data" style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
                 </div>
               </div>
-              <br><br>
-              <div class="row">
+			  <br><br>
+			  <div class="row">
                 <div class="col-md-6" style="float: left;">
                   <table class="table table-bordered table-hover" style="width: 100%; float: left; height: 300px;">
                     <thead style="background-color: #855c9a; color: white;">
@@ -77,12 +101,11 @@
                   <div id="top_rc" class="top_data" style="height: 300px; margin: 0 auto; width: 100%; float: left;"></div>
                 </div>
               </div>
-              <br><br>
-              <div class="row">
-                <div id="inquiry" style="width: 100%; height: 400px; margin: 0 auto;"></div>
-              </div>
-              <br><br>
-              <div class="row">
+								</div>
+								
+								
+								<div class="tab-pane" id="in">
+								<div class="row">
                 <div class="col-md-6" style="float: left;">
                   <table class="table table-bordered table-hover" style="width: 100%; float: left; height: 300px;">
                     <thead style="background-color: #e45344; color: white;">
@@ -116,8 +139,10 @@
                   <div id="top_inquiry" class="top_data" style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
                 </div>
               </div>
-              <br><br>
-              <div class="row">
+								</div>
+								
+								<div class="tab-pane" id="by">
+								<div class="row">
                 <div class="col-md-6" style="float: left;">
                   <table class="table table-bordered table-hover" style="width: 100%; float: left; height: 300px;">
                     <thead style="background-color: #4cd25c; color: white;">
@@ -142,6 +167,28 @@
                   <div id="buying" class="top_data" style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
                 </div>
               </div>
+								</div>
+								
+								<div class="tab-pane" id="ev">
+								xxxxxxxxxx
+								</div>
+							</div>
+			</div>
+          <div class="tab-content p-3 mb-3">
+		   
+            <div class="tab-pane animate fadeIn text-muted active show" id="tab4">
+              <br><br><br>
+              
+              <br><br>
+             
+              <br><br>
+              <div class="row">
+                <div id="inquiry" style="width: 100%; height: 400px; margin: 0 auto;"></div>
+              </div>
+              <br><br>
+              
+              <br><br>
+              
               <br><br>
               <div class="row">
                 <div id="event" style="height: 300px; width: 100%; margin: 0 auto;"></div>
