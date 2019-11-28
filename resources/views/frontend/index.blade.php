@@ -304,15 +304,17 @@
                                         if($cat3 == "-"){
                                             if($cat2 == "-"){
                                                 $categorynya = $cat1;
+                                                $idcategory = $p->id_csc_product;
                                             }else{
                                                 $categorynya = $cat2;
+                                                $idcategory = $p->id_csc_product_level1;
                                             }
                                         }else{
                                             $categorynya = $cat3;
+                                            $idcategory = $p->id_csc_product_level2;
                                         }
 
                                         $img1 = $p->image_1;
-                                        $img2 = $p->image_2;
 
                                         if($img1 == NULL){
                                             $isimg1 = '/image/noimage.jpg';
@@ -324,29 +326,49 @@
                                               $isimg1 = '/image/noimage.jpg';
                                             }  
                                         }
-
-                                        if($img2 == NULL){
-                                            $isimg2 = '/image/noimage.jpg';
-                                        }else{
-                                            $image2 = 'uploads/Eksportir_Product/Image/'.$p->id.'/'.$img2; 
-                                            if(file_exists($image2)) {
-                                              $isimg2 = '/uploads/Eksportir_Product/Image/'.$p->id.'/'.$img2;
-                                            }else {
-                                              $isimg2 = '/image/noimage.jpg';
-                                            }  
-                                        }
                                     ?>
                                         <div class="single_product" style="height: 350px;">
                                             <div class="product_name">
-                                                <h3><a href="{{url('front_end/product/'.$p->id)}}">{{getProductAttr($p->id, 'prodname', $lct)}}</a></h3>
-                                                <p class="manufacture_product"><a href="#">{{$categorynya}}</a></p>
+                                                <?php
+                                                    $num_char = 30;
+                                                    $prodn = getProductAttr($p->id, 'prodname', $lct);
+                                                    if(strlen($prodn) > 30){
+                                                        $cut_text = substr($prodn, 0, $num_char);
+                                                        if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                            $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                            $cut_text = substr($prodn, 0, $new_pos);
+                                                        }
+                                                        $prodnama = $cut_text . '...';
+                                                    }else{
+                                                        $prodnama = $prodn;
+                                                    }
+                                                ?>
+                                                <h3><a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}">
+                                                    {{$prodnama}}
+                                                </a></h3>
                                             </div>
+                                            <h3 style="text-transform: uppercase; font-size: 14px; font-weight: 400; font-family: "Open Sans", sans-serif;">
+                                                <?php
+                                                    $num_charp = 15;
+                                                    $compname = getCompanyName($p->id_itdp_company_user);
+                                                    if(strlen($compname) > 15){
+                                                        $cut_text = substr($compname, 0, $num_charp);
+                                                        if ($compname{$num_charp - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                            $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                            $cut_text = substr($compname, 0, $new_pos);
+                                                        }
+                                                        $companame = $cut_text . '...';
+                                                    }else{
+                                                        $companame = $compname;
+                                                    }
+                                                ?>
+                                                <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}">{{$companame}}</a>
+                                            </h3>
                                             <div class="product_thumb">
                                                 <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
-                                                <a class="secondary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a>
-                                                <div class="label_product">
-                                                    <!-- <span class="label_sale">-57%</span> -->
-                                                </div>
+                                            </div>
+                                            <div class="product_name">
+                                                <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}">{{$categorynya}}</a></p>
                                             </div>
                                             <div class="product_content">
                                                 <div class="product_footer d-flex align-items-center">

@@ -59,6 +59,29 @@ class FrontController extends Controller
             ->limit(10)
             ->get();
 
+        //Sort By
+        $sortbyproduct = NULL;
+        if($request->sort_prod != NULL || $request->sort_prod != ""){
+            if($request->sort_prod == "new"){
+                $col = "csc_product_single.created_at";
+                $asdes = "DESC";
+            }else if($request->sort_prod == "lowhigh"){
+                $col = "csc_product_single.price_usd";
+                $asdes = "ASC";
+            }else if($request->sort_prod == "highlow"){
+                $col = "csc_product_single.price_usd";
+                $asdes = "DESC";
+            }else if($request->sort_prod == "asc"){
+                $col = "csc_product_single.prodname_en";
+                $asdes = "ASC";
+            }
+            $sortbyproduct = $request->sort_prod;
+        }else{
+            $col = "updated_at";
+            $asdes = "DESC";
+            $sortbyproduct = "";
+        }
+
 
         //Data Product
         if($request->cari_catnya == NULL){
@@ -71,7 +94,7 @@ class FrontController extends Controller
                     ->where('itdp_company_users.status', 1)
                     ->where('csc_product_single.status', 2)
                     ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
-                    ->inRandomOrder()
+                    ->orderBy($col, $asdes)
                     ->paginate(12);
                 $coproduct = DB::table('csc_product_single')
                     ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
@@ -79,7 +102,7 @@ class FrontController extends Controller
                     ->where('itdp_company_users.status', 1)
                     ->where('csc_product_single.status', 2)
                     ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
-                    ->inRandomOrder()
+                    ->orderBy($col, $asdes)
                     ->count();
             }else{
                 $search = "";
@@ -88,14 +111,14 @@ class FrontController extends Controller
                     ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
                     ->where('itdp_company_users.status', 1)
                     ->where('csc_product_single.status', 2)
-                    ->inRandomOrder()
+                    ->orderBy($col, $asdes)
                     ->paginate(12);
                 $coproduct = DB::table('csc_product_single')
                     ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
                     ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
                     ->where('itdp_company_users.status', 1)
                     ->where('csc_product_single.status', 2)
-                    ->inRandomOrder()
+                    ->orderBy($col, $asdes)
                     ->count();
             }
             $catActive = NULL;
@@ -119,8 +142,8 @@ class FrontController extends Controller
                 $search = "";
             }
 
-            $product = $this->getQueryCategory('data', $pisah, $request->locnya, $request->cari_product);
-            $coproduct = $this->getQueryCategory('count', $pisah, $request->locnya, $request->cari_product);
+            $product = $this->getQueryCategory('data', $pisah, $request->locnya, $request->cari_product, $col, $asdes);
+            $coproduct = $this->getQueryCategory('count', $pisah, $request->locnya, $request->cari_product, $col, $asdes);
         }
 
         //Data Eksportir/Manufacturer
@@ -134,11 +157,11 @@ class FrontController extends Controller
 
 
         // return view('frontend.product.all_product', compact('product', 'catprod'));
-        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat'));
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct'));
 
     }
 
-    function getQueryCategory($jenis, $dt, $lct, $search)
+    function getQueryCategory($jenis, $dt, $lct, $search, $col, $ord)
     {
         if(is_array($dt)){
             if($search){
@@ -151,7 +174,7 @@ class FrontController extends Controller
                     ->where('csc_product_single.id_csc_product', $dt[0])
                     ->where('csc_product_single.id_csc_product_level1', $dt[1])
                     ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
-                    ->inRandomOrder()
+                    ->orderBy($col, $ord)
                     ->paginate(12);
                 $coproduct = DB::table('csc_product_single')
                     ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
@@ -161,7 +184,7 @@ class FrontController extends Controller
                     ->where('csc_product_single.id_csc_product', $dt[0])
                     ->where('csc_product_single.id_csc_product_level1', $dt[1])
                     ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
-                    ->inRandomOrder()
+                    ->orderBy($col, $ord)
                     ->count();
             }else{
                 $product = DB::table('csc_product_single')
@@ -171,7 +194,7 @@ class FrontController extends Controller
                     ->where('csc_product_single.status', 2)
                     ->where('csc_product_single.id_csc_product', $dt[0])
                     ->where('csc_product_single.id_csc_product_level1', $dt[1])
-                    ->inRandomOrder()
+                    ->orderBy($col, $ord)
                     ->paginate(12);
                 $coproduct = DB::table('csc_product_single')
                     ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
@@ -180,7 +203,7 @@ class FrontController extends Controller
                     ->where('csc_product_single.status', 2)
                     ->where('csc_product_single.id_csc_product', $dt[0])
                     ->where('csc_product_single.id_csc_product_level1', $dt[1])
-                    ->inRandomOrder()
+                    ->orderBy($col, $ord)
                     ->count();
             }
         }else{
@@ -193,7 +216,7 @@ class FrontController extends Controller
                     ->where('csc_product_single.status', 2)
                     ->where('csc_product_single.id_csc_product', $dt)
                     ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
-                    ->inRandomOrder()
+                    ->orderBy($col, $ord)
                     ->paginate(12);
                 $coproduct = DB::table('csc_product_single')
                     ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
@@ -202,7 +225,7 @@ class FrontController extends Controller
                     ->where('csc_product_single.status', 2)
                     ->where('csc_product_single.id_csc_product', $dt)
                     ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
-                    ->inRandomOrder()
+                    ->orderBy($col, $ord)
                     ->count();
             }else{
                 $product = DB::table('csc_product_single')
@@ -211,7 +234,7 @@ class FrontController extends Controller
                     ->where('itdp_company_users.status', 1)
                     ->where('csc_product_single.status', 2)
                     ->where('csc_product_single.id_csc_product', $dt)
-                    ->inRandomOrder()
+                    ->orderBy($col, $ord)
                     ->paginate(12);
                 $coproduct = DB::table('csc_product_single')
                     ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
@@ -219,7 +242,7 @@ class FrontController extends Controller
                     ->where('itdp_company_users.status', 1)
                     ->where('csc_product_single.status', 2)
                     ->where('csc_product_single.id_csc_product', $dt)
-                    ->inRandomOrder()
+                    ->orderBy($col, $ord)
                     ->count();
             }
         }
