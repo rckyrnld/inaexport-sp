@@ -52,11 +52,13 @@
                 </div>
                 <div class="col-4" style="text-align: left;">
                     <div class="breadcrumb_content">
-                        <b>@lang('frontend.liseksportir.sortby')</b> <select name="orderby" id="short" style="border: none;">
+                        <b>@lang('frontend.liseksportir.sortby')</b> <select name="sortbyproduct" id="sortbyproduct" style="border: none;">
                                 <option value="" @if(isset($sortbyproduct)) @if($sortbyproduct == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
                                 <option value="new" @if(isset($sortbyproduct)) @if($sortbyproduct == "new") selected @endif @endif>@lang('frontend.liseksportir.newest')</option>
+                                @if(Auth::guard('eksmp')->user())
                                 <option value="lowhigh" @if(isset($sortbyproduct)) @if($sortbyproduct == "lowhigh") selected @endif @endif>@lang('frontend.proddetail.pricelh')</option>
                                 <option value="highlow" @if(isset($sortbyproduct)) @if($sortbyproduct == "highlow") selected @endif @endif>@lang('frontend.proddetail.pricehl')</option>
+                                @endif
                                 <option value="asc" @if(isset($sortbyproduct)) @if($sortbyproduct == "asc") selected @endif @endif>@lang('frontend.liseksportir.eksporternm')</option>
                             </select>
                     </div>
@@ -224,7 +226,7 @@
                                     <div class="product_name grid_name">
                                         <h3><a href="{{url('front_end/product/'.$pro->id)}}">{{getProductAttr($pro->id, 'prodname', $lct)}}</a></h3>
                                     </div>
-                                    <h3 style="text-transform: uppercase; font-size: 14px; font-weight: 400; font-family: "Open Sans", sans-serif;"><a href="{{url('front_end/list_perusahaan/View/'.$pro->id_itdp_company_user)}}">{{getCompanyName($pro->id_itdp_company_user)}}</a></h3>
+                                    <h3 style="text-transform: uppercase; font-size: 14px; font-weight: 400; font-family: "Open Sans", sans-serif;"><a href="{{url('front_end/list_perusahaan/view/'.$pro->id_itdp_company_user)}}">{{getCompanyName($pro->id_itdp_company_user)}}</a></h3>
                                     <div class="product_thumb">
                                         <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
                                         <!-- <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
@@ -348,39 +350,9 @@
             });
         });
 
-        $("#short").on('change', function () {
-            var search = $('#cari_product').val();
-            var lct = $('#locnya').val();
-            var category = $('#cari_catnya').val();
-            var exportir = [];
-            $.each($("input[name='checkexp']:checked"), function(){
-                exportir.push($(this).val());
-            });
-
-            if(search == ""){
-                search = null;
-            }
-
-            if(lct == ""){
-                lct = null;
-            }
-
-            if(category == ""){
-                category = null;
-            }
-
-            if(exportir.length == 0){
-                exportir = null;
-            }
-            
-            // $.ajax({
-            //     url: "{{url('/front_end/list_product')}}",
-            //     type: 'get',
-            //     data: {cari_catnya:category, cari_product: search, locnya: lct, isieks: exportir},
-            //     success:function(response){
-                    
-            //     }
-            // });
+        $("#sortbyproduct").on('change', function () {
+            $('#sort_prod').val(this.value);
+            $('#formsprod').submit();
         })
     })
 

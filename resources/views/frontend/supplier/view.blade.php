@@ -312,11 +312,13 @@
                                                     </div>
                                                     <div class="product_name grid_name">
                                                         <h3><a href="{{url('front_end/product/'.$pro->id)}}">{{getProductAttr($pro->id, 'prodname', $lct)}}</a></h3>
-                                                        <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}">{{$categorynya}}</a></p>
                                                     </div>
                                                     <div class="product_thumb">
                                                         <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
                                                         <!-- <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
+                                                    </div>
+                                                    <div class="product_name grid_name">
+                                                        <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}">{{$categorynya}}</a></p>
                                                     </div>
                                                     <div class="product_content grid_content">
                                                         <div class="content_inner">
