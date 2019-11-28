@@ -350,11 +350,41 @@
                                     }  
                                 }
                             ?>
-                            <div class="single_product">
+                            <div class="single_product" style="height: 350px;">
                                 <div class="product_name">
-                                    <h3><a href="{{url('front_end/product/'.$p->id)}}">{{getProductAttr($p->id, 'prodname', $lct)}}</a></h3>
+                                    <?php
+                                        $num_char = 30;
+                                        $prodn = getProductAttr($p->id, 'prodname', $lct);
+                                        if(strlen($prodn) > 30){
+                                            $cut_text = substr($prodn, 0, $num_char);
+                                            if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                $cut_text = substr($prodn, 0, $new_pos);
+                                            }
+                                            $prodnama = $cut_text . '...';
+                                        }else{
+                                            $prodnama = $prodn;
+                                        }
+                                    ?>
+                                    <h3><a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}">{{$prodnama}}</a></h3>
                                 </div>
-                                <h3 style="text-transform: uppercase; font-size: 14px; font-weight: 400; font-family: "Open Sans", sans-serif;"><a href="{{url('front_end/list_perusahaan/View/'.$p->id_itdp_company_user)}}">{{getCompanyName($p->id_itdp_company_user)}}</a></h3>
+                                <h3 style="text-transform: uppercase; font-size: 14px; font-weight: 400; font-family: "Open Sans", sans-serif;">
+                                    <?php
+                                        $num_charp = 15;
+                                        $compname = getCompanyName($p->id_itdp_company_user);
+                                        if(strlen($compname) > 15){
+                                            $cut_text = substr($compname, 0, $num_charp);
+                                            if ($compname{$num_charp - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                $cut_text = substr($compname, 0, $new_pos);
+                                            }
+                                            $companame = $cut_text . '...';
+                                        }else{
+                                            $companame = $compname;
+                                        }
+                                    ?>
+                                    <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}">{{$companame}}</a>
+                                </h3>
                                 <div class="product_thumb">
                                     <a class="primary_img" href="{{url('/front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
                                     <!-- <a class="secondary_img" href="{{url('/front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->

@@ -234,7 +234,7 @@ body {font-family: Arial;}
                                 </thead>
 								<tbody>
 								<?php 
-								$pesan = DB::select("select a.*,b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where b.status_join >= '1' and a.id=b.id_eks and a.id_profil = c.id and id_br='".$id."'");
+								$pesan = DB::select("select a.*,b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where a.id=b.id_eks and a.id_profil = c.id and id_br='".$id."'");
 								$na = 1;
 								foreach($pesan as $ryu){
 								?>
@@ -244,7 +244,7 @@ body {font-family: Arial;}
 								<td><?php echo $ryu->addres." , ".$ryu->city; ?></td>
 								<td><?php echo $ryu->oemail; ?></td>
 								<td><center>
-								<?php if($ryu->status_join == "1"){ echo "Menunggu Verifikasi Importir"; }else if($ryu->status_join == "2"){ echo "Negosiation"; }
+								<?php if($ryu->status_join == null){echo 'pending';}else if($ryu->status_join == "1"){ echo "Menunggu Verifikasi Importir"; }else if($ryu->status_join == "2"){ echo "Negosiation"; }
 									else if($ryu->status_join == "4"){ echo "Deal"; }else{ echo "-"; }?>
 								</center></td>
 								<td><center>

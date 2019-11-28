@@ -62,6 +62,16 @@ return [
     "service-title"    => "Layanan Keanggotaan",
     "contact-person"    => "Contact Person",
     "about"    => "Tentang",
+    "about-det" => [
+        "1" => "Layanan Keanggotaan DGNED adalah jendela Indonesia menuju dunia untuk pengembangan ekspor dan telah berkembang dengan sangat baik dalam mengidentifikasi pasar dan peluang baru di luar negeri bagi produsen yang mampu memenuhi persyaratan pasar. Sebagai lembaga pemerintah nirlaba, DGNED menyediakan semua layanannya secara gratis.",
+        "2" => "DGNED sendiri mempunyai tanggung jawab berikut :",
+        "2-1" => "Merumuskan kebijakan dan pedoman untuk mendorong dan mendukung ekspansi ekspor produk nonmigas.",
+        "2-2" => "Untuk memberikan layanan informasi di pasar luar negeri.",
+        "2-3" => "Untuk mengatur kegiatan promosi ekspor.",
+        "2-4" => "Untuk memperluas jangkauan produk dan pasar ekspor.",
+        "3" => "DGNED menyediakan riset pasar, saran tentang prosedur ekspor, persyaratan lisensi, dan pembiayaan. Ini juga membantu eksportir untuk berpartisipasi dalam pameran dagang reguler baik di dalam maupun luar negeri.",
+        "4" => "Di sini Layanan Keanggotaan disediakan untuk membantu mereka yang ingin mengekspor dan yang ingin membeli dari Indonesia, dengan layanan satu jendela.",
+    ],
     "home" => [
         "product" => "Produk",
         "eksporter" => "Eksportir",
@@ -124,4 +134,5 @@ return [
         "phone" => "Telepon",
         "address" => "Alamat",
     ],
+    "title-services" => "Pelayanan",
 ];

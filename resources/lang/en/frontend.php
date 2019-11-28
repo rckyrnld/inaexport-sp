@@ -62,6 +62,16 @@ return [
     "service-title"    => "Membership Service",
     "contact-person"    => "Contact Person",
     "about"    => "About",
+    "about-det" => [
+        "1" => "DGNED's Membership Services is Indonesia's window to the world for export development and has developed excellently in identifying new markets and opportunities overseas for producers which are capable of meeting the requirements of the markets. As a non-profit government agency, DGNED provides all of its services free of charge.",
+        "2" => "DGNED itself is tasked with the following responsibilities :",
+        "2-1" => "To formulate policies and guidelines to encourage and to support the expansion of non-oil and gas products export.",
+        "2-2" => "To provide information services on overseas markets.",
+        "2-3" => "To organize export promotion activities.",
+        "2-4" => "To expand the range of export products and markets.",
+        "3" => "DGNED provides market research, advice on export procedures, licensing requirements, and financing. It also assists exporters to participate in its regular trade exhibitions both domestic and overseas.",
+        "4" => "Here Membership Services is provided to help those who want to export and who want to buy from Indonesia, with a single windows services.",
+    ],
     "home" => [
         "product" => "Products",
         "eksporter" => "Exporters",
@@ -124,4 +134,5 @@ return [
         "phone" => "Phone",
         "address" => "Address",
     ],
+    "title-services" => "Services",
 ];
