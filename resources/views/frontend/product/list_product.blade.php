@@ -18,6 +18,15 @@
         background-color: #DDEFFD; 
         border: none;
     }
+
+    .hover-none:hover{
+        color: #007bff;
+    }
+
+    .hover-none:hover{
+        color: #007bff;
+        text-decoration: none;
+    }
 </style>
 <!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
@@ -136,13 +145,29 @@
                                         $srchmanlang = "Search Manufacturer";
                                     }
                                 ?>
-                                <input type="text" class="form-control" id="cari_eksportir" name="cari_eksportir" placeholder="{{$srchmanlang}}" style="font-size: 12px;">
-                                <br>
+                                <!-- <input type="text" class="form-control" id="cari_eksportir" name="cari_eksportir" placeholder="{{$srchmanlang}}" style="font-size: 12px;">
+                                <br> -->
                                 <ul id="manufacturlist">
                                     @foreach($manufacturer as $man)
+                                        <?php
+                                            $checkednya = '';
+                                            if(isset($getEks)){
+                                                if (strstr($getEks, '|')){
+                                                    $eks = explode('|', $getEks);
+                                                }else{
+                                                    $eks = [$getEks];
+                                                }
+
+                                                for ($k=0; $k < count($eks); $k++) { 
+                                                    if($man->id == $eks[$k]){
+                                                        $checkednya = 'checked="true"';
+                                                    }
+                                                }
+                                            }
+                                        ?>
                                         <li>
-                                            <input type="checkbox" name="checkexp" value="{{$man->id}}">
-                                            <a href="#">{{$man->company}}({{getCountProduct('company', $man->id)}})</a>
+                                            <input type="checkbox" name="checkexp" value="{{$man->id}}" id="checkexp" class="check_eks" {{$checkednya}}>
+                                            <a href="#" class="hover-none">{{$man->company}} ({{$man->jml_produk}})</a>
                                             <span class="checkmark"></span>
                                         </li>
                                     @endforeach
@@ -353,6 +378,33 @@
         $("#sortbyproduct").on('change', function () {
             $('#sort_prod').val(this.value);
             $('#formsprod').submit();
+        });
+
+        $(".check_eks").on('change', function () {
+            if(this.checked){
+                var arrisi = [];
+                $.each($("input[name='checkexp']:checked"), function(){
+                    arrisi.push($(this).val());
+                });
+            }
+
+            if(arrisi.length != 0){
+                var isinya = "";
+                for (var i = arrisi.length - 1; i >= 0; i--) {
+                    if(isinya == ""){
+                        isinya += arrisi[i];
+                    }else{
+                        isinya += '|'+arrisi[i];
+                    }
+                }
+                // alert(isinya);
+                $('#eks_prod').val(isinya);
+                $('#formsprod').submit();
+            }
+        });
+
+        $('.hover-none').on('click', function (e) {
+            e.preventDefault();
         })
     })
 
