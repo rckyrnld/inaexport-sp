@@ -8,7 +8,7 @@
 	<!--<h6>@lang("login.title2")</h6> -->
 	<br>
       
-	  <div class="col-md-12">
+	 
 	  <center>
 	  <table border="0" width="75%">
 	  <tr>

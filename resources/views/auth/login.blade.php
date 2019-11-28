@@ -47,7 +47,7 @@
 	<h3><b>@lang("login.title2")</b></h3>
 	<h6>@lang("login.title2")</h6><br>
 			
-		        <div class="mx-auto" style="width:400px;background: white; border-radius: 0px;">
+		        <div class="mx-auto col-sm-4" style="background: white; border-radius: 0px;">
 	  <br>
 	  <!-- <h5>LOGIN</h5> -->
 	  <div class="wrap-login100" style="padding-left : 30px; padding-right : 30px; font-size:12px;">

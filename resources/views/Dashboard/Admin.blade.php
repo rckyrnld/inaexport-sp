@@ -12,6 +12,18 @@
     min-width: 50%;
   }
 </style>
+<style>
+    #set_admin.nav-link.active, #set_perwakilan.nav-link.active, #set_importir.nav-link.active {
+        background-color: #40bad2 !important;
+        color: white !important;
+    }
+    /*CSS MODAL*/
+    .modal-lg{ width: 700px; }
+    .modal-header { background-color: #84afd4; color: white; font-size: 20px; text-align: center;}
+    .modal-body{ height: 300px; }
+    .modal-content { border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; overflow: hidden;}
+    .modal-footer { background-color: #84afd4; color: white; font-size: 20px; text-align: center;}
+</style>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -22,6 +34,19 @@
       
         <div class="box-body">
           <div class="tab-content p-3 mb-3">
+		   <div id="exTab2" class="container"> 
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item"><a class="nav-link active" href="#admin" id="set_admin" data-toggle="tab"><h6><b>Member</b></h6></a></li>
+                                <li class="nav-item"><a class="nav-link" href="#perwakilan" id="set_perwakilan" data-toggle="tab"><h6><b>Research Corner</b></h6></a></li>
+                                <li class="nav-item"><a class="nav-link" href="#importir" id="set_importir" data-toggle="tab"><h6><b>Inquiry</b></h6></a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="admin">
+								
+								abs
+								</div>
+							</div>
+			</div>
             <div class="tab-pane animate fadeIn text-muted active show" id="tab4">
               <div class="row">
                 <div id="user_year" style="min-width: 100%; height: 400px; margin: 0 auto;"></div>

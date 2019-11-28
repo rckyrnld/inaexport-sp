@@ -1,13 +1,24 @@
 @include('headerlog')
   
-  <div id="content-body" style="background-color: #c5e1f8 ; color: black" >
-  <center><br><img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center>
+      <section class="product_area" style="background-color:#c5e1f8">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!--<div class="section_title">
+                        <br>
+                    </div> -->
+
+                </div>
+            </div>
+
+            <div class="tab-content" id="tabing-product">
+			<center><br><img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center>
     <div class="py-1 text-center w-100">
 	
 	<h3><b>@lang("login.title2")</b></h3>
 	<h6>@lang("login.title2")</h6>
 	<br>
-      <div class="mx-auto" style="width:400px;background: white; border-radius: 0px;">
+      <div class="mx-auto col-sm-4" style="background: white; border-radius: 0px;">
 	  <br>
 	  <!-- <h5>LOGIN</h5> -->
 	  <div class="wrap-login100" style="padding-left : 30px; padding-right : 30px; font-size:12px;">
@@ -58,6 +69,8 @@
 	  
 		
       </div><br><br>
-    </div>
-  </div>
+     </div>
+        </div>
+	<br><br>
+    </section>
 @include('footerlog')
