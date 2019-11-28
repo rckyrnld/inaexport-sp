@@ -43,7 +43,10 @@
     .third-child{ font-size: 14px; color: grey; }
     .third-child:hover, .third-child:active{ text-decoration: none; }
 </style>
-<?php if(empty($loc)){ $loc = 'en'; } ?>
+<?php
+    $loc = app()->getLocale(); 
+    if(empty($loc)){ $loc = 'en'; } 
+?>
     <section class="call_to_action">
         <div class="container">
             <div class="row counters">
