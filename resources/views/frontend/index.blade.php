@@ -372,6 +372,7 @@
                                             </div>
                                             <div class="product_content">
                                                 <div class="product_footer d-flex align-items-center">
+                                                    @if(Auth::guard('eksmp')->user())
                                                     <div class="price_box">
                                                         @if(is_numeric($p->price_usd))
                                                             <span class="regular_price">
@@ -383,6 +384,7 @@
                                                             </span>
                                                         @endif
                                                     </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
