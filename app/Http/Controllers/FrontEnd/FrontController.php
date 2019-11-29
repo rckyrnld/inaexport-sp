@@ -85,44 +85,32 @@ class FrontController extends Controller
 
         //Data Product
         if($request->cari_catnya == NULL){
+            $query = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    ->where('itdp_company_users.status', 1)
+                    ->where('csc_product_single.status', 2);
+
+            $search = "";
             if($request->cari_product){
                 $search = $request->cari_product;
                 $nprod = "prodname_".$request->locnya;
-                $product = DB::table('csc_product_single')
-                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-                    ->where('itdp_company_users.status', 1)
-                    ->where('csc_product_single.status', 2)
-                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
-                    ->orderBy($col, $asdes)
-                    ->paginate(12);
-                $coproduct = DB::table('csc_product_single')
-                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-                    ->where('itdp_company_users.status', 1)
-                    ->where('csc_product_single.status', 2)
-                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
-                    ->orderBy($col, $asdes)
-                    ->count();
-            }else{
-                $search = "";
-                $product = DB::table('csc_product_single')
-                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-                    ->where('itdp_company_users.status', 1)
-                    ->where('csc_product_single.status', 2)
-                    ->orderBy($col, $asdes)
-                    ->paginate(12);
-                $coproduct = DB::table('csc_product_single')
-                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-                    ->where('itdp_company_users.status', 1)
-                    ->where('csc_product_single.status', 2)
-                    ->orderBy($col, $asdes)
-                    ->count();
+                $query->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%');
             }
+
+            $getEks = "";
+            if($request->eks_prod){
+                if (strstr($request->eks_prod, '|')){
+                    $eks = explode('|', $request->eks_prod);
+                }else{
+                    $eks = [$request->eks_prod];
+                }
+                $query->whereIn('csc_product_single.id_itdp_company_user', $eks);
+                $getEks = $request->eks_prod;
+            }
+
             $catActive = NULL;
-             $get_id_cat = NULL;
+            $get_id_cat = NULL;
         }else{
             $catActive = '';
             if (strstr($request->cari_catnya, '|')) {
@@ -142,26 +130,49 @@ class FrontController extends Controller
                 $search = "";
             }
 
-            $product = $this->getQueryCategory('data', $pisah, $request->locnya, $request->cari_product, $col, $asdes);
-            $coproduct = $this->getQueryCategory('count', $pisah, $request->locnya, $request->cari_product, $col, $asdes);
+            $query = $this->getQueryCategory($pisah, $request->locnya, $request->cari_product);
+            $getEks = "";
+            if($request->eks_prod){
+                if (strstr($request->eks_prod, '|')){
+                    $eks = explode('|', $request->eks_prod);
+                }else{
+                    $eks = [$request->eks_prod];
+                }
+                $query->whereIn('csc_product_single.id_itdp_company_user', $eks);
+                $getEks = $request->eks_prod;
+            }
         }
 
+        $product = $query->orderBy($col, $asdes)->paginate(12);
+        $coproduct = $query->orderBy($col, $asdes)->count();
+
         //Data Eksportir/Manufacturer
-        $manufacturer = DB::table('itdp_company_users as a')
-            ->join('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
-            ->selectRaw('a.*, b.id as idprofil, b.company')
-            ->where('a.id_role', 2)
-            ->inRandomOrder()
-            ->limit(10)
-            ->get();
+        $manufacturer = DB::select(
+            "SELECT 
+                a.id, b.company, b.id as id_profil, (SELECT COUNT(*) FROM csc_product_single WHERE status = 2 AND id_itdp_company_user = a.id) as jml_produk
+            FROM itdp_company_users as a
+            JOIN itdp_profil_eks as b ON a.id_profil = b.id
+            WHERE a.status = '1'
+            ORDER BY jml_produk DESC
+            LIMIT 10"
+        );
+
+        // dd($manufacturer);
+        // $manufacturer = DB::table('itdp_company_users as a')
+        //     ->join('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
+        //     ->selectRaw('a.*, b.id as idprofil, b.company')
+        //     ->where('a.id_role', 2)
+        //     ->inRandomOrder()
+        //     ->limit(10)
+        //     ->get();
 
 
         // return view('frontend.product.all_product', compact('product', 'catprod'));
-        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct'));
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks'));
 
     }
 
-    function getQueryCategory($jenis, $dt, $lct, $search, $col, $ord)
+    function getQueryCategory($dt, $lct, $search)
     {
         if(is_array($dt)){
             if($search){
@@ -173,19 +184,7 @@ class FrontController extends Controller
                     ->where('csc_product_single.status', 2)
                     ->where('csc_product_single.id_csc_product', $dt[0])
                     ->where('csc_product_single.id_csc_product_level1', $dt[1])
-                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
-                    ->orderBy($col, $ord)
-                    ->paginate(12);
-                $coproduct = DB::table('csc_product_single')
-                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-                    ->where('itdp_company_users.status', 1)
-                    ->where('csc_product_single.status', 2)
-                    ->where('csc_product_single.id_csc_product', $dt[0])
-                    ->where('csc_product_single.id_csc_product_level1', $dt[1])
-                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
-                    ->orderBy($col, $ord)
-                    ->count();
+                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%');
             }else{
                 $product = DB::table('csc_product_single')
                     ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
@@ -193,18 +192,7 @@ class FrontController extends Controller
                     ->where('itdp_company_users.status', 1)
                     ->where('csc_product_single.status', 2)
                     ->where('csc_product_single.id_csc_product', $dt[0])
-                    ->where('csc_product_single.id_csc_product_level1', $dt[1])
-                    ->orderBy($col, $ord)
-                    ->paginate(12);
-                $coproduct = DB::table('csc_product_single')
-                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-                    ->where('itdp_company_users.status', 1)
-                    ->where('csc_product_single.status', 2)
-                    ->where('csc_product_single.id_csc_product', $dt[0])
-                    ->where('csc_product_single.id_csc_product_level1', $dt[1])
-                    ->orderBy($col, $ord)
-                    ->count();
+                    ->where('csc_product_single.id_csc_product_level1', $dt[1]);
             }
         }else{
             if($search){
@@ -215,18 +203,7 @@ class FrontController extends Controller
                     ->where('itdp_company_users.status', 1)
                     ->where('csc_product_single.status', 2)
                     ->where('csc_product_single.id_csc_product', $dt)
-                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
-                    ->orderBy($col, $ord)
-                    ->paginate(12);
-                $coproduct = DB::table('csc_product_single')
-                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-                    ->where('itdp_company_users.status', 1)
-                    ->where('csc_product_single.status', 2)
-                    ->where('csc_product_single.id_csc_product', $dt)
-                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%')
-                    ->orderBy($col, $ord)
-                    ->count();
+                    ->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%');
             }else{
                 $product = DB::table('csc_product_single')
                     ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
@@ -236,22 +213,10 @@ class FrontController extends Controller
                     ->where('csc_product_single.id_csc_product', $dt)
                     ->orderBy($col, $ord)
                     ->paginate(12);
-                $coproduct = DB::table('csc_product_single')
-                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-                    ->where('itdp_company_users.status', 1)
-                    ->where('csc_product_single.status', 2)
-                    ->where('csc_product_single.id_csc_product', $dt)
-                    ->orderBy($col, $ord)
-                    ->count();
             }
         }
-
-        if($jenis == "data"){
-            return $product;
-        }else{
-            return $coproduct;
-        }
+        
+        return $product;
     }
 
     public function getCategory(Request $request)
