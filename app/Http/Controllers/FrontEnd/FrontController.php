@@ -292,6 +292,7 @@ class FrontController extends Controller
         }else{
             $lct = "en";
         }
+        
         //Category Product
         $catdata = DB::table('csc_product')->where('id', $id)->first();
 
@@ -304,13 +305,15 @@ class FrontController extends Controller
             ->get();
 
         //Data Eksportir/Manufacturer
-        $manufacturer = DB::table('itdp_company_users as a')
-            ->join('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
-            ->selectRaw('a.*, b.id as idprofil, b.company')
-            ->where('a.id_role', 2)
-            ->inRandomOrder()
-            ->limit(10)
-            ->get();
+        $manufacturer = DB::select(
+            "SELECT 
+                a.id, b.company, b.id as id_profil, (SELECT COUNT(*) FROM csc_product_single WHERE status = 2 AND id_itdp_company_user = a.id) as jml_produk
+            FROM itdp_company_users as a
+            JOIN itdp_profil_eks as b ON a.id_profil = b.id
+            WHERE a.status = '1'
+            ORDER BY jml_produk DESC
+            LIMIT 10"
+        );
 
         $catActive = '';
         if($catdata->level_1 == 0 && $catdata->level_2 == 0){
