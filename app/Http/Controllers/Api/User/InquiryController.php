@@ -27,7 +27,7 @@ class InquiryController extends Controller
         $id_user = $request->id_user;
         $user = DB::table('csc_inquiry_br')
             ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
-            ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product, csc_product_single.id_itdp_profil_eks')
+            ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product, csc_product_single.id_itdp_profil_eks, csc_product_single.prodname_en')
             ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
             ->orderBy('csc_inquiry_br.created_at', 'DESC')
             ->get();
@@ -56,7 +56,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
             $jsonResult[$i]["updated_at"] = $user[$i]->updated_at;
             $jsonResult[$i]["duration"] = $user[$i]->duration;
-            $jsonResult[$i]["prodname"] = $user[$i]->prodname;
+            $jsonResult[$i]["prodname"] = $user[$i]->prodname_en;
             $jsonResult[$i]["due_date"] = $user[$i]->due_date;
             $jsonResult[$i]["id_product"] = $user[$i]->id_product;
             $id_profil = $user[$i]->id_itdp_profil_eks;
