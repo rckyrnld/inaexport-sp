@@ -27,10 +27,11 @@ class InquiryController extends Controller
         $id_user = $request->id_user;
         $user = DB::table('csc_inquiry_br')
             ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
-            ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
+            ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product, csc_product_single.id_itdp_profil_eks')
             ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
             ->orderBy('csc_inquiry_br.created_at', 'DESC')
             ->get();
+//        dd($user);
         $jsonResult = array();
         for($i = 0; $i < count($user);  $i++){
             $jsonResult[$i]["id"] = $user[$i]->id;
@@ -58,7 +59,8 @@ class InquiryController extends Controller
             $jsonResult[$i]["prodname"] = $user[$i]->prodname;
             $jsonResult[$i]["due_date"] = $user[$i]->due_date;
             $jsonResult[$i]["id_product"] = $user[$i]->id_product;
-
+            $id_profil = $user[$i]->id_itdp_profil_eks;
+            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
             $jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat)->first()->nama_kategori_en;
             $jsonResult[$i]["csc_product_level1_desc"] = ($user[$i]->id_csc_prod_cat_level1) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level1)->first()->nama_kategori_en : null;
             $jsonResult[$i]["csc_product_level2_desc"] = ($user[$i]->id_csc_prod_cat_level2) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level2)->first()->nama_kategori_en : null;
@@ -69,7 +71,7 @@ class InquiryController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = $user;
+            $data = $jsonResult;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
