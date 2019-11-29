@@ -192,7 +192,7 @@ class TrxController extends Controller
             $pembuat = "Admin";
         }else if($id == 4){
             $pembuat = "Perwakilan";
-        }else if($id == 0){
+        }else if($id == 3){
             $pembuat = "Importir";
         }
         if($id == 0){
