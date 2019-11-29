@@ -33,7 +33,7 @@ class InquiryController extends Controller
             ->get();
 //        dd($user);
         $jsonResult = array();
-        for($i = 0; $i < count($user);  $i++){
+        for ($i = 0; $i < count($user); $i++) {
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_pembuat"] = $user[$i]->id_pembuat;
             $jsonResult[$i]["type"] = $user[$i]->type;
@@ -248,21 +248,53 @@ class InquiryController extends Controller
     {
 //        dd($request);
         $id_user = $request->id_user;
-        $importir = DB::table('csc_inquiry_br')
+        $user = DB::table('csc_inquiry_br')
             ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
-            ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
+            ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product, csc_product_single.id_itdp_profil_eks, csc_product_single.prodname_en')
             ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
 //            ->where('csc_inquiry_br.status', 1)
             ->orderBy('csc_inquiry_br.created_at', 'DESC')
             ->get();
-
-        if (count($importir) > 0) {
+        $jsonResult = array();
+        for ($i = 0; $i < count($user); $i++) {
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_pembuat"] = $user[$i]->id_pembuat;
+            $jsonResult[$i]["type"] = $user[$i]->type;
+            $jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
+            $jsonResult[$i]["id_csc_prod_cat_level1"] = $user[$i]->id_csc_prod_cat_level1;
+            $jsonResult[$i]["id_csc_prod_cat_level2"] = $user[$i]->id_csc_prod_cat_level2;
+            $jsonResult[$i]["jenis_perihal_en"] = $user[$i]->jenis_perihal_en;
+            $jsonResult[$i]["jenis_perihal_in"] = $user[$i]->jenis_perihal_in;
+            $jsonResult[$i]["jenis_perihal_chn"] = $user[$i]->jenis_perihal_chn;
+            $jsonResult[$i]["id_mst_country"] = $user[$i]->id_mst_country;
+            $jsonResult[$i]["messages_en"] = $user[$i]->messages_en;
+            $jsonResult[$i]["messages_in"] = $user[$i]->messages_in;
+            $jsonResult[$i]["messages_chn"] = $user[$i]->messages_chn;
+            $jsonResult[$i]["subyek_en"] = $user[$i]->subyek_en;
+            $jsonResult[$i]["subyek_in"] = $user[$i]->subyek_in;
+            $jsonResult[$i]["subyek_chn"] = $user[$i]->subyek_chn;
+            $jsonResult[$i]["to"] = $user[$i]->to;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["date"] = $user[$i]->date;
+            $jsonResult[$i]["created_at"] = $user[$i]->created_at;
+            $jsonResult[$i]["updated_at"] = $user[$i]->updated_at;
+            $jsonResult[$i]["duration"] = $user[$i]->duration;
+            $jsonResult[$i]["prodname"] = $user[$i]->prodname_en;
+            $jsonResult[$i]["due_date"] = $user[$i]->due_date;
+            $jsonResult[$i]["id_product"] = $user[$i]->id_product;
+            $id_profil = $user[$i]->id_itdp_profil_eks;
+            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
+            $jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat)->first()->nama_kategori_en;
+            $jsonResult[$i]["csc_product_level1_desc"] = ($user[$i]->id_csc_prod_cat_level1) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level1)->first()->nama_kategori_en : null;
+            $jsonResult[$i]["csc_product_level2_desc"] = ($user[$i]->id_csc_prod_cat_level2) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level2)->first()->nama_kategori_en : null;
+        }
+        if (count($user) > 0) {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = $importir;
+            $data = $jsonResult;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -647,15 +679,38 @@ class InquiryController extends Controller
         $id_inquiry = $request->id_inquiry;
         $status = $request->status;
         $id_user = $request->id_user;
+        $datenow = date('Y-m-d H:i:s');
         if ($status == 1) {
             $stat = 3;
         } else {
             $stat = 4;
         }
+        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
         $update = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
             'status' => $stat,
         ]);
+        if ($stat == 3) {
+            $idn = DB::table('csc_transaksi')->max('id_transaksi');
+            $idnew = $idn + 1;
 
+            if ($inquiry->type == "admin") {
+                $role = 1;
+            } else if ($inquiry->type == "perwakilan") {
+                $role = 4;
+            } else if ($inquiry->type == "importir") {
+                $role = 3;
+            }
+            $insert = DB::table('csc_transaksi')->insert([
+                "id_transaksi" => $idnew,
+                "id_pembuat" => $inquiry->id_pembuat,
+                "by_role" => $role,
+                "id_eksportir" => $id_user,
+                "id_terkait" => $id_user,
+                "origin" => 1,
+                "created_at" => $datenow,
+                "status_transaksi" => 0,
+            ]);
+        }
 
         if (count($update) > 0) {
             $meta = [
@@ -663,7 +718,7 @@ class InquiryController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '';
+            $data = $idnew;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
