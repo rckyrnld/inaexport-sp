@@ -133,7 +133,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <div class="row">
-                          <div class="col-md-6">
+                          <div class="col-md-6 col-lg-6 col-12">
                             <center>
                             <?php
                                 $url = '/login';
@@ -171,7 +171,7 @@
                                 @endif
                             </center>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-6 col-lg-6 col-12">
                             <center>
                                 @if(Auth::guard('eksmp')->user())
                                 @if(Auth::guard('eksmp')->user()->id_role == 2)
@@ -330,9 +330,9 @@
                                         <div class="single_product" style="height: 350px;">
                                             <div class="product_name">
                                                 <?php
-                                                    $num_char = 30;
+                                                    $num_char = 20;
                                                     $prodn = getProductAttr($p->id, 'prodname', $lct);
-                                                    if(strlen($prodn) > 30){
+                                                    if(strlen($prodn) > 20){
                                                         $cut_text = substr($prodn, 0, $num_char);
                                                         if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
                                                             $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
@@ -364,11 +364,24 @@
                                                 ?>
                                                 <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}">{{$companame}}</a>
                                             </h3>
-                                            <div class="product_thumb">
-                                                <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
+                                            <div class="product_thumb" align="center">
+                                                <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="height: 170px; width: auto;"></a>
                                             </div>
+                                                <?php
+                                                    $num_chark = 25;
+                                                    if(strlen($categorynya) > 25){
+                                                        $cut_text = substr($categorynya, 0, $num_chark);
+                                                        if ($categorynya{$num_chark - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                            $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                            $cut_text = substr($categorynya, 0, $new_pos);
+                                                        }
+                                                        $category = $cut_text . '...';
+                                                    }else{
+                                                        $category = $categorynya;
+                                                    }
+                                                ?>
                                             <div class="product_name">
-                                                <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}">{{$categorynya}}</a></p>
+                                                <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}">{{$category}}</a></p>
                                             </div>
                                             <div class="product_content">
                                                 <div class="product_footer d-flex align-items-center">
@@ -407,7 +420,7 @@
                     <div class="row">
                         <div class="col-md-6"></div>
                         <div class="col-md-1"></div>
-                        <div class="col-md-5">
+                        <div class="col-md-5" style="padding-top: 20px;">
                             <div class="box-cu">
                                 <form action="{{url('/contact-us/send/')}}" method="POST">
                                     {{ csrf_field() }}

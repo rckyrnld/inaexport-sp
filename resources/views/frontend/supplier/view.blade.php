@@ -298,27 +298,43 @@
                                                 }
                                             ?>
                                             <div class="col-lg-3 col-md-4 col-12 ">
-                                                <div class="single_product">
-                                                    <div class="pro-type" style="{{$dis}}">
-                                                        <span class="pro-type-content">
-                                                            @if($loc == "ch")
-                                                                新
-                                                            @elseif($loc == "in")
-                                                                BARU
-                                                            @else
-                                                                NEW
-                                                            @endif
-                                                        </span>
-                                                    </div>
+                                                <div class="single_product" style="height: 300px;">
                                                     <div class="product_name grid_name">
-                                                        <h3><a href="{{url('front_end/product/'.$pro->id)}}">{{getProductAttr($pro->id, 'prodname', $lct)}}</a></h3>
+                                                        <?php
+                                                            $num_char = 16;
+                                                            $prodn = getProductAttr($pro->id, 'prodname', $lct);
+                                                            if(strlen($prodn) > 16){
+                                                                $cut_text = substr($prodn, 0, $num_char);
+                                                                if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                                    $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                                    $cut_text = substr($prodn, 0, $new_pos);
+                                                                }
+                                                                $prodnama = $cut_text . '...';
+                                                            }else{
+                                                                $prodnama = $prodn;
+                                                            }
+                                                        ?>
+                                                        <h3><a href="{{url('front_end/product/'.$pro->id)}}"title="{{$prodn}}">{{$prodnama}}</a></h3>
                                                     </div>
-                                                    <div class="product_thumb">
-                                                        <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
+                                                    <div class="product_thumb" align="center">
+                                                        <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="height: 150px;"></a>
                                                         <!-- <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
                                                     </div>
                                                     <div class="product_name grid_name">
-                                                        <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}">{{$categorynya}}</a></p>
+                                                        <?php
+                                                            $num_chark = 23;
+                                                            if(strlen($categorynya) > 23){
+                                                                $cut_text = substr($categorynya, 0, $num_chark);
+                                                                if ($categorynya{$num_chark - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                                    $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                                    $cut_text = substr($categorynya, 0, $new_pos);
+                                                                }
+                                                                $category = $cut_text . '...';
+                                                            }else{
+                                                                $category = $categorynya;
+                                                            }
+                                                        ?>
+                                                        <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}">{{$category}}</a></p>
                                                     </div>
                                                     <div class="product_content grid_content">
                                                         <div class="content_inner">

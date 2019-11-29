@@ -324,7 +324,7 @@ $cr = explode(',',$p3->id_csc_prod);
 	</div>
 	
 	<?php } ?>
-	<?php } ?>
+	
 	
 	
 	<div class="form-row">

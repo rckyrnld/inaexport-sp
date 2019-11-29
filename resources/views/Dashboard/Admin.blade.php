@@ -1,4 +1,10 @@
 @include('header')
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 
 &nbsp;
 <style type="text/css">
@@ -62,7 +68,7 @@
                         <a class="nav-link active" data-toggle="tab" data-target="#tab1">
                             <i class="fa fa-plus-circle"></i> Member
                         </a>
-                        <a class="nav-link" data-toggle="tab" data-target="#tab2">
+                        <a class="nav-link" data-toggle="tab" data-target="#tab2" onclick="cdata2()">
                             <i class="fa fa-plus-circle"></i> Research Corner
                         </a>
                         <a class="nav-link" data-toggle="tab" data-target="#tab3">
@@ -84,6 +90,7 @@
                         <div class="tab-pane animate fadeIn text-muted active show" id="tab1">
                             <div class="row">
                                 <div id="user_year" style="min-width: 100%; height: 400px; margin: 0 auto;"></div>
+								<a id="br1" onclick="exp1()" class="btn btn-success"><font color="white"><i class="fa fa-download"></i> Export PDF</font></a>
                             </div>
                         </div>
                         <div class="tab-pane animate fadeIn text-muted" id="tab2">
@@ -142,6 +149,7 @@
 &nbsp;
 @include('footer')
 <script type="text/javascript">
+
     $(document).ready(function () {
         Highcharts.setOptions({
             lang: {
@@ -461,4 +469,19 @@
             }
         });
     }
+	
+function exp1(){
+ 
+    //send the div to PDF
+	
+    html2canvas($("#user_year"), { // DIV ID HERE
+        onrendered: function(canvas) {
+            var imgData = canvas.toDataURL('image/png'); 
+            var doc = new jsPDF('landscape');
+            doc.addImage(imgData, 'PDF', 10, 10);
+            doc.save('sample-file.pdf'); //SAVE PDF FILE
+        }
+    });
+
+}
 </script>

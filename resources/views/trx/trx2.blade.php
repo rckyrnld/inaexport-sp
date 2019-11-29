@@ -324,6 +324,107 @@ $cr = explode(',',$p3->id_csc_prod);
 	</div>
 	
 	<?php } ?>
+	
+	<?php }else { ?>
+	<!-- Inquiry -->
+	<div class="form-row">
+		<div class="form-group col-sm-2">
+			<b>Created By</b>
+		</div>
+		<div class="form-group col-sm-4">
+			<?php  if($p2->by_role == 1){ echo "Admin"; }else if($p2->by_role == 4){ echo "Representative"; }else{ echo "Importer"; }  ?>
+			<?php if($p2->by_role == 3){ 
+			$carih = DB::select("select a.*,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil=b.id and a.id='".$p2->id_pembuat."'");
+			foreach($carih as $ch){
+				echo " - ".$ch->badanusaha." ".$ch->company." (".$ch->username.")";
+			?>
+			
+			<?php } } ?>
+		</div>
+	</div>
+	<?php 
+	$idt = $p2->id_terkait;
+	$caridt = DB::select("select * from csc_inquiry_br where id='".$idt."'");
+	foreach($caridt as $cdt){
+		$cd1 = $cdt->id;
+		$cd2 = $cdt->id_csc_prod_cat;
+		$cd3 = $cdt->id_csc_prod_cat_level1;
+		$cd4 = $cdt->id_csc_prod_cat_level2;
+	}
+	//echo $cd1."aaaa";
+	?>
+	<div class="form-row">
+		<div class="form-group col-sm-2">
+			<b>Category</b>
+		</div>
+		<div class="form-group col-sm-4">
+			
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="form-group col-sm-2">
+			<b>Quantity</b>
+		</div>
+		<div class="form-group col-sm-2">
+			<input type="number" name="eo" class="form-control" value="<?php  if(empty($p2->eo)){ echo "1"; }else{ echo $p2->eo; } ?>">
+		</div>
+		<div class="form-group col-sm-2">
+			<input type="hidden" name="id_in" class="form-control" value="<?php echo $p2->id_terkait; ?>">
+			 <select class="form-control" name="neo" id="neo">
+                                                <option value="">- Choose -</option>
+
+                                                <option <?php if($p2->neo == "Each"){ echo "selected"; }?> value="Each">Each</option>
+                                                <option <?php if($p2->neo == "Foot"){ echo "selected"; }?> value="Foot">Foot</option>
+                                                <option <?php if($p2->neo == "Gallons"){ echo "selected"; }?> value="Gallons">Gallons</option>
+                                                <option <?php if($p2->neo == "Kilograms"){ echo "selected"; }?>value="Kilograms">Kilograms</option>
+                                                <option <?php if($p2->neo == "Liters"){ echo "selected"; }?> value="Liters">Liters</option>
+                                                <option <?php if($p2->neo == "Packs"){ echo "selected"; }?>value="Packs">Packs</option>
+                                                <option <?php if($p2->neo == "Pairs"){ echo "selected"; }?> value="Pairs">Pairs</option>
+                                                <option <?php if($p2->neo == "Pieces"){ echo "selected"; }?> value="Pieces">Pieces</option>
+                                                <option <?php if($p2->neo == "Reams"){ echo "selected"; }?> value="Reams">Reams</option>
+                                                <option <?php if($p2->neo == "Rods"){ echo "selected"; }?> value="Rods">Rods</option>
+                                                <option <?php if($p2->neo == "Rolls"){ echo "selected"; }?> value="Rolls">Rolls</option>
+                                                <option <?php if($p2->neo == "Sets"){ echo "selected"; }?> value="Sets">Sets</option>
+                                                <option <?php if($p2->neo == "Sheets"){ echo "selected"; }?>value="Sheets">Sheets</option>
+                                                <option <?php if($p2->neo == "Square Meters"){ echo "selected"; }?> value="Square Meters">Square Meters</option>
+                                                <option <?php if($p2->neo == "Tons"){ echo "selected"; }?> value="Tons">Tons</option>
+                                                <option <?php if($p2->neo == "Unit"){ echo "selected"; }?> value="Unit">Unit</option>
+                                                <option <?php if($p2->neo == "令"){ echo "selected"; }?> value="令">令</option>
+                                                <option <?php if($p2->neo == "件"){ echo "selected"; }?> value="件">件</option>
+                                                <option <?php if($p2->neo == "加仑"){ echo "selected"; }?> value="加仑">加仑</option>
+                                                <option <?php if($p2->neo == "包"){ echo "selected"; }?> value="包">包</option>
+                                                <option <?php if($p2->neo == "千克"){ echo "selected"; }?> value="千克">千克</option>
+                                                <option <?php if($p2->neo == "升"){ echo "selected"; }?> value="升">升</option>
+                                                <option <?php if($p2->neo == "单位"){ echo "selected"; }?> value="单位">单位</option>
+                                                <option <?php if($p2->neo == "卷"){ echo "selected"; }?> value="卷">卷</option>
+                                                <option <?php if($p2->neo == "吨"){ echo "selected"; }?> value="吨">吨</option>
+                                                <option <?php if($p2->neo == "套"){ echo "selected"; }?> value="套">套</option>
+                                                <option <?php if($p2->neo == "对"){ echo "selected"; }?> value="对">对</option>
+                                                <option <?php if($p2->neo == "平方米"){ echo "selected"; }?> value="平方米">平方米</option>
+                                                <option <?php if($p2->neo == "张"){ echo "selected"; }?> value="张">张</option>
+                                                <option <?php if($p2->neo == "根"){ echo "selected"; }?> value="根">根</option>
+                                                <option <?php if($p2->neo == "每个"){ echo "selected"; }?> value="每个">每个</option>
+                                                <option <?php if($p2->neo == "英尺"){ echo "selected"; }?> value="英尺">英尺</option>
+                                                <option <?php if($p2->neo == "集装箱"){ echo "selected"; }?> value="集装箱">集装箱</option>
+
+                                            </select>
+		</div>
+	</div>
+	
+	<div class="form-row">
+		<div class="form-group col-sm-2">
+			<b>Price</b>
+		</div>
+		<div class="form-group col-sm-2">
+		
+			<input type="number" name="tp" class="form-control" value="<?php  if(empty($p2->tp)){ echo "0"; }else{ echo $p2->tp; } ?>">
+		</div>
+		<div class="form-group col-sm-2">
+			<select style="color:black;" class="form-control" name="ntp" id="ntp"><option value="IDR">IDR</option><option value="THB">THB</option><option selected value="USD">USD</option></select>
+		</div>
+	</div>
+	
+	
 	<?php } ?>
 	
 	
@@ -364,10 +465,10 @@ $cr = explode(',',$p3->id_csc_prod);
 		
 			
 			<br>
-			<?php // if($p2->status_transaksi != 1){ ?>
+			<?php  if($p2->status_transaksi != 1){ ?>
 			<button style="width:33%;" onclick="getyou(1)" type="submit" class="btn btn-info">Submit</button>
 			<button style="width:30%;" onclick="getyou(0)" type="submit" class="btn btn-warning"><font color="white">Draft</font></button>
-			<?php // } ?>
+			<?php  } ?>
 			<a style="width:33%;" href="{{url('trx_list')}}" class="btn btn-danger">Cancel</a></center>
 		</div>
 	</div>
