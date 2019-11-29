@@ -124,6 +124,7 @@ return [
         "default" => "Default",
         "newest" => "Newest",
         "eksporternm" => "Exporter Name : A-Z",
+        "prodnm" => "Product Name : A-Z",
         "detailtitle" => "Details Exporter",
         "category" => "Categories",
         "sortby" => "Sort By",

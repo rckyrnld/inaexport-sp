@@ -226,17 +226,33 @@
                             <div class="col-lg-3 col-md-4 col-12 ">
                                 <div class="single_product" style="padding-bottom: 0px; margin-bottom: 10px;">
                                     <div class="product_content grid_content" style="margin-top: 0px;">
-                                        <div class="eksporter-logo">
+                                        <div class="eksporter-logo" style="height: 160px;">
                                             <center>
-                                                <a href="{{url('/front_end/list_perusahaan/view/'.$eks->id_user)}}" class="a-eksporter">
+                                                <?php
+                                                    $num_char = 40;
+                                                    $eksn = $eks->company;
+                                                    if(strlen($eksn) > 40){
+                                                        $cut_text = substr($eksn, 0, $num_char);
+                                                        if ($eksn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                            $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                            $cut_text = substr($eksn, 0, $new_pos);
+                                                        }
+                                                        $eksnama = $cut_text . '...';
+                                                    }else{
+                                                        $eksnama = $eksn;
+                                                    }
+                                                ?>
+                                                <a href="{{url('/front_end/list_perusahaan/view/'.$eks->id_user)}}" class="a-eksporter" title="{{$eksn}}">
                                                     <img src="{{url('/')}}{{$isimg1}}" alt="" class="eksporter_img">
                                                     <br>
-                                                    <span class="name-eksporter">{{$eks->company}}</span>
+                                                    <span class="name-eksporter">
+                                                        {{$eksnama}}
+                                                    </span>
                                                 </a>
                                             </center>
                                         </div>
-                                        <div class="eksporter-product" style="height: auto;">
-                                            <div class="list-group" style="font-size: 12px;">
+                                        <div class="eksporter-product" style="overflow-y: auto;">
+                                            <div class="list-group" style="font-size: 12px;height: 150px;">
                                                 <?php
                                                     $productnya = getProductbyEksportir($eks->id_user, 3, null, $lct);
                                                 ?>

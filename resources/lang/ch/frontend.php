@@ -125,6 +125,7 @@ return [
         "default" => "默认",
         "newest" => "最新",
         "eksporternm" => "出口商名称：A-Z",
+        "prodnm" => "产品名称 : A-Z",
         "detailtitle" => "详细资料出口商",
         "category" => "类别",
         "sortby" => "排序方式",

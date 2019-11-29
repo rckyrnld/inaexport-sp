@@ -124,6 +124,7 @@ return [
         "default" => "Default",
         "newest" => "Terbaru",
         "eksporternm" => "Nama Eksportir : A-Z",
+        "prodnm" => "Nama Produk : A-Z",
         "detailtitle" => "Detail Eksportir",
         "category" => "Kategori",
         "sortby" => "Sortir dengan",
