@@ -26,6 +26,7 @@
                     <th>Subyek</th>
                     <th>Massages</th>
                     <th>Status</th>
+                    <th>Created At</th>
                     <th width="20%">Action</th>
                   </tr>
                 </thead>
@@ -50,6 +51,7 @@
               {data: 'subyek', name: 'subyek'},
 							{data: 'main_messages', name: 'main_messages'},
               {data: 'status', name: 'status'},
+              {data: 'created_at', name: 'created_at'},
               {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
