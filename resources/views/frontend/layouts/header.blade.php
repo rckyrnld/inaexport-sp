@@ -123,18 +123,18 @@
     <!--header area start-->
     <header class="header_area">
         <!--header top start-->
-        <div class="header_top">
+        <div style="background-color: #2492eb; color: white;">
             <div class="container">
                 <div class="top_inner">
                     <div class="row align-items-center">
-                        <div class="col-lg-6 col-md-6">
+                        <div class="col-lg-6 col-md-6 col-6">
                             <div class="follow_us">
-                                <label><i class="ion-social-whatsapp-outline"></i> hotline : +62 000 111 222 333</label>
+                                <label><i class="ion-social-whatsapp-outline"></i> hotline :&nbsp;&nbsp;+62 000 111 222 333</label>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6">
+                        <div class="col-lg-6 col-md-6 col-6">
                             <div class="top_right text-right">
-                                <ul>
+                                <ul style="padding-top: 5px; margin-bottom: 5px;">
                                     @if(Auth::guard('eksmp')->user())
                                         <li class="top_links"><a href="#"><i class="ion-android-person"></i>
                                         @if(Auth::guard('eksmp')->user()->id_role == 3)
@@ -263,12 +263,12 @@
         <div class="header_middle">
             <div class="container" style="max-width: 1200px!important;">
                 <div class="row align-items-center">
-                    <div class="col-lg-2 col-md-6">
+                    <div class="col-lg-2 col-md-6 col-12">
                         <div class="logo">
                             <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>
                         </div>
                     </div>
-                    <div class="col-lg-10 col-md-6">
+                    <div class="col-lg-10 col-md-6 col-12">
                         <div class="middel_right">
                             <div class="search-container" style="margin-right: 48px!important;">
                                 <!-- Nav pills -->

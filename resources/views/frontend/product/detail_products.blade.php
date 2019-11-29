@@ -102,21 +102,21 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product-details-tab">
 
-                        <div id="img-1" class="zoomWrapper single-zoom">
+                        <div id="img-1" class="zoomWrapper single-zoom" align="center">
                             <a href="#">
-                                <img id="zoom1" src="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}" alt="big-1">
+                                <img id="zoom1" src="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}" alt="big-1" style="width: auto; height: 400px;">
                             </a>
                         </div>
 
                         @if(count($arrimg) != 0)
-                        <div class="single-zoom-thumb">
+                        <div class="single-zoom-thumb" align="center">
                             <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
                                 <?php
                                     for ($m=0; $m < count($arrimg); $m++) { 
                                 ?>
                                         <li>
                                             <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$arrimg[$m]}}" data-zoom-image="{{url('/')}}/{{$arrimg[$m]}}">
-                                                <img src="{{url('/')}}/{{$arrimg[$m]}}" alt="zo-th-1" />
+                                                <img src="{{url('/')}}/{{$arrimg[$m]}}" alt="zo-th-1" style="width: auto; height: 105px;" />
                                             </a>
 
                                         </li>
@@ -353,9 +353,9 @@
                             <div class="single_product" style="height: 350px;">
                                 <div class="product_name">
                                     <?php
-                                        $num_char = 30;
+                                        $num_char = 20;
                                         $prodn = getProductAttr($p->id, 'prodname', $lct);
-                                        if(strlen($prodn) > 30){
+                                        if(strlen($prodn) > 20){
                                             $cut_text = substr($prodn, 0, $num_char);
                                             if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
                                                 $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
@@ -390,7 +390,20 @@
                                     <!-- <a class="secondary_img" href="{{url('/front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
                                 </div>
                                 <div class="product_name grid_name">
-                                    <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}">{{$categorynya}}</a></p>
+                                    <?php
+                                        $num_chark = 25;
+                                        if(strlen($categorynya) > 25){
+                                            $cut_text = substr($categorynya, 0, $num_chark);
+                                            if ($categorynya{$num_chark - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                $cut_text = substr($categorynya, 0, $new_pos);
+                                            }
+                                            $category = $cut_text . '...';
+                                        }else{
+                                            $category = $categorynya;
+                                        }
+                                    ?>
+                                    <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}">{{$category}}</a></p>
                                 </div>
                                 <div class="product_content">
                                     <div class="product_footer d-flex align-items-center">
