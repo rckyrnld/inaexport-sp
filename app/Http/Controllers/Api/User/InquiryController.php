@@ -31,6 +31,38 @@ class InquiryController extends Controller
             ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
             ->orderBy('csc_inquiry_br.created_at', 'DESC')
             ->get();
+        $jsonResult = array();
+        for($i = 0; $i < count($user);  $i++){
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_pembuat"] = $user[$i]->id_pembuat;
+            $jsonResult[$i]["type"] = $user[$i]->type;
+            $jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
+            $jsonResult[$i]["id_csc_prod_cat_level1"] = $user[$i]->id_csc_prod_cat_level1;
+            $jsonResult[$i]["id_csc_prod_cat_level2"] = $user[$i]->id_csc_prod_cat_level2;
+            $jsonResult[$i]["jenis_perihal_en"] = $user[$i]->jenis_perihal_en;
+            $jsonResult[$i]["jenis_perihal_in"] = $user[$i]->jenis_perihal_in;
+            $jsonResult[$i]["jenis_perihal_chn"] = $user[$i]->jenis_perihal_chn;
+            $jsonResult[$i]["id_mst_country"] = $user[$i]->id_mst_country;
+            $jsonResult[$i]["messages_en"] = $user[$i]->messages_en;
+            $jsonResult[$i]["messages_in"] = $user[$i]->messages_in;
+            $jsonResult[$i]["messages_chn"] = $user[$i]->messages_chn;
+            $jsonResult[$i]["subyek_en"] = $user[$i]->subyek_en;
+            $jsonResult[$i]["subyek_in"] = $user[$i]->subyek_in;
+            $jsonResult[$i]["subyek_chn"] = $user[$i]->subyek_chn;
+            $jsonResult[$i]["to"] = $user[$i]->to;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["date"] = $user[$i]->date;
+            $jsonResult[$i]["created_at"] = $user[$i]->created_at;
+            $jsonResult[$i]["updated_at"] = $user[$i]->updated_at;
+            $jsonResult[$i]["duration"] = $user[$i]->duration;
+            $jsonResult[$i]["prodname"] = $user[$i]->prodname;
+            $jsonResult[$i]["due_date"] = $user[$i]->due_date;
+            $jsonResult[$i]["id_product"] = $user[$i]->id_product;
+
+            $jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat)->first()->nama_kategori_en;
+            $jsonResult[$i]["csc_product_level1_desc"] = ($user[$i]->id_csc_prod_cat_level1) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level1)->first()->nama_kategori_en : null;
+            $jsonResult[$i]["csc_product_level2_desc"] = ($user[$i]->id_csc_prod_cat_level2) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level2)->first()->nama_kategori_en : null;
+        }
         if (count($user) > 0) {
             $meta = [
                 'code' => 200,
