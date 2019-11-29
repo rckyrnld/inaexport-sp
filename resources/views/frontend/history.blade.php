@@ -154,6 +154,9 @@
                                     <th width="15%">
                                       <center>@lang('inquiry.status')</center>
                                     </th>
+									<th width="15%">
+                                      <center>Created at</center>
+                                    </th>
                                     <th width="20%">
                                       <center>@lang('inquiry.action')</center>
                                     </th>
@@ -301,6 +304,7 @@ function xy(a){
                 {data: 'email', name: 'email'},
                 {data: 'main_messages', name: 'main_messages'},
                 {data: 'status', name: 'status'},
+                {data: 'created_at', name: 'created_at'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
