@@ -320,7 +320,11 @@
 				</form>
 							<hr>	
 		<br><h5><center>List Contact</center></h5><br><br>
-		<a data-toggle="modal" data-target="#myModal"  class="btn btn-success"><font color="white"><i class="fa fa-plus"></i> Add Contact</font></a><br><br>
+		<?php if(empty(Auth::user()->name)){ ?>
+			<a data-toggle="modal" data-target="#myModal"  class="btn btn-success"><font color="white"><i class="fa fa-plus"></i> Add Contact</font></a><br><br>
+                                   <?php }else{ ?>
+		
+									<?php } ?>
 		<table id="example1" class="table  table-bordered table-striped">
 			      <thead class="bg-success text-white">
 			          <tr>
@@ -343,7 +347,7 @@
 						<td><?php echo $rq->name; ?></td>
 						<td><?php echo $rq->email; ?></td>
 						<td><?php echo $rq->phone; ?></td>
-						<td><a class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a></td>
+						<td><a onclickclass="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a></td>
 					</tr>
 					<?php $nb++; } ?>
 					</tbody>
