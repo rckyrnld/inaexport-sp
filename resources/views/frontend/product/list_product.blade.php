@@ -236,7 +236,7 @@
                                 }
                             ?>
                             <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
+                                <div class="single_product" style="height: 350px;">
                                     <div class="pro-type" style="{{$dis}}">
                                         <span class="pro-type-content">
                                              @if($loc == "ch")
@@ -248,16 +248,58 @@
                                             @endif
                                         </span>
                                     </div>
+                                    <?php
+                                        $num_char = 30;
+                                        $prodn = getProductAttr($pro->id, 'prodname', $lct);
+                                        if(strlen($prodn) > 30){
+                                            $cut_text = substr($prodn, 0, $num_char);
+                                            if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                $cut_text = substr($prodn, 0, $new_pos);
+                                            }
+                                            $prodnama = $cut_text . '...';
+                                        }else{
+                                            $prodnama = $prodn;
+                                        }
+                                    ?>
                                     <div class="product_name grid_name">
-                                        <h3><a href="{{url('front_end/product/'.$pro->id)}}">{{getProductAttr($pro->id, 'prodname', $lct)}}</a></h3>
+                                        <h3><a href="{{url('front_end/product/'.$pro->id)}}" title="{{$prodn}}">{{$prodnama}}</a></h3>
                                     </div>
-                                    <h3 style="text-transform: uppercase; font-size: 14px; font-weight: 400; font-family: "Open Sans", sans-serif;"><a href="{{url('front_end/list_perusahaan/view/'.$pro->id_itdp_company_user)}}">{{getCompanyName($pro->id_itdp_company_user)}}</a></h3>
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt=""></a>
+                                    <h3 style="text-transform: uppercase; font-size: 14px; font-weight: 400; font-family: "Open Sans", sans-serif;">
+                                        <?php
+                                            $num_charp = 25;
+                                            $compname = getCompanyName($pro->id_itdp_company_user);
+                                            if(strlen($compname) > 25){
+                                                $cut_text = substr($compname, 0, $num_charp);
+                                                if ($compname{$num_charp - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                    $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                    $cut_text = substr($compname, 0, $new_pos);
+                                                }
+                                                $companame = $cut_text . '...';
+                                            }else{
+                                                $companame = $compname;
+                                            }
+                                        ?>
+                                        <a href="{{url('front_end/list_perusahaan/view/'.$pro->id_itdp_company_user)}}" title="{{$compname}}">{{$companame}}</a></h3>
+                                    <div class="product_thumb" align="center">
+                                        <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="height: 170px;"></a>
                                         <!-- <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
                                     </div>
                                     <div class="product_name grid_name">
-                                        <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}">{{$categorynya}}</a></p>
+                                        <?php
+                                            $num_chark = 32;
+                                            if(strlen($categorynya) > 32){
+                                                $cut_text = substr($categorynya, 0, $num_chark);
+                                                if ($categorynya{$num_chark - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                    $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                    $cut_text = substr($categorynya, 0, $new_pos);
+                                                }
+                                                $category = $cut_text . '...';
+                                            }else{
+                                                $category = $categorynya;
+                                            }
+                                        ?>
+                                        <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}">{{$category}}</a></p>
                                     </div>
                                     <div class="product_content grid_content">
                                         <div class="content_inner">
