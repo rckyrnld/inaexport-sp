@@ -342,6 +342,25 @@ $cr = explode(',',$p3->id_csc_prod);
 			<?php } } ?>
 		</div>
 	</div>
+	<?php 
+	$idt = $p2->id_terkait;
+	$caridt = DB::select("select * from csc_inquiry_br where id='".$idt."'");
+	foreach($caridt as $cdt){
+		$cd1 = $cdt->id;
+		$cd2 = $cdt->id_csc_prod_cat;
+		$cd3 = $cdt->id_csc_prod_cat_level1;
+		$cd4 = $cdt->id_csc_prod_cat_level2;
+	}
+	//echo $cd1."aaaa";
+	?>
+	<div class="form-row">
+		<div class="form-group col-sm-2">
+			<b>Category</b>
+		</div>
+		<div class="form-group col-sm-4">
+			
+		</div>
+	</div>
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Quantity</b>
