@@ -84,7 +84,7 @@ class TrxController extends Controller
 
     public function save_trx(Request $request)
     {
-<<<<<<< HEAD
+
 		$ch1 = str_replace(".","",$request->tp);
 		$ch2 = str_replace(",",".",$ch1);
 		if($request->origin == 2){
@@ -97,18 +97,6 @@ class TrxController extends Controller
 			foreach($caripembuat as $cp){ $mailimp = $cp->email; }
 			$ket = "Transaction Created by ".Auth::guard('eksmp')->user()->username;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-=======
-        if($request->origin == 2){
-            $update = DB::select("update csc_buying_request set eo='".$request->eo."', neo='".$request->neo."',tp='".$request->tp."',ntp='".$request->ntp."' where id='".$request->id_br."' ");
-
-        }
-        if($request->tipekirim == 1){
-            if($request->by_role == 3){
-                $caripembuat = DB::select("select * from itdp_company_users where id='".$request->id_pembuat."'");
-                foreach($caripembuat as $cp){ $mailimp = $cp->email; }
-                $ket = "Transaction Created by ".Auth::guard('eksmp')->user()->username;
-                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
->>>>>>> d488d539d71d99df7ebb9a715eacbe7d38faa2ce
 			('3','Eksportir','".Auth::guard('eksmp')->user()->id."','Importir','".$request->id_pembuat."','".$ket."','detailtrx','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
 			");
 
@@ -166,7 +154,7 @@ class TrxController extends Controller
             $insertnotif3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
 			('2','Eksportir','".Auth::guard('eksmp')->user()->id."','Eksportir','".Auth::guard('eksmp')->user()->id."','".$ket3."','input_transaksi','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
 			");
-<<<<<<< HEAD
+
 			
 			$data33 = [
             'email' => "",
@@ -189,30 +177,7 @@ class TrxController extends Controller
 	}
 	
 	public function detailtrx($id)
-=======
 
-            $data33 = [
-                'email' => "",
-                'email1' => Auth::guard('eksmp')->user()->email,
-                'username' => Auth::guard('eksmp')->user()->username,
-                'main_messages' => "",
-                'id' => $request->id_transaksi
-            ];
-            Mail::send('UM.user.sendtrx3', $data33, function ($mail) use ($data33) {
-                $mail->to($data33['email1'], $data33['username']);
-                $mail->subject('Transaction Created By '.Auth::guard('eksmp')->user()->username);
-            });
-
-
-
-        }
-        $update = DB::select("update csc_transaksi set total='".($request->eo * $request->tp)."' , eo='".$request->eo."', neo='".$request->neo."',tp='".$request->tp."',ntp='".$request->ntp."', status_transaksi='".$request->tipekirim."', type_tracking='".$request->type_tracking."',no_tracking='".$request->no_track."' where id_transaksi='".$request->id_transaksi."' ");
-        return redirect('trx_list');
-
-    }
-
-    public function detailtrx($id)
->>>>>>> d488d539d71d99df7ebb9a715eacbe7d38faa2ce
     {
         $pageTitle = "";
         return view('trx.detailtrx', compact('pageTitle','id'));
