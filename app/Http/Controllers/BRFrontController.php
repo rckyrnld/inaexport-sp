@@ -260,7 +260,7 @@ class BRFrontController extends Controller
 		}
 		}
 		$update = DB::select("update csc_buying_request set status='1' where id='".$id."'");
-        return redirect('br_importir');
+        return redirect('front_end/history');
     }
 	
 	public function br_pw_bc($id)
@@ -358,6 +358,8 @@ class BRFrontController extends Controller
 			('3','Importir','".Auth::guard('eksmp')->user()->id."','Importir','".Auth::guard('eksmp')->user()->id."','".$ket3."','br_importir_chat','".$it2."','".Date('Y-m-d H:m:s')."','0')
 			");
 			
+			
+			
 			// echo "die";die();
 			
 			$idq = $request->idq;
@@ -389,7 +391,10 @@ class BRFrontController extends Controller
 	}	
 	
 	public function br_importir_save(Request $request)
-    {
+    {	
+		$ch1 = str_replace(".","",$request->tp);
+		$ch2 = str_replace(",",".",$ch1);
+		// echo $ch2;die();
 		$kumpulcat = "";
 		$g = count($request->category);
 		for($a = 0; $a < $g; $a++){
@@ -409,7 +414,7 @@ class BRFrontController extends Controller
 			,eo,neo,tp,ntp,by_role,id_pembuat,date,id_csc_prod) values
 			('".$request->subyek."','".$request->valid."','".$request->country."','".$request->city."','".$h[0]."'
 			,'0','0','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
-			,'".$request->tp."','".$request->ntp."','3','".Auth::guard('eksmp')->user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat."')");
+			,'".$ch2."','".$request->ntp."','3','".Auth::guard('eksmp')->user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat."')");
 		
 		return redirect('br_importir');
 	}

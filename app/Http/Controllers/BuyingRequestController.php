@@ -570,6 +570,9 @@ class BuyingRequestController extends Controller
 	
 	public function br_save(Request $request)
     {
+		$ch1 = str_replace(".","",$request->tp);
+		$ch2 = str_replace(",",".",$ch1);
+		
 		$kumpulcat = "";
 		$g = count($request->category);
 		for($a = 0; $a < $g; $a++){
@@ -589,7 +592,7 @@ class BuyingRequestController extends Controller
 			,eo,neo,tp,ntp,by_role,id_pembuat,date,id_csc_prod) values
 			('".$request->cmp."','".$request->valid."','".$request->country."','".$request->city."','".$h[0]."'
 			,'0','0','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
-			,'".$request->tp."','".$request->ntp."','".Auth::user()->id_group."','".Auth::user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat."')");
+			,'".$ch2."','".$request->ntp."','".Auth::user()->id_group."','".Auth::user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat."')");
 		
 		return redirect('br_list');
 	}

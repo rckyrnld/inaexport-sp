@@ -84,8 +84,10 @@ class TrxController extends Controller
 	
 	public function save_trx(Request $request)
     {
+		$ch1 = str_replace(".","",$request->tp);
+		$ch2 = str_replace(",",".",$ch1);
 		if($request->origin == 2){
-			$update = DB::select("update csc_buying_request set eo='".$request->eo."', neo='".$request->neo."',tp='".$request->tp."',ntp='".$request->ntp."' where id='".$request->id_br."' ");
+			$update = DB::select("update csc_buying_request set eo='".$request->eo."', neo='".$request->neo."',tp='".$ch2."',ntp='".$request->ntp."' where id='".$request->id_br."' ");
 		
 		}
 		if($request->tipekirim == 1){
@@ -167,7 +169,7 @@ class TrxController extends Controller
 			
 			
 		}
-		$update = DB::select("update csc_transaksi set total='".($request->eo * $request->tp)."' , eo='".$request->eo."', neo='".$request->neo."',tp='".$request->tp."',ntp='".$request->ntp."', status_transaksi='".$request->tipekirim."', type_tracking='".$request->type_tracking."',no_tracking='".$request->no_track."' where id_transaksi='".$request->id_transaksi."' ");
+		$update = DB::select("update csc_transaksi set total='".($request->eo * $ch2)."' , eo='".$request->eo."', neo='".$request->neo."',tp='".$ch2."',ntp='".$request->ntp."', status_transaksi='".$request->tipekirim."', type_tracking='".$request->type_tracking."',no_tracking='".$request->no_track."' where id_transaksi='".$request->id_transaksi."' ");
 		return redirect('trx_list');
 		
 	}
