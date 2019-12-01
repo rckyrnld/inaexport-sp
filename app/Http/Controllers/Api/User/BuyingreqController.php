@@ -393,7 +393,7 @@ class BuyingreqController extends Controller
             if ($id_role == 3) {
                 $id_profile = DB::table('itdp_company_users')->where('id', $data[$i]->id_pembuat)->first()->id_profil;
                 $jsonResult[$i]["company_name"] = DB::table('itdp_profil_imp')->where('id', $id_profile)->first()->company;
-            }else if ($id_role == 1) {
+            } else if ($id_role == 1) {
                 $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $data[$i]->id_pembuat)->first()->name;
             } else {
                 $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $data[$i]->id_pembuat)->first()->name;
@@ -734,19 +734,29 @@ class BuyingreqController extends Controller
         $id5 = $request->username;
         $id6 = $request->idb;
         date_default_timezone_set('Asia/Jakarta');
-        $insert = DB::select("
-			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join) values
-			('" . $id2 . "','" . $a . "','" . Date('Y-m-d H:m:s') . "','" . $id4 . "','" . $id3 . "','" . $id5 . "','" . $id6 . "')");
-        if ($insert) {
+
+        $insert = DB::table('csc_buying_request_chat')->insertGetId([
+                'id_br' => $id2,
+                'pesan' => $a,
+                'tanggal' => Date('Y-m-d H:m:s'),
+                'id_pengirim' => $id4,
+                'id_role' => $id3,
+                'username_pengirim' => $id5,
+                'id_join' => $id6,
+            ]
+        );
+        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id2 . "' and id_join='" . $id6 . "'and id ='" . $insert . "'");
+        if ($qwr) {
 
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
+            $data = $qwr;
 
             $res['meta'] = $meta;
-            $res['data'] = $a;
+            $res['data'] = $data;
             return response($res);
         } else {
             $meta = [
