@@ -727,7 +727,7 @@ class BuyingreqController extends Controller
 
     public function simpanchatbr(Request $request)
     {
-        dd($request);
+//        dd($request);
         $a = $request->pesan;
         $id2 = $request->id_br;
         $id3 = $request->id_role;
