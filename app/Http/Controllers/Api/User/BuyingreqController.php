@@ -627,7 +627,7 @@ class BuyingreqController extends Controller
 
             $res['meta'] = $meta;
             $res['data'] = $qwr;
-            return response($res);
+            return response($qwr);
         } else {
             $meta = [
                 'code' => 200,
@@ -654,10 +654,22 @@ class BuyingreqController extends Controller
         $destinationPath = public_path() . "/uploads/pop";
         $request->file('filez')->move($destinationPath, $file);
         date_default_timezone_set('Asia/Jakarta');
-        $insert = DB::select("
-			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
-			('" . $id2 . "','" . $a . "','" . Date('Y-m-d H:m:s') . "','" . $id4 . "','" . $id3 . "','" . $id5 . "','" . $id6 . "','" . $file . "')");
-        if ($insert) {
+        $insert = DB::table('csc_buying_request_chat')->insertGetId([
+                'id_br' => $id2,
+                'pesan' => $a,
+                'tanggal' => Date('Y-m-d H:m:s'),
+                'id_pengirim' => $id4,
+                'id_role' => $id3,
+                'username_pengirim' => $id5,
+                'id_join' => $id6,
+                'files' => $file,
+            ]
+        );
+        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id2 . "' and id_join='" . $id6 . "'and id ='" . $insert . "'");
+//        $insert = DB::select("
+//			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
+//			('" . $id2 . "','" . $a . "','" . Date('Y-m-d H:m:s') . "','" . $id4 . "','" . $id3 . "','" . $id5 . "','" . $id6 . "','" . $file . "')");
+        if ($qwr) {
 
             $meta = [
                 'code' => 200,
@@ -667,7 +679,7 @@ class BuyingreqController extends Controller
 
             $res['meta'] = $meta;
             $res['data'] = '';
-            return response($res);
+            return response($qwr);
         } else {
             $meta = [
                 'code' => 200,
@@ -757,7 +769,7 @@ class BuyingreqController extends Controller
 
             $res['meta'] = $meta;
             $res['data'] = $data;
-            return response($res);
+            return response($qwr);
         } else {
             $meta = [
                 'code' => 404,
