@@ -746,13 +746,13 @@ class BuyingreqController extends Controller
             ];
 
             $res['meta'] = $meta;
-            $res['data'] = '';
+            $res['data'] = $a;
             return response($res);
         } else {
             $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
+                'code' => 404,
+                'message' => 'Failed',
+                'status' => 'Eror'
             ];
 
             $res['meta'] = $meta;
