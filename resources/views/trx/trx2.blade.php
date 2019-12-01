@@ -288,7 +288,7 @@ $cr = explode(',',$p3->id_csc_prod);
 			<b>Price</b>
 		</div>
 		<div class="form-group col-sm-2">
-			<input type="number" name="tp" class="form-control" value="<?php  echo $p3->tp; ?>">
+			<input type="text" name="tp" class="amount form-control" value="<?php  echo number_format($p3->tp,0,',','.'); ?>">
 		</div>
 		<div class="form-group col-sm-1">
 			<select style="color:black;" class="form-control" name="ntp" id="ntp"><option <?php if($p3->ntp == "IDR"){ echo "selected"; }?> value="IDR">IDR</option><option <?php if($p3->ntp == "THB"){ echo "selected"; }?> value="THB">THB</option><option <?php if($p3->ntp == "USD"){ echo "selected"; }?> value="USD">USD</option></select>
@@ -417,7 +417,7 @@ $cr = explode(',',$p3->id_csc_prod);
 		</div>
 		<div class="form-group col-sm-2">
 		
-			<input type="number" name="tp" class="form-control" value="<?php  if(empty($p2->tp)){ echo "0"; }else{ echo $p2->tp; } ?>">
+	<input type="text" name="tp" class="amount form-control" value="<?php  if(empty($p2->tp) || $p2->tp == null ){ echo "0"; }else{ echo number_format($p2->tp,0,',','.'); } ?>">
 		</div>
 		<div class="form-group col-sm-2">
 			<select style="color:black;" class="form-control" name="ntp" id="ntp"><option value="IDR">IDR</option><option value="THB">THB</option><option selected value="USD">USD</option></select>
@@ -478,7 +478,51 @@ $cr = explode(',',$p3->id_csc_prod);
 
 <?php } ?>
 </form>
+<script>
+    function formatAmountNoDecimals( number ) {
+    var rgx = /(\d+)(\d{3})/;
+    while( rgx.test( number ) ) {
+        number = number.replace( rgx, '$1' + '.' + '$2' );
+    }
+    return number;
+}
 
+function formatAmount( number ) {
+
+    // remove all the characters except the numeric values
+    number = number.replace( /[^0-9]/g, '' );
+
+    // set the default value
+    if( number.length == 0 ) number = "0.00";
+    else if( number.length == 1 ) number = "0.0" + number;
+    else if( number.length == 2 ) number = "0." + number;
+    else number = number.substring( 0, number.length - 2 ) + '.' + number.substring( number.length - 2, number.length );
+	
+    // set the precision
+    number = new Number( number );
+    number = number.toFixed( 2 );    // only works with the "."
+
+    // change the splitter to ","
+    number = number.replace( /\./g, '' );
+
+    // format the amount
+    x = number.split( ',' );
+    x1 = x[0];
+    x2 = x.length > 1 ? ',' + x[1] : '';
+
+    return formatAmountNoDecimals( x1 ) + x2;
+}
+
+
+$(function() {
+
+    $( '.amount' ).keyup( function() {
+        $( this ).val( formatAmount( $( this ).val() ) );
+    });
+
+});
+
+</script>
 <script>
 function getyou(x){
 	$('#tipekirim').val(x);

@@ -19,6 +19,7 @@ if ($loc == "ch") {
 .select-dropdown .select-dropdown--above {
       margin-top: 336px;
 }
+
 </style>
 <!--product area start-->
 <section class="product_area mb-50">
@@ -44,8 +45,7 @@ if ($loc == "ch") {
                 <div class="col-md-6">
                     <div class="box-body">
                         <br>
-                        <img width="100%" height="10px" src="{{url('assets')}}/assets/images/07-Form-Request_01.png"
-                             alt=".">
+                        <img width="100%" height="10px" src="{{url('assets')}}/assets/images/07-Form-Request_01.png">
                         <div style="font-size:17px;padding-left:10px;padding-right:10px;"><p><b>@lang("login.lbl5")</b>
                             </p>
                             <p style="font-size:16px;">@lang("login.lbl6") <br> @lang("login.lbl7")
@@ -63,7 +63,7 @@ if ($loc == "ch") {
                 <div class="col-md-5">
 
 
-                    <div class="box-body">
+                    <div class="box-body" style="color:black; font-size:12px;">
                         <br>
 						
                         <form class="form-horizontal" method="POST" action="{{ url('br_importir_save') }}"
@@ -103,7 +103,7 @@ if ($loc == "ch") {
                                     <?php
                                     $ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
                                     ?>
-                                    <select style="color:black;" class="form-control select2" multiple name="category[]"
+                                    <select style="color:black;" class="form-control select2 col-sm-11" multiple name="category[]"
                                             id="category" onchange="t1()" required>
                                         <option value="">@lang("login.forms.by11")</option>
                                         <?php foreach($ms1 as $val1){ ?>
@@ -187,9 +187,10 @@ if ($loc == "ch") {
                                 <div class="form-group col-sm-6">
 
                                     <div class="form-row">
-                                        <div class="col-sm-7"><input style="color:black;" type="number" min="1" value=""
-                                                                     name="tp" id="tp" class="form-control"></div>
-                                        <div class="col-sm-5"><select style="color:black; font-size:10px;" class="form-control"
+                                        <div class="col-sm-7"><input style="color:black;" type="text" value=""
+                                                                     name="tp" id="tp" class="form-control amount">
+																	 </div>
+                                        <div class="col-sm-5"><select  class="form-control"
                                                                       name="ntp" id="ntp">
                                                 <option value="">@lang("login.forms.by14")</option>
                                                 <option value="IDR">IDR</option>
@@ -291,7 +292,53 @@ if ($loc == "ch") {
 
 @include('frontend.layouts.footer')
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
+<script>
+    function formatAmountNoDecimals( number ) {
+    var rgx = /(\d+)(\d{3})/;
+    while( rgx.test( number ) ) {
+        number = number.replace( rgx, '$1' + '.' + '$2' );
+    }
+    return number;
+}
+
+function formatAmount( number ) {
+
+    // remove all the characters except the numeric values
+    number = number.replace( /[^0-9]/g, '' );
+
+    // set the default value
+    if( number.length == 0 ) number = "0.00";
+    else if( number.length == 1 ) number = "0.0" + number;
+    else if( number.length == 2 ) number = "0." + number;
+    else number = number.substring( 0, number.length - 2 ) + '.' + number.substring( number.length - 2, number.length );
+	
+    // set the precision
+    number = new Number( number );
+    number = number.toFixed( 2 );    // only works with the "."
+
+    // change the splitter to ","
+    number = number.replace( /\./g, '' );
+
+    // format the amount
+    x = number.split( ',' );
+    x1 = x[0];
+    x2 = x.length > 1 ? ',' + x[1] : '';
+
+    return formatAmountNoDecimals( x1 ) + x2;
+}
+
+
+$(function() {
+
+    $( '.amount' ).keyup( function() {
+        $( this ).val( formatAmount( $( this ).val() ) );
+    });
+
+});
+
+</script>
 <script type="text/javascript">
+
     function buk() {
         alert('This Form Only For Importir !');
     }
@@ -304,6 +351,7 @@ if ($loc == "ch") {
     });
 </script>
 <script>
+	
     function xy(a) {
         var token = $('meta[name="csrf-token"]').attr('content');
         $.get('{{URL::to("ambilbroad/")}}/' + a, {_token: token}, function (data) {
