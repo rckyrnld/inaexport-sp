@@ -616,18 +616,14 @@ class BuyingreqController extends Controller
         foreach ($q1 as $p) {
             $id_br = $p->id_br;
         }
-        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id_br . "' and id_join='" . $id . "'");
-        if ($qwr) {
-
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-
-            $res['meta'] = $meta;
-            $res['data'] = $qwr;
-            return response($qwr);
+//        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id_br . "' and id_join='" . $id . "'");
+        $users = DB::table('csc_buying_request_chat')
+            ->where('id_br', '=', $id_br)
+            ->where('id_join', '=', $id)
+            ->orderBy('id', 'desc')
+            ->get();
+        if ($users) {
+            return response($users);
         } else {
             $meta = [
                 'code' => 200,
@@ -636,7 +632,7 @@ class BuyingreqController extends Controller
             ];
 
             $res['meta'] = $meta;
-            $res['data'] = $qwr;
+            $res['data'] = '';
             return $res;
 
         }
@@ -654,6 +650,7 @@ class BuyingreqController extends Controller
         $destinationPath = public_path() . "/uploads/pop";
         $request->file('filez')->move($destinationPath, $file);
         date_default_timezone_set('Asia/Jakarta');
+        
         $insert = DB::table('csc_buying_request_chat')->insertGetId([
                 'id_br' => $id2,
                 'pesan' => $a,
@@ -665,26 +662,19 @@ class BuyingreqController extends Controller
                 'files' => $file,
             ]
         );
-        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id2 . "' and id_join='" . $id6 . "'and id ='" . $insert . "'");
-//        $insert = DB::select("
-//			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
-//			('" . $id2 . "','" . $a . "','" . Date('Y-m-d H:m:s') . "','" . $id4 . "','" . $id3 . "','" . $id5 . "','" . $id6 . "','" . $file . "')");
-        if ($qwr) {
+        $users = DB::table('csc_buying_request_chat')
+            ->where('id_br', '=', $id2)
+            ->where('id_join', '=', $id6)
+            ->where('id', '=', $insert)
+            ->get();
+        if ($users) {
 
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-
-            $res['meta'] = $meta;
-            $res['data'] = '';
-            return response($qwr);
+            return $users;
         } else {
             $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
+                'code' => 404,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
             ];
 
             $res['meta'] = $meta;
@@ -757,31 +747,26 @@ class BuyingreqController extends Controller
                 'id_join' => $id6,
             ]
         );
-        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id2 . "' and id_join='" . $id6 . "'and id ='" . $insert . "'");
-        if ($qwr) {
+        $users = DB::table('csc_buying_request_chat')
+            ->where('id_br', '=', $id2)
+            ->where('id_join', '=', $id6)
+            ->where('id', '=', $insert)
+            ->get();
+        if ($users) {
 
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = $qwr;
-
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($qwr);
+            return $users;
         } else {
             $meta = [
                 'code' => 404,
-                'message' => 'Failed',
-                'status' => 'Eror'
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
             ];
 
             $res['meta'] = $meta;
             $res['data'] = '';
             return $res;
-
         }
+
     }
 
     public function searchListinquiry(Request $request)
