@@ -22,6 +22,7 @@
               <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable">
                 <thead class="text-white" style="background-color: #1089ff;">
                   <tr>
+                    <th>No</th>
                     <th>Training</th>
                     <th>Date</th>
                     <th>Duration</th>
@@ -47,7 +48,8 @@
             serverSide: true,
             ajax: "{{ route('training.getData.admin')}}",
             columns: [
-							{data: 'training_en', name: 'training_en'},
+							{data: 'DT_RowIndex', name: 'DT_RowIndex'},
+              {data: 'training_en', name: 'training_en'},
 							{data: 'start_date', name: 'start_date'},
               {data: 'duration', name: 'duration'},
               {data: 'topic_en', name: 'topic_en'},

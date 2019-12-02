@@ -326,8 +326,13 @@
                                               $isimg1 = '/image/noimage.jpg';
                                             }  
                                         }
+                                        if(Auth::guard('eksmp')->user()){
+                                            $height = 350;
+                                        } else {
+                                            $height = 300;
+                                        }
                                     ?>
-                                        <div class="single_product" style="height: 350px;">
+                                        <div class="single_product" style="height: {{$height}}px;">
                                             <div class="product_name">
                                                 <?php
                                                     $num_char = 20;

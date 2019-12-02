@@ -103,18 +103,60 @@
                           } else {
                             $button = '<button class="btn training join btn-info" onclick="__join()">'.Lang::get('training.minat').'</button>';
                           }
+                          $num_char = 25;
+                          if(strlen($training) > 25){
+                              $cut_text = substr($training, 0, $num_char);
+                              if ($training{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                  $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                  $cut_text = substr($training, 0, $new_pos);
+                              }
+                              $trainingName = $cut_text . '...';
+                          }else{
+                              $trainingName = $training;
+                          }
+
+                          $num_chart = 30;
+                          if(strlen($topic) > 30){
+                              $cut_text = substr($topic, 0, $num_chart);
+                              if ($topic{$num_chart - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                  $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                  $cut_text = substr($topic, 0, $new_pos);
+                              }
+                              $topicName = $cut_text . '...';
+                          }else{
+                              $topicName = $topic;
+                          }
+
+                          if(strlen($location) > 30){
+                              $cut_text = substr($location, 0, $num_chart);
+                              if ($location{$num_chart - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                  $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                  $cut_text = substr($location, 0, $new_pos);
+                              }
+                              $locationName = $cut_text . '...';
+                          }else{
+                              $locationName = $location;
+                          }
+
+                          if(date('Y-m-d', strtotime($val->start_date)) == date('Y-m-d', strtotime($val->end_date))){
+                            $tanggal = date('d F Y', strtotime($val->start_date));
+                          } else if(date('Y-m', strtotime($val->start_date)) == date('Y-m', strtotime($val->end_date))){
+                            $tanggal = date('d', strtotime($val->start_date)).' - '.date('d F Y', strtotime($val->end_date));
+                          } else {
+                            $tanggal = date('d F Y', strtotime($val->start_date)).' - '.date('d F Y', strtotime($val->end_date));
+                          }
                         ?>
 
                         <div class="col-lg-4 col-md-4 col-12" style="padding-top: 20px;">
                           <div style="background-color: #2385d4; border-radius: 10px; vertical-align: top; height: 100%;">
                             <div class="col" style="height: 100%; padding-top: 15px;">
-                              <span style="color: #edf1f5; font-weight: 600; font-size: 20px;">{{$training}}</span><br>
+                              <span style="color: #edf1f5; font-weight: 600; font-size: 20px;" title="{{$training}}">{{$trainingName}}</span><br>
 
                               <span class="training">
                                 <i class="fa fa-bullhorn"></i>&nbsp;&nbsp;@lang("training.topic")
                               </span><br>
-                              <span class="training_topic">
-                                {{$topic}}
+                              <span class="training_topic" title="{{$topic}}">
+                                {{$topicName}}
                               </span>
                               <br>
 
@@ -122,7 +164,7 @@
                                 <i class="fa fa-calendar"></i>&nbsp;&nbsp;@lang("training.date")
                               </span><br>
                               <span class="training_topic">
-                                {{date("d F Y", strtotime($val->start_date))}} - {{date("d F Y", strtotime($val->end_date))}}
+                                {{$tanggal}}
                               </span>
                               <br>
 
@@ -137,8 +179,8 @@
                               <span class="training">
                                 <i class="fa fa-street-view"></i>&nbsp;&nbsp;@lang("training.lokasi")
                               </span><br>
-                              <span class="training_topic">
-                                {{$location}}
+                              <span class="training_topic" title="{{$location}}">
+                                {{$locationName}}
                               </span>
                               <br><br>
                               <?php echo $button;?><br><br>

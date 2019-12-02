@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
+use Mail;
 
 class FrontController extends Controller
 {
@@ -406,14 +407,14 @@ class FrontController extends Controller
             ->orderby('a.created_at', 'desc')
             ->distinct('a.id_research_corner', 'a.created_at')
             ->select('b.*', 'a.id_research_corner', 'a.created_at', 'b.cover')
-            ->limit(9)
-            ->get();
+            ->paginate(9);
+            // ->get();
 
-        // $json = json_decode($research->toJson(), true);
-        // $page = $json["current_page"];
+        $json = json_decode($research->toJson(), true);
+        $page = $json["current_page"];
         // $item_page = $json["data"];
-        // dd($research);
-        return view('frontend.research-corner', compact('research', 'page', 'item_page'));
+        
+        return view('frontend.research-corner', compact('research', 'page'));
     }
 
     public function tracking(){
@@ -433,12 +434,7 @@ class FrontController extends Controller
     }
 
     public function contact_us_send(Request $req){
-        $id = DB::table('csc_contact_us')->orderby('id','desc')->first();
-        if($id){
-            $id = $id->id+1;
-        } else {
-            $id = 1;
-        }
+        $id = DB::table('csc_contact_us')->max('id') + 1;
 
         $data = DB::table('csc_contact_us')->insert([
             'id' => $id,
@@ -449,7 +445,9 @@ class FrontController extends Controller
             'date_created' => date('Y-m-d H:i:s')
         ]);
 
+        $idnya = DB::table('notif')->max('id_notif') + 1;
         $notif = DB::table('notif')->insert([
+            'id_notif' => $idnya,
             'dari_nama' => $req->name,
             'untuk_nama' => 'Super Admin',
             'untuk_id' => '1',
@@ -459,7 +457,23 @@ class FrontController extends Controller
             'waktu' => date('Y-m-d H:i:s'),
             'id_terkait' => $id,
             'to_role' => '1',
+
         ]);
+
+        $users = [];
+        $cek_user = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+        foreach ($cek_user as $key => $value) {
+            array_push($users, $value->email);
+        }
+
+        $datanya = [
+            'subyek' => $req->subyek
+        ];
+
+        Mail::send('management.contact-us.mail', $datanya, function ($mail) use ($users) {
+            $mail->subject('Contact us Information');
+            $mail->to($users);
+        });
 
         if($req->urlnya){
             return redirect($req->urlnya);
@@ -543,8 +557,8 @@ class FrontController extends Controller
 
     //Front End Training
     public function indexTraining(){
-      $pageTitle = 'Training';
-			$data = DB::table('training_admin')->where('status', 1)->paginate(3);
+        $pageTitle = 'Training';
+		$data = DB::table('training_admin')->where('status', 1)->orderby('created_at', 'desc')->paginate(3);
       return view('frontend.training',compact('data','pageTitle'));
     }
 
