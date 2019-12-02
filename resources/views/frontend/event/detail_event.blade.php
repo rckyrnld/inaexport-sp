@@ -147,24 +147,30 @@
                                     </a>
 
                                 </li>
+                                @if($img2 != "image/noimage.jpg")
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img2}}" data-zoom-image="{{url('/')}}/{{$img2}}">
                                         <img src="{{url('/')}}/{{$img2}}" alt="zo-th-1" />
                                     </a>
 
                                 </li>
+                                @endif
+                                @if($img3 != "image/noimage.jpg")
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img3}}" data-zoom-image="{{url('/')}}/{{$img3}}">
                                         <img src="{{url('/')}}/{{$img3}}" alt="zo-th-1" />
                                     </a>
 
                                 </li>
+                                @endif
+                                @if($img4 != "image/noimage.jpg")
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img4}}" data-zoom-image="{{url('/')}}/{{$img4}}">
                                         <img src="{{url('/')}}/{{$img4}}" alt="zo-th-1" />
                                     </a>
 
                                 </li>
+                                @endif
                             </ul>
                         </div>
                     </div>

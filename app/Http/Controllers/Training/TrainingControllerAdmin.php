@@ -46,6 +46,7 @@ class TrainingControllerAdmin extends Controller
         'location_en'  => $req->location_en,
         'location_in'  => $req->location_in,
         'location_chn' => $req->location_chn,
+        'created_at' => date('Y-m-d H:i:s'),
 				'status' => 0
       ]);
       //Input Contact Person
@@ -105,9 +106,10 @@ class TrainingControllerAdmin extends Controller
 
     public function getData(){
 
-      $tick = DB::table('training_admin as ts')->orderby('id', 'DESC')->get();
+      $tick = DB::table('training_admin as ts')->orderby('created_at', 'DESC')->get();
 
       return \Yajra\DataTables\DataTables::of($tick)
+          ->addIndexColumn()
 					->addColumn('status', function($data){
 						if ($data->status == 0){
 							return 'Not Published';

@@ -72,15 +72,15 @@
                                                     <div class="imge">
                                                         @if($ed->image_1 !== NULL)
                                                             <?php $topZ='margin-top: -100px;';?>
-                                                            <img src="{{url('/')}}/uploads/Event/Image/{{$ed->id}}/{{$ed->image_1}}" class="img-fluid img-thumbnail">
+                                                            <img src="{{url('/')}}/uploads/Event/Image/{{$ed->id}}/{{$ed->image_1}}" class="img-fluid img-thumbnail" style="height: 140px;">
                                                         @else
                                                             <?php $topZ='margin-top: -145px;';?>
-                                                            <img src="{{url('/')}}/image/event/NoPicture.png" alt="No Picture" class="img-fluid">
+                                                            <img src="{{url('/')}}/image/event/NoPicture.png" alt="No Picture" class="img-fluid" style="height: 140px;">
                                                         @endif 
                                                     </div>
                                                     <div align="right">
                                                         @if($ed->status_en == 'Verified') 
-                                                            <img src="{{url('/')}}/image/event/ceklis.png" class="">
+                                                            <img src="{{url('/')}}/image/event/ceklis.png" class="" >
                                                         @endif  
                                                     </div>
                                                </div>

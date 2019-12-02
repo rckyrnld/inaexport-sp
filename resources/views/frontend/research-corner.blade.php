@@ -153,11 +153,10 @@
               </div></div>
             @endif
           @endif
-        @else
-          </div>
         @endif
       @endforeach
   </div>
+  <br><br>
     <div class="row">
       <div class="container">
         <div class="row justify-content-center">
@@ -165,8 +164,8 @@
         </div>
       </div>
     </div>
+    <br>
 </div>
-<div style="margin-top: 0px; margin-bottom: 5%; background-color: white;"></div>
 @include('frontend.layouts.footer')
 <script type="text/javascript">
   var login = "{{$for}}";

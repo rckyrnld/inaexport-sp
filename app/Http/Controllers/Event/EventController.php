@@ -122,16 +122,6 @@ class EventController extends Controller
         	'created_at' => $datenow
         ]);
 
-        $idp = DB::table('contact_person')->max('id') + 1;
-          DB::table('contact_person')->insert([
-            'id' => $idp,
-            'name' => $req->cp_name,
-            'email' => $req->cp_email,
-            'phone' => $req->cp_phone,
-            'type' => 'event',
-            'id_type' => $id,
-          ]);
-
         for ($i=0; $i < count($req->id_prod_cat) ; $i++) { 
         	$var=$req->id_prod_cat[$i];
         	$idn=DB::table('event_detail_kategori')->max('id');
@@ -164,21 +154,33 @@ class EventController extends Controller
 	        	$account_penerima = DB::table('itdp_company_users')->where('id',$array[$user])->first();
 	        	$profile_penerima = DB::table('itdp_profil_eks')->where('id',$account_penerima->id_profil)->first();
 
-	        	$notif = DB::table('notif')->insert([
-		            'dari_nama' => $pengirim->name,
-		            'dari_id' => $pengirim->id,
-		            'untuk_nama' => $profile_penerima->company,
-		            'untuk_id' => $array[$user],
-		            'keterangan' => 'New Event from '.$pengirim->name.' with Title  "'.$req->eventname_en.'"',
-		            'url_terkait' => 'event/show/read',
-		            'status_baca' => 0,
-		            'waktu' => date('Y-m-d H:i:s'),
-		            'id_terkait' => $id,
-		            'to_role' => 2
-		        ]);
+                if($profile_penerima){
+    	        	$notif = DB::table('notif')->insert([
+    		            'dari_nama' => $pengirim->name,
+    		            'dari_id' => $pengirim->id,
+    		            'untuk_nama' => $profile_penerima->company,
+    		            'untuk_id' => $array[$user],
+    		            'keterangan' => 'New Event from '.$pengirim->name.' with Title  "'.$req->eventname_en.'"',
+    		            'url_terkait' => 'event/show/read',
+    		            'status_baca' => 0,
+    		            'waktu' => date('Y-m-d H:i:s'),
+    		            'id_terkait' => $id,
+    		            'to_role' => 2
+    		        ]);
+                }
 	        }
 
         }
+
+        $idp = DB::table('contact_person')->max('id') + 1;
+          DB::table('contact_person')->insert([
+            'id' => $idp,
+            'name' => $req->cp_name,
+            'email' => $req->cp_email,
+            'phone' => $req->cp_phone,
+            'type' => 'event',
+            'id_type' => $id,
+          ]);
 
         return redirect('event');
 	}
