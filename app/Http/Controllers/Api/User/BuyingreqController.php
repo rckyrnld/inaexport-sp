@@ -721,7 +721,10 @@ class BuyingreqController extends Controller
         }
 
         if ($insert) {
-
+            $data = array();
+            array_push($data, array(
+                'id_transaksi' => $maxid,
+            ));
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
@@ -729,7 +732,7 @@ class BuyingreqController extends Controller
             ];
 
             $res['meta'] = $meta;
-            $res['data'] = $maxid;
+            $res['data'] = $data;
             return response($res);
         } else {
             $meta = [
