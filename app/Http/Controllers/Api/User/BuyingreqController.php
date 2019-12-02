@@ -705,22 +705,22 @@ class BuyingreqController extends Controller
 //			('" . $isi1 . "','" . $isi2 . "','" . $id3 . "','" . $id2 . "','2','" . Date('Y-m-d H:m:s') . "','0')");
 //        $querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
 
-//        $insert = DB::table('csc_transaksi')->insert([
-//                'id_pembuat' => $isi1,
-//                'by_role' => $isi2,
-//                'id_eksportir' => $id3,
-//                'id_terkait' => $id2,
-//                'origin' => '2',
-//                'created_at' => Date('Y-m-d H:m:s'),
-//                'status_transaksi' => '0'
-//            ]
-//        );
+        $insert = DB::table('csc_transaksi')->insert([
+                'id_pembuat' => $isi1,
+                'by_role' => $isi2,
+                'id_eksportir' => $id3,
+                'id_terkait' => $id2,
+                'origin' => '2',
+                'created_at' => Date('Y-m-d H:m:s'),
+                'status_transaksi' => '0'
+            ]
+        );
         $querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
         foreach ($querymax as $maxquery) {
             $maxid = $maxquery->maxid;
         }
 
-        if ($querymax) {
+        if ($insert) {
             $list_k = array();
             $list_k["id_transaksi"] = $maxid;
             $meta = [
@@ -734,9 +734,9 @@ class BuyingreqController extends Controller
             return response($res);
         } else {
             $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
+                'code' => 404,
+                'message' => 'Erorr',
+                'status' => 'Failed'
             ];
 
             $res['meta'] = $meta;
