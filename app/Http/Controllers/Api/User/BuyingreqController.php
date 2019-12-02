@@ -624,7 +624,7 @@ class BuyingreqController extends Controller
             ->get();
         $jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
-            $ext = pathinfo($user[$i]->files , PATHINFO_EXTENSION);
+            $ext = pathinfo($user[$i]->files, PATHINFO_EXTENSION);
             $gbr = ['png', 'jpg', 'jpeg'];
             $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
 
@@ -645,7 +645,7 @@ class BuyingreqController extends Controller
             $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
             $jsonResult[$i]["id_role"] = $user[$i]->id_role;
             $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
-            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop' . $user[$i]->files) : "";
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop/' . $user[$i]->files) : "";
             $jsonResult[$i]["id_join"] = $user[$i]->id_join;
             $jsonResult[$i]["ext"] = $extension;
 
@@ -700,7 +700,7 @@ class BuyingreqController extends Controller
             ->get();
 
         for ($i = 0; $i < count($user); $i++) {
-            $ext = pathinfo($user[$i]->files , PATHINFO_EXTENSION);
+            $ext = pathinfo($user[$i]->files, PATHINFO_EXTENSION);
             $gbr = ['png', 'jpg', 'jpeg'];
             $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
 
@@ -721,7 +721,7 @@ class BuyingreqController extends Controller
             $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
             $jsonResult[$i]["id_role"] = $user[$i]->id_role;
             $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
-            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop' . $user[$i]->files) : "";
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop/' . $user[$i]->files) : "";
             $jsonResult[$i]["id_join"] = $user[$i]->id_join;
             $jsonResult[$i]["ext"] = $extension;
 
@@ -866,7 +866,7 @@ class BuyingreqController extends Controller
             ->get();
 
         for ($i = 0; $i < count($user); $i++) {
-            $ext = pathinfo($user[$i]->files , PATHINFO_EXTENSION);
+            $ext = pathinfo($user[$i]->files, PATHINFO_EXTENSION);
             $gbr = ['png', 'jpg', 'jpeg'];
             $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
 
@@ -887,7 +887,7 @@ class BuyingreqController extends Controller
             $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
             $jsonResult[$i]["id_role"] = $user[$i]->id_role;
             $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
-            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop' . $user[$i]->files) : "";
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop/' . $user[$i]->files) : "";
             $jsonResult[$i]["id_join"] = $user[$i]->id_join;
             $jsonResult[$i]["ext"] = $extension;
 
