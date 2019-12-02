@@ -705,7 +705,7 @@ class BuyingreqController extends Controller
 //			('" . $isi1 . "','" . $isi2 . "','" . $id3 . "','" . $id2 . "','2','" . Date('Y-m-d H:m:s') . "','0')");
 //        $querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
 
-        $insert = DB::table('csc_transaksi')->insertGetId([
+        $insert = DB::table('csc_transaksi')->insert([
                 'id_pembuat' => $isi1,
                 'by_role' => $isi2,
                 'id_eksportir' => $id3,
@@ -715,6 +715,10 @@ class BuyingreqController extends Controller
                 'status_transaksi' => '0'
             ]
         );
+        $querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
+        foreach ($querymax as $maxquery) {
+            $maxid = $maxquery->maxid;
+        }
 
         if ($insert) {
 
@@ -725,7 +729,7 @@ class BuyingreqController extends Controller
             ];
 
             $res['meta'] = $meta;
-            $res['data'] = $insert;
+            $res['data'] = $maxid;
             return response($res);
         } else {
             $meta = [
