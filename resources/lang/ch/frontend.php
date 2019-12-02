@@ -136,5 +136,13 @@ return [
         "phone" => "电话",
         "address" => "地址",
     ],
+    "event" => [
+        "type" => "类型",
+        "eo" => "活动组织者",
+        "comodity" => "大宗商品",
+        "scope" => "范围",
+        "place" => "地点",
+        "website" => "网站",
+    ],
     "title-services" => "服务",
 ];

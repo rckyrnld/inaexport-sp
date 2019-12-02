@@ -135,5 +135,13 @@ return [
         "phone" => "Telepon",
         "address" => "Alamat",
     ],
+    "event" => [
+        "type" => "Tipe",
+        "eo" => "Event Organizer",
+        "comodity" => "Komoditi",
+        "scope" => "Cakupan",
+        "place" => "Tempat",
+        "website" => "Website",
+    ],
     "title-services" => "Pelayanan",
 ];
