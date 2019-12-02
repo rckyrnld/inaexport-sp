@@ -617,13 +617,43 @@ class BuyingreqController extends Controller
             $id_br = $p->id_br;
         }
 //        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id_br . "' and id_join='" . $id . "'");
-        $users = DB::table('csc_buying_request_chat')
+        $user = DB::table('csc_buying_request_chat')
             ->where('id_br', '=', $id_br)
             ->where('id_join', '=', $id)
             ->orderBy('id', 'desc')
             ->get();
-        if ($users) {
-            return response($users);
+        for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->files , PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_br"] = $user[$i]->id_br;
+            $jsonResult[$i]["pesan"] = $user[$i]->pesan;
+            $jsonResult[$i]["tanggapan"] = $user[$i]->tanggapan;
+            $jsonResult[$i]["tanggal"] = $user[$i]->tanggal;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
+            $jsonResult[$i]["id_role"] = $user[$i]->id_role;
+            $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop' . $user[$i]->files) : "";
+            $jsonResult[$i]["id_join"] = $user[$i]->id_join;
+            $jsonResult[$i]["ext"] = $extension;
+
+        }
+
+//        dd($jsonResult);
+
+        if ($jsonResult) {
+            return response($jsonResult);
         } else {
             $meta = [
                 'code' => 200,
@@ -665,7 +695,7 @@ class BuyingreqController extends Controller
         $users = DB::table('csc_buying_request_chat')
             ->where('id_br', '=', $id2)
             ->where('id_join', '=', $id6)
-            ->where('id', '=', '240')
+            ->where('id', '=', $insert)
             ->first();
 
 
@@ -692,7 +722,7 @@ class BuyingreqController extends Controller
         $list_k["id_pengirim"] = $users->id_pengirim;
         $list_k["id_role"] = $users->id_role;
         $list_k["username_pengirim"] = $users->username_pengirim;
-        $list_k["files"] = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/noimage.jpg');
+        $list_k["files"] = $path =  url('/uploads/pop' . $users->files);
         $list_k["id_join"] = $users->id_join;
         $list_k["ext"] = $extension;
 
@@ -795,14 +825,42 @@ class BuyingreqController extends Controller
                 'id_join' => $id6,
             ]
         );
-        $users = DB::table('csc_buying_request_chat')
+        $user = DB::table('csc_buying_request_chat')
             ->where('id_br', '=', $id2)
             ->where('id_join', '=', $id6)
             ->where('id', '=', $insert)
             ->get();
-        if ($users) {
 
-            return $users;
+        for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->files , PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_br"] = $user[$i]->id_br;
+            $jsonResult[$i]["pesan"] = $user[$i]->pesan;
+            $jsonResult[$i]["tanggapan"] = $user[$i]->tanggapan;
+            $jsonResult[$i]["tanggal"] = $user[$i]->tanggal;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
+            $jsonResult[$i]["id_role"] = $user[$i]->id_role;
+            $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop' . $user[$i]->files) : "";
+            $jsonResult[$i]["id_join"] = $user[$i]->id_join;
+            $jsonResult[$i]["ext"] = $extension;
+
+        }
+        if ($user) {
+
+            return $jsonResult;
         } else {
             $meta = [
                 'code' => 404,
