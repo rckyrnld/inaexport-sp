@@ -666,12 +666,24 @@ class BuyingreqController extends Controller
             ->where('id_br', '=', $id2)
             ->where('id_join', '=', $id6)
             ->where('id', '=', $insert)
-            ->get();
-//        dd($users->files);
+            ->first();
+        $list_k = array();
+        $list_k["id"] = $users->id;
+        $list_k["id_br"] = $users->id_br;
+        $list_k["pesan"] = $users->pesan;
+        $list_k["tanggapan"] = $users->tanggapan;
+        $list_k["tanggal"] = $users->tanggal;
+        $list_k["status"] = $users->status;
+        $list_k["id_pengirim"] = $users->id_pengirim;
+        $list_k["id_role"] = $users->id_role;
+        $list_k["username_pengirim"] = $users->username_pengirim;
+        $list_k["files"] = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/noimage.jpg');
+        $list_k["id_join"] = $users->id_join;
+//        dd($list_k);
 //        $users->file_desc = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/noimage.jpg');
         if ($users) {
 
-            return $users;
+            return $list_k;
         } else {
             $meta = [
                 'code' => 404,
