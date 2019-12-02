@@ -634,7 +634,7 @@ class BuyingreqController extends Controller
             } else {
                 $extension = "not identified";
             }
-
+            $jsonResult = array();
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_br"] = $user[$i]->id_br;
             $jsonResult[$i]["pesan"] = $user[$i]->pesan;
