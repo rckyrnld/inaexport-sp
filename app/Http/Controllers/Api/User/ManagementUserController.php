@@ -383,7 +383,7 @@ class ManagementUserController extends Controller
     public function detailTransaksi(Request $request)
     {
         $data = DB::table('csc_transaksi')
-            ->where('id_pembuat', $request->id_transaksi)
+            ->where('id_transaksi', $request->id_transaksi)
             ->get();
 
         if ($data) {
