@@ -720,7 +720,7 @@ class BuyingreqController extends Controller
             $maxid = $maxquery->maxid;
         }
 
-        if ($insert) {
+        if ($querymax) {
             $list_k = array();
             $list_k["id_transaksi"] = $maxid;
             $meta = [
