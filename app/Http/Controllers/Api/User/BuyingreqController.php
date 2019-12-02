@@ -651,22 +651,37 @@ class BuyingreqController extends Controller
         $request->file('filez')->move($destinationPath, $file);
         date_default_timezone_set('Asia/Jakarta');
 
-        $insert = DB::table('csc_buying_request_chat')->insertGetId([
-                'id_br' => $id2,
-                'pesan' => $a,
-                'tanggal' => Date('Y-m-d H:m:s'),
-                'id_pengirim' => $id4,
-                'id_role' => $id3,
-                'username_pengirim' => $id5,
-                'id_join' => $id6,
-                'files' => $file,
-            ]
-        );
+//        $insert = DB::table('csc_buying_request_chat')->insertGetId([
+//                'id_br' => $id2,
+//                'pesan' => $a,
+//                'tanggal' => Date('Y-m-d H:m:s'),
+//                'id_pengirim' => $id4,
+//                'id_role' => $id3,
+//                'username_pengirim' => $id5,
+//                'id_join' => $id6,
+//                'files' => $file,
+//            ]
+//        );
         $users = DB::table('csc_buying_request_chat')
             ->where('id_br', '=', $id2)
             ->where('id_join', '=', $id6)
-            ->where('id', '=', $insert)
+            ->where('id', '=', '240')
             ->first();
+
+
+//        dd($users);
+        $ext = pathinfo($users->files, PATHINFO_EXTENSION);
+        $gbr = ['png', 'jpg', 'jpeg'];
+        $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+        if (in_array($ext, $gbr)) {
+            $extension = "gambar";
+        } else if (in_array($ext, $file)) {
+            $extension = "file";
+        } else {
+            $extension = "not identified";
+        }
+
         $list_k = array();
         $list_k["id"] = $users->id;
         $list_k["id_br"] = $users->id_br;
@@ -679,6 +694,8 @@ class BuyingreqController extends Controller
         $list_k["username_pengirim"] = $users->username_pengirim;
         $list_k["files"] = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/noimage.jpg');
         $list_k["id_join"] = $users->id_join;
+        $list_k["ext"] = $extension;
+
 //        dd($list_k);
 //        $users->file_desc = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/noimage.jpg');
         if ($users) {
