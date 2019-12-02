@@ -693,45 +693,78 @@ class BuyingreqController extends Controller
                 'files' => $file,
             ]
         );
-        $users = DB::table('csc_buying_request_chat')
+        $user = DB::table('csc_buying_request_chat')
             ->where('id_br', '=', $id2)
             ->where('id_join', '=', $id6)
             ->where('id', '=', $insert)
-            ->first();
+            ->get();
 
+        for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->files , PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
 
-//        dd($users);
-        $ext = pathinfo($users->files, PATHINFO_EXTENSION);
-        $gbr = ['png', 'jpg', 'jpeg'];
-        $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
 
-        if (in_array($ext, $gbr)) {
-            $extension = "gambar";
-        } else if (in_array($ext, $file)) {
-            $extension = "file";
-        } else {
-            $extension = "not identified";
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_br"] = $user[$i]->id_br;
+            $jsonResult[$i]["pesan"] = $user[$i]->pesan;
+            $jsonResult[$i]["tanggapan"] = $user[$i]->tanggapan;
+            $jsonResult[$i]["tanggal"] = $user[$i]->tanggal;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
+            $jsonResult[$i]["id_role"] = $user[$i]->id_role;
+            $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop' . $user[$i]->files) : "";
+            $jsonResult[$i]["id_join"] = $user[$i]->id_join;
+            $jsonResult[$i]["ext"] = $extension;
+
         }
-
-        $list_k = array();
-        $list_k["id"] = $users->id;
-        $list_k["id_br"] = $users->id_br;
-        $list_k["pesan"] = $users->pesan;
-        $list_k["tanggapan"] = $users->tanggapan;
-        $list_k["tanggal"] = $users->tanggal;
-        $list_k["status"] = $users->status;
-        $list_k["id_pengirim"] = $users->id_pengirim;
-        $list_k["id_role"] = $users->id_role;
-        $list_k["username_pengirim"] = $users->username_pengirim;
-        $list_k["files"] = $path =  url('/uploads/pop' . $users->files);
-        $list_k["id_join"] = $users->id_join;
-        $list_k["ext"] = $extension;
+//        $users = DB::table('csc_buying_request_chat')
+//            ->where('id_br', '=', $id2)
+//            ->where('id_join', '=', $id6)
+//            ->where('id', '=', $insert)
+//            ->first();
+//
+//
+////        dd($users);
+//        $ext = pathinfo($users->files, PATHINFO_EXTENSION);
+//        $gbr = ['png', 'jpg', 'jpeg'];
+//        $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+//
+//        if (in_array($ext, $gbr)) {
+//            $extension = "gambar";
+//        } else if (in_array($ext, $file)) {
+//            $extension = "file";
+//        } else {
+//            $extension = "not identified";
+//        }
+//
+//        $list_k = array();
+//        $list_k["id"] = $users->id;
+//        $list_k["id_br"] = $users->id_br;
+//        $list_k["pesan"] = $users->pesan;
+//        $list_k["tanggapan"] = $users->tanggapan;
+//        $list_k["tanggal"] = $users->tanggal;
+//        $list_k["status"] = $users->status;
+//        $list_k["id_pengirim"] = $users->id_pengirim;
+//        $list_k["id_role"] = $users->id_role;
+//        $list_k["username_pengirim"] = $users->username_pengirim;
+//        $list_k["files"] = $path =  url('/uploads/pop' . $users->files);
+//        $list_k["id_join"] = $users->id_join;
+//        $list_k["ext"] = $extension;
 
 //        dd($list_k);
 //        $users->file_desc = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/noimage.jpg');
-        if ($users) {
+        if ($jsonResult) {
 
-            return $list_k;
+            return $jsonResult;
         } else {
             $meta = [
                 'code' => 404,
