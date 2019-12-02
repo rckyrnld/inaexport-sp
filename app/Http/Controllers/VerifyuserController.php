@@ -354,6 +354,32 @@ class VerifyuserController extends Controller
 	
 	public function simpanperwakilan(Request $request)
 	{
+		$data = [
+            'email' => "",
+            'email1' => $request->email,
+            'username' => $request->username,
+            'password' => $request->password,
+            'main_messages' => "",
+            'id' => 0
+			];
+		Mail::send('UM.user.sendpw', $data, function ($mail) use ($data) {
+        $mail->to($data['email1'], $data['username']);
+        $mail->subject('Admin Had Created and Set you as Representative');
+		});
+		
+		$data22 = [
+            'email' => $request->email,
+            'email1' => "kementerianperdagangan.max@gmail.com",
+            'username' => $request->username,
+            'password' => $request->password,
+            'main_messages' => "",
+            'id' => 0
+			];
+		Mail::send('UM.user.sendpw2', $data22, function ($mail) use ($data22) {
+        $mail->to($data22['email1'], $data22['username']);
+        $mail->subject('You Had Created and Set Representative');
+		});
+		// echo "hello";die();
 		if($request->type == "DINAS PERDAGANGAN"){
 			$insert1 = DB::select("
 			insert into itdp_admin_dn (nama,id_country,email,web,telp,kepala,username,password,status) values

@@ -172,7 +172,7 @@
 	 var token = $('meta[name="csrf-token"]').attr('content');
         $.get('{{URL::to("cekmail/")}}/' + m, {_token: token}, function (data) {
             if(data == 0){
-				$('#cekmail').html("<font color='green'>( Avaible )</font>");
+				$('#cekmail').html("<font color='green'>( Available )</font>");
 				
 			}else{
 				$('#cekmail').html("<font color='red'>( Has Been Used ! )</font>");
