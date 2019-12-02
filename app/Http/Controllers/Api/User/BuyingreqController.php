@@ -393,7 +393,7 @@ class BuyingreqController extends Controller
             if ($id_role == 3) {
                 $id_profile = DB::table('itdp_company_users')->where('id', $data[$i]->id_pembuat)->first()->id_profil;
                 $jsonResult[$i]["company_name"] = DB::table('itdp_profil_imp')->where('id', $id_profile)->first()->company;
-            }else if ($id_role == 1) {
+            } else if ($id_role == 1) {
                 $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $data[$i]->id_pembuat)->first()->name;
             } else {
                 $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $data[$i]->id_pembuat)->first()->name;
@@ -616,18 +616,14 @@ class BuyingreqController extends Controller
         foreach ($q1 as $p) {
             $id_br = $p->id_br;
         }
-        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id_br . "' and id_join='" . $id . "'");
-        if ($qwr) {
-
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-
-            $res['meta'] = $meta;
-            $res['data'] = $qwr;
-            return response($res);
+//        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id_br . "' and id_join='" . $id . "'");
+        $users = DB::table('csc_buying_request_chat')
+            ->where('id_br', '=', $id_br)
+            ->where('id_join', '=', $id)
+            ->orderBy('id', 'desc')
+            ->get();
+        if ($users) {
+            return response($users);
         } else {
             $meta = [
                 'code' => 200,
@@ -636,7 +632,7 @@ class BuyingreqController extends Controller
             ];
 
             $res['meta'] = $meta;
-            $res['data'] = $qwr;
+            $res['data'] = '';
             return $res;
 
         }
@@ -654,25 +650,33 @@ class BuyingreqController extends Controller
         $destinationPath = public_path() . "/uploads/pop";
         $request->file('filez')->move($destinationPath, $file);
         date_default_timezone_set('Asia/Jakarta');
-        $insert = DB::select("
-			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
-			('" . $id2 . "','" . $a . "','" . Date('Y-m-d H:m:s') . "','" . $id4 . "','" . $id3 . "','" . $id5 . "','" . $id6 . "','" . $file . "')");
-        if ($insert) {
 
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
+        $insert = DB::table('csc_buying_request_chat')->insertGetId([
+                'id_br' => $id2,
+                'pesan' => $a,
+                'tanggal' => Date('Y-m-d H:m:s'),
+                'id_pengirim' => $id4,
+                'id_role' => $id3,
+                'username_pengirim' => $id5,
+                'id_join' => $id6,
+                'files' => $file,
+            ]
+        );
+        $users = DB::table('csc_buying_request_chat')
+            ->where('id_br', '=', $id2)
+            ->where('id_join', '=', $id6)
+            ->where('id', '=', $insert)
+            ->get();
+//        dd($users->files);
+//        $users->file_desc = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/noimage.jpg');
+        if ($users) {
 
-            $res['meta'] = $meta;
-            $res['data'] = '';
-            return response($res);
+            return $users;
         } else {
             $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
+                'code' => 404,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
             ];
 
             $res['meta'] = $meta;
@@ -696,11 +700,23 @@ class BuyingreqController extends Controller
             $isi2 = $ad->by_role;
         }
 
-        $insert = DB::select("
-			insert into csc_transaksi (id_pembuat,by_role,id_eksportir,id_terkait,origin,created_at,status_transaksi) values
-			('" . $isi1 . "','" . $isi2 . "','" . $id3 . "','" . $id2 . "','2','" . Date('Y-m-d H:m:s') . "','0')");
-        $querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
-        if ($querymax) {
+//        $insert = DB::select("
+//			insert into csc_transaksi (id_pembuat,by_role,id_eksportir,id_terkait,origin,created_at,status_transaksi) values
+//			('" . $isi1 . "','" . $isi2 . "','" . $id3 . "','" . $id2 . "','2','" . Date('Y-m-d H:m:s') . "','0')");
+//        $querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
+
+        $insert = DB::table('csc_transaksi')->insertGetId([
+                'id_pembuat' => $isi1,
+                'by_role' => $isi2,
+                'id_eksportir' => $id3,
+                'id_terkait' => $id2,
+                'origin' => '2',
+                'created_at' => Date('Y-m-d H:m:s'),
+                'status_transaksi' => '0'
+            ]
+        );
+
+        if ($insert) {
 
             $meta = [
                 'code' => 200,
@@ -709,7 +725,7 @@ class BuyingreqController extends Controller
             ];
 
             $res['meta'] = $meta;
-            $res['data'] = '';
+            $res['data'] = $insert;
             return response($res);
         } else {
             $meta = [
@@ -734,32 +750,37 @@ class BuyingreqController extends Controller
         $id5 = $request->username;
         $id6 = $request->idb;
         date_default_timezone_set('Asia/Jakarta');
-        $insert = DB::select("
-			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join) values
-			('" . $id2 . "','" . $a . "','" . Date('Y-m-d H:m:s') . "','" . $id4 . "','" . $id3 . "','" . $id5 . "','" . $id6 . "')");
-        if ($insert) {
 
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
+        $insert = DB::table('csc_buying_request_chat')->insertGetId([
+                'id_br' => $id2,
+                'pesan' => $a,
+                'tanggal' => Date('Y-m-d H:m:s'),
+                'id_pengirim' => $id4,
+                'id_role' => $id3,
+                'username_pengirim' => $id5,
+                'id_join' => $id6,
+            ]
+        );
+        $users = DB::table('csc_buying_request_chat')
+            ->where('id_br', '=', $id2)
+            ->where('id_join', '=', $id6)
+            ->where('id', '=', $insert)
+            ->get();
+        if ($users) {
 
-            $res['meta'] = $meta;
-            $res['data'] = '';
-            return response($res);
+            return $users;
         } else {
             $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
+                'code' => 404,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
             ];
 
             $res['meta'] = $meta;
             $res['data'] = '';
             return $res;
-
         }
+
     }
 
     public function searchListinquiry(Request $request)
