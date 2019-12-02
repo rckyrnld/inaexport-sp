@@ -21,6 +21,7 @@
     .detail_rc{
       color: #1a70bb;
       font-family: 'Arial' !important; 
+      font-size: 14px;
     }
     .a-modif:hover{
       text-decoration: none;
@@ -51,23 +52,41 @@
         <span style="color: #1a70bb; text-align: center;"><h2>@lang("frontend.jdl_event")</h2></span>
       </div>
     </div><br>
+    @if($page > 1)
+      <div class="row justify-content-center">
+        <div class="col-lg-12 col-md-12 col-12">
+          <div class="row shop_wrapper">
+    @endif
       @foreach($e_detail as $key => $ed)
-      @if($key == 0 || $key == 5 )
-        <div class="form-group row utama" style="height: 100%">
-      @endif
-      
-      @if( $key == 0 || $key == 1 )
-          <div class="col-lg-6 col-md-6 col-12 second @if($key == 0) a-modif @endif" style="height: 100%;">
-      @elseif($key >= 5)
-          <div class="col-lg-3 col-md-3 col-12 second a-modif" style="height: 100%;">
-      @endif
-
-      @if( $key > 0 && $key < 5)
-        @if($key == 1)
-          <div class="form-group row" style="height: 100%;">
+        @if($page == 1)
+          @if($key == 0 || $key == 5 )
+            <div class="form-group row utama" style="height: 100%">
+          @endif
         @endif
-          <div class="col-lg-6 col-md-6 col-12 a-modif" style="height: 50%; padding-top: 10px;">
-      @endif
+
+
+        @if($page == 1)
+          @if( $key == 0 || $key == 1 )
+              <div class="col-lg-6 col-md-6 col-12 second @if($key == 0) a-modif @endif" style="height: 100%;">
+                <?php $size = 412; $num_char = 65;?>
+          @elseif($key >= 5)
+              <div class="col-lg-3 col-md-3 col-12 second a-modif" style="height: 100%; padding-top: 10px;">
+                <?php $size = 162; $num_char = 25;?>
+          @endif
+        @else
+          <div class="col-lg-3 col-md-3 col-12 second a-modif" style="height: 100%; padding-top: 10px;">
+          <?php $size = 162; $num_char = 25;?>
+        @endif
+
+        @if($page == 1)
+          @if( $key > 0 && $key < 5)
+            @if($key == 1)
+              <div class="form-group row" style="height: 100%;">
+            @endif
+              <div class="col-lg-6 col-md-6 col-12 a-modif" style="height: 50%;">
+                <?php $size = 162; $num_char = 25;?>
+          @endif
+        @endif
         <?php
           if($loc == "ch"){
             if($ed->event_name_chn != null){
@@ -75,17 +94,14 @@
             } else {
               $title = $ed->event_name_en;
             }
-            $comod = getEventCom($ed->event_comodity,'ch');
           }elseif($loc == "in"){
             if($ed->event_name_in != null){
               $title = $ed->event_name_in;
             } else {
               $title = $ed->event_name_en;
             }
-            $comod = getEventCom($ed->event_comodity,'in');
           }else{
             $title = $ed->event_name_en;
-            $comod = getEventCom($ed->event_comodity, 'en');
           }
 
           if(date('Y-m-d', strtotime($ed->start_date)) == date('Y-m-d', strtotime($ed->end_date))){
@@ -96,7 +112,7 @@
             $tanggal = date('d F Y', strtotime($ed->start_date)).' - '.date('d F Y', strtotime($ed->end_date));
           }
 
-          $lokasi = EventPlaceZ($ed->id_event_place, $loc);
+          $lokasi = EventPlaceName($ed->id_event_place, $loc);
 
           if (Auth::guard('eksmp')->user()) {
                 $id_ = Auth::guard('eksmp')->user()->id;
@@ -120,36 +136,66 @@
           } else {
             $image = '/image/event/NoPicture.png';
           }
+
+          if(strlen($title) > $num_char){
+              $cut_text = substr($title, 0, $num_char);
+              if ($title{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                  $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                  $cut_text = substr($title, 0, $new_pos);
+              }
+              $titleName = $cut_text . '...';
+          }else{
+              $titleName = $title;
+          }
+
+          if(strlen($lokasi) > ($num_char+7)){
+              $cut_text = substr($lokasi, 0, ($num_char+7));
+              if ($lokasi{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                  $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                  $cut_text = substr($lokasi, 0, $new_pos);
+              }
+              $lokasiName = $cut_text . '...';
+          }else{
+              $lokasiName = $lokasi;
+          }
           ?>
           <a href="{{url('/front_end/join_event/')}}/{{$ed->id}}" class="a-modif">
           <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-            <img class="rc" src="{{url('/')}}/{{$image}}">
+            <img class="rc" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
           </div>
           <div style="height: 25%; padding-top: 5px;">
-              <span style="font-family: arial; font-weight: 530; font-size: 18px; color: black !important;">{{$title}}</span><br>
-              <span class="detail_rc">
+              <span style="font-family: arial; font-weight: 530; font-size: 18px; color: black !important;" title="{{$title}}">{{$titleName}}</span><br>
+              <span class="detail_rc" title="{{$lokasi}}">
               <i class="fa fa-calendar-check-o"></i>&nbsp;&nbsp;{{$tanggal}}
               <br>
-              <i class="fa fa-map-marker"></i>&nbsp;&nbsp;&nbsp;{{$lokasi}}<br>
+              <i class="fa fa-map-marker"></i>&nbsp;&nbsp;&nbsp;{{$lokasiName}}<br>
               </span>
           </div>
           </a>
       </div>
-        @if( $key == 4 || $key == 9)
-          </div>
-          @if($key == 4)
-            </div></div>
+        @if($page == 1)
+          @if( $key == 4 || $key == 9)
+            </div>
+            @if($key == 4)
+              </div></div>
+            @endif
           @endif
         @endif
       @endforeach
+
+      @if($page > 1)
+        </div></div></div>
+      @endif
+  </div>
+  <br><br>
     <div class="row">
       <div class="container">
-        <div class="row justify-content-center">
-          
+        <div class="row justify-content-center" align="center">
+          {{ $e_detail->render("pagination::bootstrap-4") }}
         </div>
       </div>
     </div>
-  </div>
+    <br>
 </div>
 <div style="margin-top: 0px; margin-bottom: 5%; background-color: white;"></div>
 @include('frontend.layouts.footer')

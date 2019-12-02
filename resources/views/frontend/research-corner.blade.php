@@ -58,30 +58,36 @@
     </div>
 <!--breadcrumbs area end-->
 
-<div style="background-color: white; padding-bottom: 3%;">
+<div class="shop_area shop_reverse" style="background-color: white; padding-bottom: 3%;">
   <div class="container">
     <div class="row">
       <div class="col-md-12 col-lg-12">
         <span style="color: #1a70bb; text-align: center;"><h2>Research Corner</h2></span>
       </div>
     </div><br>
+    @if($page > 1)
+      <div class="row justify-content-center">
+        <div class="col-lg-12 col-md-12 col-12">
+          <div class="row shop_wrapper">
+    @endif
+
       @foreach($research as $key => $data)
         @if($page == 1)
           @if($key == 0 || $key == 5 )
-            <div class="form-group row utama" style="height: 100%">
+            <div class="form-group row" style="height: 100%">
           @endif
         @endif
       
         @if($page == 1)
           @if( $key == 0 || $key == 1 )
-              <div class="col-lg-6 col-md-6 col-12 second" style="height: 100%;">
+              <div class="col-lg-6 col-md-6 col-12" style="height: 100%;">
                 <?php $size = 412; $num_char = 60;?>
           @elseif($key >= 5)
-              <div class="col-lg-3 col-md-3 col-12 second" style="height: 100%;">
+              <div class="col-lg-3 col-md-3 col-12" style="height: 100%;">
                 <?php $size = 162; $num_char = 23;?>
           @endif
         @else
-            <div class="col-lg-3 col-md-3 col-12 second" style="height: 100%;">
+            <div class="col-lg-3 col-md-3 col-12" style="height: 100%; padding-top: 20px;">
             <?php $size = 162; $num_char = 23;?>
         @endif
 
@@ -139,7 +145,7 @@
           </div>
           <div style="height: 25%; padding-top: 5px;">
               <span style="font-family: arial; font-weight: 500; font-size: 18px;" title="{{$title}}"><strong style="padding-right: 10px;">{{$titleName}}</strong> <span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf;">{{getDataDownload($data->id)}}&nbsp;&nbsp;<i class="fa fa-download"></i></span></span><br>
-              <span class="detail_rc" style="font-size: 12px;">
+              <span class="detail_rc" style="font-size: 14px;">
               <i class="fa fa-calendar-check-o"></i>&nbsp;&nbsp;{{$date}}
               <br>
               <a href="{{$url}}" class="detail_rc" onclick="__download('{{$data->id}}', event, this)" style="text-decoration: none;"><i class="fa fa-download"></i>&nbsp;&nbsp;&nbsp;@lang("button-name.donlod")</a>
@@ -155,11 +161,15 @@
           @endif
         @endif
       @endforeach
+
+      @if($page > 1)
+        </div></div></div>
+      @endif
   </div>
   <br><br>
     <div class="row">
       <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" align="center">
           {{ $research->render("pagination::bootstrap-4") }}
         </div>
       </div>

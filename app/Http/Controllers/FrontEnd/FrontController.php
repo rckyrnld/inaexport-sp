@@ -407,13 +407,20 @@ class FrontController extends Controller
             ->orderby('a.created_at', 'desc')
             ->distinct('a.id_research_corner', 'a.created_at')
             ->select('b.*', 'a.id_research_corner', 'a.created_at', 'b.cover')
-            ->paginate(9);
+            ->paginate(9, ['b.*']);
             // ->get();
 
         $json = json_decode($research->toJson(), true);
         $page = $json["current_page"];
+        if($page > 1){
+         $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
+            ->distinct('a.id_research_corner', 'a.created_at')
+            ->select('b.*', 'a.id_research_corner', 'a.created_at', 'b.cover')
+            ->orderby('a.created_at', 'desc')
+            ->paginate(8, ['b.*']);
+        }
         // $item_page = $json["data"];
-        
+
         return view('frontend.research-corner', compact('research', 'page'));
     }
 
@@ -512,8 +519,24 @@ class FrontController extends Controller
     }
 
     public function Event(){
-        $e_detail = DB::table('event_detail as a')->join('event_place as b', 'a.id_event_place', '=', 'b.id')->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')->where('a.status_en', 'Verified')->orderby('a.id', 'desc')->limit(9)->get();
-        return view('frontend.event.index', compact('e_detail'));
+        $e_detail = DB::table('event_detail as a')
+            ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+            ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+            ->where('a.status_en', 'Verified')->orderby('a.id', 'desc')
+            ->paginate(9);
+
+        $json = json_decode($e_detail->toJson(), true);
+        $page = $json["current_page"];
+        if($page > 1){
+         $e_detail = DB::table('event_detail as a')
+            ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+            ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+            ->where('a.status_en', 'Verified')->orderby('a.id', 'desc')
+            ->paginate(8);
+        }
+        // dd($e_detail);
+            // ->get();
+        return view('frontend.event.index', compact('e_detail', 'page'));
     }
 
     public function join_event($id){

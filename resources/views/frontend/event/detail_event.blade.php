@@ -47,9 +47,9 @@
         $name = $detail->event_name_en;
     }
 
-    $comodity = getEventCom($detail->event_comodity, $loc);
-    $eo = EvenOrgZ($detail->id_event_organizer, $loc);
-    $place = EventPlaceZ($detail->id_event_place, $loc);
+    $comodity = EventComodityName($detail->event_comodity, $loc);
+    $eo = EventOrganizerName($detail->id_event_organizer, $loc);
+    $place = EventPlaceName($detail->id_event_place, $loc);
 
     //get category
     $cat1 = getCategoryName($detail->id_prod_cat, $lct);
@@ -133,9 +133,9 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product-details-tab">
 
-                        <div id="img-1" class="zoomWrapper single-zoom">
+                        <div id="img-1" class="zoomWrapper single-zoom" align="center">
                             <a href="#">
-                                <img id="zoom1" src="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}" alt="big-1">
+                                <img id="zoom1" src="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}" alt="big-1" style="width: auto; height: 400px;">
                             </a>
                         </div>
 
@@ -143,14 +143,14 @@
                             <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}">
-                                        <img src="{{url('/')}}/{{$img1}}" alt="zo-th-1" />
+                                        <img src="{{url('/')}}/{{$img1}}" alt="zo-th-1" style="width: auto; height: 90px;" />
                                     </a>
 
                                 </li>
                                 @if($img2 != "image/noimage.jpg")
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img2}}" data-zoom-image="{{url('/')}}/{{$img2}}">
-                                        <img src="{{url('/')}}/{{$img2}}" alt="zo-th-1" />
+                                        <img src="{{url('/')}}/{{$img2}}" alt="zo-th-1" style="width: auto; height: 90px;" />
                                     </a>
 
                                 </li>
@@ -158,7 +158,7 @@
                                 @if($img3 != "image/noimage.jpg")
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img3}}" data-zoom-image="{{url('/')}}/{{$img3}}">
-                                        <img src="{{url('/')}}/{{$img3}}" alt="zo-th-1" />
+                                        <img src="{{url('/')}}/{{$img3}}" alt="zo-th-1" style="width: auto; height: 90px;" />
                                     </a>
 
                                 </li>
@@ -166,7 +166,7 @@
                                 @if($img4 != "image/noimage.jpg")
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img4}}" data-zoom-image="{{url('/')}}/{{$img4}}">
-                                        <img src="{{url('/')}}/{{$img4}}" alt="zo-th-1" />
+                                        <img src="{{url('/')}}/{{$img4}}" alt="zo-th-1" style="width: auto; height: 90px;" />
                                     </a>
 
                                 </li>
@@ -182,32 +182,32 @@
                                 {{date("d F Y", strtotime($detail->start_date))}} - {{date("d F Y", strtotime($detail->end_date))}}<br>
                                 <table>
                                     <tr>
-                                        <td>Type</td>
+                                        <td>@lang("frontend.event.type")</td>
                                         <td style="padding-left: 5px;padding-right: 10px;">:</td>
                                         <td>{{$type}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Event Organizer</td>
+                                        <td>@lang("frontend.event.eo")</td>
                                         <td style="padding-left: 5px;padding-right: 10px;">:</td>
                                         <td>{{$eo}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Comodity</td>
+                                        <td>@lang("frontend.event.comodity")</td>
                                         <td style="padding-left: 5px;padding-right: 10px;">:</td>
                                         <td>{{$comodity}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Scope</td>
+                                        <td>@lang("frontend.event.scope")</td>
                                         <td style="padding-left: 5px;padding-right: 10px;">:</td>
                                         <td>{{$scope}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Place</td>
+                                        <td>@lang("frontend.event.place")</td>
                                         <td style="padding-left: 5px;padding-right: 10px;">:</td>
                                         <td>{{$place}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Website</td>
+                                        <td>@lang("frontend.event.website")</td>
                                         <td style="padding-left: 5px;padding-right: 10px;">:</td>
                                         <td>{{$detail->website}}</td>
                                     </tr>
