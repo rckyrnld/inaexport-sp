@@ -622,6 +622,7 @@ class BuyingreqController extends Controller
             ->where('id_join', '=', $id)
             ->orderBy('id', 'desc')
             ->get();
+        $jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
             $ext = pathinfo($user[$i]->files , PATHINFO_EXTENSION);
             $gbr = ['png', 'jpg', 'jpeg'];
@@ -634,7 +635,7 @@ class BuyingreqController extends Controller
             } else {
                 $extension = "not identified";
             }
-            $jsonResult = array();
+
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_br"] = $user[$i]->id_br;
             $jsonResult[$i]["pesan"] = $user[$i]->pesan;
