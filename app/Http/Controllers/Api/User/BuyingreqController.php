@@ -651,17 +651,17 @@ class BuyingreqController extends Controller
         $request->file('filez')->move($destinationPath, $file);
         date_default_timezone_set('Asia/Jakarta');
 
-//        $insert = DB::table('csc_buying_request_chat')->insertGetId([
-//                'id_br' => $id2,
-//                'pesan' => $a,
-//                'tanggal' => Date('Y-m-d H:m:s'),
-//                'id_pengirim' => $id4,
-//                'id_role' => $id3,
-//                'username_pengirim' => $id5,
-//                'id_join' => $id6,
-//                'files' => $file,
-//            ]
-//        );
+        $insert = DB::table('csc_buying_request_chat')->insertGetId([
+                'id_br' => $id2,
+                'pesan' => $a,
+                'tanggal' => Date('Y-m-d H:m:s'),
+                'id_pengirim' => $id4,
+                'id_role' => $id3,
+                'username_pengirim' => $id5,
+                'id_join' => $id6,
+                'files' => $file,
+            ]
+        );
         $users = DB::table('csc_buying_request_chat')
             ->where('id_br', '=', $id2)
             ->where('id_join', '=', $id6)
