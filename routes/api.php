@@ -111,6 +111,11 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     Route::post('br_save_join', 'Api\User\BuyingreqController@br_save_join');
     Route::post('br_deal', 'Api\User\BuyingreqController@br_deal');
 
+    //transaksi
+    Route::post('getTransaksi', 'Api\User\ManagementUserController@getTransaksi');
+    Route::post('detailTransaksi', 'Api\User\ManagementUserController@detailTransaksi');
+
+
 
 
 });

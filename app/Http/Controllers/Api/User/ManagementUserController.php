@@ -344,4 +344,68 @@ class ManagementUserController extends Controller
             return response($res);
         }
     }
+
+    public function getTransaksi(Request $request)
+    {
+        if ($request->id_role == 2) {
+            $data = DB::table('csc_transaksi')
+                ->where('id_eksportir', $request->id_user)
+                ->orderBy('id_transaksi', 'desc')
+                ->get();
+        } else if ($request->id_role == 3) {
+            $data = DB::table('csc_transaksi')
+                ->where('id_pembuat', $request->id_user)
+                ->orderBy('id_transaksi', 'desc')
+                ->get();
+        }
+        if ($data) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
+    }
+    public function detailTransaksi(Request $request)
+    {
+        $data = DB::table('csc_transaksi')
+            ->where('id_pembuat', $request->id_transaksi)
+            ->get();
+
+        if ($data) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
+    }
 }

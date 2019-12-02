@@ -650,7 +650,7 @@ class BuyingreqController extends Controller
         $destinationPath = public_path() . "/uploads/pop";
         $request->file('filez')->move($destinationPath, $file);
         date_default_timezone_set('Asia/Jakarta');
-        
+
         $insert = DB::table('csc_buying_request_chat')->insertGetId([
                 'id_br' => $id2,
                 'pesan' => $a,
@@ -667,6 +667,8 @@ class BuyingreqController extends Controller
             ->where('id_join', '=', $id6)
             ->where('id', '=', $insert)
             ->get();
+//        dd($users->files);
+//        $users->file_desc = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/noimage.jpg');
         if ($users) {
 
             return $users;
@@ -698,11 +700,23 @@ class BuyingreqController extends Controller
             $isi2 = $ad->by_role;
         }
 
-        $insert = DB::select("
-			insert into csc_transaksi (id_pembuat,by_role,id_eksportir,id_terkait,origin,created_at,status_transaksi) values
-			('" . $isi1 . "','" . $isi2 . "','" . $id3 . "','" . $id2 . "','2','" . Date('Y-m-d H:m:s') . "','0')");
-        $querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
-        if ($querymax) {
+//        $insert = DB::select("
+//			insert into csc_transaksi (id_pembuat,by_role,id_eksportir,id_terkait,origin,created_at,status_transaksi) values
+//			('" . $isi1 . "','" . $isi2 . "','" . $id3 . "','" . $id2 . "','2','" . Date('Y-m-d H:m:s') . "','0')");
+//        $querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
+
+        $insert = DB::table('csc_transaksi')->insertGetId([
+                'id_pembuat' => $isi1,
+                'by_role' => $isi2,
+                'id_eksportir' => $id3,
+                'id_terkait' => $id2,
+                'origin' => '2',
+                'created_at' => Date('Y-m-d H:m:s'),
+                'status_transaksi' => '0'
+            ]
+        );
+
+        if ($insert) {
 
             $meta = [
                 'code' => 200,
@@ -711,7 +725,7 @@ class BuyingreqController extends Controller
             ];
 
             $res['meta'] = $meta;
-            $res['data'] = '';
+            $res['data'] = $insert;
             return response($res);
         } else {
             $meta = [
