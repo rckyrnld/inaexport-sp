@@ -215,9 +215,6 @@
                                         <div class="col-md-3">
                                             <select class="form-control select2" name="hscode" id="hscode" style="width: 100%;">
                                                <option value=""></option>
-                                               @foreach($hsco as $val)
-                                                <option value="{{$val->id}}">{{$val->desc_eng}}</option>
-                                               @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-3">
@@ -352,6 +349,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var CSRF_TOKEN = "{{ csrf_token() }}";
         CKEDITOR.replace('product_description_en');
         CKEDITOR.replace('product_description_in');
         CKEDITOR.replace('product_description_chn');
@@ -361,7 +359,24 @@
         // });
 
         $('.select2').select2({
-          placeholder: 'Select HS Code'
+            allowClear: true,
+            placeholder: 'Select HS Code',
+            ajax: {
+                url: "{{route('eksproduct.getHsCode')}}",
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                  return {
+                    results: $.map(data, function (item) {
+                      return {
+                        text: item.desc_eng,
+                        id: item.id
+                      }
+                    })
+                  };
+                },
+                cache: true
+            }
         });
 
         $("#img_1").click(function() {
@@ -387,16 +402,16 @@
         document.getElementById("image_4").addEventListener('change',handleFileSelect,false);
 
         $("#hal1").on("click", function(){
-            if ($('#prodname_en').val() == "") {
-                alert("Product name is empty, please fill in!");
-                return false;
-            }else if ($('#id_csc_product').val() == "") {
-                alert("Please select a product category!");
-                return false;
-            }else {
+            // if ($('#prodname_en').val() == "") {
+            //     alert("Product name is empty, please fill in!");
+            //     return false;
+            // }else if ($('#id_csc_product').val() == "") {
+            //     alert("Please select a product category!");
+            //     return false;
+            // }else {
                 nextTab('formprod','infoprod');
                 return true;
-            }
+            // }
         });
 
         $("#hal2").on("click", function(){
@@ -405,7 +420,15 @@
         });
 
         $("#hal3").on("click", function(){
-            $("#formnya").submit();
+            if ($('#prodname_en').val() == "") {
+                alert("Product name is empty, please fill in!");
+                return false;
+            }else if ($('#id_csc_product').val() == "") {
+                alert("Please select a product category!");
+                return false;
+            }else{
+                $("#formnya").submit();
+            }
         });
 
         $("#code").focus(function(){}).blur(function(){
@@ -435,6 +458,11 @@
             }
 
         });
+
+        // $(document).on('keyup', '.select2', function (e) {   
+        //     console.log(e);
+        //     // alert(this.value);
+        // })
 
     })
 

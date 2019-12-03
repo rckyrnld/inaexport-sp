@@ -273,9 +273,6 @@
                                         <div class="col-md-3">
                                             <select class="form-control select2" name="hscode" id="hscode" style="width: 100%;">
                                                <option value=""></option>
-                                               @foreach($hsco as $val)
-                                                    <option value="{{$val->id}}" @isset($data) @if($data->id_mst_hscodes == $val->id) selected @endif  @endisset>{{$val->desc_eng}}</option>
-                                               @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-3">
@@ -472,16 +469,16 @@
         document.getElementById("image_4").addEventListener('change',handleFileSelect,false);
 
         $("#hal1").on("click", function(){
-            if ($('#prodname_en').val() == "") {
-                alert("Product name is empty, please fill in!");
-                return false;
-            }else if ($('#id_csc_product').val() == "") {
-                alert("Please select a product category!");
-                return false;
-            }else {
+            // if ($('#prodname_en').val() == "") {
+            //     alert("Product name is empty, please fill in!");
+            //     return false;
+            // }else if ($('#id_csc_product').val() == "") {
+            //     alert("Please select a product category!");
+            //     return false;
+            // }else {
                 nextTab('formprod','infoprod');
                 return true;
-            }
+            // }
         });
 
         $("#hal2").on("click", function(){
@@ -490,7 +487,15 @@
         });
 
         $("#hal3").on("click", function(){
-            $("#formnya").submit();
+            if ($('#prodname_en').val() == "") {
+                alert("Product name is empty, please fill in!");
+                return false;
+            }else if ($('#id_csc_product').val() == "") {
+                alert("Please select a product category!");
+                return false;
+            } else{
+                $("#formnya").submit();
+            }
         });
 
         $("#code").focus(function(){}).blur(function(){
@@ -520,6 +525,41 @@
             }
 
         });
+
+        $('.select2').select2({
+            allowClear: true,
+            placeholder: 'Select HS Code',
+            ajax: {
+                url: "{{route('eksproduct.getHsCode')}}",
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                  return {
+                    results: $.map(data, function (item) {
+                      return {
+                        text: item.desc_eng,
+                        id: item.id
+                      }
+                    })
+                  };
+                },
+                cache: true
+            }
+        });
+        @isset($data)
+        var hscode = "{{$data->id_mst_hscodes}}";
+        if (hscode != null) {
+            $.ajax({
+                type: 'GET',
+                url: "{{route('eksproduct.getHsCode')}}",
+                data: { code: hscode }
+            }).then(function (data) {
+                var option = new Option(data[0].desc_eng, data[0].id, true, true);
+
+                $('#hscode').append(option).trigger('change');
+            });
+        }
+        @endisset
     })
 
     function nextTab(now, next) {
