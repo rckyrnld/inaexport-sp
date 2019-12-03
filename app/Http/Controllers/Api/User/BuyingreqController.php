@@ -319,8 +319,7 @@ class BuyingreqController extends Controller
                         $id_terkait = "";
                         $ket = "Buying Request created by " . $namapembuat;
                         $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-					('2','" . $namapembuat . "','" . $zzz . "','Eksportir','" . $napro . "','" . $ket . "','br_list','" . $id_terkait . "','" . Date('Y-m-d H:m:s') . "','0')
-				");
+					('2','" . $namapembuat . "','" . $zzz . "','Eksportir','" . $napro . "','" . $ket . "','br_list','" . $id_terkait . "','" . Date('Y-m-d H:m:s') . "','0')");
                         //END NOTIF
                         //EMAIL
                         $caridataeks = DB::select("select * from itdp_company_users where id='" . $napro . "'");
@@ -519,6 +518,74 @@ class BuyingreqController extends Controller
     public function br_save_join(Request $request)
     {
         $id = $request->id;
+        $data1 ="";
+        $data2 ="";
+        $data3 ="";
+        $data4 ="";
+        $data5 ="";
+        $caribrsl = DB::select("select * from csc_buying_request_join where id='".$id."'");
+        foreach($caribrsl as $val1){
+            $data1 = $val1->id_eks;
+            $data2 = $val1->id_br;
+        }
+        $caribrs2 = DB::select("select * from csc_buying_request where id='".$data2."'");
+        foreach($caribrs2 as $val2){
+            $data3 = $val2->id_pembuat;
+            $data5 = $val2->by_role;
+        }
+        $caribrs3 = DB::select("select * from itdp_company_users where id='".$data3."'");
+        foreach($caribrs3 as $val3){
+            $data4 = $val3->email;
+        }
+
+
+        $ket = $request->username." Join to your Buying Request!";
+        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+		('3','Eksportir','".$request->id_user."','Importir','".$data3."','".$ket."','br_importir_lc','".$data2."','".Date('Y-m-d H:m:s')."','0')
+		");
+
+        $ket2 = $request->username." Join to Buying Request!";
+        $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+		('1','Eksportir','".$request->id_user."','Super Admin','1','".$ket2."','br_pw_lc','".$data2."','".Date('Y-m-d H:m:s')."','0')
+		");
+        if($data5 == 3){
+            $data = [
+                'email' => "",
+                'email1' => $data4,
+                'username' => $request->username,
+                'main_messages' => "",
+                'id' => $data2
+            ];
+            Mail::send('UM.user.sendbrjoin', $data, function ($mail) use ($data) {
+                $mail->to($data['email1'], $data['username']);
+                $mail->subject('Eksportir Join to Your Buying Request');
+            });
+
+        }
+
+        $data22 = [
+            'email' => "",
+            'email1' => $request->email,
+            'username' => "",
+            'main_messages' => $request->username,
+            'id' => $id        ];
+
+        Mail::send('UM.user.sendbrjoin2', $data22, function ($mail) use ($data22) {
+            $mail->to($data22['email1'], $data22['username']);
+            $mail->subject('You Join To Buying Request');
+        });
+
+        $data33 = [
+            'email' => "",
+            'email1' => "kementerianperdagangan.max@gmail.com",
+            'username' => $request->username,
+            'main_messages' => "",
+            'id' => $data2
+        ];
+        Mail::send('UM.user.sendbrjoin3', $data33, function ($mail) use ($data33) {
+            $mail->to($data33['email1'], $data33['username']);
+            $mail->subject('Eksportir Join to Buying Request');
+        });
         $update = DB::select("update csc_buying_request_join set status_join='1' where id='" . $id . "' ");
         if ($update) {
 
