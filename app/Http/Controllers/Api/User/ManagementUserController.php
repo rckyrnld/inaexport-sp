@@ -221,6 +221,7 @@ class ManagementUserController extends Controller
         $id_user = $request->id_user;
         $tick = TicketingSupportModel::from('ticketing_support as ts')
             ->where('ts.id_pembuat', $id_user)
+            ->orderby('ts.created_at', 'desc')
             ->get();
 
         if (count($tick) > 0) {
@@ -252,68 +253,46 @@ class ManagementUserController extends Controller
         $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
             ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
             ->where('ts.id', $id)
-            ->orderby('cts.messages_send', 'asc')
+            ->orderby('cts.messages_send', 'desc')
             ->get();
 
         $users = TicketingSupportModel::where('id', $id)->first();
 
         if (count($messages) > 0) {
-//            $meta = [
-//                'code' => 200,
-//                'message' => 'Success',
-//                'status' => 'OK'
-//            ];
-////            $data = '';
-////            $data = array();
-////            array_push($data, array(
-////                'id_pembuat' => $users->id_pembuat,
-////                'items' => $messages
-////            ));
-//            $res['meta'] = $meta;
-//            $res['data'] = $messages;
             return response($messages);
         } else {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = $messages;
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
+
+            return response($messages);
         }
     }
 
     public function sendchat(Request $req)
     {
-        $chat = ChatingTicketingSupportModel::insert([
+        $chat = ChatingTicketingSupportModel::insertGetId([
             'id_ticketing_support' => $req->id_tiketing,
             'sender' => $req->id_pembuat,
             'reciver' => '0',
             'messages' => $req->messages,
             'messages_send' => date('Y-m-d H:i:s')
         ]);
+
+        $user = DB::table('chating_ticketing_support')
+            ->where('id', '=', $chat)
+            ->get();
+
+        for ($i = 0; $i < count($user); $i++) {
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_ticketing_support"] = $user[$i]->id_ticketing_support;
+            $jsonResult[$i]["sender"] = $user[$i]->sender;
+            $jsonResult[$i]["reciver"] = $user[$i]->reciver;
+            $jsonResult[$i]["messages"] = $user[$i]->messages;
+            $jsonResult[$i]["messages_send"] = $user[$i]->messages_send;
+        }
+//        dd($jsonResult);
         if ($chat) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-//            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = '';
-            return response($res);
+            return response($jsonResult);
         } else {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
+            return response($jsonResult);
         }
     }
 
@@ -380,6 +359,7 @@ class ManagementUserController extends Controller
             return response($res);
         }
     }
+
     public function detailTransaksi(Request $request)
     {
         $data = DB::table('csc_transaksi')
