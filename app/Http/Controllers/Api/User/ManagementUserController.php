@@ -258,20 +258,20 @@ class ManagementUserController extends Controller
         $users = TicketingSupportModel::where('id', $id)->first();
 
         if (count($messages) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-//            $data = '';
-//            $data = array();
-//            array_push($data, array(
-//                'id_pembuat' => $users->id_pembuat,
-//                'items' => $messages
-//            ));
-            $res['meta'] = $meta;
-            $res['data'] = $messages;
-            return response($res);
+//            $meta = [
+//                'code' => 200,
+//                'message' => 'Success',
+//                'status' => 'OK'
+//            ];
+////            $data = '';
+////            $data = array();
+////            array_push($data, array(
+////                'id_pembuat' => $users->id_pembuat,
+////                'items' => $messages
+////            ));
+//            $res['meta'] = $meta;
+//            $res['data'] = $messages;
+            return response($messages);
         } else {
             $meta = [
                 'code' => 200,
