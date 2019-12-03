@@ -388,6 +388,7 @@ Route::namespace('ResearchCorner')->group(function () {
  */
 Route::namespace('Event')->prefix('event')->group(function () {
     Route::get('/', 'EventController@index');
+    Route::get('/comodity', 'EventController@comodity')->name('event.comodity');
     Route::get('/create', 'EventController@create');
     Route::post('/store', 'EventController@store');
     Route::get('/edit/{id}', 'EventController@edit');

@@ -50,15 +50,25 @@ class TrainingControllerAdmin extends Controller
 				'status' => 0
       ]);
       //Input Contact Person
-      $idp = DB::table('contact_person')->max('id') + 1;
-      DB::table('contact_person')->insert([
-        'id' => $idp,
-        'name' => $req->cp_name,
-        'email' => $req->cp_email,
-        'phone' => $req->cp_phone,
-        'type' => 'training',
-        'id_type' => $idt,
-      ]);
+      $cp = DB::table('contact_person')->where('type', 'training')->where('id_type', $idt)->first();
+      if($cp){
+        DB::table('contact_person')->where('type', 'training')->where('id_type', $idt)->update([
+          'name' => $req->cp_name,
+          'email' => $req->cp_email,
+          'phone' => $req->cp_phone,
+        ]);
+      } else {
+        $idp = DB::table('contact_person')->max('id') + 1;
+        DB::table('contact_person')->insert([
+          'id' => $idp,
+          'name' => $req->cp_name,
+          'email' => $req->cp_email,
+          'phone' => $req->cp_phone,
+          'type' => 'training',
+          'id_type' => $idt,
+        ]);
+      }
+      
 
 
 			return redirect('/admin/training');

@@ -172,15 +172,25 @@ class EventController extends Controller
 
         }
 
-        $idp = DB::table('contact_person')->max('id') + 1;
-          DB::table('contact_person')->insert([
-            'id' => $idp,
-            'name' => $req->cp_name,
-            'email' => $req->cp_email,
-            'phone' => $req->cp_phone,
-            'type' => 'event',
-            'id_type' => $id,
-          ]);
+        $cp = DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->first();
+        if($cp){
+            DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->update([
+              'name' => $req->cp_name,
+              'email' => $req->cp_email,
+              'phone' => $req->cp_phone,
+            ]);
+          } else {
+            $idp = DB::table('contact_person')->max('id') + 1;
+            DB::table('contact_person')->insert([
+                'id' => $idp,
+                'name' => $req->cp_name,
+                'email' => $req->cp_email,
+                'phone' => $req->cp_phone,
+                'type' => 'event',
+                'id_type' => $id,
+            ]);
+          }
+        
 
         return redirect('event');
 	}
@@ -438,6 +448,21 @@ class EventController extends Controller
     		'status' => 2
     	]);
     	return redirect('/event/show_company/'.$id);
+    }
+
+    public function comodity(Request $request)
+    {
+      $comodity = DB::table('event_comodity')
+                        ->select('id', 'comodity_en')
+                        ->orderby('comodity_en', 'asc');
+      if (isset($request->q)) {
+          $comodity->where('comodity_en', 'ILIKE', '%'.$request->q.'%');
+      } else if (isset($request->code)) {
+          $comodity->where('id', $request->code);
+      } else {
+          $comodity->limit(10);
+      }
+      return response()->json($comodity->get());
     }
 
 }
