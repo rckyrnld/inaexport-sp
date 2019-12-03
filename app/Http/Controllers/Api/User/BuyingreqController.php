@@ -319,8 +319,7 @@ class BuyingreqController extends Controller
                         $id_terkait = "";
                         $ket = "Buying Request created by " . $namapembuat;
                         $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-					('2','" . $namapembuat . "','" . $zzz . "','Eksportir','" . $napro . "','" . $ket . "','br_list','" . $id_terkait . "','" . Date('Y-m-d H:m:s') . "','0')
-				");
+					('2','" . $namapembuat . "','" . $zzz . "','Eksportir','" . $napro . "','" . $ket . "','br_list','" . $id_terkait . "','" . Date('Y-m-d H:m:s') . "','0')");
                         //END NOTIF
                         //EMAIL
                         $caridataeks = DB::select("select * from itdp_company_users where id='" . $napro . "'");
@@ -519,6 +518,74 @@ class BuyingreqController extends Controller
     public function br_save_join(Request $request)
     {
         $id = $request->id;
+//        $data1 = "";
+//        $data2 = "";
+//        $data3 = "";
+//        $data4 = "";
+//        $data5 = "";
+//        $caribrsl = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
+//        foreach ($caribrsl as $val1) {
+//            $data1 = $val1->id_eks;
+//            $data2 = $val1->id_br;
+//        }
+//        $caribrs2 = DB::select("select * from csc_buying_request where id='" . $data2 . "'");
+//        foreach ($caribrs2 as $val2) {
+//            $data3 = $val2->id_pembuat;
+//            $data5 = $val2->by_role;
+//        }
+//        $caribrs3 = DB::select("select * from itdp_company_users where id='" . $data3 . "'");
+//        foreach ($caribrs3 as $val3) {
+//            $data4 = $val3->email;
+//        }
+//
+//
+//        $ket = $request->username . " Join to your Buying Request!";
+//        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('3','Eksportir','" . $request->id_user . "','Importir','" . $data3 . "','" . $ket . "','br_importir_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
+//		");
+//
+//        $ket2 = $request->username . " Join to Buying Request!";
+//        $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_pw_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
+//		");
+//        if ($data5 == 3) {
+//            $data = [
+//                'email' => "",
+//                'email1' => $data4,
+//                'username' => $request->username,
+//                'main_messages' => "",
+//                'id' => $data2
+//            ];
+//            Mail::send('UM.user.sendbrjoin', $data, function ($mail) use ($data) {
+//                $mail->to($data['email1'], $data['username']);
+//                $mail->subject('Eksportir Join to Your Buying Request');
+//            });
+//
+//        }
+//
+//        $data22 = [
+//            'email' => "",
+//            'email1' => $request->email,
+//            'username' => "",
+//            'main_messages' => $request->username,
+//            'id' => $id];
+//
+//        Mail::send('UM.user.sendbrjoin2', $data22, function ($mail) use ($data22) {
+//            $mail->to($data22['email1'], $data22['username']);
+//            $mail->subject('You Join To Buying Request');
+//        });
+//
+//        $data33 = [
+//            'email' => "",
+//            'email1' => "kementerianperdagangan.max@gmail.com",
+//            'username' => $request->username,
+//            'main_messages' => "",
+//            'id' => $data2
+//        ];
+//        Mail::send('UM.user.sendbrjoin3', $data33, function ($mail) use ($data33) {
+//            $mail->to($data33['email1'], $data33['username']);
+//            $mail->subject('Eksportir Join to Buying Request');
+//        });
         $update = DB::select("update csc_buying_request_join set status_join='1' where id='" . $id . "' ");
         if ($update) {
 
@@ -583,6 +650,71 @@ class BuyingreqController extends Controller
         }
         $dy = $vld . " day";
         $besok = date('Y-m-d', strtotime($dy, strtotime(date("Y-m-d"))));
+
+//        $caribrsl = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
+//        foreach ($caribrsl as $val1) {
+//            $data1 = $val1->id_eks;
+//            $data2 = $val1->id_br;
+//        }
+//
+//        $caribrs2 = DB::select("select * from csc_buying_request where id='" . $data2 . "'");
+//        foreach ($caribrs2 as $val2) {
+//            $data3 = $val2->id_pembuat;
+//        }
+//        $caribrs3 = DB::select("select * from itdp_company_users where id='" . $data1 . "'");
+//        foreach ($caribrs3 as $val3) {
+//            $data4 = $val3->email;
+//        }
+
+//        $ket = $request->username." Verified Buying Request!";
+//        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('2','Importir','".$request->id_user."','Eksportir','".$data1."','".$ket."','br_chat','".$id."','".Date('Y-m-d H:m:s')."','0')
+//		");
+//
+//        $ket2 = $request->username." Verified Buying Request!";
+//        $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('1','Importir','".$request->id_user."','Super Admin','1','".$ket2."','br_pw_lc','".$id2."','".Date('Y-m-d H:m:s')."','0')
+//		");
+//
+//        $data = [
+//            'email' => "",
+//            'email1' => $data4,
+//            'username' => $request->username,
+//            'main_messages' => "",
+//            'id' => $id
+//        ];
+//        Mail::send('UM.user.sendbrchat', $data, function ($mail) use ($data) {
+//            $mail->to($data['email1'], $data['username']);
+//            $mail->subject('Impotir Verified Buying Request');
+//        });
+//        $data22 = [
+//            'email' => "",
+//            'email1' => $request->email,
+//            'username' => $request->username,
+//            'main_messages' => $request->username,
+//            'id' => $id,
+//            'id2' => $id2
+//        ];
+//
+//        Mail::send('UM.user.sendbrchat2', $data22, function ($mail) use ($data22) {
+//            $mail->to($data22['email1'], $data22['username']);
+//            $mail->subject('You Verified Buying Request');
+//        });
+//
+//        $data33 = [
+//            'email' => "",
+//            'email1' => "kementerianperdagangan.max@gmail.com",
+//            'username' => $request->username,
+//            'main_messages' => $request->username,
+//            'id' => $id,
+//            'id2' => $id2
+//        ];
+//
+//        Mail::send('UM.user.sendbrchat3', $data33, function ($mail) use ($data33) {
+//            $mail->to($data33['email1'], $data33['username']);
+//            $mail->subject('Importir Verified Join Buying Request');
+//        });
+
         $update = DB::select("update csc_buying_request_join set status_join='2', expired_at='" . $besok . "' where id='" . $id . "' ");
         if ($update) {
 
@@ -617,13 +749,44 @@ class BuyingreqController extends Controller
             $id_br = $p->id_br;
         }
 //        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id_br . "' and id_join='" . $id . "'");
-        $users = DB::table('csc_buying_request_chat')
+        $user = DB::table('csc_buying_request_chat')
             ->where('id_br', '=', $id_br)
             ->where('id_join', '=', $id)
             ->orderBy('id', 'desc')
             ->get();
-        if ($users) {
-            return response($users);
+        $jsonResult = array();
+        for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->files, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_br"] = $user[$i]->id_br;
+            $jsonResult[$i]["pesan"] = $user[$i]->pesan;
+            $jsonResult[$i]["tanggapan"] = $user[$i]->tanggapan;
+            $jsonResult[$i]["tanggal"] = $user[$i]->tanggal;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
+            $jsonResult[$i]["id_role"] = $user[$i]->id_role;
+            $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop/' . $user[$i]->files) : "";
+            $jsonResult[$i]["id_join"] = $user[$i]->id_join;
+            $jsonResult[$i]["ext"] = $extension;
+
+        }
+
+//        dd($jsonResult);
+
+        if ($jsonResult) {
+            return response($jsonResult);
         } else {
             $meta = [
                 'code' => 200,
@@ -662,16 +825,78 @@ class BuyingreqController extends Controller
                 'files' => $file,
             ]
         );
-        $users = DB::table('csc_buying_request_chat')
+        $user = DB::table('csc_buying_request_chat')
             ->where('id_br', '=', $id2)
             ->where('id_join', '=', $id6)
             ->where('id', '=', $insert)
             ->get();
-//        dd($users->files);
-//        $users->file_desc = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/noimage.jpg');
-        if ($users) {
 
-            return $users;
+        for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->files, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_br"] = $user[$i]->id_br;
+            $jsonResult[$i]["pesan"] = $user[$i]->pesan;
+            $jsonResult[$i]["tanggapan"] = $user[$i]->tanggapan;
+            $jsonResult[$i]["tanggal"] = $user[$i]->tanggal;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
+            $jsonResult[$i]["id_role"] = $user[$i]->id_role;
+            $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop/' . $user[$i]->files) : "";
+            $jsonResult[$i]["id_join"] = $user[$i]->id_join;
+            $jsonResult[$i]["ext"] = $extension;
+
+        }
+////        $users = DB::table('csc_buying_request_chat')
+////            ->where('id_br', '=', $id2)
+////            ->where('id_join', '=', $id6)
+////            ->where('id', '=', $insert)
+////            ->first();
+////
+////
+//////        dd($users);
+////        $ext = pathinfo($users->files, PATHINFO_EXTENSION);
+////        $gbr = ['png', 'jpg', 'jpeg'];
+////        $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+////
+////        if (in_array($ext, $gbr)) {
+////            $extension = "gambar";
+////        } else if (in_array($ext, $file)) {
+////            $extension = "file";
+////        } else {
+////            $extension = "not identified";
+////        }
+////
+////        $list_k = array();
+////        $list_k["id"] = $users->id;
+////        $list_k["id_br"] = $users->id_br;
+////        $list_k["pesan"] = $users->pesan;
+////        $list_k["tanggapan"] = $users->tanggapan;
+////        $list_k["tanggal"] = $users->tanggal;
+////        $list_k["status"] = $users->status;
+////        $list_k["id_pengirim"] = $users->id_pengirim;
+////        $list_k["id_role"] = $users->id_role;
+////        $list_k["username_pengirim"] = $users->username_pengirim;
+////        $list_k["files"] = $path =  url('/uploads/pop' . $users->files);
+////        $list_k["id_join"] = $users->id_join;
+////        $list_k["ext"] = $extension;
+//
+////        dd($list_k);
+////        $users->file_desc = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/noimage.jpg');
+        if ($jsonResult) {
+
+            return $jsonResult;
         } else {
             $meta = [
                 'code' => 404,
@@ -691,6 +916,65 @@ class BuyingreqController extends Controller
         $id = $request->idb;
         $id2 = $request->id_br;
         $id3 = $request->id_user;
+
+//        $cari1 = DB::select("select id_pembuat,by_role from csc_buying_request where id='".$id2."'");
+//        foreach($cari1 as $aja1){
+//            $data1 = $aja1->id_pembuat;
+//            $data3 = $aja1->by_role;
+//        }
+//        $cari2 = DB::select("select email from itdp_company_users where id='".$data1."'");
+//        foreach($cari2 as $aja2){
+//            $data2 = $aja2->email;
+//        }
+//
+//        $ket = $request->username." Deal Buying Request!";
+//        $it = $id2."/".$id;
+//        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('3','Eksportir','".$request->id_user."','Importir','".$data1."','".$ket."','br_importir_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+//		");
+//
+//        $ket2 = $request->username." Deal Buying Request!";
+//        $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('1','Eksportir','".$request->id_user."','Super Admin','1','".$ket2."','br_pw_chat','".$id."','".Date('Y-m-d H:m:s')."','0')
+//		");
+//
+//        if($data3 == 3){
+//            $data = [
+//                'email' => "",
+//                'email1' => $data2,
+//                'username' => $request->username,
+//                'main_messages' => "",
+//                'id' => $it
+//            ];
+//            Mail::send('UM.user.sendbrdeal', $data, function ($mail) use ($data) {
+//                $mail->to($data['email1'], $data['username']);
+//                $mail->subject('Eksportir Deal Buying Request');
+//            });
+//        }
+//        $data22 = [
+//            'email' => "",
+//            'email1' => $request->email,
+//            'username' => $request->username,
+//            'main_messages' => "",
+//            'id' => $id
+//        ];
+//        Mail::send('UM.user.sendbrdeal2', $data22, function ($mail) use ($data22) {
+//            $mail->to($data22['email1'], $data22['username']);
+//            $mail->subject('You Was Deal Buying Request');
+//        });
+//
+//        $data33 = [
+//            'email' => "",
+//            'email1' => "fahrisafari95@gmail.com",
+//            'username' => $request->username,
+//            'main_messages' => "",
+//            'id' => $id
+//        ];
+//        Mail::send('UM.user.sendbrdeal3', $data33, function ($mail) use ($data33) {
+//            $mail->to($data33['email1'], $data33['username']);
+//            $mail->subject('Eksportir Was Deal Buying Request');
+//        });
+
         $maxid = 0;
         $update = DB::select("update csc_buying_request_join set status_join='4' where id='" . $id . "' ");
         $update2 = DB::select("update csc_buying_request set status='4', deal='" . $id3 . "' where id='" . $id2 . "' ");
@@ -700,12 +984,7 @@ class BuyingreqController extends Controller
             $isi2 = $ad->by_role;
         }
 
-//        $insert = DB::select("
-//			insert into csc_transaksi (id_pembuat,by_role,id_eksportir,id_terkait,origin,created_at,status_transaksi) values
-//			('" . $isi1 . "','" . $isi2 . "','" . $id3 . "','" . $id2 . "','2','" . Date('Y-m-d H:m:s') . "','0')");
-//        $querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
-
-        $insert = DB::table('csc_transaksi')->insertGetId([
+        $insert = DB::table('csc_transaksi')->insert([
                 'id_pembuat' => $isi1,
                 'by_role' => $isi2,
                 'id_eksportir' => $id3,
@@ -715,9 +994,14 @@ class BuyingreqController extends Controller
                 'status_transaksi' => '0'
             ]
         );
+        $querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
+        foreach ($querymax as $maxquery) {
+            $maxid = $maxquery->maxid;
+        }
 
         if ($insert) {
-
+            $list_k = array();
+            $list_k["id_transaksi"] = $maxid;
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
@@ -725,13 +1009,13 @@ class BuyingreqController extends Controller
             ];
 
             $res['meta'] = $meta;
-            $res['data'] = $insert;
+            $res['data'] = $list_k;
             return response($res);
         } else {
             $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
+                'code' => 404,
+                'message' => 'Erorr',
+                'status' => 'Failed'
             ];
 
             $res['meta'] = $meta;
@@ -761,14 +1045,158 @@ class BuyingreqController extends Controller
                 'id_join' => $id6,
             ]
         );
-        $users = DB::table('csc_buying_request_chat')
+        $user = DB::table('csc_buying_request_chat')
             ->where('id_br', '=', $id2)
             ->where('id_join', '=', $id6)
             ->where('id', '=', $insert)
             ->get();
-        if ($users) {
 
-            return $users;
+        for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->files, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_br"] = $user[$i]->id_br;
+            $jsonResult[$i]["pesan"] = $user[$i]->pesan;
+            $jsonResult[$i]["tanggapan"] = $user[$i]->tanggapan;
+            $jsonResult[$i]["tanggal"] = $user[$i]->tanggal;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
+            $jsonResult[$i]["id_role"] = $user[$i]->id_role;
+            $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop/' . $user[$i]->files) : "";
+            $jsonResult[$i]["id_join"] = $user[$i]->id_join;
+            $jsonResult[$i]["ext"] = $extension;
+
+        }
+//        $cari = DB::select("select * from csc_buying_request where id='".$id2."'");
+//        foreach($cari as $aja){
+//            $data1 = $aja->id_pembuat;
+//        }
+//        $cari2 = DB::select("select * from itdp_company_users where id='".$data1."'");
+//        foreach($cari2 as $aja2){
+//            $data2 = $aja2->email;
+//        }
+//
+//        if($id3 == 2){
+//            $ket = "Eksportir ".$request->username." Respond Chat Buying Request !";
+//            $it = $id2."/".$id6;
+//            $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('3','Eksportir','".$request->id_user."','Importir','".$data1."','".$ket."','br_importir_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+//		");
+//
+//            $ket2 = "Eksportir ".$request->username." Respond Chat Buying Request !";
+//            $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('1','Eksportir','".$request->id_user."','Super Admin','1','".$ket2."','br_pw_chat','".$id6."','".Date('Y-m-d H:m:s')."','0')
+//		");
+//
+//            $data = [
+//                'email' => "",
+//                'email1' => $data2,
+//                'username' => $request->username,
+//                'main_messages' => "",
+//                'id' => $it
+//            ];
+//            Mail::send('UM.user.sendbrchateks', $data, function ($mail) use ($data) {
+//                $mail->to($data['email1'], $data['username']);
+//                $mail->subject('Ekportir Respond Chat On Buying Request');
+//            });
+//
+//            $data22 = [
+//                'email' => "",
+//                'email1' => $request->email,
+//                'username' => $request->username,
+//                'main_messages' => "",
+//                'id' => $id6
+//            ];
+//            Mail::send('UM.user.sendbrchateks2', $data22, function ($mail) use ($data22) {
+//                $mail->to($data22['email1'], $data22['username']);
+//                $mail->subject('You Was Respond Chat On Buying Request');
+//            });
+//
+//            $data33 = [
+//                'email' => "",
+//                'email1' => "kementerianperdagangan.max@gmail.com",
+//                'username' => $request->username,
+//                'main_messages' => "",
+//                'id' => $id6
+//            ];
+//            Mail::send('UM.user.sendbrchateks3', $data33, function ($mail) use ($data33) {
+//                $mail->to($data33['email1'], $data33['username']);
+//                $mail->subject('Ekportir Respond Chat On Buying Request');
+//            });
+//
+//
+//
+//        }else if($id3 == 3){
+//            $cari3 = DB::select("select * from csc_buying_request_join where id='".$id6."'");
+//            foreach($cari3 as $aja3){
+//                $data3 = $aja3->id_eks;
+//            }
+//            $cari4 = DB::select("select * from itdp_company_users where id='".$data3."'");
+//            foreach($cari4 as $aja4){
+//                $data4 = $aja4->email;
+//            }
+//            $ket = "Importir ".$request->username." Respond Chat Buying Request !";
+//            $it = $id2."/".$id6;
+//            $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('2','Importir','".$request->id_user."','Eksportir','".$data3."','".$ket."','br_chat','".$id6."','".Date('Y-m-d H:m:s')."','0')
+//		");
+//
+//            $ket2 = "Importir ".$request->username." Respond Chat Buying Request !";
+//            $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('1','Importir','".$request->id_user."','Super Admin','1','".$ket2."','br_pw_chat','".$id6."','".Date('Y-m-d H:m:s')."','0')
+//		");
+//
+//            $data = [
+//                'email' => "",
+//                'email1' => $data4,
+//                'username' => $request->username,
+//                'main_messages' => "",
+//                'id' => $id6
+//            ];
+//            Mail::send('UM.user.sendbrchatimp', $data, function ($mail) use ($data) {
+//                $mail->to($data['email1'], $data['username']);
+//                $mail->subject('Importir Respond Chat On Buying Request');
+//            });
+//
+//            $data22 = [
+//                'email' => "",
+//                'email1' => $request->email,
+//                'username' => $request->username,
+//                'main_messages' => "",
+//                'id' => $it
+//            ];
+//            Mail::send('UM.user.sendbrchatimp2', $data22, function ($mail) use ($data22) {
+//                $mail->to($data22['email1'], $data22['username']);
+//                $mail->subject('You Was Respond Chat On Buying Request');
+//            });
+//
+//            $data33 = [
+//                'email' => "",
+//                'email1' => "kementerianperdagangan.max@gmail.com",
+//                'username' => $request->username,
+//                'main_messages' => "",
+//                'id' => $id6
+//            ];
+//            Mail::send('UM.user.sendbrchateks3', $data33, function ($mail) use ($data33) {
+//                $mail->to($data33['email1'], $data33['username']);
+//                $mail->subject('Importir Respond Chat On Buying Request');
+//            });
+//
+//        }
+        if ($user) {
+
+            return $jsonResult;
         } else {
             $meta = [
                 'code' => 404,
@@ -781,597 +1209,5 @@ class BuyingreqController extends Controller
             return $res;
         }
 
-    }
-
-    public function searchListinquiry(Request $request)
-    {
-        $id_user = $request->id_user;
-        $queryaaa = $request->parameternya;
-
-        $user = DB::table('csc_inquiry_br')
-            ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
-            ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
-            ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
-            ->where(function ($query) use ($queryaaa) {
-                $query->where('csc_inquiry_br.subyek_in', 'like', '%' . $queryaaa . '%')
-                    ->orwhere('csc_inquiry_br.subyek_chn', 'like', '%' . $queryaaa . '%')
-                    ->orwhere('csc_inquiry_br.subyek_en', 'like', '%' . $queryaaa . '%')
-                    ->orwhere('csc_inquiry_br.messages_en', 'like', '%' . $queryaaa . '%')
-                    ->orwhere('csc_inquiry_br.messages_in', 'like', '%' . $queryaaa . '%')
-                    ->orwhere('csc_inquiry_br.messages_chn', 'like', '%' . $queryaaa . '%');
-            })
-            ->orderBy('csc_inquiry_br.created_at', 'DESC')
-            ->get();
-
-        if (count($user) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = $user;
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 204,
-                'message' => 'Data Not Found',
-                'status' => 'No Content'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        }
-    }
-
-    public function store(Request $request)
-    {
-        if ($request->id_role == 3) {
-            $id_user = $request->id_user;
-            $id_product = $request->id_product;
-            $type = 'importir';
-            $datenow = date("Y-m-d H:i:s");
-
-            $dtproduct = DB::table('csc_product_single')->where('id', $id_product)->first();
-            $idn = DB::table('csc_inquiry_br')->max('id');
-            $idnew = $idn + 1;
-
-            $destination = 'uploads\Inquiry\\' . $idnew;
-            if ($request->hasFile('filedo')) {
-                $file1 = $request->file('filedo');
-                $nama_file1 = time() . '_' . $request->subyek_en . '_' . $file1->getClientOriginalName();
-                Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
-            }
-
-            //Jenis Perihal
-            $jpen = "";
-            $jpin = "";
-            $jpchn = "";
-            if ($request->kos == "offer to sell") {
-                $jpen = $request->kos;
-                $jpin = "menawarkan untuk menjual";
-                $jpchn = "出售要约";
-            } else if ($request->kos == "offer to buy") {
-                $jpen = $request->kos;
-                $jpin = "menawarkan untuk membeli";
-                $jpchn = "报价购买";
-            } else if ($request->kos == "consultation") {
-                $jpen = $request->kos;
-                $jpin = "konsultasi";
-                $jpchn = "咨询服务";
-            }
-
-            $save = DB::table('csc_inquiry_br')->insert([
-                'id' => $idnew,
-                'id_pembuat' => $id_user,
-                'type' => $type,
-                'id_csc_prod_cat' => $dtproduct->id_csc_product,
-                'id_csc_prod_cat_level1' => $dtproduct->id_csc_product_level1,
-                'id_csc_prod_cat_level2' => $dtproduct->id_csc_product_level2,
-                'jenis_perihal_en' => $jpen,
-                'jenis_perihal_in' => $jpin,
-                'jenis_perihal_chn' => $jpchn,
-                'messages_en' => $request->messages,
-                'messages_in' => $request->messages,
-                'messages_chn' => $request->messages,
-                'subyek_en' => $request->subject,
-                'subyek_in' => $request->subject,
-                'subyek_chn' => $request->subject,
-                'to' => $id_product,
-                'file' => $nama_file1,
-                'status' => 1,
-                'date' => $datenow,
-                'duration' => $request->duration,
-                'created_at' => $datenow,
-            ]);
-
-            if ($save) {
-                $notif = DB::table('notif')->insert([
-                    'dari_nama' => getCompanyNameImportir($id_user),
-                    'dari_id' => $id_user,
-                    'untuk_nama' => getCompanyName($dtproduct->id_itdp_company_user),
-                    'untuk_id' => $dtproduct->id_itdp_company_user,
-                    'keterangan' => 'New Inquiry By ' . getCompanyNameImportir($id_user) . ' with Subyek  "' . $request->subject . '"',
-                    'url_terkait' => 'inquiry',
-                    'status_baca' => 0,
-                    'waktu' => $datenow,
-                    'to_role' => 2,
-                ]);
-
-                //Tinggal Ganti Email1 dengan email kemendag
-                $untuk = DB::table('itdp_company_users')->where('id', $dtproduct->id_itdp_company_user)->first();
-                $data = [
-                    'email' => $untuk->email,
-                    'username' => $untuk->username,
-                    'type' => "eksportir",
-                    'company' => getCompanyName($dtproduct->id_itdp_company_user),
-                    'dari' => "Importer"
-                ];
-
-//                Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data) {
-//                    $mail->to($data['email'], $data['username']);
-//                    $mail->subject('Inquiry Information');
-//                });
-                $meta = [
-                    'code' => 200,
-                    'message' => 'Success',
-                    'status' => 'OK'
-                ];
-                $data = '';
-                $res['meta'] = $meta;
-                $res['data'] = $data;
-                return response($res);
-            }
-        } else {
-            $meta = [
-                'code' => 100,
-                'message' => 'Unauthorized',
-                'status' => 'Failed'
-            ];
-            $data = "";
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return $res;
-        }
-
-    }
-
-    public function getDataeks(Request $request)
-    {
-//        dd($request);
-        $id_user = $request->id_user;
-        $importir = DB::table('csc_inquiry_br')
-            ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
-            ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
-            ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
-//            ->where('csc_inquiry_br.status', 1)
-            ->orderBy('csc_inquiry_br.created_at', 'DESC')
-            ->get();
-
-        if (count($importir) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = $importir;
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 204,
-                'message' => 'Data Not Found',
-                'status' => 'No Content'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        }
-
-    }
-
-    public function joined(Request $request)
-    {
-        $id_inquiry = $request->id_inquiry;
-        $id_user = $request->id_user;
-        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
-        $product = DB::table('csc_product_single')->where('id', $inquiry->to)->where('id_itdp_company_user', $id_user)->first();
-
-        $path = ($inquiry->file) ? url('uploads/Inquiry/' . $id_inquiry . '/' . $inquiry->file) : url('image/noimage.jpg');
-        $product->file = $path;
-
-        if (count($product) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = $product;
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 204,
-                'message' => 'Data Not Found',
-                'status' => 'No Content'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-
-        }
-    }
-
-    public function accept_chat(Request $request)
-    {
-        $id_inquiry = $request->id_inquiry;
-
-        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
-            'status' => 0,
-        ]);
-
-        if (count($inquiry) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 204,
-                'message' => 'Data Not Found',
-                'status' => 'No Content'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-
-        }
-
-    }
-
-    public function verifikasi_inquiry(Request $request)
-    {
-        $id_inquiry = $request->id_inquiry;
-        $datenow = date('Y-m-d H:i:s');
-        $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
-
-        $durasi = 0;
-        if ($data) {
-            if ($data->duration != NULL) {
-                $jn = explode(' ', $data->duration);
-                if ($jn[1] == "week" || $jn[1] == "weeks") {
-                    $durasi = (int)$jn[0] * 7;
-                } else if ($jn[1] == "month" || $jn[1] == "months") {
-                    $durasi = (int)$jn[0] * 30;
-                }
-            }
-        }
-
-        $date = strtotime("+" . $durasi . " days", strtotime($datenow));
-        $duedate = date('Y-m-d H:i:s', $date);
-
-        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
-            'status' => 2,
-            'due_date' => $duedate,
-        ]);
-
-        if (count($inquiry) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 204,
-                'message' => 'Data Not Found',
-                'status' => 'No Content'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-
-        }
-
-    }
-
-    public function masukchattingImp(Request $request)
-    {
-        $id_inquiry = $request->id_inquiry;
-        $id_user = $request->id_user;
-
-        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
-        $data = DB::table('csc_product_single')->where('id', $inquiry->to)->first();
-        $idpenerima = $data->id_itdp_company_user;
-        $messages = DB::table('csc_chatting_inquiry')
-            ->where('id_inquiry', $id_inquiry)
-            ->where('type', 'importir')
-            ->orderBy('created_at', 'asc')
-            ->get();
-//        dd($data->id_itdp_company_user);
-        //Read Chat
-        $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id_inquiry)->where('type', 'importir')->where('receive', $id_user)->update([
-            'status' => 1,
-        ]);
-
-        if (count($messages) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-
-            $data = array();
-            array_push($data, array(
-                'id_penerima' => $idpenerima,
-                'items' => $messages
-            ));
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 204,
-                'message' => 'Data Not Found',
-                'status' => 'No Content'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-
-        }
-    }
-
-    public function sendChatimp(Request $request)
-    {
-        $datenow = date('Y-m-d H:i:s');
-        $id_inquiry = $request->id_inquiry;
-        $sender = $request->id_user;
-        $receiver = $request->id_penerima;
-        $msg = $request->messages;
-
-        $idm = DB::table('csc_chatting_inquiry')->max('id');
-        $idmax = $idm + 1;
-
-        $save = DB::table('csc_chatting_inquiry')->insert([
-            'id' => $idmax,
-            'id_inquiry' => $id_inquiry,
-            'sender' => $sender,
-            'receive' => $receiver,
-            'type' => 'importir',
-            'messages' => $msg,
-            'status' => 0,
-            'created_at' => $datenow,
-        ]);
-
-        if (count($save) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 204,
-                'message' => 'Data Not Found',
-                'status' => 'No Content'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-
-        }
-    }
-
-    public function fileChat(Request $request)
-    {
-        $datenow = date('Y-m-d H:i:s');
-        $id_inquiry = $request->id_inquiry;
-        $sender = $request->id_user;
-        $receiver = $request->id_penerima;
-
-        $idm = DB::table('csc_chatting_inquiry')->max('id');
-        $idmax = $idm + 1;
-
-        $destination = 'uploads\ChatFileInquiry\\' . $idmax;
-        if ($request->hasFile('upload_file')) {
-            $file1 = $request->file('upload_file');
-            $nama_file1 = time() . '_' . $request->file('upload_file')->getClientOriginalName();
-            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
-        }
-
-        $save = DB::table('csc_chatting_inquiry')->insert([
-            'id' => $idmax,
-            'id_inquiry' => $id_inquiry,
-            'sender' => $sender,
-            'receive' => $receiver,
-            'type' => 'importir',
-            'file' => $nama_file1,
-            'status' => 0,
-            'created_at' => $datenow,
-        ]);
-
-        if (count($save) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 204,
-                'message' => 'Data Not Found',
-                'status' => 'No Content'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-
-        }
-
-    }
-
-    public function masukchattingEks(Request $request)
-    {
-        $id_user = $request->id_user;//sender
-        $id_inquiry = $request->id_inquiry;
-        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
-        $product = DB::table('csc_product_single')->where('id', $inquiry->to)->where('id_itdp_company_user', $id_user)->first();
-
-        $broadcast = NULL;
-        $messages = DB::table('csc_chatting_inquiry')
-            ->where('id_inquiry', $id_inquiry)
-            ->where('type', $inquiry->type)
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-//        dd($inquiry->id_pembuat);
-        $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id_inquiry)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
-
-        //Read Chat
-        $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id_inquiry)->where('type', $inquiry->type)->where('receive', $id_user)->update([
-            'status' => 1,
-        ]);
-
-        if (count($messages) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = array();
-            array_push($data, array(
-                'id_penerima' => $inquiry->id_pembuat,
-                'items' => $messages
-            ));
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 204,
-                'message' => 'Data Not Found',
-                'status' => 'No Content'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-
-        }
-
-    }
-
-    public function sendChatEks(Request $request)
-    {
-        $datenow = date('Y-m-d H:i:s');
-        $id_inquiry = $request->id_inquiry;
-        $sender = $request->id_user;
-        $receiver = $request->id_penerima;
-        $msg = $request->messages;
-        $type = 'importir';
-
-        $idm = DB::table('csc_chatting_inquiry')->max('id');
-        $idmax = $idm + 1;
-
-        $save = DB::table('csc_chatting_inquiry')->insert([
-            'id' => $idmax,
-            'id_inquiry' => $id_inquiry,
-            'sender' => $sender,
-            'receive' => $receiver,
-            'type' => $type,
-            'messages' => $msg,
-            'status' => 0,
-            'created_at' => $datenow,
-        ]);
-        if (count($save) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 204,
-                'message' => 'Data Not Found',
-                'status' => 'No Content'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-
-        }
-    }
-
-    public function dealing(Request $request)
-    {
-        $id_inquiry = $request->id_inquiry;
-        $status = $request->status;
-        $id_user = $request->id_user;
-        if ($status == 1) {
-            $stat = 3;
-        } else {
-            $stat = 4;
-        }
-        $update = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
-            'status' => $stat,
-        ]);
-
-
-        if (count($update) > 0) {
-            $meta = [
-                'code' => 200,
-                'message' => 'Success',
-                'status' => 'OK'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 204,
-                'message' => 'Data Not Found',
-                'status' => 'No Content'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-
-        }
     }
 }

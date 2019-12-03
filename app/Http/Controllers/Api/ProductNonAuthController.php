@@ -154,30 +154,19 @@ class ProductNonAuthController extends Controller
 
     public function detailProduk(Request $request)
     {
-//        dd("hahaha");
-        //Product
         $dataProduka = DB::table('csc_product_single')
-            ->select('id', 'id_itdp_profil_eks','prodname_en','id_csc_product','id_csc_product_level1','id_csc_product_level2')
+//            ->select('id', 'id_itdp_profil_eks','prodname_en','id_csc_product','id_csc_product_level1','id_csc_product_level2')
             ->where('id', '=', $request->id)
             ->first();
-        // dd($data);
-//        $dataProduk = array();
-//        foreach ($dataProduka as $dataProduk) {
-//        $dataProduka->id;
-//        $dataProduka->id_itdp_profil_eks;
-//        $dataProduka->prodname_en;
         $dataProduka->company_name = DB::table('itdp_profil_eks')->where('id', $dataProduka->id_itdp_profil_eks)->first()->company;
-////            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
-//        $dataProduka->id_csc_product;
-//        $dataProduka->id_csc_product_level1;
-//        $dataProduka->id_csc_product_level2;
         $dataProduka->csc_product_desc = DB::table('csc_product')->where('id', $dataProduka->id_csc_product)->first()->nama_kategori_en;
         $dataProduka->csc_product_level1_desc = ($dataProduka->id_csc_product_level1) ? DB::table('csc_product')->where('id', $dataProduka->id_csc_product_level1)->first()->nama_kategori_en : null;
         $dataProduka->csc_product_level2_desc = ($dataProduka->id_csc_product_level2) ? DB::table('csc_product')->where('id', $dataProduka->id_csc_product_level2)->first()->nama_kategori_en : null;
-//            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
-//            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
-//            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
-//            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+        $dataProduka->link_image_1 = $path = ($dataProduka->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_1) : url('image/noimage.jpg');
+        $dataProduka->link_image_2 = $path = ($dataProduka->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_2) : url('image/noimage.jpg');
+        $dataProduka->link_image_3 = $path = ($dataProduka->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_3) : url('image/noimage.jpg');
+        $dataProduka->link_image_4 = $path = ($dataProduka->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_4) : url('image/noimage.jpg');
+        $dataProduka->name_mst_hscodes = ($dataProduka->id_mst_hscodes) ? DB::table('mst_hscodes')->where('id', $dataProduka->id_mst_hscodes)->first()->desc_eng : "";
 //            $jsonResult[$i]["product_description_en"] = $dataProduk[$i]->product_description_en;
 //            $list_k = array();
 //            $list_k["code_en"] = $dataProduk[$i]->code_en;
@@ -188,6 +177,7 @@ class ProductNonAuthController extends Controller
 //            $jsonResult[$i]["product_information"] = $list_k;
 
 //        }
+//        dd($dataProduka);
         if (count($dataProduka) > 0) {
             $meta = [
                 'code' => 200,

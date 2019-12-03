@@ -226,7 +226,7 @@
       }
     });
     @isset($data)
-    var hscode = {{$data->id_mst_hscodes}};
+    var hscode = "{{$data->id_mst_hscodes}}";
     if (hscode != null) {
         $.ajax({
             type: 'GET',

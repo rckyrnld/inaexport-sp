@@ -18,7 +18,11 @@ class AdminResearchController extends Controller
 
 	  public function index(){
       $pageTitle = 'Research Corner';
-      return view('research-corner.admin.index',compact('pageTitle'));
+      if(Auth::user()->id_group == 1){
+        return view('research-corner.admin.index',compact('pageTitle'));
+      } else {
+        return redirect('/perwakilan/research-corner');
+      }
     }
 
     public function getData()
@@ -97,8 +101,11 @@ class AdminResearchController extends Controller
       $url = "/admin/research-corner/store/Create";
       $type = DB::table('csc_research_type')->orderby('nama_en', 'asc')->get();
       $country = DB::table('mst_country')->orderby('country', 'asc')->get();
-      // $hscode = DB::table('mst_hscodes')->orderby('desc_eng', 'asc')->get();
-      return view('research-corner.admin.create',compact('url','pageTitle','page','country','hscode','type'));
+      if(Auth::user()->id_group == 1){
+        return view('research-corner.admin.create',compact('url','pageTitle','page','country','type'));
+      } else {
+        return redirect('/perwakilan/research-corner');
+      }
     }
 
     public function store(Request $req, $param)
@@ -229,8 +236,11 @@ class AdminResearchController extends Controller
       $data = DB::table('csc_research_corner')->where('id', $id)->first();
       $type = DB::table('csc_research_type')->orderby('nama_en', 'asc')->get();
       $country = DB::table('mst_country')->orderby('country', 'asc')->get();
-      $hscode = DB::table('mst_hscodes')->orderby('desc_eng', 'asc')->get();
-      return view('research-corner.admin.create',compact('page','data','pageTitle','country','hscode','type'));
+      if(Auth::user()->id_group == 1){
+        return view('research-corner.admin.create',compact('page','data','pageTitle','country','type'));
+      } else {
+        return redirect('/perwakilan/research-corner');
+      }
     }
 
     public function edit($id)
@@ -241,8 +251,11 @@ class AdminResearchController extends Controller
       $data = DB::table('csc_research_corner')->where('id', $id)->first();
       $type = DB::table('csc_research_type')->orderby('nama_en', 'asc')->get();
       $country = DB::table('mst_country')->orderby('country', 'asc')->get();
-      $hscode = DB::table('mst_hscodes')->orderby('desc_eng', 'asc')->get();
-      return view('research-corner.admin.create',compact('url','data','pageTitle','page','hscode','type','country'));
+      if(Auth::user()->id_group == 1){
+        return view('research-corner.admin.create',compact('url','data','pageTitle','page','type','country'));
+      } else {
+        return redirect('/perwakilan/research-corner');
+      }
     }
 
     public function destroy($id)
@@ -263,7 +276,7 @@ class AdminResearchController extends Controller
                         ->select('id', 'desc_eng')
                         ->orderby('desc_eng', 'asc');
       if (isset($request->q)) {
-          $hscode->where('desc_eng', 'LIKE', '%'.$request->q.'%');
+          $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');
       } else if (isset($request->code)) {
           $hscode->where('id', $request->code);
       } else {

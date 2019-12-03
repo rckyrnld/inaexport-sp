@@ -72,29 +72,58 @@
                                                     <div class="imge">
                                                         @if($ed->image_1 !== NULL)
                                                             <?php $topZ='margin-top: -100px;';?>
-                                                            <img src="{{url('/')}}/uploads/Event/Image/{{$ed->id}}/{{$ed->image_1}}" class="img-fluid img-thumbnail">
+                                                            <img src="{{url('/')}}/uploads/Event/Image/{{$ed->id}}/{{$ed->image_1}}" class="img-fluid img-thumbnail" style="height: 140px;">
                                                         @else
                                                             <?php $topZ='margin-top: -145px;';?>
-                                                            <img src="{{url('/')}}/image/event/NoPicture.png" alt="No Picture" class="img-fluid">
+                                                            <img src="{{url('/')}}/image/event/NoPicture.png" alt="No Picture" class="img-fluid" style="height: 140px;">
                                                         @endif 
                                                     </div>
                                                     <div align="right">
                                                         @if($ed->status_en == 'Verified') 
-                                                            <img src="{{url('/')}}/image/event/ceklis.png" class="">
+                                                            <img src="{{url('/')}}/image/event/ceklis.png" class="" >
                                                         @endif  
                                                     </div>
                                                </div>
                                                <div class="caption">
-                                                <table style="margin-left:1.35cm;margin-top: 1.5cm">
-                                                    <tr><td>{{$ed->event_name_en}}</td></tr>
+                                                <?php
+                                                    $title = $ed->event_name_en;
+                                                    if(strlen($title) > 43){
+                                                          $cut_text = substr($title, 0, 43);
+                                                          if ($title{43 - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                              $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                              $cut_text = substr($title, 0, $new_pos);
+                                                          }
+                                                          $titleName = $cut_text . '...';
+                                                      }else{
+                                                          $titleName = $title;
+                                                      }
+
+                                                    $comodity = getEventComodity($ed->event_comodity);
+                                                    if(strlen($comodity) > 40){
+                                                          $cut_text = substr($comodity, 0, 40);
+                                                          if ($comodity{40 - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                              $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                              $cut_text = substr($comodity, 0, $new_pos);
+                                                          }
+                                                          $comodityName = $cut_text . '...';
+                                                      }else{
+                                                          $comodityName = $comodity;
+                                                      }
+                                                ?>
+                                                <table width="100%" style="margin-top: 1.5cm">
+                                                    <tr><td title="{{$title}}">{{$titleName}}</td></tr>
                                                     <tr><td><b>Start Date - End Date</b></td></tr>
                                                     <tr><td>{{getTanggalIndo($ed->start_date)}} - {{getTanggalIndo($ed->end_date)}}</td></tr>
                                                     <tr><td><b>Comodity</b></td></tr>
-                                                    <tr><td>{{getEventComodity($ed->event_comodity)}}</td></tr>
+                                                    <tr><td title="{{$comodity}}">{{$comodityName}}</td></tr>
+                                                    <tr>
+                                                        <td style="padding-top: 10px;">
+                                                            <a href="{{url('/')}}/event/show/read/{{$ed->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a> 
+                                                            <a href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                                            <a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                                        </td>
+                                                    </tr>
                                                 </table>
-                                                <a href="{{url('/')}}/event/show/read/{{$ed->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a> 
-                                                <a href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                                <a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                                </div>
                                             </div>
                                         </td>

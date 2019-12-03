@@ -389,6 +389,7 @@ Route::namespace('ResearchCorner')->group(function () {
  */
 Route::namespace('Event')->prefix('event')->group(function () {
     Route::get('/', 'EventController@index');
+    Route::get('/comodity', 'EventController@comodity')->name('event.comodity');
     Route::get('/create', 'EventController@create');
     Route::post('/store', 'EventController@store');
     Route::get('/edit/{id}', 'EventController@edit');
@@ -618,6 +619,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/product_getdata_admin/{id}', 'EksProductController@datanya_admin')->name('datatables.eksproduct_admin');
     Route::get('/product_getdata', 'EksProductController@datanya')->name('datatables.eksproduct');
     Route::get('/getsub/', 'EksProductController@getSub')->name('eksproduct.getSub');
+    Route::get('/getHsCode/', 'EksProductController@getHsCode')->name('eksproduct.getHsCode');
     Route::get('/tambah_product', 'EksProductController@tambah');
     Route::post('/product_save', 'EksProductController@store');
     Route::get('/product_view/{id}', 'EksProductController@view')->name('eksproduct.view');

@@ -326,8 +326,13 @@
                                               $isimg1 = '/image/noimage.jpg';
                                             }  
                                         }
+                                        if(Auth::guard('eksmp')->user()){
+                                            $height = 350;
+                                        } else {
+                                            $height = 300;
+                                        }
                                     ?>
-                                        <div class="single_product" style="height: 350px;">
+                                        <div class="single_product" style="height: {{$height}}px;">
                                             <div class="product_name">
                                                 <?php
                                                     $num_char = 20;
@@ -389,7 +394,7 @@
                                                     <div class="price_box">
                                                         @if(is_numeric($p->price_usd))
                                                             <span class="regular_price">
-                                                                $ {{$p->price_usd}}
+                                                                $ {{number_format($p->price_usd,0,",",".")}}
                                                             </span>
                                                         @else
                                                             <span class="regular_price" style="font-size: 13px;">

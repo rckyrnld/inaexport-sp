@@ -216,10 +216,10 @@ class InquiryController extends Controller
                     'dari' => "Importer"
                 ];
 
-//                Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data) {
-//                    $mail->to($data['email'], $data['username']);
-//                    $mail->subject('Inquiry Information');
-//                });
+                Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data) {
+                    $mail->to($data['email'], $data['username']);
+                    $mail->subject('Inquiry Information');
+                });
                 $meta = [
                     'code' => 200,
                     'message' => 'Success',
@@ -349,7 +349,25 @@ class InquiryController extends Controller
     public function accept_chat(Request $request)
     {
         $id_inquiry = $request->id_inquiry;
-
+//        $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+//        $users = DB::table('itdp_company_users')->where('id', $data->id_pembuat)->first();
+//        $email = $users->email;
+//        $username = $users->username;
+//
+//        //Tinggal Ganti Email1 dengan email kemendag
+//        $data = [
+//            'email' => $email,
+//            'username' => $username,
+//            'type' => "importir",
+//            'company' => getCompanyNameImportir($data->id_pembuat),
+//            'dari' => "Eksportir"
+//        ];
+//
+//        Mail::send('inquiry.mail.sendToPembuat', $data, function ($mail) use ($data) {
+//            $mail->to($data['email'], $data['username']);
+//            $mail->subject('Inquiry Information');
+//        });
+//
         $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
             'status' => 0,
         ]);

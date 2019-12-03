@@ -211,7 +211,7 @@ class EksProductController extends Controller
         if(Auth::guard('eksmp')->user()){
             $url = '/eksportir/product_save';
             $pageTitle = 'Tambah Product';
-            $hsco = DB::table('mst_hscodes')->orderBy('desc_eng', 'ASC')->get();
+            $hsco = DB::table('mst_hscodes')->orderBy('desc_eng', 'ASC')->limit(10)->get();
             $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
             return view('eksportir.eksproduct.tambah', compact('pageTitle', 'url', 'catprod', 'hsco'));
         }else{
@@ -312,6 +312,22 @@ class EksProductController extends Controller
                         'id_terkait' => $idnew,
                         'to_role' => 1,
                     ]);
+
+                    $email = $adm->email;
+                    $username = $adm->name;
+
+                    //Tinggal Ganti Email1 dengan email kemendag
+                    $data = [
+                        'email' => $email,
+                        'username' => $username,
+                        'company' => getCompanyName($id_user),
+                        'dari' => "Eksportir"
+                    ];
+
+                    Mail::send('eksportir.eksproduct.sendToAdmin', $data, function ($mail) use ($data) {
+                        $mail->to($data['email'], $data['username']);
+                        $mail->subject('New Product Information');
+                    });
                 }
             }
 
@@ -590,5 +606,20 @@ class EksProductController extends Controller
         $value = str_replace('.', '', $value);
 
         return (int)$value;
+    }
+
+    public function getHsCode(Request $request)
+    {
+        $hscode = DB::table('mst_hscodes')
+                ->select('id', 'desc_eng')
+                ->orderby('desc_eng', 'asc');
+        if (isset($request->q)) {
+            $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');
+        } else if (isset($request->code)) {
+            $hscode->where('id', $request->code);
+        } else {
+            $hscode->limit(10);
+        }
+        return response()->json($hscode->get());
     }
 }

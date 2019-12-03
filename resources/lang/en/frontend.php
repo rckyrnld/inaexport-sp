@@ -135,5 +135,13 @@ return [
         "phone" => "Phone",
         "address" => "Address",
     ],
+    "event" => [
+        "type" => "Type",
+        "eo" => "Event Organizer",
+        "comodity" => "Comodity",
+        "scope" => "Scope",
+        "place" => "Place",
+        "website" => "Website",
+    ],
     "title-services" => "Services",
 ];

@@ -251,12 +251,13 @@
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Comodity</b></label>
                                         <div class="col-md-3">
-                                            <select class="form-control" name="eventcomodity" id="eventcomodity" required>
-                                                <option value="" style="display: none;">- Pilih Event Comodity -</option>
-                                                @foreach($e_comodity as $ec)
-                                                    <option value="{{$ec->id}}" @if($page!=='add') @if($e_detail->event_comodity == $ec->id) selected @endif @endif>{{$ec->comodity_en}}</option>
-                                                @endforeach
+                                            @if($page != 'show')
+                                            <select class="form-control" id="com" required name="eventcomodity">
+                                               <option></option>
                                             </select>
+                                            @else 
+                                                <input class="form-control" type="text" readonly value="{{getEventComodity($e_detail->event_comodity)}}">
+                                            @endif
                                         </div>
                                         <div class="col-md-3"></div>
                                         <div class="col-md-3"></div>
@@ -326,7 +327,7 @@
                                     <b>Phone</b>
                                   </div>
                                   <div class="col-md-6">
-                                    <input type="text" onblur="this.value=removeSpaces(this.value);" autocomplete="off" class="form-control" name="cp_phone" maxlength="15" @if($page != 'add') @if($cp) value="{{$cp->phone}}" @endif @endif required>
+                                    <input type="text" onkeypress="this.value=removeSpaces(this.value);" autocomplete="off" class="form-control" name="cp_phone" maxlength="15" @if($page != 'add') @if($cp) value="{{$cp->phone}}" @endif @endif required>
                                   </div>
                                 </div><br>
                               </div>
@@ -427,6 +428,41 @@
             $("#img_4").click(function() {
                 $("input[id='image_4']").click();
             });
+
+            $('#com').select2({
+              allowClear: true,
+              placeholder: 'Select Comodity',
+              ajax: {
+                url: "{{route('event.comodity')}}",
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                  return {
+                    results: $.map(data, function (item) {
+                      return {
+                        text: item.comodity_en,
+                        id: item.id
+                      }
+                    })
+                  };
+                },
+                cache: true
+              }
+            });
+            @isset($e_detail)
+            var comoditynya = "{{$e_detail->event_comodity}}";
+            if (comoditynya != null) {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{route('event.comodity')}}",
+                    data: { code: comoditynya }
+                }).then(function (data) {
+                    var option = new Option(data[0].comodity_en, data[0].id, true, true);
+
+                    $('#com').append(option).trigger('change');
+                });
+            }
+            @endisset
 
             document.getElementById("image_1").addEventListener('change',handleFileSelect,false);
             document.getElementById("image_2").addEventListener('change',handleFileSelect,false);

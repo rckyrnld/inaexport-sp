@@ -46,18 +46,29 @@ class TrainingControllerAdmin extends Controller
         'location_en'  => $req->location_en,
         'location_in'  => $req->location_in,
         'location_chn' => $req->location_chn,
+        'created_at' => date('Y-m-d H:i:s'),
 				'status' => 0
       ]);
       //Input Contact Person
-      $idp = DB::table('contact_person')->max('id') + 1;
-      DB::table('contact_person')->insert([
-        'id' => $idp,
-        'name' => $req->cp_name,
-        'email' => $req->cp_email,
-        'phone' => $req->cp_phone,
-        'type' => 'training',
-        'id_type' => $idt,
-      ]);
+      $cp = DB::table('contact_person')->where('type', 'training')->where('id_type', $idt)->first();
+      if($cp){
+        DB::table('contact_person')->where('type', 'training')->where('id_type', $idt)->update([
+          'name' => $req->cp_name,
+          'email' => $req->cp_email,
+          'phone' => $req->cp_phone,
+        ]);
+      } else {
+        $idp = DB::table('contact_person')->max('id') + 1;
+        DB::table('contact_person')->insert([
+          'id' => $idp,
+          'name' => $req->cp_name,
+          'email' => $req->cp_email,
+          'phone' => $req->cp_phone,
+          'type' => 'training',
+          'id_type' => $idt,
+        ]);
+      }
+      
 
 
 			return redirect('/admin/training');
@@ -105,9 +116,10 @@ class TrainingControllerAdmin extends Controller
 
     public function getData(){
 
-      $tick = DB::table('training_admin as ts')->orderby('id', 'DESC')->get();
+      $tick = DB::table('training_admin as ts')->orderby('created_at', 'DESC')->get();
 
       return \Yajra\DataTables\DataTables::of($tick)
+          ->addIndexColumn()
 					->addColumn('status', function($data){
 						if ($data->status == 0){
 							return 'Not Published';

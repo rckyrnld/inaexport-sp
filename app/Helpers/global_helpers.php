@@ -775,3 +775,54 @@ if (! function_exists('getServiceAttribute')) {
         return $isi;
     }
 }
+
+if (! function_exists('EventPlaceName')) {
+    function EventPlaceName($id, $lang){
+        $data = DB::table('event_place')->where('id', $id)->first();
+        $place = $data->name_en;
+        if ($lang=='in') {
+          if($data->name_in != null){
+            $place = $data->name_in;
+          }
+        }else if($lang == 'ch'){
+          if($data->name_chn != null){
+            $place = $data->name_chn;
+          }
+        }
+        return $place;
+    }
+}
+
+if (! function_exists('EventComodityName')) {
+    function EventComodityName($id, $lang){
+        $data = DB::table('event_comodity')->where('id', $id)->first();
+        $comodity = $data->comodity_en;
+        if ($lang=='in') {
+          if($data->comodity_in != null){
+            $comodity = $data->comodity_in;
+          }
+        }else if($lang == 'ch'){
+          if($data->comodity_chn != null){
+            $comodity = $data->comodity_chn;
+          }
+        }
+        return $comodity;
+    }
+}
+
+if (! function_exists('EventOrganizerName')) {
+    function EventOrganizerName($id, $lang){
+        $data = DB::table('event_organizer')->where('id', $id)->first();
+        $organizer = $data->name_en;
+        if ($lang=='in') {
+          if($data->name_in != null){
+            $organizer = $data->name_in;
+          }
+        }else if($lang == 'ch'){
+          if($data->name_chn != null){
+            $organizer = $data->name_chn;
+          }
+        }
+        return $organizer;
+    }
+}
