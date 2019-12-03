@@ -264,13 +264,13 @@ class ManagementUserController extends Controller
                 'status' => 'OK'
             ];
 //            $data = '';
-            $data = array();
-            array_push($data, array(
-                'id_pembuat' => $users->id_pembuat,
-                'items' => $messages
-            ));
+//            $data = array();
+//            array_push($data, array(
+//                'id_pembuat' => $users->id_pembuat,
+//                'items' => $messages
+//            ));
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = $messages;
             return response($res);
         } else {
             $meta = [
