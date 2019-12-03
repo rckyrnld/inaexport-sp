@@ -249,7 +249,7 @@
                                                     </center>
                                                     <?php }else{ ?>
                                                     <center><img width="150px" height="150px"
-                                                                 src="{{ asset('image/fotoprofil/'.$rhj->foto_profil) }}">
+                                                                 src="{{ asset('uploads/Profile/Importir/'.$idb.'/'.$rhj->foto_profil) }}">
                                                     </center>
                                                     <?php } ?>
                                                     <br>
