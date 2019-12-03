@@ -326,7 +326,7 @@
                                                                     Price : 
                                                                     <?php
                                                                         if(is_numeric($p->price_usd)){
-                                                                            echo '$ '.$p->price_usd;
+                                                                            echo '$ '.number_format($p->price_usd,0,",",".");
                                                                         }else{
                                                                             $num_char2 = 15;
                                                                             $text2 = $p->price_usd;
@@ -449,7 +449,7 @@
                                                                         Price : 
                                                                         <?php
                                                                             if(is_numeric($p->price_usd)){
-                                                                                echo '$ '.$p->price_usd;
+                                                                                echo '$ '.number_format($p->price_usd,0,",",".");
                                                                             }else{
                                                                                 $num_char2 = 15;
                                                                                 $text2 = $p->price_usd;

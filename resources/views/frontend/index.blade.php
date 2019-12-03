@@ -394,7 +394,7 @@
                                                     <div class="price_box">
                                                         @if(is_numeric($p->price_usd))
                                                             <span class="regular_price">
-                                                                $ {{$p->price_usd}}
+                                                                $ {{number_format($p->price_usd,0,",",".")}}
                                                             </span>
                                                         @else
                                                             <span class="regular_price" style="font-size: 13px;">

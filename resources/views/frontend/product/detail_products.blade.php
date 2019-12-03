@@ -143,7 +143,7 @@
                                 @if(Auth::guard('eksmp')->user())
                                 <span class="current_price">
                                     @if(is_numeric($data->price_usd))
-                                        $ {{$data->price_usd}}
+                                        $ {{number_format($data->price_usd,0,",",".")}}
                                     @else
                                         {{$data->price_usd}}
                                     @endif
@@ -411,7 +411,7 @@
                                             @if(Auth::guard('eksmp')->user())
                                             <span class="regular_price">
                                                 @if(is_numeric($p->price_usd))
-                                                    $ {{$p->price_usd}}
+                                                    $ {{number_format($p->price_usd,0,",",".")}}
                                                 @else
                                                     {{$p->price_usd}}
                                                 @endif

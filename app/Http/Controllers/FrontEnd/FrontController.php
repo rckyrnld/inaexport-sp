@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
 use Mail;
+use Illuminate\Support\Facades\Input;
 
 class FrontController extends Controller
 {
@@ -52,6 +53,12 @@ class FrontController extends Controller
 
     public function list_product(Request $request)
     {
+        //Current Page
+        if($request->page){
+            $pagenow = $request->page;
+        }else{
+            $pagenow = 1;
+        }
         //List Category Product
         $categoryutama = DB::table('csc_product')
             ->where('level_1', 0)
@@ -91,12 +98,18 @@ class FrontController extends Controller
                     ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
                     ->where('itdp_company_users.status', 1)
                     ->where('csc_product_single.status', 2);
+            $coquery = DB::table('csc_product_single')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                    ->where('itdp_company_users.status', 1)
+                    ->where('csc_product_single.status', 2);
 
             $search = "";
             if($request->cari_product){
                 $search = $request->cari_product;
                 $nprod = "prodname_".$request->locnya;
                 $query->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%');
+                $coquery->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%');
             }
 
             $getEks = "";
@@ -107,8 +120,12 @@ class FrontController extends Controller
                     $eks = [$request->eks_prod];
                 }
                 $query->whereIn('csc_product_single.id_itdp_company_user', $eks);
+                $coquery->whereIn('csc_product_single.id_itdp_company_user', $eks);
                 $getEks = $request->eks_prod;
             }
+
+            $coproduct = $coquery->orderBy($col, $asdes)->count();
+            $product = $query->orderBy($col, $asdes)->paginate(12);
 
             $catActive = NULL;
             $get_id_cat = NULL;
@@ -132,6 +149,7 @@ class FrontController extends Controller
             }
 
             $query = $this->getQueryCategory($pisah, $request->locnya, $request->cari_product);
+            $coquery = $this->getQueryCategory($pisah, $request->locnya, $request->cari_product);
             $getEks = "";
             if($request->eks_prod){
                 if (strstr($request->eks_prod, '|')){
@@ -140,12 +158,12 @@ class FrontController extends Controller
                     $eks = [$request->eks_prod];
                 }
                 $query->whereIn('csc_product_single.id_itdp_company_user', $eks);
+                $coquery->whereIn('csc_product_single.id_itdp_company_user', $eks);
                 $getEks = $request->eks_prod;
             }
+            $coproduct = $coquery->orderBy($col, $asdes)->count();
+            $product = $query->orderBy($col, $asdes)->paginate(12);
         }
-
-        $product = $query->orderBy($col, $asdes)->paginate(12);
-        $coproduct = $query->orderBy($col, $asdes)->count();
 
         //Data Eksportir/Manufacturer
         $manufacturer = DB::select(
@@ -158,18 +176,8 @@ class FrontController extends Controller
             LIMIT 10"
         );
 
-        // dd($manufacturer);
-        // $manufacturer = DB::table('itdp_company_users as a')
-        //     ->join('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
-        //     ->selectRaw('a.*, b.id as idprofil, b.company')
-        //     ->where('a.id_role', 2)
-        //     ->inRandomOrder()
-        //     ->limit(10)
-        //     ->get();
-
-
         // return view('frontend.product.all_product', compact('product', 'catprod'));
-        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks'));
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow'));
 
     }
 
