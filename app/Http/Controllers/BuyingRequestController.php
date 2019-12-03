@@ -33,6 +33,25 @@ class BuyingRequestController extends Controller
 		}
 		}
     }
+
+	public function show_all_notif()
+    {
+		if(!empty(Auth::guard('eksmp')->user()->id)){
+		if(Auth::guard('eksmp')->user()->id_role == 2){
+		$pageTitle = "All Notif For Eksportir";
+		$data = DB::select("select a.*,a.id as ida,a.status as statusa,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where a.id = b.id_br and b.id_eks='".Auth::guard('eksmp')->user()->id."' order by b.id desc ");
+        return view('buying-request.index_eks', compact('pageTitle','data'));
+		}
+		}else{
+		if(Auth::user()->id_group == 4){
+        $pageTitle = "All Notif For Representative";
+		return view('notif.indexperwakilan', compact('pageTitle'));
+		}else{
+		$pageTitle = "All Notif For Admin";
+        return view('notif.indexadmin', compact('pageTitle'));
+		}
+		}
+    }
 	
 	public function getcsc()
     {
@@ -185,8 +204,10 @@ class BuyingRequestController extends Controller
 				$semuacat = "";
 				for($a = 0; $a < ($hitung - 1); $a++){
 					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					if(count($namaprod) != 0){
 					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
 					$semuacat = $semuacat."- ".$napro."<br>";
+					}
 				}
 				return $semuacat;
             })
