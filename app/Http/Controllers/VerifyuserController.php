@@ -577,6 +577,20 @@ class VerifyuserController extends Controller
 		
 			}
 		}
+		if($request->staim == 1){
+			$it = "3".$id_user_b;
+			$data = [
+            'email' => "",
+            'email1' => $request->email,
+            'username' => $request->username,
+            'main_messages' => "",
+            'id' => $it
+			];
+		Mail::send('UM.user.sendverif', $data, function ($mail) use ($data) {
+        $mail->to($data['email1'], $data['username']);
+        $mail->subject('Your account had Verified');
+		});
+		}
 		
 		return redirect('profil2/'.$id_role.'/'.$id_user);
 		

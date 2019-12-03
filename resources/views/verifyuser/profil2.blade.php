@@ -347,7 +347,7 @@
 						<td><?php echo $rq->name; ?></td>
 						<td><?php echo $rq->email; ?></td>
 						<td><?php echo $rq->phone; ?></td>
-						<td><a onclickclass="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a></td>
+						<td><a href="{{url('verifyimportir')}}" class="btn btn-danger"><font color="white"><i class="fa fa-trash"></i> Hapus</a></a></td>
 					</tr>
 					<?php $nb++; } ?>
 					</tbody>
