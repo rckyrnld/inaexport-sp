@@ -342,7 +342,7 @@
 					$nb = 1;
 					foreach($qr as $rq){
 					?>
-					<tr style="color:white;">
+					<tr style="color:black;">
 						<td><?php echo $nb; ?></td>
 						<td><?php echo $rq->name; ?></td>
 						<td><?php echo $rq->email; ?></td>
