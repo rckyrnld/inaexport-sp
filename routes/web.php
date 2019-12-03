@@ -618,6 +618,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/product_getdata_admin/{id}', 'EksProductController@datanya_admin')->name('datatables.eksproduct_admin');
     Route::get('/product_getdata', 'EksProductController@datanya')->name('datatables.eksproduct');
     Route::get('/getsub/', 'EksProductController@getSub')->name('eksproduct.getSub');
+    Route::get('/getHsCode/', 'EksProductController@getHsCode')->name('eksproduct.getHsCode');
     Route::get('/tambah_product', 'EksProductController@tambah');
     Route::post('/product_save', 'EksProductController@store');
     Route::get('/product_view/{id}', 'EksProductController@view')->name('eksproduct.view');

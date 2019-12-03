@@ -343,7 +343,7 @@
                                                                     @if(Auth::guard('eksmp')->user())
                                                                     <span class="current_price">
                                                                         @if(is_numeric($pro->price_usd))
-                                                                            $ {{$pro->price_usd}}
+                                                                            $ {{number_format($pro->price_usd,0,",",".")}}
                                                                         @else
                                                                             <span style="font-size: 13px;">
                                                                                 {{$pro->price_usd}}
@@ -362,7 +362,21 @@
                                                             </div>
 
                                                             <div class="product_desc">
-                                                                <?php echo getProductAttr($pro->id, 'product_description', $lct); ?>
+                                                                <?php
+                                                                    $proddesc = getProductAttr($pro->id, 'product_description', $lct);
+                                                                    $num_desc = 350;
+                                                                    if(strlen($proddesc) > $num_desc){
+                                                                        $cut_desc = substr($proddesc, 0, $num_desc);
+                                                                        if ($proddesc{$num_desc - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                                            $new_pos = strrpos($cut_desc, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                                            $cut_desc = substr($proddesc, 0, $new_pos);
+                                                                        }
+                                                                        $product_desc = $cut_desc . '...';
+                                                                    }else{
+                                                                        $product_desc = $proddesc;
+                                                                    }
+                                                                ?>
+                                                                <?php echo $product_desc; ?>
                                                             </div>
                                                         </div>
                                                         <div class="right_caption">
@@ -382,7 +396,7 @@
                                                                 @if(Auth::guard('eksmp')->user())
                                                                 <span class="current_price">
                                                                     @if(is_numeric($pro->price_usd))
-                                                                        $ {{$pro->price_usd}}
+                                                                        $ {{number_format($pro->price_usd,0,",",".")}}
                                                                     @else
                                                                         <span style="font-size: 13px;">
                                                                             {{$pro->price_usd}}
