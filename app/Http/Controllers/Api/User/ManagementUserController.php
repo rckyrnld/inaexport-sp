@@ -285,7 +285,7 @@ class ManagementUserController extends Controller
 
         $user = DB::table('chating_ticketing_support')
             ->where('id', '=', $chat)
-            ->orderBy('messages_send', 'desc')
+            ->orderBy('messages_send', 'asc')
             ->get();
 
         for ($i = 0; $i < count($user); $i++) {
