@@ -18,7 +18,7 @@
                                 </p>
 								<p>
 								<?php if(empty($r->files)){}else{?>
-									<br><a target="_BLANK" href="{{asset('uploads/pop/'.$r->files)}}"><font color="green"><?php echo $r->files; ?></font></a>
+									<br><a target="_BLANK" href="<?php echo asset(''); ?>uploads/pop/<?php echo $r->files;?>"><font color="green"><?php echo $r->files; ?></font></a>
 									<?php } ?>
 								</p>
                             </div>
@@ -38,7 +38,7 @@
                                 </p>
 								<p>
 								<?php if(empty($r->files)){}else{?>
-									<br><a target="_BLANK" href="{{asset('uploads/pop/'.$r->files)}}"><font color="green"><?php echo $r->files; ?></font></a>
+									<br><a target="_BLANK" href="<?php echo asset(''); ?>uploads/pop/<?php echo $r->files;?>"><font color="green"><?php echo $r->files; ?></font></a>
 									<?php } ?>
 								</p>
                             </div>

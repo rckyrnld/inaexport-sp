@@ -198,7 +198,7 @@ class TrxController extends Controller
         if($id == 0){
             $data = DB::select("select * from csc_buying_request  order by id desc ");
         }else{
-            $data = DB::select("select * from csc_buying_request where id_pembuat='".$id."' order by id desc ");
+            $data = DB::select("select * from csc_buying_request where by_role='".$id."' order by id desc ");
 
         }
         return view('trx.cetaktrx', compact('pageTitle','id','pembuat','data'));
