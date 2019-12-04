@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Management;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Session;
 
 class CategoryProductController extends Controller
@@ -62,6 +63,17 @@ class CategoryProductController extends Controller
         $level_2 = $req->level_1;
       }
 
+      if($req->level_1 == '0'){
+        $destination= 'uploads\Product\Icon\\';
+        if($req->hasFile('icon')){ 
+          $icon = $req->file('icon');
+          $nama_image = time().'_icon-'.$req->product_en.'_'.$req->file('icon')->getClientOriginalName();
+          Storage::disk('uploads')->putFileAs($destination, $icon, $nama_image);
+        } else { $nama_image = $req->lastest_icon; }
+      } else {
+        $nama_image = null;
+      }
+
       if($param == 'Create'){
         $data = DB::table('csc_product')->insert([
           'id' => $id,
@@ -70,6 +82,7 @@ class CategoryProductController extends Controller
           'nama_kategori_en' => $req->product_en,
           'nama_kategori_in' => $req->product_in,
           'nama_kategori_chn' => $req->product_chn,
+          'logo' => $nama_image,
           'type' => $req->type
         ]);
       } else {
@@ -82,6 +95,7 @@ class CategoryProductController extends Controller
           'nama_kategori_en' => $req->product_en,
           'nama_kategori_in' => $req->product_in,
           'nama_kategori_chn' => $req->product_chn,
+          'logo' => $nama_image,
           'type' => $req->type
         ]);
       }

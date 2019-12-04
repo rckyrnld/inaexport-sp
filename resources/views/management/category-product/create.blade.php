@@ -112,6 +112,17 @@
                      </select>
                  </div>
              </div>
+
+             <div class="form-group row" id="icon" @isset($data) @if($data->level_1 != '0') style="display:none;" @endif @endisset>
+              <div class="col-md-1"></div>
+                 <label class="control-label col-md-3">Icon</label>
+                 <div class="col-md-7">
+                     <input type="file" class="form-control" name="icon" accept="image/*">
+                     @isset($data)
+                     <input type="hidden" name="lastest_icon" value="{{$data->logo}}">
+                     @endisset
+                 </div>
+             </div>
         
              <div class="form-group row">
                 <div class="col-md-11">
@@ -153,8 +164,12 @@
           dataType: 'json',
           success:function(response){
             $('#level_2').append(response);
-            $('#level_2').val(level2);
-            $('#level_2').trigger('change');
+            if(level2 != 0){
+              $('#level_2').val(level2);
+            } else {
+              $('#level_2').val(0);
+            }
+              $('#level_2').trigger('change');
           }
         });
     }
@@ -163,7 +178,7 @@
       var data = this.value;
       $('#level_2').empty().trigger("change");;
       $("#first").prop("disabled", true);
-      if(data != ''){
+      if(data != '0'){
         $.ajax({
             url: "{{route('management.category-product.level2')}}",
             type: 'get',
@@ -174,7 +189,9 @@
             }
         });
         $('#input_level_2').show('fast');
+        $('#icon').hide('fast');
       } else {
+        $('#icon').show('fast');
         $('#input_level_2').hide('fast');
       }
     });

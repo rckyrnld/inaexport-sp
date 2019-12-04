@@ -80,11 +80,16 @@
                                         }else{
                                             $kategorinya = $textkat;
                                         }
+                                        if($cu->logo != null){
+                                            $imagenya = asset('uploads/Product/Icon').'/'.$cu->logo;
+                                        } else {
+                                            $imagenya = asset('front/assets/img/kategori/').'/'.$imgarray[$key].'.png';
+                                        }
                                     ?>
                                     @if(count($catprod1) == 0)
-                                        <li><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$key]}}.png" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}}</a></li>
+                                        <li><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}}</a></li>
                                     @else
-                                        <li class="menu_item_children categorie_list"><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$key]}}.png" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}} <i class="fa fa-angle-right"></i></a>
+                                        <li class="menu_item_children categorie_list"><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}} <i class="fa fa-angle-right"></i></a>
                                             <ul class="categories_mega_menu">
                                                 @foreach($catprod1 as $key => $c1)
                                                   @if($key < 19)
