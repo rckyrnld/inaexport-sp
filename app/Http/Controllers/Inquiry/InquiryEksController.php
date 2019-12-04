@@ -237,6 +237,16 @@ class InquiryEksController extends Controller
             $pageTitle = "Inquiry";
             $id_user = Auth::guard('eksmp')->user()->id;
             $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
+            $datenow = date('Y-m-d H:i:s');
+
+            if($data->type == "admin"){
+                $rolenya = 1;
+            }else if($data->type == "perwakilan"){
+                $rolenya = 4;
+            }else if($data->type == "importir"){
+                $rolenya = 3;
+            }
+
             if($data->type == "importir"){
                 $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->update([
                     'status' => 0,
@@ -244,6 +254,22 @@ class InquiryEksController extends Controller
                 $users = DB::table('itdp_company_users')->where('id', $data->id_pembuat)->first();
                 $email = $users->email;
                 $username = $users->username;
+
+                //Notif sistem
+                $idn = DB::table('notif')->max('id_notif');
+                $idnotifn = $idn + 1;
+                $notif = DB::table('notif')->insert([
+                    'id_notif' => $idnotifn,
+                    'dari_nama' => getCompanyName($id_user),
+                    'dari_id' => $id_user,
+                    'untuk_nama' => getCompanyNameImportir($data->id_pembuat),
+                    'untuk_id' => $data->id_pembuat,
+                    'keterangan' => 'Exporter '.getCompanyName($id_user).' has joined Inquiry '.$data->subyek_en,
+                    'url_terkait' => 'front_end/history',
+                    'status_baca' => 0,
+                    'waktu' => $datenow,
+                    'to_role' => $rolenya,
+                ]);
 
                 //Tinggal Ganti Email1 dengan email kemendag
                 $data = [
@@ -268,9 +294,28 @@ class InquiryEksController extends Controller
                 $username = $users->name;
                 if($data->type == "perwakilan"){
                     $name = getPerwakilanName($data->id_pembuat);
+                    $url_terkait = 'inquiry_perwakilan/view';
                 }else{
                     $name = $users->name;
+                    $url_terkait = 'inquiry_admin/view';
                 }
+
+                //Notif sistem
+                $idn = DB::table('notif')->max('id_notif');
+                $idnotifn = $idn + 1;
+                $notif = DB::table('notif')->insert([
+                    'id_notif' => $idnotifn,
+                    'dari_nama' => getCompanyName($id_user),
+                    'dari_id' => $id_user,
+                    'untuk_nama' => $name,
+                    'untuk_id' => $data->id_pembuat,
+                    'keterangan' => 'Exporter '.getCompanyName($id_user).' has joined Inquiry '.$data->subyek_en,
+                    'url_terkait' => $url_terkait,
+                    'status_baca' => 0,
+                    'waktu' => $datenow,
+                    'id_terkait' => $id,
+                    'to_role' => $rolenya,
+                ]);
 
                 //Tinggal Ganti Email1 dengan email kemendag
                 $data = [
@@ -346,6 +391,8 @@ class InquiryEksController extends Controller
         $msg = $request->messages;
         $type = $request->typenya;
 
+        $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
+
         $idm = DB::table('csc_chatting_inquiry')->max('id');
         $idmax = $idm + 1;
 
@@ -360,6 +407,41 @@ class InquiryEksController extends Controller
                 'status' => 0,
                 'created_at' => $datenow,
             ]);
+
+            //Notif sistem
+            $idn = DB::table('notif')->max('id_notif');
+            $idnotifn = $idn + 1;
+            $notif = DB::table('notif')->insert([
+                'id_notif' => $idnotifn,
+                'dari_nama' => getCompanyName($sender),
+                'dari_id' => $sender,
+                'untuk_nama' => getCompanyNameImportir($receiver),
+                'untuk_id' => $receiver,
+                'keterangan' => 'New Message from '.getCompanyName($sender).' about Inquiry '.$data->subyek_en,
+                'url_terkait' => 'front_end/chat_inquiry',
+                'status_baca' => 0,
+                'waktu' => $datenow,
+                'to_role' => 3,
+                'id_terkait' => $id
+            ]);
+
+            $users = DB::table('itdp_company_users')->where('id', $receiver)->first();
+            $email = $users->email;
+            $username = $users->username;
+            //Tinggal Ganti Email1 dengan email kemendag
+            $data = [
+                'email' => $email,
+                'username' => $username,
+                'type' => $type,
+                'sender' => getCompanyName($sender),
+                'receiver' => getCompanyNameImportir($receiver),
+                'subjek' => $data->subyek_en
+            ];
+
+            Mail::send('inquiry.mail.sendChat', $data, function ($mail) use ($data) {
+                $mail->to($data['email'], $data['username']);
+                $mail->subject('Inquiry Chatting Information');
+            });
         }else if($type == "perwakilan" || $type == "admin"){
             $cek = Db::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $sender)->first();
             $save = DB::table('csc_chatting_inquiry')->insert([
@@ -373,6 +455,52 @@ class InquiryEksController extends Controller
                 'status' => 0,
                 'created_at' => $datenow,
             ]);
+
+            $untuk_nama = "";
+            if($type == "admin"){
+                $untuk_nama = getAdminName($receiver);
+                $to_role = 1;
+                $url_terkait = 'inquiry_admin/chatting';
+            }else if($type == "perwakilan"){
+                $untuk_nama = getPerwakilanName($receiver);
+                $to_role = 4;
+                $url_terkait = 'inquiry_perwakilan/chatting';
+            }
+
+            //Notif sistem
+            $idn = DB::table('notif')->max('id_notif');
+            $idnotifn = $idn + 1;
+            $notif = DB::table('notif')->insert([
+                'id_notif' => $idnotifn,
+                'dari_nama' => getCompanyName($sender),
+                'dari_id' => $sender,
+                'untuk_nama' => $untuk_nama,
+                'untuk_id' => $receiver,
+                'keterangan' => 'New Message from '.getCompanyName($sender).' about Inquiry '.$data->subyek_en,
+                'url_terkait' => $url_terkait,
+                'status_baca' => 0,
+                'waktu' => $datenow,
+                'to_role' => $to_role,
+                'id_terkait' => $cek->id
+            ]);
+
+            $users = DB::table('itdp_admin_users')->where('id', $receiver)->first();
+            $email = $users->email;
+            $username = $users->name;
+            //Tinggal Ganti Email1 dengan email kemendag
+            $data2 = [
+                'email' => $email,
+                'username' => $username,
+                'type' => $type,
+                'sender' => getCompanyName($sender),
+                'receiver' => $untuk_nama,
+                'subjek' => $data->subyek_en
+            ];
+
+            Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+                $mail->to($data2['email'], $data2['username']);
+                $mail->subject('Inquiry Chatting Information');
+            });
         }
 
         if($save){
@@ -413,6 +541,41 @@ class InquiryEksController extends Controller
                 'status' => 0,
                 'created_at' => $datenow,
             ]);
+
+            //Notif sistem
+            $idn = DB::table('notif')->max('id_notif');
+            $idnotifn = $idn + 1;
+            $notif = DB::table('notif')->insert([
+                'id_notif' => $idnotifn,
+                'dari_nama' => getCompanyName($sender),
+                'dari_id' => $sender,
+                'untuk_nama' => getCompanyNameImportir($receiver),
+                'untuk_id' => $receiver,
+                'keterangan' => 'New Message from '.getCompanyName($sender).' about Inquiry '.$inquiry->subyek_en,
+                'url_terkait' => 'front_end/chat_inquiry',
+                'status_baca' => 0,
+                'waktu' => $datenow,
+                'to_role' => 3,
+                'id_terkait' => $id
+            ]);
+
+            $users = DB::table('itdp_company_users')->where('id', $receiver)->first();
+            $email = $users->email;
+            $username = $users->username;
+            //Tinggal Ganti Email1 dengan email kemendag
+            $data = [
+                'email' => $email,
+                'username' => $username,
+                'type' => $inquiry->type,
+                'sender' => getCompanyName($sender),
+                'receiver' => getCompanyNameImportir($receiver),
+                'subjek' => $inquiry->subyek_en
+            ];
+
+            Mail::send('inquiry.mail.sendChat', $data, function ($mail) use ($data) {
+                $mail->to($data['email'], $data['username']);
+                $mail->subject('Inquiry Chatting Information');
+            });
         }else if($inquiry->type == "perwakilan" || $inquiry->type == "admin"){
             $broadcast = DB::table('csc_inquiry_broadcast')->where('id_itdp_company_users', $id_user)->where('id_inquiry', $id)->first();
             $save = DB::table('csc_chatting_inquiry')->insert([
@@ -426,6 +589,52 @@ class InquiryEksController extends Controller
                 'status' => 0,
                 'created_at' => $datenow,
             ]);
+
+            $untuk_nama = "";
+            if($inquiry->type == "admin"){
+                $untuk_nama = getAdminName($receiver);
+                $to_role = 1;
+                $url_terkait = 'inquiry_admin/chatting';
+            }else if($inquiry->type == "perwakilan"){
+                $untuk_nama = getPerwakilanName($receiver);
+                $to_role = 4;
+                $url_terkait = 'inquiry_perwakilan/chatting';
+            }
+
+            //Notif sistem
+            $idn = DB::table('notif')->max('id_notif');
+            $idnotifn = $idn + 1;
+            $notif = DB::table('notif')->insert([
+                'id_notif' => $idnotifn,
+                'dari_nama' => getCompanyName($sender),
+                'dari_id' => $sender,
+                'untuk_nama' => $untuk_nama,
+                'untuk_id' => $receiver,
+                'keterangan' => 'New Message from '.getCompanyName($sender).' about Inquiry '.$inquiry->subyek_en,
+                'url_terkait' => $url_terkait,
+                'status_baca' => 0,
+                'waktu' => $datenow,
+                'to_role' => $to_role,
+                'id_terkait' => $cek->id
+            ]);
+
+            $users = DB::table('itdp_admin_users')->where('id', $receiver)->first();
+            $email = $users->email;
+            $username = $users->name;
+            //Tinggal Ganti Email1 dengan email kemendag
+            $data = [
+                'email' => $email,
+                'username' => $username,
+                'type' => $inquiry->type,
+                'sender' => getCompanyName($sender),
+                'receiver' => $untuk_nama,
+                'subjek' => $inquiry->subyek_en
+            ];
+
+            Mail::send('inquiry.mail.sendChat', $data, function ($mail) use ($data) {
+                $mail->to($data['email'], $data['username']);
+                $mail->subject('Inquiry Chatting Information');
+            });
         }
 
         return redirect('/inquiry/chatting/'.$id); 
@@ -452,17 +661,101 @@ class InquiryEksController extends Controller
 
                 $updatebr = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->update([
                     'status' => 4,
-                ]); 
+                ]);
+
+                $broad = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->first();
+
+                $untuk_nama = "";
+                if($inquiry->type == "admin"){
+                    $untuk_nama = getAdminName($inquiry->id_pembuat);
+                    $to_role = 1;
+                    $url_terkait = 'inquiry_admin/view_detail';
+                }else if($inquiry->type == "perwakilan"){
+                    $untuk_nama = getPerwakilanName($inquiry->id_pembuat);
+                    $to_role = 4;
+                    $url_terkait = 'inquiry_perwakilan/view_detail';
+                }
+
+                //Notif sistem
+                $idn = DB::table('notif')->max('id_notif');
+                $idnotifn = $idn + 1;
+                $notif = DB::table('notif')->insert([
+                    'id_notif' => $idnotifn,
+                    'dari_nama' => getCompanyName($id_user),
+                    'dari_id' => $id_user,
+                    'untuk_nama' => $untuk_nama,
+                    'untuk_id' => $inquiry->id_pembuat,
+                    'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getCompanyName($id_user),
+                    'url_terkait' => $url_terkait,
+                    'status_baca' => 0,
+                    'waktu' => $datenow,
+                    'to_role' => $to_role,
+                    'id_terkait' => $broad->id
+                ]);
+
+                $users = DB::table('itdp_admin_users')->where('id', $inquiry->id_pembuat)->first();
+                $email = $users->email;
+                $username = $users->name;
+                //Tinggal Ganti Email1 dengan email kemendag
+                $data2 = [
+                    'email' => $email,
+                    'username' => $username,
+                    'type' => $inquiry->type,
+                    'penerima' => $untuk_nama,
+                    'company' => getCompanyName($id_user),
+                    'subjek' => $inquiry->subyek_en
+                ];
+
+                Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
+                    $mail->to($data2['email'], $data2['username']);
+                    $mail->subject('Inquiry Deal Information');
+                }); 
             }
 
             $updatebrm = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->update([
                     'status' => $stat,
-            ]); 
+            ]);
 
         }else if($inquiry->type == "importir"){
             $update = DB::table('csc_inquiry_br')->where('id', $id)->update([
                 'status' => $stat,
             ]);
+
+            if($stat == 3){
+                //Notif sistem
+                $idn = DB::table('notif')->max('id_notif');
+                $idnotifn = $idn + 1;
+                $notif = DB::table('notif')->insert([
+                    'id_notif' => $idnotifn,
+                    'dari_nama' => getCompanyName($id_user),
+                    'dari_id' => $id_user,
+                    'untuk_nama' => getCompanyNameImportir($inquiry->id_pembuat),
+                    'untuk_id' => $inquiry->id_pembuat,
+                    'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getCompanyName($id_user),
+                    'url_terkait' => 'front_end/view_inquiry',
+                    'status_baca' => 0,
+                    'waktu' => $datenow,
+                    'to_role' => 3,
+                    'id_terkait' => $id
+                ]);
+
+                $users = DB::table('itdp_company_users')->where('id', $inquiry->id_pembuat)->first();
+                $email = $users->email;
+                $username = $users->username;
+                $data2 = [
+                    'email' => $email,
+                    'username' => $username,
+                    'type' => $inquiry->type,
+                    'penerima' => getCompanyNameImportir($inquiry->id_pembuat),
+                    'company' => getCompanyName($id_user),
+                    'subjek' => $inquiry->subyek_en
+                ];
+
+                Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
+                    $mail->to($data2['email'], $data2['username']);
+                    $mail->subject('Inquiry Deal Information');
+                }); 
+            }
         }
 
         if($stat == 3){

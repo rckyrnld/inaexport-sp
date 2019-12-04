@@ -273,7 +273,7 @@
             $('textarea#messages2').val("");
           }else{
             $.ajax({
-                url: "{{route('eksportir.inquiry.sendChat')}}",
+                url: "{{route('front.inquiry.sendChat')}}",
                 type: 'get',
                 data: {from:sender, to:receiver, idinquiry:id_inquiry, messages: msg, file: "", typenya: type},
                 success:function(response){

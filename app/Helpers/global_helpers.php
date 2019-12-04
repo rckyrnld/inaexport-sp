@@ -406,19 +406,20 @@ if (! function_exists('getPerwakilanName')) {
         $nama = "-";
         $data = DB::table('itdp_admin_users')->where('id', $id)->first();
         if($data){
-          if($data->id_admin_dn || $data->id_admin_ln){
-            if($data->id_admin_dn == 0){
-              $ln = DB::table('itdp_admin_ln')->where('id', $data->id_admin_ln)->first();
-              if($ln){
-                $nama = $ln->nama;
-              }
-            }else if($data->id_admin_ln == 0){
-              $dn = DB::table('itdp_admin_dn')->where('id', $data->id_admin_dn)->first();
-              if($dn){
-                $nama = $dn->nama;
-              }
-            }
-          }
+          $nama = $data->name;
+          // if($data->id_admin_dn || $data->id_admin_ln){
+          //   if($data->id_admin_dn == 0){
+          //     $ln = DB::table('itdp_admin_ln')->where('id', $data->id_admin_ln)->first();
+          //     if($ln){
+          //       $nama = $ln->nama;
+          //     }
+          //   }else if($data->id_admin_ln == 0){
+          //     $dn = DB::table('itdp_admin_dn')->where('id', $data->id_admin_dn)->first();
+          //     if($dn){
+          //       $nama = $dn->nama;
+          //     }
+          //   }
+          // }
         }
 
         return $nama;
