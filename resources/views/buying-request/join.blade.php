@@ -104,9 +104,17 @@ foreach($q2 as $p2){
 		<div class="form-group col-sm-4">
 			<?php 
 			if($p2->by_role == 1){
-				echo "";
+				$co = $p2->id_mst_country;
+				$naco ="";
+				$caric = DB::select("select * from mst_country where id='".$co."'");
+				foreach($caric as $cc){ $naco = $cc->country; }
+				echo $naco." ,".$p2->city;
 			}else if($p2->by_role == 4){
-				echo "";
+				$co = $p2->id_mst_country;
+				$naco ="";
+				$caric = DB::select("select * from mst_country where id='".$co."'");
+				foreach($caric as $cc){ $naco = $cc->country; }
+				echo $naco." ,".$p2->city;
 			}else if($p2->by_role == 3){
 				$usre = DB::select("select b.addres,b.city from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$p2->id_pembuat."'"); 
 									foreach($usre as $imp){ 
