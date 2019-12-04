@@ -253,7 +253,7 @@ class ManagementUserController extends Controller
         $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
             ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
             ->where('ts.id', $id)
-            ->orderby('cts.messages_send', 'desc')
+            ->orderby('cts.messages_send', 'asc')
             ->get();
 
         $users = TicketingSupportModel::where('id', $id)->first();
@@ -285,7 +285,6 @@ class ManagementUserController extends Controller
 
         $user = DB::table('chating_ticketing_support')
             ->where('id', '=', $chat)
-            ->orderBy('messages_send', 'asc')
             ->get();
 
         for ($i = 0; $i < count($user); $i++) {
