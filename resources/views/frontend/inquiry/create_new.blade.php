@@ -207,6 +207,7 @@
                                   <td width="60%">
                                     <select class="form-control" name="duration" id="duration" style="font-size: 14px;">
                                       <option value="" style="display: none;"> - @lang('inquiry.selectduration') - </option>
+                                      <option value="None">@lang('inquiry.none')</option>
                                       <option value="1 week">@lang('inquiry.v1w')</option>
                                       <option value="2 weeks">@lang('inquiry.v2w')</option>
                                       <option value="3 weeks">@lang('inquiry.v3w')</option>

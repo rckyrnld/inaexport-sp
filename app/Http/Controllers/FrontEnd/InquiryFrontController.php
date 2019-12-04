@@ -83,6 +83,12 @@ class InquiryFrontController extends Controller
                 $jpchn = "咨询服务";
             }
 
+            if($request->duration == NULL){
+                $duration = "None";
+            }else{
+                $duration = $request->duration;
+            }
+
             $save = DB::table('csc_inquiry_br')->insert([
                 'id' => $idnew,
                 'id_pembuat' => $id_user,
@@ -103,7 +109,7 @@ class InquiryFrontController extends Controller
                 'file' => $nama_file1,
                 'status' => 1,
                 'date' => $datenow,
-                'duration' => $request->duration,
+                'duration' => $duration,
                 'created_at' => $datenow,
             ]);
 
@@ -164,7 +170,7 @@ class InquiryFrontController extends Controller
             $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
             if($data){
-                    if($data->duration != NULL){
+                    if($data->duration != "None"){
                         $durasi = 0;
                         $jn = explode(' ', $data->duration);
                         if($jn[1] == "week" || $jn[1] == "weeks"){

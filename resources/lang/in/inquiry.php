@@ -38,6 +38,7 @@ return [
     "v4m" => "Berlaku selama 4 bulan",
     "v5m" => "Berlaku selama 5 bulan",
     "v6m" => "Berlaku selama 6 bulan",
+    "none" => "Tidak Ada",
     "list" => [
         "exportir" => "Eksportir",
         "date" => "Tanggal Transaksi",
