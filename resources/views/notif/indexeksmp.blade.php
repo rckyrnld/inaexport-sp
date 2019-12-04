@@ -38,9 +38,9 @@
 			<table id="tablebureq3" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
 								<th>No</th>
-								<th>Subyek</th>
-								<th>Category</th>
-								<th>Create at</th>
+								<th>From</th>
+								<th>Details</th>
+								<th>Aksi</th>
                                 </thead>
 								<tbody>
 								<?php 
