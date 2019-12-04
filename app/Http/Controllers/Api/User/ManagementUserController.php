@@ -607,13 +607,13 @@ class ManagementUserController extends Controller
                 $data22 = [
                     'email' => "",
                     'email1' => "kementerianperdagangan.max@gmail.com",
-                    'username' => Auth::guard('eksmp')->user()->username,
+                    'username' => $request->username,
                     'main_messages' => "",
                     'id' => $request->id_transaksi
                 ];
                 Mail::send('UM.user.sendtrx2', $data22, function ($mail) use ($data22) {
                     $mail->to($data22['email1'], $data22['username']);
-                    $mail->subject('Transaction Created By ' . Auth::guard('eksmp')->user()->username);
+                    $mail->subject('Transaction Created By');
                 });
 
             }
