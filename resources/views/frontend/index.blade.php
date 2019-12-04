@@ -6,15 +6,16 @@
         margin-bottom: 10%;
     }
 
-    .product_tab_button.nav li{
+    .product_tab_button.nav div{
       margin: 2% 0 1% 0;
     }
 
-    .product_tab_button.nav li a{
-      color: black;
+    .product_tab_button.nav div a{
+        font-size: 10px; 
+        color: black;
     }
 
-    .product_tab_button.nav li a.active, .product_tab_button.nav li a:hover{
+    .product_tab_button.nav div a.active, .product_tab_button.nav div a:hover{
       color: #007bff;
       text-decoration: none;
       font-weight: bold;
@@ -65,11 +66,23 @@
                                         if($cu->$nk == NULL){
                                             $nk = "nama_kategori_en";
                                         }
+
+                                        $textkat = $cu->$nk;
+                                        if(strlen($textkat) > 31){
+                                            $cut_text = substr($textkat, 0, 31);
+                                            if ($textkat{31 - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                $cut_text = substr($textkat, 0, $new_pos);
+                                            }
+                                            $kategorinya = $cut_text . '...';
+                                        }else{
+                                            $kategorinya = $textkat;
+                                        }
                                     ?>
                                     @if(count($catprod1) == 0)
-                                        <li><a href="{{url('/front_end/list_product/category/'.$cu->id)}}">{{$cu->$nk}}</a></li>
+                                        <li><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="http://localhost/kemendag/public/front/assets/img/kategori/health_beauty.png" style="width: 24px; vertical-align: middle;">&nbsp;{{$kategorinya}}</a></li>
                                     @else
-                                        <li class="menu_item_children categorie_list"><a href="{{url('/front_end/list_product/category/'.$cu->id)}}">{{$cu->$nk}} <i class="fa fa-angle-right"></i></a>
+                                        <li class="menu_item_children categorie_list"><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="http://localhost/kemendag/public/front/assets/img/kategori/health_beauty.png" style="width: 24px; vertical-align: middle;">&nbsp;{{$kategorinya}} <i class="fa fa-angle-right"></i></a>
                                             <ul class="categories_mega_menu">
                                                 @foreach($catprod1 as $key => $c1)
                                                   @if($key < 19)
@@ -80,7 +93,7 @@
                                                             $nk = "nama_kategori_en";
                                                         }
                                                     ?>
-                                                    <li class="menu_item_children"><a href="{{url('/front_end/list_product/category/'.$c1->id)}}" style="text-transform: capitalize !important;">{{$c1->$nk}}</a></li>
+                                                    <li class="menu_item_children next"><a href="{{url('/front_end/list_product/category/'.$c1->id)}}" style="text-transform: capitalize !important;">{{$c1->$nk}}</a></li>
                                                   @endif
                                                 @endforeach
                                                 @if(count($catprod1) > 19)
@@ -213,7 +226,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section_title" style="margin-bottom: 0px;">
-                        <ul class="product_tab_button nav" role="tablist" style="background-color: inherit;">
+                        <!-- <div class="row product_tab_button nav" role="tablist" style="background-color: inherit; width: 100%">
+                            <div class="col-md-2">
+                                
+                            </div>
+                        </div> -->
+                        <div class="row product_tab_button nav justify-content-center" role="tablist" style="background-color: inherit; width: 100%">
                             <?php
                                 $numb = 1;
                             ?>
@@ -226,16 +244,16 @@
 
                                 $imgarray = ['agriculture','apparel','automotive','jewelry','health_beauty','electrics','furniture','industrial_parts','gift_card','food'];
                             ?>
-                            <li>
+                            <div class="col-md-1 col-lg-1 col-3" align="center">
                                 <?php
                                     $nkat = "nama_kategori_".$lct; 
                                     if($cut->$nkat == NULL){
                                         $nkat = "nama_kategori_en";
                                     }
 
-                                    $num_char = 20;
+                                    $num_char = 30;
                                     $textkat = $cut->$nkat;
-                                    if(strlen($textkat) > 20){
+                                    if(strlen($textkat) > 30){
                                         $cut_text = substr($textkat, 0, $num_char);
                                         if ($textkat{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
                                             $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
@@ -246,14 +264,14 @@
                                         $kategorinya = $textkat;
                                     }
                                 ?>
-                                <a class="{{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" role="tab" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
-                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="">
-                                    {{$kategorinya}}
+                                <a class="tabnya {{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" role="tab" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
+                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 32px">
+                                    <p>{{$kategorinya}}</p>
                                 </a>
-                            </li>
+                            </div>
                             <?php $numb++; ?>
                             @endforeach
-                        </ul>
+                        </div>
                     </div>
 
                 </div>
@@ -520,11 +538,18 @@
 <script src="{{asset('front/assets/js/plugins.js')}}"></script>
 @include('frontend.layouts.footer')
 <script type="text/javascript">
-    // $(document).ready(function () {
-        
-    // })
+    $(document).ready(function () {
+        if(window.innerWidth <= 900){
+            $( ".menu_item_children.next" ).on('click', function() {
+                var href = $("a", this).attr('href');
+                // window.location.href = href;
+                // ada masalah dalam javascript template
+            });
+        } 
+    });
     function openTab(tabname) {
         $('.tab-pane').removeClass('active');
+        $('.tabnya').removeClass('active');
         $('#'+tabname).addClass('active');
     }
 </script>
