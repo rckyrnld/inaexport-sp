@@ -88,6 +88,7 @@
                             <div class="col-md-4">
                                 <select class="form-control" name="duration" id="duration" required>
                                     <option value="" style="display: none;"> - Select Duration - </option>
+                                    <option value="None" @if($data != NULL) @if($data->duration == "None") selected @endif @endif>None</option>
                                     <option value="1 week" @if($data != NULL) @if($data->duration == "1 week") selected @endif @endif>Valid for 1 Week</option>
                                     <option value="2 weeks" @if($data != NULL) @if($data->duration == "2 weeks") selected @endif @endif>Valid for 2 Weeks</option>
                                     <option value="3 weeks" @if($data != NULL) @if($data->duration == "3 weeks") selected @endif @endif>Valid for 3 Weeks</option>
@@ -103,7 +104,7 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <div style="float: right;">
-                                    <a href="{{url('/inquiry_perwakilan')}}" class="btn btn-danger">Cancel</a>
+                                    <a href="{{url('/inquiry_admin')}}" class="btn btn-danger">Cancel</a>
                                     <button type="button" class="btn btn-primary" id="btnsubmit">Submit</button>
                                 </div>
                             </div>

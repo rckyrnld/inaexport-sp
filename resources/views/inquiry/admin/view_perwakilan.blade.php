@@ -75,7 +75,13 @@
                             <label><b>Duration</b></label>
                         </div>
                         <div class="col-md-4">
-                            <span style="text-transform: capitalize;">Valid for {{$data->duration}}</span>
+                            <span style="text-transform: capitalize;">
+                                @if($data->duration != "None")
+                                    Valid for {{$data->duration}}
+                                @else
+                                    {{$data->duration}}
+                                @endif
+                            </span>
                         </div>
                     </div><br><br>
                     <div class="row">
