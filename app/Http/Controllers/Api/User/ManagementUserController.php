@@ -545,4 +545,119 @@ class ManagementUserController extends Controller
         }
     }
 
+    public function save_trx(Request $request)
+    {
+
+        $ch1 = str_replace(".", "", $request->tp);
+        $ch2 = str_replace(",", ".", $ch1);
+        if ($request->origin == 2) {
+            $update = DB::select("update csc_buying_request set eo='" . $request->eo . "', neo='" . $request->neo . "',tp='" . $ch2 . "',ntp='" . $request->ntp . "' where id='" . $request->id_br . "' ");
+        }
+        if ($request->tipekirim == 1) {
+            if ($request->by_role == 3) {
+                $caripembuat = DB::select("select * from itdp_company_users where id='" . $request->id_pembuat . "'");
+                foreach ($caripembuat as $cp) {
+                    $mailimp = $cp->email;
+                }
+                $ket = "Transaction Created by " . $request->username;
+                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('3','Eksportir','" . $request->id_user . "','Importir','" . $request->id_pembuat . "','" . $ket . "','detailtrx','" . $request->id_transaksi . "','" . Date('Y-m-d H:m:s') . "','0')
+			");
+
+                $ket2 = "Transaction Created by " . $request->username;
+                $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_trx2','" . $request->id_transaksi . "','" . Date('Y-m-d H:m:s') . "','0')
+			");
+
+                $data = [
+                    'email' => "",
+                    'email1' => $mailimp,
+                    'username' => $request->username,
+                    'main_messages' => "",
+                    'id' => $request->id_transaksi
+                ];
+                Mail::send('UM.user.sendtrx', $data, function ($mail) use ($data) {
+                    $mail->to($data['email1'], $data['username']);
+                    $mail->subject('Transaction Created By ');
+                });
+
+                $data22 = [
+                    'email' => "",
+                    'email1' => "kementerianperdagangan.max@gmail.com",
+                    'username' => $request->username,
+                    'main_messages' => "",
+                    'id' => $request->id_transaksi
+                ];
+                Mail::send('UM.user.sendtrx2', $data22, function ($mail) use ($data22) {
+                    $mail->to($data22['email1'], $data22['username']);
+                    $mail->subject('Transaction Created By ');
+                });
+
+
+            } else {
+                $ket2 = "Transaction Created by " . $request->username;
+                $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_trx2','" . $request->id_transaksi . "','" . Date('Y-m-d H:m:s') . "','0')
+			");
+
+                $data22 = [
+                    'email' => "",
+                    'email1' => "kementerianperdagangan.max@gmail.com",
+                    'username' => Auth::guard('eksmp')->user()->username,
+                    'main_messages' => "",
+                    'id' => $request->id_transaksi
+                ];
+                Mail::send('UM.user.sendtrx2', $data22, function ($mail) use ($data22) {
+                    $mail->to($data22['email1'], $data22['username']);
+                    $mail->subject('Transaction Created By ' . Auth::guard('eksmp')->user()->username);
+                });
+
+            }
+
+            $ket3 = "Transaction Created By You";
+            $insertnotif3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('2','Eksportir','" . $request->id_user . "','Eksportir','" . $request->id_user . "','" . $ket3 . "','input_transaksi','" . $request->id_transaksi . "','" . Date('Y-m-d H:m:s') . "','0')
+			");
+
+
+            $data33 = [
+                'email' => "",
+                'email1' => $request->email,
+                'username' => $request->username,
+                'main_messages' => "",
+                'id' => $request->id_transaksi
+            ];
+            Mail::send('UM.user.sendtrx3', $data33, function ($mail) use ($data33) {
+                $mail->to($data33['email1'], $data33['username']);
+                $mail->subject('Transaction Created By ');
+            });
+
+
+        }
+        $update = DB::select("update csc_transaksi set total='" . ($request->eo * $ch2) . "' , eo='" . $request->eo . "', neo='" . $request->neo . "',tp='" . $ch2 . "',ntp='" . $request->ntp . "', status_transaksi='" . $request->tipekirim . "', type_tracking='" . $request->type_tracking . "',no_tracking='" . $request->no_track . "' where id_transaksi='" . $request->id_transaksi . "' ");
+        if ($update) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = "";
+            return response($res);
+
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
+
+    }
+
 }
