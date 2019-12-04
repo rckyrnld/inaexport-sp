@@ -407,12 +407,14 @@ class ManagementUserController extends Controller
             $user->subject = null;//
             $user->messages = null;//
             $user->file = null;//
+            $user->id_br = null;//
 
         } else if ($user->origin == 2) {
             $user->sources = "Buying Request";//
 
             $r1 = DB::select("select * from csc_buying_request where id='" . $user->id_terkait . "'");
             foreach ($r1 as $ip1) {
+                $id_buyingnya = $ip1->id;
                 $by_role = $ip1->by_role;
                 $id_pembuat = $ip1->id_pembuat;
                 $cr = explode(',', $ip1->id_csc_prod);
@@ -459,6 +461,7 @@ class ManagementUserController extends Controller
             $user->subject = $subjectnya;//
             $user->messages = $messagesnya;//
             $user->file = ($filenya) ? $filenya : null;//
+            $user->id_br = $id_buyingnya;//
         }
 
 //        $dataProduka->company_name = DB::table('itdp_profil_eks')->where('id', $dataProduka->id_itdp_profil_eks)->first()->company;
@@ -547,11 +550,12 @@ class ManagementUserController extends Controller
 
     public function save_trx(Request $request)
     {
-
+//        $id_br = $request->id_br;
+//        dd($id_br);
         $ch1 = str_replace(".", "", $request->tp);
         $ch2 = str_replace(",", ".", $ch1);
         if ($request->origin == 2) {
-            $update = DB::select("update csc_buying_request set eo='" . $request->eo . "', neo='" . $request->neo . "',tp='" . $ch2 . "',ntp='" . $request->ntp . "' where id='" . $request->id_br . "' ");
+            $update = DB::select("update csc_buying_request set eo='" . $request->eo . "', neo='" . $request->neo . "',tp='" . $ch2 . "',ntp='" . $request->ntp . "' where id='" . $request->id_br. "' ");
         }
         if ($request->tipekirim == 1) {
             if ($request->by_role == 3) {
