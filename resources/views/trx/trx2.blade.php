@@ -6,13 +6,13 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-divider m-0"></div>
-                
+
 
                 <div class="box-body bg-light">
-                   
+
                     <div class="col-md-14">
                         <div class="">
-						
+
 
 <style>
 body {font-family: Arial;}
@@ -100,7 +100,7 @@ body {font-family: Arial;}
 
 .panel-body
 {
-   
+
     height: 280px;
 }
 
@@ -128,12 +128,12 @@ body {font-family: Arial;}
 
 <form class="form-horizontal" method="POST" action="{{ url('save_trx') }}" enctype="multipart/form-data">
            {{ csrf_field() }}
-<?php 
+<?php
 
 $q2 = DB::select("select * from csc_transaksi where id_transaksi='".$id."'");
 foreach($q2 as $p2){
 ?>
-	
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Sources</b>
@@ -150,13 +150,13 @@ foreach($q2 as $p2){
 	<?php $q3 = DB::select("select * from csc_buying_request where id='".$p2->id_terkait."'");
 	foreach($q3 as $p3){
 	?>
-	
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Created By</b>
 		</div>
 		<div class="form-group col-sm-4">
-			<?php 
+			<?php
 			$r1 = DB::select("select * from csc_buying_request where id='".$p2->id_terkait."'");
 			foreach($r1 as $ip1){ $by_role = $ip1->by_role; $id_pembuat = $ip1->id_pembuat; }
 			if($by_role == 1){
@@ -166,37 +166,37 @@ foreach($q2 as $p2){
 				$addres = "";
 				echo "Perwakilan";
 			}else if($by_role == 3){
-$usre = DB::select("select b.company,b.badanusaha,b.addres,b.city from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$id_pembuat."'"); 
-									foreach($usre as $imp){ 
+$usre = DB::select("select b.company,b.badanusaha,b.addres,b.city from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$id_pembuat."'");
+									foreach($usre as $imp){
 									$addres = $imp->addres." , ".$imp->city;
-									echo "Importir - ".$imp->badanusaha." ".$imp->company; 
-									}	
+									echo "Importir - ".$imp->badanusaha." ".$imp->company;
+									}
 			}
 									?>
 		</div>
-		
+
 	</div>
-	
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Address</b>
 		</div>
 		<div class="form-group col-sm-4">
-			<?php 
-			
+			<?php
+
 									echo $addres;
-									
+
 									?>
 		</div>
-		
+
 	</div>
-	
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Category Product</b>
 		</div>
 		<div class="form-group col-sm-4">
-			<?php 
+			<?php
 $cr = explode(',',$p3->id_csc_prod);
 				$hitung = count($cr);
 				$semuacat = "";
@@ -206,15 +206,15 @@ $cr = explode(',',$p3->id_csc_prod);
 					$semuacat = $semuacat."- ".$napro."<br>";
 				}
 				echo $semuacat;
-									
-									
-									
+
+
+
 									?>
 		</div>
-		
+
 	</div>
-	
-	
+
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Kind of Subject</b>
@@ -223,7 +223,7 @@ $cr = explode(',',$p3->id_csc_prod);
 			Offer to buy
 		</div>
 	</div>
-	
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Date</b>
@@ -232,7 +232,7 @@ $cr = explode(',',$p3->id_csc_prod);
 			<?php  echo $p3->date; ?>
 		</div>
 	</div>
-	
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Quantity</b>
@@ -282,7 +282,7 @@ $cr = explode(',',$p3->id_csc_prod);
                                             </select>
 		</div>
 	</div>
-	
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Price</b>
@@ -294,7 +294,7 @@ $cr = explode(',',$p3->id_csc_prod);
 			<select style="color:black;" class="form-control" name="ntp" id="ntp"><option <?php if($p3->ntp == "IDR"){ echo "selected"; }?> value="IDR">IDR</option><option <?php if($p3->ntp == "THB"){ echo "selected"; }?> value="THB">THB</option><option <?php if($p3->ntp == "USD"){ echo "selected"; }?> value="USD">USD</option></select>
 		</div>
 	</div>
-	
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Subject</b>
@@ -303,7 +303,7 @@ $cr = explode(',',$p3->id_csc_prod);
 			<?php  echo $p3->subyek; ?>
 		</div>
 	</div>
-	
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Messages</b>
@@ -313,7 +313,7 @@ $cr = explode(',',$p3->id_csc_prod);
 			<input type="hidden" id="id_br" value="<?php  echo $p3->id; ?>">
 		</div>
 	</div>
-	
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>File</b>
@@ -322,9 +322,9 @@ $cr = explode(',',$p3->id_csc_prod);
 			<a download href="{{asset('uploads/buy_request/'.$p3->files)}}"><?php  echo $p3->files; ?></a>
 		</div>
 	</div>
-	
+
 	<?php } ?>
-	
+
 	<?php }else { ?>
 	<!-- Inquiry -->
 	<div class="form-row">
@@ -333,7 +333,7 @@ $cr = explode(',',$p3->id_csc_prod);
 		</div>
 		<div class="form-group col-sm-4">
 			<?php  if($p2->by_role == 1){ echo "Admin"; }else if($p2->by_role == 4){ echo "Representative"; }else{ echo "Importer"; }  ?>
-			<?php if($p2->by_role == 3){ 
+			<?php if($p2->by_role == 3){
 			$carih = DB::select("select a.*,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil=b.id and a.id='".$p2->id_pembuat."'");
 			foreach($carih as $ch){
 				echo " - ".$ch->badanusaha." ".$ch->company." (".$ch->username.")";
@@ -342,7 +342,7 @@ $cr = explode(',',$p3->id_csc_prod);
 			<?php } } ?>
 		</div>
 	</div>
-	<?php 
+	<?php
 	$idt = $p2->id_terkait;
 	$caridt = DB::select("select * from csc_inquiry_br where id='".$idt."'");
 	foreach($caridt as $cdt){
@@ -358,7 +358,7 @@ $cr = explode(',',$p3->id_csc_prod);
 			<b>Category</b>
 		</div>
 		<div class="form-group col-sm-4">
-			
+
 		</div>
 	</div>
 	<div class="form-row">
@@ -410,24 +410,24 @@ $cr = explode(',',$p3->id_csc_prod);
                                             </select>
 		</div>
 	</div>
-	
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Price</b>
 		</div>
 		<div class="form-group col-sm-2">
-		
+
 	<input type="text" name="tp" class="amount form-control" value="<?php  if(empty($p2->tp) || $p2->tp == null ){ echo "0"; }else{ echo number_format($p2->tp,0,',','.'); } ?>">
 		</div>
 		<div class="form-group col-sm-2">
 			<select style="color:black;" class="form-control" name="ntp" id="ntp"><option value="IDR">IDR</option><option value="THB">THB</option><option selected value="USD">USD</option></select>
 		</div>
 	</div>
-	
-	
+
+
 	<?php } ?>
-	
-	
+
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>Tracking of Type</b>
@@ -447,7 +447,7 @@ $cr = explode(',',$p3->id_csc_prod);
 			</select>
 		</div>
 	</div>
-	
+
 	<div class="form-row">
 		<div class="form-group col-sm-2">
 			<b>No Tracking</b>
@@ -458,12 +458,12 @@ $cr = explode(',',$p3->id_csc_prod);
 			<input class="form-control" type="hidden" id="id_transaksi" name="id_transaksi" value="<?php echo $p2->id_transaksi;?>">
 		</div>
 	</div>
-	
+
 	<div class="form-row">
-		
+
 		<div class="form-group col-sm-5">
-		
-			
+
+
 			<br>
 			<?php  if($p2->status_transaksi != 1){ ?>
 			<button style="width:33%;" onclick="getyou(1)" type="submit" class="btn btn-info">Submit</button>
@@ -497,7 +497,7 @@ function formatAmount( number ) {
     else if( number.length == 1 ) number = "0.0" + number;
     else if( number.length == 2 ) number = "0." + number;
     else number = number.substring( 0, number.length - 2 ) + '.' + number.substring( number.length - 2, number.length );
-	
+
     // set the precision
     number = new Number( number );
     number = number.toFixed( 2 );    // only works with the "."
@@ -544,9 +544,9 @@ function openCity(evt, cityName) {
   evt.currentTarget.className += " active";
 }
 </script>
-  
 
-                            
+
+
                         </div>
                     </div>
                 </div>

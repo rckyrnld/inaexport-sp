@@ -16,7 +16,7 @@ use Mail;
 class ManagementUserController extends Controller
 {
 
-    // use AuthenticatesUsers;  
+    // use AuthenticatesUsers;
     public function __construct()
     {
         auth()->shouldUse('api_user');
@@ -253,7 +253,7 @@ class ManagementUserController extends Controller
         $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
             ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
             ->where('ts.id', $id)
-            ->orderby('cts.messages_send', 'desc')
+            ->orderby('cts.messages_send', 'asc')
             ->get();
 
         $users = TicketingSupportModel::where('id', $id)->first();
@@ -261,8 +261,15 @@ class ManagementUserController extends Controller
         if (count($messages) > 0) {
             return response($messages);
         } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
 
-            return response($messages);
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
         }
     }
 
@@ -289,7 +296,7 @@ class ManagementUserController extends Controller
             $jsonResult[$i]["messages_send"] = $user[$i]->messages_send;
         }
 //        dd($jsonResult);
-        if ($chat) {
+        if (count($jsonResult) > 0) {
             return response($jsonResult);
         } else {
             return response($jsonResult);
@@ -337,7 +344,7 @@ class ManagementUserController extends Controller
                 ->orderBy('id_transaksi', 'desc')
                 ->get();
         }
-        if ($data) {
+        if (count($data) > 0) {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
@@ -362,11 +369,130 @@ class ManagementUserController extends Controller
 
     public function detailTransaksi(Request $request)
     {
-        $data = DB::table('csc_transaksi')
+        $user = DB::table('csc_transaksi')
             ->where('id_transaksi', $request->id_transaksi)
-            ->get();
+            ->first();
 
-        if ($data) {
+        if ($user->origin == 1) {
+
+            if (empty($user->tp) || $user->tp == null) {
+                $pricenya = "0";
+            } else {
+                $pricenya = number_format($user->tp, 0, ',', '.');
+            }
+
+            $user->sources = "Inquiry";
+
+            if ($user->by_role == 1) {
+                $user->created_by = "Admin";
+            } else if ($user->by_role == 4) {
+                $user->created_by = "Representative";
+            } else if ($user->by_role == 3) {
+                $carih = DB::select("select a.*,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil=b.id and a.id='" . $user->id_pembuat . "'");
+                foreach ($carih as $ch) {
+                    $user->created_by = " - " . $ch->badanusaha . " " . $ch->company . " (" . $ch->username . ")";
+                }
+            } else {
+                $user->created_by = "Importer";
+            }
+
+            $user->addres = null;//
+            $user->category_product = null;//
+            $user->kind_of_subject = null;//
+            $user->date = null;//
+            $user->quantity = ($user->eo) ? $user->eo : 1;//
+            $user->satuan = $user->neo;//
+            $user->price = $pricenya;//
+            $user->kurs = null;//
+            $user->subject = null;//
+            $user->messages = null;//
+            $user->file = null;//
+
+        } else if ($user->origin == 2) {
+            $user->sources = "Buying Request";//
+
+            $r1 = DB::select("select * from csc_buying_request where id='" . $user->id_terkait . "'");
+            foreach ($r1 as $ip1) {
+                $by_role = $ip1->by_role;
+                $id_pembuat = $ip1->id_pembuat;
+                $cr = explode(',', $ip1->id_csc_prod);
+                $hitung = count($cr);
+                $datenya = $ip1->date;
+                $quantitynya = $ip1->eo;
+                $neonya = $ip1->neo;
+                $kursnya = $ip1->ntp;
+                $subjectnya = $ip1->subyek;
+                $messagesnya = $ip1->spec;
+                $filenya = $path = url('uploads/buy_request/' . $ip1->files);
+                $pricenya = number_format($ip1->tp, 0, ',', '.');
+                $semuacat = "";
+                for ($a = 0; $a < ($hitung - 1); $a++) {
+                    $namaprod = DB::select("select * from csc_product where id='" . $cr[$a] . "' ");
+                    foreach ($namaprod as $prod) {
+                        $napro = $prod->nama_kategori_en;
+                    }
+                    $semuacat = $semuacat . "- " . $napro;
+                }
+            }
+            if ($by_role == 1) {
+                $addres = "";
+                $user->created_by = "Admin";//
+            } else if ($by_role == 4) {
+                $addres = "";
+                $user->created_by = "Perwakilan";//
+            } else if ($by_role == 3) {
+                $usre = DB::select("select b.company,b.badanusaha,b.addres,b.city from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='" . $id_pembuat . "'");
+                foreach ($usre as $imp) {
+                    $addres = $imp->addres . " , " . $imp->city;
+                    $user->created_by = "Importir - " . $imp->badanusaha . " " . $imp->company;//
+                }
+            }
+
+            $user->addres = $addres;//
+            $user->category_product = $semuacat;//
+            $user->kind_of_subject = "Offer to buy";//
+            $user->date = $datenya;//
+            $user->quantity = $quantitynya;//
+            $user->satuan = $neonya;//
+            $user->price = $pricenya;//
+            $user->kurs = $kursnya;//
+            $user->subject = $subjectnya;//
+            $user->messages = $messagesnya;//
+            $user->file = ($filenya) ? $filenya : null;//
+        }
+
+//        $dataProduka->company_name = DB::table('itdp_profil_eks')->where('id', $dataProduka->id_itdp_profil_eks)->first()->company;
+//        $dataProduka->csc_product_desc = DB::table('csc_product')->where('id', $dataProduka->id_csc_product)->first()->nama_kategori_en;
+//        $dataProduka->csc_product_level1_desc = ($dataProduka->id_csc_product_level1) ? DB::table('csc_product')->where('id', $dataProduka->id_csc_product_level1)->first()->nama_kategori_en : null;
+//        $dataProduka->csc_product_level2_desc = ($dataProduka->id_csc_product_level2) ? DB::table('csc_product')->where('id', $dataProduka->id_csc_product_level2)->first()->nama_kategori_en : null;
+//        $dataProduka->link_image_1 = $path = ($dataProduka->image_1) ? url('uploads/buy_request/' . $dataProduka->id . '/' . $dataProduka->image_1) : url('image/noimage.jpg');
+//        $dataProduka->link_image_2 = $path = ($dataProduka->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_2) : url('image/noimage.jpg');
+//        $dataProduka->link_image_3 = $path = ($dataProduka->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_3) : url('image/noimage.jpg');
+//        $dataProduka->link_image_4 = $path = ($dataProduka->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_4) : url('image/noimage.jpg');
+//        $dataProduka->name_mst_hscodes = ($dataProduka->id_mst_hscodes) ? DB::table('mst_hscodes')->where('id', $dataProduka->id_mst_hscodes)->first()->desc_eng : "";
+
+//        for ($i = 0; $i < count($user); $i++) {
+//
+//            $jsonResult[$i]["id_transaksi"] = $user[$i]->id_transaksi;
+//            $jsonResult[$i]["id_pembuat"] = $user[$i]->id_pembuat;
+//            $jsonResult[$i]["by_role"] = $user[$i]->by_role;
+//            $jsonResult[$i]["id_eksportir"] = $user[$i]->id_eksportir;
+//            $jsonResult[$i]["id_terkait"] = $user[$i]->id_terkait;
+//            $jsonResult[$i]["origin"] = $user[$i]->origin;
+//            $jsonResult[$i]["type_tracking"] = $user[$i]->type_tracking;
+//            $jsonResult[$i]["no_tracking"] = $user[$i]->no_tracking;
+//            $jsonResult[$i]["created_at"] = $user[$i]->created_at;
+//            $jsonResult[$i]["status_transaksi"] = $user[$i]->status_transaksi;
+//            $jsonResult[$i]["eo"] = $user[$i]->eo;
+//            $jsonResult[$i]["neo"] = $user[$i]->neo;
+//            $jsonResult[$i]["tp"] = $user[$i]->tp;
+//            $jsonResult[$i]["ntp"] = $user[$i]->ntp;
+//            $jsonResult[$i]["total"] = $user[$i]->total;
+//
+//        }
+//        dd($user);
+//        dd($jsonResult);
+        if (count($user) > 0) {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
@@ -374,8 +500,9 @@ class ManagementUserController extends Controller
             ];
 //            $data = '';
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = $user;
             return response($res);
+
         } else {
             $meta = [
                 'code' => 204,
@@ -388,4 +515,34 @@ class ManagementUserController extends Controller
             return response($res);
         }
     }
+
+    public function getNotif(Request $request)
+    {
+        $id_user = $request->id_user;
+        $id_role = $request->id_role;
+        $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='" . $id_user . "' and to_role='" . $id_role . "' order by id_notif desc");
+        if (count($querynotifa) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $querynotifa;
+            return response($res);
+
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
+    }
+
 }

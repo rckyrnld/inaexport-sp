@@ -278,7 +278,7 @@
                                     <div class="product_name grid_name">
                                         <h3><a href="{{url('front_end/product/'.$pro->id)}}" title="{{$prodn}}">{{$prodnama}}</a></h3>
                                     </div>
-                                    <h3 style="text-transform: uppercase; font-size: 14px; font-weight: 400; font-family: "Open Sans", sans-serif;">
+                                    <h3 style="text-transform: uppercase; font-size: 14px; font-weight: 400; font-family: 'Open Sans', sans-serif;">
                                         <?php
                                             $num_charp = 25;
                                             $compname = getCompanyName($pro->id_itdp_company_user);
@@ -353,6 +353,7 @@
                                                     }else{
                                                         $product_desc = $proddesc;
                                                     }
+                                                    $product_desc = strip_tags($product_desc, "<p><a><br><i><b><u><hr><strong><small>");
                                                 ?>
                                                 <?php echo $product_desc; ?>
                                             </div>

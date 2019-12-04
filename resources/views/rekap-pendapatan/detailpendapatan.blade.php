@@ -1,7 +1,7 @@
 @include('header')
 <style>
 table, th, tr, td {
-    text-align: left;
+    text-align: center;
 }
 </style>
 <div class="padding">
@@ -48,71 +48,39 @@ table, th, tr, td {
 				
 				
                 <div class="box-body bg-light">
-				
-				       <table id="example1" class="table table-bordered table-striped">
-                                <thead class="text-white" style="background-color: #1089ff;">
-                                <tr>
-                                    <th>No</th>
-									
-									<th>
-                                        <center>Origin</center>
-                                    </th>
-									<th>
-                                        <center>Buyer</center>
-                                    </th>
-									<th>
-                                        <center>Eksportir</center>
-                                    </th>
-									
-									 <th>
-                                        <center>Type Tracking</center>
-                                    </th>
-									<th>
-                                        <center>No Tracking</center>
-                                    </th>
-									<th>
-                                        <center>Harga</center>
-                                    </th>
-									
-									
-                                </tr>
-                                </thead>
-								<tbody>
-								<?php $nt = 1; foreach($data as $ruu){ ?>
-								<tr>
-									<td><?php echo $nt; ?></td>
-									
-									<td><center><?php if($ruu->origin == 1){ echo "Inquiry"; }else if($ruu->origin == 2){ echo "Buying Request"; }?></center></td>
-									<td><center><?php if($ruu->by_role == 1){ echo "Admin"; }else if($ruu->by_role == 4){ echo "Perwakilan"; }else{ 
-									$usre = DB::select("select b.company,b.badanusaha from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
-									foreach($usre as $imp){ 
-									echo "Importir - ".$imp->badanusaha." ".$imp->company; 
-									}
-									} ?></center></td>
-									<td><center><?php 
-									$carieks = DB::select("select * from itdp_company_users where id='".$ruu->id_eksportir."'");
-									foreach($carieks as $eks){ echo $eks->username; }
-									?></center></td>
-									
-									
-									<td><center><?php echo $ruu->type_tracking; ?></center></td>
-									<td><center><?php echo $ruu->no_tracking; ?></center></td>
-									<td><center><?php echo "$".number_format($ruu->total,2,',','.'); ?></center></td>
-									
-								</tr>
-								<?php $nt++; } ?>
+	       			<table id="example1" class="table table-bordered table-striped">
+	                    <thead class="text-white" style="background-color: #1089ff;">
+		                    <tr>
+		                        <th>No</th>
+								<th>Date</th>
+								<th>Origin</th>
+								<th>Buyer</th>
+								<th>Type Tracking</th>
+								<th>No Tracking</th>
+								<th>Price</th>
+		                    </tr>
+	                    </thead>
+						<tbody>
+							<?php $nt = 1; foreach($data as $ruu){ ?>
+							<tr>
+								<td><?php echo $nt; ?></td>
+								<td>{{date("d F Y", strtotime($ruu->created_at))}}</td>
+								<td><?php if($ruu->origin == 1){ echo "Inquiry"; }else if($ruu->origin == 2){ echo "Buying Request"; }?></td>
+								<td><?php if($ruu->by_role == 1){ echo "Admin"; }else if($ruu->by_role == 4){ echo "Perwakilan"; }else{ 
+								$usre = DB::select("select b.company,b.badanusaha from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
+								foreach($usre as $imp){ 
+								echo "Importir - ".$imp->badanusaha." ".$imp->company; 
+								}
+								} ?></td>
+								<td><?php echo $ruu->type_tracking; ?></td>
+								<td><?php echo $ruu->no_tracking; ?></td>
+								<td><?php echo "$".number_format($ruu->total,2,',','.'); ?></td>
 								
-								</tbody>
-
-                            </table>
-                       
-         
-
-  
-
-
-            </div>
-
+							</tr>
+							<?php $nt++; } ?>
+						</tbody>
+	                </table>
+            	</div>
         </div>
     </div>
 </div>

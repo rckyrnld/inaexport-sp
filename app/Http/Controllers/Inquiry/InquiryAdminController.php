@@ -763,7 +763,10 @@ class InquiryAdminController extends Controller
                     ]);
 
                     $admin = DB::table('itdp_admin_users')->where('id', $id_user)->first();
+                    $idn = DB::table('notif')->max('id_notif');
+                    $idnotifn = $idn + 1;
                     $notif = DB::table('notif')->insert([
+                        'id_notif' => $idnotifn,
                         'dari_nama' => $admin->name,
                         'dari_id' => $id_user,
                         'untuk_nama' => getCompanyName($array[$k]),
@@ -1031,6 +1034,8 @@ class InquiryAdminController extends Controller
         $receiver = $request->to;
         $msg = $request->messages;
 
+        $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
+
         $idm = DB::table('csc_chatting_inquiry')->max('id');
         $idmax = $idm + 1;
 
@@ -1047,6 +1052,40 @@ class InquiryAdminController extends Controller
         ]);
 
         if($save){
+            //Notif sistem
+            $idn = DB::table('notif')->max('id_notif');
+            $idnotifn = $idn + 1;
+            $notif = DB::table('notif')->insert([
+                'id_notif' => $idnotifn,
+                'dari_nama' => getAdminName($sender),
+                'dari_id' => $sender,
+                'untuk_nama' => getCompanyName($receiver),
+                'untuk_id' => $receiver,
+                'keterangan' => 'New Message from '.getAdminName($sender).' about Inquiry '.$data->subyek_en,
+                'url_terkait' => 'inquiry/chatting',
+                'status_baca' => 0,
+                'waktu' => $datenow,
+                'to_role' => 2,
+                'id_terkait' => $id
+            ]);
+
+            $users = DB::table('itdp_company_users')->where('id', $receiver)->first();
+            $email = $users->email;
+            $username = $users->username;
+            //Tinggal Ganti Email1 dengan email kemendag
+            $data2 = [
+                'email' => $email,
+                'username' => $username,
+                'type' => "admin",
+                'sender' => getAdminName($sender),
+                'receiver' => getCompanyName($receiver),
+                'subjek' => $data->subyek_en
+            ];
+
+            Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+                $mail->to($data2['email'], $data2['username']);
+                $mail->subject('Inquiry Chatting Information');
+            });
             return 1;
         }else{
             return 0;
@@ -1060,6 +1099,8 @@ class InquiryAdminController extends Controller
         $id_broadcast = $request->id_broadcast;
         $sender = $request->sender;
         $receiver = $request->receiver;
+
+        $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
         $idm = DB::table('csc_chatting_inquiry')->max('id');
         $idmax = $idm + 1;
@@ -1082,6 +1123,41 @@ class InquiryAdminController extends Controller
             'status' => 0,
             'created_at' => $datenow,
         ]);
+
+        //Notif sistem
+        $idn = DB::table('notif')->max('id_notif');
+        $idnotifn = $idn + 1;
+        $notif = DB::table('notif')->insert([
+            'id_notif' => $idnotifn,
+            'dari_nama' => getAdminName($sender),
+            'dari_id' => $sender,
+            'untuk_nama' => getCompanyName($receiver),
+            'untuk_id' => $receiver,
+            'keterangan' => 'New Message from '.getAdminName($sender).' about Inquiry '.$data->subyek_en,
+            'url_terkait' => 'inquiry/chatting',
+            'status_baca' => 0,
+            'waktu' => $datenow,
+            'to_role' => 2,
+            'id_terkait' => $id
+        ]);
+
+        $users = DB::table('itdp_company_users')->where('id', $receiver)->first();
+        $email = $users->email;
+        $username = $users->username;
+        //Tinggal Ganti Email1 dengan email kemendag
+        $data2 = [
+            'email' => $email,
+            'username' => $username,
+            'type' => "admin",
+            'sender' => getAdminName($sender),
+            'receiver' => getCompanyName($receiver),
+            'subjek' => $data->subyek_en
+        ];
+
+        Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+            $mail->to($data2['email'], $data2['username']);
+            $mail->subject('Inquiry Chatting Information');
+        });
 
         return redirect('/inquiry_admin/chatting/'.$id_broadcast); 
         
