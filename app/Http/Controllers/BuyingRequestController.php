@@ -37,11 +37,8 @@ class BuyingRequestController extends Controller
 	public function show_all_notif()
     {
 		if(!empty(Auth::guard('eksmp')->user()->id)){
-		if(Auth::guard('eksmp')->user()->id_role == 2){
-		$pageTitle = "All Notif For Eksportir";
-		$data = DB::select("select a.*,a.id as ida,a.status as statusa,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where a.id = b.id_br and b.id_eks='".Auth::guard('eksmp')->user()->id."' order by b.id desc ");
-        return view('buying-request.index_eks', compact('pageTitle','data'));
-		}
+		$pageTitle = "All Notif For Representative";
+		return view('notif.indexeksmp', compact('pageTitle'));
 		}else{
 		if(Auth::user()->id_group == 4){
         $pageTitle = "All Notif For Representative";

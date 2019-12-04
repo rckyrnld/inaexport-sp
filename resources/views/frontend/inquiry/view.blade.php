@@ -196,7 +196,7 @@
                                   <td width="30%">@lang('inquiry.duration')</td>
                                   <td width="60%">
                                     <?php
-                                      if($inquiry->duration != NULL){
+                                      if($inquiry->duration != "None"){
                                         $d = explode(' ', $inquiry->duration);
                                         if($d[1] == "week" || $d[1] == "weeks"){
                                           $dw = "w";
@@ -204,6 +204,8 @@
                                           $dw = "m";
                                         }
                                         $durasi = "v".$d[0].$dw;
+                                      }else{
+                                        $durasi = "none";
                                       }
                                     ?>
                                     <span style="text-transform: capitalize;">@lang('inquiry.'.$durasi)</span>

@@ -38,6 +38,7 @@ return [
     "v4m" => "Valid for 4 months",
     "v5m" => "Valid for 5 months",
     "v6m" => "Valid for 6 months",
+    "none" => "None",
     "list" => [
         "exportir" => "Exporter",
         "date" => "Date Transaction",

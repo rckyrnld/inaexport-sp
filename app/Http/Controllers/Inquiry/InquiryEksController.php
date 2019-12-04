@@ -124,8 +124,10 @@ class InquiryEksController extends Controller
                 })
                 ->addColumn('duration', function ($mjl) {
                     $durationnya = "-";
-                    if($mjl->duration != NULL){
+                    if($mjl->duration != "None"){
                         $durationnya = "Valid for ".$mjl->duration;
+                    }else{
+                        $durationnya = $mjl->duration;
                     }
 
                     return $durationnya;
