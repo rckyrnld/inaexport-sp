@@ -114,6 +114,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     //transaksi
     Route::post('getTransaksi', 'Api\User\ManagementUserController@getTransaksi');
     Route::post('detailTransaksi', 'Api\User\ManagementUserController@detailTransaksi');
+    Route::post('save_trx', 'Api\User\ManagementUserController@save_trx');
 
 
 
