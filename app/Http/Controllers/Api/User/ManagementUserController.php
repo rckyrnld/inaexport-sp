@@ -521,6 +521,28 @@ class ManagementUserController extends Controller
         $id_user = $request->id_user;
         $id_role = $request->id_role;
         $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='" . $id_user . "' and to_role='" . $id_role . "' order by id_notif desc");
+        if (count($querynotifa) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $querynotifa;
+            return response($res);
+
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
     }
 
 }
