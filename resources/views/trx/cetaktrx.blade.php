@@ -57,9 +57,17 @@ header("Cache-Control: max-age=0");
 									?></td>
 									<td><?php 
 									if($ruu->by_role == 1){
-									echo "";
+									$co = $ruu->id_mst_country;
+				$naco ="";
+				$caric = DB::select("select * from mst_country where id='".$co."'");
+				foreach($caric as $cc){ $naco = $cc->country; }
+				echo $naco." ,".$ruu->city;
 								}else if($ruu->by_role == 4){
-									echo "";
+									$co = $ruu->id_mst_country;
+				$naco ="";
+				$caric = DB::select("select * from mst_country where id='".$co."'");
+				foreach($caric as $cc){ $naco = $cc->country; }
+				echo $naco." ,".$ruu->city;
 								}else if($ruu->by_role == 3){
 									$usre = DB::select("select b.company,b.addres,b.city from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
 									foreach($usre as $imp){ 
