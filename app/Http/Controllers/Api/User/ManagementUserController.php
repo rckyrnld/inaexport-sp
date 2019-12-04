@@ -253,7 +253,7 @@ class ManagementUserController extends Controller
         $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
             ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
             ->where('ts.id', $id)
-            ->orderby('cts.messages_send', 'desc')
+            ->orderby('cts.messages_send', 'asc')
             ->get();
 
         $users = TicketingSupportModel::where('id', $id)->first();
@@ -261,8 +261,15 @@ class ManagementUserController extends Controller
         if (count($messages) > 0) {
             return response($messages);
         } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
 
-            return response($messages);
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
         }
     }
 
@@ -511,7 +518,31 @@ class ManagementUserController extends Controller
 
     public function getNotif(Request $request)
     {
-        $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='" . Auth::guard('eksmp')->user()->id . "' and to_role='" . Auth::guard('eksmp')->user()->id_role . "' order by id_notif desc");
+        $id_user = $request->id_user;
+        $id_role = $request->id_role;
+        $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='" . $id_user . "' and to_role='" . $id_role . "' order by id_notif desc");
+        if (count($querynotifa) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $querynotifa;
+            return response($res);
+
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
     }
 
 }
