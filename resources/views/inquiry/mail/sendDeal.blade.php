@@ -20,8 +20,8 @@
 </style>
 <p style="color: #8bbbe8; font-size: 20px;">Information</p>
 <hr>
-<p>Dear Admin,</P>
-<p>Exporter {{$company}} has created new product. please check and verification that product.</p>
+<p>Dear {{$penerima}},</P>
+<p>Inquiry with subject {{$subjek}} has been Deal by Exporter {{$company}}.</p>
 <p><a href="{{url('/login')}}">Click here</a> to login in application.</p>
 <br>
 <p>Thanks</p>

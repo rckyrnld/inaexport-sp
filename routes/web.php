@@ -54,7 +54,8 @@ Route::namespace('FrontEnd')->group(function () {
     Route::post('front_end/inquiry_act/{id}', 'InquiryFrontController@store');
     Route::get('/front_end/ver_inquiry/{id}', 'InquiryFrontController@verifikasi_inquiry');
     Route::get('/front_end/chat_inquiry/{id}', 'InquiryFrontController@chatting')->name('front.inquiry.chatting');
-    Route::post('/front_end/inquiry_product/fileChat', 'InquiryFrontController@fileChat')->name('front.inquiry.fileChat');
+    Route::post('/front_end/inquiry_chatfile/fileChat', 'InquiryFrontController@fileChat')->name('front.inquiry.fileChat');
+    Route::get('/front_end/inquiry_chat/sendChat', 'InquiryFrontController@sendChat')->name('front.inquiry.sendChat');
     Route::get('/front_end/view_inquiry/{id}', 'InquiryFrontController@view')->name('front.inquiry.view');
     //Ticketing Support
     //Eksportir

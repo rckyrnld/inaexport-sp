@@ -377,6 +377,15 @@ class BRFrontController extends Controller
 	
 	public function uploadpop2(Request $request)
     {		
+			$cari = DB::select("select * from csc_buying_request_join where id='".$request->idq."'");
+			foreach($cari as $cr1){
+				$data1 = $cr1->id_eks;
+			}
+			//echo $data1;die();
+			$cari2 = DB::select("select * from itdp_company_users where id='".$data1."'");
+			foreach($cari2 as $cr2){
+				$data2 = $cr2->email;
+			}
 			$idq = $request->idq;
 			$idb = $request->idb;
 			$idc = $request->idc;
@@ -386,6 +395,24 @@ class BRFrontController extends Controller
 			$insert = DB::select("
 			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
 			('".$idb."','".$request->catatan."','".Date('Y-m-d H:m:s')."','".$request->idc."','".$request->ide."','".$request->idd."','".$idq."','".$file."')");
+			
+			if($request->ide == 1){
+			$ket = "Super Admin Upload Invoice On Buying Request !";
+			$it = $request->idq;
+			$it2 = $request->idq."/".$request->idb;
+			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('2','Admin','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+			");
+			}else{
+			$ket = "Perwakilan Upload Invoice On Buying Request !";
+			$it = $request->idq;
+			$it2 = $request->idq."/".$request->idb;
+			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('2','Admin','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+			");
+			}
+			
+			
 			
 			return redirect('br_pw_chat/'.$idq);
 	}	

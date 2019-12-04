@@ -47,6 +47,8 @@
     }else{
         $lct = "en";
     }
+
+    $imgarray = ['agriculture','apparel','automotive','jewelry','health_beauty','electrics','furniture','industrial_parts','gift_card','food'];
 ?>
     <!--menu & category start-->
     <section class="slider_section mb-50" style="margin-bottom: 0px;">
@@ -59,7 +61,7 @@
                         </div>
                         <div class="categories_menu_toggle">
                             <ul>
-                                @foreach($categoryutama as $cu)
+                                @foreach($categoryutama as $key => $cu)
                                     <?php
                                         $catprod1 = getCategoryLevel(1, $cu->id, "");
                                         $nk = "nama_kategori_".$lct; 
@@ -78,11 +80,16 @@
                                         }else{
                                             $kategorinya = $textkat;
                                         }
+                                        if($cu->logo != null){
+                                            $imagenya = asset('uploads/Product/Icon').'/'.$cu->logo;
+                                        } else {
+                                            $imagenya = asset('front/assets/img/kategori/').'/'.$imgarray[$key].'.png';
+                                        }
                                     ?>
                                     @if(count($catprod1) == 0)
-                                        <li><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="http://localhost/kemendag/public/front/assets/img/kategori/health_beauty.png" style="width: 24px; vertical-align: middle;">&nbsp;{{$kategorinya}}</a></li>
+                                        <li><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}}</a></li>
                                     @else
-                                        <li class="menu_item_children categorie_list"><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="http://localhost/kemendag/public/front/assets/img/kategori/health_beauty.png" style="width: 24px; vertical-align: middle;">&nbsp;{{$kategorinya}} <i class="fa fa-angle-right"></i></a>
+                                        <li class="menu_item_children categorie_list"><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}} <i class="fa fa-angle-right"></i></a>
                                             <ul class="categories_mega_menu">
                                                 @foreach($catprod1 as $key => $c1)
                                                   @if($key < 19)
@@ -241,8 +248,6 @@
                                 if($numb == 1){
                                     $cls = "active";
                                 }
-
-                                $imgarray = ['agriculture','apparel','automotive','jewelry','health_beauty','electrics','furniture','industrial_parts','gift_card','food'];
                             ?>
                             <div class="col-md-1 col-lg-1 col-3" align="center">
                                 <?php

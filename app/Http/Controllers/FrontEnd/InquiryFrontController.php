@@ -114,7 +114,10 @@ class InquiryFrontController extends Controller
             ]);
 
             if($save){
+                $idn = DB::table('notif')->max('id_notif');
+                $idnotifn = $idn + 1;
                 $notif = DB::table('notif')->insert([
+                    'id_notif' => $idnotifn,
                     'dari_nama' => getCompanyNameImportir($id_user),
                     'dari_id' => $id_user,
                     'untuk_nama' => getCompanyName($dtproduct->id_itdp_company_user),
@@ -231,6 +234,8 @@ class InquiryFrontController extends Controller
         $receiver = $request->to;
         $msg = $request->messages;
 
+        $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
+
         $idm = DB::table('csc_chatting_inquiry')->max('id');
         $idmax = $idm + 1;
 
@@ -246,6 +251,40 @@ class InquiryFrontController extends Controller
         ]);
 
         if($save){
+            //Notif sistem
+            $idn = DB::table('notif')->max('id_notif');
+            $idnotifn = $idn + 1;
+            $notif = DB::table('notif')->insert([
+                'id_notif' => $idnotifn,
+                'dari_nama' => getCompanyNameImportir($sender),
+                'dari_id' => $sender,
+                'untuk_nama' => getCompanyName($receiver),
+                'untuk_id' => $receiver,
+                'keterangan' => 'New Message from '.getCompanyNameImportir($sender).' about Inquiry '.$data->subyek_en,
+                'url_terkait' => 'inquiry/chatting',
+                'status_baca' => 0,
+                'waktu' => $datenow,
+                'to_role' => 2,
+                'id_terkait' => $id
+            ]);
+
+            $users = DB::table('itdp_company_users')->where('id', $receiver)->first();
+            $email = $users->email;
+            $username = $users->username;
+            //Tinggal Ganti Email1 dengan email kemendag
+            $data2 = [
+                'email' => $email,
+                'username' => $username,
+                'type' => 'importir',
+                'sender' => getCompanyNameImportir($sender),
+                'receiver' => getCompanyName($receiver),
+                'subjek' => $data->subyek_en
+            ];
+
+            Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+                $mail->to($data2['email'], $data2['username']);
+                $mail->subject('Inquiry Chatting Information');
+            });
             return 1;
         }else{
             return 0;
@@ -258,6 +297,8 @@ class InquiryFrontController extends Controller
         $id = $request->id_inquiry2;
         $sender = $request->sender2;
         $receiver = $request->receiver2;
+
+        $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
         $idm = DB::table('csc_chatting_inquiry')->max('id');
         $idmax = $idm + 1;
@@ -279,6 +320,41 @@ class InquiryFrontController extends Controller
             'status' => 0,
             'created_at' => $datenow,
         ]);
+
+        //Notif sistem
+        $idn = DB::table('notif')->max('id_notif');
+        $idnotifn = $idn + 1;
+        $notif = DB::table('notif')->insert([
+            'id_notif' => $idnotifn,
+            'dari_nama' => getCompanyNameImportir($sender),
+            'dari_id' => $sender,
+            'untuk_nama' => getCompanyName($receiver),
+            'untuk_id' => $receiver,
+            'keterangan' => 'New Message from '.getCompanyNameImportir($sender).' about Inquiry '.$data->subyek_en,
+            'url_terkait' => 'inquiry/chatting',
+            'status_baca' => 0,
+            'waktu' => $datenow,
+            'to_role' => 2,
+            'id_terkait' => $id
+        ]);
+
+        $users = DB::table('itdp_company_users')->where('id', $receiver)->first();
+        $email = $users->email;
+        $username = $users->username;
+        //Tinggal Ganti Email1 dengan email kemendag
+        $data2 = [
+            'email' => $email,
+            'username' => $username,
+            'type' => 'importir',
+            'sender' => getCompanyNameImportir($sender),
+            'receiver' => getCompanyName($receiver),
+            'subjek' => $data->subyek_en
+        ];
+
+        Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+            $mail->to($data2['email'], $data2['username']);
+            $mail->subject('Inquiry Chatting Information');
+        });
 
         return redirect('/front_end/chat_inquiry/'.$id); 
         
