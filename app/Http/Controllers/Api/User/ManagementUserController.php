@@ -524,7 +524,7 @@ class ManagementUserController extends Controller
         $id_user = $request->id_user;
         $id_role = $request->id_role;
         $offsite = $request->offsite;
-        $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='" . $id_user . "' and to_role='" . $id_role . "' order by id_notif desc LIMIT 10 OFFSET " . $offsite);
+        $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='" . $id_user . "' order by id_notif desc LIMIT 10 OFFSET " . $offsite);
         if (count($querynotifa) > 0) {
             $meta = [
                 'code' => 200,
