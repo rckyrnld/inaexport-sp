@@ -481,7 +481,7 @@ class InquiryController extends Controller
             ));
             $res['meta'] = $meta;
             $res['data'] = $data;
-            return response($res);
+            return response($data);
         } else {
             $meta = [
                 'code' => 204,
@@ -490,7 +490,7 @@ class InquiryController extends Controller
             ];
             $data = '';
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = $messages;
             return response($res);
 
         }
@@ -616,7 +616,6 @@ class InquiryController extends Controller
         $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id_inquiry)->where('type', $inquiry->type)->where('receive', $id_user)->update([
             'status' => 1,
         ]);
-
         if (count($messages) > 0) {
             $meta = [
                 'code' => 200,
@@ -630,7 +629,7 @@ class InquiryController extends Controller
             ));
             $res['meta'] = $meta;
             $res['data'] = $data;
-            return response($res);
+            return response($messages);
         } else {
             $meta = [
                 'code' => 204,
@@ -639,7 +638,7 @@ class InquiryController extends Controller
             ];
             $data = '';
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = $messages;
             return response($res);
 
         }
