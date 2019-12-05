@@ -229,7 +229,129 @@ foreach($q2 as $p2){
 			<input class="form-control" type="hidden" id="tipekirim" name="tipekirim" value="" required>
 		</div>
 	</div>
-<?php } } } ?>
+<?php } }else{ ?>
+
+<div class="form-row">
+		<div class="form-group col-sm-6">
+			<b>Created By</b>
+		</div>
+		<div class="form-group col-sm-6">
+			<?php  if($p3->by_role == 1){ $r = "Admin"; }else if($p3->by_role == 4){ $r = "Representative"; }else{ $r = "Importer"; }  ?>
+			<?php if($p3->by_role == 3){
+			$carih = DB::select("select a.*,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil=b.id and a.id='".$p3->id_pembuat."'");
+			foreach($carih as $ch){
+				$nbb = " - ".$ch->badanusaha." ".$ch->company." (".$ch->username.")";
+			?>
+			<input class="form-control" readonly type="text" id="" name="" value="<?php echo $r." - ".$nbb; ?>" readonly>
+			<?php } } ?>
+		</div>
+	</div>
+	<?php
+	$idt = $p3->id_terkait;
+	$caridt = DB::select("select * from csc_inquiry_br where id='".$idt."'");
+	foreach($caridt as $cdt){
+		$cd1 = $cdt->id;
+		$cd2 = $cdt->id_csc_prod_cat;
+		$cd3 = $cdt->id_csc_prod_cat_level1;
+		$cd4 = $cdt->id_csc_prod_cat_level2;
+	}
+	//echo $cd1."aaaa";
+	?>
+	<div class="form-row">
+		<div class="form-group col-sm-6">
+			<b>Category</b>
+		</div>
+		<div class="form-group col-sm-6">
+
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="form-group col-sm-6">
+			<b>Quantity</b>
+		</div>
+		<div class="form-group col-sm-3">
+			<input type="number" name="eo" class="form-control" value="<?php  if(empty($p3->eo)){ echo "1"; }else{ echo $p3->eo; } ?>" readonly>
+		</div>
+		<div class="form-group col-sm-3">
+			<input type="hidden" name="id_in" class="form-control" value="<?php echo $p3->id_terkait; ?>">
+			 <select class="form-control" name="neo" id="neo" disabled>
+                                                <option value="">- Choose -</option>
+
+                                                <option <?php if($p3->neo == "Each"){ echo "selected"; }?> value="Each">Each</option>
+                                                <option <?php if($p3->neo == "Foot"){ echo "selected"; }?> value="Foot">Foot</option>
+                                                <option <?php if($p3->neo == "Gallons"){ echo "selected"; }?> value="Gallons">Gallons</option>
+												<option <?php if($p3->neo == "Kilograms"){ echo "selected"; }?>value="Kilograms">Kilograms</option>
+                                                <option <?php if($p3->neo == "Liters"){ echo "selected"; }?> value="Liters">Liters</option>
+                                                <option <?php if($p3->neo == "Packs"){ echo "selected"; }?>value="Packs">Packs</option>
+                                                <option <?php if($p3->neo == "Pairs"){ echo "selected"; }?> value="Pairs">Pairs</option>
+                                                <option <?php if($p3->neo == "Pieces"){ echo "selected"; }?> value="Pieces">Pieces</option>
+                                                <option <?php if($p3->neo == "Reams"){ echo "selected"; }?> value="Reams">Reams</option>
+                                                <option <?php if($p3->neo == "Rods"){ echo "selected"; }?> value="Rods">Rods</option>
+                                                <option <?php if($p3->neo == "Rolls"){ echo "selected"; }?> value="Rolls">Rolls</option>
+                                                <option <?php if($p3->neo == "Sets"){ echo "selected"; }?> value="Sets">Sets</option>
+                                                <option <?php if($p3->neo == "Sheets"){ echo "selected"; }?>value="Sheets">Sheets</option>
+                                                <option <?php if($p3->neo == "Square Meters"){ echo "selected"; }?> value="Square Meters">Square Meters</option>
+                                                <option <?php if($p3->neo == "Tons"){ echo "selected"; }?> value="Tons">Tons</option>
+                                                <option <?php if($p3->neo == "Unit"){ echo "selected"; }?> value="Unit">Unit</option>
+                                                
+                                            </select>
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="form-group col-sm-6">
+			<b>Price</b>
+		</div>
+		<div class="form-group col-sm-3">
+
+	<input readonly type="text" name="tp" class="amount form-control" value="<?php  if(empty($p3->tp) || $p3->tp == null ){ echo "0"; }else{ echo number_format($p3->tp,0,',','.'); } ?>">
+		</div>
+		<div class="form-group col-sm-3">
+			<select disabled style="color:black;" class="form-control" name="ntp" id="ntp"><option value="IDR">IDR</option><option value="THB">THB</option><option selected value="USD">USD</option></select>
+		</div>
+	</div>
+	
+	<div class="form-row">
+		<div class="form-group col-sm-6">
+			<b>Tracking of Type</b>
+		</div>
+		<div class="form-group col-sm-6">
+			<select <?php if($p3->status_transaksi == 1){ echo "readonly"; }?> class="form-control" name="type_tracking">
+				<option value="">- Select Tracking Type -</option>
+				<option <?php if($p3->type_tracking == "DHL Express"){ echo "selected"; }?> value="DHL Express">DHL Express</option>
+				<option <?php if($p3->type_tracking == "DHL Active Tracing"){ echo "selected"; }?> value="DHL Active Tracing">DHL Active Tracing</option>
+				<option <?php if($p3->type_tracking == "DHL Global Forwarding"){ echo "selected"; }?> value="DHL Global Forwarding">DHL Global Forwarding</option>
+				<option <?php if($p3->type_tracking == "Fedex"){ echo "selected"; }?> value="Fedex">Fedex</option>
+				<option <?php if($p3->type_tracking == "Fedex Freight"){ echo "selected"; }?> value="Fedex Freight">Fedex Freight</option>
+				<option <?php if($p3->type_tracking == "FedEx Ground"){ echo "selected"; }?> value="FedEx Ground">FedEx Ground</option>
+				<option <?php if($p3->type_tracking == "China EMS"){ echo "selected"; }?> value="China EMS">China EMS</option>
+				<option <?php if($p3->type_tracking == "Deutsche Post DHL"){ echo "selected"; }?> value="Deutsche Post DHL">Deutsche Post DHL</option>
+				<option <?php if($p3->type_tracking == "Other"){ echo "selected"; }?> value="Other">Other</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="form-group col-sm-6">
+			<b>No Tracking</b>
+		</div>
+		<div class="form-group col-sm-6">
+			<input class="form-control" type="text" id="no_track" name="no_track" value="<?php echo $p3->no_tracking; ?>" <?php if($p3->status_transaksi == 1){ echo "readonly"; }?>>
+			<input class="form-control" type="hidden" id="tipekirim" name="tipekirim" value="0">
+			<input class="form-control" type="hidden" id="id_transaksi" name="id_transaksi" value="<?php echo $p3->id_transaksi;?>">
+		</div>
+	</div>
+	<div class="form-row">
+		
+		<div class="form-group col-sm-5">
+		
+			
+			
+			<a  href="{{url('trx_list')}}" class="btn btn-danger"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
+		</div>
+	</div>
+
+<?php } }?>
 </div>
                    
             </div>
