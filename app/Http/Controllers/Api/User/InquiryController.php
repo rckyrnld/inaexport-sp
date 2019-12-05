@@ -616,7 +616,6 @@ class InquiryController extends Controller
         $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id_inquiry)->where('type', $inquiry->type)->where('receive', $id_user)->update([
             'status' => 1,
         ]);
-
         if (count($messages) > 0) {
             $meta = [
                 'code' => 200,
