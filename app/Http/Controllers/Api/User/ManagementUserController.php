@@ -561,7 +561,7 @@ class ManagementUserController extends Controller
             ];
 //            $data = '';
             $res['meta'] = $meta;
-            $res['data'] = $querynotifa;
+            $res['data'] = $update;
             return response($res);
 
         } else {

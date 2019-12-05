@@ -144,8 +144,8 @@ class InquiryController extends Controller
             $dtproduct = DB::table('csc_product_single')->where('id', $id_product)->first();
             $idn = DB::table('csc_inquiry_br')->max('id');
             $idnew = $idn + 1;
-            $destination = public_path() . "/uploads/Inquiry/".$idnew;
-//            $destination = 'uploads\Inquiry\\' . $idnew;
+
+            $destination = 'uploads\Inquiry\\' . $idnew;
             if ($request->hasFile('filedo')) {
                 $file1 = $request->file('filedo');
                 $nama_file1 = time() . '_' . $request->subyek_en . '_' . $file1->getClientOriginalName();
@@ -463,6 +463,18 @@ class InquiryController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
@@ -475,6 +487,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
             $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
+            $jsonResult[$i]["ext"] = $extension;
 
         }
 //        dd($data->id_itdp_company_user);
@@ -537,6 +550,17 @@ class InquiryController extends Controller
             ->where('id', '=', $idmax)
             ->get();
         for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
@@ -549,6 +573,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
             $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
+            $jsonResult[$i]["ext"] = $extension;
 
         }
 
@@ -586,8 +611,8 @@ class InquiryController extends Controller
 
         $idm = DB::table('csc_chatting_inquiry')->max('id');
         $idmax = $idm + 1;
-        $destination = public_path() . "/uploads/ChatFileInquiry/".$idmax;
-//        $destination = 'uploads\ChatFileInquiry\\' . $idmax;
+
+        $destination = 'uploads\ChatFileInquiry\\' . $idmax;
         if ($request->hasFile('upload_file')) {
             $file1 = $request->file('upload_file');
             $nama_file1 = time() . '_' . $request->file('upload_file')->getClientOriginalName();
@@ -609,6 +634,19 @@ class InquiryController extends Controller
             ->where('id', '=', $idmax)
             ->get();
         for ($i = 0; $i < count($user); $i++) {
+
+            $ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
@@ -621,6 +659,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
             $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
+            $jsonResult[$i]["ext"] = $extension;
 
         }
 
@@ -662,6 +701,17 @@ class InquiryController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
@@ -674,6 +724,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
             $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
+            $jsonResult[$i]["ext"] = $extension;
 
         }
 
@@ -739,6 +790,17 @@ class InquiryController extends Controller
             ->where('id', '=', $idmax)
             ->get();
         for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
@@ -751,6 +813,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
             $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
+            $jsonResult[$i]["ext"] = $extension;
 
         }
 
