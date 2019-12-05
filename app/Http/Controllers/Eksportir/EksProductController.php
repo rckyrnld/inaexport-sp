@@ -327,7 +327,7 @@ class EksProductController extends Controller
                 ];
 
                 Mail::send('eksportir.eksproduct.sendToAdmin', $data, function ($mail) use ($data, $users_email) {
-                    $mail->subject('Inquiry Information');
+                    $mail->subject('Product Information');
                     $mail->to($users_email);
                 });
             }
