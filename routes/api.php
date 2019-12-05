@@ -116,8 +116,9 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     Route::post('detailTransaksi', 'Api\User\ManagementUserController@detailTransaksi');
     Route::post('save_trx', 'Api\User\ManagementUserController@save_trx');
 
-
-
+    //notif
+    Route::post('getNotif', 'Api\User\ManagementUserController@getNotif');
+    Route::post('updateNotif', 'Api\User\ManagementUserController@updateNotif');
 
 });
 Route::namespace('Api')->group(function () {

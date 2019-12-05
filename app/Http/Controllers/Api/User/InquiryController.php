@@ -454,9 +454,9 @@ class InquiryController extends Controller
         $id_inquiry = $request->id_inquiry;
         $id_user = $request->id_user;
 
-        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
-        $data = DB::table('csc_product_single')->where('id', $inquiry->to)->first();
-        $idpenerima = $data->id_itdp_company_user;
+//        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+//        $data = DB::table('csc_product_single')->where('id', $inquiry->to)->first();
+//        $idpenerima = $data->id_itdp_company_user;
         $user = DB::table('csc_chatting_inquiry')
             ->where('id_inquiry', $id_inquiry)
             ->where('type', 'importir')
