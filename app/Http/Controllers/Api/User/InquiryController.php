@@ -481,7 +481,7 @@ class InquiryController extends Controller
             ));
             $res['meta'] = $meta;
             $res['data'] = $data;
-            return response($messages);
+            return response($data);
         } else {
             $meta = [
                 'code' => 204,
