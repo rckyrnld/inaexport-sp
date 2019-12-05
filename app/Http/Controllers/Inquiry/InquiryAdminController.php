@@ -66,6 +66,17 @@ class InquiryAdminController extends Controller
                     }
                     return $category;
                 })
+                ->addColumn('category', function ($mjl) {
+                    if($mjl->type == 'admin'){
+                        $category = getProductCategoryInquiry($mjl->id);
+                        if($category != ''){
+                            $category = '<div style="height: 100%; width: 100%" align="left">'.$category.'</div>';
+                        } else {
+                            $category = "-";
+                        }
+                    }
+                    return $category;
+                })
                 ->addColumn('status', function ($mjl) {
                     $statnya = "-";
                     if($mjl->status != NULL){
@@ -176,7 +187,7 @@ class InquiryAdminController extends Controller
                             </center>';
                     }
                 })
-                ->rawColumns(['action', 'msg'])
+                ->rawColumns(['action', 'msg', 'category'])
                 ->make(true);
         }
     }
@@ -244,7 +255,18 @@ class InquiryAdminController extends Controller
                     }
 
                     return $statnya;
-                })                
+                })  
+                ->addColumn('category', function ($mjl) {
+                    if($mjl->type == 'perwakilan'){
+                        $category = getProductCategoryInquiry($mjl->id);
+                        if($category != ''){
+                            $category = '<div style="height: 100%; width: 100%" align="left">'.$category.'</div>';
+                        } else {
+                            $category = "-";
+                        }
+                    }
+                    return $category;
+                })              
                 ->addColumn('subject', function ($mjl) {
                     $subyek = "-";
                     if($mjl->subyek_en != NULL){
@@ -267,7 +289,7 @@ class InquiryAdminController extends Controller
                         <a href="'.url('/inquiry_admin/perwakilan_view').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> View</a>
                         </center>';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'category'])
                 ->make(true);
         }
     }
@@ -733,6 +755,14 @@ class InquiryAdminController extends Controller
                 $array = [];
                 for($i = 0; $i<count($request->categori); $i++){
                     $var = $request->categori[$i];
+                    
+                    $idnya = DB::table('csc_inquiry_category')->max('id') + 1;
+                    $input_cat = DB::table('csc_inquiry_category')->insert([
+                        'id' => $idnya,
+                        'id_inquiry' => $id_inquiry,
+                        'id_cat_prod' => $var,
+                        'created_at' => date('Y-m-d H:i:s')
+                    ]);
 
                     $perusahaan = DB::table('csc_product_single')->where('id_itdp_company_user', '!=', null)
                           ->where(function ($query) use ($var) {
@@ -747,7 +777,7 @@ class InquiryAdminController extends Controller
                       }
                     }
                 }
-                
+
                 sort($array);
                 $users = [];
                 for ($k=0; $k <count($array) ; $k++) { 

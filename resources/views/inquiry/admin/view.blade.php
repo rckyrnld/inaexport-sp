@@ -18,12 +18,22 @@
                             <a href="{{url('/inquiry_admin/')}}" class="btn btn-danger" style="float: right;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
                         </div>
                     </div><br><br>
-                    <div class="row">
+                    <?php $category = getProductCategoryInquiry($data->id); ?>
+                    <div class="row" @if($category !='') style="padding-bottom: 5px;" @endif>
                         <div class="col-md-3">
                             <label><b>Product Name</b></label>
                         </div>
                         <div class="col-md-4">
                             {{$data->prodname}}
+                        </div>
+                    </div>
+                    @if($category =='') <br> @endif
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label><b>Category Product</b></label>
+                        </div>
+                        <div class="col-md-4">
+                            <span style="text-transform: capitalize;">@if($category =='') - @else <?php echo $category?> @endif</span>
                         </div>
                     </div><br>
                     <div class="row">

@@ -92,20 +92,25 @@ class InquiryEksController extends Controller
                 ->addIndexColumn()
                 ->addColumn('category', function ($mjl) {
                     $category = "-";
-                    if($mjl->id_csc_prod_cat != NULL){
-                        if($mjl->id_csc_prod_cat_level1 != NULL){
-                            if($mjl->id_csc_prod_cat_level2 != NULL){
-                                $catprod = DB::table('csc_product')->where('id', $mjl->id_csc_prod_cat_level2)->first();
-                                $category = $catprod->nama_kategori_en;
+                    if($mjl->type == 'importir'){
+                        if($mjl->id_csc_prod_cat != NULL){
+                            if($mjl->id_csc_prod_cat_level1 != NULL){
+                                if($mjl->id_csc_prod_cat_level2 != NULL){
+                                    $catprod = DB::table('csc_product')->where('id', $mjl->id_csc_prod_cat_level2)->first();
+                                    $category = $catprod->nama_kategori_en;
+                                }else{
+                                    $catprod = DB::table('csc_product')->where('id', $mjl->id_csc_prod_cat_level1)->first();
+                                    $category = $catprod->nama_kategori_en;
+                                }
                             }else{
-                                $catprod = DB::table('csc_product')->where('id', $mjl->id_csc_prod_cat_level1)->first();
+                                $catprod = DB::table('csc_product')->where('id', $mjl->id_csc_prod_cat)->first();
                                 $category = $catprod->nama_kategori_en;
                             }
-                        }else{
-                            $catprod = DB::table('csc_product')->where('id', $mjl->id_csc_prod_cat)->first();
-                            $category = $catprod->nama_kategori_en;
+                            
                         }
-                        
+                    } else {
+                        $category = getProductCategoryInquiry($mjl->id);
+                        $category = '<div style="height: 100%; width: 100%;" align="left">'.$category.'</div>';
                     }
                     return $category;
                 })
@@ -206,7 +211,7 @@ class InquiryEksController extends Controller
                             </center>';
                     }
                 })
-                ->rawColumns(['action', 'msg'])
+                ->rawColumns(['action', 'msg', 'category'])
                 ->make(true);
         }
     }
@@ -655,13 +660,22 @@ class InquiryEksController extends Controller
 
         if($inquiry->type == "perwakilan" || $inquiry->type == "admin"){
             if($stat == 3){
-                $update = DB::table('csc_inquiry_br')->where('id', $id)->update([
+                // $updatebr = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->update([
+                //     'status' => 4,
+                // ]);
+
+                $updatebrm = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->update([
                     'status' => $stat,
                 ]);
 
-                $updatebr = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->update([
-                    'status' => 4,
-                ]);
+                $tot_broad = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->count();
+                $deal_broad = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('status', 3)->count();
+
+                if($tot_broad == $deal_broad){
+                    $update = DB::table('csc_inquiry_br')->where('id', $id)->update([
+                        'status' => $stat,
+                    ]);
+                }
 
                 $broad = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->first();
 
@@ -710,11 +724,20 @@ class InquiryEksController extends Controller
                     $mail->to($data2['email'], $data2['username']);
                     $mail->subject('Inquiry Deal Information');
                 }); 
-            }
-
-            $updatebrm = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->update([
+            }else{
+                $updatebrm = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->update([
                     'status' => $stat,
-            ]);
+                ]);
+
+                $tot_broad = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->count();
+                $cancel_broad = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('status', 4)->count();
+
+                if($tot_broad == $cancel_broad){
+                    $update = DB::table('csc_inquiry_br')->where('id', $id)->update([
+                        'status' => $stat,
+                    ]);
+                }
+            }
 
         }else if($inquiry->type == "importir"){
             $update = DB::table('csc_inquiry_br')->where('id', $id)->update([

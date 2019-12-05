@@ -388,6 +388,14 @@ class InquiryWakilController extends Controller
                 for($i = 0; $i<count($request->categori); $i++){
                     $var = $request->categori[$i];
 
+                    $idnya = DB::table('csc_inquiry_category')->max('id') + 1;
+                    $input_cat = DB::table('csc_inquiry_category')->insert([
+                        'id' => $idnya,
+                        'id_inquiry' => $id_inquiry,
+                        'id_cat_prod' => $var,
+                        'created_at' => date('Y-m-d H:i:s')
+                    ]);
+
                     $perusahaan = DB::table('csc_product_single')->where('id_itdp_company_user', '!=', null)
                           ->where(function ($query) use ($var) {
                                   $query->where('id_csc_product', $var)
