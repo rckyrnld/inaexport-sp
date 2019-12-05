@@ -481,7 +481,7 @@ class InquiryController extends Controller
             ));
             $res['meta'] = $meta;
             $res['data'] = $data;
-            return response($data);
+            return response($res);
         } else {
             $meta = [
                 'code' => 204,
@@ -490,7 +490,7 @@ class InquiryController extends Controller
             ];
             $data = '';
             $res['meta'] = $meta;
-            $res['data'] = $messages;
+            $res['data'] = $data;
             return response($res);
 
         }
@@ -600,7 +600,6 @@ class InquiryController extends Controller
         $id_user = $request->id_user;//sender
         $id_inquiry = $request->id_inquiry;
         $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
-        $product = DB::table('csc_product_single')->where('id', $inquiry->to)->where('id_itdp_company_user', $id_user)->first();
 
         $broadcast = NULL;
         $messages = DB::table('csc_chatting_inquiry')
@@ -609,13 +608,13 @@ class InquiryController extends Controller
             ->orderBy('created_at', 'asc')
             ->get();
 
-//        dd($inquiry->id_pembuat);
         $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id_inquiry)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
 
         //Read Chat
         $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id_inquiry)->where('type', $inquiry->type)->where('receive', $id_user)->update([
             'status' => 1,
         ]);
+
         if (count($messages) > 0) {
             $meta = [
                 'code' => 200,
@@ -638,7 +637,7 @@ class InquiryController extends Controller
             ];
             $data = '';
             $res['meta'] = $meta;
-            $res['data'] = $messages;
+            $res['data'] = $data;
             return response($res);
 
         }
@@ -667,6 +666,10 @@ class InquiryController extends Controller
             'status' => 0,
             'created_at' => $datenow,
         ]);
+        $user = DB::table('csc_chatting_inquiry')
+            ->where('id', '=', $idmax)
+            ->get();
+
         if (count($save) > 0) {
             $meta = [
                 'code' => 200,
@@ -676,7 +679,7 @@ class InquiryController extends Controller
             $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
-            return response($res);
+            return response($user);
         } else {
             $meta = [
                 'code' => 204,
