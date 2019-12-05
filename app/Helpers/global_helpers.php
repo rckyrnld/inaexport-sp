@@ -827,3 +827,15 @@ if (! function_exists('EventOrganizerName')) {
         return $organizer;
     }
 }
+
+if (! function_exists('getProductCategoryInquiry')) {
+    function getProductCategoryInquiry($id){
+        $data = DB::table('csc_inquiry_category')->where('id_inquiry', $id)->get();
+        $return = '';
+        foreach ($data as $key => $value) {
+          $category = DB::table('csc_product')->where('id', $value->id_cat_prod)->first();
+          $return .= '- '.$category->nama_kategori_en.'<br>';
+        }
+        return $return;
+    }
+}

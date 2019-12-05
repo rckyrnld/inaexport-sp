@@ -36,6 +36,9 @@
                                         <center>No</center>
                                       </th>
                                       <th>
+                                        <center>Category</center>
+                                      </th>
+                                      <th>
                                         <center>Subject</center>
                                       </th>
                                       <th>
@@ -70,6 +73,7 @@
             ajax: "{{ route('admin.inquiry.getDataPerwakilan', $id) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'category', name: 'category'},
                 {data: 'subject', name: 'subject'},
                 {data: 'date', name: 'date'},
                 {data: 'status', name: 'status'},
