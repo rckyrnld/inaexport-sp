@@ -24,31 +24,49 @@
                             @endif
                         </div>
                     </div><br>
-                    @if($product != NULL)
-                    <div class="row">
-                        <label class="col-md-3"><b>Category Product</b></label>
-                        <div class="col-md-7">
-                            <?php
-                                $cat1 = getCategoryName($product->id_csc_product, "en");
-                                $cat2 = getCategoryName($product->id_csc_product_level1, "en");
-                                $cat3 = getCategoryName($product->id_csc_product_level2, "en");
+                    @if($inquiry->type == 'importir')
+                        @if($product != NULL)
+                        <div class="row">
+                            <label class="col-md-3"><b>Category Product</b></label>
+                            <div class="col-md-7">
+                                <?php
+                                    $cat1 = getCategoryName($product->id_csc_product, "en");
+                                    $cat2 = getCategoryName($product->id_csc_product_level1, "en");
+                                    $cat3 = getCategoryName($product->id_csc_product_level2, "en");
 
-                                if($cat1 == "-"){
-                                  echo $cat1;
-                                }else{
-                                  if($cat2 == "-"){
-                                    echo $cat1;
-                                  }else{
-                                    if($cat3 == "-"){
-                                      echo $cat1." > ".$cat2;
+                                    if($cat1 == "-"){
+                                      echo $cat1;
                                     }else{
-                                      echo $cat1." > ".$cat2." > ".$cat3;
+                                      if($cat2 == "-"){
+                                        echo $cat1;
+                                      }else{
+                                        if($cat3 == "-"){
+                                          echo $cat1." > ".$cat2;
+                                        }else{
+                                          echo $cat1." > ".$cat2." > ".$cat3;
+                                        }
+                                      }
                                     }
-                                  }
+                                  ?>
+                            </div>
+                        </div><br>
+                        @endif
+                    @else 
+                        <?php $category = getProductCategoryInquiry($inquiry->id);
+                            if($category != ''){
+                                if($category == strip_tags($category)) {
+                                    $category = substr($category, 2);
                                 }
-                              ?>
-                        </div>
-                    </div><br>
+                            }
+                        ?>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label><b>Category Product</b></label>
+                            </div>
+                            <div class="col-md-4">
+                                <span style="text-transform: capitalize;">@if($category =='') - @else <?php echo $category?> @endif</span>
+                            </div>
+                        </div><br>
                     @endif
                     <div class="row">
                         <label class="col-md-3"><b>Kind Of Subject</b></label>

@@ -18,12 +18,27 @@
                             <a href="{{url('/inquiry_perwakilan/')}}" class="btn btn-danger" style="float: right;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
                         </div>
                     </div><br><br>
+                    <?php $category = getProductCategoryInquiry($data->id);
+                        if($category != ''){
+                            if($category == strip_tags($category)) {
+                                $category = substr($category, 2);
+                            }
+                        }
+                    ?>
                     <div class="row">
                         <div class="col-md-3">
                             <label><b>Product Name</b></label>
                         </div>
                         <div class="col-md-4">
                             {{$data->prodname}}
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label><b>Product Category</b></label>
+                        </div>
+                        <div class="col-md-4">
+                            <span style="text-transform: capitalize;">@if($category =='') - @else <?php echo $category?> @endif</span>
                         </div>
                     </div><br>
                     <div class="row">

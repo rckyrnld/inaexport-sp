@@ -56,49 +56,57 @@
                         </div>
                     </div>
                     <br><br>
-                    <?php $categoryadmin = getProductCategoryInquiry($data->id); ?>
-                    <div class="row" @if($inquiry->type != 'importir') @if($categoryadmin !='') style="padding-bottom: 5px;" @endif @endif>
+                    <div class="row">
                         <label class="col-md-3"><b>Product Name</b></label>
                         <div class="col-md-7">
+                            @if($product != NULL)
+                            {{$product->prodname_en}}
+                            @else
                             {{$inquiry->prodname}}
+                            @endif
                         </div>
-                    </div>
+                    </div><br>
                     @if($inquiry->type == 'importir')
-                    <br>
                         @if($product != NULL)
-                            <div class="row">
-                                <label class="col-md-3"><b>Category Product</b></label>
-                                <div class="col-md-7">
-                                    <?php
+                        <div class="row">
+                            <label class="col-md-3"><b>Category Product</b></label>
+                            <div class="col-md-7">
+                                <?php
                                     $cat1 = getCategoryName($product->id_csc_product, "en");
                                     $cat2 = getCategoryName($product->id_csc_product_level1, "en");
                                     $cat3 = getCategoryName($product->id_csc_product_level2, "en");
 
-                                    if ($cat1 == "-") {
+                                    if($cat1 == "-"){
+                                      echo $cat1;
+                                    }else{
+                                      if($cat2 == "-"){
                                         echo $cat1;
-                                    } else {
-                                        if ($cat2 == "-") {
-                                            echo $cat1;
-                                        } else {
-                                            if ($cat3 == "-") {
-                                                echo $cat1 . " > " . $cat2;
-                                            } else {
-                                                echo $cat1 . " > " . $cat2 . " > " . $cat3;
-                                            }
+                                      }else{
+                                        if($cat3 == "-"){
+                                          echo $cat1." > ".$cat2;
+                                        }else{
+                                          echo $cat1." > ".$cat2." > ".$cat3;
                                         }
+                                      }
                                     }
-                                    ?>
-                                </div>
-                            </div><br>
+                                  ?>
+                            </div>
+                        </div><br>
                         @endif
-                    @else
-                        @if($categoryadmin =='') <br> @endif
+                    @else 
+                        <?php $category = getProductCategoryInquiry($inquiry->id);
+                            if($category != ''){
+                                if($category == strip_tags($category)) {
+                                    $category = substr($category, 2);
+                                }
+                            }
+                        ?>
                         <div class="row">
                             <div class="col-md-3">
                                 <label><b>Category Product</b></label>
                             </div>
                             <div class="col-md-4">
-                                <span style="text-transform: capitalize;">@if($categoryadmin =='') - @else <?php echo $categoryadmin?> @endif</span>
+                                <span style="text-transform: capitalize;">@if($category =='') - @else <?php echo $category?> @endif</span>
                             </div>
                         </div><br>
                     @endif
