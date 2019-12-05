@@ -523,7 +523,8 @@ class ManagementUserController extends Controller
     {
         $id_user = $request->id_user;
         $id_role = $request->id_role;
-        $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='" . $id_user . "' and to_role='" . $id_role . "' order by id_notif desc");
+        $offsite = $request->offsite;
+        $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='" . $id_user . "' order by id_notif desc LIMIT 10 OFFSET " . $offsite);
         if (count($querynotifa) > 0) {
             $meta = [
                 'code' => 200,
@@ -548,6 +549,34 @@ class ManagementUserController extends Controller
         }
     }
 
+    public function updateNotif(Request $request)
+    {
+        $id_notif = $request->id_notif;
+        $update = DB::select("update notif set status_baca='1' where id='" . $id_notif . "'");
+        if (count($update) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $update;
+            return response($res);
+
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
+    }
+
     public function save_trx(Request $request)
     {
 //        $id_br = $request->id_br;
@@ -555,7 +584,7 @@ class ManagementUserController extends Controller
         $ch1 = str_replace(".", "", $request->tp);
         $ch2 = str_replace(",", ".", $ch1);
         if ($request->origin == 2) {
-            $update = DB::select("update csc_buying_request set eo='" . $request->eo . "', neo='" . $request->neo . "',tp='" . $ch2 . "',ntp='" . $request->ntp . "' where id='" . $request->id_br. "' ");
+            $update = DB::select("update csc_buying_request set eo='" . $request->eo . "', neo='" . $request->neo . "',tp='" . $ch2 . "',ntp='" . $request->ntp . "' where id='" . $request->id_br . "' ");
         }
         if ($request->tipekirim == 1) {
             if ($request->by_role == 3) {
