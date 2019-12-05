@@ -45,6 +45,13 @@
                             @endif
                         </div>
                     </div><br>
+                    <div class="row">
+                        <label class="col-md-3"><b>Product Name</b></label>
+                        <div class="col-md-7">
+                            {{$prodname}}
+                        </div>
+                    </div><br>
+                    @if($inquiry->type != 'importir')
                     <?php $category = getProductCategoryInquiry($inquiry->id);
                         if($category != ''){
                             if($category == strip_tags($category)) {
@@ -53,12 +60,6 @@
                         }
                     ?>
                     <div class="row">
-                        <label class="col-md-3"><b>Product Name</b></label>
-                        <div class="col-md-7">
-                            {{$prodname}}
-                        </div>
-                    </div><br>
-                    <div class="row">
                         <div class="col-md-3">
                             <label><b>Category Product</b></label>
                         </div>
@@ -66,6 +67,7 @@
                             <span style="text-transform: capitalize;">@if($category =='') - @else <?php echo $category?> @endif</span>
                         </div>
                     </div><br>
+                    @endif
                     <div class="row">
                         <label class="col-md-3"><b>Kind Of Subject</b></label>
                         <div class="col-md-7">
