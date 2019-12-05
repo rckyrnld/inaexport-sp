@@ -41,10 +41,25 @@
                             {{getCompanyName($data->id_itdp_company_users)}}
                         </div>
                     </div><br>
+                    <?php $category = getProductCategoryInquiry($inquiry->id);
+                        if($category != ''){
+                            if($category == strip_tags($category)) {
+                                $category = substr($category, 2);
+                            }
+                        }
+                    ?>
                     <div class="row">
                         <label class="col-md-3"><b>Product Name</b></label>
                         <div class="col-md-7">
                             {{$inquiry->prodname}}
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label><b>Product Category</b></label>
+                        </div>
+                        <div class="col-md-4">
+                            <span style="text-transform: capitalize;">@if($category =='') - @else <?php echo $category?> @endif</span>
                         </div>
                     </div><br>
                     <div class="row">

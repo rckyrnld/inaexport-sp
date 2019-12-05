@@ -49,30 +49,28 @@ class InquiryAdminController extends Controller
                 ->addIndexColumn()
                 ->addColumn('category', function ($mjl) {
                     $category = "-";
-                    if($mjl->id_csc_prod_cat != NULL){
-                        if($mjl->id_csc_prod_cat_level1 != NULL){
-                            if($mjl->id_csc_prod_cat_level2 != NULL){
-                                $catprod = DB::table('csc_product')->where('id', $mjl->id_csc_prod_cat_level2)->first();
-                                $category = $catprod->nama_kategori_en;
-                            }else{
-                                $catprod = DB::table('csc_product')->where('id', $mjl->id_csc_prod_cat_level1)->first();
-                                $category = $catprod->nama_kategori_en;
-                            }
-                        }else{
-                            $catprod = DB::table('csc_product')->where('id', $mjl->id_csc_prod_cat)->first();
-                            $category = $catprod->nama_kategori_en;
-                        }
-                        
-                    }
-                    return $category;
-                })
-                ->addColumn('category', function ($mjl) {
                     if($mjl->type == 'admin'){
                         $category = getProductCategoryInquiry($mjl->id);
                         if($category != ''){
                             $category = '<div style="height: 100%; width: 100%" align="left">'.$category.'</div>';
                         } else {
                             $category = "-";
+                        }
+                    } else {
+                        if($mjl->id_csc_prod_cat != NULL){
+                            if($mjl->id_csc_prod_cat_level1 != NULL){
+                                if($mjl->id_csc_prod_cat_level2 != NULL){
+                                    $catprod = DB::table('csc_product')->where('id', $mjl->id_csc_prod_cat_level2)->first();
+                                    $category = $catprod->nama_kategori_en;
+                                }else{
+                                    $catprod = DB::table('csc_product')->where('id', $mjl->id_csc_prod_cat_level1)->first();
+                                    $category = $catprod->nama_kategori_en;
+                                }
+                            }else{
+                                $catprod = DB::table('csc_product')->where('id', $mjl->id_csc_prod_cat)->first();
+                                $category = $catprod->nama_kategori_en;
+                            }
+                            
                         }
                     }
                     return $category;

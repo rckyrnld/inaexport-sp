@@ -834,7 +834,10 @@ if (! function_exists('getProductCategoryInquiry')) {
         $return = '';
         foreach ($data as $key => $value) {
           $category = DB::table('csc_product')->where('id', $value->id_cat_prod)->first();
-          $return .= '- '.$category->nama_kategori_en.'<br>';
+          $return .= '- '.$category->nama_kategori_en;
+          if($key != (count($data) - 1)){
+            $return .= '<br>';
+          }
         }
         return $return;
     }
