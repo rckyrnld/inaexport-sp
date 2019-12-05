@@ -582,6 +582,7 @@ class InquiryController extends Controller
         $id_inquiry = $request->id_inquiry;
         $sender = $request->id_user;
         $receiver = $request->id_penerima;
+        $msg = $request->messages;
 
         $idm = DB::table('csc_chatting_inquiry')->max('id');
         $idmax = $idm + 1;
@@ -600,6 +601,7 @@ class InquiryController extends Controller
             'receive' => $receiver,
             'type' => 'importir',
             'file' => $nama_file1,
+            'messages' => $msg,
             'status' => 0,
             'created_at' => $datenow,
         ]);
