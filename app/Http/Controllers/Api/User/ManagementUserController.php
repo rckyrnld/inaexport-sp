@@ -597,7 +597,6 @@ class ManagementUserController extends Controller
                     $mail->subject('Transaction Created By ');
                 });
 
-
             } else {
                 $ket2 = "Transaction Created by " . $request->username;
                 $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
@@ -615,15 +614,12 @@ class ManagementUserController extends Controller
                     $mail->to($data22['email1'], $data22['username']);
                     $mail->subject('Transaction Created By');
                 });
-
             }
 
             $ket3 = "Transaction Created By You";
             $insertnotif3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
 			('2','Eksportir','" . $request->id_user . "','Eksportir','" . $request->id_user . "','" . $ket3 . "','input_transaksi','" . $request->id_transaksi . "','" . Date('Y-m-d H:m:s') . "','0')
 			");
-
-
             $data33 = [
                 'email' => "",
                 'email1' => $request->email,
@@ -635,8 +631,6 @@ class ManagementUserController extends Controller
                 $mail->to($data33['email1'], $data33['username']);
                 $mail->subject('Transaction Created By ');
             });
-
-
         }
         $update = DB::select("update csc_transaksi set total='" . ($request->eo * $ch2) . "' , eo='" . $request->eo . "', neo='" . $request->neo . "',tp='" . $ch2 . "',ntp='" . $request->ntp . "', status_transaksi='" . $request->tipekirim . "', type_tracking='" . $request->type_tracking . "',no_tracking='" . $request->no_track . "' where id_transaksi='" . $request->id_transaksi . "' ");
         if ($update) {

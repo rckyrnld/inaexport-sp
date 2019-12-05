@@ -481,7 +481,7 @@ class InquiryController extends Controller
             ));
             $res['meta'] = $meta;
             $res['data'] = $data;
-            return response($res);
+            return response($messages);
         } else {
             $meta = [
                 'code' => 204,
@@ -490,7 +490,7 @@ class InquiryController extends Controller
             ];
             $data = '';
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = $messages;
             return response($res);
 
         }
@@ -630,7 +630,7 @@ class InquiryController extends Controller
             ));
             $res['meta'] = $meta;
             $res['data'] = $data;
-            return response($res);
+            return response($messages);
         } else {
             $meta = [
                 'code' => 204,
@@ -639,7 +639,7 @@ class InquiryController extends Controller
             ];
             $data = '';
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = $messages;
             return response($res);
 
         }
