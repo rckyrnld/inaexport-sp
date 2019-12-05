@@ -144,8 +144,8 @@ class InquiryController extends Controller
             $dtproduct = DB::table('csc_product_single')->where('id', $id_product)->first();
             $idn = DB::table('csc_inquiry_br')->max('id');
             $idnew = $idn + 1;
-
-            $destination = 'uploads\Inquiry\\' . $idnew;
+            $destination = public_path() . "/uploads/Inquiry/".$idnew;
+//            $destination = 'uploads\Inquiry\\' . $idnew;
             if ($request->hasFile('filedo')) {
                 $file1 = $request->file('filedo');
                 $nama_file1 = time() . '_' . $request->subyek_en . '_' . $file1->getClientOriginalName();
@@ -586,8 +586,8 @@ class InquiryController extends Controller
 
         $idm = DB::table('csc_chatting_inquiry')->max('id');
         $idmax = $idm + 1;
-
-        $destination = 'uploads\ChatFileInquiry\\' . $idmax;
+        $destination = public_path() . "/uploads/ChatFileInquiry/".$idmax;
+//        $destination = 'uploads\ChatFileInquiry\\' . $idmax;
         if ($request->hasFile('upload_file')) {
             $file1 = $request->file('upload_file');
             $nama_file1 = time() . '_' . $request->file('upload_file')->getClientOriginalName();
