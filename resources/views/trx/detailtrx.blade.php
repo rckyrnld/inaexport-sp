@@ -341,6 +341,15 @@ foreach($q2 as $p2){
 			<input class="form-control" type="hidden" id="id_transaksi" name="id_transaksi" value="<?php echo $p3->id_transaksi;?>">
 		</div>
 	</div>
+	<div class="form-row">
+		
+		<div class="form-group col-sm-5">
+		
+			
+			
+			<a  href="{{url('trx_list')}}" class="btn btn-danger"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
+		</div>
+	</div>
 
 <?php } }?>
 </div>
