@@ -299,8 +299,12 @@ class EksProductController extends Controller
 
             if($save && $request->status == "1"){
                 $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+                $users_email = [];
                 foreach ($admin as $adm) {
+                    $idn = DB::table('notif')->max('id_notif');
+                    $idnotifn = $idn + 1;
                     $notif = DB::table('notif')->insert([
+                        'id_notif' => $idnotifn,
                         'dari_nama' => getCompanyName($id_user),
                         'dari_id' => $id_user,
                         'untuk_nama' => $adm->name,
@@ -313,22 +317,19 @@ class EksProductController extends Controller
                         'to_role' => 1,
                     ]);
 
-                    $email = $adm->email;
-                    $username = $adm->name;
-
-                    //Tinggal Ganti Email1 dengan email kemendag
-                    $data = [
-                        'email' => $email,
-                        'username' => $username,
-                        'company' => getCompanyName($id_user),
-                        'dari' => "Eksportir"
-                    ];
-
-                    Mail::send('eksportir.eksproduct.sendToAdmin', $data, function ($mail) use ($data) {
-                        $mail->to($data['email'], $data['username']);
-                        $mail->subject('New Product Information');
-                    });
+                    array_push($users_email, $adm->email);
                 }
+
+                //Tinggal Ganti Email1 dengan email kemendag
+                $data = [
+                    'company' => getCompanyName($id_user),
+                    'dari' => "Eksportir"
+                ];
+
+                Mail::send('eksportir.eksproduct.sendToAdmin', $data, function ($mail) use ($data, $users_email) {
+                    $mail->subject('Product Information');
+                    $mail->to($users_email);
+                });
             }
 
         }
@@ -520,8 +521,10 @@ class EksProductController extends Controller
                 $ket = "This product has been added on the front page";
                 $notifnya = "has been accepted";
 				$ket = "Your product ".$data->prodname_en." got verified !";
-				$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-				('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
+                $idn = DB::table('notif')->max('id_notif');
+                $idnotifn = $idn + 1;
+				$insertnotif = DB::select("insert into notif (id_notif,to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+				('".$idnotifn."','2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
 				");
 			$data33 = [
             'email' => "",
@@ -554,7 +557,10 @@ class EksProductController extends Controller
 
             if($update){
                 $pengirim = DB::table('itdp_admin_users')->where('id', $id_user)->first();
+                $idn = DB::table('notif')->max('id_notif');
+                $idnotifn = $idn + 1;
                 $notif = DB::table('notif')->insert([
+                    'id_notif' => $idnotifn,
                     'dari_nama' => $pengirim->name,
                     'dari_id' => $id_user,
                     'untuk_nama' => getCompanyName($data->id_itdp_company_user),
@@ -569,7 +575,7 @@ class EksProductController extends Controller
             }
         }
 
-        return redirect('eksportir/product');
+        return redirect('eksportir/product_admin/'.$data->id_itdp_profil_eks);
     }
 
     public function getSub(Request $request)
