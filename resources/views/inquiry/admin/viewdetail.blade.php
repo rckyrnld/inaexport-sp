@@ -47,6 +47,23 @@
                             {{$inquiry->prodname}}
                         </div>
                     </div><br>
+                    @if($inquiry->type != 'importir')
+                    <?php $category = getProductCategoryInquiry($inquiry->id);
+                        if($category != ''){
+                            if($category == strip_tags($category)) {
+                                $category = substr($category, 2);
+                            }
+                        }
+                    ?>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label><b>Category Product</b></label>
+                        </div>
+                        <div class="col-md-4">
+                            <span style="text-transform: capitalize;">@if($category =='') - @else <?php echo $category?> @endif</span>
+                        </div>
+                    </div><br>
+                    @endif
                     <div class="row">
                         <label class="col-md-3"><b>Kind Of Subject</b></label>
                         <div class="col-md-7">
