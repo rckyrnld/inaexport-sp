@@ -421,20 +421,16 @@ class BRFrontController extends Controller
     {	
 		$ch1 = str_replace(".","",$request->tp);
 		$ch2 = str_replace(",",".",$ch1);
-		// echo $ch2;die();
-		$kumpulcat = "";
-		$g = count($request->category);
-		for($a = 0; $a < $g; $a++){
-			$kumpulcat= $kumpulcat.$request->category[$a].",";
-		}
-		$h = explode(",",$kumpulcat);
 		
-		if(empty($request->file('doc'))){
+		$kumpulcat = $request->category;
+		$h = explode(",",$request->category);
+		
+		if(empty($request->file('image'))){
 			$file = "";
 		}else{
-			$file = $request->file('doc')->getClientOriginalName();
+			$file = $request->file('image')->getClientOriginalName();
 			$destinationPath = public_path() . "/uploads/buy_request";
-			$request->file('doc')->move($destinationPath, $file);
+			$request->file('image')->move($destinationPath, $file);
 		}
 		$insert = DB::select("
 			insert into csc_buying_request (subyek,valid,id_mst_country,city,id_csc_prod_cat,id_csc_prod_cat_level1,id_csc_prod_cat_level2,shipping,spec,files
@@ -443,7 +439,13 @@ class BRFrontController extends Controller
 			,'0','0','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
 			,'".$ch2."','".$request->ntp."','3','".Auth::guard('eksmp')->user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat."')");
 		
-		return redirect('br_importir');
+		$carimax = DB::select("select max(id) as maxid from csc_buying_request ");
+		foreach($carimax as $cm){
+			$maxid = $cm->maxid;
+		}
+		
+		echo "<a href='".url('br_importir_bc/'.$maxid)."' class='btn btn-warning'><font color='white'>Broadcast</font></a>";
+		//return redirect('br_importir');
 	}
 	
 	

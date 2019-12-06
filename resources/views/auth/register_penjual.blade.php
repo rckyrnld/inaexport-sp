@@ -218,6 +218,7 @@ function simpanpenjual(){
 
 			},
 		});
+		
 		$('#company').val('');
 		$('#username').val('');
 		$('#website').val('');
@@ -230,7 +231,8 @@ function simpanpenjual(){
 		$('#prov').val('');
 		$('#postcode').val('');
 		$('#alamat').val('');
-	$("#myModal").modal("show");
+		
+	$("#myModal").modal("show"); 
 	}
 }
  </script>
