@@ -116,9 +116,9 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     Route::post('detailTransaksi', 'Api\User\ManagementUserController@detailTransaksi');
     Route::post('save_trx', 'Api\User\ManagementUserController@save_trx');
 
-
-
-
+    //notif
+    Route::post('getNotif', 'Api\User\ManagementUserController@getNotif');
+    Route::post('updateNotif', 'Api\User\ManagementUserController@updateNotif');
 });
 Route::namespace('Api')->group(function () {
     /*Contact Us*/
@@ -132,6 +132,8 @@ Route::namespace('Api')->group(function () {
     Route::get('getImageProduk/{id}/{image}', 'ProductNonAuthController@getImageProduk');
     Route::get('getRandomProduct', 'ProductNonAuthController@getRandomProduct');
     Route::get('getprodukBaru', 'ProductNonAuthController@getprodukBaru');
+    Route::post('browseProductListBynameAndKategori', 'ProductNonAuthController@browseProductDetailBynameAndKategori');
+    Route::post('suggestProductsearch', 'ProductNonAuthController@browseProductBynameAndKategori');
 
     //training
     Route::get('getTrainingall', 'TrainingNonAuthController@browseTraining');

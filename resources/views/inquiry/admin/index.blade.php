@@ -38,9 +38,9 @@
                                                   <th width="5%">
                                                     <center>No</center>
                                                   </th>
-                                                  <!-- <th>
+                                                  <th>
                                                     <center>Category Product</center>
-                                                  </th> -->
+                                                  </th>
                                                   <th>
                                                     <center>Subject</center>
                                                   </th>
@@ -196,7 +196,7 @@
             ajax: "{{ route('admin.inquiry.getDataAdmin') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                // {data: 'category', name: 'category'},
+                {data: 'category', name: 'category'},
                 {data: 'subject', name: 'subject'},
                 {data: 'date', name: 'date'},
                 {data: 'kos', name: 'kos'},
@@ -236,11 +236,11 @@
 
         //kategori broadcast
         $('#categori').select2({
-        //   sorter: function(data) {
-        //     return data.sort(function(a, b) {
-        //         return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-        //     });
-        // }
+          sorter: function(data) {
+            return data.sort(function(a, b) {
+                return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+            });
+        }
         }).on("select2:select", function (e) { 
           $('.select2-selection__rendered li.select2-selection__choice').sort(function(a, b) {
               return $(a).text() < $(b).text() ? -1 : $(a).text() > $(b).text() ? 1 : 0;

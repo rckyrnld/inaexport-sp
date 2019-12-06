@@ -523,7 +523,8 @@ class ManagementUserController extends Controller
     {
         $id_user = $request->id_user;
         $id_role = $request->id_role;
-        $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='" . $id_user . "' and to_role='" . $id_role . "' order by id_notif desc");
+        $offsite = $request->offsite;
+        $querynotifa = DB::select("select * from notif where untuk_id='" . $id_user . "' order by id_notif desc LIMIT 10 OFFSET " . $offsite);
         if (count($querynotifa) > 0) {
             $meta = [
                 'code' => 200,
@@ -548,6 +549,34 @@ class ManagementUserController extends Controller
         }
     }
 
+    public function updateNotif(Request $request)
+    {
+        $id_notif = $request->id_notif;
+        $update = DB::select("update notif set status_baca='1' where id='" . $id_notif . "'");
+        if (count($update) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $update;
+            return response($res);
+
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
+    }
+
     public function save_trx(Request $request)
     {
 //        $id_br = $request->id_br;
@@ -555,7 +584,7 @@ class ManagementUserController extends Controller
         $ch1 = str_replace(".", "", $request->tp);
         $ch2 = str_replace(",", ".", $ch1);
         if ($request->origin == 2) {
-            $update = DB::select("update csc_buying_request set eo='" . $request->eo . "', neo='" . $request->neo . "',tp='" . $ch2 . "',ntp='" . $request->ntp . "' where id='" . $request->id_br. "' ");
+            $update = DB::select("update csc_buying_request set eo='" . $request->eo . "', neo='" . $request->neo . "',tp='" . $ch2 . "',ntp='" . $request->ntp . "' where id='" . $request->id_br . "' ");
         }
         if ($request->tipekirim == 1) {
             if ($request->by_role == 3) {
@@ -597,7 +626,6 @@ class ManagementUserController extends Controller
                     $mail->subject('Transaction Created By ');
                 });
 
-
             } else {
                 $ket2 = "Transaction Created by " . $request->username;
                 $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
@@ -615,15 +643,12 @@ class ManagementUserController extends Controller
                     $mail->to($data22['email1'], $data22['username']);
                     $mail->subject('Transaction Created By');
                 });
-
             }
 
             $ket3 = "Transaction Created By You";
             $insertnotif3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
 			('2','Eksportir','" . $request->id_user . "','Eksportir','" . $request->id_user . "','" . $ket3 . "','input_transaksi','" . $request->id_transaksi . "','" . Date('Y-m-d H:m:s') . "','0')
 			");
-
-
             $data33 = [
                 'email' => "",
                 'email1' => $request->email,
@@ -635,8 +660,6 @@ class ManagementUserController extends Controller
                 $mail->to($data33['email1'], $data33['username']);
                 $mail->subject('Transaction Created By ');
             });
-
-
         }
         $update = DB::select("update csc_transaksi set total='" . ($request->eo * $ch2) . "' , eo='" . $request->eo . "', neo='" . $request->neo . "',tp='" . $ch2 . "',ntp='" . $request->ntp . "', status_transaksi='" . $request->tipekirim . "', type_tracking='" . $request->type_tracking . "',no_tracking='" . $request->no_track . "' where id_transaksi='" . $request->id_transaksi . "' ");
         if ($update) {

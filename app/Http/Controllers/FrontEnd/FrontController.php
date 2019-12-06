@@ -460,9 +460,7 @@ class FrontController extends Controller
             'date_created' => date('Y-m-d H:i:s')
         ]);
 
-        $idnya = DB::table('notif')->max('id_notif') + 1;
         $notif = DB::table('notif')->insert([
-            'id_notif' => $idnya,
             'dari_nama' => $req->name,
             'untuk_nama' => 'Super Admin',
             'untuk_id' => '1',

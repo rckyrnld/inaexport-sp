@@ -299,6 +299,7 @@ class EksProductController extends Controller
 
             if($save && $request->status == "1"){
                 $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+                $users_email = [];
                 foreach ($admin as $adm) {
                     $notif = DB::table('notif')->insert([
                         'dari_nama' => getCompanyName($id_user),
@@ -313,22 +314,19 @@ class EksProductController extends Controller
                         'to_role' => 1,
                     ]);
 
-                    $email = $adm->email;
-                    $username = $adm->name;
-
-                    //Tinggal Ganti Email1 dengan email kemendag
-                    $data = [
-                        'email' => $email,
-                        'username' => $username,
-                        'company' => getCompanyName($id_user),
-                        'dari' => "Eksportir"
-                    ];
-
-                    Mail::send('eksportir.eksproduct.sendToAdmin', $data, function ($mail) use ($data) {
-                        $mail->to($data['email'], $data['username']);
-                        $mail->subject('New Product Information');
-                    });
+                    array_push($users_email, $adm->email);
                 }
+
+                //Tinggal Ganti Email1 dengan email kemendag
+                $data = [
+                    'company' => getCompanyName($id_user),
+                    'dari' => "Eksportir"
+                ];
+
+                Mail::send('eksportir.eksproduct.sendToAdmin', $data, function ($mail) use ($data, $users_email) {
+                    $mail->subject('Product Information');
+                    $mail->to($users_email);
+                });
             }
 
         }
@@ -569,7 +567,7 @@ class EksProductController extends Controller
             }
         }
 
-        return redirect('eksportir/product');
+        return redirect('eksportir/product_admin/'.$data->id_itdp_profil_eks);
     }
 
     public function getSub(Request $request)
