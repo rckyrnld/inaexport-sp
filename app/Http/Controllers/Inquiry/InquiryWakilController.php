@@ -221,16 +221,6 @@ class InquiryWakilController extends Controller
                 $type = "perwakilan";
                 $datenow = date("Y-m-d H:i:s");
 
-                $idn = DB::table('csc_inquiry_br')->max('id');
-                $idnew = $idn + 1;
-
-                $destination= 'uploads\Inquiry\\'.$idnew;
-                if($request->hasFile('file')){ 
-                    $file1 = $request->file('file');
-                    $nama_file1 = time().'_'.$request->subject.'_'.$file1->getClientOriginalName();
-                    Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
-                }
-
                 //Jenis Perihal
                 $jpen = "";
                 $jpin = "";
@@ -255,8 +245,7 @@ class InquiryWakilController extends Controller
                     $duration = $request->duration;
                 }
 
-                $save = DB::table('csc_inquiry_br')->insert([
-                    'id' => $idnew,
+                $save = DB::table('csc_inquiry_br')->insertGetId([
                     'id_pembuat' => $id_user,
                     'type' => $type,
                     'id_mst_country' => $request->id_country,
@@ -270,11 +259,22 @@ class InquiryWakilController extends Controller
                     'subyek_en' => $request->subject,
                     'subyek_in' => $request->subject,
                     'subyek_chn' => $request->subject,
-                    'file' => $nama_file1,
                     'status' => 1,
                     'date' => $request->dateinquiry,
                     'duration' => $duration,
                     'created_at' => $datenow,
+                ]);
+
+                $nama_file1 = NULL;
+                $destination= 'uploads\Inquiry\\'.$save;
+                if($request->hasFile('file')){ 
+                    $file1 = $request->file('file');
+                    $nama_file1 = time().'_'.$request->subject.'_'.$file1->getClientOriginalName();
+                    Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+                }
+
+                $savefile = DB::table('csc_inquiry_br')->where('id', $save)->update([
+                    'file' => $nama_file1,
                 ]);
 
                 return redirect('/inquiry_perwakilan');
@@ -763,6 +763,7 @@ class InquiryWakilController extends Controller
         $id_broadcast = $request->id_broadcast;
         $sender = $request->sender;
         $receiver = $request->receiver;
+        $msg = $request->msgfile;
 
         $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
@@ -784,6 +785,7 @@ class InquiryWakilController extends Controller
             'receive' => $receiver,
             'type' => 'perwakilan',
             'file' => $nama_file1,
+            'messages' => $msg,
             'status' => 0,
             'created_at' => $datenow,
         ]);
@@ -794,7 +796,7 @@ class InquiryWakilController extends Controller
             'dari_id' => $sender,
             'untuk_nama' => getCompanyName($receiver),
             'untuk_id' => $receiver,
-            'keterangan' => 'New Message from '.getPerwakilanName($sender).' about Inquiry '.$data->subyek_en,
+            'keterangan' => 'New Invoice from '.getPerwakilanName($sender).' about Inquiry '.$data->subyek_en,
             'url_terkait' => 'inquiry/chatting',
             'status_baca' => 0,
             'waktu' => $datenow,
