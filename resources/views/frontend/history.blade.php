@@ -116,20 +116,21 @@
                 <div class="col-lg-12 col-md-12">
                   <br><br>
                     <ul class="nav nav-pills" role="tablist" style="font-size: 13px;">
-                      <li class="nav-item">
-                        <a class="nav-link nav-me active" href="#ticket" data-toggle="pill" aria-controls="ticket" aria-selected="false">@lang('frontend.history.ticket')</a>
-                      </li>
+                      
                       @if(Auth::guard('eksmp')->user()->id_role == 3)
                       <li class="nav-item">
-                        <a class="nav-link nav-me" href="#inquiry" data-toggle="pill" aria-controls="inquiry" aria-selected="false">@lang('frontend.history.inquiry')</a>
+                        <a class="nav-link nav-me active" href="#inquiry" data-toggle="pill" aria-controls="inquiry" aria-selected="false">@lang('frontend.history.inquiry')</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link nav-me" href="#buyreq" data-toggle="pill" aria-controls="buyreq" aria-selected="false">@lang('frontend.history.buyr')</a>
                       </li>
                       @endif
+					  <li class="nav-item">
+                        <a class="nav-link nav-me <?php if(Auth::guard('eksmp')->user()->id_role == 2){ echo "active"; } ?>" href="#ticket" data-toggle="pill" aria-controls="ticket" aria-selected="false">@lang('frontend.history.ticket')</a>
+                      </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="ticket" role="tabpanel">
+                        <div class="tab-pane fade <?php if(Auth::guard('eksmp')->user()->id_role == 2){ echo "show active"; } ?>" id="ticket" role="tabpanel">
                           <br>
                           <div class="row">
                             <div class="col-lg-12 col-md-12">
@@ -166,7 +167,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="tab-pane fade" id="inquiry">                            
+                        <div class="tab-pane fade show active" id="inquiry">                            
                           <br>
                           <div class="row">
                             <div class="col-lg-12 col-md-12">
