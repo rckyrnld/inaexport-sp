@@ -35,6 +35,25 @@
         .a-custom span:hover{
             color: #2FB4C2 !important;
         }
+        .img-profil-header{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%
+        }
+        .header-span{
+            padding-left: 10px;
+            color: #ff8d00; 
+            font-weight: 500; 
+            font-size: 18px;
+        }
+        .nav-pills .nav-link:hover, .nav-pills .nav-link.active{
+            font-weight: 600;
+            color: #ff8d00;
+        }
+        .nav-pills .nav-link {
+            font-weight: 600;
+            color: #007bff;
+        }
     </style>
 
     <!-- build:js scripts/app.min.js -->
@@ -127,12 +146,7 @@
             <div class="container">
                 <div class="top_inner">
                     <div class="row align-items-center">
-                        <div class="col-lg-6 col-md-6 col-6">
-                            <div class="follow_us">
-                                <label><i class="ion-social-whatsapp-outline"></i> hotline :&nbsp;&nbsp;+62 000 111 222 333</label>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-6">
+                        <div class="col-lg-12 col-md-12 col-12" align="right">
                             <div class="top_right text-right">
                                 <ul style="padding-top: 5px; margin-bottom: 5px;">
                                     @if(Auth::guard('eksmp')->user())
@@ -368,7 +382,7 @@
                                                     <img src="{{asset('front/assets/icon/product1.png')}}" alt="" style="width: 50px;">
                                                 </td>
                                                 <td style="">
-                                                    <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
+                                                    <span class="header-span">
                                                         @lang("frontend.lbl8")
                                                     </span>
                                                 </td>
@@ -389,7 +403,7 @@
                                                 <img src="{{asset('front/assets/icon/tracking.png')}}" alt="" style="width: 50px;">
                                             </td>
                                             <td style="">
-                                                <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
+                                                <span class="header-span">
                                                     @lang("frontend.lbl9")
                                                 </span>
                                             </td>
@@ -412,40 +426,52 @@
 														
 												<?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
 												
-												<img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">
+												<img src="{{asset('front/assets/icon/user.png')}}" alt="" class="img-profil-header">
 												<?php }else{ ?>
 												
-                                                <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" style="width: 50px;">
+                                                <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
 												<?php } ?>
                                                     @elseif(Auth::guard('eksmp')->user()->id_role == 2)
 													
                                                  <?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
-												<img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">
+												<img src="{{asset('front/assets/icon/user.png')}}" alt="" class="img-profil-header">
 												<?php }else{ ?>
 												
-                                                <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" style="width: 50px;">
+                                                <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
 												<?php } ?>
                                                     @endif
 											@else	
-												<img src="{{asset('front/assets/icon/user.png')}}" alt="" style="width: 50px;">
+												<img src="{{asset('front/assets/icon/user.png')}}" alt="" class="img-profil-header">
                                             @endif
-                                                
                                             </td>
                                             <td style="">
-                                                <span style="color: #ff3e3e; font-weight: 500; padding-left: 10px;">
+                                                <span class="header-span">
                                                     @lang("frontend.lbl10")
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="padding-left: 10px;">
                                                 @if(Auth::guard('eksmp')->user())
-                                                <span style="color: black; font-weight: 600; font-size: 12px; padding-left: 10px;">
-                                                    @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                                        {{getCompanyNameImportir(Auth::guard('eksmp')->user()->id)}}
-                                                    @elseif(Auth::guard('eksmp')->user()->id_role == 2)
-                                                        {{getCompanyName(Auth::guard('eksmp')->user()->id)}}
-                                                    @endif
+                                                    <?php
+                                                    if(Auth::guard('eksmp')->user()->id_role == 3){
+                                                        $user = getCompanyNameImportir(Auth::guard('eksmp')->user()->id);
+                                                    }else if(Auth::guard('eksmp')->user()->id_role == 2){
+                                                        $user = getCompanyName(Auth::guard('eksmp')->user()->id);
+                                                    }
+                                                    if(strlen($user) > 12){
+                                                      $cut_text = substr($user, 0, 12);
+                                                      if ($user{12 - 1} != ' ') {
+                                                          $new_pos = strrpos($cut_text, ' '); 
+                                                          $cut_text = substr($user, 0, $new_pos);
+                                                      }
+                                                      $userName = $cut_text;
+                                                    }else{
+                                                      $userName = $user;
+                                                    }
+                                                    ?>
+                                                <span style="color: black; font-weight: 600; font-size: 12px;" title="{{$user}}">
+                                                    {{$userName}}
                                                 </span>
                                                 @endif
                                             </td>

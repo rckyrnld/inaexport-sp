@@ -43,7 +43,7 @@ return [
     "negara_rc" => "NEGARA",
     "publish_rc" => "TANGGAL PUBLIKASI",
     "terbaru" => "10 Terbaru",
-    "jdl_event" => "Daftar Peristiwa",
+    "jdl_event" => "Acara & Pameran",
     "cari"  => "Cari",
     "t_date"    => 'Tanggal Mulai - Tanggal Berakhir', 
     "t_Comodity"    => "Komoditas",

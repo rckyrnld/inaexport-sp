@@ -172,16 +172,7 @@
                                 @else
                                 <a href="{{url($url)}}" class="for-act">
                                 @endif
-                                  <img src="{{asset('front/assets/icon/icon_buyer.png')}}" alt="" style="width: 20%;">
-                                  <span style="font-size: 27px; color: #37791C;">
-                                    @if($loc == 'ch')
-                                    给买家
-                                    @elseif($loc == 'in')
-                                    PEMBELI
-                                    @else
-                                    FOR BUYER
-                                    @endif
-                                  </span>
+                                  <img src="{{asset('front/assets/icon/for-buyer.png')}}" alt="">
                                 @if(Auth::guard('eksmp')->user())
                                 @if(Auth::guard('eksmp')->user()->id_role == 3)
                                 </a>
@@ -200,16 +191,7 @@
                                 @else
                                 <a href="{{url($url)}}" class="for-act">
                                 @endif
-                                  <img src="{{asset('front/assets/icon/icon_seller.png')}}" alt="" style="width: 20%;">
-                                  <span style="font-size: 27px; color: #EA8125;">
-                                    @if($loc == 'ch')
-                                    印尼出口商
-                                    @elseif($loc == 'in')
-                                    EKSPORTIR INDONESIA
-                                    @else
-                                    FOR INDONESIA EXPORTER
-                                    @endif
-                                  </span>
+                                  <img src="{{asset('front/assets/icon/for-indonesia-exportir.png')}}" alt="" >
                                 @if(Auth::guard('eksmp')->user())
                                 @if(Auth::guard('eksmp')->user()->id_role == 2)
                                 </a>

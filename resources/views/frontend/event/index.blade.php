@@ -49,7 +49,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 col-lg-12">
-        <span style="color: #1a70bb; text-align: center;"><h2>@lang("frontend.jdl_event")</h2></span>
+        <span style="color: #1a70bb;"><h2>@lang("frontend.jdl_event")</h2></span>
       </div>
     </div><br>
     @if($page > 1)
@@ -139,8 +139,8 @@
 
           if(strlen($title) > $num_char){
               $cut_text = substr($title, 0, $num_char);
-              if ($title{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                  $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+              if ($title{$num_char - 1} != ' ') { 
+                  $new_pos = strrpos($cut_text, ' '); 
                   $cut_text = substr($title, 0, $new_pos);
               }
               $titleName = $cut_text . '...';
@@ -148,10 +148,10 @@
               $titleName = $title;
           }
 
-          if(strlen($lokasi) > ($num_char+7)){
-              $cut_text = substr($lokasi, 0, ($num_char+7));
-              if ($lokasi{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                  $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+          if(strlen($lokasi) > ($num_char+6)){
+              $cut_text = substr($lokasi, 0, ($num_char+6));
+              if ($lokasi{ ($num_char+6) - 1} != ' ') {
+                  $new_pos = strrpos($cut_text, ' '); 
                   $cut_text = substr($lokasi, 0, $new_pos);
               }
               $lokasiName = $cut_text . '...';
@@ -161,7 +161,7 @@
           ?>
           <a href="{{url('/front_end/join_event/')}}/{{$ed->id}}" class="a-modif">
           <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-            <img class="rc" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
+            <img class="rc" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px; width: 100%;">
           </div>
           <div style="height: 25%; padding-top: 5px;">
               <span style="font-family: arial; font-weight: 530; font-size: 18px; color: black !important;" title="{{$title}}">{{$titleName}}</span><br>
