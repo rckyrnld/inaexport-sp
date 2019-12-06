@@ -171,7 +171,7 @@ class InquiryController extends Controller
             }
 
             $save = DB::table('csc_inquiry_br')->insert([
-                'id' => $idnew,
+//                'id' => $idnew,
                 'id_pembuat' => $id_user,
                 'type' => $type,
                 'id_csc_prod_cat' => $dtproduct->id_csc_product,
@@ -868,7 +868,7 @@ class InquiryController extends Controller
                 $role = 3;
             }
             $insert = DB::table('csc_transaksi')->insert([
-                "id_transaksi" => $idnew,
+//                "id_transaksi" => $idnew,
                 "id_pembuat" => $inquiry->id_pembuat,
                 "by_role" => $role,
                 "id_eksportir" => $id_user,
