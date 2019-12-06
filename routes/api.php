@@ -132,8 +132,8 @@ Route::namespace('Api')->group(function () {
     Route::get('getImageProduk/{id}/{image}', 'ProductNonAuthController@getImageProduk');
     Route::get('getRandomProduct', 'ProductNonAuthController@getRandomProduct');
     Route::get('getprodukBaru', 'ProductNonAuthController@getprodukBaru');
-    Route::post('browseProductDetailBynameAndKategori', 'ProductNonAuthController@browseProductDetailBynameAndKategori');
-    Route::post('browseProductNameAndKategori', 'ProductNonAuthController@browseProductBynameAndKategori');
+    Route::post('browseProductListBynameAndKategori', 'ProductNonAuthController@browseProductDetailBynameAndKategori');
+    Route::post('suggestProductsearch', 'ProductNonAuthController@browseProductBynameAndKategori');
 
     //training
     Route::get('getTrainingall', 'TrainingNonAuthController@browseTraining');
