@@ -261,10 +261,7 @@ class InquiryEksController extends Controller
                 $username = $users->username;
 
                 //Notif sistem
-                $idn = DB::table('notif')->max('id_notif');
-                $idnotifn = $idn + 1;
                 $notif = DB::table('notif')->insert([
-                    'id_notif' => $idnotifn,
                     'dari_nama' => getCompanyName($id_user),
                     'dari_id' => $id_user,
                     'untuk_nama' => getCompanyNameImportir($data->id_pembuat),
@@ -306,10 +303,7 @@ class InquiryEksController extends Controller
                 }
 
                 //Notif sistem
-                $idn = DB::table('notif')->max('id_notif');
-                $idnotifn = $idn + 1;
                 $notif = DB::table('notif')->insert([
-                    'id_notif' => $idnotifn,
                     'dari_nama' => getCompanyName($id_user),
                     'dari_id' => $id_user,
                     'untuk_nama' => $name,
@@ -414,10 +408,7 @@ class InquiryEksController extends Controller
             ]);
 
             //Notif sistem
-            $idn = DB::table('notif')->max('id_notif');
-            $idnotifn = $idn + 1;
             $notif = DB::table('notif')->insert([
-                'id_notif' => $idnotifn,
                 'dari_nama' => getCompanyName($sender),
                 'dari_id' => $sender,
                 'untuk_nama' => getCompanyNameImportir($receiver),
@@ -473,10 +464,7 @@ class InquiryEksController extends Controller
             }
 
             //Notif sistem
-            $idn = DB::table('notif')->max('id_notif');
-            $idnotifn = $idn + 1;
             $notif = DB::table('notif')->insert([
-                'id_notif' => $idnotifn,
                 'dari_nama' => getCompanyName($sender),
                 'dari_id' => $sender,
                 'untuk_nama' => $untuk_nama,
@@ -548,10 +536,7 @@ class InquiryEksController extends Controller
             ]);
 
             //Notif sistem
-            $idn = DB::table('notif')->max('id_notif');
-            $idnotifn = $idn + 1;
             $notif = DB::table('notif')->insert([
-                'id_notif' => $idnotifn,
                 'dari_nama' => getCompanyName($sender),
                 'dari_id' => $sender,
                 'untuk_nama' => getCompanyNameImportir($receiver),
@@ -607,10 +592,7 @@ class InquiryEksController extends Controller
             }
 
             //Notif sistem
-            $idn = DB::table('notif')->max('id_notif');
-            $idnotifn = $idn + 1;
             $notif = DB::table('notif')->insert([
-                'id_notif' => $idnotifn,
                 'dari_nama' => getCompanyName($sender),
                 'dari_id' => $sender,
                 'untuk_nama' => $untuk_nama,
@@ -691,10 +673,7 @@ class InquiryEksController extends Controller
                 }
 
                 //Notif sistem
-                $idn = DB::table('notif')->max('id_notif');
-                $idnotifn = $idn + 1;
                 $notif = DB::table('notif')->insert([
-                    'id_notif' => $idnotifn,
                     'dari_nama' => getCompanyName($id_user),
                     'dari_id' => $id_user,
                     'untuk_nama' => $untuk_nama,
@@ -746,10 +725,7 @@ class InquiryEksController extends Controller
 
             if($stat == 3){
                 //Notif sistem
-                $idn = DB::table('notif')->max('id_notif');
-                $idnotifn = $idn + 1;
                 $notif = DB::table('notif')->insert([
-                    'id_notif' => $idnotifn,
                     'dari_nama' => getCompanyName($id_user),
                     'dari_id' => $id_user,
                     'untuk_nama' => getCompanyNameImportir($inquiry->id_pembuat),

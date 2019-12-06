@@ -791,10 +791,7 @@ class InquiryAdminController extends Controller
                     ]);
 
                     $admin = DB::table('itdp_admin_users')->where('id', $id_user)->first();
-                    $idn = DB::table('notif')->max('id_notif');
-                    $idnotifn = $idn + 1;
                     $notif = DB::table('notif')->insert([
-                        'id_notif' => $idnotifn,
                         'dari_nama' => $admin->name,
                         'dari_id' => $id_user,
                         'untuk_nama' => getCompanyName($array[$k]),
@@ -1081,10 +1078,7 @@ class InquiryAdminController extends Controller
 
         if($save){
             //Notif sistem
-            $idn = DB::table('notif')->max('id_notif');
-            $idnotifn = $idn + 1;
             $notif = DB::table('notif')->insert([
-                'id_notif' => $idnotifn,
                 'dari_nama' => getAdminName($sender),
                 'dari_id' => $sender,
                 'untuk_nama' => getCompanyName($receiver),
@@ -1153,10 +1147,7 @@ class InquiryAdminController extends Controller
         ]);
 
         //Notif sistem
-        $idn = DB::table('notif')->max('id_notif');
-        $idnotifn = $idn + 1;
         $notif = DB::table('notif')->insert([
-            'id_notif' => $idnotifn,
             'dari_nama' => getAdminName($sender),
             'dari_id' => $sender,
             'untuk_nama' => getCompanyName($receiver),

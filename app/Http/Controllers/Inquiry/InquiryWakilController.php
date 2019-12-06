@@ -433,9 +433,7 @@ class InquiryWakilController extends Controller
                         'created_at' => $datenow,
                     ]);
 
-                    $idnotif = DB::table('notif')->max('id_notif') + 1;
                     $notif = DB::table('notif')->insert([
-                        'id_notif' => $idnotif,
                         'dari_nama' => getPerwakilanName($id_user),
                         'dari_id' => $id_user,
                         'untuk_nama' => getCompanyName($array[$k]),
@@ -722,10 +720,7 @@ class InquiryWakilController extends Controller
 
         if($save){
             //Notif sistem
-            $idn = DB::table('notif')->max('id_notif');
-            $idnotifn = $idn + 1;
             $notif = DB::table('notif')->insert([
-                'id_notif' => $idnotifn,
                 'dari_nama' => getPerwakilanName($sender),
                 'dari_id' => $sender,
                 'untuk_nama' => getCompanyName($receiver),
@@ -794,10 +789,7 @@ class InquiryWakilController extends Controller
         ]);
 
         //Notif sistem
-        $idn = DB::table('notif')->max('id_notif');
-        $idnotifn = $idn + 1;
         $notif = DB::table('notif')->insert([
-            'id_notif' => $idnotifn,
             'dari_nama' => getPerwakilanName($sender),
             'dari_id' => $sender,
             'untuk_nama' => getCompanyName($receiver),
