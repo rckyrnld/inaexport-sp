@@ -226,15 +226,44 @@ class EksProductController extends Controller
             $id_profil = Auth::guard('eksmp')->user()->id_profil;
             $datenow = date("Y-m-d H:i:s");
 
-            $idn = DB::table('csc_product_single')->max('id');
-            $idnew = $idn + 1;
+            $save = DB::table('csc_product_single')->insertGetId([
+                'id_csc_product' => $request->id_csc_product,
+                'id_csc_product_level1' => $request->id_csc_product_level1,
+                'id_csc_product_level2' => $request->id_csc_product_level2,
+                'prodname_en' => $request->prodname_en,
+                'prodname_in' => $request->prodname_in,
+                'prodname_chn' => $request->prodname_chn,
+                'code_en' => $request->code,
+                'code_in' => $request->code,
+                'code_chn' => $request->code_,
+                'color_en' => $request->color_en,
+                'color_in' => $request->color_in,
+                'color_chn' => $request->color_chn,
+                'size_en' => $request->size_en,
+                'size_in' => $request->size_in,
+                'size_chn' => $request->size_chn,
+                'raw_material_en' => $request->raw_material_en,
+                'raw_material_in' => $request->raw_material_in,
+                'raw_material_chn' => $request->raw_material_chn,
+                'capacity' => $request->capacity,
+                'price_usd' => $request->price_usd,
+                'id_mst_hscodes' => $request->hscode,
+                'id_itdp_profil_eks' => $id_profil,
+                'id_itdp_company_user' => $id_user,
+                'minimum_order' => $request->minimum_order,
+                'product_description_en' => $request->product_description_en,
+                'product_description_in' => $request->product_description_in,
+                'product_description_chn' => $request->product_description_chn,
+                'status' => $request->status,
+                'created_at' => $datenow,
+            ]);
 
             $nama_file1 = NULL;
             $nama_file2 = NULL;
             $nama_file3 = NULL;
             $nama_file4 = NULL;
 
-            $destination= 'uploads\Eksportir_Product\Image\\'.$idnew;
+            $destination= 'uploads\Eksportir_Product\Image\\'.$save;
             if($request->hasFile('image_1')){ 
                 $file1 = $request->file('image_1');
                 $nama_file1 = time().'_'.$request->prodname_en.'_'.$request->file('image_1')->getClientOriginalName();
@@ -259,42 +288,11 @@ class EksProductController extends Controller
                 Storage::disk('uploads')->putFileAs($destination, $file4, $nama_file4);
             }
 
-
-            $save = DB::table('csc_product_single')->insert([
-                'id' => $idnew,
-                'id_csc_product' => $request->id_csc_product,
-                'id_csc_product_level1' => $request->id_csc_product_level1,
-                'id_csc_product_level2' => $request->id_csc_product_level2,
-                'prodname_en' => $request->prodname_en,
-                'prodname_in' => $request->prodname_in,
-                'prodname_chn' => $request->prodname_chn,
-                'code_en' => $request->code,
-                'code_in' => $request->code,
-                'code_chn' => $request->code_,
-                'color_en' => $request->color_en,
-                'color_in' => $request->color_in,
-                'color_chn' => $request->color_chn,
-                'size_en' => $request->size_en,
-                'size_in' => $request->size_in,
-                'size_chn' => $request->size_chn,
-                'raw_material_en' => $request->raw_material_en,
-                'raw_material_in' => $request->raw_material_in,
-                'raw_material_chn' => $request->raw_material_chn,
-                'capacity' => $request->capacity,
-                'price_usd' => $request->price_usd,
-                'id_mst_hscodes' => $request->hscode,
+            $savefile = DB::table('csc_product_single')->where('id', $save)->update([
                 'image_1' => $nama_file1,
                 'image_2' => $nama_file2,
                 'image_3' => $nama_file3,
                 'image_4' => $nama_file4,
-                'id_itdp_profil_eks' => $id_profil,
-                'id_itdp_company_user' => $id_user,
-                'minimum_order' => $request->minimum_order,
-                'product_description_en' => $request->product_description_en,
-                'product_description_in' => $request->product_description_in,
-                'product_description_chn' => $request->product_description_chn,
-                'status' => $request->status,
-                'created_at' => $datenow,
             ]);
 
             if($save && $request->status == "1"){
@@ -310,7 +308,7 @@ class EksProductController extends Controller
                         'url_terkait' => 'eksportir/verifikasi_product',
                         'status_baca' => 0,
                         'waktu' => $datenow,
-                        'id_terkait' => $idnew,
+                        'id_terkait' => $save,
                         'to_role' => 1,
                     ]);
 

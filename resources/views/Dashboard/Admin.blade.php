@@ -90,7 +90,8 @@
                         <div class="tab-pane animate fadeIn text-muted active show" id="tab1">
                             <div class="row">
                                 <div id="user_year" style="min-width: 100%; height: 400px; margin: 0 auto;"></div>
-								<a id="br1" onclick="exp1()" class="btn btn-success"><font color="white"><i class="fa fa-download"></i> Export PDF</font></a>
+                                <a id="br1" onclick="exp1()" class="btn btn-success"><font color="white"><i
+                                                class="fa fa-download"></i> Export PDF</font></a>
                             </div>
                         </div>
                         <div class="tab-pane animate fadeIn text-muted" id="tab2">
@@ -469,19 +470,19 @@
             }
         });
     }
-	
-function exp1(){
- 
-    //send the div to PDF
-	
-    html2canvas($("#user_year"), { // DIV ID HERE
-        onrendered: function(canvas) {
-            var imgData = canvas.toDataURL('image/png'); 
-            var doc = new jsPDF('landscape');
-            doc.addImage(imgData, 'PDF', 10, 10);
-            doc.save('sample-file.pdf'); //SAVE PDF FILE
-        }
-    });
 
-}
+    function exp1() {
+
+        //send the div to PDF
+
+        html2canvas($("#user_year"), { // DIV ID HERE
+            onrendered: function (canvas) {
+                var imgData = canvas.toDataURL('image/png');
+                var doc = new jsPDF('landscape');
+                doc.addImage(imgData, 'PDF', 10, 10);
+                doc.save('sample-file.pdf'); //SAVE PDF FILE
+            }
+        });
+
+    }
 </script>

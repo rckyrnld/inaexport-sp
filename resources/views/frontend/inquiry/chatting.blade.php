@@ -47,7 +47,7 @@
   }
 
   .chat-me{
-    background: #2492EB; 
+    background: #64abe4; 
     border-radius: 10px 0px 10px 10px;
     width: 400px;
     padding: 10px;
@@ -81,6 +81,31 @@
 
   .chat-back:hover{
     opacity: 0.7;
+  }
+
+  button.closedmodal {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+  }
+
+  .closedmodal {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+  }
+  .modal-header .closedmodal {
+      padding: 1rem;
+      margin: -1rem -1rem -1rem auto;
+  }
+
+  .closedmodal:hover{
+    color: #fff;
   }
 </style>
 <?php
@@ -143,9 +168,10 @@
                             <div class="row pull-right">
                               <div class="col-md-10">
                                 <label class="label chat-me">
-                                    @if($msg->messages == NULL)
-                                        <a href="{{ url('/').'/uploads/ChatFileInquiry/'.$msg->id }}/{{ $msg->file }}" target="_blank" class="atag" style="color: white;">{{$msg->file}}</a><br>
+                                    @if($msg->file == NULL)
+                                        {{$msg->messages}}<br>
                                     @else
+                                        <a href="{{ url('/').'/uploads/ChatFileInquiry/'.$msg->id }}/{{ $msg->file }}" target="_blank" class="atag" style="color: white;">{{$msg->file}}</a><br><br>
                                         {{$msg->messages}}<br>
                                     @endif
                                     <span style="float: right;">{{date('H:i',strtotime($msg->created_at))}}</span>
@@ -180,9 +206,10 @@
                             <div class="row">
                               <div class="col-md-10">
                                 <label class="label chat-other">
-                                    @if($msg->messages == NULL)
-                                        <a href="{{ url('/').'/uploads/ChatFileInquiry/'.$msg->id }}/{{ $msg->file }}" target="_blank" class="atag" style="color: white;">{{$msg->file}}</a><br>
+                                    @if($msg->file == NULL)
+                                        {{$msg->messages}}<br>
                                     @else
+                                        <a href="{{ url('/').'/uploads/ChatFileInquiry/'.$msg->id }}/{{ $msg->file }}" target="_blank" class="atag" style="color: white;">{{$msg->file}}</a><br><br>
                                         {{$msg->messages}}<br>
                                     @endif
                                     <span style="color: #555; float: right;">{{date('H:i',strtotime($msg->created_at))}}</span>
@@ -198,15 +225,13 @@
                     <div class="chat-footer">
                       <div class="row">
                         <div class="col-md-1">
-                          <form action="{{route('front.inquiry.fileChat')}}" method="post" enctype="multipart/form-data" id="uploadform2">
-                            {{ csrf_field() }}
                             <img src="{{asset('front/assets/icon/plus-circle.png')}}" alt="" width="100%" id="uploading2" />
-                            <input type="file" id="upload_file2" name="upload_file2" style="display: none;" />
-                            <input type="hidden" name="sender2" id="sender2" value="{{$id_user}}">
+                            <!-- <input type="file" id="upload_file2" name="upload_file2" style="display: none;" /> -->
+                            <!-- <input type="hidden" name="sender2" id="sender2" value="{{$id_user}}">
                             <input type="hidden" name="id_inquiry2" id="id_inquiry2" value="{{$inquiry->id}}">
                             <input type="hidden" name="type2" id="type2" value="{{$inquiry->type}}">
                             <input type="hidden" name="receiver2" id="receiver2" value="{{$data->id_itdp_company_user}}">
-                            <input type="hidden" name="statusmsg2" id="statusmsg2" value="{{$inquiry->status}}">
+                            <input type="hidden" name="statusmsg2" id="statusmsg2" value="{{$inquiry->status}}"> -->
                           </form>
                         </div>
                         <div class="col-md-10" style="padding-left: 0px;">
@@ -224,6 +249,49 @@
           </div>
       </div>
   <!--product details end-->
+
+<!-- Modal Invoice -->
+<div class="modal fade" id="modalInvoice" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Upload Proof of Payment</h6>
+                <button type="button" class="closedmodal" data-dismiss="modal">&times;</button>
+            </div>
+            <form action="{{route('front.inquiry.fileChat')}}" method="post" enctype="multipart/form-data" id="uploadform2">
+            {{ csrf_field() }}
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-sm-3">
+                            <label><b>File Upload</b></label>
+                        </div>
+                        <div class="form-group col-sm-7">
+                            <input type="hidden" name="sender2" id="sender2" value="{{$id_user}}">
+                            <input type="hidden" name="id_inquiry2" id="id_inquiry2" value="{{$inquiry->id}}">
+                            <input type="hidden" name="type2" id="type2" value="{{$inquiry->type}}">
+                            <input type="hidden" name="receiver2" id="receiver2" value="{{$data->id_itdp_company_user}}">
+                            <input type="hidden" name="statusmsg2" id="statusmsg2" value="{{$inquiry->status}}">
+                            <input type="file" id="upload_file2" name="upload_file2">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-3">
+                            <label><b>Note</b></label>
+                        </div>
+                        <div class="form-group col-sm-7">
+                             <textarea class="form-control" name="msgfile2" id="msgfile2"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"><font color="white">Upload</font></button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div> 
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <?php
   if($loc == "ch"){
     $alertimage = "抱歉，无法发送此文件。";
@@ -242,22 +310,23 @@
     $(document).ready(function(){
         //Click Image
         $("#uploading2").click(function() {
-            $("input[id='upload_file2']").click();
+            // $("input[id='upload_file2']").click();
+            $('#modalInvoice').modal('show');
         });
 
         //Upload File
-        $("#upload_file2").on('change', function() {
-            if(this.value != ""){
-              var status = $('#statusmsg2').val();
-              if(status == 3 || status == 4 || status == 5){
-                alert("{{$alertimage}}");
-              }else{
-                $('#uploadform2').submit();
-              }
-            }else{
-                alert('The file cannot be uploaded');
-            }
-        });
+        // $("#upload_file2").on('change', function() {
+        //     if(this.value != ""){
+        //       var status = $('#statusmsg2').val();
+        //       if(status == 3 || status == 4 || status == 5){
+        //         alert("{{$alertimage}}");
+        //       }else{
+        //         $('#uploadform2').submit();
+        //       }
+        //     }else{
+        //         alert('The file cannot be uploaded');
+        //     }
+        // });
 
         //Send Message
         $('#sendmessage').on('click', function(event){

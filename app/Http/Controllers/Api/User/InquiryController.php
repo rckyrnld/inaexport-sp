@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Mail;
 use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -536,8 +537,8 @@ class InquiryController extends Controller
         $idm = DB::table('csc_chatting_inquiry')->max('id');
         $idmax = $idm + 1;
 
-        $save = DB::table('csc_chatting_inquiry')->insert([
-            'id' => $idmax,
+        $save = DB::table('csc_chatting_inquiry')->insertGetId([
+//            'id' => $idmax,
             'id_inquiry' => $id_inquiry,
             'sender' => $sender,
             'receive' => $receiver,
@@ -547,7 +548,7 @@ class InquiryController extends Controller
             'created_at' => $datenow,
         ]);
         $user = DB::table('csc_chatting_inquiry')
-            ->where('id', '=', $idmax)
+            ->where('id', '=', $save)
             ->get();
         for ($i = 0; $i < count($user); $i++) {
             $ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);
@@ -619,8 +620,8 @@ class InquiryController extends Controller
             Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
         }
 
-        $save = DB::table('csc_chatting_inquiry')->insert([
-            'id' => $idmax,
+        $save = DB::table('csc_chatting_inquiry')->insertGetId([
+//            'id' => $idmax,
             'id_inquiry' => $id_inquiry,
             'sender' => $sender,
             'receive' => $receiver,
@@ -631,7 +632,7 @@ class InquiryController extends Controller
             'created_at' => $datenow,
         ]);
         $user = DB::table('csc_chatting_inquiry')
-            ->where('id', '=', $idmax)
+            ->where('id', '=', $save)
             ->get();
         for ($i = 0; $i < count($user); $i++) {
 
@@ -776,8 +777,8 @@ class InquiryController extends Controller
         $idm = DB::table('csc_chatting_inquiry')->max('id');
         $idmax = $idm + 1;
 
-        $save = DB::table('csc_chatting_inquiry')->insert([
-            'id' => $idmax,
+        $save = DB::table('csc_chatting_inquiry')->insertGetId([
+//            'id' => $idmax,
             'id_inquiry' => $id_inquiry,
             'sender' => $sender,
             'receive' => $receiver,
@@ -787,7 +788,7 @@ class InquiryController extends Controller
             'created_at' => $datenow,
         ]);
         $user = DB::table('csc_chatting_inquiry')
-            ->where('id', '=', $idmax)
+            ->where('id', '=', $save)
             ->get();
         for ($i = 0; $i < count($user); $i++) {
             $ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);

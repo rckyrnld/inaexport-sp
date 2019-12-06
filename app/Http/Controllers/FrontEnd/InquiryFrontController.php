@@ -55,15 +55,6 @@ class InquiryFrontController extends Controller
             $datenow = date("Y-m-d H:i:s");
 
             $dtproduct = DB::table('csc_product_single')->where('id', $id_product)->first();
-            $idn = DB::table('csc_inquiry_br')->max('id');
-            $idnew = $idn + 1;
-
-            $destination= 'uploads\Inquiry\\'.$idnew;
-            if($request->hasFile('filedo')){ 
-                $file1 = $request->file('filedo');
-                $nama_file1 = time().'_'.$request->subyek_en.'_'.$file1->getClientOriginalName();
-                Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
-            }
 
             //Jenis Perihal
             $jpen = "";
@@ -89,8 +80,7 @@ class InquiryFrontController extends Controller
                 $duration = $request->duration;
             }
 
-            $save = DB::table('csc_inquiry_br')->insert([
-                'id' => $idnew,
+            $save = DB::table('csc_inquiry_br')->insertGetId([
                 'id_pembuat' => $id_user,
                 'type' => $type,
                 'id_csc_prod_cat' => $dtproduct->id_csc_product,
@@ -106,11 +96,22 @@ class InquiryFrontController extends Controller
                 'subyek_in' => $request->subject,
                 'subyek_chn' => $request->subject,
                 'to' => $id_product,
-                'file' => $nama_file1,
                 'status' => 1,
                 'date' => $datenow,
                 'duration' => $duration,
                 'created_at' => $datenow,
+            ]);
+
+            $nama_file1 = NULL;
+            $destination= 'uploads\Inquiry\\'.$save;
+            if($request->hasFile('filedo')){ 
+                $file1 = $request->file('filedo');
+                $nama_file1 = time().'_'.$request->subject.'_'.$file1->getClientOriginalName();
+                Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+            }
+
+            $savefile = DB::table('csc_inquiry_br')->where('id', $save)->update([
+                'file' => $nama_file1,
             ]);
 
             if($save){
@@ -291,6 +292,7 @@ class InquiryFrontController extends Controller
         $id = $request->id_inquiry2;
         $sender = $request->sender2;
         $receiver = $request->receiver2;
+        $msg = $request->msgfile2;
 
         $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
@@ -311,6 +313,7 @@ class InquiryFrontController extends Controller
             'receive' => $receiver,
             'type' => 'importir',
             'file' => $nama_file1,
+            'messages' => $msg,
             'status' => 0,
             'created_at' => $datenow,
         ]);

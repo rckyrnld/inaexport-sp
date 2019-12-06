@@ -125,7 +125,7 @@ Route::namespace('Api')->group(function () {
     Route::post('contactUs', 'ManagementNoAuthController@contactUs');
     /*Contact Us*/
 
-    Route::get('browseProdukFe', 'ProductNonAuthController@browseProduct');
+    Route::post('browseProdukFe', 'ProductNonAuthController@browseProduct');
     Route::post('browseProdukFeByKategori', 'ProductNonAuthController@browseProductByKategori');
     Route::get('getKategori', 'ProductNonAuthController@findKategori');
     Route::post('detailProdukFe', 'ProductNonAuthController@detailProduk');
@@ -133,7 +133,8 @@ Route::namespace('Api')->group(function () {
     Route::get('getRandomProduct', 'ProductNonAuthController@getRandomProduct');
     Route::get('getprodukBaru', 'ProductNonAuthController@getprodukBaru');
     Route::post('browseProductListBynameAndKategori', 'ProductNonAuthController@browseProductDetailBynameAndKategori');
-    Route::post('suggestProductsearch', 'ProductNonAuthController@browseProductBynameAndKategori');
+    Route::post('suggestProductkategorisearch', 'ProductNonAuthController@browseProductBynameAndKategori');
+    Route::get('suggestProductnamesearch', 'ProductNonAuthController@suggestProductname');
 
     //training
     Route::get('getTrainingall', 'TrainingNonAuthController@browseTraining');
@@ -161,6 +162,5 @@ Route::namespace('Api')->group(function () {
 
     //hscode
     Route::get('getHscode', 'ManagementNoAuthController@getHscode');
-
 });
 // });

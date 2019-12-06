@@ -180,7 +180,7 @@ class ProductController extends Controller
                 Storage::disk('uploads')->putFileAs($destination, $file4, $nama_file4);
             }
             $insertRecord = DB::table('csc_product_single')->insert([
-                'id' => $idnew,
+//                'id' => $idnew,
                 'id_csc_product' => $request->id_csc_product,
                 'id_csc_product_level1' => $request->id_csc_product_level1,
                 'id_csc_product_level2' => $request->id_csc_product_level2,
