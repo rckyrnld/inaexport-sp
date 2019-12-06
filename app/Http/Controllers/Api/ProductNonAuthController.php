@@ -20,8 +20,9 @@ class ProductNonAuthController extends Controller
     // }
 
 
-    public function browseProduct()
+    public function browseProduct(Request $request)
     {
+        $offset = $request->offset;
         $dataProduk = DB::table('itdp_company_users')
             ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
@@ -33,6 +34,8 @@ class ProductNonAuthController extends Controller
                 'csc_product_single.image_4', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd',
                 'csc_product.nama_kategori_en', 'csc_product_single.code_en', 'csc_product_single.color_en', 'csc_product_single.size_en', 'csc_product_single.raw_material_en')
             ->orderBy('csc_product_single.id', 'desc')
+            ->limit(10)
+            ->offset($offset)
             ->get();
 
         $jsonResult = array();
@@ -251,6 +254,49 @@ class ProductNonAuthController extends Controller
                 'kategori' => $dataKategori
             ));
 //            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
+    public function suggestProductname(Request $request)
+    {
+        $queryaaa = $request->parameter;
+        $dataProduk = DB::table('itdp_company_users')
+            ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
+            ->where('itdp_company_users.status', '=', 1)
+            ->where('csc_product_single.status', 2)
+            ->where(function ($query) use ($queryaaa) {
+                $query->where('csc_product_single.prodname_en', 'like', '%' . $queryaaa . '%');
+            })
+            ->select('csc_product_single.prodname_en')
+//            ->limit(1)
+            ->get();
+//       dd($dataProduk);
+        foreach ($dataProduk as $data) {
+            $prod_name[] = $data->prodname_en;
+        }
+//        dd($prod_name);
+        if (count($dataProduk) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $data = $dataProduk;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);

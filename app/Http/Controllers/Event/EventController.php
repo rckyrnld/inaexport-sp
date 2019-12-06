@@ -82,6 +82,30 @@ class EventController extends Controller
             Storage::disk('uploads')->putFileAs($destination, $file4, $nama_file4);
         }
 
+        if($req->eventorgnzr_en == '|adding_eo|'){
+            $id_eo = DB::table('event_organizer')->max('id') + 1;
+            DB::table('event_organizer')->insert([
+                'id' => $id_eo,
+                'name_en' => $req->eo_en,
+                'name_in' => $req->eo_in,
+                'name_chn' => $req->eo_chn
+            ]);
+        } else {
+            $id_eo = $req->eventorgnzr_en;
+        }
+
+        if($req->eventplace_en == '|adding_place|'){
+            $id_place = DB::table('event_place')->max('id') + 1;
+            DB::table('event_place')->insert([
+                'id' => $id_place,
+                'name_en' => $req->plc_en,
+                'name_in' => $req->plc_in,
+                'name_chn' => $req->plc_chn
+            ]);
+        } else {
+            $id_place = $req->eventplace_en;
+        }
+
         $data = DB::table('event_detail')->insert([
         	'id' => $id,
         	'start_date'	=> $req->s_date,
@@ -92,11 +116,11 @@ class EventController extends Controller
 			'event_type_en'	=> $req->eventype_en,
 			'event_type_in'	=> $req->eventype_in,
 			'event_type_chn'	=> $req->eventype_chn,
-			'id_event_organizer'	=> $req->eventorgnzr_en,
+			'id_event_organizer'	=> $id_eo,
 			'event_organizer_text_en'	=> $req->eot_en,
 			'even_organizer_text_in'	=> $req->eot_in,
 			'even_organizer_text_chn'	=> $req->eot_chn,
-			'id_event_place'	=> $req->eventplace_en,
+			'id_event_place'	=> $id_place,
 			'event_place_text_en'	=> $req->ept_en,
 			'event_place_text_in'	=> $req->ept_in,
 			'event_place_text_chn'	=> $req->ept_chn,
@@ -121,6 +145,25 @@ class EventController extends Controller
 			// 'status_chn'	=> $req->,
         	'created_at' => $datenow
         ]);
+
+        $cp = DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->first();
+        if($cp){
+            DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->update([
+              'name' => $req->cp_name,
+              'email' => $req->cp_email,
+              'phone' => $req->cp_phone,
+            ]);
+          } else {
+            $idp = DB::table('contact_person')->max('id') + 1;
+            DB::table('contact_person')->insert([
+                'id' => $idp,
+                'name' => $req->cp_name,
+                'email' => $req->cp_email,
+                'phone' => $req->cp_phone,
+                'type' => 'event',
+                'id_type' => $id,
+            ]);
+          }
 
         for ($i=0; $i < count($req->id_prod_cat) ; $i++) { 
         	$var=$req->id_prod_cat[$i];
@@ -171,26 +214,6 @@ class EventController extends Controller
 	        }
 
         }
-
-        $cp = DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->first();
-        if($cp){
-            DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->update([
-              'name' => $req->cp_name,
-              'email' => $req->cp_email,
-              'phone' => $req->cp_phone,
-            ]);
-          } else {
-            $idp = DB::table('contact_person')->max('id') + 1;
-            DB::table('contact_person')->insert([
-                'id' => $idp,
-                'name' => $req->cp_name,
-                'email' => $req->cp_email,
-                'phone' => $req->cp_phone,
-                'type' => 'event',
-                'id_type' => $id,
-            ]);
-          }
-        
 
         return redirect('event');
 	}
@@ -256,6 +279,29 @@ class EventController extends Controller
             $nama_file4 = $dtawal->image_4;
         }
 
+        if($req->eventorgnzr_en == '|adding_eo|'){
+            $id_eo = DB::table('event_organizer')->max('id') + 1;
+            DB::table('event_organizer')->insert([
+                'id' => $id_eo,
+                'name_en' => $req->eo_en,
+                'name_in' => $req->eo_in,
+                'name_chn' => $req->eo_chn
+            ]);
+        } else {
+            $id_eo = $req->eventorgnzr_en;
+        }
+
+        if($req->eventplace_en == '|adding_place|'){
+            $id_place = DB::table('event_place')->max('id') + 1;
+            DB::table('event_place')->insert([
+                'id' => $id_place,
+                'name_en' => $req->plc_en,
+                'name_in' => $req->plc_in,
+                'name_chn' => $req->plc_chn
+            ]);
+        } else {
+            $id_place = $req->eventplace_en;
+        }
 
         DB::table('event_detail')->where('id', $id)->update([
             'start_date'	=> $req->s_date,
@@ -266,11 +312,11 @@ class EventController extends Controller
 			'event_type_en'	=> $req->eventype_en,
 			'event_type_in'	=> $req->eventype_in,
 			'event_type_chn'	=> $req->eventype_chn,
-			'id_event_organizer'	=> $req->eventorgnzr_en,
+			'id_event_organizer'	=> $id_eo,
 			'event_organizer_text_en'	=> $req->eot_en,
 			'even_organizer_text_in'	=> $req->eot_in,
 			'even_organizer_text_chn'	=> $req->eot_chn,
-			'id_event_place'	=> $req->eventplace_en,
+			'id_event_place'	=> $id_place,
 			'event_place_text_en'	=> $req->ept_en,
 			'event_place_text_in'	=> $req->ept_in,
 			'event_place_text_chn'	=> $req->ept_chn,
