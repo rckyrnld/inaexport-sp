@@ -63,19 +63,19 @@
                                     </div><br>
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Name</b></label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="eventname_en" id="eventname_en" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_name_en}}" @endif required>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="eventname_in" id="eventname_in" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_name_in}}" @endif>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="eventname_chn" id="eventname_chn" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_name_chn}}" @endif>
                                         </div>
                                     </div><br>
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Type</b></label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <select class="form-control" name="eventype_en" id="eventype_en" required onchange="EventType(this)">
                                                 <option value="" style="display: none;">- Pilih Event Type -</option>
                                                 <option value="Fair" @if($page!=='add') @if($e_detail->event_type_en == 'Fair') selected @endif @endif>Fair</option>
@@ -83,68 +83,82 @@
                                                 <option value="General" @if($page!=='add') @if($e_detail->event_type_en == 'General') selected @endif @endif>General</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="eventype_in" id="eventype_in" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_type_in}}" @endif>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="eventype_chn" id="eventype_chn" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_type_chn}}" @endif>
                                         </div>
                                     </div><br>
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Organizer</b></label>
-                                        <div class="col-md-3">
-                                            <select class="form-control" name="eventorgnzr_en" id="eventorgnzr_en" required onchange="EventOrg(this)">
-                                                <option value="" style="display: none;">- Pilih Event Organizer -</option>
-                                                @foreach($e_organizer as $eo)
-                                                    <option value="{{$eo->id}}" @if($page!=='add') @if($e_detail->id_event_organizer == $eo->id) selected @endif @endif >{{$eo->name_en}}</option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col-md-3 paddignya">
+                                            <table width="100%" border="0">
+                                                <tr>
+                                                    <td width="80%">
+                                                        <select class="form-control" name="eventorgnzr_en" id="eventorgnzr_en" required onchange="EventOrg(this)">
+                                                            <option value="" style="display: none;">- Pilih Event Organizer -</option>
+                                                            @foreach($e_organizer as $eo)
+                                                                <option value="{{$eo->id}}" @if($page!=='add') @if($e_detail->id_event_organizer == $eo->id) selected @endif @endif >{{$eo->name_en}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td style="padding-left: 5px;"><button type="button" class="btn btn-default" style="width: 100%; border-color: #bbc0c5;"  data-toggle="modal" data-target="#modal-eo"><i class="fa fa-plus"></i></button></td>
+                                                </tr>
+                                            </table>
                                         </div>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="eventorgnzr_in" id="eventorgnzr_in" autocomplete="off" @if($page!=='add') value="{{EvenOrgZ($e_detail->id_event_organizer, 'in')}}" @endif>
+                                        <div class="col-md-3 paddignya">
+                                            <input type="text" class="form-control" name="eventorgnzr_in" id="eventorgnzr_in" autocomplete="off" @if($page!=='add') value="{{EvenOrgZ($e_detail->id_event_organizer, 'in')}}" @endif readonly>
                                         </div>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="eventorgnzr_chn" id="eventorgnzr_chn" autocomplete="off" @if($page!=='add') value="{{EvenOrgZ($e_detail->id_event_organizer, 'chn')}}" @endif>
+                                        <div class="col-md-3 paddignya">
+                                            <input type="text" class="form-control" name="eventorgnzr_chn" id="eventorgnzr_chn" autocomplete="off" @if($page!=='add') value="{{EvenOrgZ($e_detail->id_event_organizer, 'chn')}}" @endif readonly>
                                         </div>
                                     </div><br>
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Organizer Text</b></label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="eot_en" id="eot_en" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_organizer_text_en}}" @endif required>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="eot_in" id="eot_in" autocomplete="off" @if($page!=='add') value="{{$e_detail->even_organizer_text_in}}" @endif>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="eot_chn" id="eot_chn" autocomplete="off" @if($page!=='add') value="{{$e_detail->even_organizer_text_chn}}" @endif>
                                         </div>
                                     </div><br>
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Place</b></label>
-                                        <div class="col-md-3">
-                                            <select class="form-control" name="eventplace_en" id="eventplace_en" required onchange="EventPlace(this)">
-                                                <option value="" style="display: none;">- Pilih Event -</option>
-                                                @foreach($e_palce as $ep)
-                                                    <option value="{{$ep->id}}" @if($page!=='add') @if($e_detail->id_event_place == $ep->id) selected @endif @endif>{{$ep->name_en}}</option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col-md-3 paddignya">
+                                            <table width="100%" border="0">
+                                                <tr>
+                                                    <td width="80%">
+                                                        <select class="form-control" name="eventplace_en" id="eventplace_en" required onchange="EventPlace(this)">
+                                                            <option value="" style="display: none;">- Pilih Event -</option>
+                                                            @foreach($e_palce as $ep)
+                                                                <option value="{{$ep->id}}" @if($page!=='add') @if($e_detail->id_event_place == $ep->id) selected @endif @endif>{{$ep->name_en}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td style="padding-left: 5px;"><button type="button" class="btn btn-default" style="width: 100%; border-color: #bbc0c5;" data-toggle="modal" data-target="#modal-place"><i class="fa fa-plus"></i></button></td>
+                                                </tr>
+                                            </table>
                                         </div>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="eventplace_in" id="eventplace_in" autocomplete="off" @if($page!=='add') value="{{EventPlaceZ($e_detail->id_event_place, 'in')}}" @endif>
+                                        <div class="col-md-3 paddignya">
+                                            <input type="text" class="form-control" name="eventplace_in" id="eventplace_in" autocomplete="off" @if($page!=='add') value="{{EventPlaceZ($e_detail->id_event_place, 'in')}}" @endif readonly>
                                         </div>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="eventplace_chn" id="eventplace_chn" autocomplete="off" @if($page!=='add') value="{{EventPlaceZ($e_detail->id_event_place, 'chn')}}" @endif>
+                                        <div class="col-md-3 paddignya">
+                                            <input type="text" class="form-control" name="eventplace_chn" id="eventplace_chn" autocomplete="off" @if($page!=='add') value="{{EventPlaceZ($e_detail->id_event_place, 'chn')}}" @endif readonly>
                                         </div>
                                     </div><br>
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Place Text</b></label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="ept_en" id="ept_en" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_place_text_en}}" @endif required>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="ept_in" id="ept_in" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_place_text_in}}" @endif>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="ept_chn" id="ept_chn" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_place_text_chn}}" @endif>
                                         </div>
                                     </div><br>
@@ -233,7 +247,7 @@
                                     </div><br>
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Jenis</b></label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <select class="form-control" name="jenis_en" id="jenis_en" required onchange="Jenis(this)">
                                                 <option value="" style="display: none;">- Pilih Jenis -</option>
                                                 <option value="To Be Confirm" @if($page!=='add') @if($e_detail->jenis_en == 'To Be Confirm') selected @endif @endif>To Be Confirm</option>
@@ -241,10 +255,10 @@
                                                 <option value="Mandiri" @if($page!=='add') @if($e_detail->jenis_en == 'Mandiri') selected @endif @endif>Independent</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="jenis_in" id="jenis_in" autocomplete="off" @if($page!=='add') value="{{$e_detail->jenis_in}}" @endif>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="jenis_chn" id="jenis_chn" autocomplete="off" @if($page!=='add') value="{{$e_detail->jenis_chn}}" @endif>
                                         </div>
                                     </div><br>
@@ -264,13 +278,13 @@
                                     </div><br>
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Scope</b></label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="es_en" id="es_en" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_scope_en}}" @endif required>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="es_in" id="es_in" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_scope_in}}" @endif>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="es_chn" id="es_chn" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_scope_chn}}" @endif>
                                         </div>
                                     </div><br>
@@ -299,6 +313,12 @@
                                 </div>
                             </div>
                         </div><br>
+                        <input type="hidden" name="eo_en" id="real_eo_en">
+                        <input type="hidden" name="eo_in" id="real_eo_in">
+                        <input type="hidden" name="eo_chn" id="real_eo_chn">
+                        <input type="hidden" name="plc_en" id="real_plc_en">
+                        <input type="hidden" name="plc_in" id="real_plc_in">
+                        <input type="hidden" name="plc_chn" id="real_plc_chn">
                         <h4>Contact Person</h4><hr>
                         <div class="container">
                             <div class="row">
@@ -350,8 +370,79 @@
             </form>
         </div>
     </div>
+
+    <!-- MODAL EO -->
+    <div class="modal fade" id="modal-eo" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Event Organizer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td style="width: 30%">Event Organizer ( Eng )</td>
+                    <td><input type="text" class="form-control" id="eo_en"></td>
+                </tr>
+                <tr>
+                    <td>Event Organizer ( Ind )</td>
+                    <td><input type="text" class="form-control" id="eo_in"></td>
+                </tr>
+                <tr>
+                    <td>Event Organizer ( Chn )</td>
+                    <td><input type="text" class="form-control" id="eo_chn"></td>
+                </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" onclick="add_eo()" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL place -->
+    <div class="modal fade" id="modal-place" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Place</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+             <table width="100%" cellpadding="5">
+                <tr>
+                    <td style="width: 30%">Event Place ( Eng )</td>
+                    <td><input type="text" class="form-control" id="plc_en"></td>
+                </tr>
+                <tr>
+                    <td>Event Place ( Ind )</td>
+                    <td><input type="text" class="form-control" id="plc_in"></td>
+                </tr>
+                <tr>
+                    <td>Event Place ( Chn )</td>
+                    <td><input type="text" class="form-control" id="plc_chn"></td>
+                </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" onclick="add_place()" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <script type="text/javascript">
         csrf_token = '{{ csrf_token() }}';
+        var adding_place = [];
+        var adding_eo = [];
 
         function EventType(obj){
             $('#eventype_in').val('');
@@ -373,23 +464,32 @@
             val = $(obj).val();
             $('#eventorgnzr_in').val('');
             $('#eventorgnzr_chn').val('');
-            $.post("{{ url('/') }}/event/getEventOrg", {'_token':csrf_token, 'id':val}, function(response){
-                res = JSON.parse(response);
-                $('#eventorgnzr_in').val(res.name_in);
-                $('#eventorgnzr_chn').val(res.name_chn);
-            });
-
+            if(val == '|adding_eo|'){
+                $('#eventorgnzr_in').val(adding_eo[0]);
+                $('#eventorgnzr_chn').val(adding_eo[1]);
+            } else {
+                $.post("{{ url('/') }}/event/getEventOrg", {'_token':csrf_token, 'id':val}, function(response){
+                    res = JSON.parse(response);
+                    $('#eventorgnzr_in').val(res.name_in);
+                    $('#eventorgnzr_chn').val(res.name_chn);
+                });
+            }
         }
 
         function EventPlace(obj){
             val = $(obj).val();
             $('#eventplace_in').val();
             $('#eventplace_chn').val();
-            $.post("{{url('/')}}/event/getEventPlace", {'_token':csrf_token, 'id':val}, function(response){
-                res=JSON.parse(response);
-                $('#eventplace_in').val(res.name_in);
-                $('#eventplace_chn').val(res.name_chn);
-            });
+            if(val == '|adding_place|'){
+                $('#eventplace_in').val(adding_place[0]);
+                $('#eventplace_chn').val(adding_place[1]);
+            } else {
+                $.post("{{url('/')}}/event/getEventPlace", {'_token':csrf_token, 'id':val}, function(response){
+                    res=JSON.parse(response);
+                    $('#eventplace_in').val(res.name_in);
+                    $('#eventplace_chn').val(res.name_chn);
+                });
+            }
         }
 
         function Jenis(obj){
@@ -408,8 +508,48 @@
                 $('#jenis_chn').val('曼迪里');
             }
         }
+
+        function add_eo(){
+            var eo_en = $('#eo_en').val();
+            var eo_in = $('#eo_in').val();
+            var eo_chn = $('#eo_chn').val();
+
+            if(eo_en != ''){
+                $('#eventorgnzr_en option[value="|adding_eo|"]').remove();
+                $('#eventorgnzr_en').append('<option value="|adding_eo|">'+eo_en+'</option>'); 
+                $('#eventorgnzr_en option[value="|adding_eo|"]').attr("selected",true);
+                adding_eo = [eo_in,eo_chn];
+                $('#real_eo_en').val(eo_en);
+                $('#real_eo_in,#eventorgnzr_in').val(eo_in);
+                $('#real_eo_chn,#eventorgnzr_chn').val(eo_chn);
+            }
+            $('#modal-eo').modal('hide');
+        }
+
+        function add_place(){
+            var place_en = $('#plc_en').val();
+            var place_in = $('#plc_in').val();
+            var place_chn = $('#plc_chn').val();
+
+            if(place_en != ''){
+                $('#eventplace_en option[value="|adding_place|"]').remove();
+                $('#eventplace_en').append('<option value="|adding_place|">'+place_en+'</option>'); 
+                $('#eventplace_en option[value="|adding_place|"]').attr("selected",true);
+                adding_place = [place_in,place_chn];
+                $('#real_plc_en').val(place_en);
+                $('#real_plc_in,#eventplace_in').val(place_in);
+                $('#real_plc_chn,#eventplace_chn').val(place_chn);
+            }
+            $('#modal-place').modal('hide');
+        }
+
         $(document).ready(function () {
             var page = '{{$page}}';
+
+            if(window.innerWidth <= 780){
+                $(".paddignya").css("padding-top","10px");
+            } 
+
             if(page == 'show'){
                 $('#show :input').prop('disabled', true);
             }
@@ -476,7 +616,7 @@
                 });
             }
             }).on("select2:select", function (e) { 
-              $('.select2-selection__rendered li.select2-selection__choice').sort(function(a, b) {
+              $('#id_prod_cat-selection__rendered li#id_prod_cat-selection__choice').sort(function(a, b) {
                   return $(a).text() < $(b).text() ? -1 : $(a).text() > $(b).text() ? 1 : 0;
                 }).prependTo('.select2-selection__rendered');
             });

@@ -250,8 +250,10 @@ if ($loc == "ch") {
                                             class="btn btn-md btn-success"><i
                                                 class="fa fa-save"></i> @lang("login.btn4")</button>
                                     <?php }else{ ?>
-                                    <button style="width:100%!important;" class="btn btn-md btn-success"><i
-                                                class="fa fa-save"></i> @lang("login.btn4")</button>
+                                   <!-- <button style="width:100%!important;" class="btn btn-md btn-success"><i
+                                                class="fa fa-save"></i> @lang("login.btn4")</button> -->
+									<a onclick="simpanbr()"style="width:100%!important;" class="btn btn-md btn-success"><i
+                                                class="fa fa-save"></i> @lang("login.btn4")</a>
                                     <?php } ?>
                                 </div>
 
@@ -271,12 +273,13 @@ if ($loc == "ch") {
 
                             </div>
                             <div id="isibroadcast"></div>
-                            <!--<div class="modal-body">
-                              1
+                            <div class="modal-body">
+                              You Want Broadcast Buying Request Now ?
                             </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div> -->
+                            <div class="modal-footer" id="mf">
+							
+                              <a href="{{ url('front_end/history') }}" type="button" class="btn btn-info">Go To History List</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -293,6 +296,47 @@ if ($loc == "ch") {
 @include('frontend.layouts.footer')
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script>
+function simpanbr(){
+	var formData = new FormData();
+	
+	formData.append('subyek',$('#subyek').val());
+	formData.append('valid',$('#valid').val());
+	formData.append('category',$('#category').val());
+	formData.append('spec',$('#spec').val());
+	formData.append('eo',$('#eo').val());
+	formData.append('neo',$('#neo').val());
+	formData.append('tp',$('#tp').val());
+	formData.append('ntp',$('#ntp').val());
+	formData.append('country',$('#country').val());
+	formData.append('city',$('#city').val());
+	formData.append('ship',$('#ship').val());
+	formData.append('_token','{{csrf_token()}}');
+	formData.append('image',$('input[type=file]')[0].files[0]);
+	// var token = $('meta[name="csrf-token"]').attr('content');
+	if(category == ""){
+		alert("Please complete the field !")
+	}else{
+		$.ajax({
+			type: "POST",
+			url: '{{url('/br_importir_save')}}',
+			data: formData ,
+			contentType : false,
+			processData : false,
+			success: function (data) {
+			   console.log(data);
+			   $('#mf').append(data);
+			},
+			error: function (data, textStatus, errorThrown) {
+				console.log(data);
+
+			},
+		});
+		
+		
+		
+	$("#myModal").modal("show"); 
+	}
+}
     function formatAmountNoDecimals( number ) {
     var rgx = /(\d+)(\d{3})/;
     while( rgx.test( number ) ) {
