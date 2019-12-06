@@ -114,10 +114,7 @@ class InquiryFrontController extends Controller
             ]);
 
             if($save){
-                $idn = DB::table('notif')->max('id_notif');
-                $idnotifn = $idn + 1;
                 $notif = DB::table('notif')->insert([
-                    'id_notif' => $idnotifn,
                     'dari_nama' => getCompanyNameImportir($id_user),
                     'dari_id' => $id_user,
                     'untuk_nama' => getCompanyName($dtproduct->id_itdp_company_user),
@@ -252,10 +249,7 @@ class InquiryFrontController extends Controller
 
         if($save){
             //Notif sistem
-            $idn = DB::table('notif')->max('id_notif');
-            $idnotifn = $idn + 1;
             $notif = DB::table('notif')->insert([
-                'id_notif' => $idnotifn,
                 'dari_nama' => getCompanyNameImportir($sender),
                 'dari_id' => $sender,
                 'untuk_nama' => getCompanyName($receiver),
@@ -322,10 +316,7 @@ class InquiryFrontController extends Controller
         ]);
 
         //Notif sistem
-        $idn = DB::table('notif')->max('id_notif');
-        $idnotifn = $idn + 1;
         $notif = DB::table('notif')->insert([
-            'id_notif' => $idnotifn,
             'dari_nama' => getCompanyNameImportir($sender),
             'dari_id' => $sender,
             'untuk_nama' => getCompanyName($receiver),
