@@ -122,6 +122,131 @@ class ProductNonAuthController extends Controller
         }
     }
 
+    public function browseProductDetailBynameAndKategori(Request $request)
+    {
+        $queryaaa = $request->parameter;
+//        $e_detail = DB::table('event_detail')->where('event_name_en', 'LIKE', '%' . $q . '%')->orderby('id', 'asc')->paginate(6)->setPath('');
+        $dataProduk = DB::table('itdp_company_users')
+            ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->where('itdp_company_users.status', '=', 1)
+            ->where('csc_product_single.status', 2)
+//            ->where('csc_product_single.id_csc_product', $request->id_kategori)
+//            ->where(function ($query) use ($queryaaa) {
+//                $query->where('csc_inquiry_br.subyek_in', 'like', '%' . $queryaaa . '%')
+//                    ->orwhere('csc_inquiry_br.subyek_chn', 'like', '%' . $queryaaa . '%')
+//                    ->orwhere('csc_inquiry_br.subyek_en', 'like', '%' . $queryaaa . '%')
+//                    ->orwhere('csc_inquiry_br.messages_en', 'like', '%' . $queryaaa . '%')
+//                    ->orwhere('csc_inquiry_br.messages_in', 'like', '%' . $queryaaa . '%')
+//                    ->orwhere('csc_inquiry_br.messages_chn', 'like', '%' . $queryaaa . '%');
+//            })
+            ->select('csc_product_single.*')
+//            ->orderBy('csc_product_single.prodname_en', 'asc')
+            ->get();
+//        $jsonResult = array();
+//        for ($i = 0; $i < count($dataProduk); $i++) {
+//            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+//            $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
+//            $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
+//            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
+//            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+//            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
+//            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
+//            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+//            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
+//            $jsonResult[$i]["type"] = $dataProduk[$i]->type;
+//            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+//            $id_role = $dataProduk[$i]->id_role;
+//            $id_profil = $dataProduk[$i]->id_profil;
+//            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+//            $jsonResult[$i]["product_description_en"] = $dataProduk[$i]->product_description_en;
+//        }
+        if (count($dataProduk) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
+    public function browseProductBynameAndKategori(Request $request)
+    {
+        $queryaaa = $request->parameter;
+//        $e_detail = DB::table('event_detail')->where('event_name_en', 'LIKE', '%' . $q . '%')->orderby('id', 'asc')->paginate(6)->setPath('');
+        $dataProduk = DB::table('itdp_company_users')
+            ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->where('itdp_company_users.status', '=', 1)
+            ->where('csc_product_single.status', 2)
+//            ->where('csc_product_single.id_csc_product', $request->id_kategori)
+//            ->where(function ($query) use ($queryaaa) {
+//                $query->where('csc_inquiry_br.subyek_in', 'like', '%' . $queryaaa . '%')
+//                    ->orwhere('csc_inquiry_br.subyek_chn', 'like', '%' . $queryaaa . '%')
+//                    ->orwhere('csc_inquiry_br.subyek_en', 'like', '%' . $queryaaa . '%')
+//                    ->orwhere('csc_inquiry_br.messages_en', 'like', '%' . $queryaaa . '%')
+//                    ->orwhere('csc_inquiry_br.messages_in', 'like', '%' . $queryaaa . '%')
+//                    ->orwhere('csc_inquiry_br.messages_chn', 'like', '%' . $queryaaa . '%');
+//            })
+            ->select('csc_product_single.*')
+//            ->orderBy('csc_product_single.prodname_en', 'asc')
+            ->get();
+        $jsonResult = array();
+        for ($i = 0; $i < count($dataProduk); $i++) {
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $dataProduk[$i]->id_csc_product)->first()->nama_kategori_en;
+            $jsonResult[$i]["csc_product_level1_desc"] = ($dataProduk[$i]->id_csc_product_level1) ? DB::table('csc_product')->where('id', $dataProduk[$i]->id_csc_product_level1)->first()->nama_kategori_en : null;
+            $jsonResult[$i]["csc_product_level2_desc"] = ($dataProduk[$i]->id_csc_product_level2) ? DB::table('csc_product')->where('id', $dataProduk[$i]->id_csc_product_level2)->first()->nama_kategori_en : null;
+//            $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
+//            $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
+//            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
+//            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+//            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
+//            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
+//            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+//            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
+//            $jsonResult[$i]["type"] = $dataProduk[$i]->type;
+//            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+//            $id_role = $dataProduk[$i]->id_role;
+//            $id_profil = $dataProduk[$i]->id_profil;
+//            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+//            $jsonResult[$i]["product_description_en"] = $dataProduk[$i]->product_description_en;
+        }
+        if (count($dataProduk) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $jsonResult;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
     public function findKategori()
     {
         $result = DB::table('csc_product')
