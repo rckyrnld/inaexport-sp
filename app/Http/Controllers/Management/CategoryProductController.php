@@ -17,8 +17,20 @@ class CategoryProductController extends Controller
 
 	  public function index(){
       $pageTitle = 'Data Category Product';
-      $product = DB::table('csc_product')->orderby('nama_kategori_en', 'asc')->get();
+      $product = DB::table('csc_product')->orderby('nama_kategori_en', 'asc')->where('level_1', 0)->where('level_2', 0)->get();
       return view('management.category-product.index',compact('pageTitle','product'));
+    }
+
+    public function home(Request $req){
+      for ($i=1; $i <= 6 ; $i++) {
+        $nama = "cat".$i;
+        DB::table('csc_product_home')->where('number', $i)->update([
+          'id_product' => $req->$nama,
+          'updated_at' => date('Y-m-d H:i:s')
+        ]);
+      }
+
+      return redirect('management/category-product/');
     }
 
     public function getData()
@@ -38,15 +50,7 @@ class CategoryProductController extends Controller
               </center>
               ';
           })
-          ->addColumn('show', function ($data) {
-              return '
-              <center>
-                <input type="checkbox" checked data-toggle="toggle" data-on="Publish" data-off="Hide" data-onstyle="info" data-offstyle="default" id="statusnya">
-                <input type="hidden" name="status" id="status" value="1"> 
-              </center>
-              ';
-          })
-          ->rawColumns(['action', 'show'])
+          ->rawColumns(['action'])
           ->make(true);
     }
 

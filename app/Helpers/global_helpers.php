@@ -842,3 +842,10 @@ if (! function_exists('getProductCategoryInquiry')) {
         return $return;
     }
 }
+
+if (! function_exists('cat_prod_home')) {
+    function cat_prod_home($param){
+        $data = DB::table('csc_product_home')->where('number', $param)->first();
+        return $data->id_product;
+    }
+}

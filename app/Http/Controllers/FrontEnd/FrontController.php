@@ -41,10 +41,10 @@ class FrontController extends Controller
             ->limit(9)
             ->get();
 
-        $categoryutama2 = DB::table('csc_product')
-            ->where('level_1', 0)
-            ->where('level_2', 0)
-            ->orderBy('id', 'ASC')
+        $categoryutama2 = DB::table('csc_product_home as a')
+            ->join('csc_product as b', 'a.id_product', '=', 'b.id')
+            ->select('b.*')
+            ->orderBy('a.number', 'ASC')
             ->limit(6)
             ->get();
         return view('frontend.index', compact('categoryutama', 'categoryutama2'));
