@@ -38,7 +38,7 @@
     }
 
     .button_form{
-        width: 30%;
+        width: auto;
     }
 
     .href-name {
@@ -522,46 +522,119 @@
             <div class="row">
                 <div class="col-12">
                     <div class="row">
-                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <br>
+                            <div style="padding-left:10px;padding-right:10px;">
+                                <p style="font-size:20px;"><b>@lang("login.lbl5")</b></p>
+                                <p style="font-size:16px;">@lang("login.lbl6") <br> @lang("login.lbl7")
+                                <br> @lang("login.lbl8")</p>
+                            </div>
+                        </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-5" style="padding-top: 20px;">
                             <div class="box-cu">
-                                <form action="{{url('/contact-us/send/')}}" method="POST">
-                                    {{ csrf_field() }}
-                                    <center><h5><b>@lang("frontend.cu-cu")</b></h5></center>
+                                    <center><h5><b>@lang("login.forms.by1")</b></h5></center>
                                     <br>
                                    <div class="form-group row">
-                                       <div class="col-md-12">
-                                           <input type="text" id="id" class="form-control integer" name="name" autocomplete="off" placeholder="@lang("frontend.cu-fullname")" style="font-size: 13px;" required>
+                                        <div class="col-md-12">
+                                            <input type="text" style="color:black;font-size: 13px;" value="" name="subyek" id="subyek" class="form-control" placeholder="@lang('login.forms.by2')?" required>
+                                        </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                        <div class="col-md-12">
+                                            <select style="color:black;font-size: 13px;" class="form-control" name="valid" id="valid" required>
+                                                <option value="">@lang("login.forms.by10")</option>
+                                                <option value="0">None</option>
+                                                <option value="1">Valid within 1 day</option>
+                                                <option value="3">Valid within 3 day</option>
+                                                <option value="5">Valid within 5 day</option>
+                                                <option value="7">Valid within 7 day</option>
+                                                <option value="14">Valid within 2 week</option>
+                                                <option value="30">Valid within 1 month</option>
+                                            </select>
+                                        </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                        <div class="col-md-12">
+                                            <textarea style="color:black; font-size: 13px;" value="" name="spec" id="spec" class="form-control" placeholder="@lang('login.forms.by4')"></textarea>
+                                        </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                       <div class="col-md-7">
+                                           <input style="color:black; font-size: 13px;" type="number" min="1" name="eo" id="eo" class="form-control" placeholder="@lang('login.forms.by5')">
+                                       </div>
+                                       <div class="col-md-5">
+                                           <select class="form-control" name="neo" id="neo" style="color: black; font-size: 12px;">
+                                                <option value="">@lang("login.forms.by14")</option>
+                                                <option value="Each">Each</option>
+                                                <option value="Foot">Foot</option>
+                                                <option value="Gallons">Gallons</option>
+                                                <option value="Kilograms">Kilograms</option>
+                                                <option value="Liters">Liters</option>
+                                                <option value="Packs">Packs</option>
+                                                <option value="Pairs">Pairs</option>
+                                                <option value="Pieces">Pieces</option>
+                                                <option value="Reams">Reams</option>
+                                                <option value="Rods">Rods</option>
+                                                <option value="Rolls">Rolls</option>
+                                                <option value="Sets">Sets</option>
+                                                <option value="Sheets">Sheets</option>
+                                                <option value="Square Meters">Square Meters</option>
+                                                <option value="Tons">Tons</option>
+                                                <option value="Unit">Unit</option>
+                                                <option value="令">令</option>
+                                                <option value="件">件</option>
+                                                <option value="加仑">加仑</option>
+                                                <option value="包">包</option>
+                                                <option value="千克">千克</option>
+                                                <option value="升">升</option>
+                                                <option value="单位">单位</option>
+                                                <option value="卷">卷</option>
+                                                <option value="吨">吨</option>
+                                                <option value="套">套</option>
+                                                <option value="对">对</option>
+                                                <option value="平方米">平方米</option>
+                                                <option value="张">张</option>
+                                                <option value="根">根</option>
+                                                <option value="每个">每个</option>
+                                                <option value="英尺">英尺</option>
+                                                <option value="集装箱">集装箱</option>
+                                            </select>
                                        </div>
                                    </div>
 
                                    <div class="form-group row">
-                                       <div class="col-md-12">
-                                           <input type="email" class="form-control" name="email" autocomplete="off" placeholder="@lang("frontend.cu-email")" style="font-size: 13px;" required>
-                                       </div>
-                                   </div>
-
-                                   <div class="form-group row">
-                                       <div class="col-md-12">
-                                           <input type="text" class="form-control" name="subyek" autocomplete="off" placeholder="@lang("frontend.cu-subyek")" style="font-size: 13px;" required>
-                                       </div>
-                                   </div>
-
-                                   <div class="form-group row">
-                                       <div class="col-md-12">
-                                           <textarea class="form-control" name="message" id="message" placeholder="@lang("frontend.cu-message")" style="height: 150px;font-size: 13px;"></textarea>
-                                       </div>
+                                       <div class="col-md-7">
+                                            <input style="color:black; font-size: 13px;" type="text" value="" name="tp" id="tp" class="form-control amount" placeholder="@lang('login.forms.by6')">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <select  class="form-control" name="ntp" id="ntp" style="color: black; font-size: 12px;">
+                                                <option value="">@lang("login.forms.by14")</option>
+                                                <option value="IDR">IDR</option>
+                                                <option value="THB">THB</option>
+                                                <option value="USD">USD</option>
+                                            </select>
+                                        </div>
                                    </div>
                               
                                    <div class="form-group row">
                                       <div class="col-md-12">
                                         <div align="left">
-                                          <button class="btn btn-primary button_form" type="submit">@lang("button-name.submit")</button>
+                                            <a href="{{url('/br_importir')}}" class="btn btn-primary button_form">
+                                                    @if($loc == 'ch')
+                                                    立即发布购买请求
+                                                    @elseif($loc == 'in')
+                                                    Kirim permintaan pembelian sekarang
+                                                    @else
+                                                    Post buying request now
+                                                    @endif
+                                            </a>
                                         </div>
                                       </div>
                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -619,6 +692,14 @@
 <script src="{{asset('front/assets/js/plugins.js')}}"></script>
 @include('frontend.layouts.footer')
 <script type="text/javascript">
+    $(function() {
+
+        $('.amount').keyup( function() {
+            $(this).val( formatAmount( $( this ).val() ) );
+        });
+
+    });
+
     $(document).ready(function () {
         if(window.innerWidth <= 900){
             $( ".menu_item_children.next" ).on('click', function() {
@@ -632,5 +713,39 @@
         $('.tab-pane.product').removeClass('active');
         $('.tabnya').removeClass('active');
         $('#'+tabname).addClass('active');
+    }
+
+    function formatAmountNoDecimals( number ) {
+        var rgx = /(\d+)(\d{3})/;
+        while( rgx.test( number ) ) {
+            number = number.replace( rgx, '$1' + '.' + '$2' );
+        }
+        return number;
+    }
+
+    function formatAmount( number ) {
+
+        // remove all the characters except the numeric values
+        number = number.replace( /[^0-9]/g, '' );
+
+        // set the default value
+        if( number.length == 0 ) number = "0.00";
+        else if( number.length == 1 ) number = "0.0" + number;
+        else if( number.length == 2 ) number = "0." + number;
+        else number = number.substring( 0, number.length - 2 ) + '.' + number.substring( number.length - 2, number.length );
+        
+        // set the precision
+        number = new Number( number );
+        number = number.toFixed( 2 );    // only works with the "."
+
+        // change the splitter to ","
+        number = number.replace( /\./g, '' );
+
+        // format the amount
+        x = number.split( ',' );
+        x1 = x[0];
+        x2 = x.length > 1 ? ',' + x[1] : '';
+
+        return formatAmountNoDecimals( x1 ) + x2;
     }
 </script>
