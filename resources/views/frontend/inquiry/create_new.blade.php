@@ -196,7 +196,7 @@
                                   <td width="60%">
                                     <div class="input-group mb-3">
                                       <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="filedo" name="filedo" style="font-size: 14px;">
+                                        <input type="file" class="custom-file-input" id="filedo" name="filedo" style="font-size: 14px;" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,.ppt,.pptx,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,.pdf,application/pdf">
                                         <label class="custom-file-label" for="inputGroupFile01" id="labfiledo"> - @lang('inquiry.choose') - </label>
                                       </div>
                                     </div>
@@ -210,12 +210,12 @@
                                       <option value="None">@lang('inquiry.none')</option>
                                       <option value="1 week">@lang('inquiry.v1w')</option>
                                       <option value="2 weeks">@lang('inquiry.v2w')</option>
-                                      <option value="3 weeks">@lang('inquiry.v3w')</option>
+                                      <!-- <option value="3 weeks">@lang('inquiry.v3w')</option> -->
                                       <option value="1 month">@lang('inquiry.v1m')</option>
                                       <option value="2 months">@lang('inquiry.v2m')</option>
-                                      <option value="3 months">@lang('inquiry.v3m')</option>
+                                      <!-- <option value="3 months">@lang('inquiry.v3m')</option>
                                       <option value="4 months">@lang('inquiry.v4m')</option>
-                                      <option value="5 months">@lang('inquiry.v5m')</option>
+                                      <option value="5 months">@lang('inquiry.v5m')</option> -->
                                       <option value="6 months">@lang('inquiry.v6m')</option>
                                     </select>
                                   </td>
@@ -292,8 +292,6 @@
               alert("<?php echo $alertsubject; ?>");
           }else if ($('#messages').val() == "") {
               alert("<?php echo $alertmsg; ?>");
-          }else if ($('#filedo').val() == "") {
-              alert("<?php echo $alertfile; ?>");
           }else {
               $('#formnya').submit();
           }
