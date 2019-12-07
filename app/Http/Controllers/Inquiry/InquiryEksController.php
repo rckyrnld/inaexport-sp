@@ -392,12 +392,8 @@ class InquiryEksController extends Controller
 
         $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
-        $idm = DB::table('csc_chatting_inquiry')->max('id');
-        $idmax = $idm + 1;
-
         if($type == "importir"){
             $save = DB::table('csc_chatting_inquiry')->insert([
-                'id' => $idmax,
                 'id_inquiry' => $id,
                 'sender' => $sender,
                 'receive' => $receiver,
@@ -441,7 +437,6 @@ class InquiryEksController extends Controller
         }else if($type == "perwakilan" || $type == "admin"){
             $cek = Db::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $sender)->first();
             $save = DB::table('csc_chatting_inquiry')->insert([
-                'id' => $idmax,
                 'id_inquiry' => $id,
                 'id_broadcast_inquiry' => $cek->id,
                 'sender' => $sender,
@@ -513,24 +508,12 @@ class InquiryEksController extends Controller
 
         $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
-        $idm = DB::table('csc_chatting_inquiry')->max('id');
-        $idmax = $idm + 1;
-
-        $destination= 'uploads\ChatFileInquiry\\'.$idmax;
-        if($request->hasFile('upload_file')){ 
-            $file1 = $request->file('upload_file');
-            $nama_file1 = time().'_'.$request->file('upload_file')->getClientOriginalName();
-            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
-        }
-
         if($inquiry->type == "importir"){
-            $save = DB::table('csc_chatting_inquiry')->insert([
-                'id' => $idmax,
+            $save = DB::table('csc_chatting_inquiry')->insertGetId([
                 'id_inquiry' => $id,
                 'sender' => $sender,
                 'receive' => $receiver,
                 'type' => $inquiry->type,
-                'file' => $nama_file1,
                 'status' => 0,
                 'created_at' => $datenow,
             ]);
@@ -568,14 +551,12 @@ class InquiryEksController extends Controller
             });
         }else if($inquiry->type == "perwakilan" || $inquiry->type == "admin"){
             $broadcast = DB::table('csc_inquiry_broadcast')->where('id_itdp_company_users', $id_user)->where('id_inquiry', $id)->first();
-            $save = DB::table('csc_chatting_inquiry')->insert([
-                'id' => $idmax,
+            $save = DB::table('csc_chatting_inquiry')->insertGetId([
                 'id_inquiry' => $id,
                 'id_broadcast_inquiry' => $broadcast->id,
                 'sender' => $sender,
                 'receive' => $receiver,
                 'type' => $inquiry->type,
-                'file' => $nama_file1,
                 'status' => 0,
                 'created_at' => $datenow,
             ]);
@@ -623,6 +604,18 @@ class InquiryEksController extends Controller
                 $mail->subject('Inquiry Chatting Information');
             });
         }
+
+        $nama_file1 = NULL;
+        $destination= 'uploads\ChatFileInquiry\\'.$save;
+        if($request->hasFile('upload_file')){ 
+            $file1 = $request->file('upload_file');
+            $nama_file1 = time().'_'.$request->file('upload_file')->getClientOriginalName();
+            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+        }
+
+        $savefile = DB::table('csc_chatting_inquiry')->where('id', $save)->update([
+            'file' => $nama_file1,
+        ]);
 
         return redirect('/inquiry/chatting/'.$id); 
         
@@ -758,9 +751,6 @@ class InquiryEksController extends Controller
         }
 
         if($stat == 3){
-            $idn = DB::table('csc_transaksi')->max('id_transaksi');
-            $idnew = $idn + 1;
-
             if($inquiry->type == "admin"){
                 $role = 1;
             }else if($inquiry->type == "perwakilan"){
@@ -768,8 +758,7 @@ class InquiryEksController extends Controller
             }else if($inquiry->type == "importir"){
                 $role = 3;
             }
-            $insert = DB::table('csc_transaksi')->insert([
-                "id_transaksi"=> $idnew,
+            $insert = DB::table('csc_transaksi')->insertGetId([
                 "id_pembuat" => $inquiry->id_pembuat,
                 "by_role" => $role,
                 "id_eksportir" => $id_user,
@@ -778,7 +767,7 @@ class InquiryEksController extends Controller
                 "created_at" => $datenow,
                 "status_transaksi" => 0,
             ]);
-            return redirect('/input_transaksi/'.$idnew);
+            return redirect('/input_transaksi/'.$insert);
         }else{
             return redirect('/inquiry');
         }

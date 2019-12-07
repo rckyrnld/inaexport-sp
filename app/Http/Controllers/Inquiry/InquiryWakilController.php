@@ -397,9 +397,7 @@ class InquiryWakilController extends Controller
                 for($i = 0; $i<count($request->categori); $i++){
                     $var = $request->categori[$i];
 
-                    $idnya = DB::table('csc_inquiry_category')->max('id') + 1;
                     $input_cat = DB::table('csc_inquiry_category')->insert([
-                        'id' => $idnya,
                         'id_inquiry' => $id_inquiry,
                         'id_cat_prod' => $var,
                         'created_at' => date('Y-m-d H:i:s')
@@ -422,11 +420,7 @@ class InquiryWakilController extends Controller
                 sort($array);
                 $users = [];
                 for ($k=0; $k <count($array) ; $k++) { 
-                    $idn = DB::table('csc_inquiry_broadcast')->max('id');
-                    $idnew = $idn + 1;
-                    
                     $save = DB::table('csc_inquiry_broadcast')->insert([
-                        'id' => $idnew,
                         'id_inquiry' => $id_inquiry,
                         'id_itdp_company_users' => $array[$k],
                         'status' => 1,
@@ -703,11 +697,7 @@ class InquiryWakilController extends Controller
 
         $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
-        $idm = DB::table('csc_chatting_inquiry')->max('id');
-        $idmax = $idm + 1;
-
         $save = DB::table('csc_chatting_inquiry')->insert([
-            'id' => $idmax,
             'id_inquiry' => $id,
             'id_broadcast_inquiry' => $id_broadcast,
             'sender' => $sender,
@@ -767,18 +757,7 @@ class InquiryWakilController extends Controller
 
         $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
-        $idm = DB::table('csc_chatting_inquiry')->max('id');
-        $idmax = $idm + 1;
-
-        $destination= 'uploads\ChatFileInquiry\\'.$idmax;
-        if($request->hasFile('upload_file')){ 
-            $file1 = $request->file('upload_file');
-            $nama_file1 = time().'_'.$request->file('upload_file')->getClientOriginalName();
-            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
-        }
-
-        $save = DB::table('csc_chatting_inquiry')->insert([
-            'id' => $idmax,
+        $save = DB::table('csc_chatting_inquiry')->insertGetId([
             'id_inquiry' => $id,
             'id_broadcast_inquiry' => $id_broadcast,
             'sender' => $sender,
@@ -788,6 +767,19 @@ class InquiryWakilController extends Controller
             'messages' => $msg,
             'status' => 0,
             'created_at' => $datenow,
+        ]);
+
+        //upload file
+        $nama_file1 = NULL;
+        $destination= 'uploads\ChatFileInquiry\\'.$save;
+        if($request->hasFile('upload_file')){ 
+            $file1 = $request->file('upload_file');
+            $nama_file1 = time().'_'.$request->file('upload_file')->getClientOriginalName();
+            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+        }
+
+        $savefile = DB::table('csc_inquiry_br')->where('id', $save)->update([
+            'file' => $nama_file1,
         ]);
 
         //Notif sistem

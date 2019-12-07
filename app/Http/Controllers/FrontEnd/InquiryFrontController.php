@@ -234,11 +234,7 @@ class InquiryFrontController extends Controller
 
         $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
-        $idm = DB::table('csc_chatting_inquiry')->max('id');
-        $idmax = $idm + 1;
-
         $save = DB::table('csc_chatting_inquiry')->insert([
-            'id' => $idmax,
             'id_inquiry' => $id,
             'sender' => $sender,
             'receive' => $receiver,
@@ -296,18 +292,8 @@ class InquiryFrontController extends Controller
 
         $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
 
-        $idm = DB::table('csc_chatting_inquiry')->max('id');
-        $idmax = $idm + 1;
 
-        $destination= 'uploads\ChatFileInquiry\\'.$idmax;
-        if($request->hasFile('upload_file2')){ 
-            $file1 = $request->file('upload_file2');
-            $nama_file1 = time().'_'.$request->file('upload_file2')->getClientOriginalName();
-            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
-        }
-
-        $save = DB::table('csc_chatting_inquiry')->insert([
-            'id' => $idmax,
+        $save = DB::table('csc_chatting_inquiry')->insertGetId([
             'id_inquiry' => $id,
             'sender' => $sender,
             'receive' => $receiver,
@@ -316,6 +302,19 @@ class InquiryFrontController extends Controller
             'messages' => $msg,
             'status' => 0,
             'created_at' => $datenow,
+        ]);
+
+        //Upload File
+        $nama_file1 = NULL;
+        $destination= 'uploads\ChatFileInquiry\\'.$save;
+        if($request->hasFile('upload_file2')){ 
+            $file1 = $request->file('upload_file2');
+            $nama_file1 = time().'_'.$request->file('upload_file2')->getClientOriginalName();
+            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+        }
+
+        $savefile = DB::table('csc_chatting_inquiry')->where('id', $save)->update([
+            'file' => $nama_file1,
         ]);
 
         //Notif sistem
