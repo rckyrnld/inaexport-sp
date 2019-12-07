@@ -1,4 +1,6 @@
 @include('header')
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <style type="text/css">
 	th {text-align: center;}
 	td {color: black;}
@@ -6,6 +8,12 @@
 	#tambah:hover {background-color: #148de4}
 	#export { background-color: #28bd4a; color: white; white-space: pre;}
 	#export:hover {background-color: #08b32e}
+    .toggle.btn.btn-info{
+        width: 15% !important;
+    }
+    .toggle.btn.btn-default.off{
+        width: 15% !important;   
+    }
 </style>
 <div class="padding">
     <div class="row">
@@ -28,6 +36,7 @@
 					              <th>Product (INA)</th>
 					              <th>Product (CHN)</th>
 					              <th width="20%">Action</th>
+                                  <th>Show</th>
 					          </tr>
 					      </thead>
 					    </table>
@@ -50,7 +59,8 @@
                 {data: 'nama_kategori_en', name: 'nama_kategori_en'},
                 {data: 'nama_kategori_in', name: 'nama_kategori_in'},
                 {data: 'nama_kategori_chn', name: 'nama_kategori_chn'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'show', name: 'show'}
             ]
         });
     });

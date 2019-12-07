@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="{{url('assets')}}/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
     <!-- endbuild -->
     <link rel="stylesheet" href="{{url('assets')}}/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" type="text/css" />
-
+    <?php $font1 = url('/')."/front/assets/fonts/MYRIADPRO-REGULAR.woff";?>
     <style type="text/css">
         .a-custom:hover{
             text-decoration: none;
@@ -43,17 +43,22 @@
         .header-span{
             padding-left: 10px;
             color: #ff8d00; 
-            font-weight: 500; 
             font-size: 18px;
         }
         .nav-pills .nav-link:hover, .nav-pills .nav-link.active{
-            font-weight: 600;
+            font-weight: 500;
             color: #ff8d00;
         }
         .nav-pills .nav-link {
-            font-weight: 600;
+            font-weight: 500;
             color: #007bff;
         }
+        @font-face {
+                font-family: 'Myriad-pro';
+                src: url('{{$font1}}') format("truetype");
+                font-weight: normal;
+                font-style: normal;
+            }
     </style>
 
     <!-- build:js scripts/app.min.js -->
@@ -288,10 +293,10 @@
                                 <!-- Nav pills -->
                                 <ul class="nav nav-pills" role="tablist" id="tab-me">
                                     <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="pill" href="#products" id="set_products">@lang('frontend.home.product')</a>
+                                    <a class="nav-link active" data-toggle="pill" href="#products" id="set_products"  style="font-family: 'Myriad-pro';">@lang('frontend.home.product')</a>
                                     </li>
                                     <li class="nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#eksportir" id="set_eksportir">@lang('frontend.home.eksporter')</a>
+                                    <a class="nav-link" data-toggle="pill" href="#eksportir" id="set_eksportir" style="font-family: 'Myriad-pro';">@lang('frontend.home.eksporter')</a>
                                     </li>
                                     <!-- <li class="nav-item">
                                     <a class="nav-link" data-toggle="pill" href="#request">@lang('frontend.home.sourcer')</a>
@@ -382,7 +387,7 @@
                                                     <img src="{{asset('front/assets/icon/product1.png')}}" alt="" style="width: 50px;">
                                                 </td>
                                                 <td style="">
-                                                    <span class="header-span">
+                                                    <span class="header-span" style="font-family: 'Myriad-pro';">
                                                         @lang("frontend.lbl8")
                                                     </span>
                                                 </td>
@@ -403,7 +408,7 @@
                                                 <img src="{{asset('front/assets/icon/tracking.png')}}" alt="" style="width: 50px;">
                                             </td>
                                             <td style="">
-                                                <span class="header-span">
+                                                <span class="header-span" style="font-family: 'Myriad-pro';">
                                                     @lang("frontend.lbl9")
                                                 </span>
                                             </td>
@@ -445,7 +450,7 @@
                                             @endif
                                             </td>
                                             <td style="">
-                                                <span class="header-span">
+                                                <span class="header-span" style="font-family: 'Myriad-pro';">
                                                     @lang("frontend.lbl10")
                                                 </span>
                                             </td>

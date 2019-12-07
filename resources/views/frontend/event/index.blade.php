@@ -20,12 +20,15 @@
     }
     .detail_rc{
       color: #1a70bb;
-      font-family: 'Arial' !important; 
+      font-family: 'Myriad-pro' !important; 
       font-size: 14px;
     }
     .a-modif:hover{
       text-decoration: none;
       background-color: #f1ecec;
+    }
+    .a-modif.small{
+      height: 100%; padding-top: 13px; border-radius: 10px; padding-bottom: 10px;
     }
 </style>
 <!--breadcrumbs area start-->
@@ -48,42 +51,53 @@
 <div style="background-color: white; padding-bottom: 3%;">
   <div class="container">
     <div class="row">
-      <div class="col-md-12 col-lg-12">
+      <div class="col-md-6 col-lg-6">
         <span style="color: #1a70bb;"><h2>@lang("frontend.jdl_event")</h2></span>
       </div>
+      <div class="col-md-6 col-lg-6" align="right">
+        <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/event')}}">
+          {{ csrf_field() }}
+          <div class="input-group" style="width: 60%;">
+              <input type="text" name="search" class="form-control" placeholder="Search" autocomplete="off">
+              <div class="input-group-prepend">
+                <button type="submit" class="input-group-text" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px;">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
+              </div>
+          </div>
+        </form>
+      </div>
     </div><br>
-    @if($page > 1)
+    @if($page > 1 || $search != null)
       <div class="row justify-content-center">
         <div class="col-lg-12 col-md-12 col-12">
           <div class="row shop_wrapper">
     @endif
       @foreach($e_detail as $key => $ed)
-        @if($page == 1)
+        @if($page == 1 && $search == null)
           @if($key == 0 || $key == 5 )
             <div class="form-group row utama" style="height: 100%">
           @endif
         @endif
 
 
-        @if($page == 1)
+        @if($page == 1 && $search == null)
           @if( $key == 0 || $key == 1 )
-              <div class="col-lg-6 col-md-6 col-12 second @if($key == 0) a-modif @endif" style="height: 100%;">
-                <?php $size = 412; $num_char = 65;?>
+              <div class="col-lg-6 col-md-6 col-12 second @if($key == 0) a-modif @endif" style="height: 100%; padding-bottom: 10px; border-radius: 10px; @if($key == 0) padding-top: 13px; @endif">
+                <?php $size = 426; $num_char = 65;?>
           @elseif($key >= 5)
-              <div class="col-lg-3 col-md-3 col-12 second a-modif" style="height: 100%; padding-top: 10px;">
+              <div class="col-lg-3 col-md-3 col-12 second a-modif small">
                 <?php $size = 162; $num_char = 25;?>
           @endif
         @else
-          <div class="col-lg-3 col-md-3 col-12 second a-modif" style="height: 100%; padding-top: 10px;">
+          <div class="col-lg-3 col-md-3 col-12 second a-modif small">
           <?php $size = 162; $num_char = 25;?>
         @endif
 
-        @if($page == 1)
+        @if($page == 1 && $search == null)
           @if( $key > 0 && $key < 5)
             @if($key == 1)
               <div class="form-group row" style="height: 100%;">
             @endif
-              <div class="col-lg-6 col-md-6 col-12 a-modif" style="height: 50%;">
+              <div class="col-lg-6 col-md-6 col-12 a-modif" style="height: 50%; padding-bottom: 10px; padding-top: 13px; border-radius: 10px;">
                 <?php $size = 162; $num_char = 25;?>
           @endif
         @endif
@@ -148,9 +162,9 @@
               $titleName = $title;
           }
 
-          if(strlen($lokasi) > ($num_char+6)){
-              $cut_text = substr($lokasi, 0, ($num_char+6));
-              if ($lokasi{ ($num_char+6) - 1} != ' ') {
+          if(strlen($lokasi) > ($num_char+12)){
+              $cut_text = substr($lokasi, 0, ($num_char+12));
+              if ($lokasi{ ($num_char+12) - 1} != ' ') {
                   $new_pos = strrpos($cut_text, ' '); 
                   $cut_text = substr($lokasi, 0, $new_pos);
               }
@@ -161,7 +175,7 @@
           ?>
           <a href="{{url('/front_end/join_event/')}}/{{$ed->id}}" class="a-modif">
           <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-            <img class="rc" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px; width: 100%;">
+            <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
           </div>
           <div style="height: 25%; padding-top: 5px;">
               <span style="font-family: arial; font-weight: 530; font-size: 18px; color: black !important;" title="{{$title}}">{{$titleName}}</span><br>
@@ -173,7 +187,7 @@
           </div>
           </a>
       </div>
-        @if($page == 1)
+        @if($page == 1 && $search == null)
           @if( $key == 4 || $key == 9)
             </div>
             @if($key == 4)
@@ -199,3 +213,10 @@
 </div>
 <div style="margin-top: 0px; margin-bottom: 5%; background-color: white;"></div>
 @include('frontend.layouts.footer')
+<script type="text/javascript">
+  $(document).ready(function() {
+    if(window.innerWidth <= 760){
+        $('.fix-image').css('height','162px');
+    } 
+  })
+</script>

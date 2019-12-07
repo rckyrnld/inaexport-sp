@@ -38,7 +38,15 @@ class CategoryProductController extends Controller
               </center>
               ';
           })
-          ->rawColumns(['action'])
+          ->addColumn('show', function ($data) {
+              return '
+              <center>
+                <input type="checkbox" checked data-toggle="toggle" data-on="Publish" data-off="Hide" data-onstyle="info" data-offstyle="default" id="statusnya">
+                <input type="hidden" name="status" id="status" value="1"> 
+              </center>
+              ';
+          })
+          ->rawColumns(['action', 'show'])
           ->make(true);
     }
 

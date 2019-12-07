@@ -11,14 +11,17 @@
     }
 
     .product_tab_button.nav div a{
-        font-size: 10px; 
-        color: black;
+        font-size: 12px; 
+        color: #34b1e5;
+        font-family: 'Myriad-pro'; 
     }
 
     .product_tab_button.nav div a.active, .product_tab_button.nav div a:hover{
-      color: #007bff;
-      text-decoration: none;
-      font-weight: bold;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 12px; 
+        font-family: 'Myriad-pro'; 
+        color: #fe8f00;
     }
 
     .for-act{
@@ -231,7 +234,7 @@
                                     $cls = "active";
                                 }
                             ?>
-                            <div class="col-md-1 col-lg-1 col-3" align="center">
+                            <div class="col-md-2 col-lg-2 col-4" align="center">
                                 <?php
                                     $nkat = "nama_kategori_".$lct; 
                                     if($cut->$nkat == NULL){
@@ -251,8 +254,8 @@
                                         $kategorinya = $textkat;
                                     }
                                 ?>
-                                <a class="tabnya {{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" role="tab" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
-                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 32px">
+                                <a class="tabnya {{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
+                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 40px">
                                     <p>{{$kategorinya}}</p>
                                 </a>
                             </div>
@@ -282,7 +285,7 @@
                             $clsnya = "";
                         }
                     ?>
-                    <div class="tab-pane fade show {{$clsnya}}" id="tabke{{$cuta->id}}" role="tabpanel">
+                    <div class="tab-pane fade show {{$clsnya}} product" id="tabke{{$cuta->id}}" role="tabpanel">
                         <?php
                             $product = getProductByCategory($cuta->id);
                         ?>
@@ -535,7 +538,7 @@
         } 
     });
     function openTab(tabname) {
-        $('.tab-pane').removeClass('active');
+        $('.tab-pane.product').removeClass('active');
         $('.tabnya').removeClass('active');
         $('#'+tabname).addClass('active');
     }
