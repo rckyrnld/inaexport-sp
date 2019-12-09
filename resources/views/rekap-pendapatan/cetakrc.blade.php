@@ -12,6 +12,7 @@ List Research Corner
 					              <th>Title (EN)</th>
 					              <th>Type</th>
 					              <th>Country</th>
+					              <th>Download</th>
 					              <th>Publish Date</th>
 					          </tr>
 					      </thead>
@@ -25,8 +26,11 @@ List Research Corner
 							foreach($data as $d1){ echo $d1->nama_en; } 
 							?></td>
 							<td><?php 
-							echo $no; 
+							$ic = $vo->id_mst_country;
+							$data2 =  DB::select("select * from mst_country where id='".$ic."'");
+							foreach($data2 as $d2){ echo $d2->country; } 
 							?></td>
+							<td><?php echo $vo->download; ?></td>
 							<td><?php echo $vo->publish_date; ?></td>
 						  </tr>
 						  <?php $no++; } ?>

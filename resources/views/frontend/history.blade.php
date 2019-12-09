@@ -100,7 +100,15 @@
                     <div class="breadcrumb_content">
                         <ul>
                             <li><a href="{{url('/')}}">@lang('frontend.proddetail.home')</a></li>
-                            <li>@lang('frontend.history.title')</li>
+                            <li>@lang('frontend.history.title')  
+							<?php 
+							if(empty($prioritasnya)){
+								echo "ga ada";
+							}else{
+								echo $prioritasnya;
+							}
+							?>
+							</li>
                         </ul>
                     </div>
                 </div>
