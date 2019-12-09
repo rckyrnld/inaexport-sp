@@ -36,7 +36,7 @@ class InquiryController extends Controller
         $jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
             $jsonResult[$i]["id"] = $user[$i]->id;
-            $jsonResult[$i]["id_pembuat"] = $user[$i]->id_itdp_company_user;
+            $jsonResult[$i]["id_pembuat"] = $user[$i]->id_itdp_profil_eks;
 //            $jsonResult[$i]["id_itdp_company_user"] = $user[$i]->id_itdp_company_user;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
@@ -479,8 +479,11 @@ class InquiryController extends Controller
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
-            $id_profil = $user[$i]->sender;
-            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
+            $id_user = $user[$i]->sender;
+            $id_profil = DB::table('itdp_company_users')->where('id', $id_user)->first()->id_profil;
+            $id_role = DB::table('itdp_company_users')->where('id', $id_user)->first()->id_role;
+            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+            $jsonResult[$i]["id_profil"] = $id_profil;
             $jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
@@ -716,8 +719,10 @@ class InquiryController extends Controller
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
-            $id_profil = $user[$i]->sender;
-            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
+            $id_user = $user[$i]->sender;
+            $id_profil = DB::table('itdp_company_users')->where('id', $id_user)->first()->id_profil;
+            $id_role = DB::table('itdp_company_users')->where('id', $id_user)->first()->id_role;
+            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
             $jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;

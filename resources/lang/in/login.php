@@ -38,7 +38,7 @@ return [
         "re-password" => "Re-Password",
         "postcode" => "Postcode",
         "address" => "Address",
-		 "by1" => "Formulir Permintaan Pembelian",
+		 "by1" => "Ingin Mendapat Penawaran ?",
 		 "by2" => "Apa yang sedang Anda cari",
 		 "by3" => "Kategori",
 		 "by4" => "Spesifikasi",
