@@ -58,7 +58,7 @@ class BRFrontController extends Controller
 		// echo "a";die();
 		$r = "2";
 		$categoryutama = "";
-        return view('frontend.indexbr', compact('product', 'categoryutama','r'));
+        return view('frontend.indexbr', compact('product', 'categoryutama','r','subyek','valid','spec','eo','neo','tp','ntp'));
 		
 		}else{
 		if(!empty(Auth::guard('eksmp')->user()->id)){
