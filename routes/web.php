@@ -330,6 +330,7 @@ Route::namespace('Management')->group(function () {
 		    Route::get('/level_2/', 'CategoryProductController@level_2')->name('level2');
 		    Route::post('/store/{param}', 'CategoryProductController@store')->name('store');
 		    Route::get('/destroy/{id}', 'CategoryProductController@destroy')->name('destroy');
+            Route::post('/home/', 'CategoryProductController@home')->name('home');
         });
     });
 

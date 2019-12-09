@@ -135,7 +135,7 @@
 
                         <div id="img-1" class="zoomWrapper single-zoom" align="center">
                             <a href="#">
-                                <img id="zoom1" src="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}" alt="big-1" style="width: auto; height: 400px;">
+                                <img id="zoom1" src="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}" alt="big-1" style="width: 100%; height: 400px;">
                             </a>
                         </div>
 
@@ -143,14 +143,14 @@
                             <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}">
-                                        <img src="{{url('/')}}/{{$img1}}" alt="zo-th-1" style="width: auto; height: 90px;" />
+                                        <img src="{{url('/')}}/{{$img1}}" alt="zo-th-1" style="width: 100%; height: 90px;" />
                                     </a>
 
                                 </li>
                                 @if($img2 != "image/noimage.jpg")
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img2}}" data-zoom-image="{{url('/')}}/{{$img2}}">
-                                        <img src="{{url('/')}}/{{$img2}}" alt="zo-th-1" style="width: auto; height: 90px;" />
+                                        <img src="{{url('/')}}/{{$img2}}" alt="zo-th-1" style="width: 100%; height: 90px;" />
                                     </a>
 
                                 </li>
@@ -158,7 +158,7 @@
                                 @if($img3 != "image/noimage.jpg")
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img3}}" data-zoom-image="{{url('/')}}/{{$img3}}">
-                                        <img src="{{url('/')}}/{{$img3}}" alt="zo-th-1" style="width: auto; height: 90px;" />
+                                        <img src="{{url('/')}}/{{$img3}}" alt="zo-th-1" style="width: 100%; height: 90px;" />
                                     </a>
 
                                 </li>
@@ -166,7 +166,7 @@
                                 @if($img4 != "image/noimage.jpg")
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img4}}" data-zoom-image="{{url('/')}}/{{$img4}}">
-                                        <img src="{{url('/')}}/{{$img4}}" alt="zo-th-1" style="width: auto; height: 90px;" />
+                                        <img src="{{url('/')}}/{{$img4}}" alt="zo-th-1" style="width: 100%; height: 90px;" />
                                     </a>
 
                                 </li>
@@ -177,9 +177,11 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="product_d_right">
-                            <h1>{{$name}}</h1>
+                            <h1 style="font-weight: 600; color: #007bff;"><i>{{$name}}</i></h1>
+                            <span style="color: #747d90">
+                                <i class="fa fa-calendar" style="padding-right: 8px;"></i>{{date("d F Y", strtotime($detail->start_date))}} - {{date("d F Y", strtotime($detail->end_date))}}<hr>
+                            </span>
                             <div class="product_desc">
-                                {{date("d F Y", strtotime($detail->start_date))}} - {{date("d F Y", strtotime($detail->end_date))}}<br>
                                 <table>
                                     <tr>
                                         <td>@lang("frontend.event.type")</td>

@@ -188,7 +188,7 @@ class SuppliersFrontController extends Controller
         $jenisnya = "eksportir";
         $bgn = "list";
         // dd($jenisnya);
-        return view('frontend.supplier.list_eksporter', compact('categoryutama', 'eksporter', 'catActive', 'coeksporter', 'search_eks', 'get_cat_eks', 'jenisnya', 'sortingby', 'bgn'));
+        return view('frontend.supplier.list_eksporter',['eksporter' => $eksporter->appends(Input::except('page'))], compact('categoryutama', 'catActive', 'coeksporter', 'search_eks', 'get_cat_eks', 'jenisnya', 'sortingby', 'bgn'));
 
 
     }

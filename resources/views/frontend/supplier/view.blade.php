@@ -34,6 +34,36 @@
         border-radius: 10px;
         padding: 20px;
     }
+    .href-name {
+        color: black;
+    }
+
+    .href-name:hover {
+        text-decoration: none;
+    }
+
+    .href-company{
+        text-transform: capitalize; 
+        font-size: 11px; 
+        font-family: 'Open Sans', sans-serif; 
+        /*color: black;*/
+    }
+
+    .href-company:hover{
+        text-decoration: none;
+        color: black !important;
+    }
+
+    .href-category{
+        text-transform: capitalize; 
+        font-size: 11px !important; 
+        font-family: 'Open Sans', sans-serif; 
+    }
+
+    .href-category:hover{
+        text-decoration: none;
+        /*color: #2777d0 !important;*/
+    }
 </style>
 <!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
@@ -297,44 +327,82 @@
                                                     }  
                                                 }
                                             ?>
-                                            <div class="col-lg-3 col-md-4 col-12 ">
-                                                <div class="single_product" style="height: 300px;">
-                                                    <div class="product_name grid_name">
-                                                        <?php
-                                                            $num_char = 16;
-                                                            $prodn = getProductAttr($pro->id, 'prodname', $lct);
-                                                            if(strlen($prodn) > 16){
-                                                                $cut_text = substr($prodn, 0, $num_char);
-                                                                if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                                    $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                                                                    $cut_text = substr($prodn, 0, $new_pos);
-                                                                }
-                                                                $prodnama = $cut_text . '...';
-                                                            }else{
-                                                                $prodnama = $prodn;
-                                                            }
-                                                        ?>
-                                                        <h3><a href="{{url('front_end/product/'.$pro->id)}}"title="{{$prodn}}">{{$prodnama}}</a></h3>
+                                            <div class="col-lg-4 col-md-4 col-12 ">
+                                                <?php
+                                                    $ukuran = '300px';
+                                                    if(Auth::guard('eksmp')->user()){
+                                                        $ukuran = '350px';
+                                                    }
+                                                ?>
+                                                <div class="single_product" style="height: {{$ukuran}};">
+                                                    <div class="pro-type" style="{{$dis}}">
+                                                        <span class="pro-type-content">
+                                                             @if($loc == "ch")
+                                                                新
+                                                            @elseif($loc == "in")
+                                                                BARU
+                                                            @else
+                                                                NEW
+                                                            @endif
+                                                        </span>
                                                     </div>
+                                                    <?php
+                                                        //cut prod name
+                                                        $num_char = 30;
+                                                        $prodn = getProductAttr($pro->id, 'prodname', $lct);
+                                                        if(strlen($prodn) > 30){
+                                                            $cut_text = substr($prodn, 0, $num_char);
+                                                            if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                                $cut_text = substr($prodn, 0, $new_pos);
+                                                            }
+                                                            $prodnama = $cut_text . '...';
+                                                        }else{
+                                                            $prodnama = $prodn;
+                                                        }
+
+                                                        //cut company
+                                                        $num_charp = 25;
+                                                        $compname = getCompanyName($pro->id_itdp_company_user);
+                                                        if(strlen($compname) > 25){
+                                                            $cut_text = substr($compname, 0, $num_charp);
+                                                            if ($compname{$num_charp - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                                $cut_text = substr($compname, 0, $new_pos);
+                                                            }
+                                                            $companame = $cut_text . '...';
+                                                        }else{
+                                                            $companame = $compname;
+                                                        }
+
+                                                        $num_chark = 32;
+                                                        if(strlen($categorynya) > 32){
+                                                            $cut_text = substr($categorynya, 0, $num_chark);
+                                                            if ($categorynya{$num_chark - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                                $cut_text = substr($categorynya, 0, $new_pos);
+                                                            }
+                                                            $category = $cut_text . '...';
+                                                        }else{
+                                                            $category = $categorynya;
+                                                        }
+                                                    ?>
                                                     <div class="product_thumb" align="center">
-                                                        <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="height: 150px;"></a>
+                                                        <center>
+                                                            <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="height: 170px;"></a>
+                                                        </center>
                                                         <!-- <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
                                                     </div>
                                                     <div class="product_name grid_name">
-                                                        <?php
-                                                            $num_chark = 23;
-                                                            if(strlen($categorynya) > 23){
-                                                                $cut_text = substr($categorynya, 0, $num_chark);
-                                                                if ($categorynya{$num_chark - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                                    $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                                                                    $cut_text = substr($categorynya, 0, $new_pos);
-                                                                }
-                                                                $category = $cut_text . '...';
-                                                            }else{
-                                                                $category = $categorynya;
-                                                            }
-                                                        ?>
-                                                        <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}">{{$category}}</a></p>
+                                                        <p class="manufacture_product">
+                                                            <a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}" class="href-category">{{$category}}</a>
+                                                        </p>
+                                                        <h3>
+                                                            <a href="{{url('front_end/product/'.$pro->id)}}" title="{{$prodn}}" class="href-name"><b>{{$prodnama}}</b></a>
+                                                        </h3>
+                                                        <h3>
+                                                            <a href="{{url('front_end/list_perusahaan/view/'.$pro->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">by</span>&nbsp;&nbsp;{{$companame}}</a>
+                                                        </h3>
                                                     </div>
                                                     <div class="product_content grid_content">
                                                         <div class="content_inner">
@@ -358,9 +426,13 @@
                                                     <div class="product_content list_content">
                                                         <div class="left_caption">
                                                             <div class="product_name">
-                                                                <h3><a href="{{url('front_end/product/'.$pro->id)}}">{{getProductAttr($pro->id, 'prodname', $lct)}}</a></h3>
+                                                                <h3>
+                                                                    <a href="{{url('front_end/product/'.$pro->id)}}" title="{{$prodn}}" class="href-name" style="font-size: 15px !important;"><b>{{$prodn}}</b></a>
+                                                                </h3>
+                                                                <h3>
+                                                                    <a href="{{url('front_end/list_perusahaan/view/'.$pro->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">by</span>&nbsp;&nbsp;{{$compname}}</a>
+                                                                </h3>
                                                             </div>
-
                                                             <div class="product_desc">
                                                                 <?php
                                                                     $proddesc = getProductAttr($pro->id, 'product_description', $lct);

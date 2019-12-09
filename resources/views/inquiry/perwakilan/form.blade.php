@@ -71,7 +71,7 @@
                             </div>
                             <div class="col-md-4">
                                 @if($mode == "add" || $mode == "edit")
-                                <input type="file" class="form-control" id="file" name="file" required><br>
+                                <input type="file" class="form-control" id="file" name="file" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,.ppt,.pptx,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,.pdf,application/pdf" required><br>
                                 @endif
                                 @if($data != NULL)
                                     @if($data->file == "")
@@ -92,12 +92,12 @@
                                     <option value="None" @if($data != NULL) @if($data->duration == "None") selected @endif @endif>None</option>
                                     <option value="1 week" @if($data != NULL) @if($data->duration == "1 week") selected @endif @endif>Valid for 1 Week</option>
                                     <option value="2 weeks" @if($data != NULL) @if($data->duration == "2 weeks") selected @endif @endif>Valid for 2 Weeks</option>
-                                    <option value="3 weeks" @if($data != NULL) @if($data->duration == "3 weeks") selected @endif @endif>Valid for 3 Weeks</option>
+                                    <!-- <option value="3 weeks" @if($data != NULL) @if($data->duration == "3 weeks") selected @endif @endif>Valid for 3 Weeks</option> -->
                                     <option value="1 month" @if($data != NULL) @if($data->duration == "1 month") selected @endif @endif>Valid for 1 Month</option>
                                     <option value="2 months" @if($data != NULL) @if($data->duration == "2 months") selected @endif @endif>Valid for 2 Months</option>
-                                    <option value="3 months" @if($data != NULL) @if($data->duration == "3 months") selected @endif @endif>Valid for 3 Months</option>
+                                    <!-- <option value="3 months" @if($data != NULL) @if($data->duration == "3 months") selected @endif @endif>Valid for 3 Months</option>
                                     <option value="4 months" @if($data != NULL) @if($data->duration == "4 months") selected @endif @endif>Valid for 4 Months</option>
-                                    <option value="5 months" @if($data != NULL) @if($data->duration == "5 months") selected @endif @endif>Valid for 5 Months</option>
+                                    <option value="5 months" @if($data != NULL) @if($data->duration == "5 months") selected @endif @endif>Valid for 5 Months</option> -->
                                     <option value="6 months" @if($data != NULL) @if($data->duration == "6 months") selected @endif @endif>Valid for 6 Months</option>
                                 </select>
                             </div>
@@ -139,7 +139,6 @@
             var date = $('#dateinquiry').val();
             var subject = $('#subject').val();
             var messages = CKEDITOR.instances.messages.getData();
-            var file = $('#file').val();
             var duration = $('#duration').val();
             
             if(prodname == ""){
@@ -152,8 +151,6 @@
                 alert("Subject is empty, Please fill in!");
             }else if(messages == ""){
                 alert("Messages is empty, Please fill in!");
-            }else if(file == ""){
-                alert("File is empty, Please fill in!");
             }else{
                 $('#formnya').submit();
             }

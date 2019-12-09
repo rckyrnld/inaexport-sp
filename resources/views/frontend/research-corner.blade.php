@@ -201,6 +201,9 @@
       });
     } else {
       alert("{{$message}}");
+      if(login == 'non user'){
+        window.location.href = "{{url('/login')}}";
+      }
     }
   }
 </script>

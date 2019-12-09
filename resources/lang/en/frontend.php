@@ -43,7 +43,7 @@ return [
     "negara_rc" => "COUNTRY",
     "publish_rc" => "PUBLISH DATE",
     "terbaru" => "10 Latest",
-    "jdl_event" => "List Event",
+    "jdl_event" => "Event & Fair",
     "cari"  => "Search",
     "t_date"    => "Start Date - End Date", 
     "t_Comodity"    => "Comodity",

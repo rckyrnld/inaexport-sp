@@ -270,17 +270,17 @@ class ProductNonAuthController extends Controller
         }
     }
 
-    public function suggestProductname(Request $request)
+    public function suggestProductname()
     {
-        $queryaaa = $request->parameter;
+//        $queryaaa = $request->parameter;
         $dataProduk = DB::table('itdp_company_users')
             ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
             ->where('itdp_company_users.status', '=', 1)
             ->where('csc_product_single.status', 2)
-            ->where(function ($query) use ($queryaaa) {
-                $query->where('csc_product_single.prodname_en', 'like', '%' . $queryaaa . '%');
-            })
+//            ->where(function ($query) use ($queryaaa) {
+//                $query->where('csc_product_single.prodname_en', 'like', '%' . $queryaaa . '%');
+//            })
             ->select('csc_product_single.prodname_en')
 //            ->limit(1)
             ->get();

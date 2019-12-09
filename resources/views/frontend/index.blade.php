@@ -11,14 +11,17 @@
     }
 
     .product_tab_button.nav div a{
-        font-size: 10px; 
-        color: black;
+        font-size: 12px; 
+        color: #34b1e5;
+        font-family: 'Myriad-pro'; 
     }
 
     .product_tab_button.nav div a.active, .product_tab_button.nav div a:hover{
-      color: #007bff;
-      text-decoration: none;
-      font-weight: bold;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 12px; 
+        font-family: 'Myriad-pro'; 
+        color: #fe8f00;
     }
 
     .for-act{
@@ -35,7 +38,38 @@
     }
 
     .button_form{
-        width: 30%;
+        width: auto;
+    }
+
+    .href-name {
+        color: black;
+    }
+
+    .href-name:hover {
+        text-decoration: none;
+    }
+
+    .href-company{
+        text-transform: capitalize; 
+        font-size: 11px; 
+        font-family: 'Open Sans', sans-serif; 
+        /*color: black;*/
+    }
+
+    .href-company:hover{
+        text-decoration: none;
+        color: black !important;
+    }
+
+    .href-category{
+        text-transform: capitalize; 
+        font-size: 11px !important; 
+        font-family: 'Open Sans', sans-serif; 
+    }
+
+    .href-category:hover{
+        text-decoration: none;
+        /*color: #2777d0 !important;*/
     }
 </style>
 <?php 
@@ -172,16 +206,7 @@
                                 @else
                                 <a href="{{url($url)}}" class="for-act">
                                 @endif
-                                  <img src="{{asset('front/assets/icon/icon_buyer.png')}}" alt="" style="width: 20%;">
-                                  <span style="font-size: 27px; color: #37791C;">
-                                    @if($loc == 'ch')
-                                    给买家
-                                    @elseif($loc == 'in')
-                                    PEMBELI
-                                    @else
-                                    FOR BUYER
-                                    @endif
-                                  </span>
+                                  <img src="{{asset('front/assets/icon/for-buyer.png')}}" alt="">
                                 @if(Auth::guard('eksmp')->user())
                                 @if(Auth::guard('eksmp')->user()->id_role == 3)
                                 </a>
@@ -200,16 +225,7 @@
                                 @else
                                 <a href="{{url($url)}}" class="for-act">
                                 @endif
-                                  <img src="{{asset('front/assets/icon/icon_seller.png')}}" alt="" style="width: 20%;">
-                                  <span style="font-size: 27px; color: #EA8125;">
-                                    @if($loc == 'ch')
-                                    印尼出口商
-                                    @elseif($loc == 'in')
-                                    EKSPORTIR INDONESIA
-                                    @else
-                                    FOR INDONESIA EXPORTER
-                                    @endif
-                                  </span>
+                                  <img src="{{asset('front/assets/icon/for-indonesia-exportir.png')}}" alt="" >
                                 @if(Auth::guard('eksmp')->user())
                                 @if(Auth::guard('eksmp')->user()->id_role == 2)
                                 </a>
@@ -249,7 +265,7 @@
                                     $cls = "active";
                                 }
                             ?>
-                            <div class="col-md-1 col-lg-1 col-3" align="center">
+                            <div class="col-md-2 col-lg-2 col-4" align="center">
                                 <?php
                                     $nkat = "nama_kategori_".$lct; 
                                     if($cut->$nkat == NULL){
@@ -269,8 +285,8 @@
                                         $kategorinya = $textkat;
                                     }
                                 ?>
-                                <a class="tabnya {{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" role="tab" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
-                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 32px">
+                                <a class="tabnya {{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
+                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 40px">
                                     <p>{{$kategorinya}}</p>
                                 </a>
                             </div>
@@ -300,7 +316,7 @@
                             $clsnya = "";
                         }
                     ?>
-                    <div class="tab-pane fade show {{$clsnya}}" id="tabke{{$cuta->id}}" role="tabpanel">
+                    <div class="tab-pane fade show {{$clsnya}} product" id="tabke{{$cuta->id}}" role="tabpanel">
                         <?php
                             $product = getProductByCategory($cuta->id);
                         ?>
@@ -349,86 +365,146 @@
                                               $isimg1 = '/image/noimage.jpg';
                                             }  
                                         }
+                                        $ukuran = '300px';
                                         if(Auth::guard('eksmp')->user()){
-                                            $height = 350;
-                                        } else {
-                                            $height = 300;
+                                            $ukuran = '350px';
                                         }
                                     ?>
-                                        <div class="single_product" style="height: {{$height}}px;">
-                                            <div class="product_name">
-                                                <?php
-                                                    $num_char = 20;
-                                                    $prodn = getProductAttr($p->id, 'prodname', $lct);
-                                                    if(strlen($prodn) > 20){
-                                                        $cut_text = substr($prodn, 0, $num_char);
-                                                        if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                            $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                                                            $cut_text = substr($prodn, 0, $new_pos);
-                                                        }
-                                                        $prodnama = $cut_text . '...';
-                                                    }else{
-                                                        $prodnama = $prodn;
-                                                    }
-                                                ?>
-                                                <h3><a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}">
-                                                    {{$prodnama}}
-                                                </a></h3>
-                                            </div>
-                                            <h3 style="text-transform: uppercase; font-size: 14px; font-weight: 400; font-family: "Open Sans", sans-serif;">
-                                                <?php
-                                                    $num_charp = 15;
-                                                    $compname = getCompanyName($p->id_itdp_company_user);
-                                                    if(strlen($compname) > 15){
-                                                        $cut_text = substr($compname, 0, $num_charp);
-                                                        if ($compname{$num_charp - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                            $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                                                            $cut_text = substr($compname, 0, $new_pos);
-                                                        }
-                                                        $companame = $cut_text . '...';
-                                                    }else{
-                                                        $companame = $compname;
-                                                    }
-                                                ?>
-                                                <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}">{{$companame}}</a>
+                                    <div class="single_product" style="height: {{$ukuran}};">
+                                        <?php
+                                            //cut prod name
+                                            $num_char = 20;
+                                            $prodn = getProductAttr($p->id, 'prodname', $lct);
+                                            if(strlen($prodn) > 20){
+                                                $cut_text = substr($prodn, 0, $num_char);
+                                                if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                    $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                    $cut_text = substr($prodn, 0, $new_pos);
+                                                }
+                                                $prodnama = $cut_text . '...';
+                                            }else{
+                                                $prodnama = $prodn;
+                                            }
+
+                                            //cut company
+                                            $num_charp = 25;
+                                            $compname = getCompanyName($p->id_itdp_company_user);
+                                            if(strlen($compname) > 25){
+                                                $cut_text = substr($compname, 0, $num_charp);
+                                                if ($compname{$num_charp - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                    $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                    $cut_text = substr($compname, 0, $new_pos);
+                                                }
+                                                $companame = $cut_text . '...';
+                                            }else{
+                                                $companame = $compname;
+                                            }
+
+                                            $num_chark = 25;
+                                            if(strlen($categorynya) > 25){
+                                                $cut_text = substr($categorynya, 0, $num_chark);
+                                                if ($categorynya{$num_chark - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                    $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                    $cut_text = substr($categorynya, 0, $new_pos);
+                                                }
+                                                $category = $cut_text . '...';
+                                            }else{
+                                                $category = $categorynya;
+                                            }
+                                        ?>
+                                        <div class="product_thumb" align="center">
+                                            <center>
+                                                <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="height: 170px;"></a>
+                                            </center>
+                                        </div>
+                                        <div class="product_name grid_name">
+                                            <p class="manufacture_product">
+                                                <a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}" class="href-category">{{$category}}</a>
+                                            </p>
+                                            <h3>
+                                                <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name"><b>{{$prodnama}}</b></a>
                                             </h3>
-                                            <div class="product_thumb" align="center">
-                                                <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="height: 170px; width: auto;"></a>
-                                            </div>
-                                                <?php
-                                                    $num_chark = 25;
-                                                    if(strlen($categorynya) > 25){
-                                                        $cut_text = substr($categorynya, 0, $num_chark);
-                                                        if ($categorynya{$num_chark - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                            $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                                                            $cut_text = substr($categorynya, 0, $new_pos);
-                                                        }
-                                                        $category = $cut_text . '...';
-                                                    }else{
-                                                        $category = $categorynya;
-                                                    }
-                                                ?>
-                                            <div class="product_name">
-                                                <p class="manufacture_product"><a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}">{{$category}}</a></p>
-                                            </div>
-                                            <div class="product_content">
+                                            <h3>
+                                                <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">by</span>&nbsp;&nbsp;{{$companame}}</a>
+                                            </h3>
+                                        </div>
+                                        <div class="product_content grid_content">
+                                            <div class="content_inner">
                                                 <div class="product_footer d-flex align-items-center">
-                                                    @if(Auth::guard('eksmp')->user())
                                                     <div class="price_box">
-                                                        @if(is_numeric($p->price_usd))
-                                                            <span class="regular_price">
+                                                        @if(Auth::guard('eksmp')->user())
+                                                        <span class="current_price">
+                                                            @if(is_numeric($p->price_usd))
                                                                 $ {{number_format($p->price_usd,0,",",".")}}
-                                                            </span>
+                                                            @else
+                                                                <span style="font-size: 13px;">
+                                                                    {{$p->price_usd}}
+                                                                </span>
+                                                            @endif
+                                                        </span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product_content list_content">
+                                            <div class="left_caption">
+                                                <div class="product_name">
+                                                    <h3>
+                                                        <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name" style="font-size: 15px !important;"><b>{{$prodn}}</b></a>
+                                                    </h3>
+                                                    <h3>
+                                                        <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">by</span>&nbsp;&nbsp;{{$compname}}</a>
+                                                    </h3>
+                                                </div>
+                                                <div class="product_desc">
+                                                    <?php
+                                                        $proddesc = getProductAttr($p->id, 'product_description', $lct);
+                                                        $num_desc = 350;
+                                                        if(strlen($proddesc) > $num_desc){
+                                                            $cut_desc = substr($proddesc, 0, $num_desc);
+                                                            if ($proddesc{$num_desc - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                                                $new_pos = strrpos($cut_desc, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                                $cut_desc = substr($proddesc, 0, $new_pos);
+                                                            }
+                                                            $product_desc = $cut_desc . '...';
+                                                        }else{
+                                                            $product_desc = $proddesc;
+                                                        }
+                                                        $product_desc = strip_tags($product_desc, "<p><a><br><i><b><u><hr><strong><small>");
+                                                    ?>
+                                                    <?php echo $product_desc; ?>
+                                                </div>
+                                            </div>
+                                            <div class="right_caption">
+                                                <div class="text_available">
+                                                    <p>
+                                                        @lang('frontend.available'): 
+                                                        @if($loc == "ch")
+                                                            <span>库存{{$p->capacity}}件</span>
+                                                        @elseif($loc == "in")
+                                                            <span>{{$p->capacity}} dalam persediaan</span>
                                                         @else
-                                                            <span class="regular_price" style="font-size: 13px;">
+                                                            <span>{{$p->capacity}} in stock</span>
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                                <div class="price_box">
+                                                    @if(Auth::guard('eksmp')->user())
+                                                    <span class="current_price">
+                                                        @if(is_numeric($p->price_usd))
+                                                            $ {{number_format($p->price_usd,0,",",".")}}
+                                                        @else
+                                                            <span style="font-size: 13px;">
                                                                 {{$p->price_usd}}
                                                             </span>
                                                         @endif
-                                                    </div>
+                                                    </span>
                                                     @endif
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                 @endforeach
                             </div>
                         @endif
@@ -446,46 +522,119 @@
             <div class="row">
                 <div class="col-12">
                     <div class="row">
-                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <br>
+                            <div style="padding-left:10px;padding-right:10px;">
+                                <p style="font-size:20px;"><b>@lang("login.lbl5")</b></p>
+                                <p style="font-size:16px;">@lang("login.lbl6") <br> @lang("login.lbl7")
+                                <br> @lang("login.lbl8")</p>
+                            </div>
+                        </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-5" style="padding-top: 20px;">
                             <div class="box-cu">
-                                <form action="{{url('/contact-us/send/')}}" method="POST">
-                                    {{ csrf_field() }}
-                                    <center><h5><b>@lang("frontend.cu-cu")</b></h5></center>
+                                    <center><h5><b>@lang("login.forms.by1")</b></h5></center>
                                     <br>
                                    <div class="form-group row">
-                                       <div class="col-md-12">
-                                           <input type="text" id="id" class="form-control integer" name="name" autocomplete="off" placeholder="@lang("frontend.cu-fullname")" style="font-size: 13px;" required>
+                                        <div class="col-md-12">
+                                            <input type="text" style="color:black;font-size: 13px;" value="" name="subyek" id="subyek" class="form-control" placeholder="@lang('login.forms.by2')?" required>
+                                        </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                        <div class="col-md-12">
+                                            <select style="color:black;font-size: 13px;" class="form-control" name="valid" id="valid" required>
+                                                <option value="">@lang("login.forms.by10")</option>
+                                                <option value="0">None</option>
+                                                <option value="1">Valid within 1 day</option>
+                                                <option value="3">Valid within 3 day</option>
+                                                <option value="5">Valid within 5 day</option>
+                                                <option value="7">Valid within 7 day</option>
+                                                <option value="14">Valid within 2 week</option>
+                                                <option value="30">Valid within 1 month</option>
+                                            </select>
+                                        </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                        <div class="col-md-12">
+                                            <textarea style="color:black; font-size: 13px;" value="" name="spec" id="spec" class="form-control" placeholder="@lang('login.forms.by4')"></textarea>
+                                        </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                       <div class="col-md-7">
+                                           <input style="color:black; font-size: 13px;" type="number" min="1" name="eo" id="eo" class="form-control" placeholder="@lang('login.forms.by5')">
+                                       </div>
+                                       <div class="col-md-5">
+                                           <select class="form-control" name="neo" id="neo" style="color: black; font-size: 12px;">
+                                                <option value="">@lang("login.forms.by14")</option>
+                                                <option value="Each">Each</option>
+                                                <option value="Foot">Foot</option>
+                                                <option value="Gallons">Gallons</option>
+                                                <option value="Kilograms">Kilograms</option>
+                                                <option value="Liters">Liters</option>
+                                                <option value="Packs">Packs</option>
+                                                <option value="Pairs">Pairs</option>
+                                                <option value="Pieces">Pieces</option>
+                                                <option value="Reams">Reams</option>
+                                                <option value="Rods">Rods</option>
+                                                <option value="Rolls">Rolls</option>
+                                                <option value="Sets">Sets</option>
+                                                <option value="Sheets">Sheets</option>
+                                                <option value="Square Meters">Square Meters</option>
+                                                <option value="Tons">Tons</option>
+                                                <option value="Unit">Unit</option>
+                                                <option value="令">令</option>
+                                                <option value="件">件</option>
+                                                <option value="加仑">加仑</option>
+                                                <option value="包">包</option>
+                                                <option value="千克">千克</option>
+                                                <option value="升">升</option>
+                                                <option value="单位">单位</option>
+                                                <option value="卷">卷</option>
+                                                <option value="吨">吨</option>
+                                                <option value="套">套</option>
+                                                <option value="对">对</option>
+                                                <option value="平方米">平方米</option>
+                                                <option value="张">张</option>
+                                                <option value="根">根</option>
+                                                <option value="每个">每个</option>
+                                                <option value="英尺">英尺</option>
+                                                <option value="集装箱">集装箱</option>
+                                            </select>
                                        </div>
                                    </div>
 
                                    <div class="form-group row">
-                                       <div class="col-md-12">
-                                           <input type="email" class="form-control" name="email" autocomplete="off" placeholder="@lang("frontend.cu-email")" style="font-size: 13px;" required>
-                                       </div>
-                                   </div>
-
-                                   <div class="form-group row">
-                                       <div class="col-md-12">
-                                           <input type="text" class="form-control" name="subyek" autocomplete="off" placeholder="@lang("frontend.cu-subyek")" style="font-size: 13px;" required>
-                                       </div>
-                                   </div>
-
-                                   <div class="form-group row">
-                                       <div class="col-md-12">
-                                           <textarea class="form-control" name="message" id="message" placeholder="@lang("frontend.cu-message")" style="height: 150px;font-size: 13px;"></textarea>
-                                       </div>
+                                       <div class="col-md-7">
+                                            <input style="color:black; font-size: 13px;" type="text" value="" name="tp" id="tp" class="form-control amount" placeholder="@lang('login.forms.by6')">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <select  class="form-control" name="ntp" id="ntp" style="color: black; font-size: 12px;">
+                                                <option value="">@lang("login.forms.by14")</option>
+                                                <option value="IDR">IDR</option>
+                                                <option value="THB">THB</option>
+                                                <option value="USD">USD</option>
+                                            </select>
+                                        </div>
                                    </div>
                               
                                    <div class="form-group row">
                                       <div class="col-md-12">
                                         <div align="left">
-                                          <button class="btn btn-primary button_form" type="submit">@lang("button-name.submit")</button>
+                                            <a href="{{url('/br_importir')}}" class="btn btn-primary button_form">
+                                                    @if($loc == 'ch')
+                                                    立即发布购买请求
+                                                    @elseif($loc == 'in')
+                                                    Kirim permintaan pembelian sekarang
+                                                    @else
+                                                    Post buying request now
+                                                    @endif
+                                            </a>
                                         </div>
                                       </div>
                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -543,6 +692,14 @@
 <script src="{{asset('front/assets/js/plugins.js')}}"></script>
 @include('frontend.layouts.footer')
 <script type="text/javascript">
+    $(function() {
+
+        $('.amount').keyup( function() {
+            $(this).val( formatAmount( $( this ).val() ) );
+        });
+
+    });
+
     $(document).ready(function () {
         if(window.innerWidth <= 900){
             $( ".menu_item_children.next" ).on('click', function() {
@@ -553,8 +710,42 @@
         } 
     });
     function openTab(tabname) {
-        $('.tab-pane').removeClass('active');
+        $('.tab-pane.product').removeClass('active');
         $('.tabnya').removeClass('active');
         $('#'+tabname).addClass('active');
+    }
+
+    function formatAmountNoDecimals( number ) {
+        var rgx = /(\d+)(\d{3})/;
+        while( rgx.test( number ) ) {
+            number = number.replace( rgx, '$1' + '.' + '$2' );
+        }
+        return number;
+    }
+
+    function formatAmount( number ) {
+
+        // remove all the characters except the numeric values
+        number = number.replace( /[^0-9]/g, '' );
+
+        // set the default value
+        if( number.length == 0 ) number = "0.00";
+        else if( number.length == 1 ) number = "0.0" + number;
+        else if( number.length == 2 ) number = "0." + number;
+        else number = number.substring( 0, number.length - 2 ) + '.' + number.substring( number.length - 2, number.length );
+        
+        // set the precision
+        number = new Number( number );
+        number = number.toFixed( 2 );    // only works with the "."
+
+        // change the splitter to ","
+        number = number.replace( /\./g, '' );
+
+        // format the amount
+        x = number.split( ',' );
+        x1 = x[0];
+        x2 = x.length > 1 ? ',' + x[1] : '';
+
+        return formatAmountNoDecimals( x1 ) + x2;
     }
 </script>

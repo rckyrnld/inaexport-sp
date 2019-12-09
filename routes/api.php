@@ -134,7 +134,7 @@ Route::namespace('Api')->group(function () {
     Route::get('getprodukBaru', 'ProductNonAuthController@getprodukBaru');
     Route::post('browseProductListBynameAndKategori', 'ProductNonAuthController@browseProductDetailBynameAndKategori');
     Route::post('suggestProductkategorisearch', 'ProductNonAuthController@browseProductBynameAndKategori');
-    Route::post('suggestProductnamesearch', 'ProductNonAuthController@suggestProductname');
+    Route::get('suggestProductnamesearch', 'ProductNonAuthController@suggestProductname');
 
     //training
     Route::get('getTrainingall', 'TrainingNonAuthController@browseTraining');
@@ -162,6 +162,5 @@ Route::namespace('Api')->group(function () {
 
     //hscode
     Route::get('getHscode', 'ManagementNoAuthController@getHscode');
-
 });
 // });

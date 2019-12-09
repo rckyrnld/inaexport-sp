@@ -415,7 +415,7 @@ class EventController extends Controller
     	$pageTitle = "Event";
     	$q = $req->q;
     	if ($q!="") {
-    		$e_detail = DB::table('event_detail')->where('event_name_en', 'LIKE', '%'.$q.'%')->orderby('id', 'asc')->paginate(6)->setPath( '' );
+    		$e_detail = DB::table('event_detail')->where('event_name_en', 'ILIKE', '%'.$q.'%')->orderby('id', 'asc')->paginate(6)->setPath( '' );
           	$pagination = $e_detail->appends(array('q' => $req->q));
 	   		$e_detail->appends($req->only('q'));
           	if (count($e_detail) > 0) {
@@ -432,7 +432,7 @@ class EventController extends Controller
    		$pageTitle = "Event";
     	$eq = $req->eq;
     	if ($eq!="") {
-    		$e_detail = DB::table('event_detail')->where('event_name_en', 'LIKE', '%'.$eq.'%')->orderby('id', 'asc')->paginate(6)->setPath( '' );
+    		$e_detail = DB::table('event_detail')->where('event_name_en', 'ILIKE', '%'.$eq.'%')->orderby('id', 'asc')->paginate(6)->setPath( '' );
           	$pagination = $e_detail->appends(array('eq' => $req->eq));
 	   		$e_detail->appends($req->only('eq'));
           	if (count($e_detail) > 0) {

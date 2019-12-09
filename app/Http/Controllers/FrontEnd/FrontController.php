@@ -41,11 +41,11 @@ class FrontController extends Controller
             ->limit(9)
             ->get();
 
-        $categoryutama2 = DB::table('csc_product')
-            ->where('level_1', 0)
-            ->where('level_2', 0)
-            ->orderBy('id', 'ASC')
-            ->limit(8)
+        $categoryutama2 = DB::table('csc_product_home as a')
+            ->join('csc_product as b', 'a.id_product', '=', 'b.id')
+            ->select('b.*')
+            ->orderBy('a.number', 'ASC')
+            ->limit(6)
             ->get();
         return view('frontend.index', compact('categoryutama', 'categoryutama2'));
         // return view('frontend.index');
@@ -177,7 +177,7 @@ class FrontController extends Controller
         );
 
         // return view('frontend.product.all_product', compact('product', 'catprod'));
-        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow'));
+        return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow'));
 
     }
 
@@ -524,25 +524,42 @@ class FrontController extends Controller
         return $result;
     }
 
-    public function Event(){
-        $e_detail = DB::table('event_detail as a')
-            ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-            ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
-            ->where('a.status_en', 'Verified')->orderby('a.id', 'desc')
-            ->paginate(9);
+    public function Event(Request $req){
+        if($req->search){
+            $search = $req->search;
+            $lang = app()->getLocale();
+            if($lang == 'ch'){ $lang = 'chn';}
+            $e_detail = DB::table('event_detail as a')
+                ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->where(function($query) use ($search,$lang){
+                    $query->where('a.event_name_en', 'ILIKE', "%".$search."%")
+                        ->orWhere('a.event_name_'.$lang, 'ILIKE', "%".$search."%");
+                })
+                ->where('a.status_en', 'Verified')->orderby('a.created_at', 'desc')
+                ->paginate(8);
 
-        $json = json_decode($e_detail->toJson(), true);
-        $page = $json["current_page"];
-        if($page > 1){
-         $e_detail = DB::table('event_detail as a')
-            ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-            ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
-            ->where('a.status_en', 'Verified')->orderby('a.id', 'desc')
-            ->paginate(8);
+            $page = 100;
+        } else {
+            $search = null;
+            $e_detail = DB::table('event_detail as a')
+                ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->where('a.status_en', 'Verified')->orderby('a.created_at', 'desc')
+                ->paginate(9);
+
+            $json = json_decode($e_detail->toJson(), true);
+            $page = $json["current_page"];
+            if($page > 1){
+             $e_detail = DB::table('event_detail as a')
+                ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->where('a.status_en', 'Verified')->orderby('a.created_at', 'desc')
+                ->paginate(8);
+            }
         }
-        // dd($e_detail);
-            // ->get();
-        return view('frontend.event.index', compact('e_detail', 'page'));
+
+        return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page'))], compact('page', 'search'));
     }
 
     public function join_event($id){
