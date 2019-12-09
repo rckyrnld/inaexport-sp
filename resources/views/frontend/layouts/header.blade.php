@@ -384,7 +384,7 @@
                                         <table style="width: 150px;">
                                             <tr>
                                                 <td rowspan="2" style="width: 50px">
-                                                    <img src="{{asset('front/assets/icon/product1.png')}}" alt="" style="width: 50px;">
+                                                    <img src="{{asset('front/assets/icon/i1.png')}}" alt="" style="width: 70px;">
                                                 </td>
                                                 <td style="">
                                                     <span class="header-span" style="font-family: 'Myriad-pro';">
@@ -405,7 +405,7 @@
                                     <table style="width: 150px;">
                                         <tr>
                                             <td rowspan="2" style="width: 50px">
-                                                <img src="{{asset('front/assets/icon/tracking.png')}}" alt="" style="width: 50px;">
+                                                <img src="{{asset('front/assets/icon/i2.png')}}" alt="" style="width: 50px;">
                                             </td>
                                             <td style="">
                                                 <span class="header-span" style="font-family: 'Myriad-pro';">
@@ -431,7 +431,7 @@
 														
 												<?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
 												
-												<img src="{{asset('front/assets/icon/user.png')}}" alt="" class="img-profil-header">
+												<img src="{{asset('front/assets/icon/PROFILE.png')}}" alt="" class="img-profil-header">
 												<?php }else{ ?>
 												
                                                 <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
@@ -446,7 +446,7 @@
 												<?php } ?>
                                                     @endif
 											@else	
-												<img src="{{asset('front/assets/icon/user.png')}}" alt="" class="img-profil-header">
+												<img src="{{asset('front/assets/icon/PROFILE.png')}}" alt="" class="img-profil-header">
                                             @endif
                                             </td>
                                             <td style="">
