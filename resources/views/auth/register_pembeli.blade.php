@@ -44,7 +44,7 @@
 							
                             
                         </div>
-		<div class="form-row">
+		<!-- <div class="form-row">
                            
                             <div class="form-group col-sm-4" align="left">
                                 <label>&nbsp; Account Type</label>
@@ -54,7 +54,7 @@
                                 <input type="radio" name="Buyer" checked> Buyer 
 								
                             </div>
-                        </div>
+                        </div> -->
 						
 						<div class="form-row">
                            
@@ -174,6 +174,21 @@
 							</div>
 							<div class="form-group col-sm-5" align="left">
                                  <textarea name="alamat" id="alamat" class="form-control" style=" color: black; "></textarea>
+                            </div>
+                        </div>
+						
+						
+						<div class="form-row">
+							
+                           
+							<div class="form-group col-sm-4" align="left">
+                                <label><font color="red">*</font> Verification Code</label>
+							</div>
+							<div class="form-group col-sm-2" align="left">
+                                 <img style="height:20px!Important;" src="{{url('assets')}}/assets/images/captcha.jfif" alt="." >
+                            </div>
+							<div class="form-group col-sm-3" align="left">
+                                 <input type="text" class="form-control" name="chp" id="chp">
                             </div>
                         </div>
 						

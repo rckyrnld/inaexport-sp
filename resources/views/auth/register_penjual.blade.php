@@ -47,7 +47,7 @@
 							
                             
                         </div>
-		<div class="form-row">
+		<!-- <div class="form-row">
                            
                             <div class="form-group col-sm-4" align="left">
                                 <label>&nbsp; Account Type</label>
@@ -57,7 +57,7 @@
                                 <input type="radio" name="Buyer" disabled> Buyer 
 								
                             </div>
-                        </div>
+                        </div> -->
 		<div class="form-row">
                             <div class="form-group col-sm-4" align="left">
                                <label><font color="red">*</font> @lang("register2.forms.email")</label> &nbsp;&nbsp;&nbsp;<span id="cekmail"></span>
@@ -177,17 +177,18 @@
 		
 		
 		<div class="form-row">
-                            <div class="form-group col-sm-5" align="left">
-                                
-                            </div>
-							<div class="form-group col-sm-2">
-							&nbsp;
+							
+                           
+							<div class="form-group col-sm-4" align="left">
+                                <label><font color="red">*</font> Verification Code</label>
 							</div>
-                            <div class="form-group col-sm-5" align="left">
-                                
+							<div class="form-group col-sm-2" align="left">
+                                 <img style="height:20px!Important;" src="{{url('assets')}}/assets/images/captcha.jfif" alt="." >
+                            </div>
+							<div class="form-group col-sm-3" align="left">
+                                 <input type="text" class="form-control" name="chp" id="chp">
                             </div>
                         </div>
-		
 						
 				
 				<div class="form-row">
