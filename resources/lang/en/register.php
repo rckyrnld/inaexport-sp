@@ -15,5 +15,5 @@ return [
         "address" => "Address",
 		
     ],
-    "submit" => "Register"
+    "submit" => "Create My Account"
 ];
