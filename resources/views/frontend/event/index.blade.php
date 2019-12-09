@@ -36,7 +36,7 @@
         -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
         box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
     }
-    .search{ border: 2px solid #2492eb; border-left-color: transparent; }
+    .search{ border-color: #a9a9a9;}
 </style>
 <!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
@@ -66,7 +66,7 @@
           {{ csrf_field() }}
           <div class="input-group" style="width: 60%;">
               <div class="input-group-prepend">
-                <select id="search" name="search" style="height: 100%; border-top-left-radius: 5px;border-bottom-left-radius: 5px; padding-left: 5px; border: 2px solid #2492eb; background-color: #f7f7f7;">
+                <select id="search" name="search" style="height: 100%; border-top-left-radius: 5px;border-bottom-left-radius: 5px; padding-left: 5px; background-color: #f7f7f7; border-color: #a9a9a9;">
                   <option value="1" @if($search == 1) selected @endif>Name</option>
                   <option value="2" @if($search == 2) selected @endif>Date</option>
                   <option value="3" @if($search == 3) selected @endif>Country</option>
@@ -81,7 +81,7 @@
                   @endforeach
                 </select>
               <div class="input-group-prepend">
-                <button type="submit" class="input-group-text" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px; background-color: #2492eb; border-color: #2492eb; color: white;">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
+                <button type="submit" class="input-group-text" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px; background-color: #1a70bb; border-color: transparent; color: white;">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
               </div>
           </div>
         </form>
