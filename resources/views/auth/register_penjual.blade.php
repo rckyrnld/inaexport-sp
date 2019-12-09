@@ -15,81 +15,14 @@
 	   <center>
 	  
 	   <br><br>
-		<!-- <div class="form-row">
-							<div class="form-group col-sm-6">
-                                <label>NPWP</label>
-                                <input type="text" name="npwp" id="npwp" class="form-control" style=" color: black; ">
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Nama Pemilik NPWP</label>
-                                <input type="text" name="namanpwp" id="namanpwp" class="form-control" style=" color: black; " readonly>
-                            </div>
-                        </div> -->
-						<div class="form-row">
-							<div class="form-group col-sm-5" align="left">
-                                <label>@lang("register2.forms.company")</label>
-                                <input type="text" name="company" id="company" class="form-control" style=" color: black; " required>
-                            </div>
-							<div class="form-group col-sm-2">
-							&nbsp;
-							</div>
-                            <div class="form-group col-sm-5" align="left">
-                                <label>@lang("register2.forms.username")</label>
-                                <input type="text" name="username" id="username" class="form-control" style=" color: black; " required>
-                            </div>
-                        </div>
-		<div class="form-row">
-							
-                            <div class="form-group col-sm-5" align="left">
-                                <label>@lang("register2.forms.email")</label> &nbsp;&nbsp;&nbsp;<span id="cekmail"></span>
-                                <input type="text" onkeyup="cekmail()" name="email" id="email" class="form-control" style=" color: black; " required>
-                            </div>
-							<div class="form-group col-sm-2">
-							&nbsp;
+	   
+	   <p><h6>Enter Your Account Information</h6></p><hr>
+	   
+	   <div class="form-row">
+                            <div class="form-group col-sm-4" align="left">
+                                <label><font color="red">*</font> @lang("login.forms.prov")</label>
 							</div>
 							<div class="form-group col-sm-5" align="left">
-                                <label>@lang("register2.forms.phone")</label>
-                                <input type="text" name="phone" id="phone" class="form-control" style=" color: black; " >
-                            </div>
-                        </div>
-		<div class="form-row">
-                            
-                            <div class="form-group col-sm-5" align="left">
-                                <label>@lang("register2.forms.fax")</label>
-                                <input type="text" name="fax" id="fax" class="form-control" style=" color: black; ">
-                            </div>
-							<div class="form-group col-sm-2">
-							&nbsp;
-							</div>
-							<div class="form-group col-sm-5" align="left">
-                                <label>@lang("register2.forms.website")</label>
-                                <input type="text" name="website" id="website" class="form-control" style=" color: black; ">
-                            </div>
-                        </div>
-		<div class="form-row">
-                            <div class="form-group col-sm-5" align="left">
-                                <label>@lang("register2.forms.password")</label>
-                                <input type="password" name="password" id="password" class="form-control" style=" color: black; " required>
-                            </div>
-							<div class="form-group col-sm-2">
-							&nbsp;
-							</div>
-                            <div class="form-group col-sm-5" align="left">
-                                <label>@lang("register.forms.re-password")</label>
-                                <input type="password" name="kpassword" id="kpassword" class="form-control" style=" color: black; ">
-                            </div>
-                        </div>
-		<div class="form-row">
-                            <div class="form-group col-sm-5" align="left">
-                                <label>@lang("login.forms.city")</label>
-                                <input type="text" name="city" id="city" class="form-control" style=" color: black; ">
-                            </div>
-							<div class="form-group col-sm-2">
-							&nbsp;
-							</div>
-                            <div class="form-group col-sm-5" align="left">
-                                <label>@lang("login.forms.prov")</label>
-								
                                 <select class="form-control" name="prov" id="prov">
 									<option value="">- Choose Province -</option>
 									<?php
@@ -101,35 +34,174 @@
                                                         <?php } ?>
 								</select>
                             </div>
+							
+                            
                         </div>
 		<div class="form-row">
-                            <div class="form-group col-sm-5" align="left">
+                            <div class="form-group col-sm-4" align="left">
+                                <label><font color="red">*</font> @lang("login.forms.city")</label>
+							</div>
+							<div class="form-group col-sm-5" align="left">
+                                <input type="text" name="city" id="city" class="form-control" style=" color: black; ">
+                            </div>
+							
+                            
+                        </div>
+		<div class="form-row">
+                           
+                            <div class="form-group col-sm-4" align="left">
+                                <label>&nbsp; Account Type</label>
+							</div>
+							<div class="form-group col-sm-5" align="left">
+                                <input type="radio" name="Supplier" checked> Supplier &nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="Buyer" disabled> Buyer 
+								
+                            </div>
+                        </div>
+		<div class="form-row">
+                            <div class="form-group col-sm-4" align="left">
+                               <label><font color="red">*</font> @lang("register2.forms.email")</label> &nbsp;&nbsp;&nbsp;<span id="cekmail"></span>
+                                
+							</div>
+							<div class="form-group col-sm-5" align="left">
+                                <input type="text" onkeyup="cekmail()" name="email" id="email" class="form-control" style=" color: black; " required>
+                            </div>
+							
+                            
+                        </div>
+		<div class="form-row">
+                            <div class="form-group col-sm-4" align="left">
+                               <label><font color="red">*</font> @lang("register2.forms.password")</label>
+                                
+							</div>
+							<div class="form-group col-sm-5" align="left">
+                                <input type="password" name="password" id="password" class="form-control" style=" color: black; " required>
+                                </div>
+							
+                            
+                        </div>
+		<div class="form-row">
+                            <div class="form-group col-sm-4" align="left">
+                               <label><font color="red">*</font> @lang("register.forms.re-password")</label>
+                               </div>
+							<div class="form-group col-sm-5" align="left">
+                               <input type="password" name="kpassword" id="kpassword" class="form-control" style=" color: black; ">  
+							 </div>
+							
+                            
+                        </div>
+		
+
+		<br>
+	   <p><h6>Enter Your Business Information</h6></p><hr>
+		
+		
+		<div class="form-row">
+                            <div class="form-group col-sm-4" align="left">
+                                <label><font color="red">*</font> @lang("register2.forms.company")</label>
+                                
+                                
+							</div>
+							<div class="form-group col-sm-5" align="left">
+                                <input type="text" name="company" id="company" class="form-control" style=" color: black; " required>
+                            </div>
+							
+                            
+                        </div>
+		<div class="form-row">
+                            <div class="form-group col-sm-4" align="left">
+                                <label><font color="red">*</font> @lang("register2.forms.username")</label>
+                                
+							</div>
+							<div class="form-group col-sm-5" align="left">
+                                <input type="text" name="username" id="username" class="form-control" style=" color: black; " required>
+                            </div>
+							
+                            
+                        </div>
+		<div class="form-row">
+                            <div class="form-group col-sm-4" align="left">
+                                <label><font color="red">*</font> @lang("register2.forms.phone")</label>
+                                
+                                
+							</div>
+							<div class="form-group col-sm-5" align="left">
+                                <input type="text" name="phone" id="phone" class="form-control" style=" color: black; " >
+                            </div>
+							
+                            
+                        </div>
+		<div class="form-row">
+                            <div class="form-group col-sm-4" align="left">
+                                <label>@lang("register2.forms.fax")</label>
+							</div>
+							<div class="form-group col-sm-5" align="left">
+                                <input type="text" name="fax" id="fax" class="form-control" style=" color: black; ">
+                            </div>
+							
+                            
+                        </div>
+		<div class="form-row">
+                            <div class="form-group col-sm-4" align="left">
+                                <label>@lang("register2.forms.website")</label>
+                                
+							</div>
+							<div class="form-group col-sm-5" align="left">
+                                <input type="text" name="website" id="website" class="form-control" style=" color: black; ">
+                            </div>
+							
+                            
+                        </div>
+		<div class="form-row">
+                            <div class="form-group col-sm-4" align="left">
                                 <label>@lang("register.forms.postcode")</label>
+                                
+							</div>
+							<div class="form-group col-sm-5" align="left">
                                 <input type="text" name="postcode" id="postcode" class="form-control" style=" color: black; ">
+                            </div>
+							
+                            
+                        </div>
+		<div class="form-row">
+                            <div class="form-group col-sm-4" align="left">
+                                <label>@lang("register.forms.address")</label>
+                                
+							</div>
+							<div class="form-group col-sm-5" align="left">
+                                <textarea name="alamat" id="alamat" class="form-control" style=" color: black; "></textarea>
+                            </div>
+							
+                            
+                        </div>
+		
+		
+		<div class="form-row">
+                            <div class="form-group col-sm-5" align="left">
+                                
                             </div>
 							<div class="form-group col-sm-2">
 							&nbsp;
 							</div>
                             <div class="form-group col-sm-5" align="left">
-                                <label>@lang("register.forms.address")</label>
-                                <textarea name="alamat" id="alamat" class="form-control" style=" color: black; "></textarea>
+                                
                             </div>
                         </div>
 		
 						
+				
 				<div class="form-row">
-                            <div class="form-group col-sm-5">
-                                <!-- <a href="{{url('pilihregister')}}" style="width: 100%;" class="btn btn-danger" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;Back&nbsp;&nbsp;&nbsp;</font></a> -->
-                            
-                            </div>
-							<div class="form-group col-sm-2">
-							&nbsp;
-							</div>
-                            <div class="form-group col-sm-5" align="right">
-							<a style="width: 100%;" class="btn btn-success" style="border-color: #4CAF50;" onclick="simpanpenjual()"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></a>
                            
-                                <!-- <button style="width: 100%;" class="btn btn-success" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></button> -->
-                            </div>
+                            <div class="form-group col-sm-12"><br>
+                            <input type="checkbox" name="ckk" id="ckk"> I agree to the Term & Condition and have read and understood the Privacy Policy.
+							<br><br>
+							<center>
+							
+							<br>
+							<a  class="btn btn-danger" style="border-color: #4CAF50;" onclick="simpanpenjual()"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></a>
+                               <!-- <button style="width: 100%;" class="btn btn-success" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></button> -->
+                            </center>
+							</div>
                         </div>
 						
 		
@@ -193,12 +265,14 @@ function simpanpenjual(){
 	var fax = $('#fax').val();
 	var website = $('#website').val();
 	var password = $('#password').val();
+	var kpassword = $('#kpassword').val();
 	var city = $('#city').val();
 	var prov = $('#prov').val();
 	var postcode = $('#postcode').val();
 	var alamat = $('#alamat').val();
 	var token = $('meta[name="csrf-token"]').attr('content');
-	if(company == ""){
+	if(password == kpassword){
+	if(company == "" || username == "" || email == "" || phone == "" || password == "" || prov == "" || city == "" || alamat == ""){
 		alert("Please complete the field !")
 	}else{
 		/*
@@ -233,6 +307,11 @@ function simpanpenjual(){
 		$('#alamat').val('');
 		
 	$("#myModal").modal("show"); 
+	}
+	}else{
+		alert("Your Password Not Same !");
+		$('#password').val('');
+		$('#kpassword').val('');
 	}
 }
  </script>

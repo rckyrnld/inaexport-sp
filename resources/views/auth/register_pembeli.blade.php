@@ -19,7 +19,7 @@
 	   <div class="form-row">
                            
                             <div class="form-group col-sm-4" align="left">
-                                <label>@lang("login.forms.ct")</label>
+                                <label><font color="red">*</font> @lang("login.forms.ct")</label>
 							</div>
 							<div class="form-group col-sm-5" align="left">
                                 <select class="form-control" name="country" id="country">
@@ -36,7 +36,7 @@
                         </div>
 		<div class="form-row">
                             <div class="form-group col-sm-4" align="left">
-                                <label>@lang("login.forms.city")</label>
+                                <label><font color="red">*</font> @lang("login.forms.city")</label>
 							</div>
 							<div class="form-group col-sm-5" align="left">
                                 <input type="text" name="city" id="city" class="form-control" style=" color: black; ">
@@ -47,7 +47,7 @@
 		<div class="form-row">
                            
                             <div class="form-group col-sm-4" align="left">
-                                <label>Account Type</label>
+                                <label>&nbsp; Account Type</label>
 							</div>
 							<div class="form-group col-sm-5" align="left">
                                 <input type="radio" name="Supplier" disabled> Supplier &nbsp;&nbsp;&nbsp;&nbsp;
@@ -59,7 +59,7 @@
 						<div class="form-row">
                            
                             <div class="form-group col-sm-4" align="left">
-                                 <label>@lang("register.forms.email")</label>&nbsp;&nbsp;&nbsp;<span id="cekmail"></span>
+                                 <label><font color="red">*</font> @lang("register.forms.email")</label>&nbsp;&nbsp;&nbsp;<span id="cekmail"></span>
 							</div>
 							<div class="form-group col-sm-5" align="left">
                                 <input type="text" name="email" id="email" class="form-control" style=" color: black; " required onkeyup="cekmail()">
@@ -70,7 +70,7 @@
 						<div class="form-row">
                            
                             <div class="form-group col-sm-4" align="left">
-                                  <label>@lang("register.forms.password")</label>
+                                  <label><font color="red">*</font> @lang("register.forms.password")</label>
                                 
                             </div>
 							
@@ -83,7 +83,7 @@
 						<div class="form-row">
                            
                             <div class="form-group col-sm-4" align="left">
-                                   <label>@lang("register.forms.re-password")</label>
+                                   <label><font color="red">*</font> @lang("register.forms.re-password")</label>
                                 
                             </div>
 							
@@ -101,7 +101,7 @@
 		<div class="form-row">
                            
                             <div class="form-group col-sm-4" align="left">
-                                   <label>@lang("register.forms.company") </label>
+                                   <label><font color="red">*</font> @lang("register.forms.company") </label>
                                 
                             </div>
 							
@@ -114,7 +114,7 @@
 		<div class="form-row">
                            
                             <div class="form-group col-sm-4" align="left">
-                                   <label>@lang("register.forms.username")</label>
+                                   <label><font color="red">*</font>@lang("register.forms.username")</label>
                                 
                             </div>
 							
@@ -129,7 +129,7 @@
 							
                            
 							<div class="form-group col-sm-4" align="left">
-                                <label>@lang("register.forms.phone")</label>
+                                <label><font color="red">*</font> @lang("register.forms.phone")</label>
 							</div>
 							<div class="form-group col-sm-5" align="left">
                                 <input type="text" name="phone" id="phone" class="form-control" style=" color: black; ">
@@ -139,7 +139,7 @@
 							
                            
 							<div class="form-group col-sm-4" align="left">
-                                <label>@lang("register.forms.fax")</label>
+                                <label>&nbsp;@lang("register.forms.fax")</label>
 							</div>
 							<div class="form-group col-sm-5" align="left">
                                 <input type="text" name="fax" id="fax" class="form-control" style=" color: black; ">
@@ -149,7 +149,7 @@
 							
                            
 							<div class="form-group col-sm-4" align="left">
-                                <label>@lang("register.forms.website")</label>
+                                <label>&nbsp;@lang("register.forms.website")</label>
 							</div>
 							<div class="form-group col-sm-5" align="left">
                                 <input type="text" name="website" id="website" class="form-control" style=" color: black; ">
@@ -160,7 +160,7 @@
 							
                            
 							<div class="form-group col-sm-4" align="left">
-                                <label>@lang("register.forms.postcode")</label>
+                                <label>&nbsp;@lang("register.forms.postcode")</label>
 							</div>
 							<div class="form-group col-sm-5" align="left">
                                 <input type="text" name="postcode" id="postcode" class="form-control" style=" color: black; ">
@@ -170,7 +170,7 @@
 							
                            
 							<div class="form-group col-sm-4" align="left">
-                                <label>@lang("register.forms.address")</label>
+                                <label><font color="red">*</font> @lang("register.forms.address")</label>
 							</div>
 							<div class="form-group col-sm-5" align="left">
                                  <textarea name="alamat" id="alamat" class="form-control" style=" color: black; "></textarea>
@@ -184,7 +184,7 @@
 				<div class="form-row">
                            
                             <div class="form-group col-sm-12"><br>
-                            <input type="checkbox" name="ckk" id="ckk"> I agree to the Term & Condition and have read and understood the Privacy Polici.
+                            <input type="checkbox" name="ckk" id="ckk"> I agree to the Term & Condition and have read and understood the Privacy Policy.
 							<br><br>
 							<center>
 							
@@ -265,7 +265,7 @@ function simpanpembeli(){
 	var token = $('meta[name="csrf-token"]').attr('content');
 	if(password == kpassword){
 	
-	if(company == ""){
+	if(company == "" || username == "" || email == "" || phone == "" || password == "" || country == "" || city == "" || alamat == ""){
 		alert("Please complete the field !")
 	}else{
 		/*
