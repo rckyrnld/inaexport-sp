@@ -527,7 +527,7 @@ class FrontController extends Controller
     public function Event(Request $req){
         $country = DB::table('mst_country')->orderby('country', 'asc')->get();
         if($req->search){
-            $search = $req->search;
+            $searchEvent = $req->search;
             $lang = app()->getLocale();
             if($lang == 'ch'){ $lang = 'chn';}
             $query = DB::table('event_detail as a')
@@ -535,13 +535,13 @@ class FrontController extends Controller
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
                 ->where('a.status_en', 'Verified')->orderby('a.created_at', 'desc');
             
-            if($search == 1){
+            if($searchEvent == 1){
                 $param = $req->nama;
                 $query->where(function($query) use ($param,$lang){
                             $query->where('a.event_name_en', 'ILIKE', "%".$param."%")
                                 ->orWhere('a.event_name_'.$lang, 'ILIKE', "%".$param."%");
                         });
-            } else if($search == 2){
+            } else if($searchEvent == 2){
                 $param = $req->tanggal;
                 if($param != null){
                     $query->where(function ($query) use ($param) {
@@ -553,7 +553,7 @@ class FrontController extends Controller
                             ->orWhere('a.end_date', $param);
                     });
                 }
-            } else if($search == 3) {
+            } else if($searchEvent == 3) {
                 $param = $req->country;
                 $query->where('country', $param);
             }
@@ -565,7 +565,7 @@ class FrontController extends Controller
 
             $page = 99999999;
         } else {
-            $search = null;
+            $searchEvent = null;
             $param = null;
             $e_detail = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
@@ -584,7 +584,7 @@ class FrontController extends Controller
             }
         }
 
-        return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page'))], compact('page', 'search','country', 'param'));
+        return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page'))], compact('page', 'searchEvent','country', 'param'));
     }
 
     public function join_event($id){

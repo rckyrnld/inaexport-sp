@@ -67,17 +67,17 @@
           <div class="input-group" style="width: 60%;">
               <div class="input-group-prepend">
                 <select id="search" name="search" style="height: 100%; border-top-left-radius: 5px;border-bottom-left-radius: 5px; padding-left: 5px; background-color: #f7f7f7; border-color: #a9a9a9;">
-                  <option value="1" @if($search == 1) selected @endif>Name</option>
-                  <option value="2" @if($search == 2) selected @endif>Date</option>
-                  <option value="3" @if($search == 3) selected @endif>Country</option>
+                  <option value="1" @if($searchEvent == 1) selected @endif>Name</option>
+                  <option value="2" @if($searchEvent == 2) selected @endif>Date</option>
+                  <option value="3" @if($searchEvent == 3) selected @endif>Country</option>
                 </select>
               </div>
-                <input type="text" id="search_name" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($search == 1) value="{{$param}}" @endif>
-                <input type="date" id="search_date" name="tanggal" class="form-control search" placeholder="Search" autocomplete="off" @if($search == 2) value="{{$param}}" @endif>
+                <input type="text" id="search_name" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent == 1) value="{{$param}}" @endif>
+                <input type="date" id="search_date" name="tanggal" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent == 2) value="{{$param}}" @endif>
                 <select class="form-control search" id="search_country" name="country">
                   <option value="" style="display: none;">Select Country</option>
                   @foreach($country as $data)
-                    <option value="{{$data->id}}" @if($search == 3 && $data->id == $param) selected @endif>{{$data->country}}</option>
+                    <option value="{{$data->id}}" @if($searchEvent == 3 && $data->id == $param) selected @endif>{{$data->country}}</option>
                   @endforeach
                 </select>
               <div class="input-group-prepend">
@@ -87,20 +87,20 @@
         </form>
       </div>
     </div><br>
-    @if($page > 1 || $search != null)
+    @if($page > 1 || $searchEvent != null)
       <div class="row justify-content-center">
         <div class="col-lg-12 col-md-12 col-12">
           <div class="row shop_wrapper">
     @endif
       @foreach($e_detail as $key => $ed)
         <a href="{{url('/front_end/join_event/')}}/{{$ed->id}}" class="a-modif">
-        @if($page == 1 && $search == null)
+        @if($page == 1 && $searchEvent == null)
           @if($key == 0 || $key == 5 )
             <div class="form-group row utama" style="height: 100%">
           @endif
         @endif
 
-        @if($page == 1 && $search == null)
+        @if($page == 1 && $searchEvent == null)
           @if( $key == 0 || $key == 1 )
               <div class="col-lg-6 col-md-6 col-12 second @if($key == 0) a-modif @endif" style="height: 100%; border-radius: 10px; @if($key == 0) background-color: #f1ecec; @endif">
                 <?php $size = 438; $num_char = 65;?>
@@ -118,7 +118,7 @@
           <?php $size = 162; $num_char = 25;?>
         @endif
 
-        @if($page == 1 && $search == null)
+        @if($page == 1 && $searchEvent == null)
           @if( $key > 0 && $key < 5)
             @if($key == 1)
               <div class="form-group row" style="height: 100%;">
@@ -215,7 +215,7 @@
           </a>
       </div>
     </div>
-        @if($page == 1 && $search == null)
+        @if($page == 1 && $searchEvent == null)
           @if( $key == 4 || $key == 9)
             </div>
             @if($key == 4)
@@ -230,14 +230,15 @@
       @endif
   </div>
   <br><br>
-    <div class="row">
-      <div class="container">
-        <div class="row justify-content-center" align="center">
-          {{ $e_detail->render("pagination::bootstrap-4") }}
+      <div class="row">
+        <div class="container">
+          <div class="row justify-content-center" align="center">
+            {{ $e_detail->render("pagination::bootstrap-4") }}
+          </div>
         </div>
       </div>
-    </div>
-    <br>
+      <br>
+  </div>
 </div>
 <div style="margin-top: 0px; margin-bottom: 5%; background-color: white;"></div>
 @include('frontend.layouts.footer')
@@ -247,7 +248,7 @@
         $('.fix-image').css('height','162px');
     } 
 
-    var search = "{{$search}}";
+    var search = "{{$searchEvent}}";
     if(search == 2){
       $('#search_name').hide();
       $('#search_country').hide();
