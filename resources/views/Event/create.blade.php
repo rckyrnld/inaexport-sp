@@ -292,8 +292,26 @@
                                         <label for="code" class="col-md-3"><b>Category Product</b></label>
                                         <div class="col-md-3">
                                             <select class="form-control" name="id_prod_cat[]" id="id_prod_cat" style="width:100%" multiple="multiple" required>
+                                                <option></option>
                                                 @if($page!='add') {{optionCategoryZ($e_detail->id)}} @else {{optionCategory()}} @endif
                                             </select>   
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-3"></div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-3"><b>Country</b></label>
+                                        <div class="col-md-3">
+                                            @if($page != 'show')
+                                            <select class="form-control" id="country" required name="country">
+                                                <option></option>
+                                                @foreach($country as $data)
+                                                    <option value="{{$data->id}}" @isset($e_detail) @if($e_detail->country == $data->id) selected @endif @endisset>{{$data->country}}</option>
+                                                @endforeach
+                                            </select>
+                                            @else 
+                                                <input class="form-control" type="text" readonly value="{{rc_country($e_detail->country)}}">
+                                            @endif
                                         </div>
                                         <div class="col-md-3"></div>
                                         <div class="col-md-3"></div>
@@ -569,7 +587,9 @@
                 $("input[id='image_4']").click();
             });
 
-            $('#com').select2({
+            $('#country').select2({ placeholder: 'Select Country' });
+
+            $('#com').select2({ 
               allowClear: true,
               placeholder: 'Select Comodity',
               ajax: {
@@ -610,11 +630,12 @@
             document.getElementById("image_4").addEventListener('change',handleFileSelect,false);
 
             $('#id_prod_cat').select2({
-              sorter: function(data) {
-                return data.sort(function(a, b) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                });
-            }
+                placeholder: 'Select Category',
+                sorter: function(data) {
+                    return data.sort(function(a, b) {
+                        return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                    });
+                }
             }).on("select2:select", function (e) { 
               $('#id_prod_cat-selection__rendered li#id_prod_cat-selection__choice').sort(function(a, b) {
                   return $(a).text() < $(b).text() ? -1 : $(a).text() > $(b).text() ? 1 : 0;

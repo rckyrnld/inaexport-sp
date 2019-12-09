@@ -30,6 +30,13 @@
     .a-modif.small{
       height: 100%; border-radius: 10px; background-color: #f1ecec;
     }
+    .form-control:focus {
+        border-color: #66afe9;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    }
+    .search{ border: 2px solid #2492eb; border-left-color: transparent; }
 </style>
 <!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
@@ -58,9 +65,23 @@
         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/event')}}">
           {{ csrf_field() }}
           <div class="input-group" style="width: 60%;">
-              <input type="text" name="search" class="form-control" placeholder="Search" autocomplete="off">
               <div class="input-group-prepend">
-                <button type="submit" class="input-group-text" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px;">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
+                <select id="search" name="search" style="height: 100%; border-top-left-radius: 5px;border-bottom-left-radius: 5px; padding-left: 5px; border: 2px solid #2492eb; background-color: #f7f7f7;">
+                  <option value="1" @if($search == 1) selected @endif>Name</option>
+                  <option value="2" @if($search == 2) selected @endif>Date</option>
+                  <option value="3" @if($search == 3) selected @endif>Country</option>
+                </select>
+              </div>
+                <input type="text" id="search_name" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($search == 1) value="{{$param}}" @endif>
+                <input type="date" id="search_date" name="tanggal" class="form-control search" placeholder="Search" autocomplete="off" @if($search == 2) value="{{$param}}" @endif>
+                <select class="form-control search" id="search_country" name="country">
+                  <option value="" style="display: none;">Select Country</option>
+                  @foreach($country as $data)
+                    <option value="{{$data->id}}" @if($search == 3 && $data->id == $param) selected @endif>{{$data->country}}</option>
+                  @endforeach
+                </select>
+              <div class="input-group-prepend">
+                <button type="submit" class="input-group-text" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px; background-color: #2492eb; border-color: #2492eb; color: white;">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
               </div>
           </div>
         </form>
@@ -168,9 +189,9 @@
               $titleName = $title;
           }
 
-          if(strlen($lokasi) > ($num_char+12)){
-              $cut_text = substr($lokasi, 0, ($num_char+12));
-              if ($lokasi{ ($num_char+12) - 1} != ' ') {
+          if(strlen($lokasi) > ($num_char+11)){
+              $cut_text = substr($lokasi, 0, ($num_char+11));
+              if ($lokasi{ ($num_char+11) - 1} != ' ') {
                   $new_pos = strrpos($cut_text, ' '); 
                   $cut_text = substr($lokasi, 0, $new_pos);
               }
@@ -225,5 +246,43 @@
     if(window.innerWidth <= 760){
         $('.fix-image').css('height','162px');
     } 
+
+    var search = "{{$search}}";
+    if(search == 2){
+      $('#search_name').hide();
+      $('#search_country').hide();
+    } else if(search == 3){
+      $('#search_name').hide();
+      $('#search_date').hide();
+    } else {
+      $('#search_date').hide();
+      $('#search_country').hide();
+    }
+
+    $('#search').on('change', function(){
+      var pilihan = this.value;
+      if(pilihan == 1){
+          $('#search_name').show();
+          $('#search_date').hide();
+          $('#search_country').hide();
+
+          $('#search_date').val('');
+          $('#search_country').val('');
+      } else if(pilihan == 2){
+          $('#search_name').hide();
+          $('#search_date').show();
+          $('#search_country').hide();
+
+          $('#search_name').val('');
+          $('#search_country').val('');
+      } else {
+          $('#search_name').hide();
+          $('#search_date').hide();
+          $('#search_country').show();
+
+          $('#search_name').val('');
+          $('#search_date').val('');
+      }
+    });
   })
 </script>
