@@ -200,7 +200,8 @@
 							<br>
 							<a  class="btn btn-danger" style="border-color: #4CAF50;" onclick="simpanpenjual()"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></a>
                                <!-- <button style="width: 100%;" class="btn btn-success" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></button> -->
-                            </center>
+                            <br><br>
+							</center>
 							</div>
                         </div>
 						
@@ -233,7 +234,8 @@
 			</center></h5>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+		  <a href="{{url('login')}}" type="button" class="btn btn-danger">Close</a>
         </div>
       </div>
     </div>

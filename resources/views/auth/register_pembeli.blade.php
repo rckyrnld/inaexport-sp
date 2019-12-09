@@ -225,7 +225,8 @@
 			</center></h5>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+         <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+		 <a href="{{url('login')}}" type="button" class="btn btn-danger">Close</a>
         </div>
       </div>
     </div>
