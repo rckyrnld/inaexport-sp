@@ -533,6 +533,8 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-5" style="padding-top: 20px;">
                             <div class="box-cu">
+							<form class="form-horizontal" method="POST" action="{{ url('br_importir_next') }}" enctype="multipart/form-data">
+                            {{ csrf_field() }}
                                     <center><h5><b>@lang("login.forms.by1")</b></h5></center>
                                     <br>
                                    <div class="form-group row">
@@ -623,18 +625,20 @@
                                    <div class="form-group row">
                                       <div class="col-md-12">
                                         <div align="left">
-                                            <a href="{{url('/br_importir')}}" class="btn btn-primary button_form">
+                                            <button type="submit" style="width: 100%;" class="btn btn-danger button_form">
                                                     @if($loc == 'ch')
                                                     立即发布购买请求
                                                     @elseif($loc == 'in')
-                                                    Kirim permintaan pembelian sekarang
+                                                    Kirim Permintaan Pembelian Sekarang
                                                     @else
-                                                    Post buying request now
-                                                    @endif
-                                            </a>
+                                                    Post Buying Request Now
+                                                    @endif 
+											<i class="fa fa-arrow-right"></i>
+                                            </button>
                                         </div>
                                       </div>
                                    </div>
+							</form>
                             </div>
                         </div>
                     </div>

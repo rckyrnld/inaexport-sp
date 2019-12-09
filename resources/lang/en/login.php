@@ -38,7 +38,7 @@ return [
         "re-password" => "Re-Password",
         "postcode" => "Postcode",
         "address" => "Address",
-        "by1" => "Form Buying Request",
+        "by1" => "Want To Get Quotations ?",
         "by2" => "What are you looking for",
         "by3" => "Category",
         "by4" => "Specification",

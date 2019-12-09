@@ -47,6 +47,13 @@ class BRFrontController extends Controller
 	
 	public function br_importir()
     {
+		$subyek = "";
+		$valid = "";
+		$spec = "";
+		$eo = "";
+		$neo = "";
+		$tp = "";
+		$ntp = "";
 		if(empty(Auth::guard('eksmp')->user()->id) && empty(Auth::user()->name)){
 		// echo "a";die();
 		$r = "2";
@@ -77,16 +84,16 @@ class BRFrontController extends Controller
             ->orderBy('nama_kategori_en', 'ASC')
             ->limit(9)
             ->get();
-        return view('frontend.indexbr', compact('product', 'categoryutama','r'));
+        return view('frontend.indexbr', compact('product', 'categoryutama','r','subyek','valid','spec','eo','neo','tp','ntp'));
 		}else{
 		$r = "2";
 		$categoryutama = "";
-        return view('frontend.indexbr', compact('product', 'categoryutama','r'));
+        return view('frontend.indexbr', compact('product', 'categoryutama','r','subyek','valid','spec','eo','neo','tp','ntp'));
 		}
 		}else{
 		$r = "2";
 		$categoryutama = "";
-		return view('frontend.indexbr', compact('product', 'categoryutama','r'));
+		return view('frontend.indexbr', compact('product', 'categoryutama','r','subyek','valid','spec','eo','neo','tp','ntp'));
 		}
 		}
 		
@@ -418,6 +425,39 @@ class BRFrontController extends Controller
 			
 			return redirect('br_pw_chat/'.$idq);
 	}	
+	
+	public function br_importir_next(Request $request)
+    {
+		$subyek = $request->subyek;
+		$valid = $request->valid;
+		$spec = $request->spec;
+		$eo = $request->eo;
+		$neo = $request->neo;
+		$ch1 = str_replace(".","",$request->tp);
+		$tp = str_replace(",",".",$ch1);
+		$ntp = $request->ntp;
+		$product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            // ->where('csc_product_single.status', 2)
+            ->orderby('csc_product_single.id', 'DESC')
+            // ->inRandomOrder()
+            ->limit(10)
+            ->get();
+
+        // $service = DB::table('itdp_service_eks as a')->where('status', 2)->orderBy('created_at', 'desc')->get();
+        //Category Utama
+		$r = "1";
+        $categoryutama = DB::table('csc_product')
+            ->where('level_1', 0)
+            ->where('level_2', 0)
+            ->orderBy('nama_kategori_en', 'ASC')
+            ->limit(9)
+            ->get();
+        return view('frontend.indexbr', compact('product', 'categoryutama','r','subyek','valid','spec','eo','neo','tp','ntp'));
+		
+	}
 	
 	public function br_importir_save(Request $request)
     {	

@@ -79,19 +79,19 @@ if ($loc == "ch") {
                                     <label><b>@lang("login.forms.by2")</b></label>
                                 </div>
                                 <div class="form-group col-sm-8">
-                                    <input type="text" style="color:black;" value="" name="subyek" id="subyek"
+                                    <input type="text" style="color:black;" value="<?php echo $subyek; ?>" name="subyek" id="subyek"
                                            class="form-control" required>
                                 </div>
                                 <div class="form-group col-sm-4">
                                     <select style="color:black;" class="form-control" name="valid" id="valid" required>
                                         <option value="">@lang("login.forms.by10")</option>
-                                        <option value="0">None</option>
-                                        <option value="1">Valid within 1 day</option>
-                                        <option value="3">Valid within 3 day</option>
-                                        <option value="5">Valid within 5 day</option>
-                                        <option value="7">Valid within 7 day</option>
-                                        <option value="14">Valid within 2 week</option>
-                                        <option value="30">Valid within 1 month</option>
+                                        <option <?php if($valid == 0){ echo "selected"; } ?> value="0">None</option>
+                                        <option <?php if($valid == 1){ echo "selected"; } ?> value="1">Valid within 1 day</option>
+                                        <option <?php if($valid == 3){ echo "selected"; } ?> value="3">Valid within 3 day</option>
+                                        <option <?php if($valid == 5){ echo "selected"; } ?> value="5">Valid within 5 day</option>
+                                        <option <?php if($valid == 7){ echo "selected"; } ?> value="7">Valid within 7 day</option>
+                                        <option <?php if($valid == 14){ echo "selected"; } ?> value="14">Valid within 2 week</option>
+                                        <option <?php if($valid == 30){ echo "selected"; } ?> value="30">Valid within 1 month</option>
                                     </select>
                                 </div>
                             </div>
@@ -124,8 +124,8 @@ if ($loc == "ch") {
                                     <label><b>@lang("login.forms.by4")</b></label>
                                 </div>
                                 <div class="form-group col-sm-12">
-                                    <textarea style="color:black;" value="" name="spec" id="spec"
-                                              class="form-control"></textarea>
+                                    <textarea style="color:black;" name="spec" id="spec"
+                                              class="form-control"><?php echo $spec; ?></textarea>
                                 </div>
 
                             </div>
@@ -138,7 +138,7 @@ if ($loc == "ch") {
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <div class="form-row">
-                                        <div class="col-sm-7"><input style="color:black;" type="number" min="1"
+                                        <div class="col-sm-7"><input style="color:black;" value="<?php echo $eo; ?>" type="number" min="1"
                                                                      name="eo" id="eo" class="form-control"></div>
                                         <div class="col-sm-5">
                                             <select class="form-control select2" name="neo" id="neo">
@@ -187,7 +187,7 @@ if ($loc == "ch") {
                                 <div class="form-group col-sm-6">
 
                                     <div class="form-row">
-                                        <div class="col-sm-7"><input style="color:black;" type="text" value=""
+                                        <div class="col-sm-7"><input style="color:black;" type="text" value="<?php echo $subyek; ?>"
                                                                      name="tp" id="tp" class="form-control amount">
 																	 </div>
                                         <div class="col-sm-5"><select  class="form-control"
