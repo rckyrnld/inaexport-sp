@@ -1,11 +1,12 @@
 @include('header')
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<!-- <script src="https://code.highcharts.com/modules/exporting.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-
+<!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 &nbsp;
 <style type="text/css">
     .highcharts-drilldown-axis-label {
@@ -90,7 +91,7 @@
                         <div class="tab-pane animate fadeIn text-muted active show" id="tab1">
                             <div class="row">
                                 <div id="user_year" style="min-width: 100%; height: 400px; margin: 0 auto;"></div>
-                                <a id="br1" onclick="exp1()" class="btn btn-success"><font color="white"><i
+                                <a id="export_pdf_1" class="btn btn-success"><font color="white"><i
                                                 class="fa fa-download"></i> Export PDF</font></a>
                             </div>
                         </div>
@@ -104,6 +105,8 @@
                                 <div id="top_rc"
                                      style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
                             </div>
+                            <a id="export_pdf_2" class="btn btn-success"><font color="white"><i
+                                            class="fa fa-download"></i> Export PDF</font></a>
                         </div>
                         <div class="tab-pane animate fadeIn text-muted" id="tab3">
                             <div class="row">
@@ -116,6 +119,8 @@
                                      style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
 
                             </div>
+                            <a id="export_pdf_3" class="btn btn-success"><font color="white"><i
+                                            class="fa fa-download"></i> Export PDF</font></a>
                         </div>
                         <div class="tab-pane animate fadeIn text-muted" id="tab4">
                             <div class="row">
@@ -123,6 +128,8 @@
                                      style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
 
                             </div>
+                            <a id="export_pdf_4" class="btn btn-success"><font color="white"><i
+                                            class="fa fa-download"></i> Export PDF</font></a>
                         </div>
                         <div class="tab-pane animate fadeIn text-muted" id="tab5">
                             <div class="row">
@@ -130,6 +137,8 @@
                                      style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
 
                             </div>
+                            <a id="export_pdf_5" class="btn btn-success"><font color="white"><i
+                                            class="fa fa-download"></i> Export PDF</font></a>
                         </div>
                         <div class="tab-pane animate fadeIn text-muted" id="tab6">
                             <div class="row">
@@ -137,6 +146,8 @@
                                      style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
 
                             </div>
+                            <a id="export_pdf_6" class="btn btn-success"><font color="white"><i
+                                            class="fa fa-download"></i> Export PDF</font></a>
                         </div>
                     </div>
 
@@ -170,15 +181,16 @@
         var defaultTitle = "Number of Memberships";
         var drilldownTitle = "Number of Memberships";
 
-        var chart = Highcharts.chart('user_year', {
+        var chart_user = Highcharts.chart('user_year', {
             chart: {
                 type: 'column',
                 events: {
                     drilldown: function (e) {
-                        chart.setTitle({text: drilldownTitle + e.point.name});
+                      console.log(e);
+                        // chart.setTitle({text: drilldownTitle + e.point.name});
                     },
                     drillup: function (e) {
-                        chart.setTitle({text: defaultTitle});
+                        // chart.setTitle({text: defaultTitle});
                     }
                 }
             },
@@ -205,6 +217,11 @@
                 series: data[1]
             }
         });
+        $('#export_pdf_1').click(function() {
+          Highcharts.exportCharts([chart_user], {
+            type: 'application/pdf'
+          });
+        });
     }
 
     function inquiry() {
@@ -213,15 +230,15 @@
         var defaultTitle = "Number of Inquiry This Year";
         var drilldownTitle = "Amount of Inquiry Year ";
 
-        var chart = Highcharts.chart('inquiry', {
+        var chart_inquiry_1 = Highcharts.chart('inquiry', {
             chart: {
                 type: 'column',
                 events: {
                     drilldown: function (e) {
-                        chart.setTitle({text: drilldownTitle + e.point.name});
+                        // chart.setTitle({text: drilldownTitle + e.point.name});
                     },
                     drillup: function (e) {
-                        chart.setTitle({text: defaultTitle});
+                        // chart.setTitle({text: defaultTitle});
                     }
                 }
             },
@@ -249,7 +266,7 @@
             }
         });
 
-        Highcharts.chart('top_inquiry', {
+        var chart_inquiry_2 = Highcharts.chart('top_inquiry', {
             chart: {
                 type: 'column'
             },
@@ -278,6 +295,11 @@
                 pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">{point.name}</span><br/>'
             }
         });
+        $('#export_pdf_3').click(function() {
+          Highcharts.exportCharts([chart_inquiry_1, chart_inquiry_2], {
+            type: 'application/pdf'
+          });
+        });
     }
 
     function buying() {
@@ -285,15 +307,15 @@
         var defaultTitle = "Number of Buying Request";
         var drilldownTitle = "Amount of Buying Year ";
 
-        var chart = Highcharts.chart('buying', {
+        var chart_buying = Highcharts.chart('buying', {
             chart: {
                 type: 'column',
                 events: {
                     drilldown: function (e) {
-                        chart.setTitle({text: drilldownTitle + e.point.name});
+                        // chart.setTitle({text: drilldownTitle + e.point.name});
                     },
                     drillup: function (e) {
-                        chart.setTitle({text: defaultTitle});
+                        // chart.setTitle({text: defaultTitle});
                     }
                 }
             },
@@ -320,6 +342,11 @@
                 series: data_year[1]
             }
         });
+        $('#export_pdf_4').click(function() {
+          Highcharts.exportCharts([chart_buying], {
+            type: 'application/pdf'
+          });
+        });
     }
 
     function event() {
@@ -327,15 +354,15 @@
         var defaultTitle = "Number of Event This Year";
         var drilldownTitle = "Amount of Events Year ";
 
-        var chart = Highcharts.chart('event', {
+        var chart_event = Highcharts.chart('event', {
             chart: {
                 type: 'column',
                 events: {
                     drilldown: function (e) {
-                        chart.setTitle({text: drilldownTitle + e.point.name});
+                        // chart.setTitle({text: drilldownTitle + e.point.name});
                     },
                     drillup: function (e) {
-                        chart.setTitle({text: defaultTitle});
+                        // chart.setTitle({text: defaultTitle});
                     }
                 }
             },
@@ -361,6 +388,11 @@
             drilldown: {
                 series: data_year[1]
             }
+        });
+        $('#export_pdf_5').click(function() {
+          Highcharts.exportCharts([chart_event], {
+            type: 'application/pdf'
+          });
         });
     }
 
@@ -369,15 +401,15 @@
         var defaultTitle = "Number of Training This Year";
         var drilldownTitle = "Amount of Training Year ";
 
-        var chart = Highcharts.chart('training', {
+        var chart_training = Highcharts.chart('training', {
             chart: {
                 type: 'column',
                 events: {
                     drilldown: function (e) {
-                        chart.setTitle({text: drilldownTitle + e.point.name});
+                        // chart.setTitle({text: drilldownTitle + e.point.name});
                     },
                     drillup: function (e) {
-                        chart.setTitle({text: defaultTitle});
+                        // chart.setTitle({text: defaultTitle});
                     }
                 }
             },
@@ -404,13 +436,18 @@
                 series: data_year[1]
             }
         });
+        $('#export_pdf_6').click(function() {
+          Highcharts.exportCharts([chart_training], {
+            type: 'application/pdf'
+          });
+        });
     }
 
     function top_downloader() {
         var data_company = JSON.parse('<?php echo addcslashes(json_encode($Top_Company_Download), '\'\\'); ?>');
         var data_rc = JSON.parse('<?php echo addcslashes(json_encode($Top_Downloaded_RC), '\'\\'); ?>');
 
-        var chart = Highcharts.chart('top_downloader', {
+        var chart_rc_1 = Highcharts.chart('top_downloader', {
             chart: {
                 type: 'column'
             },
@@ -440,7 +477,7 @@
             }
         });
 
-        var charts = Highcharts.chart('top_rc', {
+        var chart_rc_2 = Highcharts.chart('top_rc', {
             chart: {
                 type: 'column'
             },
@@ -469,20 +506,81 @@
                 pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">{point.name}</span><br/>'
             }
         });
-    }
-
-    function exp1() {
-
-        //send the div to PDF
-
-        html2canvas($("#user_year"), { // DIV ID HERE
-            onrendered: function (canvas) {
-                var imgData = canvas.toDataURL('image/png');
-                var doc = new jsPDF('landscape');
-                doc.addImage(imgData, 'PDF', 10, 10);
-                doc.save('sample-file.pdf'); //SAVE PDF FILE
-            }
+        $('#export_pdf_2').click(function() {
+          Highcharts.exportCharts([chart_rc_1, chart_rc_2], {
+            type: 'application/pdf'
+          });
         });
-
     }
+
+    // function exp1() {
+    //
+    //     //send the div to PDF
+    //
+    //     html2canvas($("#user_year"), { // DIV ID HERE
+    //         onrendered: function (canvas) {
+    //             var imgData = canvas.toDataURL('image/png');
+    //             var doc = new jsPDF('landscape');
+    //             doc.addImage(imgData, 'PDF', 10, 10);
+    //             doc.save('sample-file.pdf'); //SAVE PDF FILE
+    //         }
+    //     });
+    //
+    // }
+</script>
+<script>
+  /**
+   * Create a global getSVG method that takes an array of charts as an
+   * argument
+   */
+  Highcharts.getSVG = function(charts) {
+    var svgArr = [],
+      top = 0,
+      width = 0;
+
+    Highcharts.each(charts, function(chart) {
+      var svg = chart.getSVG(),
+        // Get width/height of SVG for export
+        svgWidth = +svg.match(
+          /^<svg[^>]*width\s*=\s*\"?(\d+)\"?[^>]*>/
+        )[1],
+        svgHeight = +svg.match(
+          /^<svg[^>]*height\s*=\s*\"?(\d+)\"?[^>]*>/
+        )[1];
+
+      svg = svg.replace(
+        '<svg',
+        '<g transform="translate('+width+', 0 )" '
+      );
+      svg = svg.replace('</svg>', '</g>');
+
+      width += svgWidth;
+  		top = Math.max(top, svgHeight);
+
+      svgArr.push(svg);
+    });
+
+    return '<svg height="' + top + '" width="' + width +
+      '" version="1.1" xmlns="http://www.w3.org/2000/svg">' +
+      svgArr.join('') + '</svg>';
+  };
+
+  /**
+   * Create a global exportCharts method that takes an array of charts as an
+   * argument, and exporting options as the second argument
+   */
+  Highcharts.exportCharts = function(charts, options) {
+
+    // Merge the options
+    options = Highcharts.merge(Highcharts.getOptions().exporting, options);
+
+    // Post to export server
+    Highcharts.post(options.url, {
+      filename: options.filename || 'chart',
+      type: options.type,
+      width: options.width,
+      svg: Highcharts.getSVG(charts)
+    });
+  };
+
 </script>
