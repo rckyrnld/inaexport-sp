@@ -79,19 +79,19 @@ if ($loc == "ch") {
                                     <label><b>@lang("login.forms.by2")</b></label>
                                 </div>
                                 <div class="form-group col-sm-8">
-                                    <input type="text" style="color:black;" value="" name="subyek" id="subyek"
+                                    <input type="text" style="color:black;" value="<?php echo $subyek; ?>" name="subyek" id="subyek"
                                            class="form-control" required>
                                 </div>
                                 <div class="form-group col-sm-4">
                                     <select style="color:black;" class="form-control" name="valid" id="valid" required>
                                         <option value="">@lang("login.forms.by10")</option>
-                                        <option value="0">None</option>
-                                        <option value="1">Valid within 1 day</option>
-                                        <option value="3">Valid within 3 day</option>
-                                        <option value="5">Valid within 5 day</option>
-                                        <option value="7">Valid within 7 day</option>
-                                        <option value="14">Valid within 2 week</option>
-                                        <option value="30">Valid within 1 month</option>
+                                        <option <?php if($valid == 0){ echo "selected"; } ?> value="0">None</option>
+                                        <option <?php if($valid == 1){ echo "selected"; } ?> value="1">Valid within 1 day</option>
+                                        <option <?php if($valid == 3){ echo "selected"; } ?> value="3">Valid within 3 day</option>
+                                        <option <?php if($valid == 5){ echo "selected"; } ?> value="5">Valid within 5 day</option>
+                                        <option <?php if($valid == 7){ echo "selected"; } ?> value="7">Valid within 7 day</option>
+                                        <option <?php if($valid == 14){ echo "selected"; } ?> value="14">Valid within 2 week</option>
+                                        <option <?php if($valid == 30){ echo "selected"; } ?> value="30">Valid within 1 month</option>
                                     </select>
                                 </div>
                             </div>
@@ -124,59 +124,57 @@ if ($loc == "ch") {
                                     <label><b>@lang("login.forms.by4")</b></label>
                                 </div>
                                 <div class="form-group col-sm-12">
-                                    <textarea style="color:black;" value="" name="spec" id="spec"
-                                              class="form-control"></textarea>
+                                    <textarea style="color:black;" name="spec" id="spec"
+                                              class="form-control"><?php echo $spec; ?></textarea>
                                 </div>
 
                             </div>
                             <div class="form-row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <label><b>@lang("login.forms.by5")</b></label>
                                 </div>
-                                <div class="col-sm-6">
-                                    <label><b>@lang("login.forms.by6")</b></label>
-                                </div>
-                                <div class="form-group col-sm-6">
+                                
+                                <div class="form-group col-sm-12">
                                     <div class="form-row">
-                                        <div class="col-sm-7"><input style="color:black;" type="number" min="1"
+                                        <div class="col-sm-7"><input style="color:black;" value="<?php echo $eo; ?>" type="number" min="1"
                                                                      name="eo" id="eo" class="form-control"></div>
                                         <div class="col-sm-5">
-                                            <select class="form-control select2" name="neo" id="neo">
+                                            <select class="form-control" name="neo" id="neo">
                                                 <option value="">@lang("login.forms.by14")</option>
 
-                                                <option value="Each">Each</option>
-                                                <option value="Foot">Foot</option>
-                                                <option value="Gallons">Gallons</option>
-                                                <option value="Kilograms">Kilograms</option>
-                                                <option value="Liters">Liters</option>
-                                                <option value="Packs">Packs</option>
-                                                <option value="Pairs">Pairs</option>
-                                                <option value="Pieces">Pieces</option>
-                                                <option value="Reams">Reams</option>
-                                                <option value="Rods">Rods</option>
-                                                <option value="Rolls">Rolls</option>
-                                                <option value="Sets">Sets</option>
-                                                <option value="Sheets">Sheets</option>
-                                                <option value="Square Meters">Square Meters</option>
-                                                <option value="Tons">Tons</option>
-                                                <option value="Unit">Unit</option>
-                                                <option value="令">令</option>
-                                                <option value="件">件</option>
-                                                <option value="加仑">加仑</option>
-                                                <option value="包">包</option>
-                                                <option value="千克">千克</option>
-                                                <option value="升">升</option>
-                                                <option value="单位">单位</option>
-                                                <option value="卷">卷</option>
-                                                <option value="吨">吨</option>
-                                                <option value="套">套</option>
-                                                <option value="对">对</option>
-                                                <option value="平方米">平方米</option>
-                                                <option value="张">张</option>
-                                                <option value="根">根</option>
-                                                <option value="每个">每个</option>
-                                                <option value="英尺">英尺</option>
-                                                <option value="集装箱">集装箱</option>
+                                                <option <?php if($neo == "Each"){ echo "selected"; } ?> value="Each">Each</option>
+                                                <option <?php if($neo == "Foot"){ echo "selected"; } ?> value="Foot">Foot</option>
+                                                <option <?php if($neo == "Gallons"){ echo "selected"; } ?> value="Gallons">Gallons</option>
+                                                <option <?php if($neo == "Kilograms"){ echo "selected"; } ?> value="Kilograms">Kilograms</option>
+                                                <option <?php if($neo == "Liters"){ echo "selected"; } ?> value="Liters">Liters</option>
+                                                <option <?php if($neo == "Packs"){ echo "selected"; } ?> value="Packs">Packs</option>
+                                                <option <?php if($neo == "Pairs"){ echo "selected"; } ?> value="Pairs">Pairs</option>
+                                                <option <?php if($neo == "Pieces"){ echo "selected"; } ?> value="Pieces">Pieces</option>
+                                                <option <?php if($neo == "Reams"){ echo "selected"; } ?> value="Reams">Reams</option>
+                                                <option <?php if($neo == "Rods"){ echo "selected"; } ?> value="Rods">Rods</option>
+                                                <option <?php if($neo == "Rolls"){ echo "selected"; } ?> value="Rolls">Rolls</option>
+                                                <option <?php if($neo == "Sets"){ echo "selected"; } ?> value="Sets">Sets</option>
+                                                <option <?php if($neo == "Sheets"){ echo "selected"; } ?> value="Sheets">Sheets</option>
+                                                <option <?php if($neo == "Square Meters"){ echo "selected"; } ?> value="Square Meters">Square Meters</option>
+                                                <option <?php if($neo == "Tons"){ echo "selected"; } ?> value="Tons">Tons</option>
+                                                <option <?php if($neo == "Unit"){ echo "selected"; } ?> value="Unit">Unit</option>
+                                                <option <?php if($neo == "令"){ echo "selected"; } ?> value="令">令</option>
+                                                <option <?php if($neo == "件"){ echo "selected"; } ?> value="件">件</option>
+                                                <option <?php if($neo == "加仑"){ echo "selected"; } ?> value="加仑">加仑</option>
+                                                <option <?php if($neo == "包"){ echo "selected"; } ?> value="包">包</option>
+                                                <option <?php if($neo == "千克"){ echo "selected"; } ?> value="千克">千克</option>
+                                                <option <?php if($neo == "升"){ echo "selected"; } ?> value="升">升</option>
+                                                <option <?php if($neo == "单位"){ echo "selected"; } ?> value="单位">单位</option>
+                                                <option <?php if($neo == "卷"){ echo "selected"; } ?> value="卷">卷</option>
+                                                <option <?php if($neo == "吨"){ echo "selected"; } ?> value="吨">吨</option>
+                                                <option <?php if($neo == "套"){ echo "selected"; } ?> value="套">套</option>
+                                                <option <?php if($neo == "对"){ echo "selected"; } ?> value="对">对</option>
+                                                <option <?php if($neo == "平方米"){ echo "selected"; } ?> value="平方米">平方米</option>
+                                                <option <?php if($neo == "张"){ echo "selected"; } ?> value="张">张</option>
+                                                <option <?php if($neo == "根"){ echo "selected"; } ?> value="根">根</option>
+                                                <option <?php if($neo == "每个"){ echo "selected"; } ?> value="每个">每个</option>
+                                                <option <?php if($neo == "英尺"){ echo "selected"; } ?> value="英尺">英尺</option>
+                                                <option <?php if($neo == "集装箱"){ echo "selected"; } ?> value="集装箱">集装箱</option>
 
                                             </select>
                                         </div>
@@ -184,18 +182,23 @@ if ($loc == "ch") {
 
 
                                 </div>
-                                <div class="form-group col-sm-6">
+							</div>
+							<div class="form-row">
+							<div class="col-sm-12">
+                                    <label><b>@lang("login.forms.by6")</b></label>
+                                </div>
+                                <div class="form-group col-sm-12">
 
                                     <div class="form-row">
-                                        <div class="col-sm-7"><input style="color:black;" type="text" value=""
+                                        <div class="col-sm-7"><input style="color:black;" type="text" value="<?php if(empty($tp)){}else{ echo number_format($tp,0,',','.'); } ?>"
                                                                      name="tp" id="tp" class="form-control amount">
 																	 </div>
                                         <div class="col-sm-5"><select  class="form-control"
                                                                       name="ntp" id="ntp">
                                                 <option value="">@lang("login.forms.by14")</option>
-                                                <option value="IDR">IDR</option>
-                                                <option value="THB">THB</option>
-                                                <option value="USD">USD</option>
+                                                <option  <?php if($ntp == "IDR"){ echo "selected"; } ?> value="IDR">IDR</option>
+                                                <option  <?php if($ntp == "THB"){ echo "selected"; } ?> value="THB">THB</option>
+                                                <option  <?php if($ntp == "USD"){ echo "selected"; } ?> value="USD">USD</option>
                                             </select></div>
                                     </div>
                                 </div>
@@ -239,7 +242,8 @@ if ($loc == "ch") {
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <input style="color:black;" type="file" value="" name="doc" id="doc"
-                                           class="form-controlz" required>
+                                           class="form-controlz" required><br>
+									<span><font color="red">* accept word, excel, ppt & pdf</font></span>
                                 </div>
 
                             </div>
@@ -247,13 +251,13 @@ if ($loc == "ch") {
                                 <div class="col-sm-12">
                                     <?php if($r == 2){ ?>
                                     <button disabled onclick="buk()" style="width:100%!important;"
-                                            class="btn btn-md btn-success"><i
-                                                class="fa fa-save"></i> @lang("login.btn4")</button>
+                                            class="btn btn-md btn-success"><font color="white"><i
+                                                class="fa fa-save"></i> @lang("login.btn4")</font></button>
                                     <?php }else{ ?>
                                    <!-- <button style="width:100%!important;" class="btn btn-md btn-success"><i
                                                 class="fa fa-save"></i> @lang("login.btn4")</button> -->
-									<a onclick="simpanbr()"style="width:100%!important;" class="btn btn-md btn-success"><i
-                                                class="fa fa-save"></i> @lang("login.btn4")</a>
+									<a onclick="simpanbr()"style="width:100%!important;" class="btn btn-md btn-success"><font color="white"><i
+                                                class="fa fa-save"></i> @lang("login.btn4")</i></a>
                                     <?php } ?>
                                 </div>
 
