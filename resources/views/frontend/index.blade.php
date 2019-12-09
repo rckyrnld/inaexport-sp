@@ -370,7 +370,7 @@
                                             $ukuran = '350px';
                                         }
                                     ?>
-                                    <div class="single_product" style="height: {{$ukuran}};">
+                                    <div class="single_product" style="height: {{$ukuran}}; background-color: #f8f9f4; padding: 13px !important;">
                                         <?php
                                             //cut prod name
                                             $num_char = 20;
