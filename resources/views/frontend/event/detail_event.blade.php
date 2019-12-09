@@ -98,7 +98,7 @@
     if (Auth::guard('eksmp')->user()) {
         $button = '<button class="btn training join btn-info" style="width:30%;" onclick="__join(\''.getContactPerson($detail->id, 'event').'\')">'.Lang::get('training.minat').'</button>';
     } else {
-        $button = '<button class="btn training join btn-info" onclick="__join()" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.join').'</button>';
+        $button = '<button class="btn training join btn-info" onclick="__join()" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> '.Lang::get('training.minat').'</button>';
     }
 ?>
 <style type="text/css">
