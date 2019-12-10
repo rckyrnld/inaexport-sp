@@ -3,7 +3,7 @@ return [
     "title" => "Masuk | Kementerian Perdagangan RI",
     "title2" => "senang berjumpa dengan anda lagi",
     "title3" => "Daftar Akun Baru, Sekarang",
-	"title4" => "Selamat datang di <font color='red'>inaexport</font>.<font color='blue'>id</font>",
+	"title4" => "Selamat datang di <b><font color='red'>inaexport</font>.<font color='blue'>id</font></b>",
 	"title5" => "Sudah punya akun ?",
 	"title6" => "Dengan mendaftar, saya menyetujui",
 	"title7" => "<font color='blue'>Syarat dan ketentuan</font>  serta <font color='blue'>kebijakan privasi</font>",

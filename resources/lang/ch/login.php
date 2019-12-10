@@ -3,7 +3,7 @@ return [
     "title" => "登入 | Kementerian Perdagangan RI",
     "title2" => "很高兴再次见到你",
 	"title3" => "立即注册新帐户",
-	"title4" => "欢迎来到 <font color='red'>inaexport</font>.<font color='blue'>id</font>",
+	"title4" => "欢迎来到 <b><font color='red'>inaexport</font>.<font color='blue'>id</font></b>",
 	"title5" => "你有帐号 ?",
 	"title6" => "通过注册，我同意",
 	"title7" => "条款和条件以及隐私政策",

@@ -3,7 +3,7 @@ return [
     "title" => "Sign In | Kementerian Perdagangan RI",
     "title2" => "it's good to see you again",
 	"title3" => "Register a New Account, Now",
-	"title4" => "Welcome to <font color='red'>inaexport</font>.<font color='blue'>id</font>",
+	"title4" => "Welcome to <b><font color='red'>inaexport</font>.<font color='blue'>id</font></b>",
 	"title5" => "You have account ?",
 	"title6" => "By registering, I agree",
 	"title7" => "<font color='blue'>Terms and conditions</font> and <font color='blue'>privacy policy</font>",
