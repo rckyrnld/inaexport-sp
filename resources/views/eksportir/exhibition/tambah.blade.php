@@ -15,7 +15,7 @@
                             </div>
 
                             <div class="form-group col-sm-6">
-                                <label>Own Production (%)</label>
+                                <label>Own Productionnn (%)</label>
                                 <input type="text" class="form-control" name="persen_sendiri" id="persen_sendiri" required>
                             </div>
                         </div>

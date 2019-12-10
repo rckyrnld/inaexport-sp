@@ -143,14 +143,17 @@ class InquiryController extends Controller
             $datenow = date("Y-m-d H:i:s");
 
             $dtproduct = DB::table('csc_product_single')->where('id', $id_product)->first();
-            $idn = DB::table('csc_inquiry_br')->max('id');
-            $idnew = $idn + 1;
-
-            $destination = 'uploads\Inquiry\\' . $idnew;
-            if ($request->hasFile('filedo')) {
+            if (empty($request->file('filedo'))) {
+                $nama_file1 = null;
+            } else {
+                $idn = DB::table('csc_inquiry_br')->max('id');
+                $idnew = $idn + 1;
+                $destination = 'uploads\Inquiry\\' . $idnew;
+//                if ($request->hasFile('filedo')) {
                 $file1 = $request->file('filedo');
                 $nama_file1 = time() . '_' . $request->subyek_en . '_' . $file1->getClientOriginalName();
                 Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+//                }
             }
 
             //Jenis Perihal
