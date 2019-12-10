@@ -66,32 +66,37 @@
         $kategori = '-';
     }
 
+    $arrimg = [];
     $img1 = "image/noimage.jpg";
-    $img2 = "image/noimage.jpg";
-    $img3 = "image/noimage.jpg";
-    $img4 = "image/noimage.jpg";
+    // $img2 = "image/noimage.jpg";
+    // $img3 = "image/noimage.jpg";
+    // $img4 = "image/noimage.jpg";
     if($detail->image_1 != NULL){
         $imge1 = 'uploads/Event/Image/'.$detail->id.'/'.$detail->image_1;
         if(file_exists($imge1)) {
           $img1 = 'uploads/Event/Image/'.$detail->id.'/'.$detail->image_1;
+          array_push($arrimg, $img1);
         }
     }
     if($detail->image_2 != NULL){
         $imge2 = 'uploads/Event/Image/'.$detail->id.'/'.$detail->image_2;
         if(file_exists($imge2)) {
           $img2 = 'uploads/Event/Image/'.$detail->id.'/'.$detail->image_2;
+          array_push($arrimg, $img2);
         }
     }
     if($detail->image_3 != NULL){
         $imge3 = 'uploads/Event/Image/'.$detail->id.'/'.$detail->image_3;
         if(file_exists($imge3)) {
           $img3 = 'uploads/Event/Image/'.$detail->id.'/'.$detail->image_3;
+          array_push($arrimg, $img3);
         }
     }
     if($detail->image_4 != NULL){
         $imge4 = 'uploads/Event/Image/'.$detail->id.'/'.$detail->image_4;
         if(file_exists($imge4)) {
           $img4 = 'uploads/Event/Image/'.$detail->id.'/'.$detail->image_4;
+          array_push($arrimg, $img4);
         }
     }
 
@@ -133,46 +138,29 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product-details-tab">
 
-                        <div id="img-1" class="zoomWrapper single-zoom" align="center">
+                        <div id="img-1" class="zoomWrapper single-zoom" align="center" style="border: 10px solid #edeff2;">
                             <a href="#">
                                 <img id="zoom1" src="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}" alt="big-1" style="width: 100%; height: 400px;">
                             </a>
                         </div>
-
-                        <div class="single-zoom-thumb">
+                        @if(count($arrimg) > 1)
+                        <div class="single-zoom-thumb" align="center">
                             <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}">
-                                        <img src="{{url('/')}}/{{$img1}}" alt="zo-th-1" style="width: 100%; height: 90px;" />
-                                    </a>
+                                <?php
+                                    for ($m=0; $m < count($arrimg); $m++) { 
+                                ?>
+                                        <li>
+                                            <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$arrimg[$m]}}" data-zoom-image="{{url('/')}}/{{$arrimg[$m]}}">
+                                                <img src="{{url('/')}}/{{$arrimg[$m]}}" alt="zo-th-1" style="width: auto; height: 105px;" />
+                                            </a>
 
-                                </li>
-                                @if($img2 != "image/noimage.jpg")
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img2}}" data-zoom-image="{{url('/')}}/{{$img2}}">
-                                        <img src="{{url('/')}}/{{$img2}}" alt="zo-th-1" style="width: 100%; height: 90px;" />
-                                    </a>
-
-                                </li>
-                                @endif
-                                @if($img3 != "image/noimage.jpg")
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img3}}" data-zoom-image="{{url('/')}}/{{$img3}}">
-                                        <img src="{{url('/')}}/{{$img3}}" alt="zo-th-1" style="width: 100%; height: 90px;" />
-                                    </a>
-
-                                </li>
-                                @endif
-                                @if($img4 != "image/noimage.jpg")
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{url('/')}}/{{$img4}}" data-zoom-image="{{url('/')}}/{{$img4}}">
-                                        <img src="{{url('/')}}/{{$img4}}" alt="zo-th-1" style="width: 100%; height: 90px;" />
-                                    </a>
-
-                                </li>
-                                @endif
+                                        </li>
+                                <?php
+                                    }
+                                ?>
                             </ul>
                         </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
