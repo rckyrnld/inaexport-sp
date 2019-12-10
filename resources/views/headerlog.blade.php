@@ -72,7 +72,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-md-6">
                             <div class="follow_us">
-                                <label><i class="ion-social-whatsapp-outline"></i> hotline : +62 000 111 222 333</label>
+                                <label><!--<i class="ion-social-whatsapp-outline"></i> --> </label>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">

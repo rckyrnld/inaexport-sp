@@ -15,5 +15,5 @@ return [
         "address" => "Alamat",
 		
     ],
-    "submit" => "Daftar"
+    "submit" => "Buat Akun"
 ];

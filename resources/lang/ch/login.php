@@ -3,6 +3,7 @@ return [
     "title" => "登入 | Kementerian Perdagangan RI",
     "title2" => "很高兴再次见到你",
 	"title3" => "立即注册新帐户",
+	"title4" => "欢迎来到 inaexport.id",
     "btn" => "登入",
     "btn2" => "过程",
     "btn3" => "修改密码",

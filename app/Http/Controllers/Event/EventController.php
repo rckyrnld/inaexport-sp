@@ -39,9 +39,10 @@ class EventController extends Controller
 		$e_organizer = DB::table('event_organizer')->orderby('id', 'desc')->get();
 		$e_palce = DB::table('event_place')->orderby('id', 'desc')->get();
 		$e_comodity = DB::table('event_comodity')->orderby('id', 'desc')->get();
+        $country = DB::table('mst_country')->orderby('country', 'asc')->get();
 		// $prod_cat = DB::table('csc_product')->orderby('id', 'asc')->get();
 
-		return view('Event.create', compact('pageTitle', 'url_store', 'page', 'e_organizer','e_palce','e_comodity'));
+		return view('Event.create', compact('pageTitle', 'url_store', 'page', 'e_organizer','e_palce','e_comodity','country'));
 	}
 
 	public function store(Request $req){
@@ -137,6 +138,7 @@ class EventController extends Controller
 			'event_scope_in'	=> $req->es_in,
 			'event_scope_chn'	=> $req->es_chn,
 			'id_prod_cat'	=> 0,
+            'country'   => $req->country,
 			// 'id_articles'	=> $req->,
 			'id_prod_sub1_kat'	=> 0,
 			'id_prod_sub2_kat'	=> 0,
@@ -232,9 +234,10 @@ class EventController extends Controller
 		$e_organizer = DB::table('event_organizer')->orderby('id', 'asc')->get();
 		$e_palce = DB::table('event_place')->orderby('id', 'asc')->get();
 		$e_comodity = DB::table('event_comodity')->orderby('id', 'asc')->get();
+        $country = DB::table('mst_country')->orderby('country', 'asc')->get();
 		// $prod_cat = DB::table('csc_product')->orderby('id', 'asc')->get();
 
-		return view('Event.create', compact('pageTitle', 'url_update', 'page', 'e_detail', 'e_organizer','e_palce','e_comodity','sd', 'se','cp'));
+		return view('Event.create', compact('pageTitle', 'url_update', 'page', 'e_detail', 'e_organizer','e_palce','e_comodity','sd', 'se','cp','country'));
 	}
 
 	public function update($id, Request $req)
@@ -333,6 +336,7 @@ class EventController extends Controller
 			'event_scope_in'	=> $req->es_in,
 			'event_scope_chn'	=> $req->es_chn,
 			'id_prod_cat'	=> 0,
+            'country'   => $req->country,
 			'status_en'	=> $req->status,
             'updated_at' => $datenow,
         ]);

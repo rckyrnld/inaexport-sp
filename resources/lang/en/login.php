@@ -3,6 +3,7 @@ return [
     "title" => "Sign In | Kementerian Perdagangan RI",
     "title2" => "it's good to see you again",
 	"title3" => "Register a New Account, Now",
+	"title4" => "Welcome to inaexport.id",
     "a1" => "Administrator",
     "a2" => "Exporter / Importer",
     "a3" => "choose as",

@@ -525,23 +525,48 @@ class FrontController extends Controller
     }
 
     public function Event(Request $req){
+        $country = DB::table('mst_country')->orderby('country', 'asc')->get();
         if($req->search){
-            $search = $req->search;
+            $searchEvent = $req->search;
             $lang = app()->getLocale();
             if($lang == 'ch'){ $lang = 'chn';}
-            $e_detail = DB::table('event_detail as a')
+            $query = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
-                ->where(function($query) use ($search,$lang){
-                    $query->where('a.event_name_en', 'ILIKE', "%".$search."%")
-                        ->orWhere('a.event_name_'.$lang, 'ILIKE', "%".$search."%");
-                })
-                ->where('a.status_en', 'Verified')->orderby('a.created_at', 'desc')
-                ->paginate(8);
+                ->where('a.status_en', 'Verified')->orderby('a.created_at', 'desc');
+            
+            if($searchEvent == 1){
+                $param = $req->nama;
+                $query->where(function($query) use ($param,$lang){
+                            $query->where('a.event_name_en', 'ILIKE', "%".$param."%")
+                                ->orWhere('a.event_name_'.$lang, 'ILIKE', "%".$param."%");
+                        });
+            } else if($searchEvent == 2){
+                $param = $req->tanggal;
+                if($param != null){
+                    $query->where(function ($query) use ($param) {
+                        $query->where('a.start_date', '<=', $param);
+                        $query->where('a.end_date', '>=', $param);
+                    });
+                    $query->orWhere(function ($query) use ($param){
+                        $query->where('a.start_date', $param)
+                            ->orWhere('a.end_date', $param);
+                    });
+                }
+            } else if($searchEvent == 3) {
+                $param = $req->country;
+                $query->where('country', $param);
+            }
 
-            $page = 100;
+            if($param == null){
+                return redirect('/front_end/event');
+            }
+            $e_detail = $query->paginate(8);
+
+            $page = 99999999;
         } else {
-            $search = null;
+            $searchEvent = null;
+            $param = null;
             $e_detail = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
@@ -559,7 +584,7 @@ class FrontController extends Controller
             }
         }
 
-        return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page'))], compact('page', 'search'));
+        return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page'))], compact('page', 'searchEvent','country', 'param'));
     }
 
     public function join_event($id){
