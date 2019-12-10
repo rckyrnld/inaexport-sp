@@ -135,7 +135,7 @@ class InquiryController extends Controller
 
     public function store(Request $request)
     {
-//        dd("ilyas");
+        dd("ilyas");
         if ($request->id_role == 3) {
             $id_user = $request->id_user;
             $id_product = $request->id_product;
