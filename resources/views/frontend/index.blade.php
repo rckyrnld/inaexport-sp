@@ -71,6 +71,9 @@
         text-decoration: none;
         /*color: #2777d0 !important;*/
     }
+    .single_product:hover{
+        box-shadow: 0 0 15px rgba(178,221,255,1); 
+    }
 </style>
 <?php 
     $loc = app()->getLocale(); 
