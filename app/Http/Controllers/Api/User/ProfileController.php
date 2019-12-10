@@ -58,13 +58,17 @@ class ProfileController extends Controller
             ->where('itdp_profil_eks.id', '=', $request->id_profil)
             ->limit(1)
             ->get();
+//        dd($dataProfil);
+        $id_user = DB::table('itdp_company_users')->where('id_profil', $request->id_profil)->first()->id;
+//        dd($id_user);
         if (count($dataProfil) > 0) {
 
             foreach ($dataProfil as $rt) {
                 $idFoto = $rt->foto_profil;
             }
-
-            $path = ($idFoto) ? url('image/fotoprofil/' . $idFoto) : url('image/noimage.jpg');
+//            $id_profil = DB::table('itdp_company_users')->where('id', $id_user)->first()->id_profil;
+            $path = ($idFoto) ? url('uploads/Profile/Eksportir/' . $id_user . '/' . $idFoto) : url('image/noimage.jpg');
+//            $destination= 'uploads\Profile\Importir\\'.$id_user;
 //            $path2 = (string)Image::make($path)->resize(96, 96)->encode('data-url');
 //        $path3 = base64_encode(file_get_contents($path2));
             $meta = [
@@ -110,7 +114,8 @@ class ProfileController extends Controller
                 $file = "";
             } else {
                 $file = $request->file('foto_profil')->getClientOriginalName();
-                $destinationPath = public_path() . "/image/fotoprofil";
+                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
+//                $destination = 'uploads\Profile\Importir\\' . $id_user;
                 $request->file('foto_profil')->move($destinationPath, $file);
                 DB::table('itdp_company_users')
                     ->where('id', $id_user)
@@ -215,7 +220,7 @@ class ProfileController extends Controller
                 $file = "";
             } else {
                 $file = $request->file('foto_profil')->getClientOriginalName();
-                $destinationPath = public_path() . "/image/fotoprofil";
+                $destinationPath = public_path() . "/uploads/Profile/Importir/" . $id_user;
                 $request->file('foto_profil')->move($destinationPath, $file);
                 DB::table('itdp_company_users')
                     ->where('id', $id_user)
@@ -337,7 +342,7 @@ class ProfileController extends Controller
             ->where('itdp_profil_imp.id', '=', $request->id_profil)
             ->limit(1)
             ->get();
-
+        $id_user = DB::table('itdp_company_users')->where('id_profil', $request->id_profil)->first()->id;
         if (count($dataProfil) > 0) {
             foreach ($dataProfil as $rat) {
                 $idaFoto = $rat->foto_profil;
@@ -345,7 +350,9 @@ class ProfileController extends Controller
 
 //        $path = asset('image/fotoprofil/' . $idFoto);
 //        $path2 = base64_encode(file_get_contents($path));
-            $path = ($idaFoto) ? url('image/fotoprofil/' . $idaFoto) : url('image/noimage.jpg');
+//            $path = ($idaFoto) ? url('image/fotoprofil/' . $idaFoto) : url('image/noimage.jpg');
+            $path = ($idaFoto) ? url('uploads/Profile/Importir/' . $id_user . '/' . $idaFoto) : url('image/noimage.jpg');
+//            $destination= 'uploads\Profile\Importir\\'.$id_user;
 //            $path2 = (string)Image::make($path)->resize(96, 96)->encode('data-url');
 
             $meta = [
