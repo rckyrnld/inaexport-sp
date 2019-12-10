@@ -6,8 +6,8 @@
 }
 </style>
   <div id="content-bodys" class="product_area" style="color: black" >
-  <div class="py-1 text-center w-100">
-	
+  <div class="py-1 w-100">
+	<center>
 	<h3><b>@lang("login.title3")</b></h3>
 	<h6>@lang("login.title5") <a href="{{url('login')}}"><font color="red"> @lang("login.btn")</font></a></h6><br></center>
 	<br>
@@ -18,8 +18,7 @@
 	  <div class="wrap-login100" style="padding-left : 70px;padding-right : 70px; font-size:12px;">
 	  <form class="form-horizontal" method="POST" action="{{ url('simpan_rpenjual') }}">
 	   {{ csrf_field() }}
-	   <center>
-	  
+	   
 	   <br><br>
 	   
 	   <p><h6>Enter Your Account Information</h6></p><hr>
@@ -229,7 +228,7 @@
 		
                                 
 					
-		</center>
+		
 		</form>
 		
 
