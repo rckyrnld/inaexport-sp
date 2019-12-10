@@ -378,13 +378,13 @@
                                     </div>
                                 </form> -->
                             </div>
-                            <div class="middel_right_info">
+                            <div class="middel_right_info" style="padding-top: 28px; padding-right: -1px;">
                                 <a href="{{url('/front_end/list_product')}}" class="a-custom">
                                     <div class="mini_cart_wrapper" style="padding-right: 15px">
                                         <table style="width: 150px;">
                                             <tr>
-                                                <td rowspan="2" style="width: 100%;">
-                                                    <img src="{{asset('front/assets/icon/PRODUCT.png')}}" alt="" style="width: 100%;">
+                                                <td rowspan="2" style="width: 50px">
+                                                    <img src="{{asset('front/assets/icon/PRODUCT.png')}}" alt="" style="width: 70px;">
                                                 </td>
                                                 <td style="">
                                                     <span class="header-span" style="font-family: 'Myriad-pro';">
@@ -404,8 +404,8 @@
 								<div class="mini_cart_wrapper" style="padding-right: 15px">
                                     <table style="width: 150px;">
                                         <tr>
-                                            <td rowspan="2" style="width: 100%;">
-                                                <img src="{{asset('front/assets/icon/TRACKING(1).png')}}" alt="" style="width: 100%;">
+                                            <td rowspan="2" style="width: 50px">
+                                                <img src="{{asset('front/assets/icon/TRACKING(1).png')}}" alt="" style="width: 70px;">
                                             </td>
                                             <td style="">
                                                 <span class="header-span" style="font-family: 'Myriad-pro';">
@@ -424,14 +424,14 @@
                                 <div class="header_wishlist">
                                     <table style="width: 150px;">
                                         <tr>
-                                            <td rowspan="2" style="width: 100%;">
+                                            <td rowspan="2" style="width: 50px">
 											@if(Auth::guard('eksmp')->user())
                                                 
                                                     @if(Auth::guard('eksmp')->user()->id_role == 3)
 														
 												<?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
 												
-												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header" style="width: 100%;">
+												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
 												<?php }else{ ?>
 												
                                                 <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
@@ -439,14 +439,14 @@
                                                     @elseif(Auth::guard('eksmp')->user()->id_role == 2)
 													
                                                  <?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
-												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header" style="width: 100%;">
+												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
 												<?php }else{ ?>
 												
                                                 <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
 												<?php } ?>
                                                     @endif
 											@else	
-												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header" style="width: 100%;">
+												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
                                             @endif
                                             </td>
                                             <td style="">
