@@ -216,10 +216,11 @@
 		
 		
 						
-				<div class="form-row">
+				<div class="form-row" align="left">
                            
                             <div class="form-group col-sm-12"><br>
-                            <input type="checkbox" name="ckk" id="ckk"> I agree to the Term & Condition and have read and understood the Privacy Policy.
+                            <input type="checkbox" name="ckk" id="ckk"> I agree to the Term & Condition and have read and understood the Privacy Policy.<br>
+							<input type="checkbox" name="ckk2" id="ckk2"> Sign up for news letter.
 							<br><br>
 							<center>
 							

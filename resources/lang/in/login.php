@@ -3,6 +3,7 @@ return [
     "title" => "Masuk | Kementerian Perdagangan RI",
     "title2" => "senang berjumpa dengan anda lagi",
     "title3" => "Daftar Akun Baru, Sekarang",
+	"title4" => "Selamat datang di inaexport.id",
 	"a1" => "Administrator",
     "a2" => "Eksportir / Importir",
 	"a3" => "pilih sebagai",

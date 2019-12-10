@@ -210,15 +210,16 @@
                         </div>
 						
 				
-				<div class="form-row">
+				<div class="form-row" align="left">
                            
                             <div class="form-group col-sm-12"><br>
-                            <input type="checkbox" name="ckk" id="ckk"> I agree to the Term & Condition and have read and understood the Privacy Policy.
+                            <input type="checkbox" name="ckk" id="ckk"> I agree to the Term & Condition and have read and understood the Privacy Policy.<br>
+                            <input type="checkbox" name="ckk2" id="ckk2"> Sign up for news letter.
 							<br><br>
 							<center>
 							
 							<br>
-							<a  class="btn btn-danger" style="border-color: #4CAF50;" onclick="simpanpenjual()"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></a>
+							<a  class="btn btn-danger" onclick="simpanpenjual()"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></a>
                                <!-- <button style="width: 100%;" class="btn btn-success" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></button> -->
                             <br><br>
 							</center>

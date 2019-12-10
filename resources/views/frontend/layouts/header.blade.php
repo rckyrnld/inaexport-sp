@@ -383,8 +383,8 @@
                                     <div class="mini_cart_wrapper" style="padding-right: 15px">
                                         <table style="width: 150px;">
                                             <tr>
-                                                <td rowspan="2" style="width: 50px">
-                                                    <img src="{{asset('front/assets/icon/i1.png')}}" alt="" style="width: 70px;">
+                                                <td rowspan="2" style="width: 100%;">
+                                                    <img src="{{asset('front/assets/icon/PRODUCT.png')}}" alt="" style="width: 100%;">
                                                 </td>
                                                 <td style="">
                                                     <span class="header-span" style="font-family: 'Myriad-pro';">
@@ -404,8 +404,8 @@
 								<div class="mini_cart_wrapper" style="padding-right: 15px">
                                     <table style="width: 150px;">
                                         <tr>
-                                            <td rowspan="2" style="width: 50px">
-                                                <img src="{{asset('front/assets/icon/i2.png')}}" alt="" style="width: 50px;">
+                                            <td rowspan="2" style="width: 100%;">
+                                                <img src="{{asset('front/assets/icon/TRACKING(1).png')}}" alt="" style="width: 100%;">
                                             </td>
                                             <td style="">
                                                 <span class="header-span" style="font-family: 'Myriad-pro';">
@@ -424,14 +424,14 @@
                                 <div class="header_wishlist">
                                     <table style="width: 150px;">
                                         <tr>
-                                            <td rowspan="2" style="width: 50px">
+                                            <td rowspan="2" style="width: 100%;">
 											@if(Auth::guard('eksmp')->user())
                                                 
                                                     @if(Auth::guard('eksmp')->user()->id_role == 3)
 														
 												<?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
 												
-												<img src="{{asset('front/assets/icon/PROFILE.png')}}" alt="" class="img-profil-header">
+												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header" style="width: 100%;">
 												<?php }else{ ?>
 												
                                                 <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
@@ -439,14 +439,14 @@
                                                     @elseif(Auth::guard('eksmp')->user()->id_role == 2)
 													
                                                  <?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
-												<img src="{{asset('front/assets/icon/user.png')}}" alt="" class="img-profil-header">
+												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header" style="width: 100%;">
 												<?php }else{ ?>
 												
                                                 <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
 												<?php } ?>
                                                     @endif
 											@else	
-												<img src="{{asset('front/assets/icon/PROFILE.png')}}" alt="" class="img-profil-header">
+												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header" style="width: 100%;">
                                             @endif
                                             </td>
                                             <td style="">
