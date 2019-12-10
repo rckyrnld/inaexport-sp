@@ -82,13 +82,16 @@
                 <div class="top_inner">
                     <div class="row align-items-center">
                         <div class="col-lg-12 col-md-12">
+<<<<<<< HEAD
                            <div style="padding-top:20px;padding-bottom:20px;">
                                <center> <img src="{{asset('')}}assets/assets/images/icon product-22.png" width="150px" ></center>
                             </div>
                         </div>
                         <!-- <div class="col-lg-6 col-md-6">
+=======
+>>>>>>> 7aabea9295bddd82c6ffb46d81236d5820ead3f6
                             <div class="top_right text-right">
-                                <ul>
+                                <ul style="padding-top: 5px; margin-bottom: 5px;">
                                     @if(Auth::guard('eksmp')->user())
                                     <li class="top_links"><a href="#"><i class="ion-android-person"></i> {{getCompanyNameImportir(Auth::guard('eksmp')->user()->id)}}<i class="ion-ios-arrow-down"></i></a>
                                         <ul class="dropdown_links">

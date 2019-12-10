@@ -487,7 +487,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
-            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/'.$user[$i]->file) : "";
+            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/' . $user[$i]->file) : "";
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
             $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
@@ -573,7 +573,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
-            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/'.$user[$i]->file) : "";
+            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/' . $user[$i]->file) : "";
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
             $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
@@ -659,7 +659,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
-            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/'.$user[$i]->file) : "";
+            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/' . $user[$i]->file) : "";
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
             $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
@@ -726,7 +726,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
-            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/'.$user[$i]->file) : "";
+            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/' . $user[$i]->file) : "";
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
             $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
@@ -815,7 +815,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
-            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/'.$user[$i]->file) : "";
+            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/' . $user[$i]->file) : "";
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
             $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
