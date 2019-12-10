@@ -251,7 +251,7 @@ class ProfileController extends Controller
                     ->update([
                         'username' => $request->username,
                         'email' => $request->email,
-                        'password' => $request->password,
+                        'password' => bcrypt($request->password)
                     ]);
 //                $updatetab1 = DB::select("update itdp_company_users set username='" . $request->username . "', password='" . bcrypt($request->password) . "', status='" . $request->staim . "' ,  email='" . $request->email . "' where id='" . $id_user . "' ");
 
