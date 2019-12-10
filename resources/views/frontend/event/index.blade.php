@@ -36,11 +36,40 @@
         -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
         box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
     }
-    .search{ border-color: #a9a9a9;}
+    .search{ 
+      border-top: 2px solid #1a70bb; 
+      border-bottom: 2px solid #1a70bb; 
+    }
 
     .kontennya:hover{
       box-shadow: 0 0 15px rgba(194, 216, 255, 1)
     }
+
+    .sel-event{
+      height: 100%; 
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px; 
+      padding-left: 5px; 
+      background-color: #f7f7f7;      
+      border-left: 2px solid #1a70bb; 
+      border-top: 2px solid #1a70bb; 
+      border-bottom: 2px solid #1a70bb; 
+    }
+
+    .search-event{
+      width: 100%;
+    }
+
+    /*@media only screen and (max-width: 767px) {
+      .search-event{
+        width: 100%;
+      }
+    }
+    @media only screen and (max-width: 479px) {
+      .search-event{
+        width: 100%;
+      }
+    }*/
 </style>
 <!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
@@ -62,15 +91,15 @@
 <div style="background-color: white; padding-bottom: 3%;">
   <div class="container">
     <div class="row">
-      <div class="col-md-6 col-lg-6"><br>
+      <div class="col-md-6 col-lg-6" style="padding-right: 0px;"><br>
         <span style="color: #1a70bb;"><h2>@lang("frontend.jdl_event")</h2></span>
       </div>
       <div class="col-md-6 col-lg-6" align="right"><br>
         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/event')}}">
           {{ csrf_field() }}
-          <div class="input-group" style="width: 60%;">
+          <div class="input-group search-event">
               <div class="input-group-prepend">
-                <select id="search" name="search" style="height: 100%; border-top-left-radius: 5px;border-bottom-left-radius: 5px; padding-left: 5px; background-color: #f7f7f7; border-color: #a9a9a9;">
+                <select id="search" name="search" class="sel-event">
                   <option value="1" @if($searchEvent == 1) selected @endif>Name</option>
                   <option value="2" @if($searchEvent == 2) selected @endif>Date</option>
                   <option value="3" @if($searchEvent == 3) selected @endif>Country</option>
@@ -90,6 +119,7 @@
           </div>
         </form>
       </div>
+<!--       <div class="col-md-6 col-lg-3"></div> -->
     </div><br>
     @if($page > 1 || $searchEvent != null)
       <div class="row justify-content-center">

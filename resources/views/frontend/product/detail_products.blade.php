@@ -3,10 +3,16 @@
     $loc = app()->getLocale(); 
     if($loc == "ch"){
         $lct = "chn";
+        $by = "通过";
+        $order = "最小订购量 : ";
     }else if($loc == "in"){
         $lct = "in";
+        $by = "Oleh";
+        $order = "Min Order : ";
     }else{
         $lct = "en";
+        $by = "By";
+        $order = "Min Order : ";
     }
 
     //get category
@@ -16,10 +22,10 @@
 
     $arrimg = [];
 
-    $img1 = "image/noimage.jpg";
-    // $img2 = "image/noimage.jpg";
-    // $img3 = "image/noimage.jpg";
-    // $img4 = "image/noimage.jpg";
+    $img1 = "image/notAvailable.png";
+    // $img2 = "image/notAvailable.png";
+    // $img3 = "image/notAvailable.png";
+    // $img4 = "image/notAvailable.png";
     if($data->image_1 != NULL){
         $imge1 = 'uploads/Eksportir_Product/Image/'.$data->id.'/'.$data->image_1;
         if(file_exists($imge1)) {
@@ -86,6 +92,9 @@
     .href-category:hover{
         text-decoration: none;
         /*color: #2777d0 !important;*/
+    }
+    .single_product:hover{
+        box-shadow: 0 0 15px rgba(178,221,255,1); 
     }
 </style>
 
@@ -360,34 +369,44 @@
                                 $img2 = $p->image_2;
 
                                 if($img1 == NULL){
-                                    $isimg1 = '/image/noimage.jpg';
+                                    $isimg1 = '/image/notAvailable.png';
                                 }else{
                                     $image1 = 'uploads/Eksportir_Product/Image/'.$p->id.'/'.$img1; 
                                     if(file_exists($image1)) {
                                       $isimg1 = '/uploads/Eksportir_Product/Image/'.$p->id.'/'.$img1;
                                     }else {
-                                      $isimg1 = '/image/noimage.jpg';
+                                      $isimg1 = '/image/notAvailable.png';
                                     }  
                                 }
 
+                                $cekImage = explode('.', $img1);
+                                $sizeImg = 210;
+                                $padImg = '0px';
+                                if($cekImage[(count($cekImage)-1)] == 'png'){
+                                    $sizeImg = 190;
+                                    $padImg = '10px 5px 0px 5px';
+                                }
+                                $minorder = '-';
+                                if($p->minimum_order != null){
+                                    $minorder = $p->minimum_order;
+                                }
+                                $ukuran = '340px';
+                                if(Auth::guard('eksmp')->user()){
+                                    $ukuran = '375px';
+                                }
+
                                 if($img2 == NULL){
-                                    $isimg2 = '/image/noimage.jpg';
+                                    $isimg2 = '/image/notAvailable.png';
                                 }else{
                                     $image2 = 'uploads/Eksportir_Product/Image/'.$p->id.'/'.$img2; 
                                     if(file_exists($image2)) {
                                       $isimg2 = '/uploads/Eksportir_Product/Image/'.$p->id.'/'.$img2;
                                     }else {
-                                      $isimg2 = '/image/noimage.jpg';
+                                      $isimg2 = '/image/notAvailable.png';
                                     }  
                                 }
                             ?>
-                            <?php
-                                $ukuran = '300px';
-                                if(Auth::guard('eksmp')->user()){
-                                    $ukuran = '350px';
-                                }
-                            ?>
-                            <div class="single_product" style="height: {{$ukuran}};">
+                            <div class="single_product" style="height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
                                 <?php
                                     //cut prod name
                                     $num_char = 20;
@@ -417,8 +436,8 @@
                                         $companame = $compname;
                                     }
 
-                                    $num_chark = 32;
-                                    if(strlen($categorynya) > 32){
+                                    $num_chark = 25;
+                                    if(strlen($categorynya) > 25){
                                         $cut_text = substr($categorynya, 0, $num_chark);
                                         if ($categorynya{$num_chark - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
                                             $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
@@ -429,41 +448,49 @@
                                         $category = $categorynya;
                                     }
                                 ?>
-                                <div class="product_thumb" align="center">
-                                    <center>
-                                        <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="height: 170px;"></a>
-                                    </center>
+                                <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 10px 10px 0px 0px;">
+                                    <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
                                     <!-- <a class="secondary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
                                 </div>
-                                <div class="product_name grid_name">
+                                <div class="product_name grid_name" style="padding: 0px 13px 0px 13px;">
                                     <p class="manufacture_product">
                                         <a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}" class="href-category">{{$category}}</a>
                                     </p>
                                     <h3>
                                         <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name"><b>{{$prodnama}}</b></a>
                                     </h3>
-                                    <h3>
-                                        <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">by</span>&nbsp;&nbsp;{{$companame}}</a>
-                                    </h3>
-                                </div>
-                                <div class="product_content grid_content">
-                                    <div class="content_inner">
-                                        <div class="product_footer d-flex align-items-center">
-                                            <div class="price_box">
-                                                @if(Auth::guard('eksmp')->user())
-                                                <span class="current_price">
-                                                    @if(is_numeric($p->price_usd))
-                                                        $ {{number_format($p->price_usd,0,",",".")}}
-                                                    @else
-                                                        <span style="font-size: 13px;">
-                                                            {{$p->price_usd}}
-                                                        </span>
-                                                    @endif
-                                                </span>
+                                    <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
+                                        @if(Auth::guard('eksmp')->user())
+                                            Price :
+                                                @if(is_numeric($p->price_usd))
+                                                    <?php 
+                                                        $pricenya = "$ ".number_format($p->price_usd,0,",",".");
+                                                        $price = $pricenya;
+                                                    ?>
+                                                @else
+                                                    <?php 
+                                                        $price = $p->price_usd;
+                                                        if(strlen($price) > 18){
+                                                            $cut_text = substr($price, 0, 18);
+                                                            if ($price{18 - 1} != ' ') { 
+                                                                $new_pos = strrpos($cut_text, ' ');
+                                                                $cut_text = substr($price, 0, $new_pos);
+                                                            }
+                                                            $pricenya = $cut_text . '...';
+                                                        }else{
+                                                            $pricenya = $price;
+                                                        }
+                                                    ?>
                                                 @endif
-                                            </div>
-                                        </div>
-                                    </div>
+                                            <span style="color: #fd5018;" title="{{$price}}">
+                                                {{$pricenya}}
+                                            </span>
+                                            <br>
+                                        @endif
+
+                                        {{$order}}{{$minorder}}<br>
+                                        <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$companame}}</a>
+                                    </span>
                                 </div>
                                 <div class="product_content list_content">
                                     <div class="left_caption">

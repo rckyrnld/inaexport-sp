@@ -365,13 +365,13 @@
                                         $img1 = $p->image_1;
 
                                         if($img1 == NULL){
-                                            $isimg1 = '/image/noimage.jpg';
+                                            $isimg1 = '/image/notAvailable.png';
                                         }else{
                                             $image1 = 'uploads/Eksportir_Product/Image/'.$p->id.'/'.$img1; 
                                             if(file_exists($image1)) {
                                               $isimg1 = '/uploads/Eksportir_Product/Image/'.$p->id.'/'.$img1;
                                             }else {
-                                              $isimg1 = '/image/noimage.jpg';
+                                              $isimg1 = '/image/notAvailable.png';
                                             }  
                                         }
                                         $cekImage = explode('.', $img1);
@@ -387,7 +387,7 @@
                                         }
                                         $ukuran = '340px';
                                         if(Auth::guard('eksmp')->user()){
-                                            $ukuran = '390px';
+                                            $ukuran = '375px';
                                         }
                                     ?>
                                     <div class="single_product" style="height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
@@ -435,7 +435,7 @@
                                         <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 10px 10px 0px 0px;">
                                                 <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
                                         </div>
-                                        <div class="product_name grid_name" style="padding: 0px 13px 13px 13px;">
+                                        <div class="product_name grid_name" style="padding: 0px 13px 0px 13px;">
                                             <p class="manufacture_product">
                                                 <a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}" class="href-category">{{$category}}</a>
                                             </p>
@@ -443,29 +443,39 @@
                                                 <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name"><b>{{$prodnama}}</b></a>
                                             </h3>
                                             <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
+                                                @if(Auth::guard('eksmp')->user())
+                                                    Price :
+                                                        @if(is_numeric($p->price_usd))
+                                                            <?php 
+                                                                $pricenya = "$ ".number_format($p->price_usd,0,",",".");
+                                                                $price = $pricenya;
+                                                            ?>
+                                                        @else
+                                                            <?php 
+                                                                $price = $p->price_usd;
+                                                                if(strlen($price) > 18){
+                                                                    $cut_text = substr($price, 0, 18);
+                                                                    if ($price{18 - 1} != ' ') { 
+                                                                        $new_pos = strrpos($cut_text, ' ');
+                                                                        $cut_text = substr($price, 0, $new_pos);
+                                                                    }
+                                                                    $pricenya = $cut_text . '...';
+                                                                }else{
+                                                                    $pricenya = $price;
+                                                                }
+                                                            ?>
+                                                        @endif
+                                                    <span style="color: #fd5018;" title="{{$price}}">
+                                                        {{$pricenya}}
+                                                    </span>
+                                                    <br>
+                                                @endif
+
                                                 {{$order}}{{$minorder}}<br>
                                                 <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$companame}}</a>
                                             </span>
                                         </div>
-                                        <div class="product_content grid_content" style="padding: 0px 13px 13px 13px;">
-                                            <div class="content_inner">
-                                                <div class="product_footer d-flex align-items-center">
-                                                    <div class="price_box">
-                                                        @if(Auth::guard('eksmp')->user())
-                                                        <span class="current_price">
-                                                            @if(is_numeric($p->price_usd))
-                                                                    $ {{number_format($p->price_usd,0,",",".")}}
-                                                            @else
-                                                                <span style="font-size: 16px;">
-                                                                    {{$p->price_usd}}
-                                                                </span>
-                                                            @endif
-                                                        </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="product_content list_content">
                                             <div class="left_caption">
                                                 <div class="product_name">
