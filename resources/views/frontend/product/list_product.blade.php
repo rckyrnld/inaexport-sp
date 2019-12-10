@@ -386,7 +386,7 @@
                                                     }else{
                                                         $product_desc = $proddesc;
                                                     }
-                                                    $product_desc = strip_tags($product_desc, "<p><a><br><i><b><u><hr><strong><small>");
+                                                    $product_desc = strip_tags($product_desc, "<br><i><b><u><hr>");
                                                 ?>
                                                 <?php echo $product_desc; ?>
                                             </div>

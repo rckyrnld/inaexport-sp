@@ -70,14 +70,9 @@
             <div class="container">
                 <div class="top_inner">
                     <div class="row align-items-center">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="follow_us">
-                                <label><!--<i class="ion-social-whatsapp-outline"></i> --> </label>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
+                        <div class="col-lg-12 col-md-12">
                             <div class="top_right text-right">
-                                <ul>
+                                <ul style="padding-top: 5px; margin-bottom: 5px;">
                                     @if(Auth::guard('eksmp')->user())
                                     <li class="top_links"><a href="#"><i class="ion-android-person"></i> {{getCompanyNameImportir(Auth::guard('eksmp')->user()->id)}}<i class="ion-ios-arrow-down"></i></a>
                                         <ul class="dropdown_links">
