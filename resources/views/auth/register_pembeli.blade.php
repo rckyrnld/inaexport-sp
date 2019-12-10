@@ -248,7 +248,7 @@
 	@lang("login.title6") <br> @lang("login.title7")
 	
 	<br><br>
-	@lang("login.title8") <br> @lang("login.title9")
+	@lang("login.title8") <br> <a href="{{url('front_end/ticketing_support')}}">@lang("login.title9")</a>
 	</center>
 					<br><br><br>
   </div>

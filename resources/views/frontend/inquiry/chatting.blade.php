@@ -133,7 +133,9 @@
                           <span class="chat-user" style=""><b>Chat</b></span>
                           <br>
                           <span class="chat-user" style="text-transform: capitalize;"><b>{{getCompanyName($data->id_itdp_company_user)}}</b>&nbsp;&nbsp;<img src="{{asset('front/assets/icon/icon-exportir.png')}}" alt="" /></span>
-                        </div>
+						<br>
+						<?php echo $data->id_itdp_company_user; ?>
+						</div>
                       </div>
                     </div>
                     <div class="chat-body">

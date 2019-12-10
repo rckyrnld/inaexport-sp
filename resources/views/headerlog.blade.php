@@ -27,6 +27,9 @@
     <!-- endbuild -->
     <link rel="stylesheet" href="{{url('assets')}}/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" type="text/css" />
 	<style>
+	body{
+		background-color: #ddeffd!important;
+	}
 	.header_top {
 		background: white!Important;
 		color: black!Important;

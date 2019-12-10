@@ -48,7 +48,7 @@
 	<h3><b>@lang("login.title2")</b></h3>
 	<h6>@lang("login.title4")</h6><br>
 			
-		        <div class="mx-auto col-sm-5" style="background: white; border-radius: 0px;box-shadow: 4px 4px 10px 6px #888888; border: 4px; border-radius: 10px;">
+		        <div class="mx-auto col-sm-4" style="background: white; border-radius: 0px;box-shadow: 4px 4px 10px 6px #888888; border: 4px; border-radius: 10px;">
 	  <br>
 	  <!-- <h5>LOGIN</h5> -->
 	  <div class="wrap-login100" style="padding-left : 30px; padding-right : 30px; font-size:12px;">
@@ -105,7 +105,7 @@
     </section>
     <!--product area end-->
 
-@include('frontend.layouts.footer')
+@include('footerlog')
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script type="text/javascript">
 	$(document).ready(function() {
