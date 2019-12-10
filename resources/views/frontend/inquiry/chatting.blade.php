@@ -134,7 +134,12 @@
                           <br>
                           <span class="chat-user" style="text-transform: capitalize;"><b>{{getCompanyName($data->id_itdp_company_user)}}</b>&nbsp;&nbsp;<img src="{{asset('front/assets/icon/icon-exportir.png')}}" alt="" /></span>
 						<br>
-						<?php echo $data->id_itdp_company_user; ?>
+						<?php $ry = $data->id_itdp_company_user; ?>
+						@if(Cache::has('user-is-eksmp-' . $ry))
+    <span class="text-success">Online</span>
+@else
+    <span class="text-secondary">Offline</span>
+@endif
 						</div>
                       </div>
                     </div>
