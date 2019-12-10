@@ -5,11 +5,11 @@
     font-size: 95%!important;
 }
 </style>
-  <div id="content-body" style="background-color: #c5e1f8 ; color: black" >
-  <a href="{{url('/')}}"><center><br><img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center></a>
-    <div class="py-1 text-center w-100">
-	
+  <div id="content-bodys" class="product_area" style="color: black" >
+  <div class="py-1 w-100">
+	<center>
 	<h3><b>@lang("login.title3")</b></h3>
+	<h6>@lang("login.title5") <a href="{{url('login')}}"><font color="red"> @lang("login.btn")</font></a></h6><br></center>
 	<br>
       <div class="mx-auto col-sm-6" style="background: white; border-radius: 0px; box-shadow: 4px 4px 10px 7px #888888; border: 4px; border-radius: 10px;">
 	  <br>
@@ -18,8 +18,7 @@
 	  <div class="wrap-login100" style="padding-left : 70px;padding-right : 70px; font-size:12px;">
 	  <form class="form-horizontal" method="POST" action="{{ url('simpan_rpenjual') }}">
 	   {{ csrf_field() }}
-	   <center>
-	  
+	   
 	   <br><br>
 	   
 	   <p><h6>Enter Your Account Information</h6></p><hr>
@@ -229,7 +228,7 @@
 		
                                 
 					
-		</center>
+		
 		</form>
 		
 
@@ -237,8 +236,15 @@
 	  
 		
       </div>
-    </div><br>
-					<br>
+    </div><br><br>
+	<center>
+	@lang("login.title6") <br> @lang("login.title7")
+	
+	<br><br>
+	@lang("login.title8") <br> <a href="{{url('front_end/ticketing_support')}}">@lang("login.title9")</a>
+	</center>
+					<br><br><br>
+					
   </div>
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg">

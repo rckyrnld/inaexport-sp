@@ -29,7 +29,7 @@
   </style>
   
     <!--product area start-->
-    <section class="product_area" style="background-color:#c5e1f8">
+    <section class="product_area" style="background-color:#ddeffd">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -41,7 +41,8 @@
             </div>
 
             <div class="tab-content" id="tabing-product">
-			<center><br><img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center>
+			<!--<center><br><img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center> -->
+			
     <div class="py-1 text-center w-100">
 	
 	<h3><b>@lang("login.title2")</b></h3>
@@ -104,7 +105,7 @@
     </section>
     <!--product area end-->
 
-@include('frontend.layouts.footer')
+@include('footerlog')
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script type="text/javascript">
 	$(document).ready(function() {

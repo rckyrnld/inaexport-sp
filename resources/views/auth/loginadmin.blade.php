@@ -12,7 +12,7 @@
             </div>
 
             <div class="tab-content" id="tabing-product">
-			<center><br><img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center>
+			
     <div class="py-1 text-center w-100">
 	
 	<h3><b>@lang("login.title2")</b></h3>

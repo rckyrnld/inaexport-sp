@@ -71,15 +71,24 @@
         text-decoration: none;
         /*color: #2777d0 !important;*/
     }
+    .single_product:hover{
+        box-shadow: 0 0 15px rgba(178,221,255,1); 
+    }
 </style>
 <?php 
     $loc = app()->getLocale(); 
     if($loc == "ch"){
         $lct = "chn";
+        $by = "通过";
+        $order = "最小订购量 : ";
     }else if($loc == "in"){
         $lct = "in";
+        $by = "Oleh";
+        $order = "Min Order : ";
     }else{
         $lct = "en";
+        $by = "By";
+        $order = "Min Order : ";
     }
 
     $imgarray = ['agriculture','apparel','automotive','jewelry','health_beauty','electrics','furniture','industrial_parts','gift_card','food'];
@@ -365,17 +374,28 @@
                                               $isimg1 = '/image/noimage.jpg';
                                             }  
                                         }
-                                        $ukuran = '300px';
+                                        $cekImage = explode('.', $img1);
+                                        $sizeImg = 210;
+                                        $padImg = '0px';
+                                        if($cekImage[(count($cekImage)-1)] == 'png'){
+                                            $sizeImg = 190;
+                                            $padImg = '10px 5px 0px 5px';
+                                        }
+                                        $minorder = '-';
+                                        if($p->minimum_order != null){
+                                            $minorder = $p->minimum_order;
+                                        }
+                                        $ukuran = '340px';
                                         if(Auth::guard('eksmp')->user()){
-                                            $ukuran = '350px';
+                                            $ukuran = '390px';
                                         }
                                     ?>
-                                    <div class="single_product" style="height: {{$ukuran}}; background-color: #f8f9f4; padding: 13px !important;">
+                                    <div class="single_product" style="height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
                                         <?php
                                             //cut prod name
-                                            $num_char = 20;
+                                            $num_char = 19;
                                             $prodn = getProductAttr($p->id, 'prodname', $lct);
-                                            if(strlen($prodn) > 20){
+                                            if(strlen($prodn) > 19){
                                                 $cut_text = substr($prodn, 0, $num_char);
                                                 if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
                                                     $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
@@ -412,32 +432,31 @@
                                                 $category = $categorynya;
                                             }
                                         ?>
-                                        <div class="product_thumb" align="center">
-                                            <center>
-                                                <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="height: 170px;"></a>
-                                            </center>
+                                        <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 10px 10px 0px 0px;">
+                                                <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
                                         </div>
-                                        <div class="product_name grid_name">
+                                        <div class="product_name grid_name" style="padding: 0px 13px 13px 13px;">
                                             <p class="manufacture_product">
                                                 <a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}" class="href-category">{{$category}}</a>
                                             </p>
                                             <h3>
                                                 <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name"><b>{{$prodnama}}</b></a>
                                             </h3>
-                                            <h3>
-                                                <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">by</span>&nbsp;&nbsp;{{$companame}}</a>
-                                            </h3>
+                                            <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
+                                                {{$order}}{{$minorder}}<br>
+                                                <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$companame}}</a>
+                                            </span>
                                         </div>
-                                        <div class="product_content grid_content">
+                                        <div class="product_content grid_content" style="padding: 0px 13px 13px 13px;">
                                             <div class="content_inner">
                                                 <div class="product_footer d-flex align-items-center">
                                                     <div class="price_box">
                                                         @if(Auth::guard('eksmp')->user())
                                                         <span class="current_price">
                                                             @if(is_numeric($p->price_usd))
-                                                                $ {{number_format($p->price_usd,0,",",".")}}
+                                                                    $ {{number_format($p->price_usd,0,",",".")}}
                                                             @else
-                                                                <span style="font-size: 13px;">
+                                                                <span style="font-size: 16px;">
                                                                     {{$p->price_usd}}
                                                                 </span>
                                                             @endif
@@ -454,7 +473,7 @@
                                                         <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name" style="font-size: 15px !important;"><b>{{$prodn}}</b></a>
                                                     </h3>
                                                     <h3>
-                                                        <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">by</span>&nbsp;&nbsp;{{$compname}}</a>
+                                                        <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$compname}}</a>
                                                     </h3>
                                                 </div>
                                                 <div class="product_desc">
@@ -471,7 +490,7 @@
                                                         }else{
                                                             $product_desc = $proddesc;
                                                         }
-                                                        $product_desc = strip_tags($product_desc, "<p><a><br><i><b><u><hr><strong><small>");
+                                                        $product_desc = strip_tags($product_desc, "<a><br><i><b><u><hr>");
                                                     ?>
                                                     <?php echo $product_desc; ?>
                                                 </div>

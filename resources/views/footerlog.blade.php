@@ -47,6 +47,7 @@
     $loc = app()->getLocale(); 
     if(empty($loc)){ $loc = 'en'; } 
 ?>
+<!--
     <section class="call_to_action">
         <div class="container">
             <div class="row counters">
@@ -107,9 +108,11 @@
             </div>
         </div>
     </section>
+	-->
 
 <!--footer area start-->
 <footer class="footer_widgets mt-50">
+<!--
         <div class="container">
             <div class="footer_top">
                 <div class="row">
@@ -192,6 +195,7 @@
                 </div>
             </div>
         </div>
+		-->
     </footer>
     <!--footer area end-->
 <!-- JS

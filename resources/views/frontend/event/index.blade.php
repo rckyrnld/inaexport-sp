@@ -28,7 +28,7 @@
       background-color: #f4f4f5;
     }
     .a-modif.small{
-      height: 100%; border-radius: 10px; background-color: #f1ecec;
+      height: 100%; border-radius: 10px; background-color: white;
     }
     .form-control:focus {
         border-color: #66afe9;
@@ -37,6 +37,10 @@
         box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
     }
     .search{ border-color: #a9a9a9;}
+
+    .kontennya:hover{
+      box-shadow: 0 0 15px rgba(194, 216, 255, 1)
+    }
 </style>
 <!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
@@ -55,7 +59,7 @@
     </div>
 <!--breadcrumbs area end-->
 
-<div style="background-color: #f1ecec; padding-bottom: 3%;">
+<div style="background-color: white; padding-bottom: 3%;">
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-lg-6"><br>
@@ -102,19 +106,19 @@
 
         @if($page == 1 && $searchEvent == null)
           @if( $key == 0 || $key == 1 )
-              <div class="col-lg-6 col-md-6 col-12 second @if($key == 0) a-modif @endif" style="height: 100%; border-radius: 10px; @if($key == 0) background-color: #f1ecec; @endif">
+              <div class="col-lg-6 col-md-6 col-12 second @if($key == 0) a-modif @endif" style="height: 100%; border-radius: 10px; @if($key == 0) background-color: white; @endif">
                 <?php $size = 438; $num_char = 65;?>
                 @if($key == 0 )
-                  <div class="kontennya" style="width: 100%;padding: 12px; background-color: white; border-radius: 10px">
+                  <div class="kontennya" style="width: 100%;padding: 12px; background-color: #f8f8f8; border-radius: 10px">
                 @endif
           @elseif($key >= 5)
               <div class="col-lg-3 col-md-3 col-12 second a-modif small">
                 <?php $size = 162; $num_char = 25;?>
-                <div class="kontennya" style="width: 100%;padding: 12px; background-color: white; border-radius: 10px">
+                <div class="kontennya" style="width: 100%;padding: 12px; background-color: #f8f8f8; border-radius: 10px">
           @endif
         @else
           <div class="col-lg-3 col-md-3 col-12 second a-modif small">
-            <div class="kontennya" style="width: 100%;padding: 12px; background-color: white; margin-bottom: 12px; border-radius: 10px">
+            <div class="kontennya" style="width: 100%;padding: 12px; background-color: #f8f8f8; margin-bottom: 12px; border-radius: 10px">
           <?php $size = 162; $num_char = 25;?>
         @endif
 
@@ -123,9 +127,9 @@
             @if($key == 1)
               <div class="form-group row" style="height: 100%;">
             @endif
-              <div class="col-lg-6 col-md-6 col-12 a-modif" style="height: 50%; border-radius: 10px; background-color: #f1ecec;">
+              <div class="col-lg-6 col-md-6 col-12 a-modif" style="height: 50%; border-radius: 10px; background-color: white;">
                 <?php $size = 162; $num_char = 25;?>
-                <div class="kontennya" style="width: 100%;padding: 12px; margin-bottom: 10px; background-color: white; border-radius: 10px">
+                <div class="kontennya" style="width: 100%;padding: 12px; margin-bottom: 10px; background-color: #f8f8f8; border-radius: 10px">
           @endif
         @endif
         <?php
