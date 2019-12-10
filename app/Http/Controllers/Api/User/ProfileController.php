@@ -110,7 +110,8 @@ class ProfileController extends Controller
             $id_user = $request->id_user;
 
             if (empty($request->file('foto_profil'))) {
-                $file = "";
+//                $file = "";
+                $cobaajadulu ="haha";
             } else {
                 $file = $request->file('foto_profil')->getClientOriginalName();
                 $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
@@ -120,7 +121,6 @@ class ProfileController extends Controller
                     ->where('id', $id_user)
                     ->update([
                         'foto_profil' => $file
-
                     ]);
 //                $updatetab12 = DB::select("update itdp_company_users set foto_profil='" . $file . "'  where id='" . $id_user . "' ");
                 DB::table('itdp_profil_eks')
@@ -216,7 +216,8 @@ class ProfileController extends Controller
             $id_profile = $request->id_profile;
             $id_user = $request->id_user;
             if (empty($request->file('foto_profil'))) {
-                $file = "";
+//                $file = "";
+                $cobaajadulu ="haha";
             } else {
                 $file = $request->file('foto_profil')->getClientOriginalName();
                 $destinationPath = public_path() . "/uploads/Profile/Importir/" . $id_user;
