@@ -124,6 +124,40 @@ class ManagementNoAuthController extends Controller
         }
     }
 
+    public function checkEmail(Request $request)
+    {
+        $email = $request->email;
+//        $username = $request->username;
+        $chek = DB::table('itdp_company_users')
+            ->where('email', '=', $email)
+//            ->orWhere('username', '=', $username)
+            ->get();
+        $hasil = count($chek);
+//        dd($hasil);
+        if ($hasil == 0) {
+//            dd("mantapgan");
+            $meta = [
+                'code' => 200,
+                'message' => 'OK',
+                'status' => 'success'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 208,
+                'message' => 'Email Already Used',
+                'status' => 'Failed'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
     public function RegisterExp(Request $request)
     {
         $company = $request->company;
@@ -138,101 +172,101 @@ class ManagementNoAuthController extends Controller
         $dateNow = date("Y-m-d H:m:s");
         $id_province = $request->id_province;
         $city = $request->city;
-        if ($company != null && $email != null && $username != null && $phone != null && $fax != null && $website != null && $password != null && $postcode != null && $address != null && $id_province != null && $city != null) {
+//        if ($company != null && $email != null && $username != null && $phone != null && $password != null && $postcode != null && $address != null && $id_province != null && $city != null) {
 
-            $chek = DB::table('itdp_company_users')
-                ->where('email', '=', $email)
-                ->orWhere('username', '=', $username)
-                ->get();
-            $hasil = count($chek);
+//            $chek = DB::table('itdp_company_users')
+//                ->where('email', '=', $email)
+//                ->orWhere('username', '=', $username)
+//                ->get();
+//            $hasil = count($chek);
 //            dd($hasil);
-            if ($hasil == 0) {
-                $insert = DB::table('itdp_profil_eks')
-                    ->insertGetId([
-                        "company" => $company,
-                        "addres" => $address,
-                        "postcode" => $postcode,
-                        "phone" => $phone,
-                        "fax" => $fax,
-                        "email" => $email,
-                        "website" => $website,
-                        "created" => $dateNow,
-                        "status" => '1',
-                        "id_mst_province" => $id_province,
-                        "city" => $city
-                    ]);
-                $insert2 = DB::table('itdp_company_users')
-                    ->insertGetId([
-                        "id_profil" => $insert,
-                        "type" => 'Dalam Negeri',
-                        "username" => $username,
-                        "password" => bcrypt($password),
-                        "email" => $email,
-                        "status" => '0',
-                        "id_role" => '2',
-                    ]);
-                // notif
-                $id_terkait = "2/" . $insert2;
-                $ket = "User baru Eksportir dengan nama " . $company;
-                $insert3 = DB::table('notif')
-                    ->insert([
-                        "to_role" => '1',
-                        "dari_nama" => $company,
-                        "dari_id" => $insert,
-                        "untuk_nama" => 'Super Admin',
-                        "untuk_id" => '1',
-                        "keterangan" => $ket,
-                        "url_terkait" => 'profil',
-                        "id_terkait" => $id_terkait,
-                        "waktu" => Date('Y-m-d H:m:s'),
-                        "status_baca" => '0',
-                    ]);
+//            if ($hasil == 0) {
+        $insert = DB::table('itdp_profil_eks')
+            ->insertGetId([
+                "company" => $company,
+                "addres" => $address,
+                "postcode" => $postcode,
+                "phone" => $phone,
+                "fax" => $fax,
+                "email" => $email,
+                "website" => $website,
+                "created" => $dateNow,
+                "status" => '1',
+                "id_mst_province" => $id_province,
+                "city" => $city
+            ]);
+        $insert2 = DB::table('itdp_company_users')
+            ->insertGetId([
+                "id_profil" => $insert,
+                "type" => 'Dalam Negeri',
+                "username" => $username,
+                "password" => bcrypt($password),
+                "email" => $email,
+                "status" => '0',
+                "id_role" => '2',
+            ]);
+        // notif
+        $id_terkait = "2/" . $insert2;
+        $ket = "User baru Eksportir dengan nama " . $company;
+        $insert3 = DB::table('notif')
+            ->insert([
+                "to_role" => '1',
+                "dari_nama" => $company,
+                "dari_id" => $insert,
+                "untuk_nama" => 'Super Admin',
+                "untuk_id" => '1',
+                "keterangan" => $ket,
+                "url_terkait" => 'profil',
+                "id_terkait" => $id_terkait,
+                "waktu" => Date('Y-m-d H:m:s'),
+                "status_baca" => '0',
+            ]);
 
-                $data = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'password' => $password, 'email' => $email];
+        $data = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'password' => $password, 'email' => $email];
 
-                Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
-                    $mail->to($data['email'], $data['username']);
-                    $mail->subject('Notifikasi Aktifasi Akun');
+        Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
+            $mail->to($data['email'], $data['username']);
+            $mail->subject('Notifikasi Aktifasi Akun');
 
-                });
-                $data2 = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'password' => $password, 'email' => 'safaririch12@gmail.com'];
+        });
+        $data2 = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'password' => $password, 'email' => 'safaririch12@gmail.com'];
 
-                Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
-                    $mail->to($data2['email'], $data2['username']);
-                    $mail->subject('Notifikasi Aktifasi Akun');
+        Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
+            $mail->to($data2['email'], $data2['username']);
+            $mail->subject('Notifikasi Aktifasi Akun');
 
-                });
-                $meta = [
-                    'code' => 200,
-                    'message' => 'Success',
-                    'status' => 'OK'
-                ];
-                $data = '0';
-                $res['meta'] = $meta;
-                $res['data'] = $data;
-                return response($res);
-            } else {
-                $meta = [
-                    'code' => 208,
-                    'message' => 'Username Or Email Already Used',
-                    'status' => 'Failed'
-                ];
-                $data = '0';
-                $res['meta'] = $meta;
-                $res['data'] = $data;
-                return response($res);
-            }
-        } else {
-            $meta = [
-                'code' => 400,
-                'message' => 'All Data Must Be Filled In',
-                'status' => 'Failed'
-            ];
-            $data = '';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        }
+        });
+        $meta = [
+            'code' => 200,
+            'message' => 'Success',
+            'status' => 'OK'
+        ];
+        $data = '';
+        $res['meta'] = $meta;
+        $res['data'] = $data;
+        return response($res);
+//            } else {
+//                $meta = [
+//                    'code' => 208,
+//                    'message' => 'Username Or Email Already Used',
+//                    'status' => 'Failed'
+//                ];
+//                $data = '0';
+//                $res['meta'] = $meta;
+//                $res['data'] = $data;
+//                return response($res);
+//            }
+//        } else {
+//            $meta = [
+//                'code' => 400,
+//                'message' => 'All Data Must Be Filled In',
+//                'status' => 'Failed'
+//            ];
+//            $data = '';
+//            $res['meta'] = $meta;
+//            $res['data'] = $data;
+//            return response($res);
+//        }
 
     }
 
@@ -250,101 +284,101 @@ class ManagementNoAuthController extends Controller
         $id_country = $request->id_country;
         $city = $request->city;
         $dateNow = date("Y-m-d H:m:s");
-        if ($company != null && $email != null && $username != null && $phone != null && $fax != null && $website != null && $password != null && $postcode != null && $address != null && $id_country != null && $city != null) {
+//        if ($company != null && $email != null && $username != null && $phone != null && $fax != null && $website != null && $password != null && $postcode != null && $address != null && $id_country != null && $city != null) {
 
-            $chek = DB::table('itdp_company_users')
-                ->where('email', '=', $email)
-                ->orWhere('username', '=', $username)
-                ->get();
-            $hasil = count($chek);
+//            $chek = DB::table('itdp_company_users')
+//                ->where('email', '=', $email)
+//                ->orWhere('username', '=', $username)
+//                ->get();
+//            $hasil = count($chek);
 //            dd($hasil);
-            if ($hasil == 0) {
-                $insert = DB::table('itdp_profil_imp')
-                    ->insertGetId([
-                        "company" => $company,
-                        "addres" => $address,
-                        "postcode" => $postcode,
-                        "phone" => $phone,
-                        "fax" => $fax,
-                        "email" => $email,
-                        "website" => $website,
-                        "created" => $dateNow,
-                        "status" => '1',
-                        "id_mst_country" => $id_country,
-                        "city" => $city
-                    ]);
-                $insert2 = DB::table('itdp_company_users')
-                    ->insertGetId([
-                        "id_profil" => $insert,
-                        "type" => 'Luar Negeri',
-                        "username" => $username,
-                        "password" => bcrypt($password),
-                        "email" => $email,
-                        "status" => '0',
-                        "id_role" => '3',
-                    ]);
-                // notif
-                $id_terkait = "2/" . $insert2;
-                $ket = "User baru Importir dengan nama " . $company;
-                $insert3 = DB::table('notif')
-                    ->insert([
-                        "to_role" => '1',
-                        "dari_nama" => $company,
-                        "dari_id" => $insert,
-                        "untuk_nama" => 'Super Admin',
-                        "untuk_id" => '1',
-                        "keterangan" => $ket,
-                        "url_terkait" => 'profil',
-                        "id_terkait" => $id_terkait,
-                        "waktu" => Date('Y-m-d H:m:s'),
-                        "status_baca" => '0',
-                    ]);
+//            if ($hasil == 0) {
+        $insert = DB::table('itdp_profil_imp')
+            ->insertGetId([
+                "company" => $company,
+                "addres" => $address,
+                "postcode" => $postcode,
+                "phone" => $phone,
+                "fax" => $fax,
+                "email" => $email,
+                "website" => $website,
+                "created" => $dateNow,
+                "status" => '1',
+                "id_mst_country" => $id_country,
+                "city" => $city
+            ]);
+        $insert2 = DB::table('itdp_company_users')
+            ->insertGetId([
+                "id_profil" => $insert,
+                "type" => 'Luar Negeri',
+                "username" => $username,
+                "password" => bcrypt($password),
+                "email" => $email,
+                "status" => '0',
+                "id_role" => '3',
+            ]);
+        // notif
+        $id_terkait = "2/" . $insert2;
+        $ket = "User baru Importir dengan nama " . $company;
+        $insert3 = DB::table('notif')
+            ->insert([
+                "to_role" => '1',
+                "dari_nama" => $company,
+                "dari_id" => $insert,
+                "untuk_nama" => 'Super Admin',
+                "untuk_id" => '1',
+                "keterangan" => $ket,
+                "url_terkait" => 'profil',
+                "id_terkait" => $id_terkait,
+                "waktu" => Date('Y-m-d H:m:s'),
+                "status_baca" => '0',
+            ]);
 
-                $data = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'password' => $password, 'email' => $email];
+        $data = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'password' => $password, 'email' => $email];
 
-                Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
-                    $mail->to($data['email'], $data['username']);
-                    $mail->subject('Notifikasi Aktifasi Akun');
+        Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
+            $mail->to($data['email'], $data['username']);
+            $mail->subject('Notifikasi Aktifasi Akun');
 
-                });
-                $data2 = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'password' => $password, 'email' => 'safaririch12@gmail.com'];
+        });
+        $data2 = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'password' => $password, 'email' => 'safaririch12@gmail.com'];
 
-                Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
-                    $mail->to($data2['email'], $data2['username']);
-                    $mail->subject('Notifikasi Aktifasi Akun');
+        Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
+            $mail->to($data2['email'], $data2['username']);
+            $mail->subject('Notifikasi Aktifasi Akun');
 
-                });
-                $meta = [
-                    'code' => 200,
-                    'message' => 'Success',
-                    'status' => 'OK'
-                ];
-                $data = '0';
-                $res['meta'] = $meta;
-                $res['data'] = $data;
-                return response($res);
-            } else {
-                $meta = [
-                    'code' => 208,
-                    'message' => 'Username Or Email Already Used',
-                    'status' => 'Failed'
-                ];
-                $data = '0';
-                $res['meta'] = $meta;
-                $res['data'] = $data;
-                return response($res);
-            }
-        } else {
-            $meta = [
-                'code' => 400,
-                'message' => 'All Data Must Be Filled In',
-                'status' => 'Failed'
-            ];
-            $data = '0';
-            $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        }
+        });
+        $meta = [
+            'code' => 200,
+            'message' => 'Success',
+            'status' => 'OK'
+        ];
+        $data = '';
+        $res['meta'] = $meta;
+        $res['data'] = $data;
+        return response($res);
+//            } else {
+//                $meta = [
+//                    'code' => 208,
+//                    'message' => 'Username Or Email Already Used',
+//                    'status' => 'Failed'
+//                ];
+//                $data = '0';
+//                $res['meta'] = $meta;
+//                $res['data'] = $data;
+//                return response($res);
+//            }
+//        } else {
+//            $meta = [
+//                'code' => 400,
+//                'message' => 'All Data Must Be Filled In',
+//                'status' => 'Failed'
+//            ];
+//            $data = '0';
+//            $res['meta'] = $meta;
+//            $res['data'] = $data;
+//            return response($res);
+//        }
 
     }
 
