@@ -13,7 +13,6 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class ProfileController extends Controller
 {
-
     // use AuthenticatesUsers;  
     public function __construct()
     {
