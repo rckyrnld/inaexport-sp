@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('front/assets/img/favicon.ico')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('front/assets/img/logo/logo.png')}}">
 
     <!-- CSS 
     ========================= -->
@@ -26,7 +26,18 @@
     <link rel="stylesheet" href="{{url('assets')}}/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
     <!-- endbuild -->
     <link rel="stylesheet" href="{{url('assets')}}/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" type="text/css" />
-
+	<style>
+	.header_top {
+		background: white!Important;
+		color: black!Important;
+	}
+	.product_area{
+		background-color: #ddeffd!important;
+		padding-top: 50px!important;
+		color : #000000d1!important;
+		font-family: "Times New Roman", Times, serif!important;
+	}
+	</style>
     <!-- build:js scripts/app.min.js -->
     <!-- jQuery -->
     <script src="{{url('assets')}}/libs/jquery/dist/jquery.min.js"></script>
@@ -70,36 +81,33 @@
             <div class="container">
                 <div class="top_inner">
                     <div class="row align-items-center">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="follow_us">
-                                <label><!--<i class="ion-social-whatsapp-outline"></i> --> </label>
+                        <div class="col-lg-12 col-md-12">
+                           <div style="padding-top:20px;padding-bottom:20px;">
+                               <center> <img src="{{asset('')}}assets/assets/images/icon product-22.png" width="150px" ></center>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6">
+                        <!-- <div class="col-lg-6 col-md-6">
                             <div class="top_right text-right">
                                 <ul>
                                     @if(Auth::guard('eksmp')->user())
                                     <li class="top_links"><a href="#"><i class="ion-android-person"></i> {{getCompanyNameImportir(Auth::guard('eksmp')->user()->id)}}<i class="ion-ios-arrow-down"></i></a>
                                         <ul class="dropdown_links">
-                                            <!-- <li><a href="checkout.html">Checkout </a></li> -->
-                                            <!-- <li><a href="my-account.html">My Account </a></li> -->
-                                            <!-- <li><a href="cart.html">Shopping Cart</a></li> -->
-                                            <!-- <li><a href="wishlist.html">Wishlist</a></li> -->
+                                           
                                             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('frontend.lbl4')</a></li>
                                         </ul>
                                     </li>
                                     @else
-                                    <li class="top_links"><a href="{{url('login')}}"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")
+                                    <li class="top_links"><a href="{{url('login')}}"><font color="black" ><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")</font>
                                     @endif
                                     <li class="language">
                                         <a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
-	<a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
+	<a href="{{ url('locale/in') }}"><img width="20px" height="15px" border="5" src="{{asset('negara/in.png')}}"></a>&nbsp;
 	<a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
-	<!--<div id="google_translate_element" style="border-radius:5px;"></div> -->
+	
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

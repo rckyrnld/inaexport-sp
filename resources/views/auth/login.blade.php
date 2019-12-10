@@ -29,7 +29,7 @@
   </style>
   
     <!--product area start-->
-    <section class="product_area" style="background-color:#c5e1f8">
+    <section class="product_area" style="background-color:#ddeffd">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -41,13 +41,14 @@
             </div>
 
             <div class="tab-content" id="tabing-product">
-			<center><br><img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center>
+			<!--<center><br><img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center> -->
+			
     <div class="py-1 text-center w-100">
 	
 	<h3><b>@lang("login.title2")</b></h3>
 	<h6>@lang("login.title4")</h6><br>
 			
-		        <div class="mx-auto col-sm-4" style="background: white; border-radius: 0px;box-shadow: 4px 4px 10px 6px #888888; border: 4px; border-radius: 10px;">
+		        <div class="mx-auto col-sm-5" style="background: white; border-radius: 0px;box-shadow: 4px 4px 10px 6px #888888; border: 4px; border-radius: 10px;">
 	  <br>
 	  <!-- <h5>LOGIN</h5> -->
 	  <div class="wrap-login100" style="padding-left : 30px; padding-right : 30px; font-size:12px;">
