@@ -229,7 +229,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label for="code" class="col-md-2"><b>Image</b></label>
+                                        <label for="code" class="col-md-2"><b>Image (.png)</b></label>
                                         <!-- <div class="col-md-2">
                                             <div id="ambil_ttd_utama" style="width: 100%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
                                                 <button type="button" id="img_utama" style="width: 100%; height: 120px;" class="img_upl">
@@ -245,7 +245,7 @@
                                                 <button type="button" id="img_1" style="width: 100%; height: 120px;" class="img_upl">
                                                     <img src="{{url('/')}}/image/plus/plusin.png" id="image_1_ambil" style="height: 40px; width: 40px;"/>
                                                 </button>
-                                                <input type="file" id="image_1" name="image_1" accept="image/*" style="display: none;" />
+                                                <input type="file" id="image_1" name="image_1" accept="image/png" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 1</center>
                                             </div>
@@ -255,7 +255,7 @@
                                                 <button type="button" id="img_2" style="width: 100%; height: 120px;" class="img_upl">
                                                     <img src="{{url('/')}}/image/plus/plusin.png" id="image_2_ambil" style="height: 40px; width: 40px;"/>
                                                 </button>
-                                                <input type="file" id="image_2" name="image_2" accept="image/*" style="display: none;" />
+                                                <input type="file" id="image_2" name="image_2" accept="image/png" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 2</center>
                                             </div>
@@ -265,7 +265,7 @@
                                                 <button type="button" id="img_3" style="width: 100%; height: 120px;" class="img_upl">
                                                     <img src="{{url('/')}}/image/plus/plusin.png" id="image_3_ambil" style="height: 40px; width: 40px;"/>
                                                 </button>
-                                                <input type="file" id="image_3" name="image_3" accept="image/*" style="display: none;" />
+                                                <input type="file" id="image_3" name="image_3" accept="image/png" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 3</center>
                                             </div>
@@ -275,7 +275,7 @@
                                                 <button type="button" id="img_4" style="width: 100%; height: 120px;" class="img_upl">
                                                     <img src="{{url('/')}}/image/plus/plusin.png" id="image_4_ambil" style="height: 40px; width: 40px;"/>
                                                 </button>
-                                                <input type="file" id="image_4" name="image_4" accept="image/*" style="display: none;" />
+                                                <input type="file" id="image_4" name="image_4" accept="image/png" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 4</center>
                                             </div>
