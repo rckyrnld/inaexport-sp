@@ -198,33 +198,33 @@ class InquiryController extends Controller
                 'created_at' => $datenow,
             ]);
 
-            if ($save) {
-                $notif = DB::table('notif')->insert([
-                    'dari_nama' => getCompanyNameImportir($id_user),
-                    'dari_id' => $id_user,
-                    'untuk_nama' => getCompanyName($dtproduct->id_itdp_company_user),
-                    'untuk_id' => $dtproduct->id_itdp_company_user,
-                    'keterangan' => 'New Inquiry By ' . getCompanyNameImportir($id_user) . ' with Subyek  "' . $request->subject . '"',
-                    'url_terkait' => 'inquiry',
-                    'status_baca' => 0,
-                    'waktu' => $datenow,
-                    'to_role' => 2,
-                ]);
-
-                //Tinggal Ganti Email1 dengan email kemendag
-                $untuk = DB::table('itdp_company_users')->where('id', $dtproduct->id_itdp_company_user)->first();
-                $data = [
-                    'email' => $untuk->email,
-                    'username' => $untuk->username,
-                    'type' => "eksportir",
-                    'company' => getCompanyName($dtproduct->id_itdp_company_user),
-                    'dari' => "Importer"
-                ];
-
-                Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data) {
-                    $mail->to($data['email'], $data['username']);
-                    $mail->subject('Inquiry Information');
-                });
+            if (count($save > 0)) {
+//                $notif = DB::table('notif')->insert([
+//                    'dari_nama' => getCompanyNameImportir($id_user),
+//                    'dari_id' => $id_user,
+//                    'untuk_nama' => getCompanyName($dtproduct->id_itdp_company_user),
+//                    'untuk_id' => $dtproduct->id_itdp_company_user,
+//                    'keterangan' => 'New Inquiry By ' . getCompanyNameImportir($id_user) . ' with Subyek  "' . $request->subject . '"',
+//                    'url_terkait' => 'inquiry',
+//                    'status_baca' => 0,
+//                    'waktu' => $datenow,
+//                    'to_role' => 2,
+//                ]);
+//
+//                //Tinggal Ganti Email1 dengan email kemendag
+//                $untuk = DB::table('itdp_company_users')->where('id', $dtproduct->id_itdp_company_user)->first();
+//                $data = [
+//                    'email' => $untuk->email,
+//                    'username' => $untuk->username,
+//                    'type' => "eksportir",
+//                    'company' => getCompanyName($dtproduct->id_itdp_company_user),
+//                    'dari' => "Importer"
+//                ];
+//
+//                Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data) {
+//                    $mail->to($data['email'], $data['username']);
+//                    $mail->subject('Inquiry Information');
+//                });
                 $meta = [
                     'code' => 200,
                     'message' => 'Success',
