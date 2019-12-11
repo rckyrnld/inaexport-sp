@@ -10,21 +10,24 @@
                     <div class="box-body">
                         <div class="form-row">
                             <div class="form-group col-sm-6">
-                                <label>Year</label>
-                                <input type="text" name="tahun" id="tahun" class="form-control">
+                                <label>Exhibition</label>
+                                <input type="text" name="exhibition" id="exhibition" class="form-control">
                             </div>
 
                             <div class="form-group col-sm-6">
-                                <label>Own Productionnn (%)</label>
-                                <input type="text" class="form-control" name="persen_sendiri" id="persen_sendiri" required>
+                                <label>Booth Area</label>
+                                <input type="text" class="form-control" name="booth_area" id="booth_area"
+                                       required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-sm-6">
-                                <label>Outside Production (%)</label>
-                                <input type="text" class="form-control" name="out_persen" id="out_persen">
+                                <label>Value Contract</label>
+                                <input type="text" class="form-control" name="value_contract" id="value_contract">
                             </div>
                             <div class="form-group col-sm-6">
+                                <label>Subsidy djpen</label>
+                                <input type="text" class="form-control" name="subsidi_djpen" id="subsidi_djpen">
 
                             </div>
                         </div>

@@ -525,12 +525,16 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     //exhibition
     Route::get('/exhibition', 'ExhibitionController@index')->name('exhibition.index');
     Route::get('/tambah_exhibition', 'ExhibitionController@tambah');
-//    Route::post('/brand_save', 'BrandController@store');
-//    Route::get('/brand_getdata', 'BrandController@datanya')->name('datatables.brand');
-//    Route::get('/brand_edit/{id}', 'BrandController@edit')->name('brand.detail');
-//    Route::get('/brand_view/{id}', 'BrandController@view')->name('brand.view');
-//    Route::get('/brand_delete/{id}', 'BrandController@delete')->name('brand.delete');
-//    Route::post('/brand_update', 'BrandController@update');
+    Route::post('/exhibition_save', 'ExhibitionController@store');
+    Route::get('/exhibition_getdata', 'ExhibitionController@datanya')->name('datatables.exhibition');
+    Route::get('/exhibition_edit/{id}', 'ExhibitionController@edit')->name('exhibition.detail');
+    Route::get('/exhibition_view/{id}', 'ExhibitionController@view')->name('exhibition.view');
+    Route::get('/exhibition_delete/{id}', 'ExhibitionController@delete')->name('exhibition.delete');
+    Route::post('/brand_update', 'BrandController@update');
+
+    //ADMIN
+    Route::get('/exhibition_admin/{id}', 'ExhibitionController@indexadmin')->name('exhibition.indexadmin');
+    Route::get('/exhibition_getdata_admin/{id}', 'ExhibitionController@datanyaadmin');
 
     //capacity utilization USER
     Route::get('/capulti', 'CapultiController@index')->name('capulti.index');
