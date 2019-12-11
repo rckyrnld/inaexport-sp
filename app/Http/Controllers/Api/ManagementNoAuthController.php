@@ -417,6 +417,7 @@ class ManagementNoAuthController extends Controller
     {
         $research = DB::table('event_detail')
             ->leftJoin('contact_person', 'event_detail.id', '=', 'contact_person.id_type')
+            ->select('event_detail.*','contact_person.name','contact_person.email','contact_person.phone')
             ->orderby('event_detail.id', 'desc')
             ->get();
 //        dd($research);
