@@ -78,7 +78,7 @@
                 <div class="col-lg-12 col-md-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index.html">@lang("frontend.proddetail.home")</a></li>
+                            <li><a href="{{url('/')}}">@lang("frontend.proddetail.home")</a></li>
                             <li>Events</li>
                         </ul>
                     </div>
