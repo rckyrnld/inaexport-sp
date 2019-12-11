@@ -1003,12 +1003,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .search-container {
-    display: none;
+    /*display: none;*/
   }
 }
 @media only screen and (max-width: 767px) {
   .search-container {
-    display: none;
+    /*display: none;*/
   }
 }
 
@@ -1081,7 +1081,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 @media only screen and (max-width: 767px) {
   .search_box button {
     padding: 0 20px;
-    border-radius: 0 3px 3px 0;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
   }
 }
 
