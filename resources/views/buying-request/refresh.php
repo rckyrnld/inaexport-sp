@@ -1,49 +1,121 @@
-<?php 
-					$qwr = DB::select("select * from csc_buying_request_chat where id_br='".$id."' and id_join='".$id2."'");
-					foreach($qwr as $r){
-					?>
-					
-					<?php if($r->id_pengirim == Auth::guard('eksmp')->user()->id){?>
-						<li class="right clearfix"><span class="chat-img pull-right">
-                            <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-                        </span>
-                            <div class="chat-body clearfix pull-right">
-                                <div class="header">
-                                    <strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo $r->username_pengirim; ?></b></strong>
-									<small class="glyphicon glyphicon-time"> (<?php echo $r->tanggal; ?>)</small>
-                                </div>
-                                <p>
-                                    <?php echo $r->pesan; ?>
-									
-                                </p>
-								<p>
-								<?php if(empty($r->files)){}else{?>
-									<br><a target="_BLANK" href="<?php echo asset(''); ?>uploads/pop/<?php echo $r->files;?>"><font color="green"><?php echo $r->files; ?></font></a>
-									<?php } ?>
-								</p>
+<?php
+                          $datenya = NULL;
+						  $messages2 = DB::select("select * from csc_buying_request_chat where id_br='".$id."' and id_join='".$id2."'");
+                        ?>
+                      
+                        <?php foreach($messages2 as $msg){ ?>
+                          <?php if($msg->id_pengirim == Auth::guard('eksmp')->user()->id){ ?>
+                          <div class="col-md-12">
+                            <?php if($datenya == NULL){ ?>
+                                <?php
+                                   $datenya = date('d-m-Y', strtotime($msg->tanggal));
+										$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
+                                ?>
+                                <center>
+                                    <i>
+										<?php echo $fix; ?>
+                                    </i>
+                                </center><br>
+						<?php }else{ ?>
+                                <?php if($datenya != date('d-m-Y', strtotime($msg->tanggal))) { ?>
+                                    <?php
+                                        $datenya = date('d-m-Y', strtotime($msg->tanggal));
+										$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
+                                    ?>
+                                    <center>
+                                        <i>
+                                           <?php echo $fix; ?>
+                                        </i>
+                                    </center><br>
+                                <?php } ?>
+						<?php } ?>
+                            <div class="row pull-right">
+                              <div class="col-md-10">
+                                <label class="label chat-me">
+                                    <?php if($msg->files == NULL){ ?>
+                                        <?php echo $msg->pesan; ?><br>
+                                    <?php }else{ ?>
+                                        <a href="{{ url('/').'/uploads/pop/' }}/<?php echo $msg->files; ?>" target="_blank" class="atag" style="color: white;"><?php echo $msg->files; ?></a><br><br>
+                                         <?php echo $msg->pesan; ?><br>
+                                    <?php } ?>
+                                    <span style="float: right;"><?php echo date('H:i',strtotime($msg->tanggal)); ?></span>
+                                </label>
+                              </div>
                             </div>
-                        </li>
-					<?php }else{ ?>
-						<li class="left clearfix"><span class="chat-img pull-left">
-                            <img src="http://placehold.it/50/55C1E7/fff&text=H" alt="User Avatar" class="img-circle" />
-                        </span>
-                            <div class="chat-body clearfix">
-                                <div class="header">
-									<strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo $r->username_pengirim; ?></b></strong>
-									<small class="glyphicon glyphicon-time"> (<?php echo $r->tanggal; ?>)</small>
-                                </div>
-                                <p>
-                                    <?php echo $r->pesan; ?>
+                          </div><br>
+						<?php }else{ ?>
+                          <!-- <div class="col-md-1"></div> -->
+                          <div class="col-md-12">
+                            <?php if($datenya == NULL){ ?>
+                                <?php
+                                    $datenya = date('d-m-Y', strtotime($msg->tanggal));
+									$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
 									
-                                </p>
-								<p>
-								<?php if(empty($r->files)){}else{?>
-									<br><a target="_BLANK" href="<?php echo asset(''); ?>uploads/pop/<?php echo $r->files;?>"><font color="green"><?php echo $r->files; ?></font></a>
-									<?php } ?>
-								</p>
+                                ?>
+                                <center>
+                                    <i>
+                                        <?php echo $fix; ?>
+                                    </i>
+                                </center><br>
+                            <?php }else{ ?>
+                                <?php if($datenya != date('d-m-Y', strtotime($msg->tanggal))){ ?>
+                                    <?php
+                                        $datenya = date('d-m-Y', strtotime($msg->tanggal));
+										$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
+                                    ?>
+                                    <center>
+                                        <i>
+                                            <?php echo $fix; ?>
+                                        </i>
+                                    </center><br>
+                                <?php } ?>
+                            <?php } ?>
+                            <div class="row">
+                              <div class="col-md-10">
+                                <label class="label chat-other">
+                                    <?php if($msg->files == NULL){ ?>
+                                        <?php echo $msg->pesan; ?><br>
+                                    <?php }else{ ?>
+                                        <a href="{{ url('/').'/uploads/pop/' }}/<?php echo $msg->files; ?>" target="_blank" class="atag" style="color: white;"><?php echo $msg->files; ?></a><br><br>
+                                        <?php echo $msg->pesan; ?><br>
+                                    <?php } ?>
+                                    <span style="color: #555; float: right;"><?php echo date('H:i',strtotime($msg->tanggal)); ?></span>
+                                </label>
+                              </div>
                             </div>
-                        </li>
-					<?php } ?>
-                        
-                        
-					<?php } ?>
+                          </div><br>
+                          <!-- <div class="col-md-1"></div> -->
+						<?php } ?>
+                        <?php } ?>

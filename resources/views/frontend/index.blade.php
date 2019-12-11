@@ -487,7 +487,7 @@
     <!--product category end-->
 	
 	<!--buyer & seller start-->
-    <div class="breadcrumbs_area">
+    <div class="breadcrumbs_area" style="">
         <div class="container">
             <div class="row">
                 <div class="col-12">

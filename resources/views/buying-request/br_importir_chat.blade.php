@@ -705,8 +705,15 @@ function kirimchat(){
 		$.get('{{URL::to("simpanchatbr/")}}/a/'+b+'/'+c+'/'+d+'/'+e+'/'+f,{a:a,_token:token},function(data){
 			
 		 });
-	$('#rchat').append('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix pull-right"><div class="header"><strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo Auth::guard('eksmp')->user()->username;?></b></strong><small class="glyphicon glyphicon-time"> (<?php echo date('Y-m-d H:m:s'); ?>)</small></div><p>'+ a +'</p></div></li>');
+	//$('#rchat').append('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix pull-right"><div class="header"><strong class=" text-muted"><span class="pull-right primary-font"></span><b><?php echo Auth::guard('eksmp')->user()->username;?></b></strong><small class="glyphicon glyphicon-time"> (<?php echo date('Y-m-d H:m:s'); ?>)</small></div><p>'+ a +'</p></div></li>');
 	$('#inputan').val('');
+	
+	x = <?php echo $id; ?>;
+	y = <?php echo $idb; ?>;
+	$.get('{{URL::to("refreshchat/")}}/'+x+'/'+y,{_token:token},function(data){
+		$('#rchat').html(data)
+		 });
+	
 	}
 	
 }
@@ -840,7 +847,7 @@ function openCity(evt, cityName) {
                       </div>
                     </div>
                     <div class="chat-body">
-                      <div class="row">
+                      <div class="row" id="rchat">
                         <?php
                           $datenya = NULL;
                         ?>
