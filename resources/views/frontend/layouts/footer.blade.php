@@ -210,19 +210,12 @@ function closenotif(x){
 }
 </script>
     <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en', layout:google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-        }
         function ce(){
             var a = $('#lang').val();
             var url = '<?php  echo url('locale/') ?>/'+a;
             window.open(url,'myWindow');
         }
     </script>
-
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-
 </body>
 
 

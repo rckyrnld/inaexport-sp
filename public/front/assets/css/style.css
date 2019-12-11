@@ -956,15 +956,32 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 /*header top css end*/
 /* 2.2 header middel css here */
+
+.logo{
+  text-align: center;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .logo {
+    text-align: left;
+    margin-left: 30px;
+  }
+}
+
 @media only screen and (max-width: 767px) {
   .logo {
     text-align: center;
     margin-bottom: 21px;
+    text-align: center;
   }
-}
-@media only screen and (max-width: 767px) {
   .logo a img {
     max-width: 135px;
+  }
+  .grid_list_btn{
+    display: none;
+  }
+  .sortproductnya{
+    width: 100px;
   }
 }
 
@@ -999,16 +1016,26 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .search-container {
-  margin-right: 82px;
+  /*margin-right: 30px; */
 }
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .search-container {
+    width: 180px;
+    margin-right: 90px;
+  }
+}
+
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .search-container {
-    /*display: none;*/
+    display: none;
+    width: 380px;
   }
 }
 @media only screen and (max-width: 767px) {
   .search-container {
     /*display: none;*/
+    width: 280px;
   }
 }
 
@@ -1020,7 +1047,19 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .search_box {
-    width: 360px;
+    width: 260px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .search_box {
+    width: 340px;
+    margin-left: -20px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .search_box {
+    width: 340px;
+    margin-left: -20px;
   }
 }
 .search_box input::-webkit-input-placeholder {
@@ -1090,6 +1129,27 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   display: flex;
   align-items: center;
   margin-top: 7px;
+  padding-top: 18px; 
+  margin-left: 15px;
+}
+
+/*@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .middel_right_info {
+    padding-top: 18px; 
+    margin-left: 15px;
+  }
+}*/
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .middel_right_info {
+    margin-left: 50px;
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .middel_right_info {
+    margin-left: 75px;
+    font-size: 13px;
+  }
 }
 
 .header_wishlist {
