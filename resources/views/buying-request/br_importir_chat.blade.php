@@ -1,6 +1,6 @@
 @include('frontend.layouts.header')
-
 <style>
+/*
 .chat
 {
     list-style: none;
@@ -60,7 +60,116 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #555;
 }
+*/
+</style>
+<style type="text/css">
+  .chat-container{
+    width: 100%;
+    background-color: white;
+    border-radius: 30px;
+  }
 
+  .chat-header{
+    width: 100%;
+    height: 5%;
+    background-color: #DDEFFD;
+    border-radius: 30px 30px 0px 0px;
+    padding: 2% 2% 2% 3%;
+  }
+
+  .chat-user{
+    font-size: 15px;
+    font-family: 'Verdana';
+  }
+
+  .chat-body{
+    height: 500px;
+    max-height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 2%;
+    font-size: 15px;
+  }
+
+  .chat-footer{
+    width: 100%;
+    height: 5%;
+    border-top: 2px solid #87c4ee;
+    border-radius: 0px 0px 30px 30px;
+    padding: 1% 1% 1% 1%;
+  }
+
+  .chat-message{
+    border: 1.5px solid #4088C6;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    resize: none;
+    padding: 1%;
+    font-size: 15px;
+  }
+
+  .chat-me{
+    background: #64abe4; 
+    border-radius: 10px 0px 10px 10px;
+    width: 400px;
+    padding: 10px;
+    color: white;
+  }
+
+  .chat-other{
+    background: #DDEFFD;
+    border-radius: 0px 10px 10px 10px;
+    width: 400px;
+    padding: 10px;
+  }
+
+  #uploading2{
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  #uploading2:hover{
+    opacity: 0.7;
+  }
+
+  #sendmessage{
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  #sendmessage:hover{
+    opacity: 0.7;
+  }
+
+  .chat-back:hover{
+    opacity: 0.7;
+  }
+
+  button.closedmodal {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+  }
+
+  .closedmodal {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+  }
+  .modal-header .closedmodal {
+      padding: 1rem;
+      margin: -1rem -1rem -1rem auto;
+  }
+
+  .closedmodal:hover{
+    color: #fff;
+  }
 </style>
 <!--slider area start-->
 <?php 
@@ -89,7 +198,7 @@
 
   </style>
     <!--product area start-->
-    <section class="product_area mb-50">
+	 <section class="product_area mb-50">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -285,7 +394,7 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
 
 </div>
 </div>
-
+<!-- 
 <div class="form-row">
 <div class="col-md-12">
    <div class="box-body">
@@ -294,7 +403,10 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
 <div align="center"><br>
 <center>
 <div class="">
-    <div class="row"><div class="col-sm-12">
+    <div class="row">
+	
+	
+	<div class="col-sm-12">
         <div class="col-md-12" style="background-color: #1a7688;color:white;">
 		<div class="row">
 		<div class="col-sm-1">
@@ -312,24 +424,7 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-comment"></span>
-                   <!-- <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-chevron-down"></span>
-                        </button>
-                        <ul class="dropdown-menu slidedown">
-                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-refresh">
-                            </span>Refresh</a></li>
-                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-ok-sign">
-                            </span>Available</a></li>
-                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-remove">
-                            </span>Busy</a></li>
-                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-time"></span>
-                                Away</a></li>
-                            <li class="divider"></li>
-                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-off"></span>
-                                Sign Out</a></li>
-                        </ul>
-                    </div> -->
+                  
                 </div>
 			<br>
                 <div class="panel-body" style="overflow-y: scroll;">
@@ -460,18 +555,65 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
     </div>
   </div>
 
-<!--
-<a href="{{ url('br_save_join/'.$id) }}" class="btn btn-md btn-primary"><i class="fa fa-comment"></i> Chat</a>
-<a href="{{ url('br_list') }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Decline</a>
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
 -->
 
-</div>
-</div>
-</div>
 
-</div>
-</div>
-</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Upload Proof of Payment</h6>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+         
+        </div>
+		<form id="formId" action="{{ url('uploadpop') }}" enctype="multipart/form-data" method="post">
+		   {{ csrf_field() }}
+        <div class="modal-body">
+		<div class="form-row">
+		<div class="col-sm-3">
+		<label><b>File Upload</b></label>
+		</div>
+		<div class="form-group col-sm-7">
+			 <input type="hidden" class="form-control" name="idq" id="idq" value="<?php echo $id; ?>">
+			 <input type="hidden" class="form-control" name="idb" id="idb" value="<?php echo $idb; ?>">
+			 <input type="hidden" class="form-control" name="idc" id="idc" value="<?php echo Auth::guard('eksmp')->user()->id; ?>">
+			 <input type="hidden" class="form-control" name="idd" id="idd" value="<?php echo Auth::guard('eksmp')->user()->username; ?>">
+			 <input type="hidden" class="form-control" name="ide" id="ide" value="<?php echo Auth::guard('eksmp')->user()->id_role; ?>">
+			 <input type="file" class="form-control" name="filez" id="filez">
+		</div>
+		
+	</div>
+	<div class="form-row">
+		<div class="col-sm-3">
+		<label><b>Note</b></label>
+		</div>
+		<div class="form-group col-sm-7">
+			 <textarea class="form-control" name="catatan"></textarea>
+		</div>
+		
+	</div>
+         
+		  
+        </div>
+        <div class="modal-footer">
+			<button type="submit" class="btn btn-success" ><font color="white">Upload</font></button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div> 
+		</form>
+      </div>
+    </div>
+  </div>
+
+
+
 
 
 
@@ -483,7 +625,9 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
 
 
 </div>
-</div>
+</div> 
+
+
 
 								<?php } ?>
 
@@ -641,7 +785,7 @@ function openCity(evt, cityName) {
     </div>
   
 
-			<div class="modal fade" id="myModal" role="dialog">
+			<!-- <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Broadcast Buying Request</h6>
@@ -649,15 +793,10 @@ function openCity(evt, cityName) {
          
         </div>
 		<div id ="isibroadcast"></div>
-        <!--<div class="modal-body">
-          1
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div> -->
+        
       </div>
     </div>
-  </div>
+  </div> -->
 
 			<!--<a href="{{ url('br_importir_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add Buying Request</a><br><br> -->
 		
@@ -666,6 +805,188 @@ function openCity(evt, cityName) {
             </div>
         </div>
     </section>
+	
+	<div class="product_details mt-20" style="background-color: #1A70BB; margin-bottom: 0px !important; margin-top: 0px; font-size: 14px;">
+          <div class="container">
+            <br><br>
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                  <div class="chat-container">
+                    <div class="chat-header">
+                      <div class="row">
+                        <div class="col-md-1">
+                          <br>
+                          <a href="{{url('/front_end/history')}}" style="width: 100%; height: 100%;" class="chat-back">
+                            <i class="fa fa-arrow-left" aria-hidden="true" style="color: #1A70BB; font-size: 40px;"></i>
+                          </a>
+                        </div>
+                        <div class="col-md-1" style="padding-left: 0px;">
+                          <img src="{{asset('front/assets/icon/user.png')}}" alt="" width="100%" />
+                        </div>
+                        <div class="col-md-4" style="padding-left: 0px;">
+                          <span class="chat-user" style=""><b>Chat</b></span>
+                          <br>
+                          <span class="chat-user" style="text-transform: capitalize;"><b>{{$company}}</b>&nbsp;&nbsp;<img src="{{asset('front/assets/icon/icon-exportir.png')}}" alt="" /></span>
+						<br>
+						<?php 
+						$messages = DB::select("select * from csc_buying_request_chat where id_br='".$id."' and id_join='".$idb."'");
+						$ry = 40055; ?>
+						@if(Cache::has('user-is-eksmp-' . $idu))
+    <span class="text-success">Online</span>
+@else
+    <span class="text-secondary">Offline</span>
+@endif
+						</div>
+                      </div>
+                    </div>
+                    <div class="chat-body">
+                      <div class="row">
+                        <?php
+                          $datenya = NULL;
+                        ?>
+                        @foreach($messages as $msg)
+                          @if($msg->id_pengirim == Auth::guard('eksmp')->user()->id)
+                          <div class="col-md-12">
+                            @if($datenya == NULL)
+                                <?php
+                                   $datenya = date('d-m-Y', strtotime($msg->tanggal));
+										$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
+                                ?>
+                                <center>
+                                    <i>
+										{{$fix}}
+                                    </i>
+                                </center><br>
+                            @else
+                                @if($datenya != date('d-m-Y', strtotime($msg->tanggal)))
+                                    <?php
+                                        $datenya = date('d-m-Y', strtotime($msg->tanggal));
+										$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
+                                    ?>
+                                    <center>
+                                        <i>
+                                           {{$fix}}
+                                        </i>
+                                    </center><br>
+                                @endif
+                            @endif
+                            <div class="row pull-right">
+                              <div class="col-md-10">
+                                <label class="label chat-me">
+                                    @if($msg->files == NULL)
+                                        {{$msg->pesan}}<br>
+                                    @else
+                                        <a href="{{ url('/').'/uploads/pop/' }}/{{ $msg->files }}" target="_blank" class="atag" style="color: white;">{{$msg->files}}</a><br><br>
+                                        {{$msg->pesan}}<br>
+                                    @endif
+                                    <span style="float: right;">{{date('H:i',strtotime($msg->tanggal))}}</span>
+                                </label>
+                              </div>
+                            </div>
+                          </div><br>
+                          @else
+                          <!-- <div class="col-md-1"></div> -->
+                          <div class="col-md-12">
+                            @if($datenya == NULL)
+                                <?php
+                                    $datenya = date('d-m-Y', strtotime($msg->tanggal));
+									$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
+									
+                                ?>
+                                <center>
+                                    <i>
+                                        {{$fix}}
+                                    </i>
+                                </center><br>
+                            @else
+                                @if($datenya != date('d-m-Y', strtotime($msg->tanggal)))
+                                    <?php
+                                        $datenya = date('d-m-Y', strtotime($msg->tanggal));
+										$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
+                                    ?>
+                                    <center>
+                                        <i>
+                                            {{$fix}}
+                                        </i>
+                                    </center><br>
+                                @endif
+                            @endif
+                            <div class="row">
+                              <div class="col-md-10">
+                                <label class="label chat-other">
+                                    @if($msg->files == NULL)
+                                        {{$msg->pesan}}<br>
+                                    @else
+                                        <a href="{{ url('/').'/uploads/pop/' }}/{{ $msg->files }}" target="_blank" class="atag" style="color: white;">{{$msg->files}}</a><br><br>
+                                        {{$msg->pesan}}<br>
+                                    @endif
+                                    <span style="color: #555; float: right;">{{date('H:i',strtotime($msg->tanggal))}}</span>
+                                </label>
+                              </div>
+                            </div>
+                          </div><br>
+                          <!-- <div class="col-md-1"></div> -->
+                          @endif
+                        @endforeach
+                      </div>
+                    </div>
+                    <div class="chat-footer">
+                      <div class="row">
+                        <div class="col-md-1">
+                            <a  class="" data-toggle="modal" data-target="#myModal">
+                                <img src="{{asset('front/assets/icon/plus-circle.png')}}" alt="" width="100%" id="" />
+								</a>
+                            
+                          </form>
+                        </div>
+                        <div class="col-md-10" style="padding-left: 0px;">
+                          <textarea id="inputan" rows="2" class="chat-message"></textarea>
+                        </div>
+						
+                        <div class="col-md-1" style="padding-left: 0px;">
+                          <a onclick="kirimchat()" class="" id="btn-chat"><img src="{{asset('front/assets/icon/send-message.png')}}" alt="" width="70%" id="sendmessage" /></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <br><br>
+          </div>
+      </div>
+   <br><br><br>
     <!--product area end-->
 
 @include('frontend.layouts.footer')
