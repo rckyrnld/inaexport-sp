@@ -57,17 +57,18 @@
 
 <script>
     $(function () {
-        $('#tableprocap').DataTable({
-            {{--processing: true,--}}
-            {{--serverSide: true,--}}
-            {{--ajax: "{{ route('datatables.exhibition') }}",--}}
-            {{--columns: [--}}
-            {{--    {data: 'DT_RowIndex', name: 'DT_RowIndex'},--}}
-            {{--    {data: 'tahun', name: 'tahun'},--}}
-            {{--    {data: 'sendiri_persen', name: 'sendiri_persen'},--}}
-            {{--    {data: 'outsourcing_persen', name: 'outsourcing_persen'},--}}
-            {{--    {data: 'action', name: 'action', orderable: false, searchable: false}--}}
-            {{--]--}}
+        $('#tableexhibition').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('datatables.exhibition') }}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'id_itdp_eks_event_profil', name: 'id_itdp_eks_event_profil'},
+                {data: 'luas_boot', name: 'luas_boot'},
+                {data: 'nilai_kontrak', name: 'nilai_kontrak'},
+                {data: 'subsidi', name: 'subsidi'},
+                {data: 'action', name: 'action', orderable: false, searchable: false}
+            ]
         });
     });
 </script>

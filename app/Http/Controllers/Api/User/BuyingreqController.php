@@ -390,7 +390,10 @@ class BuyingreqController extends Controller
             $jsonResult[$i]["id_pembuat"] = $data[$i]->id_pembuat;
             $id_role = $data[$i]->by_role;
             if ($id_role == 3) {
-                $id_profile = DB::table('itdp_company_users')->where('id', $data[$i]->id_pembuat)->first()->id_profil;
+                $companyUser = DB::table('itdp_company_users')->where('id', $data[$i]->id_pembuat)->first();
+                if ($companyUser != null) {
+                    $id_profile = DB::table('itdp_company_users')->where('id', $data[$i]->id_pembuat)->first()->id_profil;
+                }
                 $jsonResult[$i]["company_name"] = DB::table('itdp_profil_imp')->where('id', $id_profile)->first()->company;
             } else if ($id_role == 1) {
                 $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $data[$i]->id_pembuat)->first()->name;
