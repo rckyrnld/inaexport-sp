@@ -189,68 +189,7 @@
     </section>
     <!--menu & category end-->
     
-    <!--buyer & seller start-->
-    <div class="breadcrumbs_area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumb_content">
-                        <div class="row">
-                          <div class="col-md-6 col-lg-6 col-12">
-                            <center>
-                            <?php
-                                $url = '/login';
-                                if(Auth::guard('eksmp')->user()){
-                                    if(Auth::guard('eksmp')->user()->id_role == 2){
-                                        $url = '/home';
-                                    }else if(Auth::guard('eksmp')->user()->id_role == 3){
-                                        $url = '/';
-                                    }
-                                }
-                            ?>
-                                @if(Auth::guard('eksmp')->user())
-                                @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                <a href="{{url($url)}}" class="for-act">
-                                @endif
-                                @else
-                                <a href="{{url($url)}}" class="for-act">
-                                @endif
-                                  <img src="{{asset('front/assets/icon/for-buyer.png')}}" alt="">
-                                @if(Auth::guard('eksmp')->user())
-                                @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                </a>
-                                @endif
-                                @else
-                                </a>
-                                @endif
-                            </center>
-                          </div>
-                          <div class="col-md-6 col-lg-6 col-12">
-                            <center>
-                                @if(Auth::guard('eksmp')->user())
-                                @if(Auth::guard('eksmp')->user()->id_role == 2)
-                                <a href="{{url($url)}}" class="for-act">
-                                @endif
-                                @else
-                                <a href="{{url($url)}}" class="for-act">
-                                @endif
-                                  <img src="{{asset('front/assets/icon/for-indonesia-exportir.png')}}" alt="" >
-                                @if(Auth::guard('eksmp')->user())
-                                @if(Auth::guard('eksmp')->user()->id_role == 2)
-                                </a>
-                                @endif
-                                @else
-                                </a>
-                                @endif
-                            </center>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--buyer & seller start-->
+    
 
     <!--category product start-->
     <section class="product_area mb-50" style="background-color: #ddeffd;">
@@ -309,6 +248,8 @@
         </div>
     </section>
     <!--category product end-->
+	
+	
 <br>
     <!--product category start-->
     <section class="product_area mb-50">
@@ -544,6 +485,69 @@
         </div>
     </section>
     <!--product category end-->
+	
+	<!--buyer & seller start-->
+    <div class="breadcrumbs_area" style="">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-12">
+                            <center>
+                            <?php
+                                $url = '/login';
+                                if(Auth::guard('eksmp')->user()){
+                                    if(Auth::guard('eksmp')->user()->id_role == 2){
+                                        $url = '/home';
+                                    }else if(Auth::guard('eksmp')->user()->id_role == 3){
+                                        $url = '/';
+                                    }
+                                }
+                            ?>
+                                @if(Auth::guard('eksmp')->user())
+                                @if(Auth::guard('eksmp')->user()->id_role == 3)
+                                <a href="{{url($url)}}" class="for-act">
+                                @endif
+                                @else
+                                <a href="{{url($url)}}" class="for-act">
+                                @endif
+                                  <img src="{{asset('front/assets/icon/for-buyer.png')}}" alt="">
+                                @if(Auth::guard('eksmp')->user())
+                                @if(Auth::guard('eksmp')->user()->id_role == 3)
+                                </a>
+                                @endif
+                                @else
+                                </a>
+                                @endif
+                            </center>
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-12">
+                            <center>
+                                @if(Auth::guard('eksmp')->user())
+                                @if(Auth::guard('eksmp')->user()->id_role == 2)
+                                <a href="{{url($url)}}" class="for-act">
+                                @endif
+                                @else
+                                <a href="{{url($url)}}" class="for-act">
+                                @endif
+                                  <img src="{{asset('front/assets/icon/for-indonesia-exportir.png')}}" alt="" >
+                                @if(Auth::guard('eksmp')->user())
+                                @if(Auth::guard('eksmp')->user()->id_role == 2)
+                                </a>
+                                @endif
+                                @else
+                                </a>
+                                @endif
+                            </center>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--buyer & seller start-->
 
     <!--regis start-->
     <section class="breadcrumbs_area" style="padding-top: 4%;padding-bottom: 4%; margin-bottom: 0px;" data-bgimg="{{asset('front/assets/icon/homepage2.png')}}">

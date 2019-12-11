@@ -30,20 +30,20 @@ class ExhibitionController extends Controller
     {
 //        dd($request);
         $id_user = Auth::guard('eksmp')->user()->id_profil;
-        DB::table('itdp_eks_production')->insert([
+        DB::table('itdp_eks_event_participants')->insert([
             'id_itdp_profil_eks' => $id_user,
-            'tahun' => $request->tahun,
-            'sendiri_persen' => $request->persen_sendiri,
-            'outsourcing_persen' => $request->out_persen,
-            'idcompanytahun' => $id_user . $request->year,
+            'id_itdp_eks_event_profil' => $request->exhibition,
+            'luas_boot' => $request->booth_area,
+            'nilai_kontrak' => $request->value_contract,
+            'subsidi' => $request->subsidi_djpen
         ]);
-        return redirect('eksportir/product_capacity');
+        return redirect('eksportir/exhibition');
     }
 
     public function datanya()
     {
 //        dd("masuk gan");
-        $user = DB::table('itdp_eks_production')
+        $user = DB::table('itdp_eks_event_participants')
             ->where('id_itdp_profil_eks', '=', Auth::guard('eksmp')->user()->id_profil)
             ->get();
 //        dd($user);
@@ -51,13 +51,13 @@ class ExhibitionController extends Controller
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('procap.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                <a href="' . route('exhibition.view', $mjl->id) . '" class="btn btn-sm btn-info">
                     <i class="fa fa-search text-white"></i> View
                 </a>
-                <a href="' . route('procap.detail', $mjl->id) . '" class="btn btn-sm btn-success">
+                <a href="' . route('exhibition.detail', $mjl->id) . '" class="btn btn-sm btn-success">
                     <i class="fa fa-edit text-white"></i> Edit
                 </a>
-                <a href="' . route('procap.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
+                <a href="' . route('exhibition.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash text-white"></i> Delete
                 </a>
                 </center>

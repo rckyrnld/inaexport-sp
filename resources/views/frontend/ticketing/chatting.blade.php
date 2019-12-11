@@ -127,20 +127,38 @@
                             @if($datenya == NULL)
                                 <?php
                                     $datenya = date('d-m-Y', strtotime($msg->messages_send));
+									$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
                                 ?>
                                 <center>
                                     <i>
-                                        {{$datenya}}
+                                        {{$fix}}
                                     </i>
                                 </center><br>
                             @else
                                 @if($datenya != date('d-m-Y', strtotime($msg->messages_send)))
                                     <?php
                                         $datenya = date('d-m-Y', strtotime($msg->messages_send));
+										$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
                                     ?>
                                     <center>
                                         <i>
-                                            {{$datenya}}
+                                            {{$fix}}
                                         </i>
                                     </center><br>
                                 @endif
@@ -160,20 +178,38 @@
                             @if($datenya == NULL)
                                 <?php
                                     $datenya = date('d-m-Y', strtotime($msg->messages_send));
+									$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
                                 ?>
                                 <center>
                                     <i>
-                                        {{$datenya}}
+                                        {{$fix}}
                                     </i>
                                 </center><br>
                             @else
                                 @if($datenya != date('d-m-Y', strtotime($msg->messages_send)))
                                     <?php
                                         $datenya = date('d-m-Y', strtotime($msg->messages_send));
+										$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
                                     ?>
                                     <center>
                                         <i>
-                                            {{$datenya}}
+                                            {{$fix}}
                                         </i>
                                     </center><br>
                                 @endif

@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('front/assets/img/logo/logo.png')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('front/assets/img/logo/kemendag.png')}}">
 
     <!-- CSS 
     ========================= -->
@@ -332,18 +332,18 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
         <!--header top start-->
         <!--header middel start-->
         <div class="header_middle">
-            <div class="container" style="max-width: 1200px!important;">
+            <div class="container" style="max-width: 98% !important;">
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-md-6 col-12">
-                        <div class="logo">
+                        <div class="logo" align="center">
                             <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>
                         </div>
                     </div>
                     <div class="col-lg-10 col-md-6 col-12">
                         <div class="middel_right">
-                            <div class="search-container" style="margin-right: 48px!important;">
+                            <div class="search-container" style="margin-right: 30px !important; margin-bottom: 10px;">
                                 <!-- Nav pills -->
-                                <ul class="nav nav-pills" role="tablist" id="tab-me">
+                                <ul class="nav nav-pills" role="tablist" id="tab-me" style="font-size: 14px;">
                                     <li class="nav-item">
                                     <a class="nav-link active" data-toggle="pill" href="#products" id="set_products"  style="font-family: 'Myriad-pro';">@lang('frontend.home.product')</a>
                                     </li>
@@ -380,12 +380,12 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                                         $eksprod = "";
                                                     }
                                                 ?>
-                                                <input placeholder="@lang('frontend.home.cariproduct') ..." type="text" name="cari_product" autocomplete="off" value="{{$cariprod}}" id="cari_product">
+                                                <input placeholder="@lang('frontend.home.cariproduct') ..." type="text" name="cari_product" autocomplete="off" value="{{$cariprod}}" id="cari_product" style="height: 35px;">
                                                 <input type="hidden" name="locnya" value="{{$lct}}" id="locnya">
                                                 <input type="hidden" name="cari_catnya" value="{{$caricat}}" id="cari_catnya">
                                                 <input type="hidden" name="eks_prod" value="{{$eksprod}}" id="eks_prod">
                                                 <input type="hidden" name="sort_prod" value="" id="sort_prod">
-                                                <button type="submit"><i class="ion-ios-search-strong" style="font-size: 27px;"></i></button>
+                                                <button type="submit"><i class="ion-ios-search-strong" style="font-size: 22px;"></i></button>
                                             </div>
                                         </form>
                                     </div>
@@ -406,11 +406,11 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                                         $caricateks = "";
                                                     }
                                                 ?>
-                                                <input placeholder="@lang('frontend.home.carieksporter') ..." type="text" name="cari_eksportir" autocomplete="off" value="{{$carieks}}" id="cari_eksportir">
+                                                <input placeholder="@lang('frontend.home.carieksporter') ..." type="text" name="cari_eksportir" autocomplete="off" value="{{$carieks}}" id="cari_eksportir" style="height: 35px;">
                                                 <input type="hidden" name="lctnya" value="{{$lct}}" id="lctnya">
                                                 <input type="hidden" name="cat_eks" value="{{$caricateks}}" id="cat_eks">
                                                 <input type="hidden" name="sorteks" id="sorteks" value="">
-                                                <button type="submit"><i class="ion-ios-search-strong" style="font-size: 27px;"></i></button>
+                                                <button type="submit"><i class="ion-ios-search-strong" style="font-size: 22px;"></i></button>
                                             </div>
                                         </form>
                                     </div>
@@ -430,7 +430,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                     </div>
                                 </form> -->
                             </div>
-                            <div class="middel_right_info" style="padding-top: 28px; padding-right: -1px;">
+                            <div class="middel_right_info" style="padding-top: 18px; margin-left: 15px;">
                                 <a href="{{url('/front_end/list_product')}}" class="a-custom">
                                     <div class="mini_cart_wrapper" style="padding-right: 15px">
                                         <table style="width: 150px;">
