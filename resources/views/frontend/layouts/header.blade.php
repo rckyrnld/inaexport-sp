@@ -340,7 +340,9 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-md-6 col-12">
                         <div class="logo" align="center">
-                            <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>
+                            <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" style="height: 32px!important;
+    width: 100px!important;
+    margin-left: 93px!important;"></a>
                         </div>
                     </div>
                     <div class="col-lg-10 col-md-6 col-12">
