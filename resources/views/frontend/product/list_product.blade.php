@@ -101,7 +101,7 @@
                 </div>
                 <div class="col-3" style="text-align: right;">
                     <div class="breadcrumb_content">
-                        <b>@lang('frontend.liseksportir.sortby')</b> <select name="sortbyproduct" id="sortbyproduct" style="border: none;">
+                        <b>@lang('frontend.liseksportir.sortby')</b> <select name="sortbyproduct" id="sortbyproduct" style="border: none;"class="sortproductnya">
                                 <option value="" @if(isset($sortbyproduct)) @if($sortbyproduct == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
                                 <option value="new" @if(isset($sortbyproduct)) @if($sortbyproduct == "new") selected @endif @endif>@lang('frontend.liseksportir.newest')</option>
                                 @if(Auth::guard('eksmp')->user())
@@ -112,7 +112,7 @@
                             </select>
                     </div>
                 </div>
-                <div class="col-1" style="text-align: right;">
+                <div class="col-1 grid_list_btn" style="text-align: right;">
                     <div class="breadcrumb_content">
                         <div class="shop_toolbar_btn">
                             <button data-role="grid_3" type="button" class="active btn-grid-3" data-toggle="tooltip" title="3" id="grid"></button>
