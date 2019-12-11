@@ -500,7 +500,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
 												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
 												<?php }else{ ?>
 												
-                                                <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
+                                                <img src="{{asset('uploads/Profile/Eksportir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
 												<?php } ?>
                                                     @endif
 											@else	
