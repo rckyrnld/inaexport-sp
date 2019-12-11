@@ -687,11 +687,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-4">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
                             @if($loc == "in")
                                 <span style="font-size: 20px;">
-                                    Buat akun Anda dan mulailah berbisnis <span style="color: #007bff;">skala internasional</span>
+                                    Buat akun Anda dan mulailah <br>berbisnis <span style="color: #007bff;">skala internasional</span>
                                 </span><br>
                             @elseif($loc == "ch")
                                 <span style="font-size: 20px;">
@@ -699,7 +699,7 @@
                                 </span><br>
                             @else
                                 <span style="font-size: 20px;">
-                                    Create your account and start doing business on <span style="color: #007bff;">an international scale</span>
+                                    Create your account and start doing<br> business on <span style="color: #007bff;">an international scale</span>
                                 </span><br>
                             @endif
                             <span style="font-size: 12px; color: #007bff;">+ {{getCountData('itdp_company_users')}}</span>
@@ -714,7 +714,7 @@
                         <div class="col-md-2"></div>
                         <div class="col-md-4">
                             <center>
-                                <a href="{{url('/pilihregister')}}" class="btn btn-primary" style="width: 120px; font-size: 18px; border-radius: 30px;">@if($loc == 'ch') 寄存器 @elseif($loc == "in") Daftar @else Register @endif</a>
+                                <a href="{{url('/pilihregister')}}" class="btn btn-primary" style="width: 200px; font-size: 18px; border-radius: 30px;">@if($loc == 'ch') 寄存器 @elseif($loc == "in") Daftar @else Register @endif</a>
                             </center>
                         </div>
                     </div>
