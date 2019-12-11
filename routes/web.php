@@ -530,7 +530,8 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/exhibition_edit/{id}', 'ExhibitionController@edit')->name('exhibition.detail');
     Route::get('/exhibition_view/{id}', 'ExhibitionController@view')->name('exhibition.view');
     Route::get('/exhibition_delete/{id}', 'ExhibitionController@delete')->name('exhibition.delete');
-    Route::post('/brand_update', 'BrandController@update');
+    Route::post('/brand_update', 'ExhibitionController@update');
+    Route::get('/carievent', 'ExhibitionController@loadP');
 
     //ADMIN
     Route::get('/exhibition_admin/{id}', 'ExhibitionController@indexadmin')->name('exhibition.indexadmin');

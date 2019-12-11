@@ -23,7 +23,8 @@
                                 destination</a></h6>
                         <p><h6><a href="{{url('/eksportir/portland_admin/'.$id)}}" style="color: blue">Port of
                                 loading</a></h6>
-                        {{--                        <p><h6><a href="{{url('/eksportir/#/'.$id)}}" style="color: blue">Exhibition</a></h6>--}}
+                        <p><h6><a href="{{url('/eksportir/exhibition_admin/'.$id)}}" style="color: blue">Exhibition</a>
+                        </h6>
                         <p><h6><a href="{{url('/eksportir/capulti_admin/'.$id)}}" style="color: blue">Capacity
                                 utilization</a></h6>
                         <p><h6><a href="{{url('/eksportir/rawmaterial_admin/'.$id)}}" style="color: blue">Raw

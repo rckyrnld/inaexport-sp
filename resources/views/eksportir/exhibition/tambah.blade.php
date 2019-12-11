@@ -11,7 +11,10 @@
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Exhibition</label>
-                                <input type="text" name="exhibition" id="exhibition" class="form-control">
+{{--                                <input type="text" name="exhibition" id="exhibition" class="form-control">--}}
+                                <select id="exhibition" class="form-control penerbitajax"
+                                        name="exhibition" style="width:100%;">
+                                </select>
                             </div>
 
                             <div class="form-group col-sm-6">
@@ -64,7 +67,27 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.select2').select2();
+        $('.penerbitajax').select2({
+            tags: true,
+            placeholder: 'Cari...',
+            ajax: {
+                url: "{{url('eksportir/carievent')}}",
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.event_name_en,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+        // $('.select2').select2();
         $('#STAT').on('change', function () {
             var val = $('#STAT').val().split("|");
             var nama = val[0];

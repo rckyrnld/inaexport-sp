@@ -101,7 +101,7 @@
                 </div>
                 <div class="col-3" style="text-align: right;">
                     <div class="breadcrumb_content">
-                        <b>@lang('frontend.liseksportir.sortby')</b> <select name="sortbyproduct" id="sortbyproduct" style="border: none;">
+                        <b>@lang('frontend.liseksportir.sortby')</b> <select name="sortbyproduct" id="sortbyproduct" style="border: none;"class="sortproductnya">
                                 <option value="" @if(isset($sortbyproduct)) @if($sortbyproduct == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
                                 <option value="new" @if(isset($sortbyproduct)) @if($sortbyproduct == "new") selected @endif @endif>@lang('frontend.liseksportir.newest')</option>
                                 @if(Auth::guard('eksmp')->user())
@@ -112,7 +112,7 @@
                             </select>
                     </div>
                 </div>
-                <div class="col-1" style="text-align: right;">
+                <div class="col-1 grid_list_btn" style="text-align: right;">
                     <div class="breadcrumb_content">
                         <div class="shop_toolbar_btn">
                             <button data-role="grid_3" type="button" class="active btn-grid-3" data-toggle="tooltip" title="3" id="grid"></button>
@@ -306,9 +306,9 @@
                                     </div>
                                     <?php
                                         //cut prod name
-                                        $num_char = 30;
+                                        $num_char = 29;
                                         $prodn = getProductAttr($pro->id, 'prodname', $lct);
-                                        if(strlen($prodn) > 30){
+                                        if(strlen($prodn) > 29){
                                             $cut_text = substr($prodn, 0, $num_char);
                                             if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
                                                 $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
@@ -389,7 +389,7 @@
                                             <a href="{{url('front_end/list_perusahaan/view/'.$pro->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$companame}}</a>
                                         </span>
                                     </div>
-                                    <div class="product_content list_content">
+                                    <div class="product_content list_content" style="width: 100%;">
                                         <div class="left_caption">
                                             <div class="product_name">
                                                 <h3>
@@ -414,6 +414,16 @@
                                                         $product_desc = $proddesc;
                                                     }
                                                     $product_desc = strip_tags($product_desc, "<br><i><b><u><hr>");
+                                                    $capacitynya = '-';
+                                                    if($pro->capacity != null){
+                                                        if($loc == "ch"){
+                                                            $capacitynya = '库存 '.$pro->capacity.' 件';
+                                                        } else if($loc == 'in'){
+                                                            $capacitynya = $pro->capacity.' dalam persediaan';
+                                                        } else {
+                                                            $capacitynya = $pro->capacity.' in stock';
+                                                        }
+                                                    }
                                                 ?>
                                                 <?php echo $product_desc; ?>
                                             </div>
@@ -422,13 +432,7 @@
                                             <div class="text_available">
                                                 <p>
                                                     @lang('frontend.available'): 
-                                                    @if($loc == "ch")
-                                                        <span>库存{{$pro->capacity}}件</span>
-                                                    @elseif($loc == "in")
-                                                        <span>{{$pro->capacity}} dalam persediaan</span>
-                                                    @else
-                                                        <span>{{$pro->capacity}} in stock</span>
-                                                    @endif
+                                                    <span>{{$capacitynya}}</span>
                                                 </p>
                                             </div>
                                             <div class="price_box">
@@ -497,7 +501,7 @@
         })
 
         $('#list').on('click', function(){
-            $('.product_thumb').css({ "margin-top": "90px", "border-radius": "0px 10px 10px 0px" });
+            $('.product_thumb').css({ "margin-top": "60px", "border-radius": "0px 10px 10px 0px" });
         });
 
         $("#cari_eksportir").keyup(function(){
