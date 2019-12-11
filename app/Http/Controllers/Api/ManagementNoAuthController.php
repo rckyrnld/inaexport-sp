@@ -416,9 +416,10 @@ class ManagementNoAuthController extends Controller
     public function getEvent()
     {
         $research = DB::table('event_detail')
-            ->orderby('id', 'desc')
+            ->leftJoin('contact_person', 'event_detail.id', '=', 'contact_person.id_type')
+            ->orderby('event_detail.id', 'desc')
             ->get();
-
+//        dd($research);
         if (count($research) > 0) {
             $meta = [
                 'code' => '200',
@@ -466,7 +467,12 @@ class ManagementNoAuthController extends Controller
                     "updated_at" => $item->updated_at,
                     "image_2" => $path = ($item->image_2) ? url('uploads/Event/Image/' . $item->id . '/' . $item->image_2) : url('image/noimage.jpg'),
                     "image_3" => $path = ($item->image_3) ? url('uploads/Event/Image/' . $item->id . '/' . $item->image_3) : url('image/noimage.jpg'),
-                    "image_4" => $path = ($item->image_4) ? url('uploads/Event/Image/' . $item->id . '/' . $item->image_4) : url('image/noimage.jpg')
+                    "image_4" => $path = ($item->image_4) ? url('uploads/Event/Image/' . $item->id . '/' . $item->image_4) : url('image/noimage.jpg'),
+                    "name" => $item->name,
+                    "email" => $item->email,
+                    "phone" => $item->phone,
+//                    "type" => $item->type,
+//                    "id_type" => $item->id_type
                 ));
             }
 

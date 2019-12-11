@@ -111,4 +111,47 @@ class ExhibitionController extends Controller
             ]);
         return redirect('eksportir/product_capacity');
     }
+
+    public function indexadmin($id)
+    {
+//        dd($id);
+        $pageTitle = "Exhibition";
+        return view('eksportir.exhibition.indexadmin', compact('pageTitle', 'id'));
+    }
+
+    public function datanyaadmin($id)
+    {
+//        $user = DB::table('itdp_production_capacity')
+//            ->where('id_itdp_profil_eks', '=', $id)
+//            ->get();
+        $user = DB::table('itdp_eks_event_participants')
+            ->where('id_itdp_profil_eks', '=', $id)
+            ->get();
+
+        return \Yajra\DataTables\DataTables::of($user)
+            ->addColumn('action', function ($mjl) {
+                return '
+                <center>
+                <a href="' . route('exhibition.view', $mjl->id) . '" class="btn btn-sm btn-info">
+                    <i class="fa fa-search text-white"></i> View
+                </a>
+                </center>
+                ';
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+    public function loadP(Request $request){
+//        dd("hahaha");
+        if ($request->has('q')) {
+            $cari = $request->q;
+//            dd($cari);
+            $data = DB::table('event_detail')->select('id', 'event_name_en')->where('event_name_en', 'LIKE', '%'.$cari.'%')->get();
+//            dd($data);
+        } else {
+            $data = DB::table('event_detail')->select('id', 'event_name_en')->limit(5)->get();
+        }
+        return response()->json($data);
+    }
 }
