@@ -58,8 +58,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <button type="submit" class="btn btn-danger" style="width: 100%; background-color: #fe0000; font-size: 24px; font-weight: 600;">@lang("button-name.submit")</button>
+                                    <td align="right" colspan="3">
+                                        <button type="submit" class="btn btn-danger" style="width: 120px;
+    background-color: #fe0000;
+    font-size: 21px;
+    font-weight: 600;">@lang("button-name.submit")</button>
                                     </td>
                                 </tr>
                             </table>
