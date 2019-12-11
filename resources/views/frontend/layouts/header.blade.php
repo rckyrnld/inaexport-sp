@@ -226,14 +226,18 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                             			 
                             			  if($sao == 0) {
                             			  ?>
-                            			   <font color="white"> <i class="fa fa-bell-o"></i></font>
+                            			   <!--<font color="white"> <i class="fa fa-bell-o"></i></font> -->
+										   <img src="{{asset('front/assets/icon/in.png')}}" alt="" style="width: 27px;">
                             			<?php 
                                             }else{ 
                                         ?>
                             			<ul class="nav flex-row order-lg-2">
                                             <li class="dropdown notifications-menu d-flex align-items-center">
                                                 <a href="#" class="dropdown-toggles" data-toggle="dropdown">
-                                                    <font color="white"> <i class="fa fa-bell-o"></i></font>
+                                                    <!--<font color="white"> <i class="fa fa-bell-o">  
+														
+													</i></font> -->
+													<img src="{{asset('front/assets/icon/in.png')}}" alt="" style="width: 27px;">
                                                     <span class="label label-warning" style="position: absolute!important;
                                                         color : white!important;
                                                         right: 7px!important;
