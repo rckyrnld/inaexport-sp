@@ -114,7 +114,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-2" style="text-align: left;">
+                <div class="col-3" style="text-align: right;">
                     <div class="breadcrumb_content">
                         <div class="page_amount">
                             <p>
@@ -129,7 +129,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4" style="text-align: left;">
+                <div class="col-3" style="text-align: right;">
                     <div class="breadcrumb_content">
                         <b>@lang('frontend.liseksportir.sortby')</b> <select name="shorteks" id="shorteks" style="border: none;" onchange="sortBy(this.value, '{{$bgn}}')">
                                 <option value="" @if(isset($sortingby)) @if($sortingby == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>

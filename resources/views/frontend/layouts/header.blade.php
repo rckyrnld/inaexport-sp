@@ -226,14 +226,18 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                             			 
                             			  if($sao == 0) {
                             			  ?>
-                            			   <font color="white"> <i class="fa fa-bell-o"></i></font>
+                            			   <!--<font color="white"> <i class="fa fa-bell-o"></i></font> -->
+										   <img src="{{asset('front/assets/icon/in.png')}}" alt="" style="width: 27px;">
                             			<?php 
                                             }else{ 
                                         ?>
                             			<ul class="nav flex-row order-lg-2">
                                             <li class="dropdown notifications-menu d-flex align-items-center">
                                                 <a href="#" class="dropdown-toggles" data-toggle="dropdown">
-                                                    <font color="white"> <i class="fa fa-bell-o"></i></font>
+                                                    <!--<font color="white"> <i class="fa fa-bell-o">  
+														
+													</i></font> -->
+													<img src="{{asset('front/assets/icon/in.png')}}" alt="" style="width: 27px;">
                                                     <span class="label label-warning" style="position: absolute!important;
                                                         color : white!important;
                                                         right: 7px!important;
@@ -335,13 +339,13 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
             <div class="container" style="max-width: 98% !important;">
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-md-6 col-12">
-                        <div class="logo" align="center">
+                        <div class="logo">
                             <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>
                         </div>
                     </div>
                     <div class="col-lg-10 col-md-6 col-12">
                         <div class="middel_right">
-                            <div class="search-container" style="margin-right: 30px !important; margin-bottom: 10px;">
+                            <div class="search-container" style="margin-bottom: 10px;">
                                 <!-- Nav pills -->
                                 <ul class="nav nav-pills" role="tablist" id="tab-me" style="font-size: 14px;">
                                     <li class="nav-item">
@@ -360,7 +364,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                     <div id="products" class="container tab-pane active">
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_product')}}" id="formsprod">
                                             {{ csrf_field() }}
-                                            <div class="search_box" style="width:484px!important;">
+                                            <div class="search_box">
                                                 <?php
                                                     if(isset($search)){
                                                         $cariprod = $search;
@@ -392,7 +396,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                     <div id="eksportir" class="container tab-pane">
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_perusahaan')}}" id="formseksportir">
                                             {{ csrf_field() }}
-                                            <div class="search_box" style="width:484px!important;">
+                                            <div class="search_box">
                                                 <?php
                                                     if(isset($search_eks)){
                                                         $carieks = $search_eks;
@@ -430,7 +434,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                     </div>
                                 </form> -->
                             </div>
-                            <div class="middel_right_info" style="padding-top: 18px; margin-left: 15px;">
+                            <div class="middel_right_info">
                                 <a href="{{url('/front_end/list_product')}}" class="a-custom">
                                     <div class="mini_cart_wrapper" style="padding-right: 15px">
                                         <table style="width: 150px;">
@@ -452,8 +456,8 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                         </table>
                                     </div>
                                 </a>
-								<a href="{{url('front_end/tracking')}}" class="a-custom">
-								<div class="mini_cart_wrapper" style="padding-right: 15px">
+                                <a href="{{url('front_end/tracking')}}" class="a-custom">
+                                <div class="mini_cart_wrapper" style="padding-right: 15px">
                                     <table style="width: 150px;">
                                         <tr>
                                             <td rowspan="2" style="width: 50px">
@@ -472,33 +476,33 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                         </tr>
                                     </table>
                                 </div>
-								</a>
+                                </a>
                                 <div class="header_wishlist">
                                     <table style="width: 150px;">
                                         <tr>
                                             <td rowspan="2" style="width: 50px">
-											@if(Auth::guard('eksmp')->user())
+                                            @if(Auth::guard('eksmp')->user())
                                                 
                                                     @if(Auth::guard('eksmp')->user()->id_role == 3)
-														
-												<?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
-												
-												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
-												<?php }else{ ?>
-												
+                                                        
+                                                <?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
+                                                
+                                                <img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
+                                                <?php }else{ ?>
+                                                
                                                 <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
-												<?php } ?>
+                                                <?php } ?>
                                                     @elseif(Auth::guard('eksmp')->user()->id_role == 2)
-													
+                                                    
                                                  <?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
-												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
-												<?php }else{ ?>
-												
+                                                <img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
+                                                <?php }else{ ?>
+                                                
                                                 <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
-												<?php } ?>
+                                                <?php } ?>
                                                     @endif
-											@else	
-												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
+                                            @else   
+                                                <img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
                                             @endif
                                             </td>
                                             <td style="">
@@ -642,14 +646,19 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
     <!--header area end-->
     <script type="text/javascript">
         $(document).ready(function(){
-            $('.btn-select-lang').on('click', function(){
+            $('html').click(function() {
+                $('.list-lang').css('display', 'none');
+            });
+
+            $('.btn-select-lang').on('click', function(event){
+                event.stopPropagation();
                 var visible = $('.list-lang').css('display');
                 if(visible == 'none'){
                     $('.list-lang').css('display', 'block');
                 } else {
                     $('.list-lang').css('display', 'none');
-                }
-            })
+                }                
+            });
         });
     </script>
     
