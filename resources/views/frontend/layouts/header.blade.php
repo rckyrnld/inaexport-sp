@@ -642,14 +642,19 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
     <!--header area end-->
     <script type="text/javascript">
         $(document).ready(function(){
-            $('.btn-select-lang').on('click', function(){
+            $('html').click(function() {
+                $('.list-lang').css('display', 'none');
+            });
+
+            $('.btn-select-lang').on('click', function(event){
+                event.stopPropagation();
                 var visible = $('.list-lang').css('display');
                 if(visible == 'none'){
                     $('.list-lang').css('display', 'block');
                 } else {
                     $('.list-lang').css('display', 'none');
-                }
-            })
+                }                
+            });
         });
     </script>
     
