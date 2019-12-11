@@ -100,9 +100,12 @@ body {font-family: Arial;}
 									}
 									} ?></center></td>
 									<td><center><?php 
+									if($ruu->id_eksportir == 0 || $ruu->id_eksportir == null){
+										
+									}else{
 									$carieks = DB::select("select * from itdp_company_users where id='".$ruu->id_eksportir."'");
 									foreach($carieks as $eks){ echo $eks->username; }
-									?></center></td>
+									} ?></center></td>
 									
 									
 									<td><center><?php echo $ruu->type_tracking; ?></center></td>

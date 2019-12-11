@@ -226,14 +226,18 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                             			 
                             			  if($sao == 0) {
                             			  ?>
-                            			   <font color="white"> <i class="fa fa-bell-o"></i></font>
+                            			   <!--<font color="white"> <i class="fa fa-bell-o"></i></font> -->
+										   <img src="{{asset('front/assets/icon/in.png')}}" alt="" style="width: 27px;">
                             			<?php 
                                             }else{ 
                                         ?>
                             			<ul class="nav flex-row order-lg-2">
                                             <li class="dropdown notifications-menu d-flex align-items-center">
                                                 <a href="#" class="dropdown-toggles" data-toggle="dropdown">
-                                                    <font color="white"> <i class="fa fa-bell-o"></i></font>
+                                                    <!--<font color="white"> <i class="fa fa-bell-o">  
+														
+													</i></font> -->
+													<img src="{{asset('front/assets/icon/in.png')}}" alt="" style="width: 27px;">
                                                     <span class="label label-warning" style="position: absolute!important;
                                                         color : white!important;
                                                         right: 7px!important;
@@ -336,7 +340,9 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-md-6 col-12">
                         <div class="logo" align="center">
-                            <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>
+                            <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" style="height: 32px!important;
+    width: 100px!important;
+    margin-left: 93px!important;"></a>
                         </div>
                     </div>
                     <div class="col-lg-10 col-md-6 col-12">
