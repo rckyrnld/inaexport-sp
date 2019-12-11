@@ -225,10 +225,11 @@
                         @foreach($product as $pro)
                             <?php
                                 //new or not
-                                if(date('m', strtotime($pro->created_at)) == date('m')){
-                                    $dis = "";
-                                }else{
-                                    $dis = "display: none;";
+                                $dis = "display: none;";
+                                if(date('Y', strtotime($pro->created_at)) == date('Y')){
+                                    if(date('m', strtotime($pro->created_at)) == date('m')){
+                                        $dis = "";
+                                    }
                                 }
 
                                 //category
