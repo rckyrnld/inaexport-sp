@@ -96,6 +96,7 @@
 <script type="text/javascript">
     <?php
         if(isset($jenisnya)){
+        $loc = app()->getLocale(); 
     ?>
         $(document).ready(function () {
             var jenis = "{{$jenisnya}}";
@@ -128,6 +129,32 @@
 
 .bg-yellow, .callout.callout-warning, .alert-warning, .label-warning, .modal-warning .modal-body {
     background-color: #f39c12 !important;
+}
+.list-lang{
+    display: none;
+    position: absolute;
+    transition: all 0.5s ease;
+    margin-top: 3px;
+    border-radius: 5px;
+    left: 0;
+    background-color: #fff;
+    width: 100%;
+    text-align: left;
+    padding: 3px 8px 6px 8px;
+    z-index: 100;
+    background-color: #fff;
+}
+.lang-option > img {
+    height: 16px; 
+    width: 24px; 
+    margin-right: 7px; 
+}
+a.visit-lang:hover, a.visit-lang:hover > .lang-option{
+    text-decoration: none;
+    background-color: #f4f4f4;
+}
+.title-lang{
+    color: black; font-size: 13px;
 }
 </style> 
 </head>
@@ -265,10 +292,35 @@
                                         </ul>
                             			  <?php } ?>
                                     </li>
-                                    <li class="language">
-                                        <a href="{{ url('locale/en') }}"><img width="20px" height="15px" src="{{asset('negara/en.png')}}"></a>&nbsp;
-                                    	<a href="{{ url('locale/in') }}"><img width="20px" height="15px" src="{{asset('negara/in.png')}}"></a>&nbsp;
-                                    	<a href="{{ url('locale/ch') }}"><img width="20px" height="15px" src="{{asset('negara/ch.png')}}"></a>&nbsp;&nbsp;&nbsp;
+                                    <li class="language" style="position: relative; display: inline-block;">
+                                        <div class="lang-select" style="height: 100%;">
+                                            <button class="btn-select-lang" style="border-radius: 5px; background-color: #fff; border: 1px solid #ccc; height: 60%; width: 160px;">
+                                                <img src="{{asset('front/assets/img/Google.png')}}" style="height: 18px; margin:3px;" align="left">
+                                                <span class="title-lang">
+                                                    @if($loc == 'en') Select Language @elseif($loc == 'in') Pilih Bahasa @else 选择语言 @endif
+                                                <i class="fa fa-angle-down" aria-hidden="true" style="padding-left: 8px;"></i></span>
+                                            </button>
+                                            <ul class="list-lang">
+                                                <a class="visit-lang" href="{{ url('locale/en') }}">
+                                                    <li class="lang-option">
+                                                        <img src="{{asset('negara/en.png')}}">
+                                                        <span class="title-lang">English</span>
+                                                    </li>
+                                                </a>
+                                                <a class="visit-lang" href="{{ url('locale/in') }}">
+                                                    <li class="lang-option">
+                                                        <img src="{{asset('negara/in.png')}}">
+                                                        <span class="title-lang">Indonesia</span>
+                                                    </li>
+                                                </a>
+                                                <a class="visit-lang" href="{{ url('locale/ch') }}">
+                                                    <li class="lang-option">
+                                                        <img src="{{asset('negara/ch.png')}}">
+                                                        <span class="title-lang">China</span>
+                                                    </li>
+                                                </a>
+                                            </ul >
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
@@ -588,5 +640,16 @@
 
     </header>
     <!--header area end-->
-
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.btn-select-lang').on('click', function(){
+                var visible = $('.list-lang').css('display');
+                if(visible == 'none'){
+                    $('.list-lang').css('display', 'block');
+                } else {
+                    $('.list-lang').css('display', 'none');
+                }
+            })
+        });
+    </script>
     
