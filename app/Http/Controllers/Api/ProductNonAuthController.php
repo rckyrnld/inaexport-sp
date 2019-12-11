@@ -358,6 +358,8 @@ class ProductNonAuthController extends Controller
         $dataProduka->link_image_3 = $path = ($dataProduka->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_3) : url('image/noimage.jpg');
         $dataProduka->link_image_4 = $path = ($dataProduka->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_4) : url('image/noimage.jpg');
         $dataProduka->name_mst_hscodes = ($dataProduka->id_mst_hscodes) ? DB::table('mst_hscodes')->where('id', $dataProduka->id_mst_hscodes)->first()->desc_eng : "";
+        $dataProduka->product_description_en = ($dataProduka->product_description_en) ? strip_tags($dataProduka->product_description_en) : null;
+//        dd($dataProduka);
 //            $jsonResult[$i]["product_description_en"] = $dataProduk[$i]->product_description_en;
 //            $list_k = array();
 //            $list_k["code_en"] = $dataProduk[$i]->code_en;

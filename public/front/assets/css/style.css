@@ -1745,9 +1745,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   left: 100%;
 }
 .categories_menu_toggle > ul > li:hover > a {
-  background: #fff;
-  font-weight: 700;
-  color: #1a70bb;
+  background: #63b1f1;
+  color: #fff;
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .categories_menu_toggle > ul > li:hover > a {

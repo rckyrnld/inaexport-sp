@@ -61,10 +61,9 @@ class LoginController extends Controller
                     $datas = DB::Table('itdp_profil_imp')
                         ->where('id', '=', $user->id_profil)
                         ->get();
-                }
-                else {
+                } else {
                     $datas = DB::table('itdp_profil_eks')
-                        ->where('id','=', $user->id_profil)
+                        ->where('id', '=', $user->id_profil)
                         ->get();
                 }
                 return $this->sendLoginResponse($request, $datas);

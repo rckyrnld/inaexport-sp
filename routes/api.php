@@ -143,6 +143,7 @@ Route::namespace('Api')->group(function () {
     //register
     Route::post('registerExp', 'ManagementNoAuthController@RegisterExp');
     Route::post('registerImp', 'ManagementNoAuthController@RegisterImp');
+    Route::post('checkEmail', 'ManagementNoAuthController@checkEmail');
 
     //country province
     Route::get('getCountry', 'ManagementNoAuthController@getCountry');
