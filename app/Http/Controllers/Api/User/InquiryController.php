@@ -982,11 +982,11 @@ class InquiryController extends Controller
 
     public function dealing(Request $request)
     {
-        dd($request);
+//        dd($request);
         date_default_timezone_set('Asia/Jakarta');
         $id_inquiry = $request->id_inquiry;
         $status = $request->status;
-        $id_user = $request->id_user;
+//        $id_user = $request->id_user;
         $datenow = date('Y-m-d H:i:s');
         if ($status == 1) {
             $stat = 3;
@@ -994,6 +994,11 @@ class InquiryController extends Controller
             $stat = 4;
         }
         $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+        $id_prods = $inquiry->to;
+        $users = DB::table('csc_product_single')->where('id', $id_prods)->first();
+        $id_user = $users->id_itdp_company_user;
+//        $username = $users->username;
+
         $update = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
             'status' => $stat,
         ]);
