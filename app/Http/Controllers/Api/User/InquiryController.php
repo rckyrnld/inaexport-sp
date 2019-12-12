@@ -982,6 +982,7 @@ class InquiryController extends Controller
 
     public function dealing(Request $request)
     {
+        dd($request);
         date_default_timezone_set('Asia/Jakarta');
         $id_inquiry = $request->id_inquiry;
         $status = $request->status;
