@@ -997,9 +997,9 @@ class InquiryController extends Controller
         $id_user = $users->id_itdp_company_user;
 //        $username = $users->username;
 
-//        $update = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
-//            'status' => $stat,
-//        ]);
+        $update = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
+            'status' => $stat,
+        ]);
         if ($stat == 3) {
             if ($inquiry->type == "admin") {
                 $role = 1;
@@ -1008,16 +1008,16 @@ class InquiryController extends Controller
             } else if ($inquiry->type == "importir") {
                 $role = 3;
             }
-//            $insert = DB::table('csc_transaksi')->insert([
-////                "id_transaksi" => $idnew,
-//                "id_pembuat" => $inquiry->id_pembuat,
-//                "by_role" => $role,
-//                "id_eksportir" => $id_user,
-//                "id_terkait" => $id_inquiry,
-//                "origin" => 1,
-//                "created_at" => $datenow,
-//                "status_transaksi" => 0,
-//            ]);
+            $insert = DB::table('csc_transaksi')->insert([
+//                "id_transaksi" => $idnew,
+                "id_pembuat" => $inquiry->id_pembuat,
+                "by_role" => $role,
+                "id_eksportir" => $id_user,
+                "id_terkait" => $id_inquiry,
+                "origin" => 1,
+                "created_at" => $datenow,
+                "status_transaksi" => 0,
+            ]);
 
             $notif = DB::table('notif')->insert([
                 'dari_nama' => getCompanyName($id_user),
