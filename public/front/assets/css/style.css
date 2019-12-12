@@ -10159,6 +10159,23 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color: #fff;
 }
 
+.hot-type {
+  left: 63%;
+  position: absolute;
+  top: 17px;
+  transform: rotate(90deg);
+  z-index: 7;
+}
+
+.hot-type-content {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: #cd7979;
+  color: #fff;
+}
+
 .shipping_area {
   background-color: #ddeffd;
   padding-top: 20px;

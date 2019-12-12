@@ -226,10 +226,14 @@
                             <?php
                                 //new or not
                                 $dis = "display: none;";
+                                $dis2 = "display: none;";
                                 if(date('Y', strtotime($pro->created_at)) == date('Y')){
                                     if(date('m', strtotime($pro->created_at)) == date('m')){
                                         $dis = "";
                                     }
+                                }
+                                if(in_array($pro->id, $hot_product)){
+                                    $dis2 = "";
                                 }
 
                                 //category
@@ -302,6 +306,17 @@
                                                 BARU
                                             @else
                                                 NEW
+                                            @endif
+                                        </span>
+                                    </div>
+                                    <div class="hot-type" style="{{$dis2}} @if($dis != ''); left: 78% !important; @endif">
+                                        <span class="hot-type-content">
+                                             @if($loc == "ch")
+                                                热
+                                            @elseif($loc == "in")
+                                                HOT
+                                            @else
+                                                HOT
                                             @endif
                                         </span>
                                     </div>
