@@ -71,22 +71,17 @@ class FrontController extends Controller
         $sortbyproduct = NULL;
         if($request->sort_prod != NULL || $request->sort_prod != ""){
             if($request->sort_prod == "new"){
-                $col = "csc_product_single.created_at";
-                $asdes = "DESC";
+                $col = "csc_product_single.created_at DESC NULLS LAST";
             }else if($request->sort_prod == "lowhigh"){
-                $col = "csc_product_single.price_usd";
-                $asdes = "ASC";
+                $col = "csc_product_single.price_usd ASC NULLS LAST";
             }else if($request->sort_prod == "highlow"){
-                $col = "csc_product_single.price_usd";
-                $asdes = "DESC";
+                $col = "csc_product_single.price_usd DESC NULLS LAST";
             }else if($request->sort_prod == "asc"){
-                $col = "csc_product_single.prodname_en";
-                $asdes = "ASC";
+                $col = "csc_product_single.prodname_en ASC NULLS LAST";
             }
             $sortbyproduct = $request->sort_prod;
         }else{
-            $col = "updated_at";
-            $asdes = "DESC";
+            $col = "updated_at DESC NULLS LAST";
             $sortbyproduct = "";
         }
 
@@ -124,8 +119,8 @@ class FrontController extends Controller
                 $getEks = $request->eks_prod;
             }
 
-            $coproduct = $coquery->orderBy($col, $asdes)->count();
-            $product = $query->orderBy($col, $asdes)->paginate(12);
+            $coproduct = $coquery->orderByRaw($col)->count();
+            $product = $query->orderByRaw($col)->paginate(12);
 
             $catActive = NULL;
             $get_id_cat = NULL;
@@ -161,8 +156,8 @@ class FrontController extends Controller
                 $coquery->whereIn('csc_product_single.id_itdp_company_user', $eks);
                 $getEks = $request->eks_prod;
             }
-            $coproduct = $coquery->orderBy($col, $asdes)->count();
-            $product = $query->orderBy($col, $asdes)->paginate(12);
+            $coproduct = $coquery->orderByRaw($col)->count();
+            $product = $query->orderByRaw($col)->paginate(12);
         }
 
         //Data Eksportir/Manufacturer
