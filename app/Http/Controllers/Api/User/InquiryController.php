@@ -1045,7 +1045,7 @@ class InquiryController extends Controller
                 'company' => getCompanyName($id_user),
                 'subjek' => $inquiry->subyek_en
             ];
-            dd($data2);
+//            dd($data2);
             Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
                 $mail->to($data2['email'], $data2['username']);
                 $mail->subject('Inquiry Deal Information');
@@ -1058,7 +1058,7 @@ class InquiryController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = $idnew;
+            $data = '$idnew';
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
