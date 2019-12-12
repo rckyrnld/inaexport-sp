@@ -1033,7 +1033,7 @@ class InquiryController extends Controller
                 $to_role = 4;
                 $url_terkait = 'inquiry_perwakilan/view_detail';
             }
-            $broad = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->first();
+            $broad = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $inquiry)->where('id_itdp_company_users', $id_user)->first();
             //Notif sistem
             $notif = DB::table('notif')->insert([
                 'dari_nama' => getCompanyName($id_user),
