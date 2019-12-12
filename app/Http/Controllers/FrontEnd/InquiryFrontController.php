@@ -298,7 +298,6 @@ class InquiryFrontController extends Controller
             'sender' => $sender,
             'receive' => $receiver,
             'type' => 'importir',
-            'file' => $nama_file1,
             'messages' => $msg,
             'status' => 0,
             'created_at' => $datenow,
