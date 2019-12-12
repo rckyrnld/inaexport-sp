@@ -1032,9 +1032,9 @@ class InquiryController extends Controller
                 'id_terkait' => $id_inquiry
             ]);
 
-            $users = DB::table('itdp_company_users')->where('id', $inquiry->id_pembuat)->first();
-            dd($users);
-            $email = $users->email;
+//            $users = DB::table('itdp_company_users')->where('id', $inquiry->id_pembuat)->first();
+//            dd($users);
+            $email = "riza.ansori@hotmail.com";
             $username = $users->username;
 
             $data2 = [
@@ -1052,7 +1052,7 @@ class InquiryController extends Controller
             });
         }
 
-        if (count($update) > 0) {
+        if (count($data2) > 0) {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
