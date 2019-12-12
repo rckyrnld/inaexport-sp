@@ -353,7 +353,7 @@ class InquiryEksController extends Controller
                     ->orderBy('created_at', 'asc')
                     ->get();
 
-                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
+                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNotNull('file')->count();
 
                 //Read Chat
                 $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('type', $inquiry->type)->where('receive', $id_user)->update([
@@ -368,7 +368,7 @@ class InquiryEksController extends Controller
                     ->orderBy('created_at', 'asc')
                     ->get();    
 
-                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
+                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNotNull('file')->count();
 
                 //Read Chat
                 $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('type', $inquiry->type)->where('receive', $id_user)->update([
@@ -789,7 +789,7 @@ class InquiryEksController extends Controller
                     ->orderBy('created_at', 'asc')
                     ->get();
 
-                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
+                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNotNull('file')->count();
 
                 //Read Chat
                 $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('type', $inquiry->type)->where('receive', $id_user)->update([
@@ -804,7 +804,7 @@ class InquiryEksController extends Controller
                     ->orderBy('created_at', 'asc')
                     ->get();    
 
-                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNull('messages')->count();
+                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNotNull('file')->count();
 
                 //Read Chat
                 $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('type', $inquiry->type)->where('receive', $id_user)->update([
