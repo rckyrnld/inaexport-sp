@@ -287,12 +287,19 @@ class InquiryController extends Controller
             $jsonResult[$i]["prodname"] = $user[$i]->prodname_en;
             $jsonResult[$i]["due_date"] = $user[$i]->due_date;
             $jsonResult[$i]["id_product"] = $user[$i]->id_product;
-            $id_profil = $user[$i]->id_itdp_profil_eks;
-            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
+
+            $id_profil = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_profil;
+//            dd($id_profil);
+            $id_role = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_role;
+//            dd($id_role);
+            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+
+            //            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
             $jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat)->first()->nama_kategori_en;
             $jsonResult[$i]["csc_product_level1_desc"] = ($user[$i]->id_csc_prod_cat_level1) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level1)->first()->nama_kategori_en : null;
             $jsonResult[$i]["csc_product_level2_desc"] = ($user[$i]->id_csc_prod_cat_level2) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level2)->first()->nama_kategori_en : null;
         }
+//        dd($jsonResult);
         if (count($user) > 0) {
             $meta = [
                 'code' => 200,
@@ -976,7 +983,7 @@ class InquiryController extends Controller
                 "id_pembuat" => $inquiry->id_pembuat,
                 "by_role" => $role,
                 "id_eksportir" => $id_user,
-                "id_terkait" => $id_user,
+                "id_terkait" => $id_inquiry,
                 "origin" => 1,
                 "created_at" => $datenow,
                 "status_transaksi" => 0,
