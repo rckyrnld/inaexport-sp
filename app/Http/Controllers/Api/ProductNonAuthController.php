@@ -135,8 +135,8 @@ class ProductNonAuthController extends Controller
             ->where('itdp_company_users.status', '=', 1)
             ->where('csc_product_single.status', 2)
             ->where(function ($query) use ($queryaaa) {
-                $query->where('csc_product_single.prodname_en', 'like', '%' . $queryaaa . '%');
-                $query->Orwhere('csc_product.nama_kategori_en', 'like', '%' . $queryaaa . '%');
+                $query->where('csc_product_single.prodname_en', 'ilike', '%' . $queryaaa . '%');
+                $query->Orwhere('csc_product.nama_kategori_en', 'ilike', '%' . $queryaaa . '%');
             })
             ->select('csc_product_single.id', 'itdp_company_users.id_profil', 'itdp_company_users.id_role', 'csc_product_single.*',
                 'csc_product_single.image_1', 'csc_product_single.product_description_en', 'csc_product_single.image_2', 'csc_product_single.image_3',
