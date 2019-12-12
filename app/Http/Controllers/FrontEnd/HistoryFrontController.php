@@ -222,6 +222,7 @@ class HistoryFrontController extends Controller
         $type = Auth::guard('eksmp')->user()->type;
         $tick = TicketingSupportModel::from('ticketing_support as ts')
             ->where('ts.id_pembuat', $id_user)
+			->orderBy('ts.created_at', 'DESC')
             ->get();
 
         return \Yajra\DataTables\DataTables::of($tick)
