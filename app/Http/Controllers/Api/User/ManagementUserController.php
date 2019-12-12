@@ -183,8 +183,8 @@ class ManagementUserController extends Controller
         //Tinggal Ganti Email1 dengan email kemendag
         //kementerianperdagangan.max@gmail.com
         $data = [
-            'email' => 'ilyasmuhammad97@gmail.com',
-            'email1' => 'kementerianperdagangan.max@gmail.com',
+            'email' => $request->email,
+            'email1' => 'ilyasmuhammad97@gmail.com',
             'username' => $request->name,
             'main_messages' => $request->messages,
             'id' => $id_ticketing
