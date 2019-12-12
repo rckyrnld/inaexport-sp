@@ -1032,10 +1032,15 @@ class InquiryController extends Controller
                 'id_terkait' => $id_inquiry
             ]);
 
-//            $users = DB::table('itdp_company_users')->where('id', $inquiry->id_pembuat)->first();
+            $querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
+            foreach ($querymax as $maxquery) {
+                $maxid = $maxquery->maxid;
+            }
+
+            $usersemail = DB::table('itdp_company_users')->where('id', $inquiry->id_pembuat)->first();
 //            dd($users);
-            $email = "riza.ansori@hotmail.com";
-            $username = "usersusername";
+            $email = $usersemail->email;
+            $username = $usersemail->username;
 
             $data2 = [
                 'email' => $email,
@@ -1058,7 +1063,7 @@ class InquiryController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = '$idnew';
+            $data = $maxid;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
