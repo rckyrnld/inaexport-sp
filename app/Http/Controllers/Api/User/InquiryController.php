@@ -1063,9 +1063,10 @@ class InquiryController extends Controller
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = $maxid;
+            $list_k = array();
+            $list_k["id_transaksi"] = $maxid;
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = $list_k;
             return response($res);
         } else {
             $meta = [
