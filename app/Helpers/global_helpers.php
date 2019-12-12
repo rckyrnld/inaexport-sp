@@ -853,10 +853,24 @@ if (! function_exists('cat_prod_home')) {
 if (! function_exists('hotProduct')) {
     function hotProduct(){
         $hot = [];
-        $data = DB::table('csc_product_single')->orderByRaw('hot desc NULLS LAST')->limit(50)->get();
+        $data = DB::table('csc_product_single')->where('status', 2)->whereNotNull('hot')->orderByRaw('hot desc')->limit(50)->get();
         foreach ($data as $key => $value) {
            array_push($hot, $value->id);
         }
         return $hot;
     }
+}
+
+if (! function_exists('countProductBy')) {
+  function countProductBy($by){
+    $count = 0;
+    if($by == "new"){
+      $data = DB::table('csc_product_single')->where('status', 2)->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->count();
+      $count = $data;
+    }else if($by == "hot"){
+      $data = DB::table('csc_product_single')->where('status', 2)->whereNotNull('hot')->orderByRaw('hot desc')->limit(50)->count();
+      $count = $data;
+    }
+    return $count;
+  }
 }

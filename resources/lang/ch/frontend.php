@@ -145,4 +145,9 @@ return [
         "website" => "网站",
     ],
     "title-services" => "服务",
+    "listprod" => [
+        "highlight" => "突出",
+        "hotprod" => "热销产品",
+        "newarrival" => "新品到货",
+    ],
 ];
