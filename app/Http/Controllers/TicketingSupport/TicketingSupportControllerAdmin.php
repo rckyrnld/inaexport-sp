@@ -29,8 +29,10 @@ class TicketingSupportControllerAdmin extends Controller
 
     public function getData(){
 
-      $tick = TicketingSupportModel::from('ticketing_support as ts')->orderby('id', 'DESC')
-				->get();
+      /*$tick = TicketingSupportModel::from('ticketing_support as ts')->orderby('ts.created_at', 'DESC')
+				->get(); */
+		$tick = DB::select("select ROW_NUMBER() OVER (ORDER BY created_at DESC) AS Row, * from ticketing_support as ts   order by created_at desc ");
+      
 
       return \Yajra\DataTables\DataTables::of($tick)
 					->addColumn('status', function($data){

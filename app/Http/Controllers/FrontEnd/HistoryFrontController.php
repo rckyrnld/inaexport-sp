@@ -222,6 +222,7 @@ class HistoryFrontController extends Controller
         $type = Auth::guard('eksmp')->user()->type;
         $tick = TicketingSupportModel::from('ticketing_support as ts')
             ->where('ts.id_pembuat', $id_user)
+			->orderBy('ts.created_at', 'DESC')
             ->get();
 
         return \Yajra\DataTables\DataTables::of($tick)
@@ -293,8 +294,10 @@ class HistoryFrontController extends Controller
 				$semuacat = "";
 				for($a = 0; $a < ($hitung - 1); $a++){
 					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+					if(count($namaprod) != 0){
 					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
 					$semuacat = $semuacat."- ".$napro."<br>";
+					}
 				}
 				return $semuacat;
             })

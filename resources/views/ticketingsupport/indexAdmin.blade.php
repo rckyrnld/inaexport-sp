@@ -21,6 +21,7 @@
               <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable">
                 <thead class="text-white" style="background-color: #1089ff;">
                   <tr>
+                    <th>No</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Subyek</th>
@@ -46,6 +47,7 @@
             serverSide: true,
             ajax: "{{ route('ticket_support.getData.admin')}}",
             columns: [
+							{data: 'row', name: 'row'},
 							{data: 'name', name: 'name'},
 							{data: 'email', name: 'email'},
               {data: 'subyek', name: 'subyek'},
