@@ -222,6 +222,7 @@ class BRFrontController extends Controller
 	public function br_importir_bc($id)
     {
 		
+		
 		$cariprod = DB::select("select * from csc_buying_request where id='".$id."'");
 		foreach($cariprod as $prodcari) { $rrr = $prodcari->id_csc_prod; $zzz = $prodcari->id_pembuat; }
 		$namacom = DB::select("select * from itdp_company_users where id='".$zzz."'");
