@@ -175,6 +175,22 @@
                     <aside class="sidebar_widget">
                         <div class="widget_inner">
                             <div class="widget_list widget_categories">
+                                <!-- <h2>Highlight</h2> -->
+                                <h2>@lang('frontend.listprod.highlight')</h2>
+                                <ul id="highlightlist">
+                                    <li>
+                                        <input type="checkbox" name="checkhl" value="hotproduct" id="checkhl" class="check_hl">
+                                        <a href="#" class="hover-none">@lang('frontend.listprod.hotprod') ({{countProductBy('hot')}})</a>
+                                        <span class="checkmark"></span>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="checkhl" value="newarrival" id="checkhl" class="check_hl">
+                                        <a href="#" class="hover-none">@lang('frontend.listprod.newarrival') ({{countProductBy('new')}})</a>
+                                        <span class="checkmark"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="widget_list widget_categories">
                                 <h2>@lang('frontend.proddetail.bymanufacture')</h2>
                                 <?php
                                     if($loc == "ch"){
@@ -560,6 +576,31 @@
                 $('#eks_prod').val(isinya);
                 $('#formsprod').submit();
             }
+        });
+
+        $(".check_hl").on('change', function () {
+            if(this.checked){
+                var arrisi = [];
+                $.each($("input[name='checkhl']:checked"), function(){
+                    arrisi.push($(this).val());
+                });
+            }
+
+            console.log(arrisi);
+
+            // if(arrisi.length != 0){
+            //     var isinya = "";
+            //     for (var i = arrisi.length - 1; i >= 0; i--) {
+            //         if(isinya == ""){
+            //             isinya += arrisi[i];
+            //         }else{
+            //             isinya += '|'+arrisi[i];
+            //         }
+            //     }
+            //     // alert(isinya);
+            //     $('#eks_prod').val(isinya);
+            //     $('#formsprod').submit();
+            // }
         });
 
         $('.hover-none').on('click', function (e) {
