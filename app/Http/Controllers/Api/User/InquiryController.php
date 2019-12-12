@@ -135,6 +135,7 @@ class InquiryController extends Controller
 
     public function store(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
 //        dd("ilyas");
         if ($request->id_role == 3) {
             $id_user = $request->id_user;
@@ -360,12 +361,34 @@ class InquiryController extends Controller
 
     public function accept_chat(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id_inquiry = $request->id_inquiry;
         $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
         $users = DB::table('itdp_company_users')->where('id', $data->id_pembuat)->first();
         $email = $users->email;
         $username = $users->username;
+        $id_user = $users->id;
+        $datenow = date('Y-m-d H:i:s');
 
+        if($data->type == "admin"){
+            $rolenya = 1;
+        }else if($data->type == "perwakilan"){
+            $rolenya = 4;
+        }else if($data->type == "importir"){
+            $rolenya = 3;
+        }
+
+        $notif = DB::table('notif')->insert([
+            'dari_nama' => getCompanyName($id_user),
+            'dari_id' => $id_user,
+            'untuk_nama' => getCompanyNameImportir($data->id_pembuat),
+            'untuk_id' => $data->id_pembuat,
+            'keterangan' => 'Exporter '.getCompanyName($id_user).' has joined Inquiry '.$data->subyek_en,
+            'url_terkait' => 'front_end/history',
+            'status_baca' => 0,
+            'waktu' => $datenow,
+            'to_role' => $rolenya,
+        ]);
         //Tinggal Ganti Email1 dengan email kemendag
         $data = [
             'email' => $email,
@@ -411,6 +434,7 @@ class InquiryController extends Controller
 
     public function verifikasi_inquiry(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id_inquiry = $request->id_inquiry;
         $datenow = date('Y-m-d H:i:s');
         $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
@@ -541,6 +565,7 @@ class InquiryController extends Controller
 
     public function sendChatimp(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $datenow = date('Y-m-d H:i:s');
         $id_inquiry = $request->id_inquiry;
         $sender = $request->id_user;
@@ -649,6 +674,7 @@ class InquiryController extends Controller
 
     public function fileChat(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $datenow = date('Y-m-d H:i:s');
         $id_inquiry = $request->id_inquiry;
         $sender = $request->id_user;
@@ -845,6 +871,7 @@ class InquiryController extends Controller
 
     public function sendChatEks(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $datenow = date('Y-m-d H:i:s');
         $id_inquiry = $request->id_inquiry;
         $sender = $request->id_user;
@@ -954,6 +981,7 @@ class InquiryController extends Controller
 
     public function dealing(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id_inquiry = $request->id_inquiry;
         $status = $request->status;
         $id_user = $request->id_user;
