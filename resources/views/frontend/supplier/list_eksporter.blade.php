@@ -133,7 +133,6 @@
                     <div class="breadcrumb_content">
                         <b>@lang('frontend.liseksportir.sortby')</b> <select name="shorteks" id="shorteks" style="border: none;" onchange="sortBy(this.value, '{{$bgn}}')">
                                 <option value="" @if(isset($sortingby)) @if($sortingby == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
-                                <option value="new" @if(isset($sortingby)) @if($sortingby == "new") selected @endif @endif>@lang('frontend.liseksportir.newest')</option>
                                 <option value="asc" @if(isset($sortingby)) @if($sortingby == "asc") selected @endif @endif>@lang('frontend.liseksportir.eksporternm')</option>
                             </select>
                     </div>
@@ -298,7 +297,7 @@
                                                             }  
                                                         }
                                                     ?>
-                                                    <a href="{{url('/front_end/product/'.$p->id)}}" class="list-group-item" style="padding: 0px; margin-bottom: 10px;" title="{{getProductAttr($p->id, 'prodname', $lct)}}">
+                                                    <a href="{{url('/front_end/product/'.$p->id)}}" class="list-group-item" style="padding: 0px; margin-bottom: 10px;" title="{{getProductAttr($p->id, 'prodname', $lct)}}" onclick="GoToProduct('{{$p->id}}', event, this)">
                                                         <table border="0" style="width: 100%;">
                                                             <tr>
                                                                 <td width="30%">
@@ -421,7 +420,7 @@
                                                                 }  
                                                             }
                                                         ?>
-                                                        <a href="{{url('/front_end/product/'.$p->id)}}" class="list-group-item list-me" style="padding: 0px; margin-bottom: 10px;" title="{{getProductAttr($p->id, 'prodname', $lct)}}">
+                                                        <a href="{{url('/front_end/product/'.$p->id)}}" class="list-group-item list-me" style="padding: 0px; margin-bottom: 10px;" title="{{getProductAttr($p->id, 'prodname', $lct)}}" onclick="GoToProduct('{{$p->id}}', event, this)">
                                                             <table border="0" style="width: 100%;">
                                                                 <tr>
                                                                     <td width="30%">
@@ -550,5 +549,21 @@
             $('#fontdrop'+col).removeClass('fa-chevron-up');
             $('#fontdrop'+col).addClass('fa-chevron-down');
         }
+    }
+
+    function GoToProduct(id, e, obj){
+        e.preventDefault();
+        var token = "{{ csrf_token() }}";
+        $.ajax({
+            url: "{{route('product.hot')}}",
+            type: 'post',
+            data: {'_token':token,id:id},
+            dataType: 'json',
+            success:function(response){
+                if(response == 'ok'){
+                    location.href = obj.href;
+                }
+            }
+        });
     }
 </script>

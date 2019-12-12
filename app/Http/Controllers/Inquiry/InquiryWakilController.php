@@ -763,7 +763,6 @@ class InquiryWakilController extends Controller
             'sender' => $sender,
             'receive' => $receiver,
             'type' => 'perwakilan',
-            'file' => $nama_file1,
             'messages' => $msg,
             'status' => 0,
             'created_at' => $datenow,
@@ -778,7 +777,7 @@ class InquiryWakilController extends Controller
             Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
         }
 
-        $savefile = DB::table('csc_inquiry_br')->where('id', $save)->update([
+        $savefile = DB::table('csc_chatting_inquiry')->where('id', $save)->update([
             'file' => $nama_file1,
         ]);
 

@@ -441,14 +441,14 @@
                                             }
                                         ?>
                                         <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 10px 10px 0px 0px;">
-                                                <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
+                                                <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}" onclick="GoToProduct('{{$p->id}}', event, this)"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
                                         </div>
                                         <div class="product_name grid_name" style="padding: 0px 13px 0px 13px;">
                                             <p class="manufacture_product">
                                                 <a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}" class="href-category">{{$category}}</a>
                                             </p>
                                             <h3>
-                                                <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name"><b>{{$prodnama}}</b></a>
+                                                <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name" onclick="GoToProduct('{{$p->id}}', event, this)"><b>{{$prodnama}}</b></a>
                                             </h3>
                                             <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
                                                 @if(Auth::guard('eksmp')->user())
@@ -825,6 +825,22 @@
             number = number.replace( rgx, '$1' + '.' + '$2' );
         }
         return number;
+    }
+
+    function GoToProduct(id, e, obj){
+        e.preventDefault();
+        var token = "{{ csrf_token() }}";
+        $.ajax({
+            url: "{{route('product.hot')}}",
+            type: 'post',
+            data: {'_token':token,id:id},
+            dataType: 'json',
+            success:function(response){
+                if(response == 'ok'){
+                    location.href = obj.href;
+                }
+            }
+        });
     }
 
     function formatAmount( number ) {

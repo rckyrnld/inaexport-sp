@@ -53,6 +53,7 @@ class FrontController extends Controller
 
     public function list_product(Request $request)
     {
+        $hot_product = hotProduct();
         //Current Page
         if($request->page){
             $pagenow = $request->page;
@@ -71,22 +72,17 @@ class FrontController extends Controller
         $sortbyproduct = NULL;
         if($request->sort_prod != NULL || $request->sort_prod != ""){
             if($request->sort_prod == "new"){
-                $col = "csc_product_single.created_at";
-                $asdes = "DESC";
+                $col = "csc_product_single.created_at DESC NULLS LAST";
             }else if($request->sort_prod == "lowhigh"){
-                $col = "csc_product_single.price_usd";
-                $asdes = "ASC";
+                $col = "csc_product_single.price_usd ASC NULLS LAST";
             }else if($request->sort_prod == "highlow"){
-                $col = "csc_product_single.price_usd";
-                $asdes = "DESC";
+                $col = "csc_product_single.price_usd DESC NULLS LAST";
             }else if($request->sort_prod == "asc"){
-                $col = "csc_product_single.prodname_en";
-                $asdes = "ASC";
+                $col = "csc_product_single.prodname_en ASC NULLS LAST";
             }
             $sortbyproduct = $request->sort_prod;
         }else{
-            $col = "updated_at";
-            $asdes = "DESC";
+            $col = "updated_at DESC NULLS LAST";
             $sortbyproduct = "";
         }
 
@@ -124,8 +120,8 @@ class FrontController extends Controller
                 $getEks = $request->eks_prod;
             }
 
-            $coproduct = $coquery->orderBy($col, $asdes)->count();
-            $product = $query->orderBy($col, $asdes)->paginate(12);
+            $coproduct = $coquery->orderByRaw($col)->count();
+            $product = $query->orderByRaw($col)->paginate(12);
 
             $catActive = NULL;
             $get_id_cat = NULL;
@@ -161,8 +157,8 @@ class FrontController extends Controller
                 $coquery->whereIn('csc_product_single.id_itdp_company_user', $eks);
                 $getEks = $request->eks_prod;
             }
-            $coproduct = $coquery->orderBy($col, $asdes)->count();
-            $product = $query->orderBy($col, $asdes)->paginate(12);
+            $coproduct = $coquery->orderByRaw($col)->count();
+            $product = $query->orderByRaw($col)->paginate(12);
         }
 
         //Data Eksportir/Manufacturer
@@ -177,7 +173,7 @@ class FrontController extends Controller
         );
 
         // return view('frontend.product.all_product', compact('product', 'catprod'));
-        return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow'));
+        return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow','hot_product'));
 
     }
 
@@ -293,6 +289,7 @@ class FrontController extends Controller
 
     public function product_category($id)
     {
+        $hot_product = hotProduct();
         $loc = app()->getLocale();
         if($loc == "ch"){
             $lct = "chn";
@@ -360,7 +357,7 @@ class FrontController extends Controller
             ->orderBy('csc_product_single.prodname_en', 'ASC')
             ->count();
 
-        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat'));
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat', 'hot_product'));
     }
 
     public function view_product($id)
@@ -648,5 +645,18 @@ class FrontController extends Controller
     public function about()
     {
         return view('frontend.about');
+    }
+
+    public function hot(Request $req){
+        $data = DB::table('csc_product_single')->where('id', $req->id)->first();
+        $data = DB::table('csc_product_single')->where('id', $req->id)->update([
+            'hot' => $data->hot+1
+        ]);
+
+        $return = 'no';
+        if($data){
+            $return = 'ok';
+        }
+        return json_encode($return);
     }
 }
