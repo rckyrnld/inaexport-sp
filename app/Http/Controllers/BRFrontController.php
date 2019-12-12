@@ -460,6 +460,32 @@ class BRFrontController extends Controller
 		
 	}
 	
+	public function br_importir_update(Request $request)
+    {
+		$id_br = $request->id_br;
+		$ch1 = str_replace(".","",$request->tp);
+		$ch2 = str_replace(",",".",$ch1);
+		
+		$kumpulcat = $request->category;
+		$kumpulcat2 = $request->category.",";
+		$h = explode(",",$request->category);
+		// echo $kumpulcat2;die();
+		if(empty($request->file('image'))){
+			$file = "";
+		}else{
+			$file = $request->file('image')->getClientOriginalName();
+			$destinationPath = public_path() . "/uploads/buy_request";
+			$request->file('image')->move($destinationPath, $file);
+		}
+		$insert = DB::select("update csc_buying_request set subyek='".$request->subyek."',valid='".$request->valid."',id_mst_country='".$request->country."'
+								,shipping='".$request->ship."', spec='".$request->spec."', files='".$file."', eo ='".$request->eo."', neo='".$request->neo."'
+								,tp='".$ch2."',ntp='".$request->ntp."',id_csc_prod='".$kumpulcat2."' where id='".$request->id_br."'");
+		
+		
+		
+		echo "<a href='".url('br_importir_bc/'.$id_br)."' class='btn btn-warning'><font color='white'>Broadcast</font></a>";
+	
+	}	
 	public function br_importir_save(Request $request)
     {	
 		$ch1 = str_replace(".","",$request->tp);

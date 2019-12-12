@@ -129,6 +129,7 @@ Route::get('/br_konfirm2/{id}/{id2}', 'BRFrontController@br_konfirm2');
 Route::get('/refreshchat/{id}/{id2}', 'BRFrontController@refreshchat');
 Route::get('/refreshchat2/{id}/{id2}', 'BRFrontController@refreshchat2');
 Route::post('/br_importir_save', 'BRFrontController@br_importir_save');
+Route::post('/br_importir_update', 'BRFrontController@br_importir_update');
 Route::post('/br_importir_next', 'BRFrontController@br_importir_next');
 Route::post('/uploadpop', 'BRFrontController@uploadpop');
 Route::post('/uploadpop2', 'BRFrontController@uploadpop2');
