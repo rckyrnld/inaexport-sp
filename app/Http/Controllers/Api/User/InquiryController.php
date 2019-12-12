@@ -1035,7 +1035,7 @@ class InquiryController extends Controller
 //            $users = DB::table('itdp_company_users')->where('id', $inquiry->id_pembuat)->first();
 //            dd($users);
             $email = "riza.ansori@hotmail.com";
-            $username = $users->username;
+            $username = "usersusername";
 
             $data2 = [
                 'email' => $email,
