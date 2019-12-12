@@ -371,11 +371,11 @@ class InquiryController extends Controller
         $id_user = $users->id;
         $datenow = date('Y-m-d H:i:s');
 
-        if($data->type == "admin"){
+        if ($data->type == "admin") {
             $rolenya = 1;
-        }else if($data->type == "perwakilan"){
+        } else if ($data->type == "perwakilan") {
             $rolenya = 4;
-        }else if($data->type == "importir"){
+        } else if ($data->type == "importir") {
             $rolenya = 3;
         }
 
@@ -384,7 +384,7 @@ class InquiryController extends Controller
             'dari_id' => $id_user,
             'untuk_nama' => getCompanyNameImportir($data->id_pembuat),
             'untuk_id' => $data->id_pembuat,
-            'keterangan' => 'Exporter '.getCompanyName($id_user).' has joined Inquiry '.$data->subyek_en,
+            'keterangan' => 'Exporter ' . getCompanyName($id_user) . ' has joined Inquiry ' . $data->subyek_en,
             'url_terkait' => 'front_end/history',
             'status_baca' => 0,
             'waktu' => $datenow,
@@ -982,11 +982,9 @@ class InquiryController extends Controller
 
     public function dealing(Request $request)
     {
-//        dd($request);
         date_default_timezone_set('Asia/Jakarta');
         $id_inquiry = $request->id_inquiry;
         $status = $request->status;
-//        $id_user = $request->id_user;
         $datenow = date('Y-m-d H:i:s');
         if ($status == 1) {
             $stat = 3;
@@ -1003,9 +1001,6 @@ class InquiryController extends Controller
             'status' => $stat,
         ]);
         if ($stat == 3) {
-            $idn = DB::table('csc_transaksi')->max('id_transaksi');
-            $idnew = $idn + 1;
-
             if ($inquiry->type == "admin") {
                 $role = 1;
             } else if ($inquiry->type == "perwakilan") {
@@ -1023,43 +1018,28 @@ class InquiryController extends Controller
                 "created_at" => $datenow,
                 "status_transaksi" => 0,
             ]);
-            $untuk_nama = "";
-            if ($inquiry->type == "admin") {
-                $untuk_nama = getAdminName($inquiry->id_pembuat);
-                $to_role = 1;
-                $url_terkait = 'inquiry_admin/view_detail';
-            } else if ($inquiry->type == "perwakilan") {
-                $untuk_nama = getPerwakilanName($inquiry->id_pembuat);
-                $to_role = 4;
-                $url_terkait = 'inquiry_perwakilan/view_detail';
-            }
-            $broad = DB::table('csc_inquiry_broadcast')
-                ->where('id_inquiry', $id_inquiry)
-                ->where('id_itdp_company_users', $id_user)
-                ->first();
-            //Notif sistem
+
             $notif = DB::table('notif')->insert([
                 'dari_nama' => getCompanyName($id_user),
                 'dari_id' => $id_user,
-                'untuk_nama' => $untuk_nama,
+                'untuk_nama' => getCompanyNameImportir($inquiry->id_pembuat),
                 'untuk_id' => $inquiry->id_pembuat,
                 'keterangan' => 'Inquiry with subject ' . $inquiry->subyek_en . ' has been Deal by Exporter ' . getCompanyName($id_user),
-                'url_terkait' => $url_terkait,
+                'url_terkait' => 'front_end/view_inquiry',
                 'status_baca' => 0,
                 'waktu' => $datenow,
-                'to_role' => $to_role,
-                'id_terkait' => $broad->id
+                'to_role' => 3,
+                'id_terkait' => $id_inquiry
             ]);
 
-            $users = DB::table('itdp_admin_users')->where('id', $inquiry->id_pembuat)->first();
+            $users = DB::table('itdp_company_users')->where('id', $inquiry->id_pembuat)->first();
             $email = $users->email;
-            $username = $users->name;
-            //Tinggal Ganti Email1 dengan email kemendag
+            $username = $users->username;
             $data2 = [
                 'email' => $email,
                 'username' => $username,
                 'type' => $inquiry->type,
-                'penerima' => $untuk_nama,
+                'penerima' => getCompanyNameImportir($inquiry->id_pembuat),
                 'company' => getCompanyName($id_user),
                 'subjek' => $inquiry->subyek_en
             ];
