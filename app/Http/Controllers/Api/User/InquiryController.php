@@ -52,7 +52,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["subyek_en"] = $user[$i]->subyek_en;
             $jsonResult[$i]["subyek_in"] = $user[$i]->subyek_in;
             $jsonResult[$i]["subyek_chn"] = $user[$i]->subyek_chn;
-            $jsonResult[$i]["to"] = $user[$i]->to;
+            $jsonResult[$i]["to"] = $user[$i]->id_itdp_company_user;
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["date"] = $user[$i]->date;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
@@ -261,6 +261,7 @@ class InquiryController extends Controller
 //            ->where('csc_inquiry_br.status', 1)
             ->orderBy('csc_inquiry_br.created_at', 'DESC')
             ->get();
+//        dd($user);
         $jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
             $jsonResult[$i]["id"] = $user[$i]->id;
@@ -279,7 +280,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["subyek_en"] = $user[$i]->subyek_en;
             $jsonResult[$i]["subyek_in"] = $user[$i]->subyek_in;
             $jsonResult[$i]["subyek_chn"] = $user[$i]->subyek_chn;
-            $jsonResult[$i]["to"] = $user[$i]->to;
+            $jsonResult[$i]["to"] = $user[$i]->id_pembuat;
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["date"] = $user[$i]->date;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
