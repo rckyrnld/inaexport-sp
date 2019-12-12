@@ -191,7 +191,7 @@ class InquiryController extends Controller
                 'subyek_en' => $request->subject,
                 'subyek_in' => $request->subject,
                 'subyek_chn' => $request->subject,
-                'to' => $dtproduct->id_itdp_company_user,
+                'to' => $id_product,
                 'file' => $nama_file1,
                 'status' => 1,
                 'date' => $datenow,
@@ -261,7 +261,7 @@ class InquiryController extends Controller
 //            ->where('csc_inquiry_br.status', 1)
             ->orderBy('csc_inquiry_br.created_at', 'DESC')
             ->get();
-        dd($user);
+//        dd($user);
         $jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
             $jsonResult[$i]["id"] = $user[$i]->id;
