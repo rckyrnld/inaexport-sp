@@ -184,7 +184,7 @@ class ManagementUserController extends Controller
         //kementerianperdagangan.max@gmail.com
         $data = [
             'email' => $request->email,
-            'email1' => 'ilyasmuhammad97@gmail.com',
+            'email1' => 'kementerianperdagangan.max@gmail.com',
             'username' => $request->name,
             'main_messages' => $request->messages,
             'id' => $id_ticketing
@@ -197,7 +197,7 @@ class ManagementUserController extends Controller
 		");
 
         Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
-            $mail->to($data['email'], $data['username']);
+            $mail->to($data['email1'], $data['username']);
             $mail->subject('Requesting Ticketing Support');
         });
         if (count($store) > 0) {
