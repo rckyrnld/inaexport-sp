@@ -133,7 +133,6 @@
                     <div class="breadcrumb_content">
                         <b>@lang('frontend.liseksportir.sortby')</b> <select name="shorteks" id="shorteks" style="border: none;" onchange="sortBy(this.value, '{{$bgn}}')">
                                 <option value="" @if(isset($sortingby)) @if($sortingby == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
-                                <option value="new" @if(isset($sortingby)) @if($sortingby == "new") selected @endif @endif>@lang('frontend.liseksportir.newest')</option>
                                 <option value="asc" @if(isset($sortingby)) @if($sortingby == "asc") selected @endif @endif>@lang('frontend.liseksportir.eksporternm')</option>
                             </select>
                     </div>

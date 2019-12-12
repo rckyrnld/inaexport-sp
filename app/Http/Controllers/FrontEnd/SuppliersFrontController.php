@@ -50,11 +50,9 @@ class SuppliersFrontController extends Controller
         // Data eksporter
         if($request->sorteks){
             if($request->sorteks == "new"){
-                $col = "itdp_company_users.created_at";
-                $urut = "DESC";
+                $col = "itdp_company_users.created_at DESC NULLS LAST";
             }else if($request->sorteks == "asc"){
-                $col = "itdp_profil_eks.company";
-                $urut = "ASC";
+                $col = "itdp_profil_eks.company ASC NULLS LAST";
             }
             if($request->cat_eks == NULL){
                 if($request->cari_eksportir){
@@ -65,7 +63,7 @@ class SuppliersFrontController extends Controller
                                 ->where('itdp_company_users.id_role', 2)
                                 ->where('itdp_company_users.status', 1)
                                 ->where('itdp_profil_eks.company', 'ILIKE', '%'.$search_eks.'%')
-                                ->orderBy($col, $urut)
+                                ->orderByRaw($col)
                                 ->paginate(12);
 
                     $coeksporter = DB::table('itdp_company_users')
@@ -74,7 +72,7 @@ class SuppliersFrontController extends Controller
                                 ->where('itdp_company_users.id_role', 2)
                                 ->where('itdp_company_users.status', 1)
                                 ->where('itdp_profil_eks.company', 'ILIKE', '%'.$search_eks.'%')
-                                ->orderBy($col, $urut)
+                                ->orderByRaw($col)
                                 ->count();
                 }else{
                     $search_eks = NULL;
@@ -83,7 +81,7 @@ class SuppliersFrontController extends Controller
                                 ->select('itdp_profil_eks.*', 'itdp_company_users.email', 'itdp_company_users.status as status_company', 'itdp_company_users.type', 'itdp_company_users.id_role', 'itdp_company_users.id as id_user', 'itdp_company_users.foto_profil')
                                 ->where('itdp_company_users.id_role', 2)
                                 ->where('itdp_company_users.status', 1)
-                                ->orderBy($col, $urut)
+                                ->orderByRaw($col)
                                 ->paginate(12);
 
                     $coeksporter = DB::table('itdp_company_users')
@@ -91,7 +89,7 @@ class SuppliersFrontController extends Controller
                                 ->select('itdp_profil_eks.*', 'itdp_company_users.email', 'itdp_company_users.status as status_company', 'itdp_company_users.type', 'itdp_company_users.id_role', 'itdp_company_users.id as id_user', 'itdp_company_users.foto_profil')
                                 ->where('itdp_company_users.id_role', 2)
                                 ->where('itdp_company_users.status', 1)
-                                ->orderBy($col, $urut)
+                                ->orderByRaw($col)
                                 ->count();
                 }
                 $catActive = NULL;
@@ -115,8 +113,8 @@ class SuppliersFrontController extends Controller
                     $search_eks = "";
                 }
 
-                $eksporter = $this->getQueryCategory('data', $pisah, $request->lctnya, $request->cari_eksportir, $col, $urut);
-                $coeksporter = $this->getQueryCategory('count', $pisah, $request->locnya, $request->cari_eksportir, $col, $urut);
+                $eksporter = $this->getQueryCategory('data', $pisah, $request->lctnya, $request->cari_eksportir, $col);
+                $coeksporter = $this->getQueryCategory('count', $pisah, $request->locnya, $request->cari_eksportir, $col);
             }
 
             $sortingby = $request->sorteks;
@@ -407,11 +405,9 @@ class SuppliersFrontController extends Controller
 
         if($request->sortekscat){
             if($request->sortekscat == "new"){
-                $col = "itdp_company_users.created_at";
-                $urut = "DESC";
+                $col = "itdp_company_users.created_at DESC NULLS LAST";
             }else if($request->sortekscat == "asc"){
-                $col = "itdp_profil_eks.company";
-                $urut = "ASC";
+                $col = "itdp_profil_eks.company ASC NULLS LAST";
             }
             $eksporter = DB::table('itdp_company_users')
                         ->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
@@ -419,7 +415,7 @@ class SuppliersFrontController extends Controller
                         ->where('itdp_company_users.id_role', 2)
                         ->where('itdp_company_users.status', 1)
                         ->whereIn('itdp_company_users.id', $array)
-                        ->orderBy($col, $urut)
+                        ->orderByRaw($col)
                         ->paginate(12);
 
             $coeksporter = DB::table('itdp_company_users')
@@ -428,7 +424,7 @@ class SuppliersFrontController extends Controller
                         ->where('itdp_company_users.id_role', 2)
                         ->where('itdp_company_users.status', 1)
                         ->whereIn('itdp_company_users.id', $array)
-                        ->orderBy($col, $urut)
+                        ->orderByRaw($col)
                         ->count();
 
             $sortingby = $request->sortekscat;
@@ -497,20 +493,18 @@ class SuppliersFrontController extends Controller
         //get service
         if($request->shortsrveks){
             if($request->shortsrveks == "new"){
-              $col = "created_at";
-              $urut = "DESC";
+              $col = "created_at DESC NULLS LAST";
               $service = DB::table('itdp_service_eks')
                         ->where('id_itdp_profil_eks', $data->id)
                         ->where('status', 2)
-                        ->orderBy($col, $urut)
+                        ->orderByRaw($col)
                         ->get();
             }else if($request->shortsrveks == "asc"){
-              $col = "nama_".$lcts;  
-              $urut = "ASC";
+              $col = "nama_".$lcts." ASC NULLS LAST";
               $service = DB::table('itdp_service_eks')
                         ->where('id_itdp_profil_eks', $data->id)
                         ->where('status', 2)
-                        ->orderBy($col, $urut)
+                        ->orderByRaw($col)
                         ->get();
             }else{
                 $service = DB::table('itdp_service_eks')
