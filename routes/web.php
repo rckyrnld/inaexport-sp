@@ -92,6 +92,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/profile/', 'ImporterController@profile')->name('profile');
     Route::post('/profile/update/', 'ImporterController@update')->name('profile.update');
     Route::post('/profile/contact_update/', 'ImporterController@contact_update')->name('profile.contact_update');
+    Route::post('/product/hot/', 'FrontController@hot')->name('product.hot');
     Route::get('/front_end/test', function () {
         return view('frontend.contoh.content_home');
     });
