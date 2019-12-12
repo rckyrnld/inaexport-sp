@@ -181,13 +181,20 @@ class ManagementUserController extends Controller
         $id_ticketing = $store->id;
 
         //Tinggal Ganti Email1 dengan email kemendag
+        //kementerianperdagangan.max@gmail.com
         $data = [
             'email' => $request->email,
-            'email1' => 'yossandiimran02@gmail.com',
+            'email1' => 'kementerianperdagangan.max@gmail.com',
             'username' => $request->name,
             'main_messages' => $request->messages,
             'id' => $id_ticketing
         ];
+
+        $ket = "Ticketing was created by " . $request->name;
+        $ket2 = "You was create ticketing !";
+        $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+			('1','" . $request->name . "','" . $request->id_user . "','Super Admin','1','" . $ket . "','admin/ticketing/chatview','" . $id_ticketing . "','" . Date('Y-m-d H:m:s') . "','0')
+		");
 
         Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
             $mail->to($data['email1'], $data['username']);

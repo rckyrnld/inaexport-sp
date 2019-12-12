@@ -12,5 +12,7 @@ class TransaksiInBR extends Model
     
     protected $guarded = [];
 
-	protected $fillable = ['id_pembuat','by_role','id_eksportir','id_terkait','origin','type_tracking','no_tracking','created_at','status_transaksi','eo','neo','tp','ntp','total'];    
+	protected $fillable = ['id_pembuat','by_role','id_eksportir','id_terkait','origin','type_tracking','no_tracking','created_at','status_transaksi','eo','neo','tp','ntp','total']; 
+
+	public $timestamps = false;
 }
