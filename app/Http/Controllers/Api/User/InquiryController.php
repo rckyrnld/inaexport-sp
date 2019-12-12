@@ -354,25 +354,25 @@ class InquiryController extends Controller
     public function accept_chat(Request $request)
     {
         $id_inquiry = $request->id_inquiry;
-//        $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
-//        $users = DB::table('itdp_company_users')->where('id', $data->id_pembuat)->first();
-//        $email = $users->email;
-//        $username = $users->username;
-//
-//        //Tinggal Ganti Email1 dengan email kemendag
-//        $data = [
-//            'email' => $email,
-//            'username' => $username,
-//            'type' => "importir",
-//            'company' => getCompanyNameImportir($data->id_pembuat),
-//            'dari' => "Eksportir"
-//        ];
-//
-//        Mail::send('inquiry.mail.sendToPembuat', $data, function ($mail) use ($data) {
-//            $mail->to($data['email'], $data['username']);
-//            $mail->subject('Inquiry Information');
-//        });
-//
+        $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+        $users = DB::table('itdp_company_users')->where('id', $data->id_pembuat)->first();
+        $email = $users->email;
+        $username = $users->username;
+
+        //Tinggal Ganti Email1 dengan email kemendag
+        $data = [
+            'email' => $email,
+            'username' => $username,
+            'type' => "importir",
+            'company' => getCompanyNameImportir($data->id_pembuat),
+            'dari' => "Eksportir"
+        ];
+
+        Mail::send('inquiry.mail.sendToPembuat', $data, function ($mail) use ($data) {
+            $mail->to($data['email'], $data['username']);
+            $mail->subject('Inquiry Information');
+        });
+
         $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
             'status' => 0,
         ]);
@@ -583,6 +583,38 @@ class InquiryController extends Controller
             $jsonResult[$i]["ext"] = $extension;
 
         }
+        $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+        //Notif sistem
+        $notif = DB::table('notif')->insert([
+            'dari_nama' => getCompanyNameImportir($sender),
+            'dari_id' => $sender,
+            'untuk_nama' => getCompanyName($receiver),
+            'untuk_id' => $receiver,
+            'keterangan' => 'New Message from ' . getCompanyNameImportir($sender) . ' about Inquiry ' . $data->subyek_en,
+            'url_terkait' => 'inquiry/chatting',
+            'status_baca' => 0,
+            'waktu' => $datenow,
+            'to_role' => 2,
+            'id_terkait' => $id_inquiry
+        ]);
+
+        $users = DB::table('itdp_company_users')->where('id', $receiver)->first();
+        $email = $users->email;
+        $username = $users->username;
+        //Tinggal Ganti Email1 dengan email kemendag
+        $data2 = [
+            'email' => $email,
+            'username' => $username,
+            'type' => 'importir',
+            'sender' => getCompanyNameImportir($sender),
+            'receiver' => getCompanyName($receiver),
+            'subjek' => $data->subyek_en
+        ];
+
+        Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+            $mail->to($data2['email'], $data2['username']);
+            $mail->subject('Inquiry Chatting Information');
+        });
 
         if (count($save) > 0) {
 //            $meta = [
@@ -669,6 +701,37 @@ class InquiryController extends Controller
             $jsonResult[$i]["ext"] = $extension;
 
         }
+        $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+        $notif = DB::table('notif')->insert([
+            'dari_nama' => getCompanyNameImportir($sender),
+            'dari_id' => $sender,
+            'untuk_nama' => getCompanyName($receiver),
+            'untuk_id' => $receiver,
+            'keterangan' => 'New Message from ' . getCompanyNameImportir($sender) . ' about Inquiry ' . $data->subyek_en,
+            'url_terkait' => 'inquiry/chatting',
+            'status_baca' => 0,
+            'waktu' => $datenow,
+            'to_role' => 2,
+            'id_terkait' => $id_inquiry
+        ]);
+
+        $users = DB::table('itdp_company_users')->where('id', $receiver)->first();
+        $email = $users->email;
+        $username = $users->username;
+        //Tinggal Ganti Email1 dengan email kemendag
+        $data2 = [
+            'email' => $email,
+            'username' => $username,
+            'type' => 'importir',
+            'sender' => getCompanyNameImportir($sender),
+            'receiver' => getCompanyName($receiver),
+            'subjek' => $data->subyek_en
+        ];
+
+        Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+            $mail->to($data2['email'], $data2['username']);
+            $mail->subject('Inquiry Chatting Information');
+        });
 
         if (count($save) > 0) {
             $meta = [
@@ -825,6 +888,38 @@ class InquiryController extends Controller
             $jsonResult[$i]["ext"] = $extension;
 
         }
+        $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+        //Notif sistem
+        $notif = DB::table('notif')->insert([
+            'dari_nama' => getCompanyName($sender),
+            'dari_id' => $sender,
+            'untuk_nama' => getCompanyNameImportir($receiver),
+            'untuk_id' => $receiver,
+            'keterangan' => 'New Message from ' . getCompanyName($sender) . ' about Inquiry ' . $data->subyek_en,
+            'url_terkait' => 'front_end/chat_inquiry',
+            'status_baca' => 0,
+            'waktu' => $datenow,
+            'to_role' => 3,
+            'id_terkait' => $id_inquiry
+        ]);
+
+        $users = DB::table('itdp_company_users')->where('id', $receiver)->first();
+        $email = $users->email;
+        $username = $users->username;
+        //Tinggal Ganti Email1 dengan email kemendag
+        $data = [
+            'email' => $email,
+            'username' => $username,
+            'type' => $type,
+            'sender' => getCompanyName($sender),
+            'receiver' => getCompanyNameImportir($receiver),
+            'subjek' => $data->subyek_en
+        ];
+
+        Mail::send('inquiry.mail.sendChat', $data, function ($mail) use ($data) {
+            $mail->to($data['email'], $data['username']);
+            $mail->subject('Inquiry Chatting Information');
+        });
 
         if (count($save) > 0) {
             $meta = [
@@ -886,6 +981,48 @@ class InquiryController extends Controller
                 "created_at" => $datenow,
                 "status_transaksi" => 0,
             ]);
+            $untuk_nama = "";
+            if ($inquiry->type == "admin") {
+                $untuk_nama = getAdminName($inquiry->id_pembuat);
+                $to_role = 1;
+                $url_terkait = 'inquiry_admin/view_detail';
+            } else if ($inquiry->type == "perwakilan") {
+                $untuk_nama = getPerwakilanName($inquiry->id_pembuat);
+                $to_role = 4;
+                $url_terkait = 'inquiry_perwakilan/view_detail';
+            }
+            $broad = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->first();
+            //Notif sistem
+            $notif = DB::table('notif')->insert([
+                'dari_nama' => getCompanyName($id_user),
+                'dari_id' => $id_user,
+                'untuk_nama' => $untuk_nama,
+                'untuk_id' => $inquiry->id_pembuat,
+                'keterangan' => 'Inquiry with subject ' . $inquiry->subyek_en . ' has been Deal by Exporter ' . getCompanyName($id_user),
+                'url_terkait' => $url_terkait,
+                'status_baca' => 0,
+                'waktu' => $datenow,
+                'to_role' => $to_role,
+                'id_terkait' => $broad->id
+            ]);
+
+            $users = DB::table('itdp_admin_users')->where('id', $inquiry->id_pembuat)->first();
+            $email = $users->email;
+            $username = $users->name;
+            //Tinggal Ganti Email1 dengan email kemendag
+            $data2 = [
+                'email' => $email,
+                'username' => $username,
+                'type' => $inquiry->type,
+                'penerima' => $untuk_nama,
+                'company' => getCompanyName($id_user),
+                'subjek' => $inquiry->subyek_en
+            ];
+
+            Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
+                $mail->to($data2['email'], $data2['username']);
+                $mail->subject('Inquiry Deal Information');
+            });
         }
 
         if (count($update) > 0) {
