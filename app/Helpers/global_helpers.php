@@ -849,3 +849,14 @@ if (! function_exists('cat_prod_home')) {
         return $data->id_product;
     }
 }
+
+if (! function_exists('hotProduct')) {
+    function hotProduct(){
+        $hot = [];
+        $data = DB::table('csc_product_single')->orderByRaw('hot desc NULLS LAST')->limit(50)->get();
+        foreach ($data as $key => $value) {
+           array_push($hot, $value->id);
+        }
+        return $hot;
+    }
+}

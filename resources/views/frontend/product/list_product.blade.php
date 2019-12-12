@@ -347,7 +347,7 @@
                                         }
                                     ?>
                                     <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 10px 10px 0px 0px;">
-                                        <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
+                                        <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}" onclick="GoToProduct('{{$pro->id}}', event, this)"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
                                         <!-- <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
                                     </div>
                                     <div class="product_name grid_name" style="padding: 0px 13px 0px 13px;">
@@ -355,7 +355,7 @@
                                             <a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}" class="href-category">{{$category}}</a>
                                         </p>
                                         <h3>
-                                            <a href="{{url('front_end/product/'.$pro->id)}}" title="{{$prodn}}" class="href-name"><b>{{$prodnama}}</b></a>
+                                            <a href="{{url('front_end/product/'.$pro->id)}}" title="{{$prodn}}" class="href-name" onclick="GoToProduct('{{$pro->id}}', event, this)"><b>{{$prodnama}}</b></a>
                                         </h3>
                                         <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
                                             @if(Auth::guard('eksmp')->user())
@@ -394,7 +394,7 @@
                                         <div class="left_caption">
                                             <div class="product_name">
                                                 <h3>
-                                                    <a href="{{url('front_end/product/'.$pro->id)}}" title="{{$prodn}}" class="href-name" style="font-size: 15px !important;"><b>{{$prodn}}</b></a>
+                                                    <a href="{{url('front_end/product/'.$pro->id)}}" title="{{$prodn}}" class="href-name" style="font-size: 15px !important;" onclick="GoToProduct('{{$pro->id}}', event, this)"><b>{{$prodn}}</b></a>
                                                 </h3>
                                                 <h3>
                                                     <a href="{{url('front_end/list_perusahaan/view/'.$pro->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">by</span>&nbsp;&nbsp;{{$compname}}</a>
@@ -560,5 +560,21 @@
             $('#fontdrop'+col).removeClass('fa-chevron-up');
             $('#fontdrop'+col).addClass('fa-chevron-down');
         }
+    }
+
+    function GoToProduct(id, e, obj){
+        e.preventDefault();
+        var token = "{{ csrf_token() }}";
+        $.ajax({
+            url: "{{route('product.hot')}}",
+            type: 'post',
+            data: {'_token':token,id:id},
+            dataType: 'json',
+            success:function(response){
+                if(response == 'ok'){
+                    location.href = obj.href;
+                }
+            }
+        });
     }
 </script>

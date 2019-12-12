@@ -53,6 +53,7 @@ class FrontController extends Controller
 
     public function list_product(Request $request)
     {
+        $hot_product = hotProduct();
         //Current Page
         if($request->page){
             $pagenow = $request->page;
@@ -172,7 +173,7 @@ class FrontController extends Controller
         );
 
         // return view('frontend.product.all_product', compact('product', 'catprod'));
-        return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow'));
+        return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow','hot_product'));
 
     }
 
@@ -288,6 +289,7 @@ class FrontController extends Controller
 
     public function product_category($id)
     {
+        $hot_product = hotProduct();
         $loc = app()->getLocale();
         if($loc == "ch"){
             $lct = "chn";
@@ -355,7 +357,7 @@ class FrontController extends Controller
             ->orderBy('csc_product_single.prodname_en', 'ASC')
             ->count();
 
-        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat'));
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat', 'hot_product'));
     }
 
     public function view_product($id)
@@ -643,5 +645,18 @@ class FrontController extends Controller
     public function about()
     {
         return view('frontend.about');
+    }
+
+    public function hot(Request $req){
+        $data = DB::table('csc_product_single')->where('id', $req->id)->first();
+        $data = DB::table('csc_product_single')->where('id', $req->id)->update([
+            'hot' => $data->hot+1
+        ]);
+
+        $return = 'no';
+        if($data){
+            $return = 'ok';
+        }
+        return json_encode($return);
     }
 }
