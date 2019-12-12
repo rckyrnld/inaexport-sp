@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Mail;
+use App\Models\TransaksiInBR;
 
 class InquiryEksController extends Controller
 {
@@ -758,7 +759,7 @@ class InquiryEksController extends Controller
             }else if($inquiry->type == "importir"){
                 $role = 3;
             }
-            $insert = DB::table('csc_transaksi')->insertGetId([
+            $insert = TransaksiInBR::create([
                 "id_pembuat" => $inquiry->id_pembuat,
                 "by_role" => $role,
                 "id_eksportir" => $id_user,
@@ -767,7 +768,7 @@ class InquiryEksController extends Controller
                 "created_at" => $datenow,
                 "status_transaksi" => 0,
             ]);
-            return redirect('/input_transaksi/'.$insert);
+            return redirect('/input_transaksi/'.$insert->id_transaksi);
         }else{
             return redirect('/inquiry');
         }

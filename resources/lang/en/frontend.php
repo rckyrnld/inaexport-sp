@@ -144,4 +144,9 @@ return [
         "website" => "Website",
     ],
     "title-services" => "Services",
+    "listprod" => [
+        "highlight" => "Highlight",
+        "hotprod" => "Hot Products",
+        "newarrival" => "New Arrival",
+    ],
 ];
