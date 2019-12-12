@@ -466,8 +466,9 @@ class BRFrontController extends Controller
 		$ch2 = str_replace(",",".",$ch1);
 		
 		$kumpulcat = $request->category;
+		$kumpulcat2 = $request->category.",";
 		$h = explode(",",$request->category);
-		
+		// echo $kumpulcat2;die();
 		if(empty($request->file('image'))){
 			$file = "";
 		}else{
@@ -480,7 +481,7 @@ class BRFrontController extends Controller
 			,eo,neo,tp,ntp,by_role,id_pembuat,date,id_csc_prod) values
 			('".$request->subyek."','".$request->valid."','".$request->country."','".$request->city."','".$h[0]."'
 			,'0','0','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
-			,'".$ch2."','".$request->ntp."','3','".Auth::guard('eksmp')->user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat."')");
+			,'".$ch2."','".$request->ntp."','3','".Auth::guard('eksmp')->user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat2."')");
 		
 		$carimax = DB::select("select max(id) as maxid from csc_buying_request ");
 		foreach($carimax as $cm){
