@@ -526,36 +526,78 @@ class BuyingreqController extends Controller
         $data3 = "";
         $data4 = "";
         $data5 = "";
-        $caribrsl = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
+//        $caribrsl = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
+        $caribrsl = DB::table('csc_buying_request_join')
+            ->where('id', '=', $id)
+            ->get();
         foreach ($caribrsl as $val1) {
-            $data1 = $val1->id_eks;
+            $data1 = $val1->id_eks; //id eksportir
             $data2 = $val1->id_br;
         }
-        $caribrs2 = DB::select("select * from csc_buying_request where id='" . $data2 . "'");
+
+        $getusernameeks = DB::table('itdp_company_users')
+            ->where('id', '=', $data1)
+            ->first()->username;
+        $getemaileks = DB::table('itdp_company_users')
+            ->where('id', '=', $data1)
+            ->first()->email;
+
+        $caribrs2 = DB::table('csc_buying_request')
+            ->where('id', '=', $data2)
+            ->get();
         foreach ($caribrs2 as $val2) {
             $data3 = $val2->id_pembuat;
             $data5 = $val2->by_role;
         }
-        $caribrs3 = DB::select("select * from itdp_company_users where id='" . $data3 . "'");
+
+        $caribrs3 = DB::table('itdp_company_users')
+            ->where('id', '=', $data3)
+            ->get();
         foreach ($caribrs3 as $val3) {
             $data4 = $val3->email;
+            $id_user_importir = $val3->id;
         }
 
+//        dd($caribrs2);
 
-        $ket = $request->username . " Join to your Buying Request!";
-        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('3','Eksportir','" . $request->id_user . "','Importir','" . $data3 . "','" . $ket . "','br_importir_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
-		");
+        $ket = 'Exporter ' . $getusernameeks . " Join to your Buying Request!";
+//        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('3',getCompanyName($data1),'" . $request->id_user . "','Importir','" . $data3 . "','" . $ket . "','br_importir_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
+//		");
+        $notif = DB::table('notif')->insert([
+            'dari_nama' => getCompanyName($data1),
+            'dari_id' => $data1,
+            'untuk_nama' => getCompanyNameImportir($data3),
+            'untuk_id' => $data3,
+            'keterangan' => $ket,
+            'url_terkait' => 'br_importir_lc',
+            'status_baca' => 0,
+            'waktu' => Date('Y-m-d H:m:s'),
+            'to_role' => '3',
+            'id_terkait' => $data2
+        ]);
 
-        $ket2 = $request->username . " Join to Buying Request!";
-        $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_pw_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
-		");
+        $ket2 = $getusernameeks . " Join to Buying Request!";
+//        $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_pw_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
+//		");
+        $notif = DB::table('notif')->insert([
+            'dari_nama' => getCompanyName($data1),
+            'dari_id' => $data1,
+            'untuk_nama' => 'Super Admin',
+            'untuk_id' => '1',
+            'keterangan' => $ket2,
+            'url_terkait' => 'br_pw_lc',
+            'status_baca' => 0,
+            'waktu' => Date('Y-m-d H:m:s'),
+            'to_role' => '1',
+            'id_terkait' => $data2
+        ]);
         if ($data5 == 3) {
             $data = [
                 'email' => "",
                 'email1' => $data4,
-                'username' => $request->username,
+                'username' => $getusernameeks,
                 'main_messages' => "",
                 'id' => $data2
             ];
@@ -568,10 +610,11 @@ class BuyingreqController extends Controller
 
         $data22 = [
             'email' => "",
-            'email1' => $request->email,
+            'email1' => $getemaileks,
             'username' => "",
-            'main_messages' => $request->username,
-            'id' => $id];
+            'main_messages' => $getusernameeks,
+            'id' => $id
+        ];
 
         Mail::send('UM.user.sendbrjoin2', $data22, function ($mail) use ($data22) {
             $mail->to($data22['email1'], $data22['username']);
@@ -581,7 +624,7 @@ class BuyingreqController extends Controller
         $data33 = [
             'email' => "",
             'email1' => "kementerianperdagangan.max@gmail.com",
-            'username' => $request->username,
+            'username' => $getusernameeks,
             'main_messages' => "",
             'id' => $data2
         ];
@@ -589,7 +632,12 @@ class BuyingreqController extends Controller
             $mail->to($data33['email1'], $data33['username']);
             $mail->subject('Eksportir Join to Buying Request');
         });
-        $update = DB::select("update csc_buying_request_join set status_join='1' where id='" . $id . "' ");
+//        $update = DB::select("update csc_buying_request_join set status_join='1' where id='" . $id . "' ");
+        $update = DB::table('csc_buying_request_join')
+            ->where('id', $id)
+            ->update([
+                'status_join' => '1',
+                ]);
         if ($update) {
 
             $meta = [
@@ -647,42 +695,67 @@ class BuyingreqController extends Controller
         $id = $request->idb;
         $id2 = $request->id_br;
 
-        $crv = DB::select("select * from csc_buying_request where id='" . $id2 . "'");
+        $crv = DB::table('csc_buying_request')
+            ->where('id', '=', $id2)
+            ->get();
         foreach ($crv as $cr) {
             $vld = $cr->valid;
+            $data3 = $cr->id_pembuat;
         }
+
         $dy = $vld . " day";
         $besok = date('Y-m-d', strtotime($dy, strtotime(date("Y-m-d"))));
 
-        $caribrsl = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
+        $caribrsl = DB::table('csc_buying_request_join')
+            ->where('id', '=', $id)
+            ->get();
         foreach ($caribrsl as $val1) {
             $data1 = $val1->id_eks;
             $data2 = $val1->id_br;
         }
+        $getusernameimp = DB::table('itdp_company_users')
+            ->where('id', '=', $data3)
+            ->first()->username;
 
-        $caribrs2 = DB::select("select * from csc_buying_request where id='" . $data2 . "'");
-        foreach ($caribrs2 as $val2) {
-            $data3 = $val2->id_pembuat;
-        }
-        $caribrs3 = DB::select("select * from itdp_company_users where id='" . $data1 . "'");
+        $getemaileks = DB::table('itdp_company_users')
+            ->where('id', '=', $data3)
+            ->first()->email;
+
+        $caribrs3 = DB::table('itdp_company_users')
+            ->where('id', '=', $data1)
+            ->get();
         foreach ($caribrs3 as $val3) {
-            $data4 = $val3->email;
+            $data4 = $val3->email; //email eksportir
         }
-//
-        $ket = $request->username . " Verified Buying Request!";
-        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('2','Importir','" . $request->id_user . "','Eksportir','" . $data1 . "','" . $ket . "','br_chat','" . $id . "','" . Date('Y-m-d H:m:s') . "','0')
-		");
+//        dd($getemaileks);
 
-        $ket2 = $request->username . " Verified Buying Request!";
+        $ket = $getusernameimp . " Verified Buying Request!";
+//        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('2','Importir','" . $request->id_user . "','Eksportir','" . $data1 . "','" . $ket . "','br_chat','" . $id . "','" . Date('Y-m-d H:m:s') . "','0')
+//		");
+
+        $notif = DB::table('notif')->insert([
+            'dari_nama' => 'Importir',
+            'dari_id' => $data3,
+            'untuk_nama' => 'Eksportir',
+            'untuk_id' => $data1,
+            'keterangan' => $ket,
+            'url_terkait' => 'br_chat',
+            'status_baca' => 0,
+            'waktu' => Date('Y-m-d H:m:s'),
+            'to_role' => '2',
+            'id_terkait' => $id
+        ]);
+
+        $ket2 = $getusernameimp . " Verified Buying Request!";
         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Importir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_pw_lc','" . $id2 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('1','Importir','" . $data3 . "','Super Admin','1','" . $ket2 . "','br_pw_lc','" . $id2 . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
         $data = [
             'email' => "",
             'email1' => $data4,
-            'username' => $request->username,
+            'username' => $getusernameimp,
             'main_messages' => "",
             'id' => $id
         ];
@@ -692,9 +765,9 @@ class BuyingreqController extends Controller
         });
         $data22 = [
             'email' => "",
-            'email1' => $request->email,
-            'username' => $request->username,
-            'main_messages' => $request->username,
+            'email1' => $getemaileks,
+            'username' => $getusernameimp,
+            'main_messages' => $getusernameimp,
             'id' => $id,
             'id2' => $id2
         ];
@@ -707,8 +780,8 @@ class BuyingreqController extends Controller
         $data33 = [
             'email' => "",
             'email1' => "kementerianperdagangan.max@gmail.com",
-            'username' => $request->username,
-            'main_messages' => $request->username,
+            'username' => $getusernameimp,
+            'main_messages' => $getusernameimp,
             'id' => $id,
             'id2' => $id2
         ];
@@ -817,6 +890,7 @@ class BuyingreqController extends Controller
         $request->file('filez')->move($destinationPath, $file);
         date_default_timezone_set('Asia/Jakarta');
 
+
         $insert = DB::table('csc_buying_request_chat')->insertGetId([
                 'id_br' => $id2,
                 'pesan' => $a,
@@ -907,21 +981,21 @@ class BuyingreqController extends Controller
         }
 
         if ($id3 == 2) {
-            $ket = "Eksportir " . $request->username . " Respond Chat Buying Request !";
+            $ket = "Eksportir " . $id5 . " Respond Chat Buying Request !";
             $it = $id2 . "/" . $id6;
             $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('3','Eksportir','" . $request->id_user . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
+		('3','Eksportir','" . $id4 . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
-            $ket2 = "Eksportir " . $request->username . " Respond Chat Buying Request !";
+            $ket2 = "Eksportir " . $id5 . " Respond Chat Buying Request !";
             $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('1','Eksportir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
             $data = [
                 'email' => "",
                 'email1' => $data2,
-                'username' => $request->username,
+                'username' => $id5,
                 'main_messages' => "",
                 'id' => $it
             ];
@@ -932,8 +1006,8 @@ class BuyingreqController extends Controller
 
             $data22 = [
                 'email' => "",
-                'email1' => $request->email,
-                'username' => $request->username,
+                'email1' => $data2,
+                'username' => $id5,
                 'main_messages' => "",
                 'id' => $id6
             ];
@@ -945,7 +1019,7 @@ class BuyingreqController extends Controller
             $data33 = [
                 'email' => "",
                 'email1' => "kementerianperdagangan.max@gmail.com",
-                'username' => $request->username,
+                'username' => $id5,
                 'main_messages' => "",
                 'id' => $id6
             ];
@@ -964,21 +1038,21 @@ class BuyingreqController extends Controller
             foreach ($cari4 as $aja4) {
                 $data4 = $aja4->email;
             }
-            $ket = "Importir " . $request->username . " Respond Chat Buying Request !";
+            $ket = "Importir " . $id5 . " Respond Chat Buying Request !";
             $it = $id2 . "/" . $id6;
             $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('2','Importir','" . $request->id_user . "','Eksportir','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('2','Importir','" . $id4 . "','Eksportir','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
-            $ket2 = "Importir " . $request->username . " Respond Chat Buying Request !";
+            $ket2 = "Importir " .$id5 . " Respond Chat Buying Request !";
             $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Importir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('1','Importir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
             $data = [
                 'email' => "",
                 'email1' => $data4,
-                'username' => $request->username,
+                'username' => $id5,
                 'main_messages' => "",
                 'id' => $id6
             ];
@@ -989,8 +1063,8 @@ class BuyingreqController extends Controller
 
             $data22 = [
                 'email' => "",
-                'email1' => $request->email,
-                'username' => $request->username,
+                'email1' => $data2,
+                'username' => $id5,
                 'main_messages' => "",
                 'id' => $it
             ];
@@ -1002,7 +1076,7 @@ class BuyingreqController extends Controller
             $data33 = [
                 'email' => "",
                 'email1' => "kementerianperdagangan.max@gmail.com",
-                'username' => $request->username,
+                'username' => $id5,
                 'main_messages' => "",
                 'id' => $id6
             ];
@@ -1035,28 +1109,29 @@ class BuyingreqController extends Controller
         $id2 = $request->id_br;
         $id3 = $request->id_user;
 
-        $cari1 = DB::select("select id_pembuat,by_role from csc_buying_request where id='".$id2."'");
-        foreach($cari1 as $aja1){
+        $cari1 = DB::select("select id_pembuat,by_role from csc_buying_request where id='" . $id2 . "'");
+        foreach ($cari1 as $aja1) {
             $data1 = $aja1->id_pembuat;
             $data3 = $aja1->by_role;
         }
-        $cari2 = DB::select("select email from itdp_company_users where id='".$data1."'");
-        foreach($cari2 as $aja2){
+        $cari2 = DB::select("select email from itdp_company_users where id='" . $data1 . "'");
+        foreach ($cari2 as $aja2) {
             $data2 = $aja2->email;
         }
 
-        $ket = $request->username." Deal Buying Request!";
-        $it = $id2."/".$id;
+        $ket = $request->username . " Deal Buying Request!";
+        $it = $id2 . "/" . $id;
         $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('3','Eksportir','".$request->id_user."','Importir','".$data1."','".$ket."','br_importir_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+		('3','Eksportir','" . $request->id_user . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
-        $ket2 = $request->username." Deal Buying Request!";
+        $ket2 = $request->username . " Deal Buying Request!";
         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Eksportir','".$request->id_user."','Super Admin','1','".$ket2."','br_pw_chat','".$id."','".Date('Y-m-d H:m:s')."','0')
+		('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
-        if($data3 == 3){
+
+        if ($data3 == 3) {
             $data = [
                 'email' => "",
                 'email1' => $data2,
@@ -1145,6 +1220,7 @@ class BuyingreqController extends Controller
 
     public function simpanchatbr(Request $request)
     {
+//        dd($request);
         $a = $request->pesan;
         $id2 = $request->id_br;
         $id3 = $request->id_role;
@@ -1152,6 +1228,9 @@ class BuyingreqController extends Controller
         $id5 = $request->username;
         $id6 = $request->idb;
         date_default_timezone_set('Asia/Jakarta');
+//        $getusername = DB::table('itdp_company_users')
+//            ->where('id', '=', $id5)
+//            ->first()->username;
 
         $insert = DB::table('csc_buying_request_chat')->insertGetId([
                 'id_br' => $id2,
@@ -1206,21 +1285,21 @@ class BuyingreqController extends Controller
         }
 
         if ($id3 == 2) {
-            $ket = "Eksportir " . $request->username . " Respond Chat Buying Request !";
+            $ket = "Eksportir " . $id5 . " Respond Chat Buying Request !";
             $it = $id2 . "/" . $id6;
             $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('3','Eksportir','" . $request->id_user . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
+		('3','Eksportir','" . $id4 . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
-            $ket2 = "Eksportir " . $request->username . " Respond Chat Buying Request !";
+            $ket2 = "Eksportir " . $id5 . " Respond Chat Buying Request !";
             $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('1','Eksportir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
             $data = [
                 'email' => "",
                 'email1' => $data2,
-                'username' => $request->username,
+                'username' => $id5,
                 'main_messages' => "",
                 'id' => $it
             ];
@@ -1231,8 +1310,8 @@ class BuyingreqController extends Controller
 
             $data22 = [
                 'email' => "",
-                'email1' => $request->email,
-                'username' => $request->username,
+                'email1' => $data2,
+                'username' => $id5,
                 'main_messages' => "",
                 'id' => $id6
             ];
@@ -1244,7 +1323,7 @@ class BuyingreqController extends Controller
             $data33 = [
                 'email' => "",
                 'email1' => "kementerianperdagangan.max@gmail.com",
-                'username' => $request->username,
+                'username' => $id5,
                 'main_messages' => "",
                 'id' => $id6
             ];
@@ -1263,21 +1342,21 @@ class BuyingreqController extends Controller
             foreach ($cari4 as $aja4) {
                 $data4 = $aja4->email;
             }
-            $ket = "Importir " . $request->username . " Respond Chat Buying Request !";
+            $ket = "Importir " . $id5 . " Respond Chat Buying Request !";
             $it = $id2 . "/" . $id6;
             $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('2','Importir','" . $request->id_user . "','Eksportir','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('2','Importir','" . $id4 . "','Eksportir','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
-            $ket2 = "Importir " . $request->username . " Respond Chat Buying Request !";
+            $ket2 = "Importir " . $id5 . " Respond Chat Buying Request !";
             $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Importir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('1','Importir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
             $data = [
                 'email' => "",
                 'email1' => $data4,
-                'username' => $request->username,
+                'username' => $id5,
                 'main_messages' => "",
                 'id' => $id6
             ];
@@ -1288,8 +1367,8 @@ class BuyingreqController extends Controller
 
             $data22 = [
                 'email' => "",
-                'email1' => $request->email,
-                'username' => $request->username,
+                'email1' => $data2,
+                'username' => $id5,
                 'main_messages' => "",
                 'id' => $it
             ];
@@ -1301,7 +1380,7 @@ class BuyingreqController extends Controller
             $data33 = [
                 'email' => "",
                 'email1' => "kementerianperdagangan.max@gmail.com",
-                'username' => $request->username,
+                'username' => $id5,
                 'main_messages' => "",
                 'id' => $id6
             ];
