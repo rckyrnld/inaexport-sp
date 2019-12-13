@@ -30,7 +30,10 @@ class MasterCountryController extends Controller
               ->get();
 
       return \Yajra\DataTables\DataTables::of($country)
-          ->addColumn('action', function ($data) {
+          ->addColumn('country', function ($data) {
+              return '<div align="left">'.$data->country.'</div>';
+          })
+		  ->addColumn('action', function ($data) {
               return '
               <center>
               <div class="btn-group">
@@ -41,7 +44,7 @@ class MasterCountryController extends Controller
               </center>
               ';
           })
-          ->rawColumns(['action'])
+          ->rawColumns(['action','country'])
           ->make(true);
     }
 

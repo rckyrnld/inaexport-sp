@@ -6,7 +6,7 @@
       <div class="box">
       	 <div class="box-divider m-0"></div>
       	 <div class="box-header bg-info">
-      	 	<h4 class="text-white">Hakakses Menu</h4>
+      	 	<h4 class="text-white">Hak Akses Menu</h4>
       	 </div>
       	 <div class="box-body">
       	  {!! Form::open(['url' => '/permission_update/'.$id, 'class' => 'form-horizontal', 'files' => true]) !!}
@@ -23,7 +23,7 @@
                                     <th><center>No</center></th>
                                     <th><center>Nama Menu</center></th>
                                     <th><center>Url</center></th>
-                                    <th><center>Ururtan</center></th>
+                                    <th><center>Urutan</center></th>
                                     <th><center>Icon</center></th>
                                     <th width="15%"><center>Read</center></th> 
                                 </tr>
@@ -41,7 +41,7 @@
 
                                     <tr>
                                         <td><center>{{ $no++ }}</center></td>
-                                        <td><b>{{ $res->menu_name }}</b>
+                                        <td><div align="left"><b>{{ $res->menu_name }}</b></b>
                                        
                                         </td>
                                         <td>{{ $res->url }}</td>
@@ -64,7 +64,7 @@
                                 ?>
                                 <tr>
                                     <td></td>
-                                    <td>{{ $restwo->menu_name }}
+                                    <td><div align="left">{{ $restwo->menu_name }}</div>
 
 
                                     </td>
