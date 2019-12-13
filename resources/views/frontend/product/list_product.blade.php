@@ -177,14 +177,34 @@
                             <div class="widget_list widget_categories">
                                 <!-- <h2>Highlight</h2> -->
                                 <h2>@lang('frontend.listprod.highlight')</h2>
+                                <?php
+                                    $checkedna = '';
+                                    $checkedhot = '';
+                                    if(isset($hl_sort)){
+                                        if (strstr($hl_sort, '|')){
+                                            $hlist = explode('|', $hl_sort);
+                                        }else{
+                                            $hlist = [$hl_sort];
+                                        }
+
+                                        for ($k=0; $k < count($hlist); $k++) { 
+                                            if($hlist[$k] == "new"){
+                                                $checkedna = 'checked="true"';
+                                            }
+                                            if($hlist[$k] == "hot"){
+                                                $checkedhot = 'checked="true"';
+                                            }
+                                        }
+                                    }
+                                ?>
                                 <ul id="highlightlist">
                                     <li>
-                                        <input type="checkbox" name="checkhl" value="hotproduct" id="checkhl" class="check_hl">
+                                        <input type="checkbox" name="checkhl" value="hot" id="checkhl" class="check_hl" onclick="getProduct(this.value, '{{$hl_sort}}', this.checked)" {{$checkedhot}}>
                                         <a href="#" class="hover-none">@lang('frontend.listprod.hotprod') ({{countProductBy('hot')}})</a>
                                         <span class="checkmark"></span>
                                     </li>
                                     <li>
-                                        <input type="checkbox" name="checkhl" value="newarrival" id="checkhl" class="check_hl">
+                                        <input type="checkbox" name="checkhl" value="new" id="checkhl" class="check_hl" onclick="getProduct(this.value, '{{$hl_sort}}', this.checked)" {{$checkedna}}>
                                         <a href="#" class="hover-none">@lang('frontend.listprod.newarrival') ({{countProductBy('new')}})</a>
                                         <span class="checkmark"></span>
                                     </li>
@@ -578,30 +598,28 @@
             }
         });
 
-        $(".check_hl").on('change', function () {
-            if(this.checked){
-                var arrisi = [];
-                $.each($("input[name='checkhl']:checked"), function(){
-                    arrisi.push($(this).val());
-                });
-            }
+        // $(".check_hl").on('change', function () {
+        //     if(this.checked){
+        //         var arrisi = [];
+        //         $.each($("input[name='checkhl']:checked"), function(){
+        //             arrisi.push($(this).val());
+        //         });
+        //     }
 
-            console.log(arrisi);
+        //     if(arrisi.length != 0){
+        //         var isinya = "";
+        //         for (var i = arrisi.length - 1; i >= 0; i--) {
+        //             if(isinya == ""){
+        //                 isinya += arrisi[i];
+        //             }else{
+        //                 isinya += '|'+arrisi[i];
+        //             }
+        //         }
 
-            // if(arrisi.length != 0){
-            //     var isinya = "";
-            //     for (var i = arrisi.length - 1; i >= 0; i--) {
-            //         if(isinya == ""){
-            //             isinya += arrisi[i];
-            //         }else{
-            //             isinya += '|'+arrisi[i];
-            //         }
-            //     }
-            //     // alert(isinya);
-            //     $('#eks_prod').val(isinya);
-            //     $('#formsprod').submit();
-            // }
-        });
+        //         $('#hl_prod').val(isinya);
+        //         $('#formsprod').submit();
+        //     }
+        // });
 
         $('.hover-none').on('click', function (e) {
             e.preventDefault();
@@ -632,5 +650,28 @@
                 }
             }
         });
+    }
+
+    function getProduct(val, isi, checked) {
+        var isinya = "";
+        if(checked){
+            if(isi == ""){
+                isinya = val;
+            }else{
+                isinya = isi+'|'+val; 
+            }
+        }else{
+            if(isi == ""){
+                isinya = val;
+            }else{
+                var isibar = isi.split('|');
+                var isin = $.inArray(val, isibar);
+                isibar.splice(isin, 1);
+                isinya = isibar[0]; 
+            }
+        }
+
+        $('#hl_prod').val(isinya);
+        $('#formsprod').submit();
     }
 </script>
