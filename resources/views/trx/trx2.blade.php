@@ -469,7 +469,7 @@ $cr = explode(',',$p3->id_csc_prod);
 			<button style="width:33%;" onclick="getyou(1)" type="submit" class="btn btn-info">Submit</button>
 			<button style="width:30%;" onclick="getyou(0)" type="submit" class="btn btn-warning"><font color="white">Draft</font></button>
 			<?php  } ?>
-			<a style="width:33%;" href="{{url('trx_list')}}" class="btn btn-danger">Cancel</a></center>
+			<a style="width:33%;" href="{{url('trx_list')}}" class="btn btn-danger">Back</a></center>
 		</div>
 	</div>
 	</div>

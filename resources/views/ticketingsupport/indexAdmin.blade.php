@@ -22,12 +22,17 @@
                 <thead class="text-white" style="background-color: #1089ff;">
                   <tr>
                     <th>No</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Subyek</th>
-                    <th>Massages</th>
+					<th>Date</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Subject</th>
+					<th>Messages</th>
+                    
+                    
+                    
+                    
                     <th>Status</th>
-                    <th>Created At</th>
+                    
                     <th width="20%">Action</th>
                   </tr>
                 </thead>
@@ -48,12 +53,13 @@
             ajax: "{{ route('ticket_support.getData.admin')}}",
             columns: [
 							{data: 'row', name: 'row'},
+							{data: 'created_at', name: 'created_at'},
 							{data: 'name', name: 'name'},
 							{data: 'email', name: 'email'},
               {data: 'subyek', name: 'subyek'},
 							{data: 'main_messages', name: 'main_messages'},
               {data: 'status', name: 'status'},
-              {data: 'created_at', name: 'created_at'},
+              
               {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });

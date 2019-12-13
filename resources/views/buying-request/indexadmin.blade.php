@@ -85,20 +85,22 @@ body {font-family: Arial;}
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Subyek</center>
-                                    </th>
-                                    <th>
-                                        <center>Duration</center>
-                                    </th>
-                                    <th>
-                                        <center>Date</center>
+                                        <center>Subject</center>
                                     </th>
 									<th>
                                         <center>Category</center>
                                     </th>
 									<th>
-                                        <center>Create By</center>
+                                        <center>Date</center>
                                     </th>
+                                    <th>
+                                        <center>Duration</center>
+                                    </th>
+                                    
+									
+									<!--<th>
+                                        <center>Create By</center>
+                                    </th>-->
                                     <th>
                                         <center>Status</center>
                                     </th>
@@ -123,20 +125,22 @@ body {font-family: Arial;}
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Subyek</center>
-                                    </th>
-                                    <th>
-                                        <center>Duration</center>
-                                    </th>
-                                    <th>
-                                        <center>Date</center>
+                                        <center>Subject</center>
                                     </th>
 									<th>
                                         <center>Category</center>
                                     </th>
-									<th>
-                                        <center>Create By</center>
+                                    
+                                    <th>
+                                        <center>Date</center>
                                     </th>
+									<th>
+                                        <center>Duration</center>
+                                    </th>
+									
+									<!--<th>
+                                        <center>Create By</center>
+                                    </th>-->
                                     <th>
                                         <center>Status</center>
                                     </th>
@@ -160,20 +164,22 @@ body {font-family: Arial;}
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Subyek</center>
-                                    </th>
-                                    <th>
-                                        <center>Duration</center>
-                                    </th>
-                                    <th>
-                                        <center>Date</center>
+                                        <center>Subject</center>
                                     </th>
 									<th>
                                         <center>Category</center>
                                     </th>
-									<th>
-                                        <center>Create By</center>
+									 <th>
+                                        <center>Date</center>
                                     </th>
+                                    <th>
+                                        <center>Duration</center>
+                                    </th>
+                                   
+									
+									<!--<th>
+                                        <center>Create By</center>
+                                    </th>-->
                                     <th>
                                         <center>Status</center>
                                     </th>
@@ -262,12 +268,13 @@ function xy(a){
             columns: [
                 {data: 'row', name: 'row'},
                 {data: 'f1', name: 'f1'},
-                {data: 'f2', name: 'f2'},
+				{data: 'f4', name: 'f4'},
                 {data: 'f3', name: 'f3'},
-                {data: 'f4', name: 'f4'},
-                {
+                {data: 'f2', name: 'f2'},
+                
+                /*{
 					data: 'f6', name: 'f6', orderable: false, searchable: false
-				},
+				},*/
 				{
 					data: 'f7', name: 'f7', orderable: false, searchable: false
 				},
@@ -283,12 +290,14 @@ function xy(a){
             columns: [
                 {data: 'row', name: 'row'},
                 {data: 'f1', name: 'f1'},
+				{data: 'f4', name: 'f4'},
+				{data: 'f3', name: 'f3'},
                 {data: 'f2', name: 'f2'},
-                {data: 'f3', name: 'f3'},
-                {data: 'f4', name: 'f4'},
-                {
+                
+                
+                /*{
 					data: 'f6', name: 'f6', orderable: false, searchable: false
-				},
+				}, */
 				{
 					data: 'f7', name: 'f7', orderable: false, searchable: false
 				},
@@ -303,12 +312,14 @@ function xy(a){
             columns: [
                 {data: 'row', name: 'row'},
                 {data: 'f1', name: 'f1'},
+				{data: 'f4', name: 'f4'},
+				{data: 'f3', name: 'f3'},
                 {data: 'f2', name: 'f2'},
-                {data: 'f3', name: 'f3'},
-                {data: 'f4', name: 'f4'},
-                {
+                
+                
+                /*{
 					data: 'f6', name: 'f6', orderable: false, searchable: false
-				},
+				},*/
 				{
 					data: 'f7', name: 'f7', orderable: false, searchable: false
 				},

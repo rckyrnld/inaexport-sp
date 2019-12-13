@@ -24,10 +24,12 @@
                   <tr>
                     <th>No</th>
                     <th>Training</th>
+					<th>Topic</th>
+					<th>Location</th>
                     <th>Date</th>
                     <th>Duration</th>
-                    <th>Topic</th>
-                    <th>Location</th>
+                    
+                    
                     <th>Status</th>
                     <th width="20%">Action</th>
                   </tr>
@@ -50,10 +52,12 @@
             columns: [
 							{data: 'DT_RowIndex', name: 'DT_RowIndex'},
               {data: 'training_en', name: 'training_en'},
+			  {data: 'topic_en', name: 'topic_en'},
+			  {data: 'location_en', name: 'location_en'},
 							{data: 'start_date', name: 'start_date'},
               {data: 'duration', name: 'duration'},
-              {data: 'topic_en', name: 'topic_en'},
-							{data: 'location_en', name: 'location_en'},
+              
+							
               {data: 'status', name: 'status'},
               {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
