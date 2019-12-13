@@ -1114,19 +1114,21 @@ class BuyingreqController extends Controller
             $data1 = $aja1->id_pembuat;
             $data3 = $aja1->by_role;
         }
-        $cari2 = DB::select("select email,username from itdp_company_users where id='" . $data1 . "'");
+        $cari2 = DB::select("select email from itdp_company_users where id='" . $data1 . "'");
         foreach ($cari2 as $aja2) {
             $data2 = $aja2->email;
-            $username = $aja2->username;
         }
+        $getusernameeks = DB::table('itdp_company_users')
+            ->where('id', '=', $id3)
+            ->first()->username;
 
-        $ket = $username . " Deal Buying Request!";
+        $ket = $getusernameeks . " Deal Buying Request!";
         $it = $id2 . "/" . $id;
         $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 		('3','Eksportir','" . $id3 . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
-        $ket2 = $username . " Deal Buying Request!";
+        $ket2 = $getusernameeks . " Deal Buying Request!";
         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 		('1','Eksportir','" . $id3 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
@@ -1136,7 +1138,7 @@ class BuyingreqController extends Controller
             $data = [
                 'email' => "",
                 'email1' => $data2,
-                'username' => $username,
+                'username' => $getusernameeks,
                 'main_messages' => "",
                 'id' => $it
             ];
@@ -1148,7 +1150,7 @@ class BuyingreqController extends Controller
         $data22 = [
             'email' => "",
             'email1' => $data2,
-            'username' => $username,
+            'username' => $getusernameeks,
             'main_messages' => "",
             'id' => $id
         ];
@@ -1160,7 +1162,7 @@ class BuyingreqController extends Controller
         $data33 = [
             'email' => "",
             'email1' => "fahrisafari95@gmail.com",
-            'username' => $username,
+            'username' => $getusernameeks,
             'main_messages' => "",
             'id' => $id
         ];
