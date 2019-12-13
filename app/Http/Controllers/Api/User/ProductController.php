@@ -142,7 +142,7 @@ class ProductController extends Controller
 
     public function insertProduct(Request $request)
     {
-        dd($request);
+//        dd($request);
         if ($request->id_role != "1" || $request->id_role != "4") {
             $id_user = $request->id;
             $id_profil = $request->id_profil;
