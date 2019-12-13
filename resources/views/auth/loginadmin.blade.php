@@ -21,7 +21,7 @@
       <div class="mx-auto col-sm-4" style="background: white; border-radius: 0px;box-shadow: 4px 4px 10px 6px #888888; border: 4px; border-radius: 10px;">
 	  <br>
 	  <!-- <h5>LOGIN</h5> -->
-	  <div class="wrap-login100" style="padding-left : 30px; padding-right : 30px; font-size:12px;">
+	  <div class="wrap-login100" style="padding-left : 30px; padding-right : 30px; font-size:15px;">
 	  
 	   <form class="form-horizontal" method="POST" action="{{ route('login') }}">
            {{ csrf_field() }}

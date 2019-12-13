@@ -278,7 +278,7 @@ if ($loc == "ch") {
                             </div>
                             <div id="isibroadcast"></div>
                             <div class="modal-body">
-                              You Want Broadcast Buying Request Now ?
+                             <font color="black"> You Want Broadcast Buying Request Now ?</font>
                             </div>
                             <div class="modal-footer" id="mf">
 							

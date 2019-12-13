@@ -222,6 +222,7 @@ class BRFrontController extends Controller
 	public function br_importir_bc($id)
     {
 		
+		
 		$cariprod = DB::select("select * from csc_buying_request where id='".$id."'");
 		foreach($cariprod as $prodcari) { $rrr = $prodcari->id_csc_prod; $zzz = $prodcari->id_pembuat; }
 		$namacom = DB::select("select * from itdp_company_users where id='".$zzz."'");
@@ -459,14 +460,41 @@ class BRFrontController extends Controller
 		
 	}
 	
+	public function br_importir_update(Request $request)
+    {
+		$id_br = $request->id_br;
+		$ch1 = str_replace(".","",$request->tp);
+		$ch2 = str_replace(",",".",$ch1);
+		
+		$kumpulcat = $request->category;
+		$kumpulcat2 = $request->category.",";
+		$h = explode(",",$request->category);
+		// echo $kumpulcat2;die();
+		if(empty($request->file('image'))){
+			$file = "";
+		}else{
+			$file = $request->file('image')->getClientOriginalName();
+			$destinationPath = public_path() . "/uploads/buy_request";
+			$request->file('image')->move($destinationPath, $file);
+		}
+		$insert = DB::select("update csc_buying_request set subyek='".$request->subyek."',valid='".$request->valid."',id_mst_country='".$request->country."'
+								,shipping='".$request->ship."', spec='".$request->spec."', files='".$file."', eo ='".$request->eo."', neo='".$request->neo."'
+								,tp='".$ch2."',ntp='".$request->ntp."',id_csc_prod='".$kumpulcat2."' where id='".$request->id_br."'");
+		
+		
+		
+		echo "<a href='".url('br_importir_bc/'.$id_br)."' class='btn btn-warning'><font color='white'>Broadcast</font></a>";
+	
+	}	
 	public function br_importir_save(Request $request)
     {	
 		$ch1 = str_replace(".","",$request->tp);
 		$ch2 = str_replace(",",".",$ch1);
 		
 		$kumpulcat = $request->category;
+		$kumpulcat2 = $request->category.",";
 		$h = explode(",",$request->category);
-		
+		// echo $kumpulcat2;die();
 		if(empty($request->file('image'))){
 			$file = "";
 		}else{
@@ -479,7 +507,7 @@ class BRFrontController extends Controller
 			,eo,neo,tp,ntp,by_role,id_pembuat,date,id_csc_prod) values
 			('".$request->subyek."','".$request->valid."','".$request->country."','".$request->city."','".$h[0]."'
 			,'0','0','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
-			,'".$ch2."','".$request->ntp."','3','".Auth::guard('eksmp')->user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat."')");
+			,'".$ch2."','".$request->ntp."','3','".Auth::guard('eksmp')->user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat2."')");
 		
 		$carimax = DB::select("select max(id) as maxid from csc_buying_request ");
 		foreach($carimax as $cm){

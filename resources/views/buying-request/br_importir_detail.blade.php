@@ -35,7 +35,7 @@
 			<div class="form-row" style="font-size:12px;">
 			 <!--<img style="width:100%!important;" src="{{url('assets')}}/assets/images/07-Form-Request_01.png" alt="." >-->
   
- <form class="form-horizontal" method="POST" action="{{ url('br_importir_save') }}" enctype="multipart/form-data">
+ <form class="form-horizontal" method="POST" action="{{ url('br_importir_update') }}" enctype="multipart/form-data">
            {{ csrf_field() }}
 
 <?php 
@@ -52,7 +52,7 @@
 		<label><b>What are you looking for</b></label>
 		</div>
 		<div class="form-group col-sm-8">
-			<input type="text" style="color:black;" value="<?php echo $ryu->subyek; ?>" name="cmp" id="cmp" class="form-control" >
+			<input type="text" style="color:black;" value="<?php echo $ryu->subyek; ?>" name="subyek" id="subyek" class="form-control" >
 		</div>
 		<div class="form-group col-sm-4">
 			<select style="color:black;" class="form-control" name="valid" id="valid">
@@ -65,13 +65,42 @@
 		<label><b>Category</b></label>
 		</div>
 		<div class="form-group col-sm-11">
-			<?php 
+			<?php // echo $ryu->id_csc_prod;
 			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
 			?>
-			<select style="color:black;" class="form-control select2" multiple name="category" id="category" onchange="t1()">
+			<select style="color:black;" class="form-control select2" multiple name="category" id="category">
 			<option value="">-- Select Category --</option>
 			<?php foreach($ms1 as $val1){ ?>
-			<option <?php if($ryu->id_csc_prod_cat == $val1->id){ echo "selected"; }?>  value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
+			<option <?php 
+			$oc = explode(",",$ryu->id_csc_prod);
+			if(empty($oc[0])){
+			$a1 = "";
+			}else{
+				$a1 = $oc[0];
+			}
+			if(empty($oc[1])){
+			$a2 = "";
+			}else{
+				$a2 = $oc[1];
+			}
+			if(empty($oc[2])){
+			$a3 = "";
+			}else{
+				$a3 = $oc[2];
+			}
+			if(empty($oc[3])){
+			$a4 = "";
+			}else{
+				$a4 = $oc[3];
+			}
+			if(empty($oc[4])){
+			$a5 = "";
+			}else{
+				$a5 = $oc[4];
+			}
+			
+			if($a1 == $val1->id || $a2 == $val1->id || $a3 == $val1->id || $a4 == $val1->id || $a5 == $val1->id){ echo "selected"; } 
+			?>  value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
 			<?php } ?>
 			</select>
 		</div>
@@ -111,7 +140,8 @@
 		<div class="form-group col-sm-6">
 				
 			<div class="form-row">
-		<div class="col-sm-7"><input style="color:black;" type="number" value="<?php echo $ryu->tp; ?>" name="tp" id="tp" class="form-control" ></div>
+		<div class="col-sm-7"><input style="color:black;" type="text" value="<?php if(empty($ryu->tp)){}else{ echo number_format($ryu->tp,0,',','.'); } ?>"
+                                                                     name="tp" id="tp" class="form-control amount"></div>
 		<div class="col-sm-5"> <select style="color:black;" class="form-control" name="ntp" id="ntp"><option <?php if($ryu->ntp == "IDR"){ echo "selected"; }?> value="IDR">IDR</option><option <?php if($ryu->ntp == "THB"){ echo "selected"; }?> value="THB">THB</option><option <?php if($ryu->ntp == "USD"){ echo "selected"; }?> value="USD">USD</option></select></div>
 		</div>
 		</div>
@@ -160,7 +190,10 @@
 		</div>
 		<div class="form-group col-sm-12">
 			<!-- <input style="color:black;" type="file" value="" name="doc" id="doc" class="form-control" > -->
-			<a class="btn btn-warning" download href="{{ asset('uploads/buy_request/'.$ryu->files) }}">Download File</a>
+			<input style="color:black;" type="file" value="" name="doc" id="doc"
+                                           class="form-controlz" required><br>
+									<span><font color="red">* accept word, excel, ppt & pdf</font></span><br>
+			If you want open document you upload before click <a download href="{{ asset('uploads/buy_request/'.$ryu->files) }}">This</a>
 		</div>
 		
 	</div>
@@ -172,26 +205,12 @@
 </div>
 
 
-<?php if($ryu->status != 0){ ?>
-<div class="col-md-12">
-<div class="box-body">
-<div style="background-color : #41289d47; ">
-	<hr>
-	<center><b><h6>Chat Column</h6></b></center>
-	<div style="background-color : white; width:100%; height:200px;"></div>
-	<textarea class="form-control" style="color:black"></textarea>
-	<div align="right"><a class="btn btn-success">Send Chat</a></div>
-</div>
-</div>
-</div>
-<?php } ?>
-
-
 
 <div class="col-sm-12">
 <div align="right">
-<a href="{{ url('br_importir') }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Back</a>
-<submit class="btn btn-md btn-primary"><i class="fa fa-save"></i> Update</submit>
+<a href="{{ url('front_end/history') }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Back</a>
+<a onclick="simpanbr()" class="btn btn-md btn-success"><font color="white"><i
+                                                class="fa fa-save"></i> Update</i></a>
 
 
 </div>
@@ -199,8 +218,117 @@
 
 								<?php } ?>
 </form>
+<div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color:#2e899e; color:white;"><h6>Broadcast
+                                    Buying Request</h6>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">&times;</button>
+
+                            </div>
+                            <div id="isibroadcast"></div>
+                            <div class="modal-body">
+                             <center><font color="black"><h4> Update Success ! </h4><br> You Want Broadcast Buying Request Now ?</font></center>
+                            </div>
+                            <div class="modal-footer" id="mf">
+							
+                              <a href="{{ url('front_end/history') }}" type="button" class="btn btn-info">Go To History List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script>
+function simpanbr(){
+	//alert($('#category').val());
+	var formData = new FormData();
+	
+	formData.append('subyek',$('#subyek').val());
+	formData.append('valid',$('#valid').val());
+	formData.append('category',$('#category').val());
+	formData.append('spec',$('#spec').val());
+	formData.append('eo',$('#eo').val());
+	formData.append('neo',$('#neo').val());
+	formData.append('tp',$('#tp').val());
+	formData.append('ntp',$('#ntp').val());
+	formData.append('country',$('#country').val());
+	formData.append('city',$('#city').val());
+	formData.append('ship',$('#ship').val());
+	formData.append('id_br',<?php echo $id; ?>);
+	formData.append('_token','{{csrf_token()}}');
+	formData.append('image',$('input[type=file]')[0].files[0]);
+	
+	// var token = $('meta[name="csrf-token"]').attr('content');
+	if(category == ""){
+		alert("Please complete the field !")
+	}else{
+		
+		$.ajax({
+			type: "POST",
+			url: '{{url('/br_importir_update')}}',
+			data: formData ,
+			contentType : false,
+			processData : false,
+			success: function (data) {
+			   console.log(data);
+			   $('#mf').append(data);
+			},
+			error: function (data, textStatus, errorThrown) {
+				console.log(data);
+
+			},
+		});
+		
+		
+		
+	$("#myModal").modal("show"); 
+	
+	}
+}
+
+function formatAmountNoDecimals( number ) {
+    var rgx = /(\d+)(\d{3})/;
+    while( rgx.test( number ) ) {
+        number = number.replace( rgx, '$1' + '.' + '$2' );
+    }
+    return number;
+}
+
+function formatAmount( number ) {
+
+    // remove all the characters except the numeric values
+    number = number.replace( /[^0-9]/g, '' );
+
+    // set the default value
+    if( number.length == 0 ) number = "0.00";
+    else if( number.length == 1 ) number = "0.0" + number;
+    else if( number.length == 2 ) number = "0." + number;
+    else number = number.substring( 0, number.length - 2 ) + '.' + number.substring( number.length - 2, number.length );
+	
+    // set the precision
+    number = new Number( number );
+    number = number.toFixed( 2 );    // only works with the "."
+
+    // change the splitter to ","
+    number = number.replace( /\./g, '' );
+
+    // format the amount
+    x = number.split( ',' );
+    x1 = x[0];
+    x2 = x.length > 1 ? ',' + x[1] : '';
+
+    return formatAmountNoDecimals( x1 ) + x2;
+}
+
+
+$(function() {
+
+    $( '.amount' ).keyup( function() {
+        $( this ).val( formatAmount( $( this ).val() ) );
+    });
+
+});
+
 /*
 function t1(){
 	$('#t2').html('');

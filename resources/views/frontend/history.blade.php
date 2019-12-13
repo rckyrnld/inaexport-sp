@@ -169,6 +169,7 @@
                             </div>
                           </div>
                         </div>
+						<?php if(Auth::guard('eksmp')->user()->id_role == 3){ ?>
                         <div class="tab-pane fade show active" id="inquiry">                            
                           <br>
                           <div class="row">
@@ -238,6 +239,7 @@
                             </div>
                           </div>
                         </div>
+						<?php } ?>
                     </div>
                     <br><br>
                 </div>
