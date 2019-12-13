@@ -65,9 +65,12 @@ if (! function_exists('optionCategory')) {
 
 if (! function_exists('rc_country')) {
     function rc_country($id){
+        $country = '-';
         $data = DB::table('mst_country')->where('id', $id)->first();
-
-        return $data->country;
+        if($data){
+          $country = $data->country;
+        }
+        return $country;
     }
 }
 

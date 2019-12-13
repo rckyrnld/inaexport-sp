@@ -257,6 +257,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/gantipass', 'HomeController@gantipass');
 Route::post('/updatepass', 'HomeController@updatepass');
 
+Route::get('/directory/', 'DirectoryController@index')->name('directory.index');
+Route::post('/directory/getData/', 'DirectoryController@getData')->name('directory.getData');
+Route::get('/directory/view/{id}', 'DirectoryController@view')->name('directory.view');
+
 Route::namespace('Master')->group(function () {
 // Angga Start
     //Master Country
