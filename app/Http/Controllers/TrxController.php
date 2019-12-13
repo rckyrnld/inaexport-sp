@@ -257,6 +257,9 @@ class TrxController extends Controller
 
 
         return DataTables::of($buy)
+			->addColumn('row', function ($buy) {
+				 return "<center>".$buy->row."</center>";
+            })
             ->addColumn('col1', function ($buy) {
                 return $buy->subyek;
             })
@@ -309,7 +312,7 @@ class TrxController extends Controller
             })
 
 
-            ->rawColumns(['col4','col5','col2','col6','aks'])
+            ->rawColumns(['col4','col5','col2','col6','aks','row'])
             ->make(true);
     }
 
