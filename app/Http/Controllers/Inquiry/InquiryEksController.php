@@ -144,7 +144,7 @@ class InquiryEksController extends Controller
                         $subyek = $mjl->subyek_en;
                     }
 
-                    return $subyek;
+                    return '<div align="left">'.$subyek.'</div>';
                 })
                 ->addColumn('date', function ($mjl) {
                     $datenya = "-";
@@ -154,14 +154,14 @@ class InquiryEksController extends Controller
 
                     return $datenya;
                 })
-                ->addColumn('kos', function ($mjl) {
+               /* ->addColumn('kos', function ($mjl) {
                     $kosnya = "-";
                     if($mjl->jenis_perihal_en != NULL){
                         $kosnya = $mjl->jenis_perihal_en;
                     }
 
                     return $kosnya;
-                })
+                }) */
                 ->addColumn('msg', function ($mjl) {
                     $msgnya = "-";
                     if($mjl->messages_en != NULL){
@@ -212,7 +212,7 @@ class InquiryEksController extends Controller
                             </center>';
                     }
                 })
-                ->rawColumns(['action', 'msg', 'category'])
+                ->rawColumns(['action', 'msg', 'category','subject'])
                 ->make(true);
         }
     }
