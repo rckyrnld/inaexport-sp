@@ -120,6 +120,60 @@ class FrontController extends Controller
                 $getEks = $request->eks_prod;
             }
 
+            //highlight
+            $hl_sort = NULL;
+            if($request->hl_prod != NULL || $request->hl_prod != ""){
+                if (strstr($request->hl_prod, '|')) {
+                    $query->where(function ($query){
+                        return $query->where(function ($query){
+                            return $query->whereYear('csc_product_single.created_at', date('Y'))
+                              ->whereMonth('csc_product_single.created_at', date('m'));
+                        })->orWhereNotNull('csc_product_single.hot');
+                    });
+                    $coquery->where(function ($coquery){
+                        return $coquery->where(function ($coquery){
+                            return $coquery->whereYear('csc_product_single.created_at', date('Y'))
+                              ->whereMonth('csc_product_single.created_at', date('m'));
+                        })->orWhereNotNull('csc_product_single.hot');
+                    });
+                    // $coquery->orWhere(function ($coquery){
+                    //     $coquery->whereYear('csc_product_single.created_at', date('Y'))
+                    //           ->whereMonth('csc_product_single.created_at', date('m'));
+                    // });
+                    // for ($i=0; $i < count($hl_pisah); $i++) { 
+                    //     if($hl_pisah[$i] == "new"){
+                    //         $query->orWhere(function ($query){
+                    //             $query->whereYear('csc_product_single.created_at', date('Y'))
+                    //                   ->whereMonth('csc_product_single.created_at', date('m'));
+                    //         });
+                    //         $coquery->orWhere(function ($coquery){
+                    //             $coquery->whereYear('csc_product_single.created_at', date('Y'))
+                    //                   ->whereMonth('csc_product_single.created_at', date('m'));
+                    //         });
+                    //     }
+
+                    //     if($hl_pisah[$i] == "hot"){
+                    //         $query->orWhereNotNull('csc_product_single.hot');
+                    //         $coquery->orWhereNotNull('csc_product_single.hot');
+                    //     }
+
+                    //     if($hl_pisah[$i] == "hot"){
+                    //         $query->orderByRaw('hot desc');
+                    //         $coquery->orderByRaw('hot desc');
+                    //     }
+                    // }
+                }else{
+                    if($request->hl_prod == "new"){
+                        $query->whereYear('csc_product_single.created_at', date('Y'))->whereMonth('csc_product_single.created_at', date('m'));
+                        $coquery->whereYear('csc_product_single.created_at', date('Y'))->whereMonth('csc_product_single.created_at', date('m'));
+                    }else if($request->hl_prod == "hot"){
+                            $query->whereNotNull('csc_product_single.hot');
+                            $coquery->whereNotNull('csc_product_single.hot')->orderByRaw('hot desc');
+                    }
+                }
+                $hl_sort = $request->hl_prod;
+            }
+
             $coproduct = $coquery->orderByRaw($col)->count();
             $product = $query->orderByRaw($col)->paginate(12);
 
@@ -146,6 +200,7 @@ class FrontController extends Controller
 
             $query = $this->getQueryCategory($pisah, $request->locnya, $request->cari_product);
             $coquery = $this->getQueryCategory($pisah, $request->locnya, $request->cari_product);
+
             $getEks = "";
             if($request->eks_prod){
                 if (strstr($request->eks_prod, '|')){
@@ -157,6 +212,58 @@ class FrontController extends Controller
                 $coquery->whereIn('csc_product_single.id_itdp_company_user', $eks);
                 $getEks = $request->eks_prod;
             }
+
+            //highlight
+            $hl_sort = NULL;
+            if($request->hl_prod != NULL || $request->hl_prod != ""){
+                if (strstr($request->hl_prod, '|')) {
+                    $query->where(function ($query){
+                        return $query->where(function ($query){
+                            return $query->whereYear('csc_product_single.created_at', date('Y'))
+                              ->whereMonth('csc_product_single.created_at', date('m'));
+                        })->orWhereNotNull('csc_product_single.hot');
+                    });
+                    $coquery->where(function ($coquery){
+                        return $coquery->where(function ($coquery){
+                            return $coquery->whereYear('csc_product_single.created_at', date('Y'))
+                              ->whereMonth('csc_product_single.created_at', date('m'));
+                        })->orWhereNotNull('csc_product_single.hot');
+                    });
+                    // $hl_pisah = explode('|', $request->hl_prod);
+                    // for ($i=0; $i < count($hl_pisah); $i++) { 
+                    //     if($hl_pisah[$i] == "new"){
+                    //         $query->orWhere(function ($query){
+                    //             $query->whereYear('csc_product_single.created_at', date('Y'))
+                    //                   ->whereMonth('csc_product_single.created_at', date('m'));
+                    //         });
+                    //         $coquery->orWhere(function ($coquery){
+                    //             $coquery->whereYear('csc_product_single.created_at', date('Y'))
+                    //                   ->whereMonth('csc_product_single.created_at', date('m'));
+                    //         });
+                    //     }
+
+                    //     if($hl_pisah[$i] == "hot"){
+                    //         $query->orWhereNotNull('csc_product_single.hot');
+                    //         $coquery->orWhereNotNull('csc_product_single.hot');
+                    //     }
+
+                    //     if($hl_pisah[$i] == "hot"){
+                    //         $query->orderByRaw('hot desc');
+                    //         $coquery->orderByRaw('hot desc');
+                    //     }
+                    // }
+                }else{
+                    if($request->hl_prod == "new"){
+                        $query->whereYear('csc_product_single.created_at', date('Y'))->whereMonth('csc_product_single.created_at', date('m'));
+                        $coquery->whereYear('csc_product_single.created_at', date('Y'))->whereMonth('csc_product_single.created_at', date('m'));
+                    }else if($request->hl_prod == "hot"){
+                            $query->whereNotNull('csc_product_single.hot')->orderByRaw('hot desc');
+                            $coquery->whereNotNull('csc_product_single.hot')->orderByRaw('hot desc');
+                    }
+                }
+                $hl_sort = $request->hl_prod;
+            }
+
             $coproduct = $coquery->orderByRaw($col)->count();
             $product = $query->orderByRaw($col)->paginate(12);
         }
@@ -173,7 +280,7 @@ class FrontController extends Controller
         );
 
         // return view('frontend.product.all_product', compact('product', 'catprod'));
-        return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow','hot_product'));
+        return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow','hot_product', 'hl_sort'));
 
     }
 

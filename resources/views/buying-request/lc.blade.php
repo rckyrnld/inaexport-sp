@@ -240,7 +240,7 @@ body {font-family: Arial;}
 								?>
 								<tr>
 								<td><?php echo $na; ?></td>
-								<td><?php echo $ryu->company; ?></td>
+								<td><div align="left"><?php echo $ryu->company; ?></div></td>
 								<td><?php echo $ryu->addres." , ".$ryu->city; ?></td>
 								<td><?php echo $ryu->oemail; ?></td>
 								<td><center>

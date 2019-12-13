@@ -35,6 +35,14 @@ class TicketingSupportControllerAdmin extends Controller
       
 
       return \Yajra\DataTables\DataTables::of($tick)
+					->addColumn('name', function($data){
+						return '<div align="left">'.$data->name.'</div>';
+						
+					})
+					->addColumn('subyek', function($data){
+						return '<div align="left">'.$data->subyek.'</div>';
+						
+					})
 					->addColumn('status', function($data){
 						if ($data->status == 1){
 							return 'No Respone';
@@ -67,7 +75,7 @@ class TicketingSupportControllerAdmin extends Controller
               ';
 						}
           })
-          ->rawColumns(['action'])
+          ->rawColumns(['action','name','subyek'])
           ->make(true);
     }
 

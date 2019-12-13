@@ -868,10 +868,25 @@ if (! function_exists('countProductBy')) {
   function countProductBy($by){
     $count = 0;
     if($by == "new"){
-      $data = DB::table('csc_product_single')->where('status', 2)->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->count();
+      $data = DB::table('csc_product_single')
+                ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                ->where('itdp_company_users.status', 1)
+                ->where('csc_product_single.status', 2)
+                ->whereYear('csc_product_single.created_at', date('Y'))
+                ->whereMonth('csc_product_single.created_at', date('m'))
+                ->count();
       $count = $data;
     }else if($by == "hot"){
-      $data = DB::table('csc_product_single')->where('status', 2)->whereNotNull('hot')->orderByRaw('hot desc')->limit(50)->count();
+      $data = DB::table('csc_product_single')
+                ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                ->where('itdp_company_users.status', 1)
+                ->where('csc_product_single.status', 2)
+                ->whereNotNull('csc_product_single.hot')
+                ->orderByRaw('csc_product_single.hot desc')
+                ->limit(50)
+                ->count();
       $count = $data;
     }
     return $count;

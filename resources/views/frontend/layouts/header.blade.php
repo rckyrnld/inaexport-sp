@@ -383,11 +383,18 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                                     }else{
                                                         $eksprod = "";
                                                     }
+
+                                                    if(isset($hl_sort)){
+                                                        $hlprod = $hl_sort;
+                                                    }else{
+                                                        $hlprod = "";
+                                                    }
                                                 ?>
                                                 <input placeholder="@lang('frontend.home.cariproduct') ..." type="text" name="cari_product" autocomplete="off" value="{{$cariprod}}" id="cari_product" style="height: 35px;">
                                                 <input type="hidden" name="locnya" value="{{$lct}}" id="locnya">
                                                 <input type="hidden" name="cari_catnya" value="{{$caricat}}" id="cari_catnya">
                                                 <input type="hidden" name="eks_prod" value="{{$eksprod}}" id="eks_prod">
+                                                <input type="hidden" name="hl_prod" value="{{$hlprod}}" id="hl_prod">
                                                 <input type="hidden" name="sort_prod" value="" id="sort_prod">
                                                 <button type="submit"><i class="ion-ios-search-strong" style="font-size: 22px;"></i></button>
                                             </div>

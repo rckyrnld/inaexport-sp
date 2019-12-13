@@ -55,7 +55,7 @@ class BuyingRequestController extends Controller
         $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='4' order by id desc ");
       return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
-				 return $pesan->subyek;
+				 return '<div align="left">'.$pesan->subyek.'</div>';
             })
 			->addColumn('f2', function ($pesan) {
 				if($pesan->valid == 0){
@@ -115,7 +115,7 @@ class BuyingRequestController extends Controller
            
                 
             })
-			->rawColumns(['action','f6','f7','f3','f4'])
+			->rawColumns(['action','f6','f7','f3','f4','f1'])
             ->make(true);
     }
 	
@@ -124,7 +124,7 @@ class BuyingRequestController extends Controller
         $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='1' order by id desc ");
       return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
-				 return $pesan->subyek;
+				 return '<div align="left">'.$pesan->subyek.'</div>';
             })
 			->addColumn('f2', function ($pesan) {
 				if($pesan->valid == 0){
@@ -179,7 +179,7 @@ class BuyingRequestController extends Controller
            
                 
             })
-			->rawColumns(['action','f6','f7','f3','f4'])
+			->rawColumns(['action','f6','f7','f3','f4','f1'])
             ->make(true);
     }
 	public function getcsc3()
@@ -187,7 +187,7 @@ class BuyingRequestController extends Controller
         $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='3' order by id desc ");
       return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
-				 return $pesan->subyek;
+				 return '<div align="left">'.$pesan->subyek.'</div>';
             })
 			->addColumn('f2', function ($pesan) {
 				 return "Valid until ".$pesan->valid." days";
@@ -240,7 +240,7 @@ class BuyingRequestController extends Controller
            
                 
             })
-			->rawColumns(['action','f6','f7','f3','f4'])
+			->rawColumns(['action','f6','f7','f3','f4','f1'])
             ->make(true);
     }
 	

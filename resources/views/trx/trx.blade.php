@@ -465,7 +465,7 @@ $cr = explode(',',$p3->id_csc_prod);
 		
 			
 			<br>
-			<a style="width:33%;" href="{{url('trx_list')}}" class="btn btn-danger">Cancel</a></center>
+			<a style="width:33%;" href="{{url('trx_list')}}" class="btn btn-danger">Back</a></center>
 		</div>
 	</div>
 	</div>
