@@ -637,7 +637,7 @@ class BuyingreqController extends Controller
             ->where('id', $id)
             ->update([
                 'status_join' => '1',
-                ]);
+            ]);
         if ($update) {
 
             $meta = [
@@ -1044,7 +1044,7 @@ class BuyingreqController extends Controller
 		('2','Importir','" . $id4 . "','Eksportir','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
-            $ket2 = "Importir " .$id5 . " Respond Chat Buying Request !";
+            $ket2 = "Importir " . $id5 . " Respond Chat Buying Request !";
             $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 		('1','Importir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
@@ -1117,17 +1117,18 @@ class BuyingreqController extends Controller
         $cari2 = DB::select("select email from itdp_company_users where id='" . $data1 . "'");
         foreach ($cari2 as $aja2) {
             $data2 = $aja2->email;
+            $username = $aja2->username;
         }
 
-        $ket = $request->username . " Deal Buying Request!";
+        $ket = $username . " Deal Buying Request!";
         $it = $id2 . "/" . $id;
         $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('3','Eksportir','" . $request->id_user . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
+		('3','Eksportir','" . $id3 . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
-        $ket2 = $request->username . " Deal Buying Request!";
+        $ket2 = $username . " Deal Buying Request!";
         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id . "','" . Date('Y-m-d H:m:s') . "','0')
+		('1','Eksportir','" . $id3 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id . "','" . Date('Y-m-d H:m:s') . "','0')
 		");
 
 
@@ -1135,7 +1136,7 @@ class BuyingreqController extends Controller
             $data = [
                 'email' => "",
                 'email1' => $data2,
-                'username' => $request->username,
+                'username' => $username,
                 'main_messages' => "",
                 'id' => $it
             ];
@@ -1146,8 +1147,8 @@ class BuyingreqController extends Controller
         }
         $data22 = [
             'email' => "",
-            'email1' => $request->email,
-            'username' => $request->username,
+            'email1' => $data2,
+            'username' => $username,
             'main_messages' => "",
             'id' => $id
         ];
@@ -1159,7 +1160,7 @@ class BuyingreqController extends Controller
         $data33 = [
             'email' => "",
             'email1' => "fahrisafari95@gmail.com",
-            'username' => $request->username,
+            'username' => $username,
             'main_messages' => "",
             'id' => $id
         ];
