@@ -29,13 +29,13 @@
                                         <center>Zip Code</center>
                                     </th>
 									<th>
-                                        <center>Telepon</center>
+                                        <center>Telephone</center>
                                     </th>
 									<th>
                                         <center>Fax</center>
                                     </th>
                                     <th>
-                                        <center>Konfirmasi Email</center>
+                                        <center>Email Confirmation</center>
                                     </th>
 									<th>
                                         <center>Verify By Admin</center>

@@ -129,7 +129,10 @@ class ExhibitionController extends Controller
             ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
-            ->addColumn('action', function ($mjl) {
+            ->addColumn('id_itdp_eks_event_profil', function ($mjl) {
+                return '<div align="left">'.$mjl->id_itdp_eks_event_profil.'</div>';
+            })
+			->addColumn('action', function ($mjl) {
                 return '
                 <center>
                 <a href="' . route('exhibition.view', $mjl->id) . '" class="btn btn-sm btn-info">
@@ -139,7 +142,7 @@ class ExhibitionController extends Controller
                 ';
             })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','id_itdp_eks_event_profil'])
             ->make(true);
     }
     public function loadP(Request $request){

@@ -130,7 +130,13 @@ class BrandController extends Controller
             ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
-            ->addColumn('action', function ($mjl) {
+            ->addColumn('merek', function ($mjl) {
+                return '<div align="left">'.$mjl->merek.'</div>';
+            })
+			->addColumn('arti_merek', function ($mjl) {
+                return '<div align="left">'.$mjl->arti_merek.'</div>';
+            })
+			->addColumn('action', function ($mjl) {
                 return '
                 <center>
                 <a href="' . route('brand.view', $mjl->id) . '" class="btn btn-sm btn-info">
@@ -141,7 +147,7 @@ class BrandController extends Controller
                 ';
             })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','merek','arti_merek'])
             ->make(true);
     }
 }

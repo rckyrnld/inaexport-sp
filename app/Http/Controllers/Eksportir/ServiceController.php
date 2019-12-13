@@ -134,7 +134,12 @@ class ServiceController extends Controller
 
       return \Yajra\DataTables\DataTables::of($service)
         ->addIndexColumn()
-        ->addColumn('status', function ($value) {
+        ->addColumn('bidang_en', function ($value) {
+          
+                return '<div align="left">'.$value->bidang_en.'</div>';
+             
+        })
+		->addColumn('status', function ($value) {
           switch ($value->status) {
             case 0:
                 return 'Hide';
@@ -211,7 +216,7 @@ class ServiceController extends Controller
               </center>';
           }
         })
-        ->rawColumns(['action', 'skill_en', 'pengalaman_en', 'link'])
+        ->rawColumns(['action', 'skill_en', 'pengalaman_en', 'link','bidang_en'])
         ->make(true);
     }
 

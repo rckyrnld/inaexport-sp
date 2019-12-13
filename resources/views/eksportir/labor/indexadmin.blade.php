@@ -22,7 +22,7 @@
                                         <center>Year</center>
                                     </th>
                                     <th>
-                                        <center>Local Employe</center>
+                                        <center>Local Employee</center>
                                     </th>
                                     <th>
                                         <center>Foreign Worker</center>

@@ -16,19 +16,19 @@
                                 Sales</a></h6>
                         <p><h6><a href="{{url('/eksportir/brand_admin/'.$id)}}" style="color: blue">Brand</a></h6>
                         <p><h6><a href="{{url('/eksportir/country_patern_brand_admin/'.$id)}}" style="color: blue">Country
-                                patent brand</a></h6>
+                                Patent Brand</a></h6>
                         <p><h6><a href="{{url('/eksportir/product_capacity_admin/'.$id)}}" style="color: blue">Production
-                                capacity</a></h6>
+                                Capacity</a></h6>
                         <p><h6><a href="{{url('/eksportir/export_destination_admin/'.$id)}}" style="color: blue">Export
-                                destination</a></h6>
+                                Destination</a></h6>
                         <p><h6><a href="{{url('/eksportir/portland_admin/'.$id)}}" style="color: blue">Port of
-                                loading</a></h6>
+                                Loading</a></h6>
                         <p><h6><a href="{{url('/eksportir/exhibition_admin/'.$id)}}" style="color: blue">Exhibition</a>
                         </h6>
                         <p><h6><a href="{{url('/eksportir/capulti_admin/'.$id)}}" style="color: blue">Capacity
-                                utilization</a></h6>
+                                Utilization</a></h6>
                         <p><h6><a href="{{url('/eksportir/rawmaterial_admin/'.$id)}}" style="color: blue">Raw
-                                material</a></h6>
+                                Material</a></h6>
                         <p><h6><a href="{{url('/eksportir/labor_admin/'.$id)}}" style="color: blue">Labor</a>
                         <p><h6><a href="{{url('/eksportir/consultan_admin/'.$id)}}" style="color: blue">Consultation</a>
                         </h6>

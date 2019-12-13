@@ -133,7 +133,10 @@ class PortlandController extends Controller
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
-            ->addColumn('action', function ($mjl) {
+            ->addColumn('name_port', function ($mjl) {
+                return '<div align="left">'.$mjl->name_port.'</div>';
+            })
+			->addColumn('action', function ($mjl) {
                 return '
                 <center>
                 <a href="' . route('portland.view', $mjl->id) . '" class="btn btn-sm btn-info">
@@ -143,7 +146,7 @@ class PortlandController extends Controller
                 ';
             })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','name_port'])
             ->make(true);
     }
 }
