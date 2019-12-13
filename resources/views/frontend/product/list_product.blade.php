@@ -177,9 +177,11 @@
                             <div class="widget_list widget_categories">
                                 <!-- <h2>Highlight</h2> -->
                                 <h2>@lang('frontend.listprod.highlight')</h2>
+                                <br>
                                 <?php
                                     $checkedna = '';
                                     $checkedhot = '';
+                                    $hlsortnya = '';
                                     if(isset($hl_sort)){
                                         if (strstr($hl_sort, '|')){
                                             $hlist = explode('|', $hl_sort);
@@ -195,17 +197,19 @@
                                                 $checkedhot = 'checked="true"';
                                             }
                                         }
+
+                                        $hlsortnya = $hl_sort;
                                     }
                                 ?>
                                 <ul id="highlightlist">
                                     <li>
-                                        <input type="checkbox" name="checkhl" value="hot" id="checkhl" class="check_hl" onclick="getProduct(this.value, '{{$hl_sort}}', this.checked)" {{$checkedhot}}>
-                                        <a href="#" class="hover-none">@lang('frontend.listprod.hotprod') ({{countProductBy('hot')}})</a>
+                                        <input type="checkbox" name="checkhl" value="hot" id="checkhl" class="check_hl" onclick="getProduct(this.value, '{{$hlsortnya}}', this.checked)" {{$checkedhot}}>
+                                        <a href="#" class="hover-none">@lang('frontend.listprod.hotprod') ({{$countHot}})</a>
                                         <span class="checkmark"></span>
                                     </li>
                                     <li>
-                                        <input type="checkbox" name="checkhl" value="new" id="checkhl" class="check_hl" onclick="getProduct(this.value, '{{$hl_sort}}', this.checked)" {{$checkedna}}>
-                                        <a href="#" class="hover-none">@lang('frontend.listprod.newarrival') ({{countProductBy('new')}})</a>
+                                        <input type="checkbox" name="checkhl" value="new" id="checkhl" class="check_hl" onclick="getProduct(this.value, '{{$hlsortnya}}', this.checked)" {{$checkedna}}>
+                                        <a href="#" class="hover-none">@lang('frontend.listprod.newarrival') ({{$countNew}})</a>
                                         <span class="checkmark"></span>
                                     </li>
                                 </ul>
@@ -662,12 +666,17 @@
             }
         }else{
             if(isi == ""){
-                isinya = val;
+                isinya = "";
             }else{
-                var isibar = isi.split('|');
-                var isin = $.inArray(val, isibar);
-                isibar.splice(isin, 1);
-                isinya = isibar[0]; 
+                var checkstring = isi.includes("|");
+                if(checkstring){
+                    var isibar = isi.split('|');
+                    var isin = $.inArray(val, isibar);
+                    isibar.splice(isin, 1);
+                    isinya = isibar[0]; 
+                }else{
+                    isinya = "";
+                }
             }
         }
 
