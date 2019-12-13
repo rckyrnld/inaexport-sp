@@ -558,7 +558,7 @@ class BuyingreqController extends Controller
             $id_user_importir = $val3->id;
         }
 
-        dd($caribrs2);
+//        dd($caribrs2);
 
         $ket = 'Exporter ' . $getusernameeks . " Join to your Buying Request!";
 //        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
