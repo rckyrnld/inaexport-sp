@@ -345,11 +345,63 @@ class ManagementUserController extends Controller
                 ->where('id_eksportir', $request->id_user)
                 ->orderBy('id_transaksi', 'desc')
                 ->get();
+            $jsonResult = array();
+            for ($i = 0; $i < count($data); $i++) {
+                $jsonResult[$i]["id_transaksi"] = $data[$i]->id_transaksi;
+                $jsonResult[$i]["id_pembuat"] = $data[$i]->id_pembuat;
+                $jsonResult[$i]["by_role"] = $data[$i]->by_role;
+                $jsonResult[$i]["id_eksportir"] = $data[$i]->id_eksportir;
+                $jsonResult[$i]["id_terkait"] = $data[$i]->id_terkait;
+                $jsonResult[$i]["origin"] = $data[$i]->origin;
+                $jsonResult[$i]["type_tracking"] = $data[$i]->type_tracking;
+                $jsonResult[$i]["no_tracking"] = $data[$i]->no_tracking;
+                $jsonResult[$i]["created_at"] = $data[$i]->created_at;
+                $jsonResult[$i]["status_transaksi"] = $data[$i]->status_transaksi;
+                $jsonResult[$i]["eo"] = $data[$i]->eo;
+                $jsonResult[$i]["neo"] = $data[$i]->neo;
+                $jsonResult[$i]["ntp"] = $data[$i]->ntp;
+                $jsonResult[$i]["total"] = $data[$i]->total;
+                $by_role = $data[$i]->by_role;
+//                if ($by_role == 2 || 3) {
+////                    $jsonResult[$i]["nama_pembeli"] = getCompanyNameImportir($data[$i]->id_pembuat);
+//                }
+                if ($by_role == 1 || $by_role == 4) {
+                    $jsonResult[$i]["nama_pembeli"] = getAdminName($data[$i]->id_pembuat);
+                } else {
+                    $jsonResult[$i]["nama_pembeli"] = getCompanyNameImportir($data[$i]->id_pembuat);
+                }
+            }
         } else if ($request->id_role == 3) {
             $data = DB::table('csc_transaksi')
                 ->where('id_pembuat', $request->id_user)
                 ->orderBy('id_transaksi', 'desc')
                 ->get();
+            $jsonResult = array();
+            for ($i = 0; $i < count($data); $i++) {
+                $jsonResult[$i]["id_transaksi"] = $data[$i]->id_transaksi;
+                $jsonResult[$i]["id_pembuat"] = $data[$i]->id_pembuat;
+                $jsonResult[$i]["by_role"] = $data[$i]->by_role;
+                $jsonResult[$i]["id_eksportir"] = $data[$i]->id_eksportir;
+                $jsonResult[$i]["id_terkait"] = $data[$i]->id_terkait;
+                $jsonResult[$i]["origin"] = $data[$i]->origin;
+                $jsonResult[$i]["type_tracking"] = $data[$i]->type_tracking;
+                $jsonResult[$i]["no_tracking"] = $data[$i]->no_tracking;
+                $jsonResult[$i]["created_at"] = $data[$i]->created_at;
+                $jsonResult[$i]["status_transaksi"] = $data[$i]->status_transaksi;
+                $jsonResult[$i]["eo"] = $data[$i]->eo;
+                $jsonResult[$i]["neo"] = $data[$i]->neo;
+                $jsonResult[$i]["ntp"] = $data[$i]->ntp;
+                $jsonResult[$i]["total"] = $data[$i]->total;
+                $by_role = $data[$i]->by_role;
+//                if ($by_role == 2 || 3) {
+////                    $jsonResult[$i]["nama_pembeli"] = getCompanyNameImportir($data[$i]->id_pembuat);
+//                }
+                if ($by_role == 1 || $by_role == 4) {
+                    $jsonResult[$i]["nama_pembeli"] = getAdminName($data[$i]->id_pembuat);
+                } else {
+                    $jsonResult[$i]["nama_pembeli"] = getCompanyNameImportir($data[$i]->id_pembuat);
+                }
+            }
         }
         if (count($data) > 0) {
             $meta = [
@@ -359,7 +411,7 @@ class ManagementUserController extends Controller
             ];
 //            $data = '';
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = $jsonResult;
             return response($res);
         } else {
             $meta = [
