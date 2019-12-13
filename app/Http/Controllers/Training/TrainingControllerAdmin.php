@@ -127,7 +127,11 @@ class TrainingControllerAdmin extends Controller
 							return 'Published';
 						}
 					})
-          ->addColumn('start_date', function($data){
+          ->addColumn('training_en', function($data){
+					   
+             return '<div align="left">'.$data->training_en.'</div>';
+					})
+			->addColumn('start_date', function($data){
 					   $date = date("Y/m/d", strtotime($data->start_date));
 						 $date2 = date("Y/m/d", strtotime($data->end_date));
              return ''.$date.' - '.$date2.'';
@@ -156,7 +160,7 @@ class TrainingControllerAdmin extends Controller
               ';
 						}
           })
-          ->rawColumns(['action'])
+          ->rawColumns(['action','training_en'])
           ->make(true);
     }
 

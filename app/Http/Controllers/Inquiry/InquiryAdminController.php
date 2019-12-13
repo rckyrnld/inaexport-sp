@@ -104,7 +104,7 @@ class InquiryAdminController extends Controller
                         $subyek = $mjl->subyek_en;
                     }
 
-                    return $subyek;
+                    return '<div align="left">'.$subyek.'</div>';
                 })
                 ->addColumn('date', function ($mjl) {
                     $datenya = "-";
@@ -185,7 +185,7 @@ class InquiryAdminController extends Controller
                             </center>';
                     }
                 })
-                ->rawColumns(['action', 'msg', 'category'])
+                ->rawColumns(['action', 'msg', 'category','subject'])
                 ->make(true);
         }
     }
@@ -205,7 +205,7 @@ class InquiryAdminController extends Controller
                     if($mjl->id != NULL){
                         $name = getPerwakilanName($mjl->id);
                     }
-                    return $name;
+                    return '<div align="left">'.$name.'</div>';
                 })
                 ->addColumn('action', function ($mjl) {
                     return '
@@ -213,7 +213,7 @@ class InquiryAdminController extends Controller
                         <a href="'.url('/inquiry_admin/detail_perwakilan').'/'.$mjl->id.'" class="btn btn-sm btn-success"><i class="fa fa-list" aria-hidden="true"></i> Detail</a>
                         </center>';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action','name'])
                 ->make(true);
         }
     }
@@ -263,7 +263,7 @@ class InquiryAdminController extends Controller
                             $category = "-";
                         }
                     }
-                    return $category;
+                    return '<div align="left">'.$category.'</div>';
                 })              
                 ->addColumn('subject', function ($mjl) {
                     $subyek = "-";
@@ -271,7 +271,7 @@ class InquiryAdminController extends Controller
                         $subyek = $mjl->subyek_en;
                     }
 
-                    return $subyek;
+                    return '<div align="left">'.$subyek.'</div>';
                 })
                 ->addColumn('date', function ($mjl) {
                     $datenya = "-";
@@ -287,7 +287,7 @@ class InquiryAdminController extends Controller
                         <a href="'.url('/inquiry_admin/perwakilan_view').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> View</a>
                         </center>';
                 })
-                ->rawColumns(['action', 'category'])
+                ->rawColumns(['action', 'category','subject'])
                 ->make(true);
         }
     }
@@ -330,7 +330,7 @@ class InquiryAdminController extends Controller
                     if($mjl->id_itdp_company_users != NULL){
                         $company = getCompanyName($mjl->id_itdp_company_users);
                     }
-                    return $company;
+                    return '<div align="left">'.$company.'</div>';
                 })
                 ->addColumn('status', function ($mjl) {
                     $statnya = "-";
@@ -367,7 +367,7 @@ class InquiryAdminController extends Controller
                             </center>';
                     }
                 })
-                ->rawColumns(['action', 'msg'])
+                ->rawColumns(['action', 'msg','company'])
                 ->make(true);
         }
     }
@@ -468,7 +468,7 @@ class InquiryAdminController extends Controller
                         $subyek = $mjl->subyek_en;
                     }
 
-                    return $subyek;
+                    return '<div align="left">'.$subyek.'</div>';
                 })
                 ->addColumn('date', function ($mjl) {
                     $datenya = "-";
@@ -519,7 +519,7 @@ class InquiryAdminController extends Controller
                         <a href="'.url('/inquiry_admin/view_importir').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> View</a>
                         </center>';
                 })
-                ->rawColumns(['action', 'msg'])
+                ->rawColumns(['action', 'msg','subject'])
                 ->make(true);
         }
     }
@@ -885,7 +885,7 @@ class InquiryAdminController extends Controller
                     if($mjl->id_itdp_company_users != NULL){
                         $company = getCompanyName($mjl->id_itdp_company_users);
                     }
-                    return $company;
+                    return '<div align="left">'.$company.'</div>';
                 })
                 ->addColumn('status', function ($mjl) {
                     $statnya = "-";
@@ -943,7 +943,7 @@ class InquiryAdminController extends Controller
                             </center>';
                     }
                 })
-                ->rawColumns(['action', 'msg'])
+                ->rawColumns(['action', 'msg','company'])
                 ->make(true);
         }
     }

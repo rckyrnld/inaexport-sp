@@ -31,7 +31,12 @@ class AdminResearchController extends Controller
 
       return \Yajra\DataTables\DataTables::of($research)
           ->addIndexColumn()
-          ->addColumn('country', function ($value) {
+          ->addColumn('title_en', function ($value) {
+            
+              return '<div align="left">'.$value->title_en.'</div>';
+            
+          })
+		  ->addColumn('country', function ($value) {
             $data =  DB::table('mst_country')->where('id', $value->id_mst_country)->first();
             if($data){
               return $data->country;
@@ -69,7 +74,7 @@ class AdminResearchController extends Controller
                   </center>';
               }
           })
-          ->rawColumns(['action'])
+          ->rawColumns(['action','title_en'])
           ->make(true);
     }
 
@@ -83,14 +88,15 @@ class AdminResearchController extends Controller
           ->addColumn('company', function ($var) {
             $data = DB::table('itdp_profil_eks')->where('id', $var->id_itdp_profil_eks)->first();
             if($data){
-              return $data->company;
+              return '<div align="left">'.$data->company.'</div>';
             } else {
-              return 'Profile '.$var->id_itdp_profil_eks.' Not Found';
+              return '<div align="left">Profile '.$var->id_itdp_profil_eks.' Not Found</div>';
             }
           })
           ->addColumn('download_date', function ($data) {
             return date('d F Y', strtotime($data->waktu)).' ( '.date('H:i', strtotime($data->waktu)).' )';
           })
+		  ->rawColumns(['company'])
           ->make(true);
     }
 

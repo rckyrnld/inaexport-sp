@@ -70,6 +70,11 @@ class ResearchCornerController extends Controller
 
             return \Yajra\DataTables\DataTables::of($research)
                 ->addIndexColumn()
+				->addColumn('title_en', function ($value) {
+            
+					  return '<div align="left">'.$value->title_en.'</div>';
+					
+				  })
                 ->addColumn('country', function ($value) {
                     $data = DB::table('mst_country')->where('id', $value->id_mst_country)->first();
                     return $data->country;
@@ -98,7 +103,7 @@ class ResearchCornerController extends Controller
                       </center>';
                     }
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action','title_en'])
                 ->make(true);
         } else {
             return redirect('/home');

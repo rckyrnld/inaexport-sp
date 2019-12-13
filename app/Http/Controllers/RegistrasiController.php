@@ -208,6 +208,9 @@ class RegistrasiController extends Controller
       
 
         return DataTables::of($buy)
+			->addColumn('row', function ($buy) {
+				 return "<center>".$buy->row."</center>";
+            })
             ->addColumn('col1', function ($buy) {
 				 return $buy->subyek;
             })
@@ -250,7 +253,7 @@ class RegistrasiController extends Controller
             })
 			
 			
-			->rawColumns(['col4','col5','col2','col6'])
+			->rawColumns(['col4','col5','col2','col6','row'])
             ->make(true);
     }
 	
