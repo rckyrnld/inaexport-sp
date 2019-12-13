@@ -19,6 +19,15 @@ if ($loc == "ch") {
 .select-dropdown .select-dropdown--above {
       margin-top: 336px;
 }
+#select2-country-results{
+	font-size:12px!important;
+}
+#select2-category-results{
+	font-size:12px!important;
+}
+.select2-container--default{
+	width:100%!important;
+}
 
 </style>
 <!--product area start-->
@@ -63,7 +72,7 @@ if ($loc == "ch") {
                 <div class="col-md-5">
 
 
-                    <div class="box-body" style="color:black; font-size:12px;">
+                    <div class="box-body" style="color:black; font-size:13px;">
                         <br>
 						
                         <form class="form-horizontal" method="POST" action="{{ url('br_importir_save') }}"
@@ -79,11 +88,11 @@ if ($loc == "ch") {
                                     <label><b>@lang("login.forms.by2")</b></label>
                                 </div>
                                 <div class="form-group col-sm-8">
-                                    <input type="text" style="color:black;" value="<?php echo $subyek; ?>" name="subyek" id="subyek"
+                                    <input type="text" style="color:black;font-size:12px;" value="<?php echo $subyek; ?>" name="subyek" id="subyek"
                                            class="form-control" required>
                                 </div>
                                 <div class="form-group col-sm-4">
-                                    <select style="color:black;" class="form-control" name="valid" id="valid" required>
+                                    <select style="color:black;font-size:12px;height: 31px;" class="form-control" name="valid" id="valid" required>
                                         <option value="">@lang("login.forms.by10")</option>
                                         <option <?php if($valid == 0){ echo "selected"; } ?> value="0">None</option>
                                         <option <?php if($valid == 1){ echo "selected"; } ?> value="1">Valid within 1 day</option>
@@ -103,7 +112,7 @@ if ($loc == "ch") {
                                     <?php
                                     $ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
                                     ?>
-                                    <select style="color:black;" class="form-control select2 col-sm-11" multiple name="category[]"
+                                    <select style="color:black;font-size:12px;" class="form-control select2 col-sm-11" multiple name="category[]"
                                             id="category" onchange="t1()" required>
                                         <option value="">@lang("login.forms.by11")</option>
                                         <?php foreach($ms1 as $val1){ ?>
@@ -124,7 +133,7 @@ if ($loc == "ch") {
                                     <label><b>@lang("login.forms.by4")</b></label>
                                 </div>
                                 <div class="form-group col-sm-12">
-                                    <textarea style="color:black;" name="spec" id="spec"
+                                    <textarea style="color:black;font-size:12px;" name="spec" id="spec"
                                               class="form-control"><?php echo $spec; ?></textarea>
                                 </div>
 
@@ -136,10 +145,10 @@ if ($loc == "ch") {
                                 
                                 <div class="form-group col-sm-12">
                                     <div class="form-row">
-                                        <div class="col-sm-7"><input style="color:black;" value="<?php echo $eo; ?>" type="number" min="1"
+                                        <div class="col-sm-7"><input style="color:black;font-size:12px;" value="<?php echo $eo; ?>" type="number" min="1"
                                                                      name="eo" id="eo" class="form-control"></div>
                                         <div class="col-sm-5">
-                                            <select class="form-control" name="neo" id="neo">
+                                            <select class="form-control" style="font-size:12px;height: 31px;" name="neo" id="neo">
                                                 <option value="">@lang("login.forms.by14")</option>
 
                                                 <option <?php if($neo == "Each"){ echo "selected"; } ?> value="Each">Each</option>
@@ -190,10 +199,10 @@ if ($loc == "ch") {
                                 <div class="form-group col-sm-12">
 
                                     <div class="form-row">
-                                        <div class="col-sm-7"><input style="color:black;" type="text" value="<?php if(empty($tp)){}else{ echo number_format($tp,0,',','.'); } ?>"
+                                        <div class="col-sm-7"><input style="color:black;font-size:12px;" type="text" value="<?php if(empty($tp)){}else{ echo number_format($tp,0,',','.'); } ?>"
                                                                      name="tp" id="tp" class="form-control amount">
 																	 </div>
-                                        <div class="col-sm-5"><select  class="form-control"
+                                        <div class="col-sm-5"><select  style="font-size:12px;height: 31px;" class="form-control"
                                                                       name="ntp" id="ntp">
                                                 <option value="">@lang("login.forms.by14")</option>
                                                 <option  <?php if($ntp == "IDR"){ echo "selected"; } ?> value="IDR">IDR</option>
@@ -212,17 +221,17 @@ if ($loc == "ch") {
                                     <?php
                                     $ms2 = DB::select("select id,country from mst_country order by country asc");
                                     ?>
-                                    <select style="color:black;" style="border-color: rgba(120, 130, 140, 0.5)!important;
+                                    <select style="color:black;font-size:12px;height: 31px;" style="border-color: rgba(120, 130, 140, 0.5)!important;
     border-radius: 0.25rem!important;
     color: inherit!important;" class="form-control select2" name="country" id="country" required>
                                         <option value="">-- @lang("login.forms.by12") --</option>
                                         <?php foreach($ms2 as $val2){ ?>
-                                        <option value="<?php echo $val2->id; ?>"><?php echo $val2->country; ?></option>
+                                        <option value="<?php echo $val2->id; ?>" style="font-size:12px;"><?php echo $val2->country; ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <input style="color:black;" type="text" value="" name="city" id="city"
+                                    <input style="color:black;font-size:12px;" type="text" value="" name="city" id="city"
                                            class="form-control" placeholder="@lang("login.forms.by13")">
                                 </div>
                             </div>
@@ -231,7 +240,7 @@ if ($loc == "ch") {
                                     <label><b>@lang("login.forms.by8")</b></label>
                                 </div>
                                 <div class="form-group col-sm-12">
-                                    <textarea style="color:black;" value="" name="ship" id="ship"
+                                    <textarea style="color:black;font-size:12px;" value="" name="ship" id="ship"
                                               class="form-control"></textarea>
                                 </div>
 

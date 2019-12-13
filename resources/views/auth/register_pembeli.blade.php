@@ -15,7 +15,7 @@
 	  <br>
 	  <!-- <h5>LOGIN</h5> -->
 	   <h5><center><b>@lang("register.title")</b></center></h5>
-	  <div class="wrap-login100" style="padding-left : 70px; padding-right : 70px; font-size:12px;">
+	  <div class="wrap-login100" style="padding-left : 70px; padding-right : 70px; font-size:14px;">
 	  <form class="form-horizontal" method="POST" action="{{ url('simpan_rpembeli') }}">
 	   {{ csrf_field() }}
 	   
