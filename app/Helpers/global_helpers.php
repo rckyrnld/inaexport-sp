@@ -863,17 +863,3 @@ if (! function_exists('hotProduct')) {
         return $hot;
     }
 }
-
-if (! function_exists('countProductBy')) {
-  function countProductBy($by){
-    $count = 0;
-    if($by == "new"){
-      $data = DB::table('csc_product_single')->where('status', 2)->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->count();
-      $count = $data;
-    }else if($by == "hot"){
-      $data = DB::table('csc_product_single')->where('status', 2)->whereNotNull('hot')->orderByRaw('hot desc')->limit(50)->count();
-      $count = $data;
-    }
-    return $count;
-  }
-}

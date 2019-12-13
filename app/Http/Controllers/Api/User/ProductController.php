@@ -27,7 +27,7 @@ class ProductController extends Controller
         //  if(Auth::guard('userApi')->user()){
         $dataProduk = DB::table('csc_product_single')
             ->where('id_itdp_company_user', '=', $request->id_user)
-            ->orderBy('product_description_en', 'ASC')
+            ->orderBy('id', 'desc')
             ->get();
         $jsonResult = array();
         for($i = 0; $i < count($dataProduk);  $i++){
@@ -142,6 +142,7 @@ class ProductController extends Controller
 
     public function insertProduct(Request $request)
     {
+//        dd($request);
         if ($request->id_role != "1" || $request->id_role != "4") {
             $id_user = $request->id;
             $id_profil = $request->id_profil;
@@ -179,7 +180,7 @@ class ProductController extends Controller
                 $nama_file4 = time() . '_' . $request->prodname_en . '_' . $request->file('image_4')->getClientOriginalName();
                 Storage::disk('uploads')->putFileAs($destination, $file4, $nama_file4);
             }
-            $insertRecord = DB::table('csc_product_single')->insert([
+            $insertRecord = DB::table('csc_product_single')->insertGetId([
 //                'id' => $idnew,
                 'id_csc_product' => $request->id_csc_product,
                 'id_csc_product_level1' => $request->id_csc_product_level1,
@@ -215,6 +216,37 @@ class ProductController extends Controller
                 'status' => $request->status,
                 'created_at' => $datenow,
             ]);
+            if($insertRecord && $request->status == "1"){
+                $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+                $users_email = [];
+                foreach ($admin as $adm) {
+                    $notif = DB::table('notif')->insert([
+                        'dari_nama' => getCompanyName($id_user),
+                        'dari_id' => $id_user,
+                        'untuk_nama' => $adm->name,
+                        'untuk_id' => $adm->id,
+                        'keterangan' => 'New Product Published By '.getCompanyName($id_user).' with Title  "'.$request->prodname_en.'"',
+                        'url_terkait' => 'eksportir/verifikasi_product',
+                        'status_baca' => 0,
+                        'waktu' => $datenow,
+                        'id_terkait' => $insertRecord,
+                        'to_role' => 1,
+                    ]);
+
+                    array_push($users_email, $adm->email);
+                }
+
+                //Tinggal Ganti Email1 dengan email kemendag
+                $data = [
+                    'company' => getCompanyName($id_user),
+                    'dari' => "Eksportir"
+                ];
+
+                Mail::send('eksportir.eksproduct.sendToAdmin', $data, function ($mail) use ($data, $users_email) {
+                    $mail->subject('Product Information');
+                    $mail->to($users_email);
+                });
+            }
             if ($insertRecord) {
                 $meta = [
                     'code' => '200',

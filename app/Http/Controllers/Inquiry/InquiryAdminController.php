@@ -778,28 +778,30 @@ class InquiryAdminController extends Controller
                 sort($array);
                 $users = [];
                 for ($k=0; $k <count($array) ; $k++) { 
-                    $save = DB::table('csc_inquiry_broadcast')->insert([
-                        'id_inquiry' => $id_inquiry,
-                        'id_itdp_company_users' => $array[$k],
-                        'status' => 1,
-                        'created_at' => $datenow,
-                    ]);
-
-                    $admin = DB::table('itdp_admin_users')->where('id', $id_user)->first();
-                    $notif = DB::table('notif')->insert([
-                        'dari_nama' => $admin->name,
-                        'dari_id' => $id_user,
-                        'untuk_nama' => getCompanyName($array[$k]),
-                        'untuk_id' => $array[$k],
-                        'keterangan' => 'New Inquiry By '.$admin->name.' with Subyek  "'.$inquiry->subyek_en.'"',
-                        'url_terkait' => 'inquiry',
-                        'status_baca' => 0,
-                        'waktu' => $datenow,
-                        'to_role' => 2,
-                    ]);
-
                     $untuk = DB::table('itdp_company_users')->where('id', $array[$k])->first();
-                    array_push($users, $untuk->email);
+                    if($untuk != NULL){
+                        $save = DB::table('csc_inquiry_broadcast')->insert([
+                            'id_inquiry' => $id_inquiry,
+                            'id_itdp_company_users' => $array[$k],
+                            'status' => 1,
+                            'created_at' => $datenow,
+                        ]);
+
+                        $admin = DB::table('itdp_admin_users')->where('id', $id_user)->first();
+                        $notif = DB::table('notif')->insert([
+                            'dari_nama' => $admin->name,
+                            'dari_id' => $id_user,
+                            'untuk_nama' => getCompanyName($array[$k]),
+                            'untuk_id' => $array[$k],
+                            'keterangan' => 'New Inquiry By '.$admin->name.' with Subyek  "'.$inquiry->subyek_en.'"',
+                            'url_terkait' => 'inquiry',
+                            'status_baca' => 0,
+                            'waktu' => $datenow,
+                            'to_role' => 2,
+                        ]);
+
+                        array_push($users, $untuk->email);
+                    }
                 }
 
                 //Tinggal Ganti Email1 dengan email kemendag
