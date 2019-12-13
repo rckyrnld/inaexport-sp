@@ -30,17 +30,18 @@
                                                 <th width="5%">
                                                     <center>No</center>
                                                 </th>
-                                                <th>
-                                                    <center>Duration</center>
-                                                </th>
+                                                
                                                 <th>
                                                     <center>Subject</center>
                                                 </th>
                                                 <th>
                                                     <center>Date</center>
                                                 </th>
-                                                <th>
+                                                <!-- <th>
                                                     <center>Kind of Subject</center>
+                                                </th> -->
+												<th>
+                                                    <center>Duration</center>
                                                 </th>
                                                 <th>
                                                     <center>Origin</center>
@@ -71,9 +72,9 @@
                                               <th>
                                                 <center>Date</center>
                                               </th>
-                                              <th>
+                                              <!-- <th>
                                                 <center>Kind Of Subject</center>
-                                              </th>
+                                              </th> -->
                                               <th width="15%">
                                                 <center>Messages</center>
                                               </th>
@@ -109,10 +110,11 @@
             ajax: "{{ route('eksportir.inquiry.getData', 1) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'duration', name: 'duration'},
+               
                 {data: 'subject', name: 'subject'},
                 {data: 'date', name: 'date'},
-                {data: 'kos', name: 'kos'},
+				 {data: 'duration', name: 'duration'},
+               /* {data: 'kos', name: 'kos'}, */
                 {data: 'origin', name: 'origin'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
@@ -127,7 +129,7 @@
                 {data: 'category', name: 'category'},
                 {data: 'subject', name: 'subject'},
                 {data: 'date', name: 'date'},
-                {data: 'kos', name: 'kos'},
+              /*  {data: 'kos', name: 'kos'}, */
                 {data: 'msg', name: 'msg'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
