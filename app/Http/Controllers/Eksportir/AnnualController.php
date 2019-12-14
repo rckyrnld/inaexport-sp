@@ -153,7 +153,7 @@ class AnnualController extends Controller
 //        dd($pesan);
         return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
-                return $pesan->company;
+                return '<div align="left">'.$pesan->company.'</div>';
             })
             ->addColumn('f2', function ($pesan) {
                 return $pesan->addres;
@@ -171,7 +171,7 @@ class AnnualController extends Controller
                 return '<a href="' . url('eksportir/listeksportir/' . $pesan->id) . '" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>';
             })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','f1'])
             ->make(true);
     }
 

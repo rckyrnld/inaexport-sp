@@ -22,18 +22,19 @@
                                     <th>
                                         <center>Instansi</center>
                                     </th>
-                                    <th>
-                                        <center>Email</center>
-                                    </th>
-                                    <th>
-                                        <center>Web</center>
-                                    </th>
 									<th>
                                         <center>Jenis</center>
                                     </th>
 									<th>
                                         <center>Type</center>
                                     </th>
+                                    <th>
+                                        <center>Email</center>
+                                    </th>
+                                    <th>
+                                        <center>Website</center>
+                                    </th>
+									
 									
                                     <th width="17%">
                                         <center>Action</center>
@@ -79,14 +80,15 @@
             columns: [
                 {data: 'row', name: 'row'},
                 {data: 'f1', name: 'f1'},
-                {data: 'f2', name: 'f2'},
-                {data: 'f3', name: 'f3'},
-                {
+				{
 					data: 'f6', name: 'f6', orderable: false, searchable: false
 				},
 				{
 					data: 'f7', name: 'f7', orderable: false, searchable: false
 				},
+                {data: 'f2', name: 'f2'},
+                {data: 'f3', name: 'f3'},
+                
                 {
                     data: 'action', name: 'action', orderable: false, searchable: false
                 }]

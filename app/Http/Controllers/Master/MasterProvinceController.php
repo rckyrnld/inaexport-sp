@@ -27,7 +27,13 @@ class MasterProvinceController extends Controller
       $province = MasterProvince::orderby('province_en', 'asc')->get();
 
       return \Yajra\DataTables\DataTables::of($province)
-          ->addColumn('action', function ($data) {
+          ->addColumn('province_en', function ($data) {
+              return '<div align="left">'.$data->province_en.'</div>';
+          })
+		  ->addColumn('province_in', function ($data) {
+              return '<div align="left">'.$data->province_in.'</div>';
+          })
+		  ->addColumn('action', function ($data) {
               return '
               <center>
               <div class="btn-group">
@@ -38,7 +44,7 @@ class MasterProvinceController extends Controller
               </center>
               ';
           })
-          ->rawColumns(['action'])
+          ->rawColumns(['action','province_en','province_in'])
           ->make(true);
     }
 

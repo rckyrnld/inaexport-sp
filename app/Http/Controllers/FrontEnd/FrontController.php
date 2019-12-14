@@ -120,6 +120,21 @@ class FrontController extends Controller
                 $getEks = $request->eks_prod;
             }
 
+            //count Hot dan New Product
+            $productcheck = $query->orderByRaw($col)->get();
+            $countNew = 0;
+            $countHot = 0;
+            foreach ($productcheck as $prod) {
+                if(date('Y', strtotime($prod->created_at)) == date('Y')){
+                    if(date('m', strtotime($prod->created_at)) == date('m')){
+                        $countNew = $countNew + 1;
+                    }
+                }
+                if(in_array($prod->id, $hot_product)){
+                    $countHot = $countHot + 1;
+                }
+            }
+
             //highlight
             $hl_sort = NULL;
             if($request->hl_prod != NULL || $request->hl_prod != ""){
@@ -135,33 +150,7 @@ class FrontController extends Controller
                             return $coquery->whereYear('csc_product_single.created_at', date('Y'))
                               ->whereMonth('csc_product_single.created_at', date('m'));
                         })->orWhereNotNull('csc_product_single.hot');
-                    });
-                    // $coquery->orWhere(function ($coquery){
-                    //     $coquery->whereYear('csc_product_single.created_at', date('Y'))
-                    //           ->whereMonth('csc_product_single.created_at', date('m'));
-                    // });
-                    // for ($i=0; $i < count($hl_pisah); $i++) { 
-                    //     if($hl_pisah[$i] == "new"){
-                    //         $query->orWhere(function ($query){
-                    //             $query->whereYear('csc_product_single.created_at', date('Y'))
-                    //                   ->whereMonth('csc_product_single.created_at', date('m'));
-                    //         });
-                    //         $coquery->orWhere(function ($coquery){
-                    //             $coquery->whereYear('csc_product_single.created_at', date('Y'))
-                    //                   ->whereMonth('csc_product_single.created_at', date('m'));
-                    //         });
-                    //     }
-
-                    //     if($hl_pisah[$i] == "hot"){
-                    //         $query->orWhereNotNull('csc_product_single.hot');
-                    //         $coquery->orWhereNotNull('csc_product_single.hot');
-                    //     }
-
-                    //     if($hl_pisah[$i] == "hot"){
-                    //         $query->orderByRaw('hot desc');
-                    //         $coquery->orderByRaw('hot desc');
-                    //     }
-                    // }
+                    });                  
                 }else{
                     if($request->hl_prod == "new"){
                         $query->whereYear('csc_product_single.created_at', date('Y'))->whereMonth('csc_product_single.created_at', date('m'));
@@ -213,6 +202,21 @@ class FrontController extends Controller
                 $getEks = $request->eks_prod;
             }
 
+            //count Hot dan New Product
+            $productcheck = $query->orderByRaw($col)->get();
+            $countNew = 0;
+            $countHot = 0;
+            foreach ($productcheck as $prod) {
+                if(date('Y', strtotime($prod->created_at)) == date('Y')){
+                    if(date('m', strtotime($prod->created_at)) == date('m')){
+                        $countNew = $countNew + 1;
+                    }
+                }
+                if(in_array($prod->id, $hot_product)){
+                    $countHot = $countHot + 1;
+                }
+            }
+
             //highlight
             $hl_sort = NULL;
             if($request->hl_prod != NULL || $request->hl_prod != ""){
@@ -229,29 +233,6 @@ class FrontController extends Controller
                               ->whereMonth('csc_product_single.created_at', date('m'));
                         })->orWhereNotNull('csc_product_single.hot');
                     });
-                    // $hl_pisah = explode('|', $request->hl_prod);
-                    // for ($i=0; $i < count($hl_pisah); $i++) { 
-                    //     if($hl_pisah[$i] == "new"){
-                    //         $query->orWhere(function ($query){
-                    //             $query->whereYear('csc_product_single.created_at', date('Y'))
-                    //                   ->whereMonth('csc_product_single.created_at', date('m'));
-                    //         });
-                    //         $coquery->orWhere(function ($coquery){
-                    //             $coquery->whereYear('csc_product_single.created_at', date('Y'))
-                    //                   ->whereMonth('csc_product_single.created_at', date('m'));
-                    //         });
-                    //     }
-
-                    //     if($hl_pisah[$i] == "hot"){
-                    //         $query->orWhereNotNull('csc_product_single.hot');
-                    //         $coquery->orWhereNotNull('csc_product_single.hot');
-                    //     }
-
-                    //     if($hl_pisah[$i] == "hot"){
-                    //         $query->orderByRaw('hot desc');
-                    //         $coquery->orderByRaw('hot desc');
-                    //     }
-                    // }
                 }else{
                     if($request->hl_prod == "new"){
                         $query->whereYear('csc_product_single.created_at', date('Y'))->whereMonth('csc_product_single.created_at', date('m'));
@@ -263,6 +244,7 @@ class FrontController extends Controller
                 }
                 $hl_sort = $request->hl_prod;
             }
+
 
             $coproduct = $coquery->orderByRaw($col)->count();
             $product = $query->orderByRaw($col)->paginate(12);
@@ -280,7 +262,7 @@ class FrontController extends Controller
         );
 
         // return view('frontend.product.all_product', compact('product', 'catprod'));
-        return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow','hot_product', 'hl_sort'));
+        return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow','hot_product', 'hl_sort', 'countNew', 'countHot'));
 
     }
 
@@ -446,15 +428,31 @@ class FrontController extends Controller
             $get_id_cat = $catdata->level_2.'|'.$catdata->level_1.'|'.$catdata->id;
         }
 
-        //Data Product
-        $product = DB::table('csc_product_single')
+        $productnya = DB::table('csc_product_single')
             ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
             ->where('itdp_company_users.status', 1)
             ->where('csc_product_single.status', 2)
             ->where('csc_product_single.'.$colnya, $id)
-            ->orderBy('csc_product_single.prodname_en', 'ASC')
-            ->paginate(12);
+            ->orderBy('csc_product_single.prodname_en', 'ASC');
+
+        //count Hot dan New Product
+        $productcheck = $productnya->get();
+        $countNew = 0;
+        $countHot = 0;
+        foreach ($productcheck as $prod) {
+            if(date('Y', strtotime($prod->created_at)) == date('Y')){
+                if(date('m', strtotime($prod->created_at)) == date('m')){
+                    $countNew = $countNew + 1;
+                }
+            }
+            if(in_array($prod->id, $hot_product)){
+                $countHot = $countHot + 1;
+            }
+        }
+        
+        //Data Product
+        $product = $productnya->paginate(12);
         $coproduct = DB::table('csc_product_single')
             ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
@@ -464,7 +462,7 @@ class FrontController extends Controller
             ->orderBy('csc_product_single.prodname_en', 'ASC')
             ->count();
 
-        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat', 'hot_product'));
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat', 'hot_product', 'countNew', 'countHot'));
     }
 
     public function view_product($id)

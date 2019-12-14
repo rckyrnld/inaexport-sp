@@ -27,7 +27,7 @@ class AdminResearchController extends Controller
 
     public function getData()
     {
-      $research = DB::table('csc_research_corner')->orderby('id', 'desc')->get();
+      $research = DB::table('csc_research_corner')->orderby('publish_date', 'desc')->get();
 
       return \Yajra\DataTables\DataTables::of($research)
           ->addIndexColumn()

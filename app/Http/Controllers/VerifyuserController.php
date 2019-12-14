@@ -53,7 +53,7 @@ class VerifyuserController extends Controller
 		}
       return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
-				 return $pesan->company;
+				 return '<div align="left">'.$pesan->company.'</div>';
             })
 			->addColumn('f2', function ($pesan) {
 				 return $pesan->email;
@@ -69,9 +69,9 @@ class VerifyuserController extends Controller
             })
 			->addColumn('f6', function ($pesan) {
 				 if($pesan->agree == 1){ 
-				 return "<center><font color='green'>Sudah</font></center>";
+				 return "<center><font color='green'>Yes</font></center>";
 				 }else{ 
-				 return "<center><font color='red'>Belum</font></center>";
+				 return "<center><font color='red'>No</font></center>";
 				 }
             })
 			->addColumn('f7', function ($pesan) {
@@ -98,7 +98,7 @@ class VerifyuserController extends Controller
 				';
 				}
             })
-			->rawColumns(['action','f6','f7'])
+			->rawColumns(['action','f6','f7','f1'])
             ->make(true);
     }
 	
@@ -127,7 +127,7 @@ class VerifyuserController extends Controller
 		}
 	 return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
-				 return $pesan->company;
+				 return '<div align="left">'.$pesan->company.'</div>';
             })
 			->addColumn('f2', function ($pesan) {
 				 return $pesan->email;
@@ -143,9 +143,9 @@ class VerifyuserController extends Controller
             })
 			->addColumn('f6', function ($pesan) {
 				 if($pesan->agree == 1){ 
-				 return "<center><font color='green'>Sudah</font></center>";
+				 return "<center><font color='green'>Yes</font></center>";
 				 }else{ 
-				 return "<center><font color='red'>Belum</font></center>";
+				 return "<center><font color='red'>No</font></center>";
 				 }
             })
 			->addColumn('f7', function ($pesan) {
@@ -176,7 +176,7 @@ class VerifyuserController extends Controller
            
                 
             })
-			->rawColumns(['action','f6','f7'])
+			->rawColumns(['action','f6','f7','f1'])
             ->make(true);
     }
 	
@@ -185,7 +185,7 @@ class VerifyuserController extends Controller
       $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from itdp_admin_users where id_group='4' order by id desc");
       return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
-				 return $pesan->name;
+				 return '<div align="left">'.$pesan->name.'</div>';
             })
 			->addColumn('f2', function ($pesan) {
 				 return $pesan->email;
@@ -213,7 +213,7 @@ class VerifyuserController extends Controller
 			   </center>';
 				
             })
-			->rawColumns(['action','f6','f7'])
+			->rawColumns(['action','f6','f7','f1'])
             ->make(true);
     }
 	

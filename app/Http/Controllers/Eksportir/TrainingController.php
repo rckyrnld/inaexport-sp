@@ -156,7 +156,10 @@ class TrainingController extends Controller
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
-            ->addColumn('action', function ($mjl) {
+            ->addColumn('nama_training', function ($mjl) {
+                return '<div align="left">'.$mjl->nama_training. '</div>';
+            })
+			->addColumn('action', function ($mjl) {
                 return '
                 <center>
                 <a href="' . route('training.vieweksportir', $mjl->id) . '" class="btn btn-sm btn-info">
@@ -166,7 +169,7 @@ class TrainingController extends Controller
                 ';
             })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','nama_training'])
             ->make(true);
     }
 }

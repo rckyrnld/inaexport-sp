@@ -123,7 +123,11 @@ class EksProductController extends Controller
 
             return \Yajra\DataTables\DataTables::of($user)
             ->addIndexColumn()
-            ->addColumn('information', function ($mjl) {
+            ->addColumn('prodname_en', function ($mjl) {
+                
+                return '<div align="left">'.$mjl->prodname_en.'</div>';
+            })
+			->addColumn('information', function ($mjl) {
                 $ket = "-";
                 if($mjl->status == 2 || $mjl->status == 3){
                     if($mjl->keterangan != NULL){
@@ -200,7 +204,7 @@ class EksProductController extends Controller
                 }
 
             })
-            ->rawColumns(['action', 'product_description'])
+            ->rawColumns(['action', 'product_description','prodname_en'])
             ->make(true);
         }
     }

@@ -39,7 +39,10 @@ class CategoryProductController extends Controller
 
       return \Yajra\DataTables\DataTables::of($product)
           ->addIndexColumn()
-          ->addColumn('action', function ($data) {
+          ->addColumn('nama_kategori_en', function ($data) {
+              return '<div align="left">'.$data->nama_kategori_en.'</div>';
+          })
+		  ->addColumn('action', function ($data) {
               return '
               <center>
               <div class="btn-group">
@@ -50,7 +53,7 @@ class CategoryProductController extends Controller
               </center>
               ';
           })
-          ->rawColumns(['action'])
+          ->rawColumns(['action','nama_kategori_en'])
           ->make(true);
     }
 

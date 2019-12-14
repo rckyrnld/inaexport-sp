@@ -35,7 +35,10 @@ class DataContactUsController extends Controller
               </center>
               ';
           })
-          ->rawColumns(['action'])
+		  ->addColumn('fullname', function ($data) {
+              return '<div align="left">'.$data->fullname.'</div>';
+          })
+          ->rawColumns(['action','fullname'])
           ->make(true);
     }
 

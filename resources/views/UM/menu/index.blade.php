@@ -25,7 +25,7 @@
                                     <th><center>No</center></th>
                                     <th><center>Nama Menu</center></th>
                                     <th><center>Url</center></th>
-                                    <th><center>Ururtan</center></th>
+                                    <th><center>Urutan</center></th>
                                     <th><center>Icon</center></th>
                                     <th width="15%"><center>Read</center></th> 
                                 </tr>
@@ -36,7 +36,7 @@
                                 @if($res->parent == 0 )
                                     <tr>
                                         <td><center>{{ $no++ }}</center></td>
-                                        <td><b>{{ $res->menu_name }}</b>
+                                        <td><div align="left"><b>{{ $res->menu_name }}</b></div>
                                        
                                         </td>
                                         <td>{{ $res->url }}</td>
@@ -63,7 +63,7 @@
                                
                                 <tr>
                                     <td></td>
-                                    <td>{{ $restwo->menu_name }}
+                                    <td><div align="left">{{ $restwo->menu_name }}</div>
 
 
                                     </td>

@@ -124,6 +124,9 @@ class ContactController extends Controller
 
         return \Yajra\DataTables\DataTables::of($user)
             ->addColumn('action', function ($mjl) {
+                return '<div align="left">'.$mjl->name. '</div>';
+            })
+			->addColumn('action', function ($mjl) {
                 return '
                 <center>
                 <a href="' . route('contact.view', $mjl->id) . '" class="btn btn-sm btn-info">
@@ -134,7 +137,7 @@ class ContactController extends Controller
                 ';
             })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','name'])
             ->make(true);
     }
 }

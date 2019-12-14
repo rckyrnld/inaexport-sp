@@ -34,10 +34,15 @@ class MasterPortController extends Controller
           ->addColumn('province_en', function ($port) {
               $data = MasterProvince::where('id', $port->id_mst_province)->first();
               if($data){
-                return $data->province_en;
+                return '<div align="left">'.$data->province_en.'</div>';
               } else {
-                return 'PROVINCE NOT FOUND';
+                return '<div align="left">PROVINCE NOT FOUND</div>';
               }
+          })
+		  ->addColumn('name_port', function ($port) {
+              
+                return '<div align="left">'.$port->name_port.'</div>';
+             
           })
           ->addColumn('action', function ($data) {
               return '
@@ -50,7 +55,7 @@ class MasterPortController extends Controller
               </center>
               ';
           })
-          ->rawColumns(['action'])
+          ->rawColumns(['action','province_en','name_port'])
           ->make(true);
     }
 

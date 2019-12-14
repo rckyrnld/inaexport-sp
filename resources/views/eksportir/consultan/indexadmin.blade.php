@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Data Consultan</h5>
+                    <h5><i></i> Data Consultation</h5>
                 </div>
 
                 <div class="box-body bg-light">
@@ -22,7 +22,7 @@
                                         <center>Name</center>
                                     </th>
                                     <th>
-                                        <center>Posisition</center>
+                                        <center>Position</center>
                                     </th>
                                     <th>
                                         <center>Phone</center>
