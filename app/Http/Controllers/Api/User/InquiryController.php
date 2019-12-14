@@ -739,9 +739,9 @@ class InquiryController extends Controller
         }
         $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
         $notif = DB::table('notif')->insert([
-            'dari_nama' => getCompanyNameImportir($sender),
+            'dari_nama' => (getCompanyNameImportir($sender) == "-") ? getCompanyName($sender) : getCompanyNameImportir($sender),
             'dari_id' => $sender,
-            'untuk_nama' => getCompanyName($receiver),
+            'untuk_nama' => (getCompanyNameImportir($receiver) == "-") ? getCompanyName($receiver) : getCompanyNameImportir($receiver),
             'untuk_id' => $receiver,
             'keterangan' => 'New Message from ' . getCompanyNameImportir($sender) . ' about Inquiry ' . $data->subyek_en,
             'url_terkait' => 'inquiry/chatting',
