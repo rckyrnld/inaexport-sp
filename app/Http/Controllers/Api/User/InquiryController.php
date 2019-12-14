@@ -724,9 +724,9 @@ class InquiryController extends Controller
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
-            $id_profil = $data = DB::table('itdp_company_users')->where('id', $user[$i]->sender)->first()->id_profil;;
+//            $id_profil = $data = DB::table('itdp_company_users')->where('id', $user[$i]->sender)->first()->id_profil;;
 //            $id_profil = $user[$i]->sender;
-            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company;
+            $jsonResult[$i]["company_name"] = (getCompanyNameImportir($user[$i]->sender) == "-") ? getCompanyName($user[$i]->sender) : getCompanyNameImportir($user[$i]->sender);
             $jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
