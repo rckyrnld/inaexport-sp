@@ -10,23 +10,28 @@
                     <div class="box-body">
                         <div class="form-row">
                             <div class="form-group col-sm-6">
-                                <label>Year</label>
-                                <input type="text" disabled value="{{$val->tahun}}" name="tahun" id="tahun" class="form-control">
+                                <label>Exhibition</label>
+                                <input type="text" disabled value="{{$val->id_itdp_eks_event_profil}}" name="exhibition" id="exhibition" class="form-control">
                             </div>
 
                             <div class="form-group col-sm-6">
-                                <label>Own Production (%)</label>
-                                <input type="text" class="form-control" disabled value="{{$val->sendiri_persen}}" name="persen_sendiri" id="persen_sendiri" required>
+                                <label>Booth Area</label>
+                                <input type="text" class="form-control" disabled value="{{$val->luas_boot}}" name="booth_area" id="booth_area" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-sm-6">
-                                <label>Outside Production (%)</label>
-                                <input type="text" disabled class="form-control" value="{{$val->outsourcing_persen}}" name="out_persen" id="out_persen">
+                                <label>Value Contract</label>
+                                <input type="text" disabled class="form-control" value="{{$val->nilai_kontrak}}" name="value_contract" id="value_contract">
                                 <input type="hidden" class="form-control" value="{{$val->id}}" name="id_sales" id="id_sales">
                             </div>
                             <div class="form-group col-sm-6">
-
+                                <label>Subsidi djpen</label>
+                                <select disabled class="form-control select2"  id="subsidi_djpen" name="subsidi_djpen">
+                                    <option value="00" {{($val->subsidi == '00')?'selected':''}}>--Select--</option>
+                                    <option value="Yes" {{($val->subsidi == 'Y')?'selected':''}}>Yes</option>
+                                    <option value="No" {{($val->subsidi == 'N')?'selected':''}}>No</option>
+                                </select>
                             </div>
                         </div>
 
@@ -44,7 +49,7 @@
 
                             </div>
                             <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/product_capacity')}}"
+                                <a style="color: white" href="{{ URL::previous() }}"
                                    class="btn btn-primary"><i style="color: white"></i>
                                     Kembali
                                 </a>

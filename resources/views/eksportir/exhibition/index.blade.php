@@ -34,7 +34,7 @@
                                         <center>Value Contract</center>
                                     </th>
                                     <th>
-                                        <center>Subsidy Djpen</center>
+                                        <center>Subsidi Djpen</center>
                                     </th>
                                     <th>
                                         <center>Action</center>
@@ -66,7 +66,7 @@
                 {data: 'id_itdp_eks_event_profil', name: 'id_itdp_eks_event_profil'},
                 {data: 'luas_boot', name: 'luas_boot'},
                 {data: 'nilai_kontrak', name: 'nilai_kontrak'},
-                {data: 'subsidi', name: 'subsidi'},
+                {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
