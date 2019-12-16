@@ -22,6 +22,6 @@
 <hr>
 <p>Dear {{$company}},</P>
 <p>There is a new inquiry from the {{$dari}}, please respond immediately to the inquiry.</p>
-<p>To knows, please enter the Trade.id application with an account that is already registered.</p>
+<p>To knows, please enter the Inaexport.id application with an account that is already registered.</p>
 <br>
 <a href="{{url('/login')}}" class="button">Next Log In</a>
