@@ -816,6 +816,21 @@ class InquiryAdminController extends Controller
                     $mail->to($users);
                 });
 
+                $users_admin = [];
+                $adminnya = DB::table('itdp_admin_users')->where('id', $id_user)->first();
+                array_push($users_admin, "kementerianperdagangan.max@gmail.com");
+
+                //Notif email ke admin
+                $dataadmin = [
+                    'pembuat' => $adminnya->name,
+                    'dari' => "admin"
+                ];
+
+                Mail::send('inquiry.mail.sendToAdmin', $dataadmin, function ($mail) use ($dataadmin, $users_admin) {
+                    $mail->subject('Inquiry Information');
+                    $mail->to($users_admin);
+                });
+
                 return redirect('/inquiry_admin');
             }else{
                 return redirect('/home');    
@@ -1049,6 +1064,7 @@ class InquiryAdminController extends Controller
 
     public function sendChat(Request $request)
     {
+		date_default_timezone_set('Asia/Jakarta');
         $datenow = date('Y-m-d H:i:s');
         $id = $request->idinquiry;
         $id_broadcast = $request->idbroadcast;
