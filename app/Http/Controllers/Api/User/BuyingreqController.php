@@ -28,7 +28,7 @@ class BuyingreqController extends Controller
     {
         $kategoriprod = DB::table('csc_product')
             ->get();
-
+        date_default_timezone_set('Asia/Jakarta');
         $quantity = array(
             "Each",
             "Foot",
@@ -97,6 +97,7 @@ class BuyingreqController extends Controller
     {
 //        dd($request);
         $kumpulcat = "";
+        date_default_timezone_set('Asia/Jakarta');
         $g = count($request->category);
         for ($a = 0; $a < $g; $a++) {
             $kumpulcat = $kumpulcat . $request->category[$a] . ",";
@@ -158,6 +159,7 @@ class BuyingreqController extends Controller
 
     public function impdata_br(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id_user = $request->id_user;
         $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request  
                            where id_pembuat='" . $id_user . "' order by id desc ");
@@ -285,6 +287,7 @@ class BuyingreqController extends Controller
 
     public function br_importir_bc(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $coba = str_replace('"', '', $request->id_csc_buying_request);
         $id = (int)$coba;
 //        dd($id);
@@ -367,6 +370,7 @@ class BuyingreqController extends Controller
 
     public function ekslistbr(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $iduser = $request->id_user;
         $data = DB::select("select a.*,a.id as ida,a.status as statusa,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where a.id = b.id_br and b.id_eks='" . $iduser . "' order by b.id desc ");
         $jsonResult = array();
@@ -487,6 +491,7 @@ class BuyingreqController extends Controller
 
     public function eksjoinbr(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id = $request->id;
         $q1 = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
         foreach ($q1 as $p) {
@@ -526,6 +531,7 @@ class BuyingreqController extends Controller
         $data3 = "";
         $data4 = "";
         $data5 = "";
+        date_default_timezone_set('Asia/Jakarta');
 //        $caribrsl = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
         $caribrsl = DB::table('csc_buying_request_join')
             ->where('id', '=', $id)
@@ -664,6 +670,7 @@ class BuyingreqController extends Controller
 
     public function br_importir_lc(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id_br = $request->id_br;
         $pesan = DB::select("select a.*,b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where b.status_join >= '1' and a.id=b.id_eks and a.id_profil = c.id and id_br='" . $id_br . "'");
         if ($pesan) {
@@ -694,7 +701,7 @@ class BuyingreqController extends Controller
     {
         $id = $request->idb;
         $id2 = $request->id_br;
-
+        date_default_timezone_set('Asia/Jakarta');
         $crv = DB::table('csc_buying_request')
             ->where('id', '=', $id2)
             ->get();
@@ -819,6 +826,7 @@ class BuyingreqController extends Controller
 
     public function eks_br_chat(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id = $request->id;
         $q1 = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
         foreach ($q1 as $p) {
@@ -1105,6 +1113,7 @@ class BuyingreqController extends Controller
 
     public function br_deal(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id = $request->idb;
         $id2 = $request->id_br;
         $id3 = $request->id_user;
