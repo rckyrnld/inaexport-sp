@@ -63,33 +63,43 @@ class ExhibitionController extends Controller
                 </center>
                 ';
             })
+            ->addColumn('status', function ($mjl) {
+                if ($mjl->subsidi == 'N') {
+                    return "NO";
+                } else if ($mjl->subsidi == 'Y') {
+                    return "YES";
+                } else {
+                    return "";
+                }
+            })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'status'])
             ->make(true);
     }
 
     public function edit($id)
     {
-        $pageTitle = 'Detail Product Capacity';
-        $url = '/eksportir/procap_update';
+        $pageTitle = 'Detail Exhibition';
+        $url = '/eksportir/exhibition_update';
 
-        $data = DB::table('itdp_eks_production')
+        $data = DB::table('itdp_eks_event_participants')
             ->where('id', '=', $id)
             ->get();
-        return view('eksportir.procap.edit', compact('pageTitle', 'data', 'url'));
+//        dd($data);
+        return view('eksportir.exhibition.edit', compact('pageTitle', 'data', 'url'));
     }
 
     public function view($id)
     {
 //        dd($id);
-        $pageTitle = 'Detail Country Patern Brand';
-        $data = DB::table('itdp_eks_production')
+        $pageTitle = 'Detail Exhibition';
+        $data = DB::table('itdp_eks_event_participants')
             ->where('id', '=', $id)
             ->get();
-        $brand = DB::table('itdp_eks_product_brand')->get();
-        $country = DB::table('mst_country')->get();
+//        $brand = DB::table('itdp_eks_product_brand')->get();
+//        $country = DB::table('mst_country')->get();
 //        dd($data);
-        return view('eksportir.procap.view', compact('pageTitle', 'data', 'brand', 'country'));
+        return view('eksportir.exhibition.view', compact('data', 'pageTitle'));
     }
 
     public function delete($id)
@@ -97,19 +107,22 @@ class ExhibitionController extends Controller
 //        dd($id);
         DB::table('itdp_eks_production')->where('id', $id)
             ->delete();
-        return redirect('eksportir/product_capacity');
+        return redirect('eksportir/exhibition');
     }
 
     public function update(Request $request)
     {
 //        dd($request);
-        DB::table('itdp_eks_production')->where('id', $request->id_sales)
+        $id_user = Auth::guard('eksmp')->user()->id_profil;
+        DB::table('itdp_eks_event_participants')->where('id', $request->id_sales)
             ->update([
-                'tahun' => $request->tahun,
-                'sendiri_persen' => $request->persen_sendiri,
-                'outsourcing_persen' => $request->out_persen,
+                'id_itdp_profil_eks' => $id_user,
+                'id_itdp_eks_event_profil' => $request->exhibition,
+                'luas_boot' => $request->booth_area,
+                'nilai_kontrak' => $request->value_contract,
+                'subsidi' => $request->subsidi_djpen
             ]);
-        return redirect('eksportir/product_capacity');
+        return redirect('eksportir/exhibition');
     }
 
     public function indexadmin($id)
@@ -129,10 +142,10 @@ class ExhibitionController extends Controller
             ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
-            ->addColumn('id_itdp_eks_event_profil', function ($mjl) {
-                return '<div align="left">'.$mjl->id_itdp_eks_event_profil.'</div>';
-            })
-			->addColumn('action', function ($mjl) {
+//            ->addColumn('id_itdp_eks_event_profil', function ($mjl) {
+//                return '<div align="left">' . $mjl->id_itdp_eks_event_profil . '</div>';
+//            })
+            ->addColumn('action', function ($mjl) {
                 return '
                 <center>
                 <a href="' . route('exhibition.view', $mjl->id) . '" class="btn btn-sm btn-info">
@@ -141,16 +154,27 @@ class ExhibitionController extends Controller
                 </center>
                 ';
             })
+            ->addColumn('status', function ($mjl) {
+                if ($mjl->subsidi == 'N') {
+                    return "NO";
+                } else if ($mjl->subsidi == 'Y') {
+                    return "YES";
+                } else {
+                    return "";
+                }
+            })
             ->addIndexColumn()
-            ->rawColumns(['action','id_itdp_eks_event_profil'])
+            ->rawColumns(['action','status'])
             ->make(true);
     }
-    public function loadP(Request $request){
+
+    public function loadP(Request $request)
+    {
 //        dd("hahaha");
         if ($request->has('q')) {
             $cari = $request->q;
 //            dd($cari);
-            $data = DB::table('event_detail')->select('id', 'event_name_en')->where('event_name_en', 'LIKE', '%'.$cari.'%')->get();
+            $data = DB::table('event_detail')->select('id', 'event_name_en')->where('event_name_en', 'LIKE', '%' . $cari . '%')->get();
 //            dd($data);
         } else {
             $data = DB::table('event_detail')->select('id', 'event_name_en')->limit(5)->get();

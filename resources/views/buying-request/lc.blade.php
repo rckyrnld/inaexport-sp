@@ -227,7 +227,7 @@ body {font-family: Arial;}
                                 <thead class="text-white" style="background-color: #1089ff;">
 									<th width="5%">No</th>
 									<th><center>Company Name</center></th>
-									<th><center>Adress</center></th>
+									<th><center>Address</center></th>
 									<th><center>Email</center></th>
 									<th><center>Status</center></th>
 									<th><center>Aksi</center></th>

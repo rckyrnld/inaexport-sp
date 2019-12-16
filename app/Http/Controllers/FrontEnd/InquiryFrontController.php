@@ -141,18 +141,23 @@ class InquiryFrontController extends Controller
                     $mail->to($data['email'], $data['username']);
                     $mail->subject('Inquiry Information');
                 });
-				
-				$data22 = [
-                    'email' => "kementerianperdagangan.max@gmail.com",
-                    'username' => $untuk->username,
-                    'type' => "eksportir",
-                    'company' => getCompanyName($dtproduct->id_itdp_company_user),
-                    'dari' => "Importer"
+
+                $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+                $users_admin = [];
+                array_push($users_admin, "kementerianperdagangan.max@gmail.com");
+                foreach ($admin as $adm) {
+                    array_push($users_admin, $adm->email);
+                }
+
+                //Notif email ke admin
+                $dataadmin = [
+                    'pembuat' => getCompanyNameImportir($id_user),
+                    'dari' => "Importir"
                 ];
 
-                Mail::send('inquiry.mail.sendToPembuat', $data22, function ($mail) use ($data22) {
-                    $mail->to($data22['email'], $data22['username']);
+                Mail::send('inquiry.mail.sendToAdmin', $dataadmin, function ($mail) use ($dataadmin, $users_admin) {
                     $mail->subject('Inquiry Information');
+                    $mail->to($users_admin);
                 });
             }
 

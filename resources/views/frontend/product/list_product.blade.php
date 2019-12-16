@@ -231,6 +231,7 @@
                                     @foreach($manufacturer as $man)
                                         <?php
                                             $checkednya = '';
+                                            $prodbyeks = '';
                                             if(isset($getEks)){
                                                 if (strstr($getEks, '|')){
                                                     $eks = explode('|', $getEks);
@@ -243,10 +244,12 @@
                                                         $checkednya = 'checked="true"';
                                                     }
                                                 }
+
+                                                $prodbyeks = $getEks;
                                             }
                                         ?>
                                         <li>
-                                            <input type="checkbox" name="checkexp" value="{{$man->id}}" id="checkexp" class="check_eks" {{$checkednya}}>
+                                            <input type="checkbox" name="checkexp" value="{{$man->id}}" id="checkexp" class="check_eks" onclick="getProductbyEksportir(this.value, '{{$prodbyeks}}', this.checked)" {{$checkednya}}>
                                             <a href="#" class="hover-none">{{$man->company}} ({{$man->jml_produk}})</a>
                                             <span class="checkmark"></span>
                                         </li>
@@ -579,28 +582,28 @@
             $('#formsprod').submit();
         });
 
-        $(".check_eks").on('change', function () {
-            if(this.checked){
-                var arrisi = [];
-                $.each($("input[name='checkexp']:checked"), function(){
-                    arrisi.push($(this).val());
-                });
-            }
+        // $(".check_eks").on('change', function () {
+        //     if(this.checked){
+        //         var arrisi = [];
+        //         $.each($("input[name='checkexp']:checked"), function(){
+        //             arrisi.push($(this).val());
+        //         });
+        //     }
 
-            if(arrisi.length != 0){
-                var isinya = "";
-                for (var i = arrisi.length - 1; i >= 0; i--) {
-                    if(isinya == ""){
-                        isinya += arrisi[i];
-                    }else{
-                        isinya += '|'+arrisi[i];
-                    }
-                }
-                // alert(isinya);
-                $('#eks_prod').val(isinya);
-                $('#formsprod').submit();
-            }
-        });
+        //     if(arrisi.length != 0){
+        //         var isinya = "";
+        //         for (var i = arrisi.length - 1; i >= 0; i--) {
+        //             if(isinya == ""){
+        //                 isinya += arrisi[i];
+        //             }else{
+        //                 isinya += '|'+arrisi[i];
+        //             }
+        //         }
+        //         // alert(isinya);
+        //         $('#eks_prod').val(isinya);
+        //         $('#formsprod').submit();
+        //     }
+        // });
 
         // $(".check_hl").on('change', function () {
         //     if(this.checked){
@@ -681,6 +684,47 @@
         }
 
         $('#hl_prod').val(isinya);
+        $('#formsprod').submit();
+    }
+
+    function getProductbyEksportir(val, isi, checked) {
+        var isinya = "";
+        if(checked){
+            if(isi == ""){
+                isinya = val;
+            }else{
+                // var stringcheck = isi.includes("|");
+                // if(stringcheck){
+                //     var pisah = isi.split('|');
+                //     var isismntra = "";
+                //     for (var i = pisah.length - 1; i >= 0; i--) {
+                //         if(isismntra == ""){
+                //             $isinya += pisah[i];
+                //         }else{
+                //             $isinya += '|'+pisah[i];
+                //         }
+                //     }
+                // }else{
+                    isinya = isi+'|'+val; 
+                // }
+            }
+        }else{
+            if(isi == ""){
+                isinya = "";
+            }else{
+                var checkstring = isi.includes("|");
+                if(checkstring){
+                    var isibar = isi.split('|');
+                    var isin = $.inArray(val, isibar);
+                    isibar.splice(isin, 1);
+                    isinya = isibar[0]; 
+                }else{
+                    isinya = "";
+                }
+            }
+        }
+
+        $('#eks_prod').val(isinya);
         $('#formsprod').submit();
     }
 </script>

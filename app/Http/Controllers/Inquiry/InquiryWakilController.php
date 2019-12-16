@@ -457,6 +457,25 @@ class InquiryWakilController extends Controller
                     $mail->to($users);
                 });
 
+                //Notif ke Admin
+                $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+                $users_admin = [];
+                array_push($users_admin, "kementerianperdagangan.max@gmail.com");
+                foreach ($admin as $adm) {
+                    array_push($users_admin, $adm->email);
+                }
+
+                //Notif email ke admin
+                $dataadmin = [
+                    'pembuat' => getPerwakilanName($id_user),
+                    'dari' => "Perwakilan"
+                ];
+
+                Mail::send('inquiry.mail.sendToAdmin', $dataadmin, function ($mail) use ($dataadmin, $users_admin) {
+                    $mail->subject('Inquiry Information');
+                    $mail->to($users_admin);
+                });
+
                 return redirect('/inquiry_perwakilan');
             }else{
                 return redirect('/home');    
@@ -528,7 +547,7 @@ class InquiryWakilController extends Controller
                     if($mjl->id_itdp_company_users != NULL){
                         $company = getCompanyName($mjl->id_itdp_company_users);
                     }
-                    return $company;
+                    return '<div align="left">'.$company.'</div>';
                 })
                 ->addColumn('status', function ($mjl) {
                     $statnya = "-";
@@ -586,7 +605,7 @@ class InquiryWakilController extends Controller
                             </center>';
                     }
                 })
-                ->rawColumns(['action', 'msg'])
+                ->rawColumns(['action', 'msg', 'company'])
                 ->make(true);
         }
     }

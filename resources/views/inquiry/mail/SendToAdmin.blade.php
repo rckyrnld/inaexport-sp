@@ -20,8 +20,8 @@
 </style>
 <p style="color: #8bbbe8; font-size: 20px;">Information</p>
 <hr>
-<p>Dear {{$company}},</P>
-<p>There are responses that have been made by the eksporters, please look immediately.</p>
+<p>Dear Admin,</P>
+<p>There are new Inquiry that has been added by {{$pembuat}}, please look immediately.</p>
 <p>To knows, please enter the Inaexport.id application with an account that is already registered.</p>
 <br>
 <a href="{{url('/login')}}" class="button">Next Log In</a>

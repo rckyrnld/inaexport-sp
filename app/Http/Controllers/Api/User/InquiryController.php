@@ -604,8 +604,9 @@ class InquiryController extends Controller
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
-            $id_profil = $user[$i]->sender;
-            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
+//            $id_profil = $user[$i]->sender;
+//            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
+            $jsonResult[$i]["company_name"] = getCompanyNameImportir($user[$i]->sender);
             $jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
@@ -723,8 +724,9 @@ class InquiryController extends Controller
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
-            $id_profil = $user[$i]->sender;
-            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
+//            $id_profil = $data = DB::table('itdp_company_users')->where('id', $user[$i]->sender)->first()->id_profil;;
+//            $id_profil = $user[$i]->sender;
+            $jsonResult[$i]["company_name"] = (getCompanyNameImportir($user[$i]->sender) == "-") ? getCompanyName($user[$i]->sender) : getCompanyNameImportir($user[$i]->sender);
             $jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
@@ -737,9 +739,9 @@ class InquiryController extends Controller
         }
         $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
         $notif = DB::table('notif')->insert([
-            'dari_nama' => getCompanyNameImportir($sender),
+            'dari_nama' => (getCompanyNameImportir($sender) == "-") ? getCompanyName($sender) : getCompanyNameImportir($sender),
             'dari_id' => $sender,
-            'untuk_nama' => getCompanyName($receiver),
+            'untuk_nama' => (getCompanyNameImportir($receiver) == "-") ? getCompanyName($receiver) : getCompanyNameImportir($receiver),
             'untuk_id' => $receiver,
             'keterangan' => 'New Message from ' . getCompanyNameImportir($sender) . ' about Inquiry ' . $data->subyek_en,
             'url_terkait' => 'inquiry/chatting',
