@@ -1240,6 +1240,7 @@ class BuyingreqController extends Controller
         $id5 = $request->username;
         $id6 = $request->idb;
         date_default_timezone_set('Asia/Jakarta');
+        $datenow = date('Y-m-d H:i:s');
 //        $getusername = DB::table('itdp_company_users')
 //            ->where('id', '=', $id5)
 //            ->first()->username;
@@ -1247,7 +1248,7 @@ class BuyingreqController extends Controller
         $insert = DB::table('csc_buying_request_chat')->insertGetId([
                 'id_br' => $id2,
                 'pesan' => $a,
-                'tanggal' => Date('Y-m-d H:m:s'),
+                'tanggal' => $datenow,
                 'id_pengirim' => $id4,
                 'id_role' => $id3,
                 'username_pengirim' => $id5,
