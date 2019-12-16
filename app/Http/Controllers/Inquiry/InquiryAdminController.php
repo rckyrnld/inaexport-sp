@@ -1049,6 +1049,7 @@ class InquiryAdminController extends Controller
 
     public function sendChat(Request $request)
     {
+		date_default_timezone_set('Asia/Jakarta');
         $datenow = date('Y-m-d H:i:s');
         $id = $request->idinquiry;
         $id_broadcast = $request->idbroadcast;

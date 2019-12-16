@@ -1409,4 +1409,48 @@ class BuyingreqController extends Controller
         }
 
     }
+	
+	public function count_br_chat(Request $request)
+    {
+        $id = $request->id;
+        $q1 = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
+        foreach ($q1 as $p) {
+            $id_br = $p->id_br;
+        }
+//        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id_br . "' and id_join='" . $id . "'");
+        $user = DB::table('csc_buying_request_chat')
+            ->where('id_br', '=', $id_br)
+            ->where('id_join', '=', $id)
+            ->orderBy('id', 'desc')
+            ->count();
+        
+
+//        dd($jsonResult);
+
+        if ($user) {
+			 $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			$data = [
+                'count' => $user
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+
+        }
+    }
 }
