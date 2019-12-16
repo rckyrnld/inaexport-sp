@@ -48,6 +48,9 @@ class PerwakilanResearchController extends Controller
               return 'Type Not Found';
             }
           })
+          ->addColumn('title_en', function ($value) {
+            return '<div align="left">'.$value->title_en.'</div>';
+          })
           ->addColumn('download', function ($value) {
             return getDataDownload($value->id);
           })
@@ -70,7 +73,7 @@ class PerwakilanResearchController extends Controller
                   </center>';
               }
           })
-          ->rawColumns(['action'])
+          ->rawColumns(['action','title_en'])
           ->make(true);
     }
 
@@ -84,14 +87,15 @@ class PerwakilanResearchController extends Controller
           ->addColumn('company', function ($var) {
             $data = DB::table('itdp_profil_eks')->where('id', $var->id_itdp_profil_eks)->first();
             if($data){
-              return $data->company;
+              return '<div align="left">'.$data->company.'</div>';
             } else {
-              return 'Profile '.$var->id_itdp_profil_eks.' Not Found';
+              return '<div align="left">Company '.$var->id_itdp_profil_eks.' Not Found</div>';
             }
           })
           ->addColumn('download_date', function ($data) {
             return date('d F Y', strtotime($data->waktu)).' ( '.date('H:i', strtotime($data->waktu)).' )';
           })
+          ->rawColumns(['company'])
           ->make(true);
     }
 
