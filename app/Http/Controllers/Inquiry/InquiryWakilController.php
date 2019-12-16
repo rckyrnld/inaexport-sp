@@ -528,7 +528,7 @@ class InquiryWakilController extends Controller
                     if($mjl->id_itdp_company_users != NULL){
                         $company = getCompanyName($mjl->id_itdp_company_users);
                     }
-                    return $company;
+                    return '<div align="left">'.$company.'</div>';
                 })
                 ->addColumn('status', function ($mjl) {
                     $statnya = "-";
@@ -586,7 +586,7 @@ class InquiryWakilController extends Controller
                             </center>';
                     }
                 })
-                ->rawColumns(['action', 'msg'])
+                ->rawColumns(['action', 'msg', 'company'])
                 ->make(true);
         }
     }

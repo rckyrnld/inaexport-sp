@@ -82,14 +82,14 @@ class HistoryFrontController extends Controller
                       $img1 = 'uploads/Eksportir_Product/Image/'.$mjl->id_product.'/'.$mjl->image_1;
                     }
                 }
-                $imgnya = '<img src="'.url('/').'/'.$img1.'" alt="" class="myImg" onclick="openImage(\''.$img1.'\')" />';
+                $imgnya = '<a href="'.url('/front_end/product/').'/'.$mjl->id_product.'"><img src="'.url('/').'/'.$img1.'" alt="" class="myImg" /></a>';
                 $prodname = "-";
                 $prodbhs = "prodname_".$lct;
                 if($mjl->$prodbhs != NULL){
                     $prodname = $mjl->$prodbhs;
                 }
 
-                return $imgnya .'&nbsp;&nbsp;&nbsp;&nbsp;'. $prodname;
+                return '<div align="left">'. $prodname.'<br>'.$imgnya.'</div>';
             })
             ->addColumn('exportir', function ($mjl) use($lct) {
                 $exp = "-";
