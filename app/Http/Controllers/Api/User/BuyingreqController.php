@@ -28,7 +28,7 @@ class BuyingreqController extends Controller
     {
         $kategoriprod = DB::table('csc_product')
             ->get();
-
+        date_default_timezone_set('Asia/Jakarta');
         $quantity = array(
             "Each",
             "Foot",
@@ -97,6 +97,7 @@ class BuyingreqController extends Controller
     {
 //        dd($request);
         $kumpulcat = "";
+        date_default_timezone_set('Asia/Jakarta');
         $g = count($request->category);
         for ($a = 0; $a < $g; $a++) {
             $kumpulcat = $kumpulcat . $request->category[$a] . ",";
@@ -128,7 +129,7 @@ class BuyingreqController extends Controller
             'ntp' => $request->ntp,
             'by_role' => '3',
             'id_pembuat' => $request->id_user,
-            'date' => Date('Y-m-d H:m:s'),
+            'date' => date('Y-m-d H:i:s'),
             'id_csc_prod' => $kumpulcat,
         ]);
         if ($insert) {
@@ -158,6 +159,7 @@ class BuyingreqController extends Controller
 
     public function impdata_br(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id_user = $request->id_user;
         $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request  
                            where id_pembuat='" . $id_user . "' order by id desc ");
@@ -285,6 +287,7 @@ class BuyingreqController extends Controller
 
     public function br_importir_bc(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $coba = str_replace('"', '', $request->id_csc_buying_request);
         $id = (int)$coba;
 //        dd($id);
@@ -313,13 +316,13 @@ class BuyingreqController extends Controller
                     if (count($cekada) == 0) {
 
                         $insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
-							('" . $id . "','" . $napro . "','" . Date('Y-m-d H:m:s') . "')");
+							('" . $id . "','" . $napro . "','" . date('Y-m-d H:i:s') . "')");
 
                         //NOTIF
                         $id_terkait = "";
                         $ket = "Buying Request created by " . $namapembuat;
                         $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-					('2','" . $namapembuat . "','" . $zzz . "','Eksportir','" . $napro . "','" . $ket . "','br_list','" . $id_terkait . "','" . Date('Y-m-d H:m:s') . "','0')");
+					('2','" . $namapembuat . "','" . $zzz . "','Eksportir','" . $napro . "','" . $ket . "','br_list','" . $id_terkait . "','" . date('Y-m-d H:i:s') . "','0')");
                         //END NOTIF
                         //EMAIL
                         $caridataeks = DB::select("select * from itdp_company_users where id='" . $napro . "'");
@@ -367,6 +370,7 @@ class BuyingreqController extends Controller
 
     public function ekslistbr(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $iduser = $request->id_user;
         $data = DB::select("select a.*,a.id as ida,a.status as statusa,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where a.id = b.id_br and b.id_eks='" . $iduser . "' order by b.id desc ");
         $jsonResult = array();
@@ -487,6 +491,7 @@ class BuyingreqController extends Controller
 
     public function eksjoinbr(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id = $request->id;
         $q1 = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
         foreach ($q1 as $p) {
@@ -526,6 +531,7 @@ class BuyingreqController extends Controller
         $data3 = "";
         $data4 = "";
         $data5 = "";
+        date_default_timezone_set('Asia/Jakarta');
 //        $caribrsl = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
         $caribrsl = DB::table('csc_buying_request_join')
             ->where('id', '=', $id)
@@ -562,7 +568,7 @@ class BuyingreqController extends Controller
 
         $ket = 'Exporter ' . $getusernameeks . " Join to your Buying Request!";
 //        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-//		('3',getCompanyName($data1),'" . $request->id_user . "','Importir','" . $data3 . "','" . $ket . "','br_importir_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
+//		('3',getCompanyName($data1),'" . $request->id_user . "','Importir','" . $data3 . "','" . $ket . "','br_importir_lc','" . $data2 . "','" . date('Y-m-d H:i:s') . "','0')
 //		");
         $notif = DB::table('notif')->insert([
             'dari_nama' => getCompanyName($data1),
@@ -572,14 +578,14 @@ class BuyingreqController extends Controller
             'keterangan' => $ket,
             'url_terkait' => 'br_importir_lc',
             'status_baca' => 0,
-            'waktu' => Date('Y-m-d H:m:s'),
+            'waktu' => date('Y-m-d H:i:s'),
             'to_role' => '3',
             'id_terkait' => $data2
         ]);
 
         $ket2 = $getusernameeks . " Join to Buying Request!";
 //        $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-//		('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_pw_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
+//		('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_pw_lc','" . $data2 . "','" . date('Y-m-d H:i:s') . "','0')
 //		");
         $notif = DB::table('notif')->insert([
             'dari_nama' => getCompanyName($data1),
@@ -589,7 +595,7 @@ class BuyingreqController extends Controller
             'keterangan' => $ket2,
             'url_terkait' => 'br_pw_lc',
             'status_baca' => 0,
-            'waktu' => Date('Y-m-d H:m:s'),
+            'waktu' => date('Y-m-d H:i:s'),
             'to_role' => '1',
             'id_terkait' => $data2
         ]);
@@ -664,6 +670,7 @@ class BuyingreqController extends Controller
 
     public function br_importir_lc(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id_br = $request->id_br;
         $pesan = DB::select("select a.*,b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where b.status_join >= '1' and a.id=b.id_eks and a.id_profil = c.id and id_br='" . $id_br . "'");
         if ($pesan) {
@@ -694,7 +701,7 @@ class BuyingreqController extends Controller
     {
         $id = $request->idb;
         $id2 = $request->id_br;
-
+        date_default_timezone_set('Asia/Jakarta');
         $crv = DB::table('csc_buying_request')
             ->where('id', '=', $id2)
             ->get();
@@ -731,7 +738,7 @@ class BuyingreqController extends Controller
 
         $ket = $getusernameimp . " Verified Buying Request!";
 //        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-//		('2','Importir','" . $request->id_user . "','Eksportir','" . $data1 . "','" . $ket . "','br_chat','" . $id . "','" . Date('Y-m-d H:m:s') . "','0')
+//		('2','Importir','" . $request->id_user . "','Eksportir','" . $data1 . "','" . $ket . "','br_chat','" . $id . "','" . date('Y-m-d H:i:s') . "','0')
 //		");
 
         $notif = DB::table('notif')->insert([
@@ -742,14 +749,14 @@ class BuyingreqController extends Controller
             'keterangan' => $ket,
             'url_terkait' => 'br_chat',
             'status_baca' => 0,
-            'waktu' => Date('Y-m-d H:m:s'),
+            'waktu' => date('Y-m-d H:i:s'),
             'to_role' => '2',
             'id_terkait' => $id
         ]);
 
         $ket2 = $getusernameimp . " Verified Buying Request!";
         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Importir','" . $data3 . "','Super Admin','1','" . $ket2 . "','br_pw_lc','" . $id2 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('1','Importir','" . $data3 . "','Super Admin','1','" . $ket2 . "','br_pw_lc','" . $id2 . "','" . date('Y-m-d H:i:s') . "','0')
 		");
 
         $data = [
@@ -819,6 +826,7 @@ class BuyingreqController extends Controller
 
     public function eks_br_chat(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id = $request->id;
         $q1 = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
         foreach ($q1 as $p) {
@@ -894,7 +902,7 @@ class BuyingreqController extends Controller
         $insert = DB::table('csc_buying_request_chat')->insertGetId([
                 'id_br' => $id2,
                 'pesan' => $a,
-                'tanggal' => Date('Y-m-d H:m:s'),
+                'tanggal' => date('Y-m-d H:i:s'),
                 'id_pengirim' => $id4,
                 'id_role' => $id3,
                 'username_pengirim' => $id5,
@@ -984,12 +992,12 @@ class BuyingreqController extends Controller
             $ket = "Eksportir " . $id5 . " Respond Chat Buying Request !";
             $it = $id2 . "/" . $id6;
             $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('3','Eksportir','" . $id4 . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
+		('3','Eksportir','" . $id4 . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . date('Y-m-d H:i:s') . "','0')
 		");
 
             $ket2 = "Eksportir " . $id5 . " Respond Chat Buying Request !";
             $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Eksportir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('1','Eksportir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . date('Y-m-d H:i:s') . "','0')
 		");
 
             $data = [
@@ -1041,12 +1049,12 @@ class BuyingreqController extends Controller
             $ket = "Importir " . $id5 . " Respond Chat Buying Request !";
             $it = $id2 . "/" . $id6;
             $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('2','Importir','" . $id4 . "','Eksportir','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('2','Importir','" . $id4 . "','Eksportir','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . date('Y-m-d H:i:s') . "','0')
 		");
 
             $ket2 = "Importir " . $id5 . " Respond Chat Buying Request !";
             $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Importir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('1','Importir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . date('Y-m-d H:i:s') . "','0')
 		");
 
             $data = [
@@ -1105,6 +1113,7 @@ class BuyingreqController extends Controller
 
     public function br_deal(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id = $request->idb;
         $id2 = $request->id_br;
         $id3 = $request->id_user;
@@ -1125,12 +1134,12 @@ class BuyingreqController extends Controller
         $ket = $getusernameeks . " Deal Buying Request!";
         $it = $id2 . "/" . $id;
         $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('3','Eksportir','" . $id3 . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
+		('3','Eksportir','" . $id3 . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . date('Y-m-d H:i:s') . "','0')
 		");
 
         $ket2 = $getusernameeks . " Deal Buying Request!";
         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Eksportir','" . $id3 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id . "','" . Date('Y-m-d H:m:s') . "','0')
+		('1','Eksportir','" . $id3 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id . "','" . date('Y-m-d H:i:s') . "','0')
 		");
 
 
@@ -1186,7 +1195,7 @@ class BuyingreqController extends Controller
                 'id_eksportir' => $id3,
                 'id_terkait' => $id2,
                 'origin' => '2',
-                'created_at' => Date('Y-m-d H:m:s'),
+                'created_at' => date('Y-m-d H:i:s'),
                 'status_transaksi' => '0'
             ]
         );
@@ -1231,6 +1240,7 @@ class BuyingreqController extends Controller
         $id5 = $request->username;
         $id6 = $request->idb;
         date_default_timezone_set('Asia/Jakarta');
+        $datenow = date('Y-m-d H:i:s');
 //        $getusername = DB::table('itdp_company_users')
 //            ->where('id', '=', $id5)
 //            ->first()->username;
@@ -1238,7 +1248,7 @@ class BuyingreqController extends Controller
         $insert = DB::table('csc_buying_request_chat')->insertGetId([
                 'id_br' => $id2,
                 'pesan' => $a,
-                'tanggal' => Date('Y-m-d H:m:s'),
+                'tanggal' => $datenow,
                 'id_pengirim' => $id4,
                 'id_role' => $id3,
                 'username_pengirim' => $id5,
@@ -1291,12 +1301,12 @@ class BuyingreqController extends Controller
             $ket = "Eksportir " . $id5 . " Respond Chat Buying Request !";
             $it = $id2 . "/" . $id6;
             $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('3','Eksportir','" . $id4 . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
+		('3','Eksportir','" . $id4 . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . date('Y-m-d H:i:s') . "','0')
 		");
 
             $ket2 = "Eksportir " . $id5 . " Respond Chat Buying Request !";
             $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Eksportir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('1','Eksportir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . date('Y-m-d H:i:s') . "','0')
 		");
 
             $data = [
@@ -1348,12 +1358,12 @@ class BuyingreqController extends Controller
             $ket = "Importir " . $id5 . " Respond Chat Buying Request !";
             $it = $id2 . "/" . $id6;
             $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('2','Importir','" . $id4 . "','Eksportir','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('2','Importir','" . $id4 . "','Eksportir','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . date('Y-m-d H:i:s') . "','0')
 		");
 
             $ket2 = "Importir " . $id5 . " Respond Chat Buying Request !";
             $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-		('1','Importir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+		('1','Importir','" . $id4 . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . date('Y-m-d H:i:s') . "','0')
 		");
 
             $data = [
