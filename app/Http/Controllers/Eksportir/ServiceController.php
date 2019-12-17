@@ -159,9 +159,9 @@ class ServiceController extends Controller
           $hitung = substr_count($value->pengalaman_en, '<p>');
           if($hitung > 3){
             $pecah = explode('<p>', $value->pengalaman_en);
-            return $pecah[1].$pecah[2].$pecah[3].'.........';
+            return '<div align="left">'.$pecah[1].$pecah[2].$pecah[3].'.........</div>';
           } else{
-            return $value->pengalaman_en;
+            return '<div align="left">'.$value->pengalaman_en.'</div>';
           }
         })
         ->addColumn('link', function ($value) {
@@ -177,9 +177,9 @@ class ServiceController extends Controller
           $hitung = preg_split('/\n/',$value->skill_en);
           // var_dump($hitung);
           if(count($hitung) > 3){
-            return $hitung[0].'<br>'.$hitung[1].'<br>'.$hitung[2].'<br>.........';
+            return '<div align="left">'.$hitung[0].'<br>'.$hitung[1].'<br>'.$hitung[2].'<br>.........</div>';
           } else{
-            return $value->skill_en;
+            return '<div align="left">'.$value->skill_en.'</div>';
           }
         })
         ->addColumn('action', function ($data) {
@@ -188,7 +188,7 @@ class ServiceController extends Controller
               return '
                 <center>
                   <div class="btn-group">
-                    <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info" style="width: 70px"><i class="fa fa-search text-white"></i><br>View</a>
+                    <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info"><i class="fa fa-search text-white"></i>&nbsp;View</a>
                   </div>
                 </center>';
             } else if($data->status != 0) {

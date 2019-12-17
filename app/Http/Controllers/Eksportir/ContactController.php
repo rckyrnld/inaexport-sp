@@ -123,8 +123,11 @@ class ContactController extends Controller
             ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
-            ->addColumn('action', function ($mjl) {
+            ->addColumn('name', function ($mjl) {
                 return '<div align="left">'.$mjl->name. '</div>';
+            })
+            ->addColumn('job_title', function ($mjl) {
+                return '<div align="left">'.$mjl->job_title. '</div>';
             })
 			->addColumn('action', function ($mjl) {
                 return '
@@ -137,7 +140,7 @@ class ContactController extends Controller
                 ';
             })
             ->addIndexColumn()
-            ->rawColumns(['action','name'])
+            ->rawColumns(['action','name','job_title'])
             ->make(true);
     }
 }

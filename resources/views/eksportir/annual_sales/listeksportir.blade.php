@@ -30,7 +30,7 @@
                         <p><h6><a href="{{url('/eksportir/rawmaterial_admin/'.$id)}}" style="color: blue">Raw
                                 Material</a></h6>
                         <p><h6><a href="{{url('/eksportir/labor_admin/'.$id)}}" style="color: blue">Labor</a>
-                        <p><h6><a href="{{url('/eksportir/consultan_admin/'.$id)}}" style="color: blue">Consultation</a>
+                        <p><h6><a href="{{url('/eksportir/consultan_admin/'.$id)}}" style="color: blue">Consultant</a>
                         </h6>
                         <p><h6><a href="{{url('/eksportir/training_admin/'.$id)}}" style="color: blue">Training</a></h6>
                         <p><h6><a href="{{url('/eksportir/taxes_admin/'.$id)}}" style="color: blue">Tax</a></h6>

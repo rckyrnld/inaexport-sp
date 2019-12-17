@@ -13,7 +13,7 @@ class ConsultanController extends Controller
     public function index()
     {
 //        dd("mantap");die();
-        $pageTitle = "Consultan";
+        $pageTitle = "Consultant";
 
         return view('eksportir.consultan.index', compact('pageTitle'));
     }
@@ -133,7 +133,7 @@ class ConsultanController extends Controller
     public function indexadmin($id)
     {
 //        dd($id);
-        $pageTitle = "Consultan";
+        $pageTitle = "Consultant";
         return view('eksportir.consultan.indexadmin', compact('pageTitle', 'id'));
     }
 
