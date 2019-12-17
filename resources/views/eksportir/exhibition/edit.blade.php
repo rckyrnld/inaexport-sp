@@ -16,13 +16,13 @@
 
                                 <div class="form-group col-sm-6">
                                     <label>Booth Area</label>
-                                    <input type="text" class="form-control" value="{{$val->luas_boot}}" name="booth_area" id="booth_area" required>
+                                    <input type="text" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="{{$val->luas_boot}}" name="booth_area" id="booth_area" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
                                     <label>Value Contract</label>
-                                    <input type="text" class="form-control" value="{{$val->nilai_kontrak}}" name="value_contract" id="value_contract">
+                                    <input type="text" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="{{$val->nilai_kontrak}}" name="value_contract" id="value_contract">
                                     <input type="hidden" class="form-control" value="{{$val->id}}" name="id_sales" id="id_sales">
                                 </div>
                                 <div class="form-group col-sm-6">

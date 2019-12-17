@@ -19,14 +19,14 @@
 
                             <div class="form-group col-sm-6">
                                 <label>Booth Area</label>
-                                <input type="text" class="form-control" name="booth_area" id="booth_area"
+                                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="form-control" name="booth_area" id="booth_area"
                                        required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Value Contract</label>
-                                <input type="text" class="form-control" name="value_contract" id="value_contract">
+                                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="form-control" name="value_contract" id="value_contract">
                             </div>
                             <div class="form-group col-sm-6">
                                 <label>Subsidi djpen</label>
