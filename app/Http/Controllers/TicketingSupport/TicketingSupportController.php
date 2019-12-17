@@ -143,6 +143,7 @@ class TicketingSupportController extends Controller
 
     public function sendchat(Request $req)
     {
+		date_default_timezone_set('Asia/Jakarta');
         $chat = ChatingTicketingSupportModel::insert([
             'id_ticketing_support' => $req->id,
             'sender' => $req->sender,

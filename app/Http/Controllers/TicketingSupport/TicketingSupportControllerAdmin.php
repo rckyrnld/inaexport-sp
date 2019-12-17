@@ -95,6 +95,7 @@ class TicketingSupportControllerAdmin extends Controller
 
 		public function sendchat(Request $req){
 			// echo $req->id;die();
+			date_default_timezone_set('Asia/Jakarta');
 			$cari1 = DB::select("select * from ticketing_support where id='".$req->id."'");
 			foreach($cari1 as $v1){ $id_company = $v1->id_pembuat; }
 			$cari2 = DB::select("select * from itdp_company_users where id='".$id_company."'");
