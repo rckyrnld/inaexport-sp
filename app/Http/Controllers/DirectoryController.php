@@ -50,7 +50,7 @@ class DirectoryController extends Controller
     	return \Yajra\DataTables\DataTables::of($buyer)
     		->addIndexColumn()
     		->addColumn('name', function($data) {
-    			return $data->company;
+    			return '<div align="left">'.$data->company.'</div>';
     		})
     		->addColumn('country', function($data){
     			$negara = DB::table('mst_country')->where('id', $data->id_mst_country)->first();
@@ -69,7 +69,7 @@ class DirectoryController extends Controller
 				</center>
 				';
 	      	})
-	      	->rawColumns(['action'])
+	      	->rawColumns(['action','name'])
 	      	->make(true);
     }
 }

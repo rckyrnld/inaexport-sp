@@ -33,6 +33,7 @@ Route::group(['middleware' => ['api']], function () {
 Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function () {
 
     Route::post('getRekapAnggota', 'Api\Admin\ManagementController@getRekapAnggota');
+    Route::post('getRekapAnggotaEks', 'Api\Admin\ManagementController@getRekapAnggotaEks');
 
     Route::post('getDetailVerifikasiImportir', 'Api\Admin\ManagementController@detailVerifikasiImportir');
     Route::post('submitVerifikasiImportir', 'Api\Admin\ManagementController@submitVerifikasiImportir');

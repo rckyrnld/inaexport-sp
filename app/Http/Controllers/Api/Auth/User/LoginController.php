@@ -75,7 +75,7 @@ class LoginController extends Controller
         $meta = [
             'code' => 200,
             'message' => 'Success',
-            'status' => 'Success'
+            'status' => 'OK'
         ];
         $datas[0]->type = $company[0]->type;
         $datas[0]->access_token = $token;
@@ -86,6 +86,7 @@ class LoginController extends Controller
         $datas[0]->username = $company[0]->username;
         $datas[0]->id_template_reject = ($company[0]->id_template_reject == null ? "" : $company[0]->id_template_reject);
         $datas[0]->keterangan_reject = $company[0]->keterangan_reject;
+        $datas[0]->status_verif = $company[0]->status;
 //    $data = [
 //        'access_token' => $token,
 //        'token_type' => 'Bearer',

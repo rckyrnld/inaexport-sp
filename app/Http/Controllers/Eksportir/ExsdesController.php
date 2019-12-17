@@ -145,8 +145,11 @@ class ExsdesController extends Controller
                 </center>
                 ';
             })
+            ->addColumn('country', function ($mjl) {
+                return '<div align="left">'.$mjl->country.'</div>';
+            })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','country'])
             ->make(true);
     }
 }

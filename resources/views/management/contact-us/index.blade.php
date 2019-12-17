@@ -22,9 +22,9 @@
 					      <thead class="text-white" style="background-color: #1089ff;">
 					          <tr>
 					              <th width="7%">No</th>
-					              <th>Fullname</th>
+					              <th>Full Name</th>
 					              <th>Email</th>
-					              <th>Subyek</th>
+					              <th>Subject</th>
 					              <th>Message</th>
 					              <th width="14%">Action</th>
 					          </tr>

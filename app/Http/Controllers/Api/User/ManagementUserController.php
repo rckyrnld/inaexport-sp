@@ -24,7 +24,7 @@ class ManagementUserController extends Controller
 
     public function downloadResearch(Request $request)
     {
-
+        date_default_timezone_set('Asia/Jakarta');
         $id_profil = $request->id_profil;
         $id_reseach = $request->id_research;
         $date = date('Y-m-d H:i:s');
@@ -92,6 +92,7 @@ class ManagementUserController extends Controller
 
     public function joinTraining(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $store = DB::table('training_join')->insert([
             'id_training_admin' => $request->id_training,
             'id_profil_eks' => $request->id_user,
@@ -134,6 +135,7 @@ class ManagementUserController extends Controller
 
     public function joinEvent(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $datenow = date("Y-m-d H:i:s");
         $id_user = $request->id_user;
         $event = DB::table('event_company_add')->insert([
@@ -167,6 +169,7 @@ class ManagementUserController extends Controller
 
     public function createTicketing(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $store = TicketingSupportModel::create([
             'id_pembuat' => $request->id_user,
             'name' => $request->name,
@@ -193,7 +196,7 @@ class ManagementUserController extends Controller
         $ket = "Ticketing was created by " . $request->name;
         $ket2 = "You was create ticketing !";
         $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('1','" . $request->name . "','" . $request->id_user . "','Super Admin','1','" . $ket . "','admin/ticketing/chatview','" . $id_ticketing . "','" . Date('Y-m-d H:m:s') . "','0')
+			('1','" . $request->name . "','" . $request->id_user . "','Super Admin','1','" . $ket . "','admin/ticketing/chatview','" . $id_ticketing . "','" . date('Y-m-d H:i:s') . "','0')
 		");
 
         Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
@@ -225,6 +228,7 @@ class ManagementUserController extends Controller
 
     public function data_ticketing(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id_user = $request->id_user;
         $tick = TicketingSupportModel::from('ticketing_support as ts')
             ->where('ts.id_pembuat', $id_user)
@@ -256,6 +260,7 @@ class ManagementUserController extends Controller
 
     public function vchat(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id = $request->id_tiketing;
         $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
             ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
@@ -282,6 +287,7 @@ class ManagementUserController extends Controller
 	
 	public function count_tkt_chat(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id = $request->id_tiketing;
         $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
             ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
@@ -335,6 +341,7 @@ class ManagementUserController extends Controller
 	
 	public function count_inq_chat(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id_inquiry = $request->id_inquiry;
 
 		$user = DB::table('csc_chatting_inquiry')
@@ -372,6 +379,7 @@ class ManagementUserController extends Controller
 
     public function sendchat(Request $req)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $chat = ChatingTicketingSupportModel::insertGetId([
             'id_ticketing_support' => $req->id_tiketing,
             'sender' => $req->id_pembuat,
@@ -402,6 +410,7 @@ class ManagementUserController extends Controller
 
     public function destroytiketing(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id = $request->id_tiketing;
         $data2 = ChatingTicketingSupportModel::where('id_ticketing_support', $id)->delete();
         $data = TicketingSupportModel::where('id', $id)->delete();
@@ -430,6 +439,7 @@ class ManagementUserController extends Controller
 
     public function getTransaksi(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         if ($request->id_role == 2) {
             $data = DB::table('csc_transaksi')
                 ->where('id_eksportir', $request->id_user)
@@ -518,6 +528,7 @@ class ManagementUserController extends Controller
 
     public function detailTransaksi(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $user = DB::table('csc_transaksi')
             ->where('id_transaksi', $request->id_transaksi)
             ->first();
@@ -670,6 +681,7 @@ class ManagementUserController extends Controller
 
     public function getNotif(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id_user = $request->id_user;
         $id_role = $request->id_role;
         $offsite = $request->offsite;
@@ -700,6 +712,7 @@ class ManagementUserController extends Controller
 
     public function updateNotif(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $id_notif = $request->id_notif;
         $update = DB::select("update notif set status_baca='1' where id='" . $id_notif . "'");
         if (count($update) > 0) {
@@ -730,6 +743,7 @@ class ManagementUserController extends Controller
     {
 //        $id_br = $request->id_br;
 //        dd($id_br);
+        date_default_timezone_set('Asia/Jakarta');
         $ch1 = str_replace(".", "", $request->tp);
         $ch2 = str_replace(",", ".", $ch1);
         if ($request->origin == 2) {
@@ -743,12 +757,12 @@ class ManagementUserController extends Controller
                 }
                 $ket = "Transaction Created by " . $request->username;
                 $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('3','Eksportir','" . $request->id_user . "','Importir','" . $request->id_pembuat . "','" . $ket . "','detailtrx','" . $request->id_transaksi . "','" . Date('Y-m-d H:m:s') . "','0')
+			('3','Eksportir','" . $request->id_user . "','Importir','" . $request->id_pembuat . "','" . $ket . "','detailtrx','" . $request->id_transaksi . "','" . date('Y-m-d H:i:s') . "','0')
 			");
 
                 $ket2 = "Transaction Created by " . $request->username;
                 $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_trx2','" . $request->id_transaksi . "','" . Date('Y-m-d H:m:s') . "','0')
+			('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_trx2','" . $request->id_transaksi . "','" . date('Y-m-d H:i:s') . "','0')
 			");
 
                 $data = [
@@ -778,7 +792,7 @@ class ManagementUserController extends Controller
             } else {
                 $ket2 = "Transaction Created by " . $request->username;
                 $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_trx2','" . $request->id_transaksi . "','" . Date('Y-m-d H:m:s') . "','0')
+			('1','Eksportir','" . $request->id_user . "','Super Admin','1','" . $ket2 . "','br_trx2','" . $request->id_transaksi . "','" . date('Y-m-d H:i:s') . "','0')
 			");
 
                 $data22 = [
@@ -796,7 +810,7 @@ class ManagementUserController extends Controller
 
             $ket3 = "Transaction Created By You";
             $insertnotif3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('2','Eksportir','" . $request->id_user . "','Eksportir','" . $request->id_user . "','" . $ket3 . "','input_transaksi','" . $request->id_transaksi . "','" . Date('Y-m-d H:m:s') . "','0')
+			('2','Eksportir','" . $request->id_user . "','Eksportir','" . $request->id_user . "','" . $ket3 . "','input_transaksi','" . $request->id_transaksi . "','" . date('Y-m-d H:i:s') . "','0')
 			");
             $data33 = [
                 'email' => "",
