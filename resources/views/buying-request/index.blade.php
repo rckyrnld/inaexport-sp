@@ -24,19 +24,15 @@
                                         <center>Product Name</center>
                                     </th>
                                     <th>
+                                        <center>Category</center>
+                                    </th>
+									<th>
+                                        <center>Date</center>
+                                    </th>
+                                    <th>
                                         <center>Duration</center>
                                     </th>
 									<th>
-                                        <center>Created By</center>
-                                    </th>
-                                    <th>
-                                        <center>Created Date</center>
-                                    </th>
-									<th>
-                                        <center>Category</center>
-                                    </th>
-									
-                                    <th>
                                         <center>Status</center>
                                     </th>
 									<th width="18%">
@@ -93,12 +89,9 @@ function xy(a){
             columns: [
                 {data: 'row', name: 'row'},
                 {data: 'f1', name: 'f1'},
-                {data: 'f2', name: 'f2'},
-				{
-					data: 'f6', name: 'f6', orderable: false, searchable: false
-				},
-                {data: 'f3', name: 'f3'},
                 {data: 'f4', name: 'f4'},
+                {data: 'f3', name: 'f3'},
+                {data: 'f2', name: 'f2'},
                 
 				{
 					data: 'f7', name: 'f7', orderable: false, searchable: false

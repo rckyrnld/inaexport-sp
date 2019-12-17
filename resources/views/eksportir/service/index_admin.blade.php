@@ -25,10 +25,10 @@
 					              <th>Name</th>
 					              <th width="15%">Field of Works</th>
                                   <th width="15%">Skills</th>
-                                  <th>Experiences (DN/LN)</th>
-                                  <th>Links</th>
+                                  <th width="30%">Experiences (DN/LN)</th>
+                                  <th width="10%">Links</th>
                                   <th>Status</th>
-					              <th width="16%">Action</th>
+					              <th>Action</th>
 					          </tr>
 					      </thead>
 					    </table>

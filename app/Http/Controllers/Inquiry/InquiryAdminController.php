@@ -418,7 +418,7 @@ class InquiryAdminController extends Controller
                     if($mjl->id_pembuat != NULL){
                         $company = getCompanyNameImportir($mjl->id_pembuat);
                     }
-                    return $company;
+                    return '<div align="left">'.$company.'</div>';
                 })
                 ->addColumn('category', function ($mjl) {
                     $category = "-";
@@ -437,7 +437,7 @@ class InquiryAdminController extends Controller
                         }
                         
                     }
-                    return $category;
+                    return '<div align="left">'.$category.'</div>';
                 })
                 ->addColumn('status', function ($mjl) {
                     $statnya = "-";
@@ -519,7 +519,7 @@ class InquiryAdminController extends Controller
                         <a href="'.url('/inquiry_admin/view_importir').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> View</a>
                         </center>';
                 })
-                ->rawColumns(['action', 'msg','subject'])
+                ->rawColumns(['action', 'msg','subject','category','company'])
                 ->make(true);
         }
     }
