@@ -113,7 +113,7 @@ class InquiryEksController extends Controller
                         $category = getProductCategoryInquiry($mjl->id);
                         $category = '<div style="height: 100%; width: 100%;" align="left">'.$category.'</div>';
                     }
-                    return $category;
+                    return "<div align='left'>".$category."</div>";
                 })
                 ->addColumn('status', function ($mjl) {
                     $statnya = "-";
