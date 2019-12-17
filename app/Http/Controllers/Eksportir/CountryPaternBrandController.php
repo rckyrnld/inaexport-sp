@@ -26,7 +26,7 @@ class CountryPaternBrandController extends Controller
             ->get();
         $country = DB::table('mst_country')->get();
         $url = '/eksportir/country_patern_brand_save';
-        $pageTitle = 'Tambah country patern brand';
+        $pageTitle = 'Add Country Patent Brand';
         return view('eksportir.country_patern_brand.tambah', compact('country', 'pageTitle', 'url', 'brand'));
     }
 
@@ -55,7 +55,10 @@ class CountryPaternBrandController extends Controller
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
-            ->addColumn('action', function ($mjl) {
+            ->addColumn('merek', function ($mjl) {
+                return '<div align="left">'.$mjl->merek. '</div>';
+            })
+			->addColumn('action', function ($mjl) {
                 return '
                 <center>
                 <a href="' . route('country_patern_brand.view', $mjl->id) . '" class="btn btn-sm btn-info">
@@ -71,7 +74,7 @@ class CountryPaternBrandController extends Controller
                 ';
             })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','merek'])
             ->make(true);
     }
 

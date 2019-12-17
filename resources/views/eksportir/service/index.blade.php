@@ -26,8 +26,8 @@
 					              <th>Name</th>
 					              <th width="15%">Field of Works</th>
                                   <th>Skills</th>
-                                  <th>Experiences (DN/LN)</th>
-                                  <th>Links</th>
+                                  <th width="20%">Experiences (DN/LN)</th>
+                                  <th width="12%">Links</th>
                                   <th>Status</th>
 					              <th width="20%">Action</th>
 					          </tr>
