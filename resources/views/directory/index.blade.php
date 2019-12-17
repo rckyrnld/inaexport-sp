@@ -69,7 +69,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" id="filter" class="btn btn-primary">Save changes</button>
+            <button type="button" id="filter" class="btn btn-primary">View</button>
           </div>
         </div>
       </div>

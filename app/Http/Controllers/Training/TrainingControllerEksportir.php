@@ -81,20 +81,29 @@ class TrainingControllerEksportir extends Controller
 
       return \Yajra\DataTables\DataTables::of($tick)
           ->addColumn('start_date', function($data){
-						$date = date("Y/m/d", strtotime($data->start_date));
-						$date2 = date("Y/m/d", strtotime($data->end_date));
-						return ''.$date.' - '.$date2.'';
-					})
+				$date = date("Y/m/d", strtotime($data->start_date));
+				$date2 = date("Y/m/d", strtotime($data->end_date));
+				return ''.$date.' - '.$date2.'';
+			})
           ->addColumn('duration', function($data){
-             return ''.$data->duration.' '.$data->param.'';
-					})
+             	return ''.$data->duration.' '.$data->param.'';
+			})
+          ->addColumn('training_en', function($data){
+             	return '<div align="left">'.$data->training_en.'</div>';
+			})
+          ->addColumn('topic_en', function($data){
+             	return '<div align="left">'.$data->topic_en.'</div>';
+			})
+          ->addColumn('location_en', function($data){
+             	return '<div align="left">'.$data->location_en.'</div>';
+			})
           ->addColumn('action', function ($data) {
           		$data = getContactPerson($data->id, 'training');
           		return '<center>
                   <button onclick="contact_person(\''.$data.'\')" class="btn btn-sm btn-info text-white">&nbsp;View&nbsp;</button>
                   </center>';
           })
-          ->rawColumns(['action'])
+          ->rawColumns(['action','training_en','topic_en','location_en'])
           ->make(true);
     }
 
