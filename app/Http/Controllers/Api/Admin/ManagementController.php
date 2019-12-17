@@ -22,31 +22,84 @@ class ManagementController extends Controller
         auth()->shouldUse('api_admin');
     }
 
-    public function getRekapAnggota()
+    public function getRekapAnggota(Request $request)
     {
+//        dd($request);
+        $offset = $request->offset;
         // dd(auth()->authenticate());
-        $data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
-        $eksportirs = DB::table('itdp_company_users')
-            ->leftJoin('itdp_profil_eks', 'itdp_company_users.id_profil', '=', 'itdp_profil_eks.id')
-            ->where('itdp_company_users.id_role', '2')
-            ->select('itdp_company_users.*', 'itdp_profil_eks.*')
-            ->orderBy('itdp_company_users.id', 'desc')->skip($request->skip)
-            ->take($request->take)->get();
+//        $data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc LIMIT 10 OFFSET " . $offsite .");
         $importirs = DB::table('itdp_company_users')
             ->leftJoin('itdp_profil_imp', 'itdp_company_users.id_profil', '=', 'itdp_profil_imp.id')
             ->where('itdp_company_users.id_role', '3')
-            ->select('itdp_company_users.*', 'itdp_profil_imp.*')
-            ->orderBy('itdp_company_users.id', 'desc')->skip($request->skip)
-            ->take($request->take)->get();
-        $data = ['importirs' => $importirs, 'eksportirs' => $eksportirs];
-        $dataResult = $this->customPaginate($data, $pageNya);
-        if (count($eksportirs) > 0 && count($importirs) > 0) {
-            $res['message'] = "Success";
-            $res['data'] = $dataResult;
-            $res['status_code'] = 200;
+            ->selectRaw('itdp_company_users.id as id_user, itdp_company_users.id_profil as id_profil, 
+            itdp_company_users.*, itdp_company_users.status as status_verif, itdp_profil_imp.*')
+//            ->select('itdp_company_users.*', 'itdp_profil_imp.*')
+            ->orderBy('itdp_company_users.id', 'desc')
+            ->offset($offset)
+            ->limit(10)
+            ->get();
+//        $data = ['importirs' => $importirs, 'eksportirs' => $eksportirs];
+//        $dataResult = $this->customPaginate($data, $pageNya);
+        if (count($importirs) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $importirs;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         } else {
-            $res['message'] = "Failed";
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
+    public function getRekapAnggotaEks(Request $request)
+    {
+//        dd($request);
+        $offset = $request->offset;
+        // dd(auth()->authenticate());
+//        $data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc LIMIT 10 OFFSET " . $offsite .");
+        $importirs = DB::table('itdp_company_users')
+            ->leftJoin('itdp_profil_eks', 'itdp_company_users.id_profil', '=', 'itdp_profil_eks.id')
+            ->where('itdp_company_users.id_role', '2')
+            ->selectRaw('itdp_company_users.id as id_user, itdp_company_users.id_profil as id_profil, 
+            itdp_company_users.*, itdp_company_users.status as status_verif, itdp_profil_eks.*')
+//            ->select('itdp_company_users.*', 'itdp_profil_imp.*')
+            ->orderBy('itdp_company_users.id', 'desc')
+            ->offset($offset)
+            ->limit(10)
+            ->get();
+//        $data = ['importirs' => $importirs, 'eksportirs' => $eksportirs];
+//        $dataResult = $this->customPaginate($data, $pageNya);
+        if (count($importirs) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $importirs;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         }
     }
