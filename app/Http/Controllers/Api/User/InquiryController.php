@@ -442,7 +442,7 @@ class InquiryController extends Controller
 
         $durasi = 0;
         if ($data) {
-            if ($data->duration != NULL) {
+            if ($data->duration != "None") {
                 $jn = explode(' ', $data->duration);
                 if ($jn[1] == "week" || $jn[1] == "weeks") {
                     $durasi = (int)$jn[0] * 7;
