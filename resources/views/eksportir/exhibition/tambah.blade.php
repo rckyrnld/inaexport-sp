@@ -30,7 +30,6 @@
                             </div>
                             <div class="form-group col-sm-6">
                                 <label>Subsidi djpen</label>
-                                <input type="text" class="form-control" name="subsidi_djpen" id="subsidi_djpen">
                                 <select class="form-control select2"  id="subsidi_djpen" name="subsidi_djpen">
                                     <option value="00">--Select--</option>
                                     <option value="Yes">Yes</option>
