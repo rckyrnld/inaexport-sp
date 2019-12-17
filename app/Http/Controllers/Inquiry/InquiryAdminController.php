@@ -826,7 +826,7 @@ class InquiryAdminController extends Controller
                     'dari' => "admin"
                 ];
 
-                Mail::send('inquiry.mail.sendToAdmin', $dataadmin, function ($mail) use ($dataadmin, $users_admin) {
+                Mail::send('inquiry.mail.SendToAdmin', $dataadmin, function ($mail) use ($dataadmin, $users_admin) {
                     $mail->subject('Inquiry Information');
                     $mail->to($users_admin);
                 });
