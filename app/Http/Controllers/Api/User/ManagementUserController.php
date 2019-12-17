@@ -279,6 +279,96 @@ class ManagementUserController extends Controller
             return $res;
         }
     }
+	
+	public function count_tkt_chat(Request $request)
+    {
+        $id = $request->id_tiketing;
+        $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
+            ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
+            ->where('ts.id', $id)
+            ->orderby('cts.messages_send', 'asc')
+            ->count();
+
+        $users = TicketingSupportModel::where('id', $id)->first();
+
+		/*
+        if (count($messages) > 0) {
+            return response($messages);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+        }
+		*/
+		if ($messages) {
+			 $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			$data = [
+                'count' => $messages
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+
+        }
+    }
+	
+	public function count_inq_chat(Request $request)
+    {
+        $id_inquiry = $request->id_inquiry;
+
+		$user = DB::table('csc_chatting_inquiry')
+            ->where('id_inquiry', $id_inquiry)
+            ->where('type', 'importir')
+            ->orderBy('created_at', 'desc')
+            ->count();
+		
+		if ($user) {
+			 $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			$data = [
+                'count' => $user
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+
+        }
+    }
 
     public function sendchat(Request $req)
     {
