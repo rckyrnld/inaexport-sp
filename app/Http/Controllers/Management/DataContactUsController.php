@@ -35,10 +35,16 @@ class DataContactUsController extends Controller
               </center>
               ';
           })
-		  ->addColumn('fullname', function ($data) {
+		      ->addColumn('fullname', function ($data) {
               return '<div align="left">'.$data->fullname.'</div>';
           })
-          ->rawColumns(['action','fullname'])
+          ->addColumn('subyek', function ($data) {
+              return '<div align="left">'.$data->subyek.'</div>';
+          })
+          ->addColumn('message', function ($data) {
+              return '<div align="left">'.$data->message.'</div>';
+          })
+          ->rawColumns(['action','fullname','subyek','message'])
           ->make(true);
     }
 
