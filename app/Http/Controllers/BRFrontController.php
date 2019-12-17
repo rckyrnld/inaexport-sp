@@ -342,6 +342,7 @@ class BRFrontController extends Controller
 	
 	public function uploadpop(Request $request)
     {		
+			date_default_timezone_set('Asia/Jakarta');
 			$cari = DB::select("select * from csc_buying_request_join where id='".$request->idb."'");
 			foreach($cari as $cr1){
 				$data1 = $cr1->id_eks;
@@ -355,17 +356,17 @@ class BRFrontController extends Controller
 			$it = $request->idb;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('2','Importir','".Auth::guard('eksmp')->user()->id."','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+			('2','Importir','".Auth::guard('eksmp')->user()->id."','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
 			");
 		
 			$ket2 = "Impotir ".Auth::guard('eksmp')->user()->username." Upload Invoice On Buying Request !";
 			$insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('1','Importir','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_pw_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+			('1','Importir','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_pw_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
 			");
 			
 			$ket3 = "You Had Uploaded Invoice On Buying Request !";
 			$insertnotif3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('3','Importir','".Auth::guard('eksmp')->user()->id."','Importir','".Auth::guard('eksmp')->user()->id."','".$ket3."','br_importir_chat','".$it2."','".Date('Y-m-d H:m:s')."','0')
+			('3','Importir','".Auth::guard('eksmp')->user()->id."','Importir','".Auth::guard('eksmp')->user()->id."','".$ket3."','br_importir_chat','".$it2."','".Date('Y-m-d H:i:s')."','0')
 			");
 			
 			
@@ -380,13 +381,14 @@ class BRFrontController extends Controller
 			$request->file('filez')->move($destinationPath, $file);
 			$insert = DB::select("
 			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
-			('".$idq."','".$request->catatan."','".Date('Y-m-d H:m:s')."','".$request->idc."','".$request->ide."','".$request->idd."','".$idb."','".$file."')");
+			('".$idq."','".$request->catatan."','".Date('Y-m-d H:i:s')."','".$request->idc."','".$request->ide."','".$request->idd."','".$idb."','".$file."')");
 			
 			return redirect('br_importir_chat/'.$idq.'/'.$idb);
 	}
 	
 	public function uploadpop2(Request $request)
     {		
+			date_default_timezone_set('Asia/Jakarta');
 			$cari = DB::select("select * from csc_buying_request_join where id='".$request->idq."'");
 			foreach($cari as $cr1){
 				$data1 = $cr1->id_eks;
@@ -404,21 +406,21 @@ class BRFrontController extends Controller
 			$request->file('filez')->move($destinationPath, $file);
 			$insert = DB::select("
 			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
-			('".$idb."','".$request->catatan."','".Date('Y-m-d H:m:s')."','".$request->idc."','".$request->ide."','".$request->idd."','".$idq."','".$file."')");
+			('".$idb."','".$request->catatan."','".Date('Y-m-d H:i:s')."','".$request->idc."','".$request->ide."','".$request->idd."','".$idq."','".$file."')");
 			
 			if($request->ide == 1){
 			$ket = "Super Admin Upload Invoice On Buying Request !";
 			$it = $request->idq;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('2','Admin','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+			('2','Admin','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
 			");
 			}else{
 			$ket = "Perwakilan Upload Invoice On Buying Request !";
 			$it = $request->idq;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('2','Admin','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+			('2','Admin','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
 			");
 			}
 			

@@ -274,7 +274,7 @@ class BuyingRequestController extends Controller
 		$a = $_GET['a'];
 		$insert = DB::select("
 			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join) values
-			('".$id2."','".$a."','".Date('Y-m-d H:m:s')."','".$id4."','".$id3."','".$id5."','".$id6."')");
+			('".$id2."','".$a."','".Date('Y-m-d H:i:s')."','".$id4."','".$id3."','".$id5."','".$id6."')");
 		$cari = DB::select("select * from csc_buying_request where id='".$id2."'");
 		foreach($cari as $aja){
 			$data1 = $aja->id_pembuat;
@@ -290,12 +290,12 @@ class BuyingRequestController extends Controller
 		$ket = "Eksportir ".Auth::guard('eksmp')->user()->username." Respond Chat Buying Request !";
 		$it = $id2."/".$id6;
 		$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('3','Eksportir','".Auth::guard('eksmp')->user()->id."','Importir','".$data1."','".$ket."','br_importir_chat','".$it."','".Date('Y-m-d H:m:s')."','0')
+		('3','Eksportir','".Auth::guard('eksmp')->user()->id."','Importir','".$data1."','".$ket."','br_importir_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
 		");
 		
 		$ket2 = "Eksportir ".Auth::guard('eksmp')->user()->username." Respond Chat Buying Request !";
 		$insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('1','Eksportir','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_pw_chat','".$id6."','".Date('Y-m-d H:m:s')."','0')
+		('1','Eksportir','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_pw_chat','".$id6."','".Date('Y-m-d H:i:s')."','0')
 		");
 		
 		$data = [
