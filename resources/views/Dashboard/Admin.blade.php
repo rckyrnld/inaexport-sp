@@ -84,6 +84,9 @@
                         <a class="nav-link" data-toggle="tab" data-target="#tab6">
                             <i class="fa fa-plus-circle"></i> Training
                         </a>
+                        <a class="nav-link" data-toggle="tab" data-target="#tab7">
+                            <i class="fa fa-plus-circle"></i> Representative
+                        </a>
                     </div>
                 </div>
                 <div class="box-body">
@@ -149,6 +152,15 @@
                             <a id="export_pdf_6" class="btn btn-success"><font color="white"><i
                                             class="fa fa-download"></i> Export PDF</font></a>
                         </div>
+                        <div class="tab-pane animate fadeIn text-muted" id="tab7">
+                            <div class="row">
+                                <div id="statistik"
+                                     style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
+
+                            </div>
+                            <a id="export_pdf_7" class="btn btn-success"><font color="white"><i
+                                            class="fa fa-download"></i> Export PDF</font></a>
+                        </div>
                     </div>
 
                 </div>
@@ -174,7 +186,53 @@
         buying();
         event();
         training();
+        statistik();
     });
+
+    function statistik() {
+        var data = JSON.parse('<?php echo addcslashes(json_encode($Statistik), '\'\\'); ?>');
+        var defaultTitle = "Most Active Representative";
+        var drilldownTitle = "Most Active Representative";
+
+        var chart_user = Highcharts.chart('statistik', {
+            chart: {
+                type: 'column',
+                events: {
+                    drilldown: function (e) {
+                      console.log(e);
+                        // chart.setTitle({text: drilldownTitle + e.point.name});
+                    },
+                    drillup: function (e) {
+                        // chart.setTitle({text: defaultTitle});
+                    }
+                }
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                allowDecimals: false,
+                title: {
+                    text: ''
+                }
+            },
+            series: data,
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: defaultTitle
+            },
+            legend: {
+                enabled: true
+            }
+        });
+        $('#export_pdf_7').click(function() {
+          Highcharts.exportCharts([chart_user], {
+            type: 'application/pdf'
+          });
+        });
+    }
 
     function user() {
         var data = JSON.parse('<?php echo addcslashes(json_encode($User), '\'\\'); ?>');
