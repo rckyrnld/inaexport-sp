@@ -690,6 +690,24 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
         e.preventDefault();
     } 
 ); */
+$(document).ready(function(){
+    setInterval(function() {
+        x = <?php echo $id; ?>;
+		y = <?php echo $idb; ?>;
+		var token = $('meta[name="csrf-token"]').attr('content');
+		$.get('{{URL::to("refreshchat/")}}/'+x+'/'+y,{_token:token},function(data){
+			$('#rchat').html(data)
+			 });
+	}, 2000);
+	/*
+	setInterval(updateScroll,1000);
+	function updateScroll(){
+	setInterval(updateScroll,1000);
+    var element = document.getElementById("rchat");
+    element.scrollTop = element.scrollHeight;
+	}
+	*/
+});
 
 function kirimchat(){
 	var a= $('#inputan').val();

@@ -133,6 +133,11 @@ class BRFrontController extends Controller
 		return view('buying-request.refresh2',compact('id','id2'));
 	}
 	
+	public function refreshchat3($id,$id2)
+    {
+		return view('buying-request.refresh3',compact('id','id2'));
+	}
+	
 	public function br_konfirm($id,$id2)
     {
 		$crv = DB::select("select * from csc_buying_request where id='".$id2."'");
