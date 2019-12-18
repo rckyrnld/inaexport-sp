@@ -25,12 +25,9 @@
         border: none;
     }
 
-    .hover-none:hover{
-        color: #007bff;
-    }
-
-    .hover-none:hover{
-        color: #007bff;
+    .hover-none:hover,.hover-none:active{
+        color: #007bff !important;
+        cursor: context-menu;
         text-decoration: none;
     }
 

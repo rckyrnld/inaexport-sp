@@ -863,3 +863,29 @@ if (! function_exists('hotProduct')) {
         return $hot;
     }
 }
+
+
+if (! function_exists('userGuide')) {
+    function userGuide($lang, $param){
+        $language = ['en' => 'User Guide', 'in' => 'Panduan Pengguna', 'ch' => '用户指南'];
+        $check = DB::table('user_guide')->orderBy('created_at','desc')->first();
+
+        if($check){
+          $url = url('/').'/uploads/User Guide/'.$check->name_version;
+          $donlod = 'download';
+        } else {
+          $url = '#';
+          $donlod = '';
+        }
+        if($lang == 'backend'){
+          if($param == 1){
+            $return = '<a href="'.route('user-guide.index').'">';
+          } else {
+            $return = '<a href="'.$url.'" '.$donlod.'>';
+          }
+        } else {
+            $return = '<li><a href="'.$url.'" '.$donlod.'  class="third-child">'.$language[$lang].'</a></li>';
+        }
+        echo $return;
+    }
+}

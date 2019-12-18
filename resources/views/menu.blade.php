@@ -56,10 +56,25 @@
 
 
          @endforeach
-		 
 		 <?php if(empty(Auth::user()->id_group)){ ?>
-		 
+          </li><li>
+            {{userGuide('backend', Auth::guard('eksmp')->user()->id_role)}}
+              <span class="nav-icon">
+                <i class="fa fa-book"></i>
+              </span>
+              <span class="nav-text"><b>User Guide</b></span>
+            </a>
+          </li>
+
 		 <?php }else { ?>
+          <li>
+            {{userGuide('backend', Auth::user()->id_group)}}
+              <span class="nav-icon">
+                <i class="fa fa-book"></i>
+              </span>
+              <span class="nav-text"><b>User Guide</b></span>
+            </a>
+          </li>
 
          @if(Auth::user()->id_group == 1)
 

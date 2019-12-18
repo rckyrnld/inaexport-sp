@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use auth;
 
 class HomeController extends Controller
@@ -71,4 +72,53 @@ class HomeController extends Controller
 		return redirect('');
 		
 	}
+
+	public function user_guide(){
+		if(Auth::user()){
+			if(Auth::user()->id_group == 1){
+				$pageTitle = "User Guide";
+		        return view('user-guide',compact('pageTitle'));
+			} else {
+				return redirect('/login');
+			}
+	    } else {
+	    	return redirect('/login');
+	    }
+	}
+
+	public function user_guide_update(Request $req){
+		date_default_timezone_set("Asia/Bangkok");
+
+		$destination= 'uploads\User Guide\\';
+		if($req->hasFile('file')){ 
+			$file = $req->file('file');
+			$nama_file = time().'_'.$req->file('file')->getClientOriginalName();
+			Storage::disk('uploads')->putFileAs($destination, $file, $nama_file);
+		} else {
+			return redirect('/login');
+		}
+
+		DB::table('user_guide')->insert([
+			'name_version' => $nama_file,
+			'created_at' => date('Y-m-d H:i:s')
+		]);
+
+        return redirect('/user-guide/');
+	}
+
+	public function user_guide_data()
+    {
+      	$data = DB::table('user_guide')->orderBy('created_at','desc')->get();
+
+      	return \Yajra\DataTables\DataTables::of($data)
+      		->addIndexColumn()
+          	->addColumn('action', function ($data) {
+              	return '<center><a href="'.url('/').'/uploads/User Guide/'.$data->name_version.'" download class="btn btn-info donlod"><i class="fa fa-download"></i>&nbsp;&nbsp;Download</a></center>';
+          	})
+          	->addColumn('date', function($data){
+          		return getTanggalIndo(date('Y-m-d', strtotime($data->created_at))).' ( '.date('H:i', strtotime($data->created_at)).' )';
+          	})
+          	->rawColumns(['action'])
+          	->make(true);
+    }
 }

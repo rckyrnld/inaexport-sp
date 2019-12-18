@@ -128,6 +128,7 @@ Route::get('/br_konfirm/{id}/{id2}', 'BRFrontController@br_konfirm');
 Route::get('/br_konfirm2/{id}/{id2}', 'BRFrontController@br_konfirm2');
 Route::get('/refreshchat/{id}/{id2}', 'BRFrontController@refreshchat');
 Route::get('/refreshchat2/{id}/{id2}', 'BRFrontController@refreshchat2');
+Route::get('/refreshchat3/{id}/{id2}', 'BRFrontController@refreshchat3');
 Route::post('/br_importir_save', 'BRFrontController@br_importir_save');
 Route::post('/br_importir_update', 'BRFrontController@br_importir_update');
 Route::post('/br_importir_next', 'BRFrontController@br_importir_next');
@@ -260,6 +261,10 @@ Route::post('/updatepass', 'HomeController@updatepass');
 Route::get('/directory/', 'DirectoryController@index')->name('directory.index');
 Route::post('/directory/getData/', 'DirectoryController@getData')->name('directory.getData');
 Route::get('/directory/view/{id}', 'DirectoryController@view')->name('directory.view');
+
+Route::get('/user-guide/', 'HomeController@user_guide')->name('user-guide.index');
+Route::get('/user-guide/getData', 'HomeController@user_guide_data')->name('user-guide.getData');
+Route::post('/user-guide/update', 'HomeController@user_guide_update')->name('user-guide.update');
 
 Route::namespace('Master')->group(function () {
 // Angga Start
