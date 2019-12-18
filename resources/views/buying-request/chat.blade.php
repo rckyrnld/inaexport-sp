@@ -270,7 +270,7 @@ foreach($q2 as $p2){
 		</div>
 		<div class="col-sm-1">
 		<br>
-		<a class="btn btn-info" onclick="rfr()">Refresh</a>
+		<!--<a class="btn btn-info" onclick="rfr()">Refresh</a> -->
 		</div>
 		</div>
 		</div>
