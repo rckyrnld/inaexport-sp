@@ -53,7 +53,10 @@ class LaborController extends Controller
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
-            ->addColumn('action', function ($mjl) {
+            ->addColumn('tahun', function ($mjl) {
+                return '<div align="center">'. $mjl->tahun . '</div>';
+            })
+			->addColumn('action', function ($mjl) {
                 return '
                 <center>
                 <a href="' . route('labor.view', $mjl->id) . '" class="btn btn-sm btn-info">
@@ -69,7 +72,7 @@ class LaborController extends Controller
                 ';
             })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','tahun'])
             ->make(true);
     }
 

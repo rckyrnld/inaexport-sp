@@ -26,7 +26,7 @@
                                         <center>Name</center>
                                     </th>
                                     <th>
-                                        <center>Posisition</center>
+                                        <center>Position</center>
                                     </th>
                                     <th>
                                         <center>Phone</center>

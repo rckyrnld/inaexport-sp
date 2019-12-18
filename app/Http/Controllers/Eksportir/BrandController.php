@@ -25,7 +25,7 @@ class BrandController extends Controller
         $years = [];
         for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
         $url = '/eksportir/brand_save';
-        $pageTitle = 'Tambah Brand';
+        $pageTitle = 'Add Brand';
         return view('eksportir.brand.tambah', compact('pageTitle', 'url', 'years'));
     }
 
@@ -52,7 +52,10 @@ class BrandController extends Controller
             ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
-            ->addColumn('action', function ($mjl) {
+            ->addColumn('merek', function ($mjl) {
+                return '<div align="left">'.$mjl->merek.'</div>';
+            })
+			->addColumn('action', function ($mjl) {
                 return '
                 <center>
                 <a href="' . route('brand.view', $mjl->id) . '" class="btn btn-sm btn-info">
@@ -68,7 +71,7 @@ class BrandController extends Controller
                 ';
             })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','merek'])
             ->make(true);
     }
 

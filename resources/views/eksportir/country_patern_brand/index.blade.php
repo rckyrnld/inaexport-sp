@@ -6,14 +6,14 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Data Country Patern Brand</h5>
+                    <h5><i></i> Data Country Patent Brand</h5>
                 </div>
 
                 <div class="box-body bg-light">
                     <a class="btn" href="{{url('/eksportir/tambah_country_patern_brand')}}"
                        style="background-color: #1089ff; color: white;"><i
                                 class="fa fa-plus-circle"></i>
-                        Tambah</a>
+                        Add</a>
                     <div class="col-md-14">
                         <br>
                         <div class="table-responsive">

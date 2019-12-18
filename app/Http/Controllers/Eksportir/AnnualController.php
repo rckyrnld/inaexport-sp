@@ -25,7 +25,7 @@ class AnnualController extends Controller
         $years = [];
         for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
         $url = '/eksportir/annual_save';
-        $pageTitle = 'Tambah Annual Sales';
+        $pageTitle = 'Add Annual Sales';
         return view('eksportir.annual_sales.tambah', compact('pageTitle', 'url', 'years'));
     }
 
@@ -50,7 +50,10 @@ class AnnualController extends Controller
             ->get();
 
         return \Yajra\DataTables\DataTables::of($user)
-            ->addColumn('action', function ($mjl) {
+            ->addColumn('tahun', function ($mjl) {
+                return '<div align="center">'.$mjl->tahun. '</div>';
+            })
+			->addColumn('action', function ($mjl) {
                 return '
                 <center>
                 <a href="' . route('sales.view', $mjl->id) . '" class="btn btn-sm btn-info">
@@ -66,7 +69,7 @@ class AnnualController extends Controller
                 ';
             })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','tahun'])
             ->make(true);
     }
 

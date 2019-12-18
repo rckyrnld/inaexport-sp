@@ -86,7 +86,19 @@
                     <span class="dropdown-toggle  mx-2 d-none l-h-1x d-lg-block">
                       <span>
 					  <?php if(empty(Auth::user()->name)){ 
-					  echo Auth::guard('eksmp')->user()->username;
+					  if(Auth::guard('eksmp')->user()->id_role == 2){
+						$rg = DB::select("select b.company from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='".Auth::guard('eksmp')->user()->id."' ");  
+						foreach($rg as $gr){
+							echo $gr->company;
+						}
+					  }else{
+						$rg = DB::select("select b.company from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".Auth::guard('eksmp')->user()->id."' ");  
+						foreach($rg as $gr){
+							echo $gr->company;
+						}
+						  
+					  }
+					  // echo Auth::guard('eksmp')->user()->username;
 					  }else{ ?>
 					  {{ Auth::user()->name }}
 					  <?php } ?>

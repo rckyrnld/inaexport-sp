@@ -60,6 +60,9 @@ class TrainingController extends Controller
             ->get();
 //        dd($user);
         return \Yajra\DataTables\DataTables::of($user)
+			->addColumn('nama_training', function ($mjl) {
+                return '<div align="left">'.$mjl->nama_training. '</div>';
+            })
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
@@ -76,7 +79,7 @@ class TrainingController extends Controller
                 ';
             })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','nama_training'])
             ->make(true);
     }
 

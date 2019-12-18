@@ -62,7 +62,7 @@
                                     Back
                                 </a>
                                 <button class="btn btn-success" type="submit"><i
-                                            class="fa fa-plus-circle"></i> Simpan
+                                            class="fa fa-plus-circle"></i> Submit
                                 </button>
                             </div>
                         </div>
