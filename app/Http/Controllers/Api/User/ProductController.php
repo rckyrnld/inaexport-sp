@@ -354,7 +354,7 @@ class ProductController extends Controller
                 'product_description_in' => $request->product_description_in,
                 'product_description_chn' => $request->product_description_chn,
                 'status' => $request->status,
-                'id_hscode' => $request->id_hscode,
+                'id_mst_hscodes' => $request->id_hscode,
                 'updated_at' => $datenow,
             ]);
             if ($insertRecord) {
