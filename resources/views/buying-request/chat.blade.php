@@ -421,11 +421,22 @@ function kirimchat(){
 	}
 	
 }
+$(document).ready(function(){
+	setInterval(function() {
+        a = $('#id_br').val();
+		b = <?php echo $id; ?>;
+		var token = $('meta[name="csrf-token"]').attr('content');
+		$.get('{{URL::to("refreshchat3/")}}/'+a+'/'+b,{_token:token},function(data){
+			$('#rchat').html(data)
+			 });
+	}, 2000);
+    
+});
 function rfr(){
 	a = $('#id_br').val();
 	b = <?php echo $id; ?>;
 	var token = $('meta[name="csrf-token"]').attr('content');
-	$.get('{{URL::to("refreshchat/")}}/'+a+'/'+b,{_token:token},function(data){
+	$.get('{{URL::to("refreshchat3/")}}/'+a+'/'+b,{_token:token},function(data){
 		$('#rchat').html(data)
 		 });
 }
