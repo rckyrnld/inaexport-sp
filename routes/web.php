@@ -261,6 +261,10 @@ Route::get('/directory/', 'DirectoryController@index')->name('directory.index');
 Route::post('/directory/getData/', 'DirectoryController@getData')->name('directory.getData');
 Route::get('/directory/view/{id}', 'DirectoryController@view')->name('directory.view');
 
+Route::get('/user-guide/', 'HomeController@user_guide')->name('user-guide.index');
+Route::get('/user-guide/getData', 'HomeController@user_guide_data')->name('user-guide.getData');
+Route::post('/user-guide/update', 'HomeController@user_guide_update')->name('user-guide.update');
+
 Route::namespace('Master')->group(function () {
 // Angga Start
     //Master Country
