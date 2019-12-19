@@ -247,26 +247,32 @@ if (! function_exists('optionCategoryZ')) {
       foreach ($categori as $data) {
         $category = DB::table('csc_product')->where('id', $data->id_csc_product)->first();
 
-        if(in_array($category->id, $arr)){ $selec = "selected";
-        }else{ $selec=""; }
+        if($category){
+          if(in_array($category->id, $arr)){ $selec = "selected";
+          }else{ $selec=""; }
 
-        $option .= '<option value="'.$category->id.'" '.$selec.'>'.$category->nama_kategori_en.'</option>';
+          $option .= '<option value="'.$category->id.'" '.$selec.'>'.$category->nama_kategori_en.'</option>';
+        }
       }
       foreach ($level1 as $data) {
         $category = DB::table('csc_product')->where('id', $data->id_csc_product_level1)->first();
 
-        if(in_array($category->id, $arr)){ $selec = "selected";
-        }else{ $selec=""; }
+        if($category){
+          if(in_array($category->id, $arr)){ $selec = "selected";
+          }else{ $selec=""; }
 
-        $option .= '<option value="'.$category->id.'" '.$selec.'>'.$category->nama_kategori_en.'</option>';
+          $option .= '<option value="'.$category->id.'" '.$selec.'>'.$category->nama_kategori_en.'</option>';
+        }
       }
       foreach ($level2 as $data) {
         $category = DB::table('csc_product')->where('id', $data->id_csc_product_level2)->first();
 
-        if(in_array($category->id, $arr)){ $selec = "selected";
-        }else{ $selec=""; }
+        if($category){
+          if(in_array($category->id, $arr)){ $selec = "selected";
+          }else{ $selec=""; }
 
-        $option .= '<option value="'.$category->id.'" '.$selec.'>'.$category->nama_kategori_en.'</option>';
+          $option .= '<option value="'.$category->id.'" '.$selec.'>'.$category->nama_kategori_en.'</option>';
+        }
       }
 
       echo $option;

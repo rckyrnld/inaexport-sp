@@ -597,6 +597,7 @@ class ManagementNoAuthController extends Controller
     public function getHscode()
     {
         $research = DB::table('mst_hscodes')
+            ->select('id','desc_ind','desc_eng')
             ->get();
         if (count($research) > 0) {
             $meta = [

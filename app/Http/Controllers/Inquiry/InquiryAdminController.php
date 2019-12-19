@@ -1125,6 +1125,7 @@ class InquiryAdminController extends Controller
 
     public function fileChat(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $datenow = date('Y-m-d H:i:s');
         $id = $request->id_inquiry;
         $id_broadcast = $request->id_broadcast;

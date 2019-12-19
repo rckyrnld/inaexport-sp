@@ -15,7 +15,7 @@ use Session;
 use Auth;
 use Mail;
 
-class TicketingSupportController extends Controller
+class TicketingSupportFrontController extends Controller
 {
 
     public function __construct()
@@ -102,7 +102,9 @@ class TicketingSupportController extends Controller
         });
 		*/
 
-        return redirect('/front_end/history');
+        //dd();
+//        return redirect('/front_end/history');
+        return redirect()->route('front.histori.index');
     }
 
     public function getData()
