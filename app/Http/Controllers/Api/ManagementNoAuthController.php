@@ -520,6 +520,28 @@ class ManagementNoAuthController extends Controller
         }
     }
 
+    public function getKategoriFilter(Request $req)
+    {
+        $query = DB::table('csc_product')->orderby('nama_kategori_en','asc');
+        if($req->filter != null){
+            $query->where('nama_kategori_en', 'ILIKE', '%'.$req->filter.'%');
+        }
+        $product = $query->get();
+        
+        return response($product);
+    }
+
+    public function getCountryFilter(Request $req)
+    {
+        $query = DB::table('mst_country')->orderby('country','asc');
+        if($req->filter != null){
+            $query->where('country', 'ILIKE', '%'.$req->filter.'%');
+        }
+        $country = $query->get();
+        
+        return response($country);
+    }
+
     public function getSub(Request $request)
     {
         $level = $request->level;

@@ -95,6 +95,7 @@ class ProfileController extends Controller
 
     public function updateProfilExp(Request $request)
     {
+//        dd($request);
         if ($request->id_profile == null) {
             $meta = [
                 'code' => 400,
