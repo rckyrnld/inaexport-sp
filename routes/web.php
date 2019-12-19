@@ -59,12 +59,12 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/view_inquiry/{id}', 'InquiryFrontController@view')->name('front.inquiry.view');
     //Ticketing Support
     //Eksportir
-    Route::get('/front_end/ticketing_support', 'TicketingSupportController@create')->name('front.ticket.create');
-    Route::post('/front_end/ticketing_support/store', 'TicketingSupportController@store')->name('front.ticket.store');
-    Route::get('/front_end/ticketing_support/chatview/{id}', 'TicketingSupportController@vchat')->name('front.ticket.vchat');
-    Route::post('/front_end/ticketing_support/sendchat', 'TicketingSupportController@sendchat')->name('front.ticket.sendchat');
-    Route::get('/front_end/ticketing_support/view/{id}', 'TicketingSupportController@view')->name('front.ticket.view');
-    Route::get('/front_end/ticketing_support/delete/{id}', 'TicketingSupportController@destroy')->name('front.ticket.delete');
+    Route::get('/front_end/ticketing_support', 'TicketingSupportFrontController@create')->name('front.ticket.create');
+    Route::post('/front_end/ticketing_support/store', 'TicketingSupportFrontController@store')->name('front.ticket.store');
+    Route::get('/front_end/ticketing_support/chatview/{id}', 'TicketingSupportFrontController@vchat')->name('front.ticket.vchat');
+    Route::post('/front_end/ticketing_support/sendchat', 'TicketingSupportFrontController@sendchat')->name('front.ticket.sendchat');
+    Route::get('/front_end/ticketing_support/view/{id}', 'TicketingSupportFrontController@view')->name('front.ticket.view');
+    Route::get('/front_end/ticketing_support/delete/{id}', 'TicketingSupportFrontController@destroy')->name('front.ticket.delete');
     //History Transaction
     Route::get('/front_end/history', 'HistoryFrontController@index');
     //Ticketing Support

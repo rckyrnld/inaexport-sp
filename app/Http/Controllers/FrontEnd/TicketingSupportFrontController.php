@@ -15,7 +15,7 @@ use Session;
 use Auth;
 use Mail;
 
-class TicketingSupportController extends Controller
+class TicketingSupportFrontController extends Controller
 {
 
     public function __construct()
