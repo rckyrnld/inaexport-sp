@@ -288,7 +288,7 @@ $cr = explode(',',$p3->id_csc_prod);
 			<b>Price</b>
 		</div>
 		<div class="form-group col-sm-2">
-			<input type="text" name="tp" class="amount form-control" value="<?php  echo number_format($p3->tp,0,',','.'); ?>">
+			<input type="text" name="tp" class="amount form-control" value="<?php  echo number_format($p2->tp,0,',','.'); ?>">
 		</div>
 		<div class="form-group col-sm-1">
 			<select style="color:black;" class="form-control" name="ntp" id="ntp"><option <?php if($p3->ntp == "IDR"){ echo "selected"; }?> value="IDR">IDR</option><option <?php if($p3->ntp == "THB"){ echo "selected"; }?> value="THB">THB</option><option <?php if($p3->ntp == "USD"){ echo "selected"; }?> value="USD">USD</option></select>
