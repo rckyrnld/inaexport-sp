@@ -66,7 +66,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/ticketing_support/view/{id}', 'TicketingSupportFrontController@view')->name('front.ticket.view');
     Route::get('/front_end/ticketing_support/delete/{id}', 'TicketingSupportFrontController@destroy')->name('front.ticket.delete');
     //History Transaction
-    Route::get('/front_end/history', 'HistoryFrontController@index');
+    Route::get('/front_end/history', 'HistoryFrontController@index')->name('front.histori.index');
     //Ticketing Support
     Route::get('/front_end/history/ticketing_getdata', 'HistoryFrontController@data_ticketing')->name('front.datatables.ticketing');
     //Inquiry

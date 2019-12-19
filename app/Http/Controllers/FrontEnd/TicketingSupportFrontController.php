@@ -103,7 +103,8 @@ class TicketingSupportFrontController extends Controller
 		*/
 
         //dd();
-        return redirect('/front_end/history');
+//        return redirect('/front_end/history');
+        return redirect()->route('front.histori.index');
     }
 
     public function getData()
