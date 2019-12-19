@@ -20,7 +20,7 @@ class RekapPendapatanController extends Controller
     public function index()
     {
 		if(empty(Auth::guard('eksmp')->user()->id)){
-		$pageTitle = "Rekap Pendapatan";
+		$pageTitle = "Company Incomes";
 		$data = "";
         return view('rekap-pendapatan.index', compact('pageTitle','data'));
 		}else{
@@ -59,7 +59,7 @@ class RekapPendapatanController extends Controller
 	public function detailpendapatan($id)
     {
 		
-		$pageTitle = "Rekap Pendapatan";
+		$pageTitle = "Detail Company Incomes";
 		$data = DB::select("select * from csc_transaksi where id_eksportir='".$id."' and status_transaksi='1'");
         return view('rekap-pendapatan.detailpendapatan', compact('pageTitle','data','id'));
 		

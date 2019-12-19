@@ -10,7 +10,7 @@ table, th, tr, td {
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i>List Rekap Pendapatan</h5>
+                    <h5><i></i>List Company Incomes</h5>
 					<br>
 				<a href="{{ url('exportpendapatanall') }}" class="btn btn-success"><i class="fa fa-download" ></i> Export Excel</a>
 				
@@ -24,13 +24,13 @@ table, th, tr, td {
                                 <tr>
                                     <th><center>No</center></th>
 									<th>
-                                        <center>Perusahaan Eksportir</center>
+                                        <center>Exporter</center>
                                     </th>
 									<th>
-                                        <center>Alamat Perusahaan</center>
+                                        <center>Address Company</center>
                                     </th>
                                     <th width="20%">
-                                        <center>Jumlah Pendapatan</center>
+                                        <center>Incomes</center>
                                     </th>
 									<th width="18%">
                                         <center>Action</center>
@@ -65,7 +65,7 @@ table, th, tr, td {
 									?></td>
 									<td style="text-align:right!important;">
 									<?php 
-									$caritotal = DB::select("select sum(total)as maxc from csc_transaksi where id_eksportir='".$ruu->id_eksportir."' and status_transaksi ='1'");
+									$caritotal = DB::select("select sum(tp)as maxc from csc_transaksi where id_eksportir='".$ruu->id_eksportir."' and status_transaksi ='1'");
 									if(count($caritotal) == 0){
 										echo "$0";
 									}else{

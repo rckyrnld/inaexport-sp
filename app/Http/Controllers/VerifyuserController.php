@@ -507,6 +507,15 @@ class VerifyuserController extends Controller
 		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->staim."', email='".$request->email."' where id='".$request->id_user."' ");
 			
 		}
+		if($request->staim == 1){
+			$data3 = ['username' => $request->username, 'id2' => 0, 'nama' => $request->company, 'password' => $request->password, 'email' => $request->email];
+
+                Mail::send('UM.user.emailverif1', $data3, function ($mail) use ($data3) {
+                    $mail->to($data3['email'], $data3['username']);
+                    $mail->subject('Your Account Was Verifed');
+
+                });
+		}
 		//UPDATE TAB 2
 		if($id_role == 2){
 		$updatetab2 = DB::select("update itdp_profil_eks set badanusaha='".$request->badanusaha."', company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
@@ -562,6 +571,15 @@ class VerifyuserController extends Controller
 		}else{
 		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->staim."' ,  email='".$request->email."' where id='".$request->id_user."' ");
 			
+		}
+		if($request->staim == 1){
+			$data3 = ['username' => $request->username, 'id2' => 0, 'nama' => $request->company, 'password' => $request->password, 'email' => $request->email];
+
+                Mail::send('UM.user.emailverif2', $data3, function ($mail) use ($data3) {
+                    $mail->to($data3['email'], $data3['username']);
+                    $mail->subject('Your Account Was Verifed');
+
+                });
 		}
 		//UPDATE TAB 2
 		$updatetab2 = DB::select("update itdp_profil_imp set company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 

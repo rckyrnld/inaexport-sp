@@ -10,7 +10,7 @@ table, th, tr, td {
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i>List Detail Rekap Pendapatan <?php 
+                    <h5><i></i>List Detail Company Incomes <?php 
 									$carieksportir = DB::select("select b.company,b.badanusaha,b.addres,b.city from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='".$id."' limit 1");
 									if(count($carieksportir) == 0){
 										$na1= "";
@@ -58,6 +58,7 @@ table, th, tr, td {
 								<th>Type Tracking</th>
 								<th>No Tracking</th>
 								<th>Price</th>
+								<th>Status</th>
 		                    </tr>
 	                    </thead>
 						<tbody>
@@ -74,7 +75,8 @@ table, th, tr, td {
 								} ?></td>
 								<td><?php echo $ruu->type_tracking; ?></td>
 								<td><?php echo $ruu->no_tracking; ?></td>
-								<td><?php echo "$".number_format($ruu->total,2,',','.'); ?></td>
+								<td><?php echo "$".number_format($ruu->tp,2,',','.'); ?></td>
+								<td><?php if( $ruu->status_transaksi == 0){ echo "<font color='red'>On Process</font>"; }else{ echo "<font color='green'>Already Sent</font>"; } ?></td>
 								
 							</tr>
 							<?php $nt++; } ?>
