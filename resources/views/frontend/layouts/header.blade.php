@@ -541,7 +541,15 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                                     }
                                                     ?>
                                                 <span style="color: black; font-weight: 600; font-size: 12px;" title="{{$user}}">
-                                                    {{$userName}}
+												<?php
+                                                // $userName
+												if(Auth::guard('eksmp')->user()->id_role == 3){
+                                                        echo "Importir";
+                                                    }else if(Auth::guard('eksmp')->user()->id_role == 2){
+                                                        echo "Ekportir";
+                                                    }
+													
+												?>
                                                 </span>
                                                 @endif
                                             </td>
