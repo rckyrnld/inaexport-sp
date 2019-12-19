@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use File;
 use auth;
 
 class HomeController extends Controller
@@ -88,6 +89,14 @@ class HomeController extends Controller
 
 	public function user_guide_update(Request $req){
 		date_default_timezone_set("Asia/Bangkok");
+		$cek = DB::table('user_guide')->where('group_user', $req->group)->first();
+		if($cek){
+			$file_path = public_path().'\uploads\User Guide\\'.$cek->name_version;
+			if(file_exists($file_path)){
+				unlink($file_path);
+			}
+			DB::table('user_guide')->where('id', $cek->id)->delete();
+		}
 
 		$destination= 'uploads\User Guide\\';
 		if($req->hasFile('file')){ 
@@ -100,6 +109,7 @@ class HomeController extends Controller
 
 		DB::table('user_guide')->insert([
 			'name_version' => $nama_file,
+			'group_user' => $req->group,
 			'created_at' => date('Y-m-d H:i:s')
 		]);
 
@@ -117,6 +127,13 @@ class HomeController extends Controller
           	})
           	->addColumn('date', function($data){
           		return getTanggalIndo(date('Y-m-d', strtotime($data->created_at))).' ( '.date('H:i', strtotime($data->created_at)).' )';
+          	})
+          	->addColumn('group', function($data){
+          		$groupnya = 1;
+          		$group = [ 1 => 'Admin', 2 => 'Exporter', 3 => 'Buyer', 4 => 'Representative'];
+          		if($data->group_user != null){ $groupnya = $data->group_user; }
+
+          		return $group[$groupnya];
           	})
           	->rawColumns(['action'])
           	->make(true);

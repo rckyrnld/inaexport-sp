@@ -160,8 +160,9 @@ if($profile->foto_profil != NULL){
                                     <tr>
                                         <td width="30%">City</td>
                                         <td>
-                                            <select class="form-control" name="city" id="city" data-toggle="tooltip" data-trigger="manual" title="Please Select City !">
-                                            </select>
+                                            <!--<select class="form-control" name="city" id="city" data-toggle="tooltip" data-trigger="manual" title="Please Select City !">
+                                            </select> -->
+											<input type="text" class="form-control" name="city" value="{{$profile->city}}" required>
                                         </td>
                                     </tr>
                                     <tr>

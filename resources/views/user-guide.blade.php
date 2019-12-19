@@ -2,7 +2,7 @@
 <style type="text/css">
 	th {text-align: center;}
 	td {color: black;}
-	#updated { background-color: #28bd4a; color: white; white-space: pre;}
+	#updated { background-color: #28bd4a; color: white; white-space: pre; height: 35px;}
 	#updated:hover {background-color: #08b32e}
     .btn.donlod:hover,.btn.donlod:active,.btn.donlod{color: white;}
     /* Style the tab */
@@ -45,8 +45,17 @@
                         <table width="60%" border="0">
                             <tr>
                                 <td width="20%" style="text-align:left !important; font-size: 14px; font-weight: 600; color: inherit;">User Guide</td>
+                                <td width="20%">
+                                  <select class="form-control" name="group" style="height: 37px;" required/>
+                                    <option value="" style="display: none;">Select Group</option> 
+                                    <option value="1" style="">Admin</option> 
+                                    <option value="4" style="">Representative</option> 
+                                    <option value="2" style="">Exporter</option> 
+                                    <option value="3" style="">Buyer</option> 
+                                  </select>
+                                </td>
                                 <td width="40%"><input type="file" class="form-control" name="file" accept="application/msword, application/pdf" required/></td>
-                                <td width="20%" style="text-align:left !important; padding-left: 10px;"><button type="submit" class="btn" id="updated">Update</button></td>
+                                <td width="15%" style="text-align:left !important; padding-left: 10px; padding-right: 10px;"><button type="submit" class="btn" id="updated">Update</button></td>
                             </tr>
                         </table>
                     </form>
@@ -60,8 +69,9 @@
                                 <thead class="text-white" style="background-color: #1089ff;">
                                   <tr>
                                       <th width="10%">No</th>
+                                      <th>Group User</th>
                                       <th>Version</th>
-                                      <th>Date</th>
+                                      <th>Last Update</th>
                                       <th width="15%">Action</th>
                                   </tr>
                                 </thead>
@@ -82,6 +92,7 @@
             ajax: "{{ route('user-guide.getData') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'group', name: 'group'},
                 {data: 'name_version', name: 'name_version', orderable: false},
                 {data: 'date', name: 'date'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}

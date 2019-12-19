@@ -259,14 +259,21 @@ if ($loc == "ch") {
                             <div class="form-row">
                                 <div class="col-sm-12">
                                     <?php if($r == 2){ ?>
-                                    <button disabled onclick="buk()" style="width:100%!important;"
+                                    <a disabled onclick="buk()" style="width:100%!important;"
                                             class="btn btn-md btn-success"><font color="white"><i
-                                                class="fa fa-save"></i> @lang("login.btn4")</font></button>
+                                                class="fa fa-save"></i> @lang("login.btn4")</font></a>
                                     <?php }else{ ?>
                                    <!-- <button style="width:100%!important;" class="btn btn-md btn-success"><i
                                                 class="fa fa-save"></i> @lang("login.btn4")</button> -->
+									<?php if(Auth::guard('eksmp')->user()->status == 1){ ?>
 									<a onclick="simpanbr()"style="width:100%!important;" class="btn btn-md btn-success"><font color="white"><i
                                                 class="fa fa-save"></i> @lang("login.btn4")</i></a>
+												
+									<?php }else{ ?>
+									<a disabled onclick="bak()" style="width:100%!important;"
+                                            class="btn btn-md btn-success"><font color="white"><i
+                                                class="fa fa-save"></i> @lang("login.btn4")</font></a>
+									<?php } ?>
                                     <?php } ?>
                                 </div>
 
@@ -397,7 +404,11 @@ $(function() {
 <script type="text/javascript">
 
     function buk() {
-        alert('This Form Only For Importir !');
+        alert('You Need Login as Importir !');
+    }
+	
+	function bak() {
+        alert('You Must Be Verified !');
     }
 
     $(document).ready(function () {

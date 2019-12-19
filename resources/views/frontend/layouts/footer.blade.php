@@ -153,7 +153,7 @@
                                     <li><a href="{{url('/contact-us/')}}" class="third-child">@lang("footer.hubungikami")</a></li>
                                     <li><a href="#" class="third-child">DGNED CSC</a></li>
                                     <li><a href="#" class="third-child">@lang("footer.foot.trade-expo")</a></li>
-                                    @if(Auth::guard('eksmp')->user()) {{userGuide($loc,'0')}} @endif
+                                    @if(Auth::guard('eksmp')->user()) {{userGuide($loc,  Auth::guard('eksmp')->user()->id_role)}} @endif
                                 </ul>
                             </div>
                         </div>
