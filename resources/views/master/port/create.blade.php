@@ -109,7 +109,7 @@
           success:function(response){
             if(response != null) {
               if(kode2 != kode){
-                alert('ID Sudah Tersedia !');
+                alert('ID have been used in other Port !');
                 $('#kode_port').val('');
               }
             }
