@@ -874,7 +874,7 @@ if (! function_exists('hotProduct')) {
 if (! function_exists('userGuide')) {
     function userGuide($lang, $param){
         $language = ['en' => 'User Guide', 'in' => 'Panduan Pengguna', 'ch' => '用户指南'];
-        $check = DB::table('user_guide')->orderBy('created_at','desc')->first();
+        $check = DB::table('user_guide')->where('group_user', $param)->orderBy('created_at','desc')->first();
 
         if($check){
           $url = url('/').'/uploads/User Guide/'.$check->name_version;
