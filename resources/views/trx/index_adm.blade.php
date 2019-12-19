@@ -103,8 +103,8 @@ body {font-family: Arial;}
 									if($ruu->id_eksportir == 0 || $ruu->id_eksportir == null){
 										
 									}else{
-									$carieks = DB::select("select * from itdp_company_users where id='".$ruu->id_eksportir."'");
-									foreach($carieks as $eks){ echo $eks->username; }
+									$carieks = DB::select("select b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil=b.id and a.id='".$ruu->id_eksportir."'");
+									foreach($carieks as $eks){ echo $eks->badanusaha." ".$eks->company; }
 									} ?></div></td>
 									
 									
