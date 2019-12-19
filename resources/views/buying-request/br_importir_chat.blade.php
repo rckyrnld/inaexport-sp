@@ -917,7 +917,7 @@ function openCity(evt, cityName) {
                                     @if($msg->files == NULL)
                                         {{$msg->pesan}}<br>
                                     @else
-                                        <a href="{{ url('/').'/uploads/pop/' }}/{{ $msg->files }}" target="_blank" class="atag" style="color: white;">{{$msg->files}}</a><br><br>
+                                        <a href="{{asset('uploads/pop/')}}" target="_blank" class="atag" style="color: white;">{{$msg->files}}</a><br><br>
                                         {{$msg->pesan}}<br>
                                     @endif
                                     <span style="float: right;">{{date('H:i',strtotime($msg->tanggal))}}</span>
@@ -974,7 +974,7 @@ function openCity(evt, cityName) {
                                     @if($msg->files == NULL)
                                         {{$msg->pesan}}<br>
                                     @else
-                                        <a href="{{ url('/').'/uploads/pop/' }}/{{ $msg->files }}" target="_blank" class="atag" style="color: white;">{{$msg->files}}</a><br><br>
+                                        <a href="{{asset('uploads/pop/')}}" target="_blank" class="atag" style="color: white;">{{$msg->files}}</a><br><br>
                                         {{$msg->pesan}}<br>
                                     @endif
                                     <span style="color: #555; float: right;">{{date('H:i',strtotime($msg->tanggal))}}</span>

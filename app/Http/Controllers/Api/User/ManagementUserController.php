@@ -376,6 +376,85 @@ class ManagementUserController extends Controller
 
         }
     }
+	
+	public function count_notif_bb(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $id_user = $request->id_user;
+        $id_role = $request->id_role;
+
+		$user = DB::table('notif')
+            ->where('untuk_id', $id_user)
+            ->where('to_role', $id_role)
+            ->where('status_baca', 0)
+            ->orderBy('created_at', 'desc')
+            ->count();
+		
+		if ($user) {
+			 $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			$data = [
+                'count' => $user
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+
+        }
+    }
+	
+	public function count_notif_all(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $id_user = $request->id_user;
+        $id_role = $request->id_role;
+
+		$user = DB::table('notif')
+            ->where('untuk_id', $id_user)
+            ->where('to_role', $id_role)
+            ->orderBy('created_at', 'desc')
+            ->count();
+		
+		if ($user) {
+			 $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			$data = [
+                'count' => $user
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+
+        }
+    }
 
     public function sendchat(Request $req)
     {

@@ -100,7 +100,7 @@ body {font-family: Arial;}
 			<?php 
 			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
 			?>
-			<select class="form-control select2" multiple name="category[]" id="category" onchange="t1()">
+			<select class="form-control select2" multiple name="category[]" id="category" >
 			<option value="">-- Select Category --</option>
 			<?php foreach($ms1 as $val1){ ?>
 			<option value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
@@ -109,12 +109,14 @@ body {font-family: Arial;}
 		</div>
 		
 	</div>
-	<div id="t2">
 	<input type="hidden" name="t2s" id="t2s" value="0">
+	<input type="hidden" name="t3s" id="t3s" value="0">
+	<!--<div id="t2">
+	
 	</div>
 	<div id="t3">
-	<input type="hidden" name="t3s" id="t3s" value="0">
-	</div>
+	
+	</div> -->
 	<div class="form-row">
 		<div class="col-sm-12">
 		<label><b>Specification</b></label>

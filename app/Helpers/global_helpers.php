@@ -46,15 +46,21 @@ if (! function_exists('optionCategory')) {
 
       foreach ($categori as $data) {
         $category = DB::table('csc_product')->where('id', $data->id_csc_product)->first();
-        $option .= '<option value="'.$category->id.'">'.$category->nama_kategori_en.'</option>';
+        if($category){
+          $option .= '<option value="'.$category->id.'">'.$category->nama_kategori_en.'</option>';
+        }
       }
       foreach ($level1 as $data) {
         $category = DB::table('csc_product')->where('id', $data->id_csc_product_level1)->first();
-        $option .= '<option value="'.$category->id.'">'.$category->nama_kategori_en.'</option>';
+        if($category){
+          $option .= '<option value="'.$category->id.'">'.$category->nama_kategori_en.'</option>';
+        }
       }
       foreach ($level2 as $data) {
         $category = DB::table('csc_product')->where('id', $data->id_csc_product_level2)->first();
-        $option .= '<option value="'.$category->id.'">'.$category->nama_kategori_en.'</option>';
+        if($category){
+          $option .= '<option value="'.$category->id.'">'.$category->nama_kategori_en.'</option>';
+        }
       }
 
       echo $option;

@@ -48,6 +48,8 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
 	Route::post('count_br_chat', 'Api\User\BuyingreqController@count_br_chat');
 	Route::post('count_tkt_chat', 'Api\User\ManagementUserController@count_tkt_chat');
 	Route::post('count_inq_chat', 'Api\User\ManagementUserController@count_inq_chat');
+	Route::post('count_notif_bb', 'Api\User\ManagementUserController@count_notif_bb');
+	Route::post('count_notif_all', 'Api\User\ManagementUserController@count_notif_all');
 
 //End Greed
 
@@ -158,6 +160,9 @@ Route::namespace('Api')->group(function () {
     Route::get('getProvince', 'ManagementNoAuthController@getProvince');
     Route::get('getCategory', 'ManagementNoAuthController@getKategori');
     Route::post('getSub', 'ManagementNoAuthController@getSub');
+    //Filter
+    Route::get('getCategoryFilter', 'ManagementNoAuthController@getKategoriFilter');
+    Route::get('getCountryFilter', 'ManagementNoAuthController@getCountryFilter');
 
     //RC
     Route::get('getResearchc', 'ManagementNoAuthController@getResearchchor');
