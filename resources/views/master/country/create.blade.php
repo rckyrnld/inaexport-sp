@@ -114,7 +114,7 @@
           success:function(response){
             if(response != null) {
               if(kode2 != kode){
-                alert('Kode Sudah Tersedia !');
+                alert('Code have been used in other Country !');
                 $('#kode').val('');
               }
             }
