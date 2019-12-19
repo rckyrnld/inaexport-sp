@@ -158,6 +158,9 @@ Route::namespace('Api')->group(function () {
     Route::get('getProvince', 'ManagementNoAuthController@getProvince');
     Route::get('getCategory', 'ManagementNoAuthController@getKategori');
     Route::post('getSub', 'ManagementNoAuthController@getSub');
+    //Filter
+    Route::get('getCategoryFilter', 'ManagementNoAuthController@getKategoriFilter');
+    Route::get('getCountryFilter', 'ManagementNoAuthController@getCountryFilter');
 
     //RC
     Route::get('getResearchc', 'ManagementNoAuthController@getResearchchor');
