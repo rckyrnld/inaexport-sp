@@ -249,7 +249,7 @@
                                 @endif
                             </div>
                             <div class="product_desc">
-                                <?php echo getProductAttr($data->id, 'product_description', $lct); ?>
+                                <?php echo nl2br(getProductAttr($data->id, 'product_description', $lct)); ?>
                             </div>
                             <div class="product_variant quantity">
                                 <label>@lang('frontend.proddetail.minorder')</label>
@@ -300,7 +300,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="info" role="tabpanel">
                                 <div class="product_info_content">
-                                    <?php echo getProductAttr($data->id, 'product_description', $lct); ?>
+                                    <?php echo nl2br(getProductAttr($data->id, 'product_description', $lct)); ?>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="sheet" role="tabpanel">
