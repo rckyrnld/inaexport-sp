@@ -51,7 +51,7 @@
                                     <?php if($msg->files == NULL){ ?>
                                         <?php echo $msg->pesan; ?><br>
                                     <?php }else{ ?>
-                                        <a href="{{ url('uploads/pop/') }}/<?php echo $msg->files; ?>" target="_blank" class="atag" style="color: white;"><?php echo $msg->files; ?></a><br><br>
+                                        <a href="../../uploads/pop/<?php echo $msg->files; ?>" target="_blank" class="atag" style="color: white;"><?php echo $msg->files; ?></a><br><br>
                                          <?php echo $msg->pesan; ?><br>
                                     <?php } ?>
                                     <span style="float: right;"><?php echo date('H:i',strtotime($msg->tanggal)); ?></span>
@@ -108,7 +108,7 @@
                                     <?php if($msg->files == NULL){ ?>
                                         <?php echo $msg->pesan; ?><br>
                                     <?php }else{ ?>
-                                        <a href="{{ url('uploads/pop/') }}/<?php echo $msg->files; ?>" target="_blank" class="atag" style="color: white;"><?php echo $msg->files; ?></a><br><br>
+                                        <a href="../../uploads/pop/<?php echo $msg->files; ?>" target="_blank" class="atag" style="color: white;"><?php echo $msg->files; ?></a><br><br>
                                         <?php echo $msg->pesan; ?><br>
                                     <?php } ?>
                                     <span style="color: #555; float: right;"><?php echo date('H:i',strtotime($msg->tanggal)); ?></span>
