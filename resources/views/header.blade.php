@@ -122,8 +122,8 @@
     
             <!-- brand -->
             <a href="{{url('/')}}" class="navbar-brand">
-                <img height="25px" src="http://localhost:88/kemendag/public/front/assets/img/logo/logo.png" alt=".">
-{{--                <img height="10px" src="{{url('assets')}}/assets/images/icon product-22.png" alt="." >--}}
+{{--                <img height="25px" src="http://localhost:88/kemendag/public/front/assets/img/logo/logo.png" alt=".">--}}
+                <img height="25px" src="{{url('assets')}}/assets/images/icon product-22.png" alt="." >
 {{--                <span class="hidden-folded d-inline"><font size="3px">Ministry Of Trade </font></span>--}}
             </a>
             <!-- / brand -->
