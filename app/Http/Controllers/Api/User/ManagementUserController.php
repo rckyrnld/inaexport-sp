@@ -272,6 +272,17 @@ class ManagementUserController extends Controller
             ->get();
 //        dd($messages);
         for ($i = 0; $i < count($messages); $i++) {
+            $ext = pathinfo($messages[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg', 'PNG'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
             $jsonResult[$i]["id"] = $messages[$i]->id_chating_tiketing;
             $jsonResult[$i]["id_ticketing_support"] = $messages[$i]->id_ticketing_support;
             $jsonResult[$i]["sender"] = $messages[$i]->sender;
@@ -288,6 +299,7 @@ class ManagementUserController extends Controller
             $jsonResult[$i]["created_at"] = $messages[$i]->created_at->toDateTimeString();
             $jsonResult[$i]["updated_at"] = $messages[$i]->updated_at->toDateTimeString();
             $jsonResult[$i]["file"] = $path = ($messages[$i]->file) ? url('/uploads/ticketing/' . $messages[$i]->file) : "";
+            $jsonResult[$i]["ext"] = $extension;
         }
 //        dd($jsonResult);
         $users = TicketingSupportModel::where('id', $id)->first();
@@ -504,6 +516,18 @@ class ManagementUserController extends Controller
             ->get();
 
         for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg', 'PNG'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_ticketing_support"] = $user[$i]->id_ticketing_support;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
@@ -511,6 +535,7 @@ class ManagementUserController extends Controller
             $jsonResult[$i]["messages"] = $user[$i]->messages;
             $jsonResult[$i]["messages_send"] = $user[$i]->messages_send;
             $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ticketing/' . $user[$i]->file) : "";
+            $jsonResult[$i]["ext"] = $extension;
         }
 //        dd($jsonResult);
         if (count($jsonResult) > 0) {
