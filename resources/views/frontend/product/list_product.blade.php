@@ -101,9 +101,11 @@
                         <b>@lang('frontend.liseksportir.sortby')</b> <select name="sortbyproduct" id="sortbyproduct" style="border: none;"class="sortproductnya">
                                 <option value="" @if(isset($sortbyproduct)) @if($sortbyproduct == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
                                 <option value="new" @if(isset($sortbyproduct)) @if($sortbyproduct == "new") selected @endif @endif>@lang('frontend.liseksportir.newest')</option>
-                                @if(Auth::guard('eksmp')->user())
-                                <option value="lowhigh" @if(isset($sortbyproduct)) @if($sortbyproduct == "lowhigh") selected @endif @endif>@lang('frontend.proddetail.pricelh')</option>
-                                <option value="highlow" @if(isset($sortbyproduct)) @if($sortbyproduct == "highlow") selected @endif @endif>@lang('frontend.proddetail.pricehl')</option>
+                                @if(!empty(Auth::guard('eksmp')->user()))
+                                    @if(Auth::guard('eksmp')->user()->status == 1)
+                                    <option value="lowhigh" @if(isset($sortbyproduct)) @if($sortbyproduct == "lowhigh") selected @endif @endif>@lang('frontend.proddetail.pricelh')</option>
+                                    <option value="highlow" @if(isset($sortbyproduct)) @if($sortbyproduct == "highlow") selected @endif @endif>@lang('frontend.proddetail.pricehl')</option>
+                                    @endif
                                 @endif
                                 <option value="asc" @if(isset($sortbyproduct)) @if($sortbyproduct == "asc") selected @endif @endif>@lang('frontend.liseksportir.prodnm')</option>
                             </select>
@@ -321,8 +323,10 @@
                                     $minorder = $pro->minimum_order;
                                 }
                                 $ukuran = '340px';
-                                if(Auth::guard('eksmp')->user()){
-                                    $ukuran = '375px';
+                                if(!empty(Auth::guard('eksmp')->user())){
+                                    if(Auth::guard('eksmp')->user()->status == 1){
+                                        $ukuran = '375px';
+                                    }
                                 }
 
                                 if($img2 == NULL){
@@ -413,7 +417,8 @@
                                             <a href="{{url('front_end/product/'.$pro->id)}}" title="{{$prodn}}" class="href-name" onclick="GoToProduct('{{$pro->id}}', event, this)"><b>{{$prodnama}}</b></a>
                                         </h3>
                                         <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
-                                            @if(Auth::guard('eksmp')->user())
+                                            @if(!empty(Auth::guard('eksmp')->user()))
+                                                @if(Auth::guard('eksmp')->user()->status == 1)
                                                 Price :
                                                     @if(is_numeric($pro->price_usd))
                                                         <?php 
@@ -439,6 +444,7 @@
                                                     {{$pricenya}}
                                                 </span>
                                                 <br>
+                                                @endif
                                             @endif
 
                                             {{$order}}{{$minorder}}<br>
@@ -492,16 +498,18 @@
                                                 </p>
                                             </div>
                                             <div class="price_box">
-                                                @if(Auth::guard('eksmp')->user())
-                                                <span class="current_price">
-                                                    @if(is_numeric($pro->price_usd))
-                                                        $ {{number_format($pro->price_usd,0,",",".")}}
-                                                    @else
-                                                        <span style="font-size: 13px;">
-                                                            {{$pro->price_usd}}
-                                                        </span>
+                                                @if(!empty(Auth::guard('eksmp')->user()))
+                                                    @if(Auth::guard('eksmp')->user()->status == 1)
+                                                    <span class="current_price">
+                                                        @if(is_numeric($pro->price_usd))
+                                                            $ {{number_format($pro->price_usd,0,",",".")}}
+                                                        @else
+                                                            <span style="font-size: 13px;">
+                                                                {{$pro->price_usd}}
+                                                            </span>
+                                                        @endif
+                                                    </span>
                                                     @endif
-                                                </span>
                                                 @endif
                                             </div>
                                         </div>
