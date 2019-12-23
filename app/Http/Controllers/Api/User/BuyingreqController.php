@@ -674,8 +674,8 @@ class BuyingreqController extends Controller
         $id_br = $request->id_br;
 //        $pesan = DB::select("select b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where a.id=b.id_eks and a.id_profil = c.id and id_br='" . $id_br . "'");
         $pesan = DB::table('itdp_company_users')
-            ->join('csc_buying_request_join', 'itdp_company_users.id', '=', 'csc_buying_request_join.id_eks')
-            ->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
+            ->leftjoin('csc_buying_request_join', 'itdp_company_users.id', '=', 'csc_buying_request_join.id_eks')
+            ->leftjoin('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
             ->where('csc_buying_request_join.id_br', '=', $id_br)
             ->selectRaw('csc_buying_request_join.*, itdp_profil_eks.*, itdp_company_users.email AS oemail,csc_buying_request_join.ID AS idb')
             ->get();
