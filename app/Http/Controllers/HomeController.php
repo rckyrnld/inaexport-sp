@@ -48,8 +48,9 @@ class HomeController extends Controller
 				}
 			}
 		}
-        $pageTitle = "Beranda";
-		
+//        $pageTitle = "Beranda";
+        $pageTitle = "Home";
+
         return view('home',compact('pageTitle'));
     }
 	

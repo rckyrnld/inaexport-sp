@@ -118,13 +118,13 @@
         <div class="sidenav modal-dialog dk">
           <!-- sidenav top -->
           
-   <div class="navbar lt" style="background-color:  #1a7688 ; color: #ffffff">
+   <div class="navbar lt" style="background-color:  #ddeffd ; color: #ffffff">
     
             <!-- brand -->
             <a href="{{url('/')}}" class="navbar-brand">
-               
-                <img height="30px" src="{{url('assets')}}/assets/images/logo.jpg" alt="." >
-                <span class="hidden-folded d-inline"><font size="3px">Ministry Of Trade </font></span>
+                <img height="25px" src="http://localhost:88/kemendag/public/front/assets/img/logo/logo.png" alt=".">
+{{--                <img height="10px" src="{{url('assets')}}/assets/images/icon product-22.png" alt="." >--}}
+{{--                <span class="hidden-folded d-inline"><font size="3px">Ministry Of Trade </font></span>--}}
             </a>
             <!-- / brand -->
           </div>
