@@ -143,6 +143,7 @@ class EventController extends Controller
 			'id_prod_sub1_kat'	=> 0,
 			'id_prod_sub2_kat'	=> 0,
 			'status_en'	=> $req->status,
+            'reg_date' => $req->registration_date,
 			// 'status_in'	=> $req->,
 			// 'status_chn'	=> $req->,
         	'created_at' => $datenow
@@ -338,6 +339,7 @@ class EventController extends Controller
 			'id_prod_cat'	=> 0,
             'country'   => $req->country,
 			'status_en'	=> $req->status,
+            'reg_date' => $req->registration_date,
             'updated_at' => $datenow,
         ]);
 

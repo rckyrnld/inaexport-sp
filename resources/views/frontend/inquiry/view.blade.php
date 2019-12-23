@@ -152,6 +152,7 @@
                                   <td width="60%">
                                     <?php
                                       $nkos = "jenis_perihal_".$lct;
+                                      $param = $data->id_itdp_company_user.'-'.getCompanyName($data->id_itdp_company_user);
                                     ?>
                                     <span style="text-transform: capitalize;">{{$inquiry->$nkos}}</span>
                                   </td>
@@ -159,7 +160,7 @@
                                 <tr>
                                   <td width="30%">@lang('inquiry.company')</td>
                                   <td width="60%">
-                                    <a href="{{url('/front_end/list_perusahaan/view/'.$data->id_itdp_company_user)}}" style="text-transform: uppercase;">
+                                    <a href="{{url('/front_end/list_perusahaan/view/'.$param)}}" style="text-transform: uppercase;">
                                       {{getCompanyName($data->id_itdp_company_user)}}
                                     </a>
                                   </td>

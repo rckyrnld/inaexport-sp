@@ -458,6 +458,8 @@ class SuppliersFrontController extends Controller
 
     public function view_eksportir($id, Request $request)
     {
+        $param = explode('-', $id);
+        $id = $param[0];
         $loc = app()->getLocale(); 
         if($loc == "ch"){
             $lct = "chn";
@@ -526,6 +528,6 @@ class SuppliersFrontController extends Controller
         //jenis halaman
         $jenisnya = "eksportir";
         
-        return view('frontend.supplier.view', compact('data', 'product', 'coproduct', 'id', 'jenisnya', 'sortby', 'service', 'sortbysrv'));
+        return view('frontend.supplier.view', compact('data', 'product', 'coproduct', 'id', 'jenisnya', 'sortby', 'service', 'sortbysrv','lcts'));
     }
 }

@@ -240,8 +240,10 @@
                                                     }else{
                                                         $eksnama = $eksn;
                                                     }
+
+                                                    $param = $eks->id_user.'-'.getCompanyName($eks->id_user);
                                                 ?>
-                                                <a href="{{url('/front_end/list_perusahaan/view/'.$eks->id_user)}}" class="a-eksporter" title="{{$eksn}}">
+                                                <a href="{{url('/front_end/list_perusahaan/view/'.$param)}}" class="a-eksporter" title="{{$eksn}}">
                                                     <img src="{{url('/')}}{{$isimg1}}" alt="" class="eksporter_img">
                                                     <br>
                                                     <span class="name-eksporter">
@@ -320,7 +322,8 @@
                                                                         }
                                                                     ?>
                                                                     </b>
-                                                                    @if(Auth::guard('eksmp')->user())
+                                                                    @if(!empty(Auth::guard('eksmp')->user()))
+                                                                        @if(Auth::guard('eksmp')->user()->status == 1)
                                                                     <br>
                                                                     Price : 
                                                                     <?php
@@ -341,6 +344,7 @@
                                                                             }
                                                                         }
                                                                     ?>
+                                                                        @endif
                                                                     @endif
                                                                 </td>
                                                             </tr>
@@ -360,7 +364,7 @@
                                         </div>
                                         <div class="eksporter-detail" style="border-top: 1px solid #DDEFFD; padding: 4%;">
                                             <center>
-                                                <a href="{{url('/front_end/list_perusahaan/view/'.$eks->id_user)}}">
+                                                <a href="{{url('/front_end/list_perusahaan/view/'.$param)}}">
                                                     @lang('frontend.liseksportir.moredetail')&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
                                                 </a>
                                             </center>
@@ -370,7 +374,7 @@
                                         <div class="left_caption" style="width: 250px; height: 100%;">
                                             <div class="eksporter-logo2">
                                                 <center>
-                                                    <a href="{{url('/front_end/list_perusahaan/view/'.$eks->id_user)}}" class="a-eksporter">
+                                                    <a href="{{url('/front_end/list_perusahaan/view/'.$param)}}" class="a-eksporter">
                                                         <img src="{{url('/')}}{{$isimg1}}" alt="" class="eksporter_img">
                                                         <br>
                                                         <span class="name-eksporter">
@@ -443,7 +447,8 @@
                                                                             // }
                                                                         ?>
                                                                         </b>
-                                                                        @if(Auth::guard('eksmp')->user())
+                                                                        @if(!empty(Auth::guard('eksmp')->user()))
+                                                                            @if(Auth::guard('eksmp')->user()->status == 1)
                                                                         <br>
                                                                         Price : 
                                                                         <?php
@@ -464,6 +469,7 @@
                                                                                 }
                                                                             }
                                                                         ?>
+                                                                            @endif
                                                                         @endif
                                                                     </td>
                                                                 </tr>
@@ -478,7 +484,7 @@
                                         <div class="caption-btn">
                                             <div class="eksporter-detail" style="border: 1px solid #DDEFFD; padding: 4%;">
                                                 <center>
-                                                    <a href="{{url('/front_end/list_perusahaan/view/'.$eks->id_user)}}">
+                                                    <a href="{{url('/front_end/list_perusahaan/view/'.$param)}}">
                                                         @lang('frontend.liseksportir.moredetail')&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
                                                     </a>
                                                 </center>

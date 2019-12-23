@@ -171,9 +171,20 @@ class BuyingreqController extends Controller
 //        foreach ($buy as $datanya) {
 //            $coba = explode(",", $datanya->id_csc_prod);
 //        }
-//        dd($jsonResult);
+
         $jsonResult = array();
         for ($i = 0; $i < count($buy); $i++) {
+            $brjoin = DB::table('csc_buying_request_join')
+                ->where('id_br', '=', $buy[$i]->id)
+                ->where('status_join', '!=', 0)
+                ->get();
+//            dd($brjoin);
+            if ($brjoin == null) {
+                $countJoin = 0;
+            } else {
+                $countJoin = count($brjoin);
+            }
+            $jsonResult[$i]["count_join"] = $countJoin;
             $jsonResult[$i]["row"] = $buy[$i]->row;
             $jsonResult[$i]["id"] = $buy[$i]->id;
             $jsonResult[$i]["id_mst_country"] = $buy[$i]->id_mst_country;
@@ -672,7 +683,7 @@ class BuyingreqController extends Controller
     {
         date_default_timezone_set('Asia/Jakarta');
         $id_br = $request->id_br;
-        $pesan = DB::select("select a.*,b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where b.status_join >= '1' and a.id=b.id_eks and a.id_profil = c.id and id_br='" . $id_br . "'");
+        $pesan = DB::select("select a.*,b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where a.id=b.id_eks and a.id_profil = c.id and id_br='" . $id_br . "'");
         if ($pesan) {
 
             $meta = [
@@ -1419,8 +1430,8 @@ class BuyingreqController extends Controller
         }
 
     }
-	
-	public function count_br_chat(Request $request)
+
+    public function count_br_chat(Request $request)
     {
         $id = $request->id;
         $q1 = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
@@ -1433,17 +1444,17 @@ class BuyingreqController extends Controller
             ->where('id_join', '=', $id)
             ->orderBy('id', 'desc')
             ->count();
-        
+
 
 //        dd($jsonResult);
 
         if ($user) {
-			 $meta = [
+            $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-			$data = [
+            $data = [
                 'count' => $user
             ];
 

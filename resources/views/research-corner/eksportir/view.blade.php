@@ -104,10 +104,8 @@
             data: {id:"{{$data->id}}"},
             dataType: 'json',
             success:function(response){
-              if(response == 'nihil'){
+              if(response){
                 window.open($('#download').attr('href'), '_blank');
-              } else {
-                alert('The document has been downloaded');
               }
             }
         });

@@ -180,16 +180,19 @@
 
                                     }
                                 ?>
-                                @if(Auth::guard('eksmp')->user())
-                                <span class="current_price">
-                                    @if(is_numeric($data->price_usd))
-                                        $ {{number_format($data->price_usd,0,",",".")}}
-                                    @else
-                                        {{$data->price_usd}}
+                                @if(!empty(Auth::guard('eksmp')->user()))
+                                    @if(Auth::guard('eksmp')->user()->status == 1)
+                                    <span class="current_price">
+                                        @if(is_numeric($data->price_usd))
+                                            $ {{number_format($data->price_usd,0,",",".")}}
+                                        @else
+                                            {{$data->price_usd}}
+                                        @endif
+                                    </span>
                                     @endif
-                                </span>
                                 @endif
-                                @if(Auth::guard('eksmp')->user())
+                                @if(!empty(Auth::guard('eksmp')->user()))
+                                    @if(Auth::guard('eksmp')->user()->status == 1)
                                     <div class="list-group" id="kurslist">
                                         <a onclick="openKurs('kurs')" href="#kurs" class="list-group-item" data-toggle="collapse" data-parent="#MainMenus" style="color: black; border: none; text-align: right"><span class="badge badge-secondary">$</span>&nbsp;&nbsp;USD&nbsp;&nbsp;<i class="fa fa-chevron-down" aria-hidden="true" id="icon-kurs"></i></a>
                                         
@@ -246,10 +249,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                 @endif
                             </div>
                             <div class="product_desc">
-                                <?php echo getProductAttr($data->id, 'product_description', $lct); ?>
+                                <?php echo nl2br(getProductAttr($data->id, 'product_description', $lct)); ?>
                             </div>
                             <div class="product_variant quantity">
                                 <label>@lang('frontend.proddetail.minorder')</label>
@@ -300,7 +304,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="info" role="tabpanel">
                                 <div class="product_info_content">
-                                    <?php echo getProductAttr($data->id, 'product_description', $lct); ?>
+                                    <?php echo nl2br(getProductAttr($data->id, 'product_description', $lct)); ?>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="sheet" role="tabpanel">
@@ -391,8 +395,11 @@
                                     $minorder = $p->minimum_order;
                                 }
                                 $ukuran = '340px';
-                                if(Auth::guard('eksmp')->user()){
-                                    $ukuran = '375px';
+
+                                if(!empty(Auth::guard('eksmp')->user())){
+                                    if(Auth::guard('eksmp')->user()->status == 1){
+                                        $ukuran = '375px';
+                                    }
                                 }
 
                                 if($img2 == NULL){
@@ -447,6 +454,7 @@
                                     }else{
                                         $category = $categorynya;
                                     }
+                                    $param = $p->id_itdp_company_user.'-'.getCompanyName($p->id_itdp_company_user);
                                 ?>
                                 <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 10px 10px 0px 0px;">
                                     <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}" onclick="GoToProduct('{{$p->id}}', event, this)"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
@@ -460,7 +468,8 @@
                                         <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name" onclick="GoToProduct('{{$p->id}}', event, this)"><b>{{$prodnama}}</b></a>
                                     </h3>
                                     <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
-                                        @if(Auth::guard('eksmp')->user())
+                                        @if(!empty(Auth::guard('eksmp')->user()))
+                                            @if(Auth::guard('eksmp')->user()->status == 1)
                                             Price :
                                                 @if(is_numeric($p->price_usd))
                                                     <?php 
@@ -486,10 +495,11 @@
                                                 {{$pricenya}}
                                             </span>
                                             <br>
+                                            @endif
                                         @endif
 
                                         {{$order}}{{$minorder}}<br>
-                                        <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$companame}}</a>
+                                        <a href="{{url('front_end/list_perusahaan/view/'.$param)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$companame}}</a>
                                     </span>
                                 </div>
                                 <div class="product_content list_content">
@@ -499,7 +509,7 @@
                                                 <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name" style="font-size: 15px !important;" onclick="GoToProduct('{{$p->id}}', event, this)"><b>{{$prodn}}</b></a>
                                             </h3>
                                             <h3>
-                                                <a href="{{url('front_end/list_perusahaan/view/'.$p->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">by</span>&nbsp;&nbsp;{{$compname}}</a>
+                                                <a href="{{url('front_end/list_perusahaan/view/'.$param)}}" title="{{$compname}}" class="href-company"><span style="color: black;">by</span>&nbsp;&nbsp;{{$compname}}</a>
                                             </h3>
                                         </div>
                                         <div class="product_desc">
@@ -535,16 +545,18 @@
                                             </p>
                                         </div>
                                         <div class="price_box">
-                                            @if(Auth::guard('eksmp')->user())
-                                            <span class="current_price">
-                                                @if(is_numeric($p->price_usd))
-                                                    $ {{number_format($p->price_usd,0,",",".")}}
-                                                @else
-                                                    <span style="font-size: 13px;">
-                                                        {{$p->price_usd}}
-                                                    </span>
+                                            @if(!empty(Auth::guard('eksmp')->user()))
+                                                @if(Auth::guard('eksmp')->user()->status == 1)
+                                                <span class="current_price">
+                                                    @if(is_numeric($p->price_usd))
+                                                        $ {{number_format($p->price_usd,0,",",".")}}
+                                                    @else
+                                                        <span style="font-size: 13px;">
+                                                            {{$p->price_usd}}
+                                                        </span>
+                                                    @endif
+                                                </span>
                                                 @endif
-                                            </span>
                                             @endif
                                         </div>
                                     </div>

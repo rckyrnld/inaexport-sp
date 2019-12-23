@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Mail;
@@ -31,12 +32,23 @@ class ManagementUserController extends Controller
         $checking = DB::table('csc_download_research_corner')->where('id_itdp_profil_eks', $id_profil)->where('id_research_corner', $id_reseach)->first();
 //        dd($checking);
         if ($checking) {
+            $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
+                ->orderby('a.created_at', 'desc')
+                ->distinct('a.id_research_corner', 'a.created_at')
+                ->select('b.*', 'a.id_research_corner', 'a.created_at')
+                ->where('a.id_research_corner', '=', $id_reseach)
+//            ->limit(10)
+                ->get();
+            foreach ($research as $img) {
+                $coba = $img->exum;
+            }
+            $path = ($coba) ? url('uploads/Research Corner/File/' . $coba) : url('image/noimage.jpg');
             $meta = [
-                'code' => 204,
-                'message' => 'The document has been downloaded',
-                'status' => 'Failed '
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
             ];
-            $data = '';
+            $data = $path;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -265,13 +277,46 @@ class ManagementUserController extends Controller
         $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
             ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
             ->where('ts.id', $id)
+            ->selectRaw('cts.id as id_chating_tiketing, cts.id_ticketing_support, cts.sender, cts.reciver, cts.messages, cts.messages_send
+            ,ts.id_pembuat,ts.type,ts.name,ts.email,ts.subyek,ts.main_messages,ts.status,ts.created_at,ts.updated_at, cts.file')
             ->orderby('cts.messages_send', 'asc')
             ->get();
+//        dd($messages);
+        for ($i = 0; $i < count($messages); $i++) {
+            $ext = pathinfo($messages[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg', 'PNG'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
 
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+            $jsonResult[$i]["id"] = $messages[$i]->id_chating_tiketing;
+            $jsonResult[$i]["id_ticketing_support"] = $messages[$i]->id_ticketing_support;
+            $jsonResult[$i]["sender"] = $messages[$i]->sender;
+            $jsonResult[$i]["reciver"] = $messages[$i]->reciver;
+            $jsonResult[$i]["messages"] = $messages[$i]->messages;
+            $jsonResult[$i]["messages_send"] = $messages[$i]->messages_send;
+            $jsonResult[$i]["id_pembuat"] = $messages[$i]->id_pembuat;
+            $jsonResult[$i]["type"] = $messages[$i]->type;
+            $jsonResult[$i]["name"] = $messages[$i]->name;
+            $jsonResult[$i]["email"] = $messages[$i]->email;
+            $jsonResult[$i]["subyek"] = $messages[$i]->subyek;
+            $jsonResult[$i]["main_messages"] = $messages[$i]->main_messages;
+            $jsonResult[$i]["status"] = $messages[$i]->status;
+            $jsonResult[$i]["created_at"] = $messages[$i]->created_at->toDateTimeString();
+            $jsonResult[$i]["updated_at"] = $messages[$i]->updated_at->toDateTimeString();
+            $jsonResult[$i]["file"] = $path = ($messages[$i]->file) ? url('/uploads/ticketing/' . $messages[$i]->file) : "";
+            $jsonResult[$i]["ext"] = $extension;
+        }
+//        dd($jsonResult);
         $users = TicketingSupportModel::where('id', $id)->first();
 
         if (count($messages) > 0) {
-            return response($messages);
+            return response($jsonResult);
         } else {
             $meta = [
                 'code' => 200,
@@ -284,8 +329,8 @@ class ManagementUserController extends Controller
             return $res;
         }
     }
-	
-	public function count_tkt_chat(Request $request)
+
+    public function count_tkt_chat(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
         $id = $request->id_tiketing;
@@ -297,7 +342,7 @@ class ManagementUserController extends Controller
 
         $users = TicketingSupportModel::where('id', $id)->first();
 
-		/*
+        /*
         if (count($messages) > 0) {
             return response($messages);
         } else {
@@ -311,14 +356,14 @@ class ManagementUserController extends Controller
             $res['data'] = '';
             return $res;
         }
-		*/
-		if ($messages) {
-			 $meta = [
+        */
+        if ($messages) {
+            $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-			$data = [
+            $data = [
                 'count' => $messages
             ];
 
@@ -338,25 +383,25 @@ class ManagementUserController extends Controller
 
         }
     }
-	
-	public function count_inq_chat(Request $request)
+
+    public function count_inq_chat(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
         $id_inquiry = $request->id_inquiry;
 
-		$user = DB::table('csc_chatting_inquiry')
+        $user = DB::table('csc_chatting_inquiry')
             ->where('id_inquiry', $id_inquiry)
             ->where('type', 'importir')
             ->orderBy('created_at', 'desc')
             ->count();
-		
-		if ($user) {
-			 $meta = [
+
+        if ($user) {
+            $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-			$data = [
+            $data = [
                 'count' => $user
             ];
 
@@ -376,27 +421,27 @@ class ManagementUserController extends Controller
 
         }
     }
-	
-	public function count_notif_bb(Request $request)
+
+    public function count_notif_bb(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
         $id_user = $request->id_user;
         $id_role = $request->id_role;
 
-		$user = DB::table('notif')
+        $user = DB::table('notif')
             ->where('untuk_id', $id_user)
             ->where('to_role', $id_role)
             ->where('status_baca', 0)
             ->orderBy('created_at', 'desc')
             ->count();
-		
-		if ($user) {
-			 $meta = [
+
+        if ($user) {
+            $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-			$data = [
+            $data = [
                 'count' => $user
             ];
 
@@ -416,26 +461,26 @@ class ManagementUserController extends Controller
 
         }
     }
-	
-	public function count_notif_all(Request $request)
+
+    public function count_notif_all(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
         $id_user = $request->id_user;
         $id_role = $request->id_role;
 
-		$user = DB::table('notif')
+        $user = DB::table('notif')
             ->where('untuk_id', $id_user)
             ->where('to_role', $id_role)
             ->orderBy('created_at', 'desc')
             ->count();
-		
-		if ($user) {
-			 $meta = [
+
+        if ($user) {
+            $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-			$data = [
+            $data = [
                 'count' => $user
             ];
 
@@ -459,10 +504,20 @@ class ManagementUserController extends Controller
     public function sendchat(Request $req)
     {
         date_default_timezone_set('Asia/Jakarta');
+
+        $destination = 'uploads\ticketing\\';
+        if ($req->hasFile('upload_file')) {
+            $file1 = $req->file('upload_file');
+            $nama_file = $req->file('upload_file')->getClientOriginalName();
+            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file);
+        } else {
+            $nama_file = null;
+        }
         $chat = ChatingTicketingSupportModel::insertGetId([
             'id_ticketing_support' => $req->id_tiketing,
             'sender' => $req->id_pembuat,
             'reciver' => '0',
+            'file' => $nama_file,
             'messages' => $req->messages,
             'messages_send' => date('Y-m-d H:i:s')
         ]);
@@ -472,12 +527,26 @@ class ManagementUserController extends Controller
             ->get();
 
         for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg', 'PNG'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_ticketing_support"] = $user[$i]->id_ticketing_support;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
             $jsonResult[$i]["reciver"] = $user[$i]->reciver;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
             $jsonResult[$i]["messages_send"] = $user[$i]->messages_send;
+            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ticketing/' . $user[$i]->file) : "";
+            $jsonResult[$i]["ext"] = $extension;
         }
 //        dd($jsonResult);
         if (count($jsonResult) > 0) {
