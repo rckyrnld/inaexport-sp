@@ -320,7 +320,8 @@
                                                                         }
                                                                     ?>
                                                                     </b>
-                                                                    @if(Auth::guard('eksmp')->user())
+                                                                    @if(!empty(Auth::guard('eksmp')->user()))
+                                                                        @if(Auth::guard('eksmp')->user()->status == 1)
                                                                     <br>
                                                                     Price : 
                                                                     <?php
@@ -341,6 +342,7 @@
                                                                             }
                                                                         }
                                                                     ?>
+                                                                        @endif
                                                                     @endif
                                                                 </td>
                                                             </tr>
@@ -443,7 +445,8 @@
                                                                             // }
                                                                         ?>
                                                                         </b>
-                                                                        @if(Auth::guard('eksmp')->user())
+                                                                        @if(!empty(Auth::guard('eksmp')->user()))
+                                                                            @if(Auth::guard('eksmp')->user()->status == 1)
                                                                         <br>
                                                                         Price : 
                                                                         <?php
@@ -464,6 +467,7 @@
                                                                                 }
                                                                             }
                                                                         ?>
+                                                                            @endif
                                                                         @endif
                                                                     </td>
                                                                 </tr>

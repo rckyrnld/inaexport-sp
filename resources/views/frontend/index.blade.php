@@ -394,8 +394,10 @@
                                             $minorder = $p->minimum_order;
                                         }
                                         $ukuran = '340px';
-                                        if(Auth::guard('eksmp')->user()){
-                                            $ukuran = '375px';
+                                        if(!empty(Auth::guard('eksmp')->user())){
+                                            if(Auth::guard('eksmp')->user()->status == 1){
+                                                $ukuran = '375px';
+                                            }
                                         }
                                     ?>
                                     <div class="single_product" style="height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
@@ -451,7 +453,8 @@
                                                 <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name" onclick="GoToProduct('{{$p->id}}', event, this)"><b>{{$prodnama}}</b></a>
                                             </h3>
                                             <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
-                                                @if(Auth::guard('eksmp')->user())
+                                                @if(!empty(Auth::guard('eksmp')->user()))
+                                                    @if(Auth::guard('eksmp')->user()->status == 1)
                                                     Price :
                                                         @if(is_numeric($p->price_usd))
                                                             <?php 
@@ -477,6 +480,7 @@
                                                         {{$pricenya}}
                                                     </span>
                                                     <br>
+                                                    @endif
                                                 @endif
 
                                                 {{$order}}{{$minorder}}<br>
@@ -527,16 +531,18 @@
                                                     </p>
                                                 </div>
                                                 <div class="price_box">
-                                                    @if(Auth::guard('eksmp')->user())
-                                                    <span class="current_price">
-                                                        @if(is_numeric($p->price_usd))
-                                                            $ {{number_format($p->price_usd,0,",",".")}}
-                                                        @else
-                                                            <span style="font-size: 13px;">
-                                                                {{$p->price_usd}}
-                                                            </span>
+                                                    @if(!empty(Auth::guard('eksmp')->user()))
+                                                        @if(Auth::guard('eksmp')->user()->status == 1)
+                                                        <span class="current_price">
+                                                            @if(is_numeric($p->price_usd))
+                                                                $ {{number_format($p->price_usd,0,",",".")}}
+                                                            @else
+                                                                <span style="font-size: 13px;">
+                                                                    {{$p->price_usd}}
+                                                                </span>
+                                                            @endif
+                                                        </span>
                                                         @endif
-                                                    </span>
                                                     @endif
                                                 </div>
                                             </div>

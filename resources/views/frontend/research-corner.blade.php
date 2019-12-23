@@ -192,10 +192,8 @@
           data: {id:id},
           dataType: 'json',
           success:function(response){
-            if(response == 'nihil'){
+            if(response){
               window.open(obj.href, '_blank');
-            } else {
-              alert('The document has been downloaded');
             }
           }
       });
