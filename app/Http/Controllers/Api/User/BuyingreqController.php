@@ -171,9 +171,22 @@ class BuyingreqController extends Controller
 //        foreach ($buy as $datanya) {
 //            $coba = explode(",", $datanya->id_csc_prod);
 //        }
-//        dd($jsonResult);
+
         $jsonResult = array();
         for ($i = 0; $i < count($buy); $i++) {
+            $brjoin = DB::table('csc_buying_request_join')
+                ->where('id_br','=', $buy[$i]->id)
+                ->get();
+//            dd($brjoin);
+            if ($brjoin == null)
+            {
+                $countJoin = 0;
+            }
+            else
+            {
+                $countJoin = count($brjoin);
+            }
+            $jsonResult[$i]["count_join"] = $countJoin;
             $jsonResult[$i]["row"] = $buy[$i]->row;
             $jsonResult[$i]["id"] = $buy[$i]->id;
             $jsonResult[$i]["id_mst_country"] = $buy[$i]->id_mst_country;
@@ -672,8 +685,8 @@ class BuyingreqController extends Controller
     {
         date_default_timezone_set('Asia/Jakarta');
         $id_br = $request->id_br;
-        $pesan = DB::select("select b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where a.id=b.id_eks and a.id_profil = c.id and id_br='" . $id_br . "'");
-        if (count($pesan) > 0) {
+        $pesan = DB::select("select a.*,b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where a.id=b.id_eks and a.id_profil = c.id and id_br='" . $id_br . "'");
+        if ($pesan) {
 
             $meta = [
                 'code' => 200,
