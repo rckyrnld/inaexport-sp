@@ -16,7 +16,7 @@
         <div class="tab-pane animate fadeIn text-muted active show" id="tab4">
 		<br>
 {{--         <center><b><h4>Selamat Datang Di Aplikasi Kementerian Perdagangan <br><br>Republik Indonesia</h4></b></center>--}}
-            <center><b><h4>Welcome to the Ministry of Trade Application <br> <br> Republic of Indonesia</h4></b></center>
+            <center><b><h4>WELCOME TO INDONESIAN TRADE DIGITAL PROMOTION</h4></b></center>
 		<br>
           <div class="row">
            <div class="table-responsive">
