@@ -50,6 +50,25 @@ class BuyingRequestController extends Controller
 		}
     }
 	
+	public function unread_all_notif()
+    {
+		if(!empty(Auth::guard('eksmp')->user()->id)){
+		$update = DB::select("update notif set status_baca='1' where untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."'");
+		$pageTitle = "All Notif For Representative";
+		return view('notif.indexeksmp', compact('pageTitle'));
+		}else{
+		if(Auth::user()->id_group == 4){
+		$update = DB::select("update notif set status_baca='1' where untuk_id='".Auth::user()->id."' and to_role='".Auth::user()->id_group."'");
+        $pageTitle = "All Notif For Representative";
+		return view('notif.indexperwakilan', compact('pageTitle'));
+		}else{
+		$update = DB::select("update notif set status_baca='1' where untuk_id='".Auth::user()->id."' and to_role='".Auth::user()->id_group."'");
+		$pageTitle = "All Notif For Admin";
+        return view('notif.indexadmin', compact('pageTitle'));
+		}
+		}
+    }
+	
 	public function getcsc()
     {
         $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='4' order by id desc ");

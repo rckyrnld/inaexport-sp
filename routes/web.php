@@ -240,6 +240,7 @@ Route::get('/ambilt3/{id}', 'BuyingRequestController@ambilt3');
 Route::post('/br_save', 'BuyingRequestController@br_save');
 Route::post('/br_save_trx', 'BuyingRequestController@br_save_trx');
 Route::get('/show_all_notif', 'BuyingRequestController@show_all_notif');
+Route::get('/unread_all_notif', 'BuyingRequestController@unread_all_notif');
 
 //trx 
 Route::resource('/trx_list', 'TrxController');
