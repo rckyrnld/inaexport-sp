@@ -458,6 +458,8 @@ class SuppliersFrontController extends Controller
 
     public function view_eksportir($id, Request $request)
     {
+        $param = explode('-', $id);
+        $id = $param[0];
         $loc = app()->getLocale(); 
         if($loc == "ch"){
             $lct = "chn";

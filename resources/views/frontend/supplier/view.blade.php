@@ -103,7 +103,7 @@
               $isimg1 = '/front/assets/icon/icon logo.png';
             }  
         }
-
+        $param = $data->id_user.'-'.getCompanyName($data->id_user);
     ?>
 
     <!--shop  area start-->
@@ -195,7 +195,7 @@
                                    <div class="form-group row">
                                        <div class="col-md-12">
                                            <input type="text" id="id" class="form-control integer" name="name" autocomplete="off" placeholder="@lang("frontend.cu-fullname")" style="font-size: 13px;" required>
-                                           <input type="hidden" name="urlnya" id="urlnya" value="/front_end/list_perusahaan/view/{{$data->id_user}}">
+                                           <input type="hidden" name="urlnya" id="urlnya" value="/front_end/list_perusahaan/view/{{$param}}">
                                        </div>
                                    </div>
 
@@ -260,7 +260,7 @@
                                         </div>
                                         <div class="col-4" style="text-align: left;">
                                             <div class="breadcrumb_content">
-                                                <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_perusahaan/view/'.$data->id_user)}}" id="formvekssort">
+                                                <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_perusahaan/view/'.$param)}}" id="formvekssort">
                                                 {{ csrf_field() }}
                                                     <b>@lang('frontend.liseksportir.sortby')</b> <select name="shortprodeks" id="shortprodeks" style="border: none;">
                                                         <option value="" @if(isset($sortby)) @if($sortby == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
@@ -448,7 +448,7 @@
                                                             @endif
 
                                                             {{$order}}{{$minorder}}<br>
-                                                            <a href="{{url('front_end/list_perusahaan/view/'.$pro->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$companame}}</a>
+                                                            <a href="{{url('front_end/list_perusahaan/view/'.$param)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$companame}}</a>
                                                         </span>
                                                     </div>
                                                     <div class="product_content list_content" style="width: 100%;">
@@ -458,7 +458,7 @@
                                                                     <a href="{{url('front_end/product/'.$pro->id)}}" title="{{$prodn}}" class="href-name" style="font-size: 15px !important;" onclick="GoToProduct('{{$pro->id}}', event, this)"><b>{{$prodn}}</b></a>
                                                                 </h3>
                                                                 <h3>
-                                                                    <a href="{{url('front_end/list_perusahaan/view/'.$pro->id_itdp_company_user)}}" title="{{$compname}}" class="href-company"><span style="color: black;">by</span>&nbsp;&nbsp;{{$compname}}</a>
+                                                                    <a href="{{url('front_end/list_perusahaan/view/'.$param)}}" title="{{$compname}}" class="href-company"><span style="color: black;">by</span>&nbsp;&nbsp;{{$compname}}</a>
                                                                 </h3>
                                                             </div>
                                                             <div class="product_desc">
@@ -545,7 +545,7 @@
                                         </div>
                                         <div class="col-4" style="text-align: left;">
                                             <div class="breadcrumb_content">
-                                                <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_perusahaan/view/'.$data->id_user)}}" id="formsrvsort">
+                                                <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_perusahaan/view/'.$param)}}" id="formsrvsort">
                                                 {{ csrf_field() }}
                                                     <b>@lang('frontend.liseksportir.sortby')</b> <select name="shortsrveks" id="shortsrveks" style="border: none;">
                                                         <option value="" @if(isset($sortbysrv)) @if($sortbysrv == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>

@@ -282,7 +282,16 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                                             if(count($querynotifa) == 0){ 
                                                                 echo "<b>Tidak Ada Notifikasi Tersedia Untuk Anda !</b><br><br>"; 
                                                             }else{ ?> 
-                                                                <a href="{{ url('show_all_notif') }}">View all</a> 
+                                                                <div class="col-md-12">
+																<div class="row">
+																<div class="col-md-6">
+																<a href="{{ url('show_all_notif') }}">View all</a> 
+																</div>
+                                                                <div class="col-md-6">
+																<a href="{{ url('unread_all_notif') }}">Unread all</a> 
+																</div> 
+																</div>
+																</div>
                                                         <?php } ?>
                                                     </center></li>
                                                    <!-- Navarbar toggle btn -->
