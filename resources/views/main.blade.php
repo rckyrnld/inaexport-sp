@@ -81,7 +81,7 @@
 																<a href="{{ url('show_all_notif') }}">View all</a> 
 																</div>
                                                                 <div class="col-md-6">
-																<a href="{{ url('unread_all_notif') }}">Unread all</a> 
+																<a href="{{ url('unread_all_notif') }}">Read all</a> 
 																</div> 
 																</div>
 																</div>
