@@ -268,7 +268,7 @@ class ManagementUserController extends Controller
             ->where('ts.id', $id)
             ->selectRaw('cts.id as id_chating_tiketing, cts.id_ticketing_support, cts.sender, cts.reciver, cts.messages, cts.messages_send
             ,ts.id_pembuat,ts.type,ts.name,ts.email,ts.subyek,ts.main_messages,ts.status,ts.created_at,ts.updated_at, cts.file')
-            ->orderby('cts.messages_send', 'DESC')
+            ->orderby('cts.messages_send', 'asc')
             ->get();
 //        dd($messages);
         for ($i = 0; $i < count($messages); $i++) {
