@@ -161,6 +161,8 @@
                                           }
                                         }
                                       }
+
+                                      $param = $data->id_itdp_company_user.'-'.getCompanyName($data->id_itdp_company_user);
                                     ?>
                                   </td>
                                 </tr>
@@ -174,7 +176,7 @@
                                 <tr>
                                   <td width="30%">@lang('inquiry.company')</td>
                                   <td width="60%">
-                                    <a href="{{url('/front_end/list_perusahaan/view/'.$data->id_itdp_company_user)}}" style="text-transform: uppercase;">
+                                    <a href="{{url('/front_end/list_perusahaan/view/'.$param)}}" style="text-transform: uppercase;">
                                       {{getCompanyName($data->id_itdp_company_user)}}
                                     </a>
                                   </td>
