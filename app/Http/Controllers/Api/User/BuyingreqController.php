@@ -175,15 +175,13 @@ class BuyingreqController extends Controller
         $jsonResult = array();
         for ($i = 0; $i < count($buy); $i++) {
             $brjoin = DB::table('csc_buying_request_join')
-                ->where('id_br','=', $buy[$i]->id)
+                ->where('id_br', '=', $buy[$i]->id)
+                ->where('status_join', '!=', 0)
                 ->get();
 //            dd($brjoin);
-            if ($brjoin == null)
-            {
+            if ($brjoin == null) {
                 $countJoin = 0;
-            }
-            else
-            {
+            } else {
                 $countJoin = count($brjoin);
             }
             $jsonResult[$i]["count_join"] = $countJoin;
@@ -1432,8 +1430,8 @@ class BuyingreqController extends Controller
         }
 
     }
-	
-	public function count_br_chat(Request $request)
+
+    public function count_br_chat(Request $request)
     {
         $id = $request->id;
         $q1 = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
@@ -1446,17 +1444,17 @@ class BuyingreqController extends Controller
             ->where('id_join', '=', $id)
             ->orderBy('id', 'desc')
             ->count();
-        
+
 
 //        dd($jsonResult);
 
         if ($user) {
-			 $meta = [
+            $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-			$data = [
+            $data = [
                 'count' => $user
             ];
 
