@@ -10,8 +10,7 @@
   .modal-body {background-image: url('{{url('/')}}/front/assets/img/cp/bg.png');background-size: cover;background-repeat: no-repeat;width: 100%; margin: 0px; background-color: transparent; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; height: 380px;}
   .modal-content{ background-color: transparent; border:none; }
   .icon{ width:15%;}
-  .cp-data{padding-left: 25px;color: white;font-size: 20px; font-family: arial;text-align: left !important;"}
-  #times:hover{color: red !important;}
+  .cp-data{padding-left: 15px;color: white;font-size: 20px; font-family: arial;text-align: left !important;"}
 </style>
 <div class="padding">
     <div class="row">
@@ -107,13 +106,13 @@
                       <td style="text-align: right !important;"><i class="fa fa-times" id="times" data-dismiss="modal" style="color: white !important; font-size: 24px !important;"></i></td>
                     </tr>
                   </table>
-                  <table border="0" width="80%" align="center" style="margin-top: 10px;">
+                  <table border="0" width="80%" align="center">
                     <tr>
                       <td class="icon" align="center"><img src="{{url('/')}}/front/assets/img/cp/nama.png" height="100%"></td>
-                      <td class="cp-data" style="text-transform: capitalize;"><span id="cp_name"></span></td>
+                      <td class="cp-data" colspan="2" style="text-transform: capitalize;"><input type="text" class="data-cp" id="cp_name"></td>
                     </tr>
                     <tr>
-                      <td colspan="2">
+                      <td colspan="3">
                         <div style="height: 8px;">
                           <img src="{{url('/')}}/front/assets/img/cp/line.png" width="100%" height="100%" style="vertical-align: top;">
                         </div>
@@ -121,10 +120,10 @@
                     </tr>
                     <tr>
                       <td class="icon" align="center"><img src="{{url('/')}}/front/assets/img/cp/phone.png" height="100%"></td>
-                      <td class="cp-data"><span id="cp_phone"></span></td>
+                      <td class="cp-data" colspan="2"><input type="text" class="data-cp" id="cp_phone"></td>
                     </tr>
                     <tr>
-                      <td colspan="2">
+                      <td colspan="3">
                         <div style="height: 8px;">
                           <img src="{{url('/')}}/front/assets/img/cp/line.png" width="100%" height="100%" style="vertical-align: top;">
                         </div>
@@ -132,14 +131,31 @@
                     </tr>
                     <tr>
                       <td class="icon" align="center"><img src="{{url('/')}}/front/assets/img/cp/email.png" height="100%" height="100%"></td>
-                      <td class="cp-data"><span id="cp_email"></span></td>
+                      <td class="cp-data" colspan="2"><input type="text" class="data-cp" id="cp_email"></td>
                     </tr>
                     <tr>
-                      <td colspan="2">
+                      <td colspan="3">
                         <div style="height: 8px;">
                           <img src="{{url('/')}}/front/assets/img/cp/line.png" width="100%" style="vertical-align: top;">
                         </div>
                       </td>
+                    </tr>
+                    <tr>
+                      <td class="icon" align="center"><img src="{{url('/')}}/front/assets/img/cp/date.png" height="100%" height="100%"></td>
+                      <td style="font-size: 24px; color: #fff;">*</td>
+                      <td class="cp-data" style="padding-left: 0px !important;"><input type="text" style="font-size: 18px !important;" class="data-cp mod" id="reg_date"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3">
+                        <div style="height: 8px;">
+                          <img src="{{url('/')}}/front/assets/img/cp/line.png" width="100%" style="vertical-align: top;">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                       <td colspan="3" style="font-size: 12px; color: #fff; font-weight: 600; padding-left: 5px;">
+                          <div align="left"><i>*) Registration Date</i></div>
+                       </td> 
                     </tr>
                   </table>
                 </div>
@@ -169,16 +185,31 @@ function showDivs(n) {
     function __join(id){
       if(id != '-'){
           var pecah = id.split('|');
-          $('#cp_name').html(pecah[0]);
-          $('#cp_phone').html(pecah[1]);
-          $('#cp_email').html(pecah[2]);
+          $('#cp_name').val(pecah[0]);
+          $('#cp_phone').val(pecah[1]);
+          $('#cp_email').val(pecah[2]);
+          $('#reg_date').val(pecah[3]);
       } else {
-          $('#cp_name').html('No Contact');
-          $('#cp_phone').html('No Contact');
-          $('#cp_email').html('No Contact');
+          $('#cp_name').val('No Contact');
+          $('#cp_phone').val('No Contact');
+          $('#cp_email').val('No Contact');
+          $('#reg_date').val('Not Specified');
       } 
         $('#modal_cp').modal('show'); 
     }
+    $(document).ready(function(){
+      $('.data-cp').prop('readonly', true);
+
+      $('#times').hover(function(){
+        $(this).css("color", "red");
+        }, function(){
+        $(this).css("color", "white");
+      });
+
+      $('.data-cp').css({"background-color":"transparent","border":"none","color":"white","font-size":"20px","width":"100%"});
+      
+      $('.data-cp.mod').css("font-size","18px");
+    });
 </script>
 
 @include('footer')

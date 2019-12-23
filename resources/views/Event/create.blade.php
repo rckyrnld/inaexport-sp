@@ -3,6 +3,9 @@
 <div class="padding">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
    <style>
         .img_upl {
             border: 1px dashed #6fccdd;
@@ -177,7 +180,7 @@
                                                         @endif
                                                     @endif
                                                 </button>
-                                                <input type="file" id="image_1" name="image_1" style="display: none;"/>
+                                                <input type="file" accept="image/*" id="image_1" name="image_1" style="display: none;"/>
                                                 <br>
                                                 <center>+ Photo Utama</center>
                                             </div>
@@ -195,7 +198,7 @@
                                                         @endif
                                                     @endif
                                                 </button>
-                                                <input type="file" id="image_2" name="image_2" style="display: none;" />
+                                                <input type="file" accept="image/*" id="image_2" name="image_2" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 2</center>
                                             </div>
@@ -213,7 +216,7 @@
                                                         @endif
                                                     @endif
                                                 </button>
-                                                <input type="file" id="image_3" name="image_3" style="display: none;" />
+                                                <input type="file" accept="image/*" id="image_3" name="image_3" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 3</center>
                                             </div>
@@ -231,7 +234,7 @@
                                                         @endif
                                                     @endif
                                                 </button>
-                                                <input type="file" id="image_4" name="image_4" style="display: none;" />
+                                                <input type="file" accept="image/*" id="image_4" name="image_4" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 4</center>
                                             </div>
@@ -324,6 +327,15 @@
                                                 <option value="Verified" @if($page!=='add') @if($e_detail->status_en == 'Verified') selected @endif @endif>Verified</option>
                                                 <option value="Tentatif" @if($page!=='add') @if($e_detail->status_en == 'Tentatif') selected @endif @endif>Tentatif</option>
                                             </select>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-3"></div>
+                                    </div><br>
+                                    <div class="row">
+                                        <label for="code" class="col-md-3"><b>Registration Date</b></label>
+                                        <div class="col-md-3">
+                                            <input type="text" id="daterange" class="form-control">
+                                            <input type="hidden" name="registration_date" @if($page!=='add') value="{{$e_detail->reg_date}}" @endif>
                                         </div>
                                         <div class="col-md-3"></div>
                                         <div class="col-md-3"></div>
@@ -563,6 +575,11 @@
 
         $(document).ready(function () {
             var page = '{{$page}}';
+            $('#daterange').daterangepicker();
+            $('#daterange').on('hide.daterangepicker', function(ev, picker) {
+              var format = picker.startDate.format('YYYY-MM-DD')+' ~ '+picker.endDate.format('YYYY-MM-DD');
+              $('input[name="registration_date"]').val(format);
+            });
 
             if(window.innerWidth <= 780){
                 $(".paddignya").css("padding-top","10px");
@@ -610,6 +627,7 @@
               }
             });
             @isset($e_detail)
+            var reg_date = "{{$e_detail->reg_date}}";
             var comoditynya = "{{$e_detail->event_comodity}}";
             if (comoditynya != null) {
                 $.ajax({
@@ -621,6 +639,14 @@
 
                     $('#com').append(option).trigger('change');
                 });
+            }
+            if(reg_date != ''){
+                reg_date = reg_date.split(' ~ ');
+                var startDate = new Date(reg_date[0]);
+                var endDate = new Date(reg_date[1]);
+
+                $('#daterange').data('daterangepicker').setStartDate( (startDate.getMonth() + 1) + "/" + startDate.getDate() + "-" + startDate.getFullYear());
+                $('#daterange').data('daterangepicker').setEndDate( (endDate.getMonth() + 1) + "/" + endDate.getDate() + "-" + endDate.getFullYear());
             }
             @endisset
 

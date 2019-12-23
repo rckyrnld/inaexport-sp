@@ -749,9 +749,25 @@ if (! function_exists('getContactPerson')) {
             ->where('id_type', $id)
             ->where('type', $param)
             ->first();
-            
+
       if($cp != NULL){
         $return = $cp->name.'|'.$cp->phone.'|'.$cp->email;
+        if($param == 'event'){
+          $event = DB::table('event_detail')->where('id',$id)->first();
+          if($event->reg_date){
+            $date = explode(' ~ ', $event->reg_date);
+            if(date('Y-m-d', strtotime($date[0])) == date('Y-m-d', strtotime($date[1]))){
+              $tanggal = date('d F Y', strtotime($date[0]));
+            } else if(date('Y-m', strtotime($date[0])) == date('Y-m', strtotime($date[1]))){
+              $tanggal = date('d F', strtotime($date[0])).' - '.date('d F Y', strtotime($date[1]));
+            } else {
+              $tanggal = date('d F Y', strtotime($date[0])).' - '.date('d F Y', strtotime($date[1]));
+            }
+            $return .= '|'.$tanggal;
+          } else{
+            $return .= '|Not Specified';
+          }
+        }
       }
 
       return $return;
