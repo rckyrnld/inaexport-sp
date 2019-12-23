@@ -32,12 +32,23 @@ class ManagementUserController extends Controller
         $checking = DB::table('csc_download_research_corner')->where('id_itdp_profil_eks', $id_profil)->where('id_research_corner', $id_reseach)->first();
 //        dd($checking);
         if ($checking) {
+            $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
+                ->orderby('a.created_at', 'desc')
+                ->distinct('a.id_research_corner', 'a.created_at')
+                ->select('b.*', 'a.id_research_corner', 'a.created_at')
+                ->where('a.id_research_corner', '=', $id_reseach)
+//            ->limit(10)
+                ->get();
+            foreach ($research as $img) {
+                $coba = $img->exum;
+            }
+            $path = ($coba) ? url('uploads/Research Corner/File/' . $coba) : url('image/noimage.jpg');
             $meta = [
-                'code' => 204,
-                'message' => 'The document has been downloaded',
-                'status' => 'Failed '
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
             ];
-            $data = '';
+            $data = $path;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
