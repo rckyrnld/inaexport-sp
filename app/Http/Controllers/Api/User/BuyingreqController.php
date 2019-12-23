@@ -672,7 +672,7 @@ class BuyingreqController extends Controller
     {
         date_default_timezone_set('Asia/Jakarta');
         $id_br = $request->id_br;
-        $pesan = DB::select("select a.*,b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where a.id=b.id_eks and a.id_profil = c.id and id_br='" . $id_br . "'");
+        $pesan = DB::select("select b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where a.id=b.id_eks and a.id_profil = c.id and id_br='" . $id_br . "'");
         if (count($pesan) > 0) {
 
             $meta = [
