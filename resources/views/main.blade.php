@@ -13,7 +13,7 @@
     background-color: #f39c12 !important;
 }
 </style> 
-      <div class="content-header white  box-shadow-0" id="content-header" style="background-color:  #1a7688  ; color: #ffffff">
+      <div class="content-header white  box-shadow-0" id="content-header" style="background-color:  #ddeffd  ; color: #000000">
      
   
             <div class="navbar navbar-expand-lg">
@@ -22,7 +22,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><path d="M80 304h352v16H80zM80 248h352v16H80zM80 192h352v16H80z"/></svg>
               </a>
               <!-- Page title -->
-              <div class="navbar-text nav-title flex" id="pageTitle" style="font-size:18px;">{{$pageTitle}}</div>
+              <div class="navbar-text nav-title flex" id="pageTitle" style="font-size:18px;"><b>{{$pageTitle}}</b></div>
             
 		  
               <ul class="nav flex-row order-lg-2">
@@ -111,7 +111,7 @@
 					  }
 					  // echo Auth::guard('eksmp')->user()->username;
 					  }else{ ?>
-					  {{ Auth::user()->name }}
+					  <b>{{ Auth::user()->name }}</b>
 					  <?php } ?>
 					  
 					  </span>

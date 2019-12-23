@@ -1,6 +1,6 @@
    <!-- Flex nav content -->
 
-      <div class="flex hide-scroll" style="padding-top:15px; background-color:  black  ; color: #ffffff">
+      <div class="flex hide-scroll" style="padding-top:15px; background-color:  white  ; color: #000000">
      
       <div class="scroll">
         <div class="nav-border b-primary" data-nav>
