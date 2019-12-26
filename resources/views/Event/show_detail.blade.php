@@ -18,7 +18,14 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i>Event</h5>
+                  <table width="100%">
+                    <tr>
+                      <td><div align="left" style="font-size: 22px; font-weight: 600;">Event Detail</div></td>
+                      @if(!empty(Auth::user()->id))
+                        <td><div align="right"><a href="{{url('/')}}/event" class="btn btn-danger">&nbsp; Back &nbsp;</a></div></td>
+                      @endif
+                    </tr>
+                  </table>
                 </div>
 
                 <div class="box-body bg-light">
@@ -47,14 +54,17 @@
                               <button class="w3-button w3-display-left" style="background-color: #eae8e4;" onclick="plusDivs(-1)">&#10094;</button>
                               <button class="w3-button w3-display-right" style="background-color: #eae8e4;" onclick="plusDivs(1)">&#10095;</button>
                             </div><br>
+                            @if(empty(Auth::user()->id))
                             <div class="w3-center">
                               <button class="btn btn-primary btn-lg" onclick="__join('{{getContactPerson($detail->id, 'event')}}')">&nbsp; Join &nbsp;</button>&nbsp;&nbsp;
                               <a href="{{url('/')}}/event" class="btn btn-danger btn-lg">&nbsp; Back &nbsp;</a>
                             </div>
+                            @endif
                           </div>
                           <div class="col-md-6 col-lg-6 col-12">
-                            <h2><b>{{$detail->event_name_en}}</b></h2>
+                            <h2 style="color: #1089ff;"><b><i>{{$detail->event_name_en}}</i></b></h2>
                             <h5>{{date("d F Y", strtotime($detail->start_date))}} - {{date("d F Y", strtotime($detail->end_date))}}</h5>
+                            <hr>
                             <table id="left">
                               <tr>
                                   <td>Type</td>
@@ -89,6 +99,22 @@
                             </table>
                           </div>
                         </div>
+                        @if(!empty(Auth::user()->id))
+                        <br>
+                        <div class="row justify-content-center">
+                          <div class="col-md-12">
+                            <table id="table" class="table table-bordered table-striped">
+                              <thead class="text-white" style="background-color: #1089ff;">
+                                <tr>
+                                  <td>No</td>
+                                  <td>Company</td>
+                                  <td>Interested at</td>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -96,6 +122,7 @@
     </div>
 </div>
 
+  @if(empty(Auth::user()->id))
   <!-- Modal Contact Person -->
     <div class="modal fade" id="modal_cp" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
@@ -162,6 +189,7 @@
             </div>
         </div>
     </div>
+  @endif
 
 <script>
 var slideIndex = 1;
@@ -206,6 +234,19 @@ function showDivs(n) {
         });
     }
     $(document).ready(function(){
+      @if(!empty(Auth::user()->id))
+        $('#table').dataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('event.getDataInterest', $detail->id)}}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'company', name: 'company'},
+                {data: 'interest', name: 'interest'}
+            ]
+        });
+      @endif
+    
       $('.data-cp').prop('readonly', true);
 
       $('#times').hover(function(){

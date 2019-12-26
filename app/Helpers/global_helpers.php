@@ -929,3 +929,25 @@ if (! function_exists('getDataInterest')) {
       return count($data);
     }
 }
+
+if (! function_exists('getProfileCompany')) {
+    function getProfileCompany($id){
+      $data = DB::table('itdp_company_users')->where('id_profil',$id)->first();
+      $return = 'Company Not Found';
+      if($data){
+        if($data->id_role == 2){
+          $data = DB::table('itdp_profil_eks')->where('id',$id)->first();
+          if($data){
+            $return = $data->company;
+          }
+        } else {
+          $data = DB::table('itdp_profil_imp')->where('id',$id)->first();
+          if($data){
+            $return = $data->company;
+          }
+        }
+      }
+      
+      return $return;
+    }
+}

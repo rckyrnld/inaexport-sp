@@ -29,7 +29,6 @@
         margin: 2cm;
     }
 </style>
-<section class="content container-fluid">
 <div class="padding">
     <div class="row">
         <div class="col-md-12">
@@ -118,7 +117,7 @@
                                                     <tr><td title="{{$comodity}}">{{$comodityName}}</td></tr>
                                                     <tr>
                                                         <td style="padding-top: 10px;">
-                                                            <a href="{{url('/')}}/event/show/read/{{$ed->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a> 
+                                                            <a href="{{url('/')}}/event/show_detail/{{$ed->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a> 
                                                             <a href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                                             <a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                                         </td>
@@ -148,7 +147,6 @@
         </div>
     </div>
 </div>
-</section>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#tableexd').DataTable();
