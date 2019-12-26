@@ -26,11 +26,20 @@ class DataContactUsController extends Controller
       return \Yajra\DataTables\DataTables::of($contactus)
           ->addIndexColumn()
           ->addColumn('action', function ($data) {
+//              return '
+//              <center>
+//              <div class="btn-group">
+//                <a href="'.route('management.contact-us.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+//                <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('management.contact-us.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+//              </div>
+//              </center>
+//              ';
+
               return '
               <center>
               <div class="btn-group">
-                <a href="'.route('management.contact-us.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-                <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('management.contact-us.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+                <a href="'.route('management.contact-us.view', $data->id).'" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-search text-white"></i></a>&nbsp;&nbsp;
+                <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('management.contact-us.destroy', $data->id).'" class="btn btn-sm btn-danger" title="Delete">&nbsp;<i class="fa fa-trash text-white"></i></a>
               </div>
               </center>
               ';

@@ -64,7 +64,7 @@ class PerwakilanResearchController extends Controller
               if($research){
                 return '<center>
                   <a href="'.route("perwakilan.research-corner.view", $data->id).'" id="button" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-                  <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route("perwakilan.research-corner.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+                  <a onclick="return confirm(\'Are You Sure ?\')" href="'.route("perwakilan.research-corner.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
                   </center>';
               } else {
                 return '<center>

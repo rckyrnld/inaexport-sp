@@ -114,12 +114,14 @@ body {font-family: Arial;}
 									
 									<td><center>
 									<?php if($ruu->status_transaksi == 1){ ?>
-									<a href="{{ url('br_trx2/'.$ruu->id_transaksi) }}" class="btn btn-info"><font color="white"><i class="fa fa-list"></i>&nbsp; View</font></a>
-									
-									
+{{--									<a href="{{ url('br_trx2/'.$ruu->id_transaksi) }}" class="btn btn-info"><font color="white"><i class="fa fa-list"></i>&nbsp; View</font></a>--}}
+                                        <a href="{{ url('br_trx2/'.$ruu->id_transaksi) }}" class="btn btn-info" data-toggle="tooltip" title="View"><font color="white"><i class="fa fa-list"></i></font></a>
+
+
 									<?php }else { ?>
-									<a href="{{ url('br_trx2/'.$ruu->id_transaksi) }}" class="btn btn-success"><font color="white"><i class="fa fa-truck"></i>&nbsp; Send</font></a>
-									
+{{--									<a href="{{ url('br_trx2/'.$ruu->id_transaksi) }}" class="btn btn-success"><font color="white"><i class="fa fa-truck"></i>&nbsp; Send</font></a>--}}
+                                        <a href="{{ url('br_trx2/'.$ruu->id_transaksi) }}" class="btn btn-success" data-toggle="tooltip" title="Send"><font color="white"><i class="fa fa-truck"></i></font></a>
+
 									<?php } ?>
 									</center></td>
 								</tr>

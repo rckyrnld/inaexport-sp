@@ -65,7 +65,7 @@ body {font-family: Arial;}
 				</select>
 						</div>
 						<div class="form-group col-sm-2">
-							<div id="cb"><a href="{{url('allgr/0')}}" class="btn btn-info" download><i class="fa fa-download"></i> Cetak</a></div>
+							<div id="cb"><a href="{{url('allgr/0')}}" class="btn btn-info" download><i class="fa fa-download"></i> Export Excel</a></div>
 						</div>
 					</div>
 				<hr>

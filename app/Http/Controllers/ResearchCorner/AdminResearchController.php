@@ -64,13 +64,13 @@ class AdminResearchController extends Controller
               ->first();
               if($research){
                 return '<center>
-                  <a href="'.route("admin.research-corner.view", $data->id).'" id="button" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-                  <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Data Ini ?\')" href="'.route("admin.research-corner.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+                  <a href="'.route("admin.research-corner.view", $data->id).'" id="button" class="btn btn-sm btn-info" title="View"><i class="fa fa-search text-white" ></i></a>&nbsp;&nbsp;
+                  <a onclick="return confirm(\'Are You Sure ?\')" href="'.route("admin.research-corner.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger" title="Delete">&nbsp<i class="fa fa-trash text-white"></i></a>
                   </center>';
               } else {
                 return '<center>
-                  <button onclick="broadcast(\''.$data->title_en.'||'.$data->id.'\')" id="button" class="btn btn-sm btn-warning text-white">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Broadcast&nbsp;</button>&nbsp;&nbsp;
-                  <a href="'.route("admin.research-corner.edit", $data->id).'" id="button" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>
+                  <button onclick="broadcast(\''.$data->title_en.'||'.$data->id.'\')" id="button" class="btn btn-sm btn-warning text-white" title="Broadcast"><i class="fa fa-edit text-white"></i></button>&nbsp;&nbsp;
+                  <a href="'.route("admin.research-corner.edit", $data->id).'" id="button" class="btn btn-sm btn-success" title="Edit"><i class="fa fa-edit text-white"></i></a>
                   </center>';
               }
           })

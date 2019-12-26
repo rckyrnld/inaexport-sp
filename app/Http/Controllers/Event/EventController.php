@@ -411,10 +411,22 @@ class EventController extends Controller
     }
 
     public function show_detail($id){
-    	$pageTitle = 'Show Event';
-    	$detail = DB::table('event_detail')->where('id', $id)->first();
-    	$id_user = strval(Auth::guard('eksmp')->user()->id);
-    	return view('Event.show_detail', compact('pageTitle','detail', 'id_user'));
+        if(Auth::user()){
+            if(Auth::user()->id_group == 1){
+                $pageTitle = 'Show Event';
+                $detail = DB::table('event_detail')->where('id', $id)->first();
+                return view('Event.show_detail', compact('pageTitle','detail'));
+            } else {
+                return redirect('/home');
+            }
+        } else if (Auth::guard('eksmp')->user()){
+        	$pageTitle = 'Show Event';
+        	$detail = DB::table('event_detail')->where('id', $id)->first();
+        	$id_user = strval(Auth::guard('eksmp')->user()->id);
+    	    return view('Event.show_detail', compact('pageTitle','detail', 'id_user'));
+        } else {
+            return redirect('/login');
+        }
     }
 
     public function search(Request $req){
@@ -515,6 +527,22 @@ class EventController extends Controller
           $comodity->limit(10);
       }
       return response()->json($comodity->get());
+    }
+
+    public function getDataInterest($id)
+    {
+      $interest = DB::table('event_interest')->where('id_event', $id)->orderby('created_at', 'desc')->get();
+
+      return \Yajra\DataTables\DataTables::of($interest)
+          ->addIndexColumn()
+          ->addColumn('company', function ($var) {
+            return '<div align="left">'.getProfileCompany($var->id_profile).'</div>';
+          })
+          ->addColumn('interest', function ($data) {
+            return date('d F Y', strtotime($data->created_at)).' ( '.date('H:i', strtotime($data->created_at)).' )';
+          })
+          ->rawColumns(['company'])
+          ->make(true);
     }
 
 }

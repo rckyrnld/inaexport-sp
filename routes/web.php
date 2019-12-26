@@ -418,6 +418,7 @@ Route::namespace('Event')->prefix('event')->group(function () {
     Route::get('/show_detail/front/{id}', 'EventController@show_detail');
     Route::any('/search', 'EventController@search');
     Route::any('/search_eksportir', 'EventController@search_eksportir');
+    Route::get('/getDataInterest/{id}', 'EventController@getDataInterest')->name('event.getDataInterest');
 
     Route::post('/getEventOrg', 'EventController@getEventOrg');
     Route::post('/getEventPlace', 'EventController@getEventPlace');

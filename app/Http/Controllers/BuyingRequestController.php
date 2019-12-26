@@ -120,16 +120,23 @@ class BuyingRequestController extends Controller
 				 
             })
             ->addColumn('action', function ($pesan) {
-				if($pesan->status == 1){
-					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary"><i class="fa fa-comment"></i> List Chat</a>';
-				}else if($pesan->status == 4){
-					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success"><i class="fa fa-list"></i> List Chat</a>';
-				}else{
-					return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i> Broadcast</i></a>
-					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Detail</a>';
-				}
-                
-				
+//				if($pesan->status == 1){
+//					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary"><i class="fa fa-comment"></i> List Chat</a>';
+//				}else if($pesan->status == 4){
+//					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success"><i class="fa fa-list"></i> List Chat</a>';
+//				}else{
+//					return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i> Broadcast</i></a>
+//					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Detail</a>';
+//				}
+
+                if($pesan->status == 1){
+                    return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary" data-toggle="tooltip" title="List Chat"><i class="fa fa-comment"></i></a>';
+                }else if($pesan->status == 4){
+                    return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success" data-toggle="tooltip" title="List Chat"><i class="fa fa-list"></i></a>';
+                }else{
+                    return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-bullhorn"></i></i></a>
+					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>';
+                }
 				
            
                 
@@ -184,15 +191,23 @@ class BuyingRequestController extends Controller
 				 
             })
             ->addColumn('action', function ($pesan) {
-				if($pesan->status == 1){
-					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary"><i class="fa fa-comment"></i> List Chat</a>';
-				}else if($pesan->status == 4){
-					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success"><i class="fa fa-list"></i> List Chat</a>';
-				}else{
-					return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i> Broadcast</i></a>
-					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Detail</a>';
-				}
-                
+//				if($pesan->status == 1){
+//					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary"><i class="fa fa-comment"></i> List Chat</a>';
+//				}else if($pesan->status == 4){
+//					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success"><i class="fa fa-list"></i> List Chat</a>';
+//				}else{
+//					return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i> Broadcast</i></a>
+//					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i></a>';
+//				}
+
+                if($pesan->status == 1){
+                    return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary" data-toggle="tooltip" title="List Chat"><i class="fa fa-comment"></i></a>';
+                }else if($pesan->status == 4){
+                    return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success" data-toggle="tooltip" title="List Chat"><i class="fa fa-list"></i></a>';
+                }else{
+                    return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-bullhorn"></i></i></a>
+					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>';
+                }
 				
 				
            
@@ -245,15 +260,23 @@ class BuyingRequestController extends Controller
 				 
             })
             ->addColumn('action', function ($pesan) {
-				if($pesan->status == 1){
-					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary"><i class="fa fa-comment"></i> List Chat</a>';
-				}else if($pesan->status == 4){
-					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success"><i class="fa fa-list"></i> List Chat</a>';
-				}else{
-					return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i> Broadcast</i></a>
-					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Detail</a>';
-				}
-                
+//				if($pesan->status == 1){
+//					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary"><i class="fa fa-comment"></i> List Chat</a>';
+//				}else if($pesan->status == 4){
+//					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success"><i class="fa fa-list"></i> List Chat</a>';
+//				}else{
+//					return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i> Broadcast</i></a>
+//					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Detail</a>';
+//				}
+
+                if($pesan->status == 1){
+                    return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary" data-toggle="tooltip" title="List Chat"><i class="fa fa-comment"></i></a>';
+                }else if($pesan->status == 4){
+                    return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success" data-toggle="tooltip" title="List Chat"><i class="fa fa-list"></i></a>';
+                }else{
+                    return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-bullhorn"></i></i></a>
+					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>';
+                }
 				
 				
            
@@ -474,7 +497,7 @@ class BuyingRequestController extends Controller
 	
 	public function br_trx2($id)
     {
-		$pageTitle = "Transaksi Buying Request";
+		$pageTitle = "Buying Request Transaction";
 		return view('trx.trx', compact('id','pageTitle'));
 	}	
 	public function br_deal($id,$id2,$id3)
