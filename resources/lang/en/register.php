@@ -15,5 +15,6 @@ return [
         "address" => "Address",
 		
     ],
-    "submit" => "Create My Account"
+    "submit" => "Create My Account",
+    "modal" => "After finish the registration, You can use your account to Login. <br><br>For doing Inquiry and Buying Request, You need to wait to the representative activate your account first.",
 ];

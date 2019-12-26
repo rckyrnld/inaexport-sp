@@ -16,7 +16,7 @@ class CategoryProductController extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'Data Category Product';
+      $pageTitle = 'List Category Product';
       $product = DB::table('csc_product')->orderby('nama_kategori_en', 'asc')->where('level_1', 0)->where('level_2', 0)->get();
       return view('management.category-product.index',compact('pageTitle','product'));
     }
@@ -43,12 +43,22 @@ class CategoryProductController extends Controller
               return '<div align="left">'.$data->nama_kategori_en.'</div>';
           })
 		  ->addColumn('action', function ($data) {
+//              return '
+//              <center>
+//              <div class="btn-group">
+//                <a href="'.route('management.category-product.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
+//                <a href="'.route('management.category-product.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
+//                <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('management.category-product.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+//              </div>
+//              </center>
+//              ';
+
               return '
               <center>
               <div class="btn-group">
-                <a href="'.route('management.category-product.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-                <a href="'.route('management.category-product.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
-                <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('management.category-product.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+                <a href="'.route('management.category-product.view', $data->id).'" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-search text-white"></i></a>&nbsp;&nbsp;
+                <a href="'.route('management.category-product.edit', $data->id).'" class="btn btn-sm btn-success" title="Edit">&nbsp;<i class="fa fa-edit text-white"></i></a>&nbsp;&nbsp;
+                <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('management.category-product.destroy', $data->id).'" class="btn btn-sm btn-danger"title="Delete">&nbsp;<i class="fa fa-trash text-white"></i></a>
               </div>
               </center>
               ';

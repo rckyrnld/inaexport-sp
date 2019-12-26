@@ -13,7 +13,7 @@ return [
         "re-password" => "Ulang Kata Sandi",
         "postcode" => "Kode Pos",
         "address" => "Alamat",
-		
     ],
-    "submit" => "Daftar"
+    "submit" => "Daftar",
+    "modal" => "Setelah Registrasi, anda sudah bisa login. <br><br>Untuk mengunggah barang, silahkan login dan unggah dokumen-dokumen yang diperlukan.",
 ];

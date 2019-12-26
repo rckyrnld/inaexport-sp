@@ -31,7 +31,6 @@ class RekapPendapatanController extends Controller
 	
 	public function cetakrc()
     {
-		
 		$pageTitle = "Rekap Pendapatan";
 		$research = DB::select("select * from csc_research_corner order by id desc");
         return view('rekap-pendapatan.cetakrc', compact('pageTitle','research'));

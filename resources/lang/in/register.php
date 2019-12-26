@@ -15,5 +15,6 @@ return [
         "address" => "Alamat",
 		
     ],
-    "submit" => "Buat Akun"
+    "submit" => "Buat Akun",
+    "modal" => "Setelah Registrasi, anda sudah bisa login.<br><br>Untuk melakukan inqury dan buying request, akun anda perlu di aktivasi oleh perwakilan terlebih dahulu.",
 ];
