@@ -13,7 +13,7 @@ return [
         "re-password" => "Re-Password",
         "postcode" => "Postcode",
         "address" => "Address",
-		
     ],
-    "submit" => "Register"
+    "submit" => "Register",
+    "modal" => "After finish the registration, You can use your account to Login. <br><br>To upload your product, Please Login and Upload some required document first.",
 ];

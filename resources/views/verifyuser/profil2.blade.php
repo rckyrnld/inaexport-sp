@@ -313,7 +313,7 @@
                                     <?php if(empty(Auth::user()->name)){
                                     }else{ ?>
                                     <a href="{{ url('verifyimportir') }}" class="btn btn-md btn-danger"><i
-                                                class="fa fa-arrow-left"></i> Kembali</a>
+                                                class="fa fa-arrow-left"></i> Back</a>
                                     <?php } ?>
                                     <button class="btn btn-md btn-primary"><i class="fa fa-save"></i> Save</button>
                                 </div>
