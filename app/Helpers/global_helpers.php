@@ -917,3 +917,15 @@ if (! function_exists('userGuide')) {
         echo $return;
     }
 }
+
+if (! function_exists('getDataInterest')) {
+    function getDataInterest($id){
+      $data = DB::table('event_interest')
+            ->where('id_event', $id)
+            ->select('id_profile')
+            ->groupby('id_profile')
+            ->get();
+      
+      return count($data);
+    }
+}
