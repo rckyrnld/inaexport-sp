@@ -15,5 +15,5 @@ return [
         "address" => "Address",
     ],
     "submit" => "Register",
-    "modal" => "After finish the registration, You can use your account to Login. <br><br>To upload your product, Please Login and Upload some required document first.",
+    "modal" => "Check your mail for activate account !<br><br>You can use your account to Login. <br><br>To upload your product, Please Login and Upload some required document first.",
 ];
