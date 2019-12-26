@@ -196,6 +196,14 @@ function showDivs(n) {
           $('#reg_date').val('Not Specified');
       } 
         $('#modal_cp').modal('show'); 
+        var token = "{{ csrf_token() }}";
+        var id = "{{$detail->id}}";
+        $.ajax({
+            url: "{{route('event.interest')}}",
+            type: 'post',
+            data: {'_token':token,id:id},
+            dataType: 'json'
+        });
     }
     $(document).ready(function(){
       $('.data-cp').prop('readonly', true);
