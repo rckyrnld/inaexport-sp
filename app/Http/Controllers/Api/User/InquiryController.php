@@ -137,7 +137,7 @@ class InquiryController extends Controller
     {
         date_default_timezone_set('Asia/Jakarta');
 //        dd("ilyas");
-        if ($request->id_role == 3) {
+        if ($request->id_role != null) {
             $id_user = $request->id_user;
             $id_product = $request->id_product;
             $type = 'importir';
@@ -1082,5 +1082,228 @@ class InquiryController extends Controller
             return response($res);
 
         }
+    }
+
+
+    //admin punya
+
+    public function adminperwachatting(Request $request)
+    {
+        $id_user = $request->id_user;
+        $data = DB::table('csc_inquiry_broadcast')->where('id', $request->id_inquiry_broadcast)->first();
+        $inquiry = DB::table('csc_inquiry_br')->where('id', $data->id_inquiry)->first();
+        $messages = DB::table('csc_chatting_inquiry')
+            ->where('id_inquiry', $data->id_inquiry)
+            ->where('type', 'admin')
+            ->where('id_broadcast_inquiry', $request->id_inquiry_broadcast)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        $chat = DB::table('csc_chatting_inquiry')
+            ->where('id_inquiry', $data->id_inquiry)
+            ->where('type', 'admin')
+            ->where('sender', $data->id_itdp_company_users)
+            ->where('receive', $inquiry->id_pembuat)
+            ->where('id_broadcast_inquiry', $request->id_inquiry_broadcast)
+            ->update([
+                'status' => 1,
+            ]);
+
+        if ($chat) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $list_k = array();
+//            $list_k["id_transaksi"] = $maxid;
+            $res['meta'] = $meta;
+            $res['data'] = $chat;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+
+        }
+    }
+
+    public function adminperwasendChat(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $datenow = date('Y-m-d H:i:s');
+        $id = $request->idinquiry;
+        $id_broadcast = $request->idbroadcast;
+        $sender = $request->from;
+        $receiver = $request->to;
+        $msg = $request->messages;
+
+        $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
+
+        $save = DB::table('csc_chatting_inquiry')->insert([
+            'id_inquiry' => $id,
+            'id_broadcast_inquiry' => $id_broadcast,
+            'sender' => $sender,
+            'receive' => $receiver,
+            'type' => 'admin',
+            'messages' => $msg,
+            'status' => 0,
+            'created_at' => $datenow,
+        ]);
+
+        if ($save) {
+            //Notif sistem
+            $notif = DB::table('notif')->insert([
+                'dari_nama' => getAdminName($sender),
+                'dari_id' => $sender,
+                'untuk_nama' => getCompanyName($receiver),
+                'untuk_id' => $receiver,
+                'keterangan' => 'New Message from ' . getAdminName($sender) . ' about Inquiry ' . $data->subyek_en,
+                'url_terkait' => 'inquiry/chatting',
+                'status_baca' => 0,
+                'waktu' => $datenow,
+                'to_role' => 2,
+                'id_terkait' => $id
+            ]);
+
+            $users = DB::table('itdp_company_users')->where('id', $receiver)->first();
+            $email = $users->email;
+            $username = $users->username;
+            //Tinggal Ganti Email1 dengan email kemendag
+            $data2 = [
+                'email' => $email,
+                'username' => $username,
+                'type' => "admin",
+                'sender' => getAdminName($sender),
+                'receiver' => getCompanyName($receiver),
+                'subjek' => $data->subyek_en
+            ];
+
+            Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+                $mail->to($data2['email'], $data2['username']);
+                $mail->subject('Inquiry Chatting Information');
+            });
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $list_k = array();
+//            $list_k["id_transaksi"] = $maxid;
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+
+        }
+    }
+
+    public function adminperwafileChat(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $datenow = date('Y-m-d H:i:s');
+        $id = $request->id_inquiry;
+        $id_broadcast = $request->id_broadcast;
+        $sender = $request->sender;
+        $receiver = $request->receiver;
+        $msg = $request->msgfile;
+
+        $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
+
+        $save = DB::table('csc_chatting_inquiry')->insertGetId([
+            'id_inquiry' => $id,
+            'id_broadcast_inquiry' => $id_broadcast,
+            'sender' => $sender,
+            'receive' => $receiver,
+            'type' => 'admin',
+            'messages' => $msg,
+            'status' => 0,
+            'created_at' => $datenow,
+        ]);
+
+        //upload file
+        $nama_file1 = NULL;
+        $destination = 'uploads\ChatFileInquiry\\' . $save;
+        if ($request->hasFile('upload_file')) {
+            $file1 = $request->file('upload_file');
+            $nama_file1 = time() . '_' . $request->file('upload_file')->getClientOriginalName();
+            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+        }
+
+        $savefile = DB::table('csc_chatting_inquiry')->where('id', $save)->update([
+            'file' => $nama_file1,
+        ]);
+
+        //Notif sistem
+        $notif = DB::table('notif')->insert([
+            'dari_nama' => getAdminName($sender),
+            'dari_id' => $sender,
+            'untuk_nama' => getCompanyName($receiver),
+            'untuk_id' => $receiver,
+            'keterangan' => 'New Message from ' . getAdminName($sender) . ' about Inquiry ' . $data->subyek_en,
+            'url_terkait' => 'inquiry/chatting',
+            'status_baca' => 0,
+            'waktu' => $datenow,
+            'to_role' => 2,
+            'id_terkait' => $id
+        ]);
+
+        $users = DB::table('itdp_company_users')->where('id', $receiver)->first();
+        $email = $users->email;
+        $username = $users->username;
+        //Tinggal Ganti Email1 dengan email kemendag
+        $data2 = [
+            'email' => $email,
+            'username' => $username,
+            'type' => "admin",
+            'sender' => getAdminName($sender),
+            'receiver' => getCompanyName($receiver),
+            'subjek' => $data->subyek_en
+        ];
+
+        Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+            $mail->to($data2['email'], $data2['username']);
+            $mail->subject('Inquiry Chatting Information');
+        });
+        if ($data2) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $list_k = array();
+//            $list_k["id_transaksi"] = $maxid;
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+
     }
 }

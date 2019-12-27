@@ -17,13 +17,13 @@ class BuyingRequestController extends Controller
     {
 		if(!empty(Auth::guard('eksmp')->user()->id)){
 		if(Auth::guard('eksmp')->user()->id_role == 2){
-		$pageTitle = "Buying Request Eksportir";
+		$pageTitle = "Buying Request Indonesian Exporter";
 		$data = DB::select("select a.*,a.id as ida,a.status as statusa,b.*,b.id as idb from csc_buying_request a, csc_buying_request_join b where a.id = b.id_br and b.id_eks='".Auth::guard('eksmp')->user()->id."' order by b.id desc ");
         return view('buying-request.index_eks', compact('pageTitle','data'));
 		}
 		}else{
 		if(Auth::user()->id_group == 4){
-        $pageTitle = "Buying Request Perwakilan";
+        $pageTitle = "Buying Request Representative";
 		$data = DB::select("select a.*,a.id as ida,a.status as status_a,b.*,b.id as idb from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
         return view('buying-request.index', compact('pageTitle','data'));
 		}else{
@@ -288,25 +288,25 @@ class BuyingRequestController extends Controller
 	
 	public function add()
     {
-        $pageTitle = "Add Buying Request Perwakilan";
+        $pageTitle = "Add Buying Request Representative";
 		return view('buying-request.add', compact('pageTitle'));
     }
 	
 	public function br_pw_lc($id)
     {
-		$pageTitle = "List Chat Request Perwakilan";
+		$pageTitle = "List Chat Request Representative";
 		return view('buying-request.lc', compact('id','pageTitle'));
 	}
 	
 	public function br_pw_dt($id)
     {
-		$pageTitle = "List Chat Request Perwakilan";
+		$pageTitle = "List Chat Request Representative";
 		return view('buying-request.dt', compact('id','pageTitle'));
 	}
 	
 	public function br_join($id)
     {
-		$pageTitle = "Join Buying Request Eksportir";
+		$pageTitle = "Join Buying Request Exporter";
 		return view('buying-request.join', compact('id','pageTitle'));
 	}
 	
@@ -491,7 +491,7 @@ class BuyingRequestController extends Controller
 	}	
 	public function br_trx($id,$id2)
     {
-		$pageTitle = "Transaksi Buying Request";
+		$pageTitle = "Buying Request Transaction";
 		return view('buying-request.trx', compact('id','pageTitle','id2'));
 	}
 	
@@ -587,13 +587,13 @@ class BuyingRequestController extends Controller
 	}	
 	public function br_chat($id)
     {
-		$pageTitle = "Chat Buying Request Eksportir";
+		$pageTitle = "Chat Buying Request Indonesian Exporter";
 		return view('buying-request.chat', compact('id','pageTitle'));
 	}
 	
 	public function br_pw_chat($id)
     {
-		$pageTitle = "Chat Buying Request Perwakilan";
+		$pageTitle = "Chat Buying Request Representative";
 		return view('buying-request.chat2', compact('id','pageTitle'));
 	}
 	
@@ -627,13 +627,7 @@ class BuyingRequestController extends Controller
 			$greed = $cb4->email;
 		}
 		}
-		
-		
-		
-		
-		
-		
-		
+
 		if($data5 == 3){
 			
 		$ket = Auth::guard('eksmp')->user()->username." Join to your Buying Request!";
@@ -653,7 +647,7 @@ class BuyingRequestController extends Controller
 			];
 		Mail::send('UM.user.sendbrjoin', $data, function ($mail) use ($data) {
         $mail->to($data['email1'], $data['username']);
-        $mail->subject('Eksportir Join to Your Buying Request');
+        $mail->subject('Exporter Join to Your Buying Request');
 		});
 		
 		$data33 = [
@@ -665,7 +659,7 @@ class BuyingRequestController extends Controller
 			];
 		Mail::send('UM.user.sendbrjoin3', $data33, function ($mail) use ($data33) {
         $mail->to($data33['email1'], $data33['username']);
-        $mail->subject('Eksportir Join to Buying Request');
+        $mail->subject('Exporter Join to Buying Request');
 		});
 		
 		}else if($data5 == 1){
@@ -683,7 +677,7 @@ class BuyingRequestController extends Controller
 			];
 		Mail::send('UM.user.sendbrjoin', $data, function ($mail) use ($data) {
         $mail->to($data['email1'], $data['username']);
-        $mail->subject('Eksportir Join to Your Buying Request');
+        $mail->subject('Exporter Join to Your Buying Request');
 		});
 			
 		}else if($data5 == 4){
@@ -701,7 +695,7 @@ class BuyingRequestController extends Controller
 			];
 		Mail::send('UM.user.sendbrjoin', $data, function ($mail) use ($data) {
         $mail->to($data['email1'], $data['username']);
-        $mail->subject('Eksportir Join to Your Buying Request');
+        $mail->subject('Exporter Join to Your Buying Request');
 		});
 			
 		}

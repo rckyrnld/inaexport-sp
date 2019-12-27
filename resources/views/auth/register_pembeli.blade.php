@@ -221,6 +221,22 @@
                     </div>
 
 
+{{--                    <div class="form-row">--}}
+{{--                        <div class="form-group col-sm-4" align="left">--}}
+{{--                            <label><font color="red">*</font> Verification Code</label>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-sm-3 captcha" align="left" id="captcha">--}}
+{{--                            <span>{!!captcha_img()!!}</span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-sm-1" align="left">--}}
+{{--                            <button type="button" class="btn btn-success" id="refresh"><i class="fa fa-refresh"></i></button>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-sm-2" align="left">--}}
+{{--                            <input type="text" class="form-control" name="captchainput" id="captchainput">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+
                     <div class="form-row" align="left">
 
                         <div class="form-group col-sm-12"><br>
@@ -286,7 +302,6 @@
 <script src="{{asset('')}}/js/tagsinput.js"></script>
 <script>
 
-
     function cekmail() {
         var m = $('#email').val();
         var token = $('meta[name="csrf-token"]').attr('content');
@@ -306,6 +321,8 @@
         //$('#cekmail').html("<font color='red'>( Has Been Used ! )</font>");
     }
 
+
+
     function simpanpembeli() {
         var company = $('#company').val();
         var username = $('#username').val();
@@ -319,17 +336,15 @@
         var country = $('#country').val();
         var postcode = $('#postcode').val();
         var alamat = $('#alamat').val();
+        var chp = $('#chp').val();
+
         var token = $('meta[name="csrf-token"]').attr('content');
         if (password == kpassword) {
-
-            if (company == "" || username == "" || email == "" || phone == "" || password == "" || country == "" || city == "" || alamat == "") {
+            if (company == "" || username == "" || email == "" || phone == "" || password == "" || country == "" || city == "" || alamat == "" || chp == "") {
                 alert("Please complete the field !")
+                // refresh();
+                // $('#captchainput').val('');
             } else {
-                /*
-                $.post('{{url('/simpan_rpenjual')}}',{company:company,username:username,email:email,phone:phone,fax:fax,password:password,city:city,prov:prov,postcode:postcode,alamat:alamat,_token:token},function (data) {
-		 	
-		 });
-		*/
                 $.ajax({
                     type: "POST",
                     url: '{{url('/simpan_rpembeli')}}',
@@ -367,6 +382,8 @@
                 $('#country').val('');
                 $('#postcode').val('');
                 $('#alamat').val('');
+                $('#chp').val('');
+                // $('#captchainput').val('');
                 $("#myModal").modal("show");
             }
         } else {

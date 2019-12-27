@@ -166,7 +166,7 @@ class TrainingControllerAdmin extends Controller
                     return '
               <center>
               <div class="btn-group">
-								<a href="' . route('training.view.admin', $data->id) . '" class="btn btn-sm btn-info" data-toggle="tooltip" title="View"><i class="fa fa-search text-white"></i></a>&nbsp;&nbsp;
+								<a href="' . route('training.view.admin', $data->id) . '" class="btn btn-sm btn-info" data-toggle="tooltip" title="View"><i class="fa fa-eye text-white"></i></a>&nbsp;&nbsp;
                 <a onclick="return confirm(\'Are You Sure ?\')" href="' . route('training.destroy.admin', $data->id) . '" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-trash text-white"></i></a>
               </div>
               </center>
@@ -259,6 +259,22 @@ class TrainingControllerAdmin extends Controller
             Session::flash('failed', 'Failed verifed Data');
             return redirect()->route('training.view.admin', ['id' => $id_tr]);
         }
+    }
+
+    public function getDataInterest($id)
+    {
+      $interest = DB::table('training_interest')->where('id_training', $id)->orderby('created_at', 'desc')->get();
+
+      return \Yajra\DataTables\DataTables::of($interest)
+          ->addIndexColumn()
+          ->addColumn('company', function ($var) {
+            return '<div align="left">'.getProfileCompany($var->id_profile).'</div>';
+          })
+          ->addColumn('interest', function ($data) {
+            return date('d F Y', strtotime($data->created_at)).' ( '.date('H:i', strtotime($data->created_at)).' )';
+          })
+          ->rawColumns(['company'])
+          ->make(true);
     }
 
 }

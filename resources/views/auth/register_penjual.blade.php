@@ -195,8 +195,8 @@
 		
 		
 		<div class="form-row">
-							
-                           
+
+
 							<div class="form-group col-sm-4" align="left">
                                 <label><font color="red">*</font> Verification Code</label>
 							</div>
@@ -207,8 +207,21 @@
                                  <input type="text" class="form-control" name="chp" id="chp">
                             </div>
                         </div>
-						
-				
+{{--                  <div class="form-row">--}}
+{{--                      <div class="form-group col-sm-4" align="left">--}}
+{{--                          <label><font color="red">*</font> Verification Code</label>--}}
+{{--                      </div>--}}
+{{--                      <div class="form-group col-sm-3 captcha" align="left" id="captcha">--}}
+{{--                          <span>{!!captcha_img()!!}</span>--}}
+{{--                      </div>--}}
+{{--                      <div class="form-group col-sm-1" align="left">--}}
+{{--                          <button type="button" class="btn btn-success" id="refresh"><i class="fa fa-refresh"></i></button>--}}
+{{--                      </div>--}}
+{{--                      <div class="form-group col-sm-2" align="left">--}}
+{{--                          <input type="text" class="form-control" name="captchainput" id="captchainput">--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+
 				<div class="form-row" align="left">
                            
                             <div class="form-group col-sm-12"><br>
@@ -272,6 +285,28 @@
   <script src="{{asset('')}}/js/tagsinput.js"></script>
  <script>
 
+     $('#refresh').click(function(){
+         $.ajax({
+             type:'GET',
+             url:'refreshcaptcha',
+             success:function(data){
+                 console.log(data);
+                 $(".captcha span").html(data);
+             }
+         });
+     });
+
+     function refresh(){
+         $.ajax({
+             type:'GET',
+             url:'refreshcaptcha',
+             success:function(data){
+                 console.log(data);
+                 $(".captcha span").html(data);
+             }
+         });
+     }
+
  function cekmail(){
 	 var m = $('#email').val();
 	 var token = $('meta[name="csrf-token"]').attr('content');
@@ -290,6 +325,9 @@
 	 //alert(m);
 	 //$('#cekmail').html("<font color='red'>( Has Been Used ! )</font>");
  }
+
+
+
 function simpanpenjual(){
 	var company = $('#company').val();
 	var username = $('#username').val();
@@ -302,11 +340,35 @@ function simpanpenjual(){
 	var city = $('#city').val();
 	var prov = $('#prov').val();
 	var postcode = $('#postcode').val();
-	var alamat = $('#alamat').val();
+	var alamat = $('textarea#alamat').val();
+	var chp = $('#chp').val();
 	var token = $('meta[name="csrf-token"]').attr('content');
+
+	console.log(company);
+	console.log(username);
+	console.log(email);
+	console.log(phone);
+    console.log(password);
+    console.log(prov);
+    console.log(city);
+    console.log(alamat);
+    console.log(chp);
+    console.log("end");
+
+	// console.log(fax);
+	// console.log(website);
+	//
+	// console.log(kpassword);
+	//
+	//
+	// console.log(postcode);
+
+
 	if(password == kpassword){
-	if(company == "" || username == "" || email == "" || phone == "" || password == "" || prov == "" || city == "" || alamat == ""){
+	if(company == "" || username == "" || email == "" || phone == "" || password == "" || city == "" || prov == "" || chp == ""){
 		alert("Please complete the field !")
+        // refresh();
+		// $('#captchainput').val('');
 	}else{
 		/*
 		$.post('{{url('/simpan_rpenjual')}}',{company:company,username:username,email:email,phone:phone,fax:fax,password:password,city:city,prov:prov,postcode:postcode,alamat:alamat,_token:token},function (data) {
@@ -322,7 +384,6 @@ function simpanpenjual(){
 			},
 			error: function (data, textStatus, errorThrown) {
 				console.log(data);
-
 			},
 		});
 		
@@ -338,6 +399,7 @@ function simpanpenjual(){
 		$('#prov').val('');
 		$('#postcode').val('');
 		$('#alamat').val('');
+        $('#captchainput').val('');
 		
 	$("#myModal").modal("show"); 
 	}
@@ -345,6 +407,8 @@ function simpanpenjual(){
 		alert("Your Password Not Same !");
 		$('#password').val('');
 		$('#kpassword').val('');
+        // refresh();
+        // $('#captchainput').val('');
 	}
 }
  </script>

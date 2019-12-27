@@ -63,6 +63,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::post('/front_end/ticketing_support/store', 'TicketingSupportFrontController@store')->name('front.ticket.store');
     Route::get('/front_end/ticketing_support/chatview/{id}', 'TicketingSupportFrontController@vchat')->name('front.ticket.vchat');
     Route::post('/front_end/ticketing_support/sendchat', 'TicketingSupportFrontController@sendchat')->name('front.ticket.sendchat');
+    Route::post('/front_end/ticketing_support/sendFilechat', 'TicketingSupportFrontController@sendFilechat')->name('front.ticket.sendchat');
     Route::get('/front_end/ticketing_support/view/{id}', 'TicketingSupportFrontController@view')->name('front.ticket.view');
     Route::get('/front_end/ticketing_support/delete/{id}', 'TicketingSupportFrontController@destroy')->name('front.ticket.delete');
     //History Transaction
@@ -111,6 +112,7 @@ Route::namespace('FrontEnd')->group(function () {
     //Front End TrainingController
     Route::get('/front_end/training', 'FrontController@indexTraining');
     Route::get('frontend/training/search', 'FrontController@indexTrainingSearch');
+    Route::post('/training-interest', 'FrontController@training_interest')->name('training.interest');
     //End Training Frontend
 
 
@@ -744,6 +746,7 @@ Route::namespace('TicketingSupport')->group(function () {
     Route::get('admin/ticketing/chatview/{id}', 'TicketingSupportControllerAdmin@vchat')->name('ticket_support.vchat.admin');
     Route::get('admin/ticketing/view/{id}', 'TicketingSupportControllerAdmin@view')->name('ticket_support.view.admin');
     Route::post('admin/ticketing/sendchat', 'TicketingSupportControllerAdmin@sendchat')->name('ticket_support.sendchat.admin');
+    Route::post('admin/ticketing/sendFilechat', 'TicketingSupportControllerAdmin@sendFilechat')->name('ticket_support.sendFilechat.admin');
     Route::get('admin/ticketing/delete/{id}', 'TicketingSupportControllerAdmin@destroy')->name('ticket_support.delete.admin');
     Route::post('admin/ticketing/change', 'TicketingSupportControllerAdmin@change')->name('ticket_support.delete.change');
 });
@@ -761,6 +764,7 @@ Route::namespace('Training')->group(function () {
     Route::get('admin/training/view/{id}', 'TrainingControllerAdmin@view')->name('training.view.admin');
     Route::get('admin/training/destroy/{id}', 'TrainingControllerAdmin@destroy')->name('training.destroy.admin');
     Route::get('admin/training/verifed/{id}/{id_tr}/{id_profil}', 'TrainingControllerAdmin@verifed')->name('training.verifed.admin');
+    Route::get('/Training-getDataInterest/{id}', 'TrainingControllerAdmin@getDataInterest')->name('training.getDataInterest');
     //Eksportir
     Route::get('training', 'TrainingControllerEksportir@index')->name('training.index');
     Route::get('training/getData', 'TrainingControllerEksportir@getData')->name('training.getData');
@@ -770,3 +774,8 @@ Route::namespace('Training')->group(function () {
 });
 
 //END YOSS ------------------------------------------
+
+//start mindy
+Route::post('/captchaValidate', 'CaptchaController@captchaValidate')->name('captcha');
+Route::get('refreshcaptcha', 'CaptchaController@refreshCaptcha')->name('refreshcaptcha');
+//end mindy

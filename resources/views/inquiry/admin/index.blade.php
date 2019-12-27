@@ -17,7 +17,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Data Inquiry</h5><br>
+                    <h5><i></i> List Inquiry</h5><br>
                     <a class="btn" href="{{url('/inquiry_admin/create')}}" style="background-color: #1089ff; color: white;"><i class="fa fa-plus-circle"></i> Add</a>
                 </div>
                 <div class="box-body bg-light">

@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Data Consultant</h5>
+                    <h5><i></i> List Consultant</h5>
                 </div>
 
                 <div class="box-body bg-light">

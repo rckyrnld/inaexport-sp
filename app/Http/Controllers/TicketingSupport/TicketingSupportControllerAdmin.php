@@ -7,6 +7,7 @@ use App\Models\MasterCity;
 use App\Models\MasterCountry;
 use App\Models\ChatingTicketingSupportModel;
 use App\Models\TicketingSupportModel;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Exports\CityExport;
@@ -70,7 +71,7 @@ class TicketingSupportControllerAdmin extends Controller
               <center>
               <div class="btn-group">
                 <a href="' . route('ticket_support.vchat.admin', $data->id) . '" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Chat">&nbsp;<i class="fa fa-envelope text-white"></i></a>&nbsp;&nbsp;
-								<a href="' . route('ticket_support.view.admin', $data->id) . '" class="btn btn-sm btn-primary" data-toggle="tooltip" title="View">&nbsp;<i class="fa fa-search text-white"></i></a>&nbsp;&nbsp;
+								<a href="' . route('ticket_support.view.admin', $data->id) . '" class="btn btn-sm btn-primary" data-toggle="tooltip" title="View">&nbsp;<i class="fa fa-eye text-white"></i></a>&nbsp;&nbsp;
                 <!-- <a href="' . route('master.city.edit', $data->id) . '" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp; !>
               </div>
               </center>
@@ -89,7 +90,7 @@ class TicketingSupportControllerAdmin extends Controller
               return '
               <center>
               <div class="btn-group">
-								<a href="' . route('ticket_support.view.admin', $data->id) . '" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white" data-toggle="tooltip" title="View"></i></a>&nbsp;&nbsp;
+								<a href="' . route('ticket_support.view.admin', $data->id) . '" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-eye text-white" data-toggle="tooltip" ></i></a>&nbsp;&nbsp;
 								<a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Chat Ini ?\')" href="' . route('ticket_support.delete.admin', $data->id) . '" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete">&nbsp;<i class="fa fa-trash text-white"></i></a>
 								<!-- <a href="" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp; !>
               </div>
@@ -173,6 +174,80 @@ class TicketingSupportControllerAdmin extends Controller
             'sender' => $req->sender,
             'reciver' => $req->reciver,
             'messages' => $req->messages,
+            'messages_send' => date('Y-m-d H:i:s')
+        ]);
+        $update = TicketingSupportModel::where('id', $req->id)->update([
+            'status' => 2
+        ]);
+        return redirect('admin/ticketing/chatview/' . $req->id);
+    }
+
+    public function sendFilechat(Request $req)
+    {
+        // echo $req->id;die();
+        date_default_timezone_set('Asia/Jakarta');
+
+        $nama_file1 = NULL;
+        $destination= 'uploads\ticketing\\';
+        if($req->hasFile('upload_file2')){ 
+            $file1 = $req->file('upload_file2');
+            $nama_file1 = time().'_'.$req->file('upload_file2')->getClientOriginalName();
+            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+        }
+
+        $cari1 = DB::select("select * from ticketing_support where id='" . $req->id . "'");
+        foreach ($cari1 as $v1) {
+            $id_company = $v1->id_pembuat;
+        }
+        $cari2 = DB::select("select * from itdp_company_users where id='" . $id_company . "'");
+        foreach ($cari2 as $v2) {
+            $data1 = $v2->username;
+            $data2 = $v2->email;
+            $data3 = $v2->id_role;
+            $data4 = $v2->id;
+        }
+        $data = [
+            'email' => "",
+            'email1' => $data2,
+            'username' => "",
+            'main_messages' => $req->messages,
+            'id' => $req->id
+        ];
+
+        /*
+        $data2 = [
+        'email' => "",
+        'email1' => "kementerianperdagangan.max@gmail.com",
+        'username' => "",
+        'main_messages' => $req->messages,
+        'id' => $req->id
+        ];
+        */
+
+        Mail::send('UM.user.sendticketchat2', $data, function ($mail) use ($data) {
+            $mail->to($data['email1'], $data['username']);
+            $mail->subject('Chat Ticketing Support');
+        });
+
+        /*
+        Mail::send('UM.user.sendticketchat', $data2, function ($mail) use ($data2) {
+        $mail->to($data2['email1'], $data2['username']);
+        $mail->subject('Chat Ticketing Support');
+        });
+        */
+
+
+        $ket = "Super Admin Respond Your Ticketing Request !";
+        $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+                ('" . $data3 . "','Super Admin','1','" . $data1 . "','" . $data4 . "','" . $ket . "','front_end/ticketing_support/chatview','" . $req->id . "','" . Date('Y-m-d H:m:s') . "','0')
+                ");
+
+        $chat = ChatingTicketingSupportModel::insert([
+            'id_ticketing_support' => $req->id,
+            'sender' => $req->sender,
+            'reciver' => $req->reciver,
+            'messages' => $req->messages,
+            'file' => $nama_file1,
             'messages_send' => date('Y-m-d H:i:s')
         ]);
         $update = TicketingSupportModel::where('id', $req->id)->update([
