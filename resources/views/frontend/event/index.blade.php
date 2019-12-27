@@ -56,6 +56,8 @@
       border-bottom: 2px solid #1a70bb; 
     }
 
+    .css-title{ font-family: arial; font-weight: 530; font-size: 18px; color: black !important; }
+
     .search-event{
       width: 100%;
     }
@@ -137,7 +139,7 @@
         @if($page == 1 && $searchEvent == null)
           @if( $key == 0 || $key == 1 )
               <div class="col-lg-6 col-md-6 col-12 second @if($key == 0) a-modif @endif" style="height: 100%; border-radius: 10px; @if($key == 0) background-color: white; @endif">
-                <?php $size = 438; $num_char = 65;?>
+                <?php $size = 438; $num_char = 55;?>
                 @if($key == 0 )
                   <div class="kontennya" style="width: 100%;padding: 12px; background-color: #f8f8f8; border-radius: 10px">
                 @endif
@@ -212,9 +214,9 @@
             $image = '/image/event/NoPicture.png';
           }
 
-          if(strlen($title) > $num_char){
-              $cut_text = substr($title, 0, $num_char);
-              if ($title{$num_char - 1} != ' ') { 
+          if(strlen($title) > $num_char - 5){
+              $cut_text = substr($title, 0, $num_char - 5);
+              if ($title{$num_char - 5 - 1} != ' ') { 
                   $new_pos = strrpos($cut_text, ' '); 
                   $cut_text = substr($title, 0, $new_pos);
               }
@@ -239,7 +241,7 @@
             <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
           </div>
           <div style="height: 25%; padding-top: 5px;">
-              <span style="font-family: arial; font-weight: 530; font-size: 18px; color: black !important;" title="{{$title}}">{{$titleName}}</span><br>
+              <span class="css-title" title="{{$title}}">{{$titleName}}<span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf; margin-left: 10px;">{{getDataInterest($ed->id)}}&nbsp;&nbsp;<i class="fa fa-eye"></i></span></span><br>
               <span class="detail_rc" title="{{$lokasi}}">
               <i class="fa fa-calendar-check-o"></i>&nbsp;&nbsp;{{$tanggal}}
               <br>

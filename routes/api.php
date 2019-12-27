@@ -176,5 +176,6 @@ Route::namespace('Api')->group(function () {
 
     //hscode
     Route::get('getHscode', 'ManagementNoAuthController@getHscode');
+    Route::get('getHscodeFilter', 'ManagementNoAuthController@getHscodeFilter');
 });
 // });

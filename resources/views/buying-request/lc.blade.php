@@ -234,13 +234,13 @@ body {font-family: Arial;}
                                 </thead>
 								<tbody>
 								<?php 
-								$pesan = DB::select("select a.*,b.*,c.*,a.email as oemail,b.id as idb from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where a.id=b.id_eks and a.id_profil = c.id and id_br='".$id."'");
+								$pesan = DB::select("select a.*,b.*,c.*,a.email as oemail,b.id as idb,a.id as id_user from itdp_company_users a, csc_buying_request_join b, itdp_profil_eks c where a.id=b.id_eks and a.id_profil = c.id and id_br='".$id."'");
 								$na = 1;
 								foreach($pesan as $ryu){
 								?>
 								<tr>
 								<td><?php echo $na; ?></td>
-								<td><div align="left"><?php echo $ryu->company; ?></div></td>
+								<td><div align="left"><a href="{{url('front_end/list_perusahaan/view', $ryu->id_user)}}-{{$ryu->company}}" target="_blank"><?php echo $ryu->company; ?></a></div></td>
 								<td><?php echo $ryu->addres." , ".$ryu->city; ?></td>
 								<td><?php echo $ryu->oemail; ?></td>
 								<td><center>

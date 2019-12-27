@@ -621,4 +621,15 @@ class ManagementNoAuthController extends Controller
             return response($res);
         }
     }
+
+    public function getHscodeFilter(Request $req)
+    {
+        $query = DB::table('mst_hscodes')->select('id','desc_ind','desc_eng');
+        if($req->filter != null){
+            $query->where('desc_eng', 'ILIKE', '%'.$req->filter.'%');
+        }
+        $research = $query->get();
+        
+        return response($research);
+    }
 }

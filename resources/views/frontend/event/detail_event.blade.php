@@ -308,7 +308,15 @@
                 $('#cp_email').val('No Contact');
                 $('#reg_date').val('Not Specified');
             } 
-              $('#modal_cp').modal('show'); 
+            $('#modal_cp').modal('show'); 
+            var token = "{{ csrf_token() }}";
+            var id = "{{$detail->id}}";
+            $.ajax({
+                url: "{{route('event.interest')}}",
+                type: 'post',
+                data: {'_token':token,id:id},
+                dataType: 'json'
+            });
         @endif
     }
 

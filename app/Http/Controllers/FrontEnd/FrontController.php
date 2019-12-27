@@ -694,6 +694,23 @@ class FrontController extends Controller
         return view('frontend.event.detail_event', compact('detail'));
     }
 
+    public function event_interest(Request $req){
+        $id_profil = $id_user = Auth::guard('eksmp')->user()->id_profil;
+        $cek = DB::table('event_interest')->where('id_profile', $id_profil)->where('id_event', $req->id)->first();
+        $return = 'failed';
+        if(!$cek){
+            DB::table('event_interest')->insert([
+                'id_profile' => $id_profil,
+                'id_event' => $req->id,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+
+            $return = 'success';
+        } 
+        
+        return json_encode($return);
+    }
+
     public function gabung_event($id)
     {   
         $id_user = Auth::guard('eksmp')->user()->id;

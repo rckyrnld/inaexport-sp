@@ -124,7 +124,7 @@ class AnnualController extends Controller
 
     public function indexadmin()
     {
-        $pageTitle = "List Eksportir";
+        $pageTitle = "List Eksporter";
         return view('eksportir.annual_sales.indexadmin', compact('pageTitle'));
     }
 
@@ -171,7 +171,7 @@ class AnnualController extends Controller
                 return $pesan->fax;
             })
             ->addColumn('action', function ($pesan) {
-                return '<a href="' . url('eksportir/listeksportir/' . $pesan->id) . '" class="btn btn-sm btn-info"><i class="fa fa-edit text-white"></i> Detail</a>';
+                return '<a href="' . url('eksportir/listeksportir/' . $pesan->id) . '" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>';
             })
             ->addIndexColumn()
             ->rawColumns(['action','f1'])

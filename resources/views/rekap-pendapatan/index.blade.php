@@ -75,7 +75,7 @@ table, th, tr, td {
 									}
 									?>
 									</td>
-									<td><center><a href="{{url('detailpendapatan/'.$ruu->id_eksportir)}}" class="btn btn-warning"><font color="white"><i class="fa fa-list"></i> Detail</font></a></center></td>
+									<td><center><a href="{{url('detailpendapatan/'.$ruu->id_eksportir)}}" class="btn btn-warning" title="Detail"><font color="white"><i class="fa fa-list"></i></font></a></center></td>
 								</tr>
 								
 								<?php $nt++; } ?>

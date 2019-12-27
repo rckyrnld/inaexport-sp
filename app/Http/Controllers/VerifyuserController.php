@@ -16,7 +16,7 @@ class VerifyuserController extends Controller
     public function index()
     {
 //        dd("mantap");die();
-        $pageTitle = "Eksportir";
+        $pageTitle = "Eksporter";
 		$data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
         return view('verifyuser.index', compact('pageTitle','data'));
     }
@@ -24,7 +24,7 @@ class VerifyuserController extends Controller
 	 public function index2()
     {
 //        dd("mantap");die();
-        $pageTitle = "Importir";
+        $pageTitle = "Importer";
 		$data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
         return view('verifyuser.index2', compact('pageTitle','data'));
     }
@@ -88,13 +88,13 @@ class VerifyuserController extends Controller
            
                 if($pesan->status_a == 1 || $pesan->status_a == 2){ 
 				return '<a href="'.url('profil2/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>
-				<a Onclick="return ConfirmDelete();" href="'.url('hapusimportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="hapus"><i class="fa fa-trash text-white"></i></a>
+				<a Onclick="return ConfirmDelete();" href="'.url('hapusimportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash text-white"></i></a>
 				<a href="'.url('resetimportir/'.$pesan->ida).'" class="btn btn-sm btn-warning" title="Reset Password"><i class="fa fa-key text-white"></i></a>
 				';
 				}else{
-				return '<a href="'.url('profil2/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-success"><i class="fa fa-check text-white"></i></a>
-				<a Onclick="return ConfirmDelete();" href="'.url('hapusimportir/'.$pesan->ida).'" class="btn btn-sm btn-danger"><i class="fa fa-trash text-white"></i></a>
-				<a href="'.url('resetimportir/'.$pesan->ida).'" class="btn btn-sm btn-warning"><i class="fa fa-key text-white"></i></a>
+				return '<a href="'.url('profil2/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-success" title="Verify"><i class="fa fa-check text-white"></i></a>
+				<a Onclick="return ConfirmDelete();" href="'.url('hapusimportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash text-white"></i></a>
+				<a href="'.url('resetimportir/'.$pesan->ida).'" class="btn btn-sm btn-warning" title="Reset Password"><i class="fa fa-key text-white"></i></a>
 				';
 				}
             })
@@ -206,9 +206,15 @@ class VerifyuserController extends Controller
             })
             ->addColumn('action', function ($pesan) {
            
-               return '<center>
-			   <a class="btn btn-success" href="'.url('editperwakilan/'.$pesan->id).'"><i class="fa fa-edit"></i> &nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
-			   <a class="btn btn-danger" href="'.url('hapusperwakilan/'.$pesan->id).'"><i class="fa fa-trash"></i> Hapus</a>
+//               return '<center>
+//			   <a class="btn btn-success" href="'.url('editperwakilan/'.$pesan->id).'"><i class="fa fa-edit"></i> &nbsp;&nbsp;Edit&nbsp;</a>
+//			   <a class="btn btn-danger" href="'.url('hapusperwakilan/'.$pesan->id).'"><i class="fa fa-trash"></i> Hapus</a>
+//
+//			   </center>';
+
+                return '<center>
+			   <a class="btn btn-success" href="'.url('editperwakilan/'.$pesan->id).'" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
+			   <a class="btn btn-danger" href="'.url('hapusperwakilan/'.$pesan->id).'" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
 			   
 			   </center>';
 				
@@ -226,7 +232,7 @@ class VerifyuserController extends Controller
 	public function index3()
     {
 //        dd("mantap");die();
-        $pageTitle = "Perwakilan";
+        $pageTitle = "Representative";
 		$data = DB::select("select * from itdp_admin_users where id_group='4' order by id desc ");
         return view('verifyuser.index3', compact('pageTitle','data'));
     }

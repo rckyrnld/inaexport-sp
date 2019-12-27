@@ -105,6 +105,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::any('/front_end/event/search', 'FrontController@search_event');
     Route::get('/front_end/join_event/{id}', 'FrontController@join_event');
     Route::get('/front_end/gabung_event/{id}', 'FrontController@gabung_event');
+    Route::post('/event-interest', 'FrontController@event_interest')->name('event.interest');
 
     //YOSS
     //Front End TrainingController
@@ -417,6 +418,7 @@ Route::namespace('Event')->prefix('event')->group(function () {
     Route::get('/show_detail/front/{id}', 'EventController@show_detail');
     Route::any('/search', 'EventController@search');
     Route::any('/search_eksportir', 'EventController@search_eksportir');
+    Route::get('/getDataInterest/{id}', 'EventController@getDataInterest')->name('event.getDataInterest');
 
     Route::post('/getEventOrg', 'EventController@getEventOrg');
     Route::post('/getEventPlace', 'EventController@getEventPlace');

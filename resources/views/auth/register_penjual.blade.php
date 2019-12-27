@@ -257,7 +257,7 @@
         <div class="modal-body">
           <h5><center><br>
 			<img style="height:80px!important;" src="{{url('assets')}}/assets/images/mail.png" alt="." ><br><br>
-			Check your mail for activate account !
+				  @lang("register2.modal")
 			</center></h5>
         </div>
         <div class="modal-footer">
@@ -267,8 +267,11 @@
       </div>
     </div>
   </div>
+
+
   <script src="{{asset('')}}/js/tagsinput.js"></script>
  <script>
+
  function cekmail(){
 	 var m = $('#email').val();
 	 var token = $('meta[name="csrf-token"]').attr('content');
