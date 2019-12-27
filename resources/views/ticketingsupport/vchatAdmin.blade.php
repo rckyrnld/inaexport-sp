@@ -128,7 +128,7 @@
                                 @if($msg->messages != null)
                                 {{$msg->messages}}<br><br>
                                 @endif
-                                <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: red; font-weight: 600;">{{$msg->file}}</a><br>
+                                <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: red; font-weight: 600;"><?php echo wordwrap($msg->file, 35, "<br \>", true);?></a><br>
                             @endif
                             <div align="right">{{date('H:i', strtotime($msg->messages_send))}}</div>
                             </label>
@@ -157,7 +157,7 @@
                                 @if($msg->messages != null)
                                 {{$msg->messages}}<br><br>
                                 @endif
-                                <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: red; font-weight: 600;">{{$msg->file}}</a><br>
+                                <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: red; font-weight: 600;"><?php echo wordwrap($msg->file, 35, "<br \>", true);?></a><br>
                             @endif
                             <div align="left">{{date('H:i', strtotime($msg->messages_send))}}</div>
                             </label>

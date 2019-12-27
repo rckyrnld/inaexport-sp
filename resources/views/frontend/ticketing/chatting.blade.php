@@ -194,7 +194,7 @@
                                     @if($msg->file == NULL)
                                         {{$msg->messages}}<br>
                                     @else
-                                        <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: white;">{{$msg->file}}</a>
+                                        <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: white;"><?php echo wordwrap($msg->file, 40, "<br \>", true);?></a>
                                         @if($msg->messages != null)
                                         <br><br>
                                         {{$msg->messages}}
@@ -254,7 +254,7 @@
                                     @if($msg->file == NULL)
                                         {{$msg->messages}}<br>
                                     @else
-                                        <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: #2492eb;">{{$msg->file}}</a>
+                                        <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: #2492eb;"><?php echo wordwrap($msg->file, 40, "<br \>", true);?></a>
                                         @if($msg->messages != null)
                                         <br><br>
                                         {{$msg->messages}}
