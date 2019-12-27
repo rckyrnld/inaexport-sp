@@ -125,8 +125,10 @@
                             @if($msg->file == NULL)
                                 {{$msg->messages}}
                             @else
+                                @if($msg->messages != null)
                                 {{$msg->messages}}<br><br>
-                                <a href="{{ url('/').'/uploads/ChatFileTicketing/' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: red; font-weight: 600;">{{$msg->file}}</a><br>
+                                @endif
+                                <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: red; font-weight: 600;">{{$msg->file}}</a><br>
                             @endif
                             <div align="right">{{date('H:i', strtotime($msg->messages_send))}}</div>
                             </label>
@@ -152,8 +154,10 @@
                             @if($msg->file == NULL)
                                 {{$msg->messages}}
                             @else
+                                @if($msg->messages != null)
                                 {{$msg->messages}}<br><br>
-                                <a href="{{ url('/').'/uploads/ChatFileTicketing/' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: red; font-weight: 600;">{{$msg->file}}</a><br>
+                                @endif
+                                <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: red; font-weight: 600;">{{$msg->file}}</a><br>
                             @endif
                             <div align="left">{{date('H:i', strtotime($msg->messages_send))}}</div>
                             </label>

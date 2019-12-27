@@ -194,8 +194,12 @@
                                     @if($msg->file == NULL)
                                         {{$msg->messages}}<br>
                                     @else
-                                        <a href="{{ url('/').'/uploads/ChatFileTicketing/' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: white;">{{$msg->file}}</a><br><br>
-                                        {{$msg->messages}}<br>
+                                        <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: white;">{{$msg->file}}</a>
+                                        @if($msg->messages != null)
+                                        <br><br>
+                                        {{$msg->messages}}
+                                        @endif
+                                        <br>
                                     @endif
                                     <span style="float: right;">{{date('H:i',strtotime($msg->messages_send))}}</span>
                                 </label>
@@ -250,8 +254,12 @@
                                     @if($msg->file == NULL)
                                         {{$msg->messages}}<br>
                                     @else
-                                        <a href="{{ url('/').'/uploads/ChatFileTicketing/' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: #2492eb;">{{$msg->file}}</a><br><br>
-                                        {{$msg->messages}}<br>
+                                        <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: #2492eb;">{{$msg->file}}</a>
+                                        @if($msg->messages != null)
+                                        <br><br>
+                                        {{$msg->messages}}
+                                        @endif
+                                        <br>
                                     @endif
                                     <span style="color: #555; float: right;">{{date('H:i',strtotime($msg->messages_send))}}</span>
                                 </label>

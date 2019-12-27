@@ -187,7 +187,7 @@ class TicketingSupportFrontController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         
         $nama_file1 = NULL;
-        $destination= 'uploads\ChatFileTicketing\\';
+        $destination= 'uploads\ticketing\\';
         if($req->hasFile('upload_file2')){ 
             $file1 = $req->file('upload_file2');
             $nama_file1 = time().'_'.$req->file('upload_file2')->getClientOriginalName();
