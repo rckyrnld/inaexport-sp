@@ -22,13 +22,29 @@
         <form action="{{route('training.update.admin',$data->id)}}" method="post">
         @endif
 					<div class="box-body bg-light">
-            @if($page == 'create')
-    				 <h4>Form Training</h4><hr>
-            @elseif($page == 'edit')
-             <h4>Edit Training</h4><hr>
-            @elseif($page == 'view')
-             <h4>View Training</h4><hr>
-            @endif
+            <table style="width: 100%">
+              <tr>
+                <td>
+                  <div align="left" style="color: #627384;">
+                    @if($page == 'create')
+            				 <h4>Form Training</h4>
+                    @elseif($page == 'edit')
+                     <h4>Edit Training</h4>
+                    @elseif($page == 'view')
+                     <h4>View Training</h4>
+                    @endif
+                  </div>
+                </td>
+                <td>
+                  <div align="right">
+                    @if($page == 'view')
+                     <a href="{{url('admin/training')}}" class="btn btn-danger" name="button">Back</a>
+                    @endif
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <hr>
             <div class="row">
               <div class="col-md-6">
                 <div class="row">
@@ -38,7 +54,7 @@
                  </div>
                  <div class="col-md-6">
                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                   <input type="text" autocomplete="off" class="form-control" name="training_en" @if($page != 'create')  value="{{$data->training_en}}" @endif required>
+                   <input type="text" autocomplete="off" class="form-control dis" name="training_en" @if($page != 'create')  value="{{$data->training_en}}" @endif required>
                  </div>
                </div><br>
                 <div class="row">
@@ -47,8 +63,7 @@
                    <b>Training (IN)</b>
                  </div>
                  <div class="col-md-6">
-                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                   <input type="text" autocomplete="off" class="form-control" name="training_in" @if($page != 'create')  value="{{$data->training_in}}" @endif required>
+                   <input type="text" autocomplete="off" class="form-control dis" name="training_in" @if($page != 'create')  value="{{$data->training_in}}" @endif required>
                  </div>
                </div><br>
                 <div class="row">
@@ -57,8 +72,7 @@
                    <b>Training (CHN)</b>
                  </div>
                  <div class="col-md-6">
-                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                   <input type="text" autocomplete="off" class="form-control" name="training_chn" @if($page != 'create')  value="{{$data->training_chn}}" @endif required>
+                   <input type="text" autocomplete="off" class="form-control dis" name="training_chn" @if($page != 'create')  value="{{$data->training_chn}}" @endif required>
                  </div>
                </div><br>
                <div class="row">
@@ -67,7 +81,7 @@
                    <b>Start Date</b>
                  </div>
                  <div class="col-md-6">
-                   <input type="date" autocomplete="off" class="form-control" name="start_date" @if($page != 'create') value="{{date('Y-m-d', strtotime($data->start_date))}}" @endif required>
+                   <input type="date" autocomplete="off" class="form-control dis" name="start_date" @if($page != 'create') value="{{date('Y-m-d', strtotime($data->start_date))}}" @endif required>
                  </div>
                </div><br>
                <div class="row">
@@ -76,7 +90,7 @@
                    <b>End Date</b>
                  </div>
                  <div class="col-md-6">
-                    <input type="date" autocomplete="off" class="form-control" name="end_date" @if($page != 'create') value="{{date('Y-m-d', strtotime($data->end_date))}}" @endif required>
+                    <input type="date" autocomplete="off" class="form-control dis" name="end_date" @if($page != 'create') value="{{date('Y-m-d', strtotime($data->end_date))}}" @endif required>
                  </div>
                </div><br>
                <div class="row">
@@ -87,8 +101,8 @@
                  <div class="col-md-6">
                    <table width="100%">
                      <tr>
-                       <td style="padding-right: 10px; width: 60%;"><input type="number" autocomplete="off" class="form-control" name="duration" @if($page != 'create')  value="{{$data->duration}}" @endif required></td>
-                       <td><select class="form-control" name="param">
+                       <td style="padding-right: 10px; width: 60%;"><input type="number" autocomplete="off" class="form-control dis" name="duration" @if($page != 'create')  value="{{$data->duration}}" @endif required></td>
+                       <td><select class="form-control dis" name="param">
                               <option value="Days" @if($page != 'create') @if($data->param == "Days") selected @endif @endif>Days</option>
                               <option value="Week" @if($page != 'create') @if($data->param == "Week") selected @endif @endif>Week</option>
                            </select>
@@ -104,8 +118,7 @@
                    <b>Topic (EN)</b>
                  </div>
                  <div class="col-md-6">
-                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                   <input type="text" autocomplete="off" class="form-control" name="topic_en" @if($page != 'create')  value="{{$data->topic_en}}" @endif required>
+                   <input type="text" autocomplete="off" class="form-control dis" name="topic_en" @if($page != 'create')  value="{{$data->topic_en}}" @endif required>
                  </div>
                </div><br>
                 <div class="row">
@@ -113,8 +126,7 @@
                    <b>Topic (IN)</b>
                  </div>
                  <div class="col-md-6">
-                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                   <input type="text" autocomplete="off" class="form-control" name="topic_in" @if($page != 'create')  value="{{$data->topic_in}}" @endif required>
+                   <input type="text" autocomplete="off" class="form-control dis" name="topic_in" @if($page != 'create')  value="{{$data->topic_in}}" @endif required>
                  </div>
                </div><br>
                 <div class="row">
@@ -122,8 +134,7 @@
                    <b>Topic (CHN)</b>
                  </div>
                  <div class="col-md-6">
-                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                   <input type="text" autocomplete="off" class="form-control" name="topic_chn" @if($page != 'create')  value="{{$data->topic_chn}}" @endif required>
+                   <input type="text" autocomplete="off" class="form-control dis" name="topic_chn" @if($page != 'create')  value="{{$data->topic_chn}}" @endif required>
                  </div>
                </div><br>
                <div class="row">
@@ -131,7 +142,7 @@
                    <b>Location (EN)</b>
                  </div>
                  <div class="col-md-6">
-                   <input type="text" autocomplete="off" class="form-control" name="location_en" @if($page != 'create')  value="{{$data->location_en}}" @endif required>
+                   <input type="text" autocomplete="off" class="form-control dis" name="location_en" @if($page != 'create')  value="{{$data->location_en}}" @endif required>
                  </div>
                </div><br>
                <div class="row">
@@ -139,7 +150,7 @@
                    <b>Location (IN)</b>
                  </div>
                  <div class="col-md-6">
-                   <input type="text" autocomplete="off" class="form-control" name="location_in" @if($page != 'create')  value="{{$data->location_in}}" @endif required>
+                   <input type="text" autocomplete="off" class="form-control dis" name="location_in" @if($page != 'create')  value="{{$data->location_in}}" @endif required>
                  </div>
                </div><br>
                <div class="row">
@@ -147,7 +158,7 @@
                    <b>Location (CHN)</b>
                  </div>
                  <div class="col-md-6">
-                    <input type="text" autocomplete="off" class="form-control" name="location_chn" @if($page != 'create')  value="{{$data->location_chn}}" @endif required>
+                    <input type="text" autocomplete="off" class="form-control dis" name="location_chn" @if($page != 'create')  value="{{$data->location_chn}}" @endif required>
                  </div>
                </div><br>
               </div>
@@ -161,7 +172,7 @@
                     <b>Full Name</b>
                   </div>
                   <div class="col-md-6">
-                    <input type="text" autocomplete="off" class="form-control" name="cp_name" @if($page != 'create') @if($cp) value="{{$cp->name}}" @endif @endif required>
+                    <input type="text" autocomplete="off" class="form-control dis" name="cp_name" @if($page != 'create') @if($cp) value="{{$cp->name}}" @endif @endif required>
                   </div>
                 </div><br>
                 <div class="row">
@@ -170,7 +181,7 @@
                     <b>Email</b>
                   </div>
                   <div class="col-md-6">
-                    <input type="email" autocomplete="off" class="form-control" name="cp_email" @if($page != 'create') @if($cp) value="{{$cp->email}}" @endif @endif required>
+                    <input type="email" autocomplete="off" class="form-control dis" name="cp_email" @if($page != 'create') @if($cp) value="{{$cp->email}}" @endif @endif required>
                   </div>
                 </div><br>
               </div><div class="col-md-6">
@@ -179,21 +190,36 @@
                     <b>Phone</b>
                   </div>
                   <div class="col-md-6">
-                    <input type="text" onblur="this.value=removeSpaces(this.value);" autocomplete="off" class="form-control" name="cp_phone" maxlength="15" @if($page != 'create') @if($cp) value="{{$cp->phone}}" @endif @endif required>
+                    <input type="text" onblur="this.value=removeSpaces(this.value);" autocomplete="off" class="form-control dis" name="cp_phone" maxlength="15" @if($page != 'create') @if($cp) value="{{$cp->phone}}" @endif @endif required>
                   </div>
                 </div><br>
               </div>
             </div>
+            @if($page != 'view')
 	          <div class="row">
               <div class="col-md-11">
                 <div align="right">
-                  <a href="{{url('admin/training')}}" class="btn btn-danger" name="button">@if($page != 'view') Cancel @else Back @endif</a>
-                  @if($page != 'view')
+                  <a href="{{url('admin/training')}}" class="btn btn-danger" name="button"> Cancel</a>
   	               <button type="submit" class="btn btn-primary" name="button"><span class="fa fa-save"></span> Submit </button>
-                  @endif
                 </div>
               </div>
 	          </div>
+            @else 
+              <br>
+              <div class="row justify-content-center">
+                <div class="col-md-11">
+                  <table id="table" class="table table-bordered table-striped">
+                    <thead class="text-white" style="background-color: #1089ff;">
+                      <tr>
+                        <td>No</td>
+                        <td>Company</td>
+                        <td>Interested at</td>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            @endif
 	        </div>
 				</form>
       </div>
@@ -204,8 +230,20 @@
 <script type="text/javascript">
   $(document).ready(function (){
     var type = '{{$page}}';
+    @if($page == 'view')
+      $('#table').dataTable({
+          processing: true,
+          serverSide: true,
+          ajax: "{{ route('training.getDataInterest', $data->id)}}",
+          columns: [
+              {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+              {data: 'company', name: 'company'},
+              {data: 'interest', name: 'interest'}
+          ]
+      });
+    @endif
     if(type == "view"){
-      $('#form :input').prop('disabled', true);
+      $('.dis').prop('disabled', true);
     } 
   })
 

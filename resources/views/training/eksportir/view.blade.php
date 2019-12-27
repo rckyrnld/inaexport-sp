@@ -111,7 +111,7 @@
         });
     });
 
-  function contact_person(id){
+  function contact_person(id, id_training){
     if(id != '-'){
       var pecah = id.split('|');
       $('#cp_name').html(pecah[0]);
@@ -123,6 +123,14 @@
       $('#cp_email').html('No Contact');
     }
 
+    var token = "{{ csrf_token() }}";
+    var id = id_training;
+    $.ajax({
+        url: "{{route('training.interest')}}",
+        type: 'post',
+        data: {'_token':token,id:id},
+        dataType: 'json'
+    });
     $('#modal_cp').modal('show'); 
   }
 </script>
