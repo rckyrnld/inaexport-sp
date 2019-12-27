@@ -76,8 +76,8 @@ class RegistrasiController extends Controller
     {
         $pageTitle = "Registrasi Penjual";
         return view('auth.register_penjual',compact('pageTitle'));
-    } 
-	
+    }
+
 	public function simpan_rpembeli(Request $request)
     {
 		$insert1 = DB::select("

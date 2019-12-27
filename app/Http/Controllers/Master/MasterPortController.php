@@ -57,7 +57,7 @@ class MasterPortController extends Controller
               return '
               <center>
               <div class="btn-group">
-                <a href="'.route('master.port.view', $data->id).'" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-search text-white"></i></a>&nbsp;&nbsp;
+                <a href="'.route('master.port.view', $data->id).'" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-eye text-white"></i></a>&nbsp;&nbsp;
                 <a href="'.route('master.port.edit', $data->id).'" class="btn btn-sm btn-success" title="Edit">&nbsp;<i class="fa fa-edit text-white"></i></a>&nbsp;&nbsp;
                 <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('master.port.destroy', $data->id).'" class="btn btn-sm btn-danger" title="Delete">&nbsp;<i class="fa fa-trash text-white"></i></a>
               </div>

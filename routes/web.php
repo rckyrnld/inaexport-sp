@@ -773,3 +773,8 @@ Route::namespace('Training')->group(function () {
 });
 
 //END YOSS ------------------------------------------
+
+//start mindy
+Route::post('/captchaValidate', 'CaptchaController@captchaValidate')->name('captcha');
+Route::get('refreshcaptcha', 'CaptchaController@refreshCaptcha')->name('refreshcaptcha');
+//end mindy

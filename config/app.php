@@ -186,6 +186,7 @@ return [
           Eusebiu\LaravelSparkCamera\CameraServiceProvider::class,
           Unisharp\Ckeditor\ServiceProvider::class,
 
+        Mews\Captcha\CaptchaServiceProvider::class
     ],
 
     /*
@@ -243,6 +244,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
         // 'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
 
     ],
