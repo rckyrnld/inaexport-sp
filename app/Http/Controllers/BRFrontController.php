@@ -140,6 +140,7 @@ class BRFrontController extends Controller
 	
 	public function br_konfirm($id,$id2)
     {
+		date_default_timezone_set('Asia/Jakarta');
 		$crv = DB::select("select * from csc_buying_request where id='".$id2."'");
 		foreach($crv as $cr){ $vld = $cr->valid; }
 		$dy = $vld." day";
@@ -211,6 +212,14 @@ class BRFrontController extends Controller
 		});
 		
 		$update = DB::select("update csc_buying_request_join set status_join='2', expired_at='".$besok."' where id='".$id."' ");
+		
+		//log
+		$insert = DB::select("
+			insert into log_user (email,waktu,date,ip_address,id_role,id_user,id_activity,keterangan) values
+			('".Auth::guard('eksmp')->user()->email."','".date('H:i:s')."','".date('Y-m-d')."','','".Auth::guard('eksmp')->user()->id_role."'
+			,'".Auth::guard('eksmp')->user()->id."','4','verification join buying request')");
+		
+		//end log
         return redirect('br_importir_lc/'.$id2);
     }
 	
@@ -227,7 +236,7 @@ class BRFrontController extends Controller
 	public function br_importir_bc($id)
     {
 		
-		
+		date_default_timezone_set('Asia/Jakarta');
 		$cariprod = DB::select("select * from csc_buying_request where id='".$id."'");
 		foreach($cariprod as $prodcari) { $rrr = $prodcari->id_csc_prod; $zzz = $prodcari->id_pembuat; }
 		$namacom = DB::select("select * from itdp_company_users where id='".$zzz."'");
@@ -274,6 +283,14 @@ class BRFrontController extends Controller
 		}
 		}
 		$update = DB::select("update csc_buying_request set status='1' where id='".$id."'");
+		
+		//log
+		$insert = DB::select("
+			insert into log_user (email,waktu,date,ip_address,id_role,id_user,id_activity,keterangan) values
+			('".Auth::guard('eksmp')->user()->email."','".date('H:i:s')."','".date('Y-m-d')."','','".Auth::guard('eksmp')->user()->id_role."'
+			,'".Auth::guard('eksmp')->user()->id."','4','broadcast buying request')");
+		
+		//end log
 		
         return redirect('front_end/history')->with('prioritasnya','yayayayaya');
     }
@@ -495,6 +512,7 @@ class BRFrontController extends Controller
 	}	
 	public function br_importir_save(Request $request)
     {	
+		date_default_timezone_set('Asia/Jakarta');
 		$ch1 = str_replace(".","",$request->tp);
 		$ch2 = str_replace(",",".",$ch1);
 		
@@ -520,6 +538,14 @@ class BRFrontController extends Controller
 		foreach($carimax as $cm){
 			$maxid = $cm->maxid;
 		}
+		
+		//log
+		$insert = DB::select("
+			insert into log_user (email,waktu,date,ip_address,id_role,id_user,id_activity,keterangan) values
+			('".Auth::guard('eksmp')->user()->email."','".date('H:i:s')."','".date('Y-m-d')."','','".Auth::guard('eksmp')->user()->id_role."'
+			,'".Auth::guard('eksmp')->user()->id."','4','created buying request')");
+		
+		//end log
 		
 		echo "<a href='".url('br_importir_bc/'.$maxid)."' class='btn btn-warning'><font color='white'>Broadcast</font></a>";
 		//return redirect('br_importir');

@@ -502,7 +502,7 @@ class BuyingRequestController extends Controller
 	}	
 	public function br_deal($id,$id2,$id3)
     {
-		
+		date_default_timezone_set('Asia/Jakarta');
 		$cari1 = DB::select("select id_pembuat,by_role from csc_buying_request where id='".$id2."'");
 		foreach($cari1 as $aja1){
 			$data1 = $aja1->id_pembuat;
@@ -576,6 +576,13 @@ class BuyingRequestController extends Controller
 			('".$isi1."','".$isi2."','".Auth::guard('eksmp')->user()->id."','".$id2."','2','".Date('Y-m-d H:m:s')."','0')");
 		$querymax = DB::select("select max(id_transaksi) as maxid from csc_transaksi");
 		foreach($querymax as $maxquery){ $maxid = $maxquery->maxid;   }
+		//log
+		$insert = DB::select("
+			insert into log_user (email,waktu,date,ip_address,id_role,id_user,id_activity,keterangan) values
+			('".Auth::guard('eksmp')->user()->email."','".date('H:i:s')."','".date('Y-m-d')."','','".Auth::guard('eksmp')->user()->id_role."'
+			,'".Auth::guard('eksmp')->user()->id."','4','deal buying request')");
+		
+		//end log
 		return redirect('input_transaksi/'.$maxid);
 	}	
 	public function br_chat($id)
@@ -592,6 +599,7 @@ class BuyingRequestController extends Controller
 	
 	public function br_save_join($id)
     {
+		date_default_timezone_set('Asia/Jakarta');
 		$id_user = Auth::guard('eksmp')->user()->id;
 		$data1 ="";
 		$data2 ="";
@@ -715,6 +723,13 @@ class BuyingRequestController extends Controller
 			
 			
 		$update = DB::select("update csc_buying_request_join set status_join='1' where id='".$id."' ");
+		//log
+		$insert = DB::select("
+			insert into log_user (email,waktu,date,ip_address,id_role,id_user,id_activity,keterangan) values
+			('".Auth::guard('eksmp')->user()->email."','".date('H:i:s')."','".date('Y-m-d')."','','".Auth::guard('eksmp')->user()->id_role."'
+			,'".Auth::guard('eksmp')->user()->id."','4','join buying request')");
+		
+		//end log
 		return redirect('br_list');
 	}
 	

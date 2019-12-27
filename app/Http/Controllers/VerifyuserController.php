@@ -620,5 +620,88 @@ class VerifyuserController extends Controller
 		
 	
 	}
+	
+	public function ceknpwp()
+	{
+		$npwpz =	str_replace(".","",$_GET['id']);
+		$npwpx =	str_replace("-","",$npwpz);
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "http://perizinan.kemendag.go.id/index.php/website_api/kswp/153/".$npwpx,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		  CURLOPT_HTTPHEADER => array(
+		    "cache-control: no-cache",
+		    "content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+		    "postman-token: f3e1235e-d688-a840-efd7-c7eb19691494",
+		    "x-api-key: kpzgMbTYlv2VmXSeOf03KxirsyBIGt48LcRPd7nN"
+		  ),
+		));
+/*
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+*/
+/*
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+*/
+	$server_output = curl_exec ($curl);
+
+		curl_close ($curl);
+
+		// print  $server_output ;
+		$r = json_decode($server_output);
+		echo json_encode(array('status'=> $r->status,'nama'=> $r->nama));
+		//die('asd');
+		/*
+		define('API_KEY', '2F0WpJ9Ija4VksioxSlc3tUywdzD7X8uMLbQHEGP');
+		define('SECRET_KEY', 'MY_SECRET_KEY');
+
+		$Sig = base64_encode(hash_hmac('sha256', 'date: "'.gmdate('D, d M Y H:i:s T').'"', SECRET_KEY, true));
+
+		$ch = curl_init();
+		$npwpz =	str_replace(".","",$_GET['id']);
+		$npwpx =	str_replace("-","",$npwpz);
+		
+		curl_setopt($ch, CURLOPT_URL,"http://www.kemendag.go.id/addon/api/website_api/kswp/153/".$npwpx);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		$headers = [
+			//'Accept: application/json',
+			//'Accept-Encoding: gzip, deflate',
+			//'Cache-Control: no-cache',
+			//'Content-Type: application/json; charset=utf-8',
+			//'Host: localhost',
+			//'Date: "'.gmdate('D, d M Y H:i:s T').'"',
+			'X-Api-Key: '.API_KEY,
+			//'Authorization: Signature keyId="'.API_KEY.'",algorithm="hmac-sha256",headers="date",signature="'.$Sig.'"'
+		];
+		//var_dump($headers);die();
+
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+		$server_output = curl_exec ($ch);
+
+		curl_close ($ch);
+
+		// print  $server_output ;
+		$r = json_decode($server_output);
+		// echo json_decode($server_output);
+		//var_dump($r);die();
+		echo json_encode(array('status'=> $r->status,'nama'=> $r->nama));
+		// var_dump($r->status);
+		*/
+	}
     
 }

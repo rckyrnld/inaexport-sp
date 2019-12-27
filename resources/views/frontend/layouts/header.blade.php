@@ -308,7 +308,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                     <li class="language" style="position: relative; display: inline-block;">
                                         <div class="lang-select" style="height: 100%;">
                                             <button class="btn-select-lang" style="border-radius: 5px; background-color: #fff; border: 1px solid #ccc; height: 60%; width: 160px;">
-                                                <img src="{{asset('front/assets/img/Google.png')}}" style="height: 18px; margin:3px;" align="left">
+                                                <!-- <img src="{{asset('front/assets/img/Google.png')}}" style="height: 18px; margin:3px;" align="left"> -->
                                                 <span class="title-lang">
                                                     @if($loc == 'en') Select Language @elseif($loc == 'in') Pilih Bahasa @else 选择语言 @endif
                                                 <i class="fa fa-angle-down" aria-hidden="true" style="padding-left: 8px;"></i></span>
