@@ -257,6 +257,17 @@
                                                            id="foto_profil">
                                                 </div>
                                             </div>
+											
+											 <div class="form-row">
+                                                <div class="form-group col-sm-4">
+                                                    <label><b>Dokumen Pendukung</b></label>
+                                                </div>
+                                                <div class="form-group col-sm-8">
+                                                    <input type="file" name="filependukung"
+                                                           id="filependukung" class="form-control">
+                                                </div>
+                                            </div>
+											
                                             <div class="form-row">
                                                 <div class="form-group col-sm-4">
                                                     <label><b>Status Importir</b></label>
