@@ -695,13 +695,30 @@ class FrontController extends Controller
     }
 
     public function event_interest(Request $req){
-        $id_profil = $id_user = Auth::guard('eksmp')->user()->id_profil;
+        $id_profil = Auth::guard('eksmp')->user()->id_profil;
         $cek = DB::table('event_interest')->where('id_profile', $id_profil)->where('id_event', $req->id)->first();
         $return = 'failed';
         if(!$cek){
             DB::table('event_interest')->insert([
                 'id_profile' => $id_profil,
                 'id_event' => $req->id,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+
+            $return = 'success';
+        } 
+        
+        return json_encode($return);
+    }
+
+    public function training_interest(Request $req){
+        $id_profil = Auth::guard('eksmp')->user()->id_profil;
+        $cek = DB::table('training_interest')->where('id_profile', $id_profil)->where('id_training', $req->id)->first();
+        $return = 'failed';
+        if(!$cek){
+            DB::table('training_interest')->insert([
+                'id_profile' => $id_profil,
+                'id_training' => $req->id,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
 

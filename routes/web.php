@@ -112,6 +112,7 @@ Route::namespace('FrontEnd')->group(function () {
     //Front End TrainingController
     Route::get('/front_end/training', 'FrontController@indexTraining');
     Route::get('frontend/training/search', 'FrontController@indexTrainingSearch');
+    Route::post('/training-interest', 'FrontController@training_interest')->name('training.interest');
     //End Training Frontend
 
 
@@ -762,6 +763,7 @@ Route::namespace('Training')->group(function () {
     Route::get('admin/training/view/{id}', 'TrainingControllerAdmin@view')->name('training.view.admin');
     Route::get('admin/training/destroy/{id}', 'TrainingControllerAdmin@destroy')->name('training.destroy.admin');
     Route::get('admin/training/verifed/{id}/{id_tr}/{id_profil}', 'TrainingControllerAdmin@verifed')->name('training.verifed.admin');
+    Route::get('/Training-getDataInterest/{id}', 'TrainingControllerAdmin@getDataInterest')->name('training.getDataInterest');
     //Eksportir
     Route::get('training', 'TrainingControllerEksportir@index')->name('training.index');
     Route::get('training/getData', 'TrainingControllerEksportir@getData')->name('training.getData');

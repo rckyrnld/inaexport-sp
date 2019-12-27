@@ -97,10 +97,10 @@ class TrainingControllerEksportir extends Controller
           ->addColumn('location_en', function($data){
              	return '<div align="left">'.$data->location_en.'</div>';
 			})
-          ->addColumn('action', function ($data) {
-          		$data = getContactPerson($data->id, 'training');
+          ->addColumn('action', function ($val) {
+          		$data = getContactPerson($val->id, 'training');
           		return '<center>
-                  <button onclick="contact_person(\''.$data.'\')" class="btn btn-sm btn-info text-white">&nbsp;View&nbsp;</button>
+                  <button onclick="contact_person(\''.$data.'\','.$val->id.')" class="btn btn-sm btn-info text-white">&nbsp;View&nbsp;</button>
                   </center>';
           })
           ->rawColumns(['action','training_en','topic_en','location_en'])

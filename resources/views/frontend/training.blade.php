@@ -99,7 +99,7 @@
                           }
 
                           if($for == 'user'){
-                            $button = '<button class="btn training join btn-info" onclick="__join(\''.getContactPerson($val->id, 'training').'\')">'.Lang::get('training.minat').'</button>';
+                            $button = '<button class="btn training join btn-info" onclick="__join(\''.getContactPerson($val->id, 'training').'\', '.$val->id.')">'.Lang::get('training.minat').'</button>';
                           } else {
                             $button = '<button class="btn training join btn-info" onclick="__join()">'.Lang::get('training.minat').'</button>';
                           }
@@ -255,7 +255,7 @@
     @endif
 @include('frontend.layouts.footer')
 <script type="text/javascript">
-  function __join(id){
+  function __join(id, id_training){
     var login = "{{$for}}";
     if(login == 'user'){
       if(id != '-'){
@@ -268,7 +268,14 @@
         $('#cp_phone').html('No Contact');
         $('#cp_email').html('No Contact');
       }
-
+      var token = "{{ csrf_token() }}";
+      var id = id_training;
+      $.ajax({
+          url: "{{route('training.interest')}}",
+          type: 'post',
+          data: {'_token':token,id:id},
+          dataType: 'json'
+      });
       $('#modal_cp').modal('show'); 
     } else {
       alert("{{$message}}");

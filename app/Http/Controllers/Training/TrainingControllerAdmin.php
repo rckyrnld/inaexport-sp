@@ -261,4 +261,20 @@ class TrainingControllerAdmin extends Controller
         }
     }
 
+    public function getDataInterest($id)
+    {
+      $interest = DB::table('training_interest')->where('id_training', $id)->orderby('created_at', 'desc')->get();
+
+      return \Yajra\DataTables\DataTables::of($interest)
+          ->addIndexColumn()
+          ->addColumn('company', function ($var) {
+            return '<div align="left">'.getProfileCompany($var->id_profile).'</div>';
+          })
+          ->addColumn('interest', function ($data) {
+            return date('d F Y', strtotime($data->created_at)).' ( '.date('H:i', strtotime($data->created_at)).' )';
+          })
+          ->rawColumns(['company'])
+          ->make(true);
+    }
+
 }
