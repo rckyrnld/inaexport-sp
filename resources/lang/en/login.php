@@ -12,7 +12,7 @@ return [
     "a1" => "Administrator",
     "a2" => "Exporter / Importer",
     "a3" => "choose as",
-    "a4" => "INDONESIAN EXPORTER",
+    "a4" => "INDONESIAN EXPORTIR",
     "a5" => "BUYER",
     "btn" => "Sign In",
     "btn2" => "Process",

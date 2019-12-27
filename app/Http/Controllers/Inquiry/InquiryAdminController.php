@@ -153,7 +153,7 @@ class InquiryAdminController extends Controller
                     if($mjl->status == 0){
                         return '
                             <center>
-                            <a href="'.url('/inquiry_admin/view').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true" title="View"></i></a>
+                            <a href="'.url('/inquiry_admin/view').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-eye" aria-hidden="true" title="View"></i></a>
                             <a href="'.url('/inquiry_admin/delete').'/'.$mjl->id.'" class="btn btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true" title="Delete"></i></a>
                             </center>';
                     }else if($mjl->status == 1){
@@ -165,18 +165,18 @@ class InquiryAdminController extends Controller
                     }else if($mjl->status == 2){
                         return '
                             <center>
-                            <a href="'.url('/inquiry_admin/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-search" aria-hidden="true"></i></a>
+                            <a href="'.url('/inquiry_admin/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             </center>';
                     }else if($mjl->status == 3 || $mjl->status == 4){
                         return '
                             <center>
-                            <a href="'.url('/inquiry_admin/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-search" aria-hidden="true"></i></a>
+                            <a href="'.url('/inquiry_admin/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             <a href="'.url('/inquiry_admin/delete').'/'.$mjl->id.'" class="btn btn-sm btn-danger" onclick="return confirm(\'Are You Sure?\')" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </center>';
                     }else if($mjl->status == 5){
                         return '
                             <center>
-                            <a href="'.url('/inquiry_admin/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-search" aria-hidden="true"></i></a>
+                            <a href="'.url('/inquiry_admin/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             </center>';
                     }else{
                         return '

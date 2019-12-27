@@ -71,7 +71,7 @@ class TicketingSupportControllerAdmin extends Controller
               <center>
               <div class="btn-group">
                 <a href="' . route('ticket_support.vchat.admin', $data->id) . '" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Chat">&nbsp;<i class="fa fa-envelope text-white"></i></a>&nbsp;&nbsp;
-								<a href="' . route('ticket_support.view.admin', $data->id) . '" class="btn btn-sm btn-primary" data-toggle="tooltip" title="View">&nbsp;<i class="fa fa-search text-white"></i></a>&nbsp;&nbsp;
+								<a href="' . route('ticket_support.view.admin', $data->id) . '" class="btn btn-sm btn-primary" data-toggle="tooltip" title="View">&nbsp;<i class="fa fa-eye text-white"></i></a>&nbsp;&nbsp;
                 <!-- <a href="' . route('master.city.edit', $data->id) . '" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp; !>
               </div>
               </center>
@@ -90,7 +90,7 @@ class TicketingSupportControllerAdmin extends Controller
               return '
               <center>
               <div class="btn-group">
-								<a href="' . route('ticket_support.view.admin', $data->id) . '" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white" data-toggle="tooltip" title="View"></i></a>&nbsp;&nbsp;
+								<a href="' . route('ticket_support.view.admin', $data->id) . '" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-eye text-white" data-toggle="tooltip" ></i></a>&nbsp;&nbsp;
 								<a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Chat Ini ?\')" href="' . route('ticket_support.delete.admin', $data->id) . '" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete">&nbsp;<i class="fa fa-trash text-white"></i></a>
 								<!-- <a href="" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp; !>
               </div>
