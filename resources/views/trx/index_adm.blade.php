@@ -115,7 +115,7 @@ body {font-family: Arial;}
 									<td><center>
 									<?php if($ruu->status_transaksi == 1){ ?>
 {{--									<a href="{{ url('br_trx2/'.$ruu->id_transaksi) }}" class="btn btn-info"><font color="white"><i class="fa fa-list"></i>&nbsp; View</font></a>--}}
-                                        <a href="{{ url('br_trx2/'.$ruu->id_transaksi) }}" class="btn btn-info" data-toggle="tooltip" title="View"><font color="white"><i class="fa fa-list"></i></font></a>
+                                        <a href="{{ url('br_trx2/'.$ruu->id_transaksi) }}" class="btn btn-info" data-toggle="tooltip" title="View"><font color="white"><i class="fa fa-eye"></i></font></a>
 
 
 									<?php }else { ?>

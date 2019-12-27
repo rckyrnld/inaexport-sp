@@ -207,16 +207,32 @@
                             <textarea name="alamat" id="alamat" class="form-control" style=" color: black; "></textarea>
                         </div>
                     </div>
+{{--                    <div class="form-row">--}}
+{{--                        <div class="form-group col-sm-4" align="left">--}}
+{{--                            <label><font color="red">*</font> Verification Code</label>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-sm-2" align="left">--}}
+{{--                            <img style="height:20px!Important;" src="{{url('assets')}}/assets/images/captcha.jfif"--}}
+{{--                                 alt=".">--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-sm-4" align="left">--}}
+{{--                            <input type="text" class="form-control" name="chp" id="chp">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+
                     <div class="form-row">
                         <div class="form-group col-sm-4" align="left">
                             <label><font color="red">*</font> Verification Code</label>
                         </div>
-                        <div class="form-group col-sm-2" align="left">
-                            <img style="height:20px!Important;" src="{{url('assets')}}/assets/images/captcha.jfif"
-                                 alt=".">
+                        <div class="form-group col-sm-3 captcha" align="left" id="captcha">
+                            <span>{!!captcha_img()!!}</span>
                         </div>
-                        <div class="form-group col-sm-4" align="left">
-                            <input type="text" class="form-control" name="chp" id="chp">
+                        <div class="form-group col-sm-1" align="left">
+                            <button type="button" class="btn btn-success" id="refresh"><i class="fa fa-refresh"></i></button>
+                        </div>
+                        <div class="form-group col-sm-2" align="left">
+                            <input type="text" class="form-control" name="captchainput" id="captchainput">
                         </div>
                     </div>
 
@@ -286,6 +302,20 @@
 <script src="{{asset('')}}/js/tagsinput.js"></script>
 <script>
 
+    $('#refresh').click(function(){
+        refresh()
+    });
+
+    function refresh(){
+        $.ajax({
+            type:'GET',
+            url:'refreshcaptcha',
+            success:function(data){
+                console.log(data);
+                $(".captcha span").html(data);
+            }
+        });
+    }
 
     function cekmail() {
         var m = $('#email').val();
@@ -306,7 +336,7 @@
         //$('#cekmail').html("<font color='red'>( Has Been Used ! )</font>");
     }
 
-    function simpanpembeli() {
+    function simpanpembeli(){
         var company = $('#company').val();
         var username = $('#username').val();
         var email = $('#email').val();
@@ -319,17 +349,52 @@
         var country = $('#country').val();
         var postcode = $('#postcode').val();
         var alamat = $('#alamat').val();
+        var captcha = $('#captchainput').val();
+        var token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            type: "POST",
+            url: '{{url('/captchaValidate')}}',
+            data: {
+                captcha : captcha,
+                _token: '{{csrf_token()}}'
+            },
+            success: function (data) {
+                // console.log(data);
+                if(data.jawab == 'gagal'){
+                    alert("Your captcha failed");
+                    $('#captchainput').val('');
+                }
+                else{
+                    simpanpembeli2();
+                }
+            },
+            error: function (data, textStatus, errorThrown) {
+                console.log(data);
+            },
+        });
+    }
+
+    function simpanpembeli2() {
+        var company = $('#company').val();
+        var username = $('#username').val();
+        var email = $('#email').val();
+        var phone = $('#phone').val();
+        var fax = $('#fax').val();
+        var website = $('#website').val();
+        var password = $('#password').val();
+        var kpassword = $('#kpassword').val();
+        var city = $('#city').val();
+        var country = $('#country').val();
+        var postcode = $('#postcode').val();
+        var alamat = $('#alamat').val();
+
         var token = $('meta[name="csrf-token"]').attr('content');
         if (password == kpassword) {
-
             if (company == "" || username == "" || email == "" || phone == "" || password == "" || country == "" || city == "" || alamat == "") {
                 alert("Please complete the field !")
+                refresh();
+                $('#captchainput').val('');
             } else {
-                /*
-                $.post('{{url('/simpan_rpenjual')}}',{company:company,username:username,email:email,phone:phone,fax:fax,password:password,city:city,prov:prov,postcode:postcode,alamat:alamat,_token:token},function (data) {
-		 	
-		 });
-		*/
                 $.ajax({
                     type: "POST",
                     url: '{{url('/simpan_rpembeli')}}',
@@ -367,12 +432,15 @@
                 $('#country').val('');
                 $('#postcode').val('');
                 $('#alamat').val('');
+                $('#captchainput').val('');
                 $("#myModal").modal("show");
             }
         } else {
             alert("Your Password Not Same !");
             $('#password').val('');
             $('#kpassword').val('');
+            refresh();
+            $('#captchainput').val('');
         }
     }
 </script>

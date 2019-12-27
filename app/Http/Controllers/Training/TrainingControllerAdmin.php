@@ -166,7 +166,7 @@ class TrainingControllerAdmin extends Controller
                     return '
               <center>
               <div class="btn-group">
-								<a href="' . route('training.view.admin', $data->id) . '" class="btn btn-sm btn-info" data-toggle="tooltip" title="View"><i class="fa fa-search text-white"></i></a>&nbsp;&nbsp;
+								<a href="' . route('training.view.admin', $data->id) . '" class="btn btn-sm btn-info" data-toggle="tooltip" title="View"><i class="fa fa-eye text-white"></i></a>&nbsp;&nbsp;
                 <a onclick="return confirm(\'Are You Sure ?\')" href="' . route('training.destroy.admin', $data->id) . '" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-trash text-white"></i></a>
               </div>
               </center>

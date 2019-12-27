@@ -1,6 +1,6 @@
 <?php
 return [
-    "title" => "Form Register Indonesia Eksportir",
+    "title" => "Form Register Indonesian Exportir",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
