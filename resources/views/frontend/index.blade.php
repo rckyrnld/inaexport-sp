@@ -605,7 +605,7 @@
                                 @else
                                 <a href="{{url($url)}}" class="for-act">
                                 @endif
-                                  <img src="{{asset('front/assets/icon/for-indonesia-exportir.png')}}" alt="" >
+                                  <img src="{{asset('front/assets/icon/For-Indonesian-Exporter_10.png')}}" alt="" >
                                 @if(Auth::guard('eksmp')->user())
                                 @if(Auth::guard('eksmp')->user()->id_role == 2)
                                 </a>
