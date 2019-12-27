@@ -133,7 +133,7 @@
                       <td style="text-align: right !important;"><i class="fa fa-times" id="times" data-dismiss="modal" style="color: white !important; font-size: 24px !important;"></i></td>
                     </tr>
                   </table>
-                  <table border="0" width="80%" align="center">
+                  <table border="0" width="85%" align="center">
                     <tr>
                       <td class="icon" align="center"><img src="{{url('/')}}/front/assets/img/cp/nama.png" height="100%"></td>
                       <td class="cp-data" colspan="2" style="text-transform: capitalize;"><input type="text" class="data-cp" id="cp_name"></td>

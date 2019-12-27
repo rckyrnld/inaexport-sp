@@ -15,5 +15,5 @@ return [
         "address" => "Alamat",
     ],
     "submit" => "Daftar",
-    "modal" => "Periksa Email Anda untuk aktifasi! <br<br>Akun anda sudah bisa digunakan untuk login.<br><br>Untuk mengunggah barang, silahkan login dan unggah dokumen-dokumen yang diperlukan.",
+    "modal" => "Periksa Email Anda untuk aktifasi! <br><br>Akun anda sudah bisa digunakan untuk login.<br><br>Untuk mengunggah barang, silahkan login dan unggah dokumen-dokumen yang diperlukan.",
 ];
