@@ -111,12 +111,24 @@ class ManagementController extends Controller
         $detailCompanyUsers = DB::select("select b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='$request->id' limit 1");
 
         if ((count($companyUsers) > 0) && (count($detailCompanyUsers) > 0)) {
-            $res['message'] = "Success";
-            $result = ['companyUser' => $companyUsers, 'profilUser' => $detailCompanyUsers];
-            $res['data'] = $result;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = ['companyUser' => $companyUsers, 'profilUser' => $detailCompanyUsers];
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         } else {
-            $res['message'] = "Failed";
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         }
     }
@@ -128,12 +140,24 @@ class ManagementController extends Controller
         $detailCompanyUsers = DB::select("select b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='$request->id' limit 1");
 
         if ((count($companyUsers) > 0) && (count($detailCompanyUsers) > 0)) {
-            $res['message'] = "Success";
-            $result = ['companyUser' => $companyUsers, 'profilUser' => $detailCompanyUsers];
-            $res['data'] = $result;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = ['companyUser' => $companyUsers, 'profilUser' => $detailCompanyUsers];
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         } else {
-            $res['message'] = "Failed";
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
             return response($res);
         }
     }
@@ -257,135 +281,158 @@ class ManagementController extends Controller
         return $paginatedSearchResults;
     }
 
-    public function verifikasi_act($id, Request $request)//belum ada api nya
+    public function verifikasi_act(Request $request)//belum ada api nya
     {
-        if (Auth::user()) {
-            $id_user = Auth::user()->id;
-            $datenow = date("Y-m-d H:i:s");
 
-            $data = DB::table('csc_product_single')->where('id', $id)->first();
-            $carieks = DB::select("select email from itdp_company_users where id='" . $data->id_itdp_company_user . "'");
-            foreach ($carieks as $teks) {
-                $maileks = $teks->email;
-            }
-            $verifikasi = $request->verifikasi;
-            // var_dump($verifikasi);
-            if ($verifikasi == '1') {
-                $status = 2;
-                $ket = "This product has been added on the front page";
-                $notifnya = "has been accepted";
-                $ket = "Your product " . $data->prodname_en . " got verified !";
-                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-				('2','Super Admin','1','Eksportir','" . $data->id_itdp_company_user . "','" . $ket . "','eksportir/product_view','" . $id . "','" . Date('Y-m-d H:m:s') . "','0')
+        $id_user = $request->id_user;
+        $datenow = date("Y-m-d H:i:s");
+
+        $data = DB::table('csc_product_single')->where('id', $request->id_product)->first();
+        $carieks = DB::select("select email from itdp_company_users where id='" . $data->id_itdp_company_user . "'");
+        foreach ($carieks as $teks) {
+            $maileks = $teks->email;
+        }
+        $verifikasi = $request->verifikasi;
+        // var_dump($verifikasi);
+        if ($verifikasi == '1') {
+            $status = 2;
+            $ket = "This product has been added on the front page";
+            $notifnya = "has been accepted";
+            $ket = "Your product " . $data->prodname_en . " got verified !";
+            $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+				('2','Super Admin','1','Eksportir','" . $data->id_itdp_company_user . "','" . $ket . "','eksportir/product_view','" . $request->id_product . "','" . Date('Y-m-d H:m:s') . "','0')
 				");
-                $data33 = [
-                    'email' => "",
-                    'email1' => $maileks,
-                    'username' => $data->prodname_en,
-                    'main_messages' => "",
-                    'id' => $id
-                ];
-                Mail::send('UM.user.sendproduct', $data33, function ($mail) use ($data33) {
-                    $mail->to($data33['email1'], $data33['username']);
-                    $mail->subject("Your product got verified !");
-                });
-                // echo $data->prodname_en;die();
-            } else {
-                $keterangan = $request->keterangan;
-                // var_dump($keterangan);
-                $status = 3;
-                $ket = "The product that you added cannot be displayed on the front page because " . $keterangan;
-                $notifnya = "has been declined";
-            }
+            $data33 = [
+                'email' => "",
+                'email1' => $maileks,
+                'username' => $data->prodname_en,
+                'main_messages' => "",
+                'id' => $request->id_product
+            ];
+            Mail::send('UM.user.sendproduct', $data33, function ($mail) use ($data33) {
+                $mail->to($data33['email1'], $data33['username']);
+                $mail->subject("Your product got verified !");
+            });
+            // echo $data->prodname_en;die();
+        } else {
+            $keterangan = $request->keterangan;
+            // var_dump($keterangan);
+            $status = 3;
+            $ket = "The product that you added cannot be displayed on the front page because " . $keterangan;
+            $notifnya = "has been declined";
+        }
 
-            // var_dump($status);
-            // var_dump($ket);
-            // die();
-            $update = DB::table('csc_product_single')->where('id', $id)->update([
-                'status' => $status,
-                'keterangan' => $ket,
-                'updated_at' => $datenow,
+        // var_dump($status);
+        // var_dump($ket);
+        // die();
+        $update = DB::table('csc_product_single')->where('id', $request->id_product)->update([
+            'status' => $status,
+            'keterangan' => $ket,
+            'updated_at' => $datenow,
+        ]);
+
+        if ($update) {
+            $pengirim = DB::table('itdp_admin_users')->where('id', $id_user)->first();
+            $notif = DB::table('notif')->insert([
+                'dari_nama' => $pengirim->name,
+                'dari_id' => $id_user,
+                'untuk_nama' => getCompanyName($data->id_itdp_company_user),
+                'untuk_id' => $data->id_itdp_company_user,
+                'keterangan' => 'Product ' . $data->prodname_en . ' ' . $notifnya . ' by Admin',
+                'url_terkait' => 'eksportir/product_view',
+                'status_baca' => 0,
+                'waktu' => $datenow,
+                'id_terkait' => $request->id_product,
+                'to_role' => 2,
             ]);
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
 
-            if ($update) {
+
+    public function approval(Request $req)
+    {
+
+        $id_user = $req->id_user;
+        $data_sebelumnya = DB::table('itdp_service_eks')->where('id', $req->id_service)->first();
+        $pageTitle = 'Service';
+        if ($req->verifikasi == 1) {
+            $status = 2;
+            $ket = "This product has been added on the front page";
+            $notifnya = "has been accepted";
+
+            $update = DB::table('itdp_service_eks')->where('id', $req->id_service)->update([
+                'status' => 2,
+                'keterangan' => $ket
+            ]);
+        } else {
+            $status = 3;
+            $ket = "The product that you added cannot be displayed on the front page because " . $req->keterangan;
+            $notifnya = "has been declined";
+
+            $update = DB::table('itdp_service_eks')->where('id', $req->id_service)->update([
+                'status' => 3,
+                'keterangan' => $ket
+            ]);
+        }
+
+        $cek_notif = DB::table('notif')->where('url_terkait', 'eksportir/service/view')
+            ->where('id_terkait', $req->id_service)
+            ->where('untuk_id', getIdUserEks($data_sebelumnya->id_itdp_profil_eks))
+            ->first();
+
+        if ($update) {
+            if (!$cek_notif) {
                 $pengirim = DB::table('itdp_admin_users')->where('id', $id_user)->first();
+                $penerima = DB::table('itdp_profil_eks')->where('id', $data_sebelumnya->id_itdp_profil_eks)->first();
                 $notif = DB::table('notif')->insert([
                     'dari_nama' => $pengirim->name,
                     'dari_id' => $id_user,
-                    'untuk_nama' => getCompanyName($data->id_itdp_company_user),
-                    'untuk_id' => $data->id_itdp_company_user,
-                    'keterangan' => 'Product ' . $data->prodname_en . ' ' . $notifnya . ' by Admin',
-                    'url_terkait' => 'eksportir/product_view',
+                    'untuk_nama' => $penerima->company,
+                    'untuk_id' => getIdUserEks($data_sebelumnya->id_itdp_profil_eks),
+                    'keterangan' => 'Product ' . $data_sebelumnya->nama_en . ' ' . $notifnya . ' by Admin',
+                    'url_terkait' => 'eksportir/service/view',
                     'status_baca' => 0,
-                    'waktu' => $datenow,
-                    'id_terkait' => $id,
-                    'to_role' => 2,
-                ]);
-            }
-        }
-
-        return redirect('eksportir/product_admin/' . $data->id_itdp_profil_eks);
-    }
-
-    public function approval(Request $req, $id)
-    {
-        if (Auth::user()) {
-            $id_user = Auth::user()->id;
-            $data_sebelumnya = DB::table('itdp_service_eks')->where('id', $id)->first();
-            $pageTitle = 'Service';
-            if ($req->verifikasi == 1) {
-                $status = 2;
-                $ket = "This product has been added on the front page";
-                $notifnya = "has been accepted";
-
-                $update = DB::table('itdp_service_eks')->where('id', $id)->update([
-                    'status' => 2,
-                    'keterangan' => $ket
+                    'waktu' => date('Y-m-d H:i:s'),
+                    'id_terkait' => $req->id_service,
+                    'to_role' => 2
                 ]);
             } else {
-                $status = 3;
-                $ket = "The product that you added cannot be displayed on the front page because " . $req->keterangan;
-                $notifnya = "has been declined";
-
-                $update = DB::table('itdp_service_eks')->where('id', $id)->update([
-                    'status' => 3,
-                    'keterangan' => $ket
+                $notif = DB::table('notif')->where('id_notif', $cek_notif->id_notif)->update([
+                    'keterangan' => 'Product ' . $data_sebelumnya->nama_en . ' ' . $notifnya . ' by Admin',
+                    'status_baca' => 0,
+                    'waktu' => date('Y-m-d H:i:s')
                 ]);
             }
 
-            $cek_notif = DB::table('notif')->where('url_terkait', 'eksportir/service/view')
-                ->where('id_terkait', $id)
-                ->where('untuk_id', getIdUserEks($data_sebelumnya->id_itdp_profil_eks))
-                ->first();
-
-            if ($update) {
-                if (!$cek_notif) {
-                    $pengirim = DB::table('itdp_admin_users')->where('id', $id_user)->first();
-                    $penerima = DB::table('itdp_profil_eks')->where('id', $data_sebelumnya->id_itdp_profil_eks)->first();
-                    $notif = DB::table('notif')->insert([
-                        'dari_nama' => $pengirim->name,
-                        'dari_id' => $id_user,
-                        'untuk_nama' => $penerima->company,
-                        'untuk_id' => getIdUserEks($data_sebelumnya->id_itdp_profil_eks),
-                        'keterangan' => 'Product ' . $data_sebelumnya->nama_en . ' ' . $notifnya . ' by Admin',
-                        'url_terkait' => 'eksportir/service/view',
-                        'status_baca' => 0,
-                        'waktu' => date('Y-m-d H:i:s'),
-                        'id_terkait' => $id,
-                        'to_role' => 2
-                    ]);
-                } else {
-                    $notif = DB::table('notif')->where('id_notif', $cek_notif->id_notif)->update([
-                        'keterangan' => 'Product ' . $data_sebelumnya->nama_en . ' ' . $notifnya . ' by Admin',
-                        'status_baca' => 0,
-                        'waktu' => date('Y-m-d H:i:s')
-                    ]);
-                }
-            }
-            return redirect('/eksportir/service/admin/' . $data_sebelumnya->id_itdp_profil_eks);
-        } else {
-            return redirect('/login');
         }
+        $meta = [
+            'code' => 200,
+            'message' => 'Success',
+            'status' => 'OK'
+        ];
+        $data = "";
+        $res['meta'] = $meta;
+        $res['data'] = $data;
+        return response($res);
     }
 
 }

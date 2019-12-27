@@ -62,7 +62,7 @@ class BuyingRequestController extends Controller
         $pageTitle = "All Notif For Representative";
 		return view('notif.indexperwakilan', compact('pageTitle'));
 		}else{
-		$update = DB::select("update notif set status_baca='1' where untuk_id='".Auth::user()->id."' and to_role='".Auth::user()->id_group."'");
+		$update = DB::select("update notif set status_baca='1' where to_role='".Auth::user()->id_group."'");
 		$pageTitle = "All Notif For Admin";
         return view('notif.indexadmin', compact('pageTitle'));
 		}

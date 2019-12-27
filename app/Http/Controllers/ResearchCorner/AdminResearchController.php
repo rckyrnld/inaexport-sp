@@ -210,20 +210,23 @@ class AdminResearchController extends Controller
       for ($user=0; $user < count($array) ; $user++) { 
         $pengirim = DB::table('itdp_admin_users')->where('id',$id_user)->first();
         $account_penerima = DB::table('itdp_company_users')->where('id',$array[$user])->first();
-        $profile_penerima = DB::table('itdp_profil_eks')->where('id',$account_penerima->id_profil)->first();
-
-        $notif = DB::table('notif')->insert([
-            'dari_nama' => $pengirim->name,
-            'dari_id' => $pengirim->id,
-            'untuk_nama' => $profile_penerima->company,
-            'untuk_id' => $array[$user],
-            'keterangan' => 'New Broadcast from '.$pengirim->name.' with Title  "'.$req->title_en.'"',
-            'url_terkait' => 'research-corner/read',
-            'status_baca' => 0,
-            'waktu' => $date,
-            'id_terkait' => $req->research,
-            'to_role' => '2',
-        ]);
+        if($account_penerima){
+          $profile_penerima = DB::table('itdp_profil_eks')->where('id',$account_penerima->id_profil)->first();
+          if($profile_penerima){
+            $notif = DB::table('notif')->insert([
+                'dari_nama' => $pengirim->name,
+                'dari_id' => $pengirim->id,
+                'untuk_nama' => $profile_penerima->company,
+                'untuk_id' => $array[$user],
+                'keterangan' => 'New Broadcast from '.$pengirim->name.' with Title  "'.$req->title_en.'"',
+                'url_terkait' => 'research-corner/read',
+                'status_baca' => 0,
+                'waktu' => $date,
+                'id_terkait' => $req->research,
+                'to_role' => '2',
+            ]);
+          }
+        }
       }
 
       if($data){

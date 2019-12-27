@@ -82,6 +82,31 @@
   .chat-back:hover{
     opacity: 0.7;
   }
+
+  button.closedmodal {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+  }
+
+  .closedmodal {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+  }
+  .modal-header .closedmodal {
+      padding: 1rem;
+      margin: -1rem -1rem -1rem auto;
+  }
+
+  .closedmodal:hover{
+    color: #fff;
+  }
 </style>
 <?php
   $loc = app()->getLocale();
@@ -166,7 +191,16 @@
                             <div class="row pull-right">
                               <div class="col-md-10">
                                 <label class="label chat-me">
-                                    {{$msg->messages}}<br>
+                                    @if($msg->file == NULL)
+                                        {{$msg->messages}}<br>
+                                    @else
+                                        <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: white;"><?php echo wordwrap($msg->file, 40, "<br \>", true);?></a>
+                                        @if($msg->messages != null)
+                                        <br><br>
+                                        {{$msg->messages}}
+                                        @endif
+                                        <br>
+                                    @endif
                                     <span style="float: right;">{{date('H:i',strtotime($msg->messages_send))}}</span>
                                 </label>
                               </div>
@@ -217,7 +251,16 @@
                             <div class="row">
                               <div class="col-md-10">
                                 <label class="label chat-other">
-                                    {{$msg->messages}}<br>
+                                    @if($msg->file == NULL)
+                                        {{$msg->messages}}<br>
+                                    @else
+                                        <a href="{{ url('/').'/uploads/ticketing' }}/{{ $msg->file }}" target="_blank" class="atag" style="color: #2492eb;"><?php echo wordwrap($msg->file, 40, "<br \>", true);?></a>
+                                        @if($msg->messages != null)
+                                        <br><br>
+                                        {{$msg->messages}}
+                                        @endif
+                                        <br>
+                                    @endif
                                     <span style="color: #555; float: right;">{{date('H:i',strtotime($msg->messages_send))}}</span>
                                 </label>
                               </div>
@@ -232,7 +275,10 @@
                       <form action="{{url('/front_end/ticketing_support/sendchat')}}" method="post" enctype="multipart/form-data" id="formMessageTicket">
                         {{ csrf_field() }}
                         <div class="row">
-                          <div class="col-md-11">
+                          <div class="col-md-1">
+                            <img src="{{asset('front/assets/icon/plus-circle.png')}}" alt="" width="100%" id="uploading2" />
+                          </div>
+                          <div class="col-md-10">
                             <textarea id="messages" name="messages" rows="2" class="chat-message"></textarea>
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="sender" value="{{$ticket->id_pembuat}}">
@@ -253,6 +299,47 @@
           </div>
       </div>
   <!--product details end-->
+
+<!-- Modal Invoice -->
+<div class="modal fade" id="modalFile" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Upload File</h6>
+                <button type="button" class="closedmodal" data-dismiss="modal">&times;</button>
+            </div>
+            <form action="{{url('/front_end/ticketing_support/sendFilechat')}}" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-sm-3">
+                            <label><b>File Upload</b></label>
+                        </div>
+                        <div class="form-group col-sm-7">
+                            <input type="file" id="upload_file2" name="upload_file2" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-3">
+                            <label><b>Note</b></label>
+                        </div>
+                        <div class="form-group col-sm-7">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="sender" value="{{$ticket->id_pembuat}}">
+                            <input type="hidden" name="id" value="{{$ticket->id}}">
+                            <input type="hidden" name="reciver" value="0">
+                            <textarea class="form-control" name="messages" id="msgfile2"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"><font color="white">Upload</font></button>
+                    <button type="button" class="btn btn-default" style="background-color: #efefef;" data-dismiss="modal">Close</button>
+                </div> 
+            </form>
+        </div>
+    </div>
+</div>
+
 <?php
   if($loc == "ch"){
     $alertmsg = "抱歉，无法发送此消息。";
@@ -267,9 +354,15 @@
 <script type="text/javascript">
     $(document).ready(function(){
         //Send Message
+        var status = $('#statusticket').val();
+        $("#uploading2").click(function() {
+            if(status == 3){
+              alert("{{$alertmsg}}");
+            } else {
+              $('#modalFile').modal('show');
+            }
+        });
         $('#sendmessageticket').on('click', function(event){
-          var status = $('#statusticket').val();
-
           if(status == 3){
             alert("{{$alertmsg}}");
             $('textarea#messages').val("");
