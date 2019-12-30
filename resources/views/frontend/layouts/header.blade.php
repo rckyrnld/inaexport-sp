@@ -373,7 +373,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                     <div id="products" class="container tab-pane active">
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_product')}}" id="formsprod">
                                             {{ csrf_field() }}
-                                            <div class="search_box">
+                                            <div class="search_box" style="width: 461px!Important;">
                                                 <?php
                                                     if(isset($search)){
                                                         $cariprod = $search;

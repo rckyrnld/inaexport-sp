@@ -42,6 +42,7 @@ class TicketingSupportFrontController extends Controller
 
     public function store(Request $req)
     {
+		date_default_timezone_set('Asia/Jakarta');
         $id_user = Auth::guard('eksmp')->user()->id;
         $type = Auth::guard('eksmp')->user()->type;
 
@@ -105,6 +106,13 @@ class TicketingSupportFrontController extends Controller
 
         //dd();
 //        return redirect('/front_end/history');
+		//log
+		$insert = DB::select("
+			insert into log_user (email,waktu,date,ip_address,id_role,id_user,id_activity,keterangan) values
+			('".Auth::guard('eksmp')->user()->email."','".date('H:i:s')."','".date('Y-m-d')."','','".Auth::guard('eksmp')->user()->id_role."'
+			,'".Auth::guard('eksmp')->user()->id."','8','create ticketing')");
+		
+		//end log
         return redirect()->route('front.histori.index');
     }
 
