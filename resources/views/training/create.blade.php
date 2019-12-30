@@ -10,6 +10,7 @@
   .btn{
     width: 80px;
   }
+  .table-css{color: #fff; font-size: 12px; font-weight: 600;}
 </style>
 <div class="padding" id="form">
   <div class="row">
@@ -209,11 +210,11 @@
               <div class="row justify-content-center">
                 <div class="col-md-11">
                   <table id="table" class="table table-bordered table-striped">
-                    <thead class="text-white" style="background-color: #1089ff;">
+                    <thead style="background-color: #1089ff;">
                       <tr>
-                        <td>No</td>
-                        <td>Company</td>
-                        <td>Interested at</td>
+                        <td class="table-css">No</td>
+                        <td class="table-css">Company</td>
+                        <td class="table-css">Interested at</td>
                       </tr>
                     </thead>
                   </table>

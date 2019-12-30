@@ -162,6 +162,7 @@ Route::get('/cekmail/{id}', 'RegistrasiController@cekmail');
 
 Route::get('/login', 'HomeController@index');
 Route::get('/dashboard', 'DashboardController@index');
+Route::get('/dashboard-seller', 'DashboardEksportirController@index');
 //Verify User 
 Route::get('ceknpwp', 'VerifyuserController@ceknpwp');
 Route::get('/bacanotif/{id}', 'VerifyuserController@bacanotif');
