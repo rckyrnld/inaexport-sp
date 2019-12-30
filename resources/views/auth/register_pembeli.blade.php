@@ -207,34 +207,35 @@
                             <textarea name="alamat" id="alamat" class="form-control" style=" color: black; "></textarea>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-sm-4" align="left">
-                            <label><font color="red">*</font> Verification Code</label>
-                        </div>
-                        <div class="form-group col-sm-2" align="left">
-                            <img style="height:20px!Important;" src="{{url('assets')}}/assets/images/captcha.jfif"
-                                 alt=".">
-                        </div>
-                        <div class="form-group col-sm-4" align="left">
-                            <input type="text" class="form-control" name="chp" id="chp">
-                        </div>
-                    </div>
-
-
 {{--                    <div class="form-row">--}}
 {{--                        <div class="form-group col-sm-4" align="left">--}}
 {{--                            <label><font color="red">*</font> Verification Code</label>--}}
 {{--                        </div>--}}
-{{--                        <div class="form-group col-sm-3 captcha" align="left" id="captcha">--}}
-{{--                            <span>{!!captcha_img()!!}</span>--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group col-sm-1" align="left">--}}
-{{--                            <button type="button" class="btn btn-success" id="refresh"><i class="fa fa-refresh"></i></button>--}}
-{{--                        </div>--}}
 {{--                        <div class="form-group col-sm-2" align="left">--}}
-{{--                            <input type="text" class="form-control" name="captchainput" id="captchainput">--}}
+{{--                            <img style="height:20px!Important;" src="{{url('assets')}}/assets/images/captcha.jfif"--}}
+{{--                                 alt=".">--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-sm-4" align="left">--}}
+{{--                            <input type="text" class="form-control" name="chp" id="chp">--}}
 {{--                        </div>--}}
 {{--                    </div>--}}
+                    <div class="form-row">
+                        <div class="form-group col-sm-4" align="left">
+                            <label><font color="red">*</font> Verification Code</label>
+                        </div>
+                        <div class="form-group col-sm-3 captcha" align="left" id="captcha">
+                            <span>{!!captcha_img()!!}</span>
+                        </div>
+                        <div class="form-group col-sm-1" align="left">
+                            <button type="button" class="btn btn-success" id="refresh"><i class="fa fa-refresh"></i></button>
+                        </div>
+                        <div class="form-group col-sm-2" align="left">
+                            <input type="text" class="form-control" name="captchainput" id="captchainput">
+                        </div>
+                    </div>
+
+
+
 
 
                     <div class="form-row" align="left">
@@ -302,6 +303,21 @@
 <script src="{{asset('')}}/js/tagsinput.js"></script>
 <script>
 
+    $('#refresh').click(function(){
+        refresh()
+    });
+
+    function refresh(){
+        $.ajax({
+            type:'GET',
+            url:'refreshcaptcha',
+            success:function(data){
+                console.log(data);
+                $(".captcha span").html(data);
+            }
+        });
+    }
+
     function cekmail() {
         var m = $('#email').val();
         var token = $('meta[name="csrf-token"]').attr('content');
@@ -322,8 +338,45 @@
     }
 
 
+    function simpanpembeli(){
+        var company = $('#company').val();
+        var username = $('#username').val();
+        var email = $('#email').val();
+        var phone = $('#phone').val();
+        var fax = $('#fax').val();
+        var website = $('#website').val();
+        var password = $('#password').val();
+        var kpassword = $('#kpassword').val();
+        var city = $('#city').val();
+        var country = $('#country').val();
+        var postcode = $('#postcode').val();
+        var alamat = $('#alamat').val();
+        var captcha = $('#captchainput').val();
+        var token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            type: "POST",
+            url: '{{url('/captchaValidate')}}',
+            data: {
+                captcha : captcha,
+                _token: '{{csrf_token()}}'
+            },
+            success: function (data) {
+                // console.log(data);
+                if(data.jawab == 'gagal'){
+                    alert("Your captcha failed");
+                    $('#captchainput').val('');
+                }
+                else{
+                    simpanpembeli2();
+                }
+            },
+            error: function (data, textStatus, errorThrown) {
+                console.log(data);
+            },
+        });
+    }
 
-    function simpanpembeli() {
+    function simpanpembeli2() {
         var company = $('#company').val();
         var username = $('#username').val();
         var email = $('#email').val();
@@ -342,8 +395,8 @@
         if (password == kpassword) {
             if (company == "" || username == "" || email == "" || phone == "" || password == "" || country == "" || city == "" || alamat == "" || chp == "") {
                 alert("Please complete the field !")
-                // refresh();
-                // $('#captchainput').val('');
+                refresh();
+                $('#captchainput').val('');
             } else {
                 $.ajax({
                     type: "POST",
@@ -390,6 +443,9 @@
             alert("Your Password Not Same !");
             $('#password').val('');
             $('#kpassword').val('');
+            refresh();
+            $('#captchainput').val('');
+
         }
     }
 </script>
