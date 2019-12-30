@@ -195,8 +195,17 @@ $usre = DB::select("select b.company,b.badanusaha,b.addres,b.city from itdp_comp
 		<div class="form-group col-sm-2">
 			<b>Category Product</b>
 		</div>
-		<div class="form-group col-sm-4">
-			<?php
+		<div class="form-group col-sm-3">
+		<select class="select2 form-control" name="id_product" id="id_product">
+		<option <?php if($p2->id_product == 0 ){ echo "selected"; }?> value="0">-- Choose Category Product --</option>
+		<?php 
+			$namaprod = DB::select("select id,prodname_en from csc_product_single where id_itdp_company_user='".Auth::guard('eksmp')->user()->id."' order by prodname_en asc");
+			foreach($namaprod as $np){
+		?>
+		<option <?php if($np->id == $p2->id_product ){ echo "selected"; }?> value="<?php echo $np->id; ?>"><?php echo $np->prodname_en; ?></option>
+			<?php } ?>
+		</select>
+			<?php /*
 $cr = explode(',',$p3->id_csc_prod);
 				$hitung = count($cr);
 				$semuacat = "";
@@ -209,7 +218,7 @@ $cr = explode(',',$p3->id_csc_prod);
 
 
 
-									?>
+									*/ ?>
 		</div>
 
 	</div>

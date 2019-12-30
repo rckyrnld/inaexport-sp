@@ -89,6 +89,7 @@ class TrxController extends Controller
 		$ch2 = str_replace(",",".",$ch1);
 		if($request->origin == 2){
 			$update = DB::select("update csc_buying_request set eo='".$request->eo."', neo='".$request->neo."',tp='".$ch2."',ntp='".$request->ntp."' where id='".$request->id_br."' ");
+			$update = DB::select("update csc_transaksi set id_product='".$request->id_product."' where id_transaksi='".$request->id_transaksi."' ");
 		
 		}
 		if($request->tipekirim == 1){
