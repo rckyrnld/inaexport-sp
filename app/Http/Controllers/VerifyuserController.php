@@ -16,7 +16,7 @@ class VerifyuserController extends Controller
     public function index()
     {
 //        dd("mantap");die();
-        $pageTitle = "Eksporter";
+        $pageTitle = "Indonesian Exporter";
 		$data = DB::select("select a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
         return view('verifyuser.index', compact('pageTitle','data'));
     }
