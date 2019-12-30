@@ -17,6 +17,18 @@
                 </div>
 
                 <div class="box-body bg-light">
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block" style="text-align: center">
+                            {{--                            <button type="button" class="close" data-dismiss="alert">×</button>--}}
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger alert-block" style="text-align: center">
+                            {{--                                <button type="button" class="close" data-dismiss="alert">×</button>--}}
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
                 	<a id="tambah" href="{{route('management.category-product.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
                     <button class="btn" type="button" data-toggle="modal" data-target="#modal-show">   <i class="fa fa-hashtag"></i>  Setting Show   </button>
                     <div class="col-md-14"><br>
@@ -132,6 +144,7 @@
 @include('footer')
 <script type="text/javascript">
 	$(document).ready(function () {
+        $(".alert").slideDown(300).delay(1000).slideUp(300);
         $('#table').DataTable({
             processing: true,
             serverSide: true,

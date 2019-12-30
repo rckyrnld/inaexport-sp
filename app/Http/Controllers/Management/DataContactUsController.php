@@ -15,7 +15,7 @@ class DataContactUsController extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'Data Contact Us';
+      $pageTitle = 'List Contact Us';
       return view('management.contact-us.index',compact('pageTitle'));
     }
 

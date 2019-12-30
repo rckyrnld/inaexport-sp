@@ -124,7 +124,7 @@ class AnnualController extends Controller
 
     public function indexadmin()
     {
-        $pageTitle = "List Eksporter";
+        $pageTitle = "List Exporter";
         return view('eksportir.annual_sales.indexadmin', compact('pageTitle'));
     }
 

@@ -21,6 +21,7 @@ class InquiryAdminController extends Controller
 
     public function index()
     {
+//        dd('coba');
         $pageTitle = "Inquiry";
         if(Auth::user()){
             $id_user = Auth::user()->id;
@@ -634,8 +635,7 @@ class InquiryAdminController extends Controller
                     'file' => $nama_file1,
                 ]);
 
-
-                return redirect('/inquiry_admin');
+                return redirect('/inquiry_admin')->with('success', 'Success Added Data !!');
             }else{
                 return redirect('/home');    
             }
@@ -728,7 +728,7 @@ class InquiryAdminController extends Controller
                     'updated_at' => $datenow,
                 ]);
 
-                return redirect('/inquiry_admin');
+                return redirect('/inquiry_admin')->with('success', 'Success Update Data!!');
             }else{
                 return redirect('/home');    
             }
