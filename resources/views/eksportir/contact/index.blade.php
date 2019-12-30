@@ -13,7 +13,7 @@
                     <a class="btn" href="{{url('/eksportir/tambah_contact')}}"
                        style="background-color: #1089ff; color: white;"><i
                                 class="fa fa-plus-circle"></i>
-                        Tambah</a>
+                        Add</a>
                     <div class="col-md-14">
                         <br>
                         <div class="table-responsive">

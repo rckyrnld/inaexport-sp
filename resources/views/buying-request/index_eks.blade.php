@@ -125,13 +125,13 @@ $cr = explode(',',$ruu->id_csc_prod);
 									</center></td>
 									<td><center>
 									<?php  if($ruu->status_join == null){ ?>
-									<a href="{{ url('br_join/'.$ruu->idb) }}" class="btn btn-success"><font color="white"><i class="fa fa-plus"></i> Join</font></a>
+									<a href="{{ url('br_join/'.$ruu->idb) }}" class="btn btn-success" title="Join"><font color="white"><i class="fa fa-plus"></i></font></a>
 									<?php }else if($ruu->status_join == 1){ ?>
 									Wait Verification
 									<?php }else if($ruu->status_join == 2){ ?>
-									<a href="{{ url('br_chat/'.$ruu->idb) }}" class="btn btn-info"><font color="white"><i class="fa fa-comment"></i> Chat</font></a>
+									<a href="{{ url('br_chat/'.$ruu->idb) }}" class="btn btn-info" title="Chat"><font color="white"><i class="fa fa-comment"></i></font></a>
 									<?php }else if($ruu->status_join == 4){ ?>
-									<a href="{{ url('br_chat/'.$ruu->idb) }}" class="btn btn-success"><font color="white"><i class="fa fa-list"></i> View</font></a>
+									<a href="{{ url('br_chat/'.$ruu->idb) }}" class="btn btn-success" title="View"><font color="white"><i class="fa fa-eye"></i></font></a>
 									<?php } ?>
 									</center></td>
 								</tr>

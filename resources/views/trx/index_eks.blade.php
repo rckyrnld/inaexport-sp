@@ -71,11 +71,11 @@
 									
 									<td><center>
 									<?php if($ruu->status_transaksi == 1){ ?>
-									<a href="{{ url('input_transaksi/'.$ruu->id_transaksi) }}" class="btn btn-info"><font color="white"><i class="fa fa-list"></i>&nbsp; View</font></a>
+									<a href="{{ url('input_transaksi/'.$ruu->id_transaksi) }}" class="btn btn-info" title="View"><font color="white"><i class="fa fa-eye"></i></font></a>
 									
 									
 									<?php }else { ?>
-									<a href="{{ url('input_transaksi/'.$ruu->id_transaksi) }}" class="btn btn-success"><font color="white"><i class="fa fa-truck"></i>&nbsp; Send</font></a>
+									<a href="{{ url('input_transaksi/'.$ruu->id_transaksi) }}" class="btn btn-success" title="Send"><font color="white"><i class="fa fa-truck"></i></font></a>
 									
 									<?php } ?>
 									</center></td>

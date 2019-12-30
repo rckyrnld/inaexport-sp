@@ -64,7 +64,7 @@ class DirectoryController extends Controller
 				return '
 				<center>
 					<div class="btn-group">
-					<a href="'.route('directory.view', $data->id).'" class="btn btn-sm btn-info btn-eye">&nbsp;<i class="fa fa-eye text-white"></i>&nbsp;Detail&nbsp;</a>
+					<a href="'.route('directory.view', $data->id).'" class="btn btn-sm btn-info btn-eye" title="Detail">&nbsp;<i class="fa fa-eye text-white"></i> </a>
 					</div>
 				</center>
 				';
