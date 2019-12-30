@@ -19,7 +19,7 @@ class MasterCityController extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'Data City';
+      $pageTitle = 'List City';
       return view('master.city.index',compact('pageTitle'));
     }
 

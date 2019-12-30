@@ -18,7 +18,7 @@ class MasterProvinceController extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'Data Province';
+      $pageTitle = 'List Province';
       return view('master.province.index',compact('pageTitle'));
     }
 

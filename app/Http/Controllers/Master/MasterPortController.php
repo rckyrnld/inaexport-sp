@@ -19,7 +19,7 @@ class MasterPortController extends Controller
     }
 
     public function index(){
-      $pageTitle = 'Data Port';
+      $pageTitle = 'List Port';
       return view('master.port.index',compact('pageTitle'));
     }
 

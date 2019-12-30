@@ -18,7 +18,7 @@ class MasterCountryController extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'Data Country';
+      $pageTitle = 'List Country';
       return view('master.country.index',compact('pageTitle'));
     }
 
