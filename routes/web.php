@@ -162,7 +162,8 @@ Route::get('/cekmail/{id}', 'RegistrasiController@cekmail');
 
 Route::get('/login', 'HomeController@index');
 Route::get('/dashboard', 'DashboardController@index');
-//Verify User
+//Verify User 
+Route::get('ceknpwp', 'VerifyuserController@ceknpwp');
 Route::get('/bacanotif/{id}', 'VerifyuserController@bacanotif');
 Route::get('/verifyuser', 'VerifyuserController@index');
 Route::get('/geteksportir', 'VerifyuserController@geteksportir');

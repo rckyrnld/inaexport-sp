@@ -268,16 +268,27 @@ body {font-family: Arial;}
   <?php foreach($ceq as $ryu){ ?>
 	<div class="form-row">
 		<div class="form-group col-sm-3">
-			<label><b>NPWP</b></label>
+			<label><b><font color="red">(*)</font> NPWP</b></label>
 		</div>
 		<div class="form-group col-sm-4">
-			<input type="text" value="<?php echo $ryu->npwp; ?>" name="npwp" id="npwp" class="form-control" >
+			<input type="text" value="<?php echo $ryu->npwp; ?>" name="npwp" id="npwp" onkeyup="ceknpwp()" class="form-control" >
 			
 		</div>
 		
-		<div class="form-group col-sm-4">
+		<div class="form-group col-sm-4 vld">
 			<font color="red">Not Valid</font><!-- <input type="text" readonly value="" placeholder="Name of NPWP" name="nanpwp" id="nanpwp" class="form-control" > -->
 		</div>
+	</div>
+	<div class="form-row">
+		<div class="form-group col-sm-3">
+			<label><b><font color="red">(*)</font> Upload NPWP</b></label>
+		</div>
+		<div class="form-group col-sm-4">
+			<input type="file" name="npwpfile" id="npwpfile" class="form-control" >
+			
+		</div>
+		
+		
 	</div>
 	<div class="form-row">
 		<div class="form-group col-sm-3">
@@ -291,10 +302,32 @@ body {font-family: Arial;}
 	</div>
 	<div class="form-row">
 		<div class="form-group col-sm-3">
+			<label><b> Upload Tanda Daftar Perusahaan</b></label>
+		</div>
+		<div class="form-group col-sm-4">
+			<input type="file" name="tdpfile" id="tdpfile" class="form-control" >
+			
+		</div>
+		
+		
+	</div>
+	<div class="form-row">
+		<div class="form-group col-sm-3">
 			<label><b>Surat Izin Usaha Perdagangan</b></label>
 		</div>
 		<div class="form-group col-sm-4">
 			<input type="text" value="<?php echo $ryu->siup; ?>" name="siup" id="siup" class="form-control" >
+		</div>
+		
+		
+	</div>
+	<div class="form-row">
+		<div class="form-group col-sm-3">
+			<label><b> Upload Surat Izin Usaha Perdagangan</b></label>
+		</div>
+		<div class="form-group col-sm-4">
+			<input type="file" name="siupfile" id="siupfile" class="form-control" >
+			
 		</div>
 		
 		
@@ -404,6 +437,38 @@ body {font-family: Arial;}
 <button class="btn btn-md btn-primary"><i class="fa fa-save"></i> Save</button>
 </div>
 </form>
+<script>
+function ceknpwp(){
+	
+	var inputnpwp = $("#npwp").val();
+	var jumlahkarakter = inputnpwp.length;
+	// alert('1234567');
+	if(jumlahkarakter == 15){
+			$.get('{{url('/ceknpwp')}}',{id:inputnpwp},function(data){
+			json = JSON.parse(data);
+			console.log('metro');
+			console.log(json.nama);
+			console.log(json.status);
+			if(json.status == "VALID"){
+				$('.vld').html("<font color='green'>Valid</font>");
+				alert("NPWP terdaftar dengan nama "+ json.nama);
+				
+			}else{
+				alert("NPWP Tidak Benar, Silahkan Hubungin Kantor Pajak Terdekat");
+				$('.vld').html("<font color='red'>Not Valid</font>");
+				$("#npwp").val('');
+			}
+			//console.log(data.status);
+			// alert(jumlahkarakter);
+			
+			})
+	}else{
+		$('.vld').html("<font color='red'>Not Valid</font>");
+	}
+	
+	
+}
+</script>
 <script>
 $(document).ready(function () {
 	$('.select2').select2();
