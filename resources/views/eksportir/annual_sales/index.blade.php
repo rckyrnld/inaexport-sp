@@ -26,13 +26,13 @@
                                         Year
                                     </th>
                                     <th>
-                                        <center>Nilai (USD)</center>
+                                        <center>Value (USD)</center>
                                     </th>
                                     <th>
-                                        <center>Persen (%)</center>
+                                        <center>Percentage (%)</center>
                                     </th>
                                     <th>
-                                        <center>Nilai Ekspor (USD)</center>
+                                        <center>Export Value (USD)</center>
                                     </th>
                                     <th>
                                         <center>Action</center>
