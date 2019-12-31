@@ -311,9 +311,9 @@
 								</div>
 							</div>
                             <div class="col-md-3 hoveraja">
-                                <a href="{{url('/front_end/ticketing_support')}}"><img src="{{asset('front/assets/icon/ticketing.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/ticketing_support')}}"><img src="{{asset('front/assets/icon/customer support.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>TICKETING</b></font></p></center>
+								<center><p><font color="black"><b>Customer Support</b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/ticketing_support')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
 							</div>

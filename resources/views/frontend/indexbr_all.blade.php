@@ -42,12 +42,12 @@
 <table id="tablebureq3" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
 								<th><center>No</center></th>
-								<th><center>Subyek</center></th>
+								<th><center>Subject</center></th>
 								<th><center>Category</center></th>
-								<th><center>Create at</center></th>
+								<th><center>Created at</center></th>
 								<th><center>Valid Time</center></th>
 								<th><center>Status</center></th>
-								<th><center>Create By</center></th>
+								<th><center>Created By</center></th>
 								<th><center>Aksi</center></th>
                                 </thead>
 								
@@ -58,12 +58,12 @@
 			 <table id="tablebureq2" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
 								<th><center>No</center></th>
-								<th><center>Subyek</center></th>
+								<th><center>Subject</center></th>
 								<th><center>Category</center></th>
-								<th><center>Create at</center></th>
+								<th><center>Created at</center></th>
 								<th><center>Valid Time</center></th>
 								<th><center>Status</center></th>
-								<th><center>Create By</center></th>
+								<th><center>Created By</center></th>
                                 </thead>
 								
 
@@ -73,12 +73,12 @@
   <table id="tablebureq" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
 								<th><center>No</center></th>
-								<th><center>Subyek</center></th>
+								<th><center>Subject</center></th>
 								<th><center>Category</center></th>
-								<th><center>Create at</center></th>
+								<th><center>Created at</center></th>
 								<th><center>Valid Time</center></th>
 								<th><center>Status</center></th>
-								<th><center>Create By</center></th>
+								<th><center>Created By</center></th>
                                 </thead>
 								
 
