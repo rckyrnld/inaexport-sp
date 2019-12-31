@@ -167,10 +167,10 @@ class AdminResearchController extends Controller
 
       if($data){
          Session::flash('success','Success '.$param.' Data');
-         return redirect('admin/research-corner/');
+         return redirect('admin/research-corner/')->with('success', 'Success '.$param.' Data!');
        }else{
          Session::flash('failed','Failed '.$param.' Data');
-         return redirect('admin/research-corner/');
+         return redirect('admin/research-corner/')->with('error', 'Failed '.$param .' Data!');
        }
     }
 

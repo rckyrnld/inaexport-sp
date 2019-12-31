@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Tambah Perwakilan</h5>
+                    <h5><i></i> Add Representative</h5>
                 </div>
 
                 <div class="box-body bg-light">
@@ -121,7 +121,7 @@
 				<input class="btn btn-primary" type="submit" value=" Simpan">
 				</div>
 				{{Form::close()}}
-          	 	
+
                         </div>
                     </div>
                 </div>
@@ -135,6 +135,10 @@
 @include('footer')
 
 <script>
+
+	// function alert(){
+	// 	alert("data tersimpan");
+	// }
 function ganticity(){
 	var a = $('#type').val();
 	if(a == 'DINAS PERDAGANGAN'){

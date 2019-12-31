@@ -225,7 +225,7 @@ class VerifyuserController extends Controller
 	
 	public function tambahperwakilan()
     {
-		$pageTitle = "Tambah Perwakilan";
+		$pageTitle = "Add Representative";
 		return view('verifyuser.tambahperwakilan', compact('pageTitle'));
 	}
 	
@@ -344,10 +344,10 @@ class VerifyuserController extends Controller
 	public function profil2($id,$id2)
     {
 		if($id == 2){
-			$pageTitle = "Profil Eksportir";
+			$pageTitle = "Exporter Profile";
 			$tx = "Eksportir";
 		}else if($id == 3){
-			$pageTitle = "Profil Importir";
+			$pageTitle = "Buyer Profile";
 			$tx = "Importir";
 		}else{
 			$pageTitle = "Profil ";
