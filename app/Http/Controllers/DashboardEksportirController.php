@@ -21,10 +21,11 @@ class DashboardEksportirController extends Controller
             $product = DB::table('csc_product_single')
                     ->where('id_itdp_company_user', Auth::guard('eksmp')->user()->id)
                     ->get();
+            $top_product = $this->getTopProduct();
             $incomes = $this->getIncomes();
             $interest = $this->getInterest();
 
-            return view('Dashboard.Eksportir', compact('pageTitle', 'product'))->with('incomes', json_decode($incomes, true))->with('interest', json_decode($interest, true));
+            return view('Dashboard.Eksportir', compact('pageTitle', 'product'))->with('top_product', json_decode($top_product, true))->with('incomes', json_decode($incomes, true))->with('interest', json_decode($interest, true));
         } else {
             return redirect('/');
         }
@@ -62,7 +63,8 @@ class DashboardEksportirController extends Controller
         return $array[$month];
     }
 
-    private function getTopProduct(){
+    private function getTopProduct()
+    {
         $color = array(
             0 => '#855c9a',
             1 => '#e69419',
@@ -71,17 +73,32 @@ class DashboardEksportirController extends Controller
             4 => '#789ec5',
         );
 
-        $product = DB::table('csc_transaksi as a')->selectRaw('extract(year from created_at) as year, count(b.id) as jumlah')
-            ->leftjoin('itdp_profil_' . $profil . ' as b', 'a.id_profil', '=', 'b.id')
-            ->where('b.' . $param, $country)
-            ->whereRaw('extract(year from created_at) in (' . $tahun . ')')
-            ->groupby('year')
+        $product = DB::table('csc_transaksi')
+            ->select(DB::raw('count(*) as jumlah, id_product'))
+            ->where('id_eksportir', Auth::guard('eksmp')->user()->id)
+            ->groupby('id_product')->orderby('jumlah', 'desc')
             ->limit(5)->get();
+
+        $return = null;
+        if (count($product) > 0) {
+            $fetch_data = '[{"name": "Selling", "data": [';
+            
+            foreach ($product as $key => $value) {
+                $fetch_data .= '{"name": "' . getProductName($value->id_product) . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
+            }
+
+            $fetch_data = rtrim($fetch_data, ", ");
+            $fetch_data .= ']}]';
+
+            $return = $fetch_data;
+        }
+
+        return $return;
     }
 
     private function getIncomes()
     {
-        $fetch_data_income = '[';
+        $fetch_data = '[';
         $fetch_sub_data = '[';
         $tahun = $this->tahun();
 
@@ -105,18 +122,18 @@ class DashboardEksportirController extends Controller
         if (count($income) > 0) {
             for ($i=0; $i < 3 ; $i++) {
                 if($i == 0 ){
-                    $fetch_data_income .= '{"name": "IDR", "color": "' . $color[$i] . '", "data": [';
+                    $fetch_data .= '{"name": "IDR", "color": "' . $color[$i] . '", "data": [';
                     $param = "IDR";
                 } else if($i == 1 ){
-                    $fetch_data_income .= '{"name": "THB", "color": "' . $color[$i] . '", "data": [';
+                    $fetch_data .= '{"name": "THB", "color": "' . $color[$i] . '", "data": [';
                     $param = "THB";
                 } else {
-                    $fetch_data_income .= '{"name": "USD", "color": "' . $color[$i] . '", "data": [';
+                    $fetch_data .= '{"name": "USD", "color": "' . $color[$i] . '", "data": [';
                     $param = "USD";
                 } 
                 foreach ($income as $key => $value) {
                     if($value->ntp == $param){
-                        $fetch_data_income .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year .'-'. $param . '"},';
+                        $fetch_data .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year .'-'. $param . '"},';
 
                         // Data Drilldown
                         $fetch_sub_data .= '{"name": "'.$param.'", "id": "' . $value->year .'-'. $param . '", "data": [';
@@ -130,15 +147,15 @@ class DashboardEksportirController extends Controller
                         $fetch_sub_data .= ']},';
                     }
                 }
-                $fetch_data_income = rtrim($fetch_data_income, ", ");
-                $fetch_data_income .= ']},';
+                $fetch_data = rtrim($fetch_data, ", ");
+                $fetch_data .= ']},';
             }
 
             $fetch_sub_data = rtrim($fetch_sub_data, ", ");
             $fetch_sub_data .= ']';
-            $fetch_data_income = rtrim($fetch_data_income, ", ");
-            $fetch_data_income .= ']';
-            $return = '[' . $fetch_data_income . ',' . $fetch_sub_data . ']';
+            $fetch_data = rtrim($fetch_data, ", ");
+            $fetch_data .= ']';
+            $return = '[' . $fetch_data . ',' . $fetch_sub_data . ']';
         }
 
         return $return;
