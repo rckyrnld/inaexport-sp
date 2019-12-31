@@ -951,3 +951,15 @@ if (! function_exists('getProfileCompany')) {
       return $return;
     }
 }
+
+if (! function_exists('getProductName')) {
+    function getProductName($id){
+      $data = DB::table('csc_product_single')->where('id',$id)->first();
+      $return = 'Unknown Product';
+      if($data){
+        $return = $data->prodname_en;
+      }
+      
+      return $return;
+    }
+}

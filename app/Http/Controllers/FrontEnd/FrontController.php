@@ -38,7 +38,7 @@ class FrontController extends Controller
             ->where('level_1', 0)
             ->where('level_2', 0)
             ->orderBy('nama_kategori_en', 'ASC')
-            ->limit(9)
+            ->limit(6)
             ->get();
 
         $categoryutama2 = DB::table('csc_product_home as a')

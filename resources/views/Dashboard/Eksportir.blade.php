@@ -76,7 +76,7 @@
                         </div>
                         <div class="tab-pane animate fadeIn text-muted" id="tab2">
                             <div class="row">
-                                <div></div>
+                                <div id="product" style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
                             </div>
                             <a id="export_pdf_1" class="btn btn-success"><font color="white"><i class="fa fa-download"></i> Export PDF</font></a>
                         </div>
@@ -117,9 +117,54 @@
             }
         });
 
+        product();
         incomes();
         interest();
     });
+
+    function product() {
+        var data = JSON.parse('<?php echo addcslashes(json_encode($top_product), '\'\\'); ?>');
+        var defaultTitle = "Best-Selling Product";
+        var drilldownTitle = "Best-Selling Product";
+
+        var chart_user = Highcharts.chart('product', {
+            chart: {
+                type: 'column',
+                events: {
+                    drilldown: function (e) {
+                        // chart.setTitle({text: drilldownTitle + e.point.name});
+                    },
+                    drillup: function (e) {
+                        // chart.setTitle({text: defaultTitle});
+                    }
+                }
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                allowDecimals: false,
+                title: {
+                    text: ''
+                }
+            },
+            series: data,
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: defaultTitle
+            },
+            legend: {
+                enabled: false
+            }
+        });
+        $('#export_pdf_1').click(function() {
+          Highcharts.exportCharts([chart_user], {
+            type: 'application/pdf'
+          });
+        });
+    }
 
     function incomes() {
         var data = JSON.parse('<?php echo addcslashes(json_encode($incomes), '\'\\'); ?>');
