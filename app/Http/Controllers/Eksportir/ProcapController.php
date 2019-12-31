@@ -51,14 +51,14 @@ class ProcapController extends Controller
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('procap.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                    <i class="fa fa-search text-white"></i> View
+                <a href="' . route('procap.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                    <i class="fa fa-eye text-white"></i> 
                 </a>
-                <a href="' . route('procap.detail', $mjl->id) . '" class="btn btn-sm btn-success">
-                    <i class="fa fa-edit text-white"></i> Edit
+                <a href="' . route('procap.detail', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit">
+                    <i class="fa fa-edit text-white"></i> 
                 </a>
-                <a href="' . route('procap.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
-                    <i class="fa fa-trash text-white"></i> Delete
+                <a href="' . route('procap.delete', $mjl->id) . '" class="btn btn-sm btn-danger" title="Delete">
+                    <i class="fa fa-trash text-white"></i> 
                 </a>
                 </center>
                 ';

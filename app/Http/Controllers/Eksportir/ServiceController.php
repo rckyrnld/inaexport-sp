@@ -188,7 +188,7 @@ class ServiceController extends Controller
               return '
                 <center>
                   <div class="btn-group">
-                    <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info"><i class="fa fa-search text-white"></i>&nbsp;View</a>
+                    <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye text-white"></i></a>
                   </div>
                 </center>';
             } else if($data->status != 0) {
@@ -200,8 +200,8 @@ class ServiceController extends Controller
               return '
                 <center>
                   <div class="btn-group">
-                    <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-                    <a href="'.route('service.verifikasi', $data->id).'" class="btn btn-sm btn-'.$class.'">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Verifikasi&nbsp;</a>
+                    <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info" title="View"> <i class="fa fa-search text-white"></i></a>&nbsp;&nbsp;
+                    <a href="'.route('service.verifikasi', $data->id).'" class="btn btn-sm btn-'.$class.'" title="Verifikasi">&nbsp;<i class="fa fa-edit text-white"></i></a>
                   </div>
                 </center>';
             }
@@ -209,9 +209,9 @@ class ServiceController extends Controller
             return '
               <center>
                 <div class="btn-group">
-                  <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-                  <a href="'.route('service.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
-                  <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('service.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
+                  <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-search text-white"></i></a>&nbsp;&nbsp;
+                  <a href="'.route('service.edit', $data->id).'" class="btn btn-sm btn-success" title="Edit">&nbsp;<i class="fa fa-edit text-white"></i></a>&nbsp;&nbsp;
+                  <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('service.destroy', $data->id).'" class="btn btn-sm btn-danger" title="Delete">&nbsp;<i class="fa fa-trash text-white"></i></a>
                 </div>
               </center>';
           }

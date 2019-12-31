@@ -19,7 +19,7 @@ class MasterPortController extends Controller
     }
 
     public function index(){
-      $pageTitle = 'Data Port';
+      $pageTitle = 'List Port';
       return view('master.port.index',compact('pageTitle'));
     }
 
@@ -70,7 +70,7 @@ class MasterPortController extends Controller
 
     public function create()
     {
-      $pageTitle = 'Data Port';
+      $pageTitle = 'List Port';
       $page = 'create';
       $url = "/master-port/store/Create";
       $province = MasterProvince::orderby('province_en','asc')->get();
@@ -98,16 +98,16 @@ class MasterPortController extends Controller
 
       if($data){
          Session::flash('success','Success '.$param.' Data');
-         return redirect('/master-port/');
+         return redirect('/master-port/')->with('success', 'Success '.$param.' Data!');
        }else{
          Session::flash('failed','Failed '.$param.' Data');
-         return redirect('/master-port/');
+         return redirect('/master-port/')->with('error', 'Failed '.$param .' Data!');
        }
     }
 
     public function view($id)
     {
-      $pageTitle = "Data Port";
+      $pageTitle = "List Port";
       $page = "view";
       $data = MasterPort::where('id', $id)->first();
       $province = MasterProvince::orderby('province_en','asc')->get();
@@ -117,7 +117,7 @@ class MasterPortController extends Controller
     public function edit($id)
     {
       $page = "edit";
-      $pageTitle = "Data Port";
+      $pageTitle = "List Port";
       $url = "/master-port/store/Update_".$id;
       $data = MasterPort::where('id', $id)->first();
       $province = MasterProvince::orderby('province_en','asc')->get();

@@ -18,7 +18,7 @@ class MasterProvinceController extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'Data Province';
+      $pageTitle = 'List Province';
       return view('master.province.index',compact('pageTitle'));
     }
 
@@ -60,7 +60,7 @@ class MasterProvinceController extends Controller
 
     public function create()
     {
-      $pageTitle = 'Data Province';
+      $pageTitle = 'List Province';
       $page = 'create';
       $url = "/master-province/store/Create";
       return view('master.province.create',compact('url','pageTitle','page'));
@@ -89,16 +89,16 @@ class MasterProvinceController extends Controller
 
       if($data){
          Session::flash('success','Success '.$param.' Data');
-         return redirect('/master-province/');
+         return redirect('/master-province/')->with('success', 'Success '.$param.' Data!');
        }else{
          Session::flash('failed','Failed '.$param.' Data');
-         return redirect('/master-province/');
+         return redirect('/master-province/')->with('error', 'Failed '.$param .' Data!');
        }
     }
 
     public function view($id)
     {
-      $pageTitle = "Data Province";
+      $pageTitle = "List Province";
       $page = "view";
       $data = MasterProvince::where('id', $id)->first();
       return view('master.province.create',compact('page','data','pageTitle'));
@@ -107,7 +107,7 @@ class MasterProvinceController extends Controller
     public function edit($id)
     {
       $page = "edit";
-      $pageTitle = "Data Province";
+      $pageTitle = "List Province";
       $url = "/master-province/store/Update_".$id;
       $data = MasterProvince::where('id', $id)->first();
       return view('master.province.create',compact('url','data','pageTitle','page'));

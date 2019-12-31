@@ -69,7 +69,7 @@ class CategoryProductController extends Controller
 
     public function create()
     {
-      $pageTitle = 'Data Category Product';
+      $pageTitle = 'List Category Product';
       $page = 'create';
       $url = "/management/category-product/store/Create";
       $level_1 = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
@@ -127,16 +127,16 @@ class CategoryProductController extends Controller
 
       if($data){
          Session::flash('success','Success '.$param.' Data');
-         return redirect('management/category-product/');
+         return redirect('management/category-product/')->with('success', 'Success '.$param.' Data!');
        }else{
          Session::flash('failed','Failed '.$param.' Data');
-         return redirect('management/category-product/');
+         return redirect('management/category-product/')->with('error', 'Failed '.$param .' Data!');
        }
     }
 
     public function view($id)
     {
-      $pageTitle = "Data Category Product";
+      $pageTitle = "List Category Product";
       $page = "view";
       $data = DB::table('csc_product')->where('id', $id)->first();
       $level_1 = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();
@@ -146,7 +146,7 @@ class CategoryProductController extends Controller
     public function edit($id)
     {
       $page = "edit";
-      $pageTitle = "Data Category Product";
+      $pageTitle = "List Category Product";
       $url = "/management/category-product/store/Update_".$id;
       $data = DB::table('csc_product')->where('id', $id)->first();
       $level_1 = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderby('nama_kategori_en', 'asc')->get();

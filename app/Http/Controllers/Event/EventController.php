@@ -28,13 +28,13 @@ class EventController extends Controller
 			return view('Event.index_eksportir', compact('pageTitle','e_detail', 'id_user'));
 		}else{
 			$e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);
-			return view('Event.index', compact('pageTitle','e_detail'));
+			return view('Event.index', compact('pageTitle','e_detail'))->with('success');
 		}
 	}
 
 	public function create(){
 		$url_store = '/event/store';
-		$pageTitle = 'Tambah Event';
+		$pageTitle = 'Add Event';
 		$page='add';
 		$e_organizer = DB::table('event_organizer')->orderby('id', 'desc')->get();
 		$e_palce = DB::table('event_place')->orderby('id', 'desc')->get();
@@ -218,7 +218,7 @@ class EventController extends Controller
 
         }
 
-        return redirect('event');
+        return redirect('event')->with('success', 'Success Add Data!');
 	}
 
 	public function edit($id){
@@ -375,7 +375,7 @@ class EventController extends Controller
 	        	'created_at' => $datenow
 	        ]);
         }
-        return redirect('event');
+        return redirect('event')->with('success', 'Success Update Data!');
     }
 
 	public function delete($id)

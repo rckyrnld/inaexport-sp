@@ -21,6 +21,7 @@ class InquiryAdminController extends Controller
 
     public function index()
     {
+//        dd('coba');
         $pageTitle = "Inquiry";
         if(Auth::user()){
             $id_user = Auth::user()->id;
@@ -210,7 +211,7 @@ class InquiryAdminController extends Controller
                 ->addColumn('action', function ($mjl) {
                     return '
                         <center>
-                        <a href="'.url('/inquiry_admin/detail_perwakilan').'/'.$mjl->id.'" class="btn btn-sm btn-success"><i class="fa fa-list" aria-hidden="true"></i> Detail</a>
+                        <a href="'.url('/inquiry_admin/detail_perwakilan').'/'.$mjl->id.'" class="btn btn-sm btn-success" title="Detail"><i class="fa fa-list" aria-hidden="true"></i></a>
                         </center>';
                 })
                 ->rawColumns(['action','name'])
@@ -516,7 +517,7 @@ class InquiryAdminController extends Controller
                 ->addColumn('action', function ($mjl) use($id_user) {
                     return '
                         <center>
-                        <a href="'.url('/inquiry_admin/view_importir').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> View</a>
+                        <a href="'.url('/inquiry_admin/view_importir').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
                         </center>';
                 })
                 ->rawColumns(['action', 'msg','subject','category','company'])
@@ -634,8 +635,7 @@ class InquiryAdminController extends Controller
                     'file' => $nama_file1,
                 ]);
 
-
-                return redirect('/inquiry_admin');
+                return redirect('/inquiry_admin')->with('success', 'Success Added Data !!');
             }else{
                 return redirect('/home');    
             }
@@ -728,7 +728,7 @@ class InquiryAdminController extends Controller
                     'updated_at' => $datenow,
                 ]);
 
-                return redirect('/inquiry_admin');
+                return redirect('/inquiry_admin')->with('success', 'Success Update Data!!');
             }else{
                 return redirect('/home');    
             }

@@ -74,7 +74,7 @@ class TrainingControllerAdmin extends Controller
         }
 
 
-        return redirect('/admin/training');
+        return redirect('/admin/training')->with('success', 'Success Add Data!!');
     }
 
     public function update(Request $req, $id)
@@ -115,7 +115,7 @@ class TrainingControllerAdmin extends Controller
             ]);
         }
 
-        return redirect('/admin/training');
+        return redirect('/admin/training')->with('success', 'Success Update Data!!');
     }
 
     public function getData()

@@ -18,7 +18,7 @@ class MasterCountryController extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'Data Country';
+      $pageTitle = 'List Country';
       return view('master.country.index',compact('pageTitle'));
     }
 
@@ -98,16 +98,16 @@ class MasterCountryController extends Controller
 
       if($data){
          Session::flash('success','Success '.$param.' Data');
-         return redirect('/master-country/');
+         return redirect('/master-country/')->with('success', 'Success '.$param.' Data!');
        }else{
          Session::flash('failed','Failed '.$param.' Data');
-         return redirect('/master-country/');
+         return redirect('/master-country/')->with('error', 'Failed '.$param .' Data!');
        }
     }
 
     public function view($id)
     {
-      $pageTitle = "Data Country";
+      $pageTitle = "List Country";
       $page = "view";
       $data = MasterCountry::where('id', $id)->first();
       $country_region = DB::table('mst_country_region')->get();
@@ -118,7 +118,7 @@ class MasterCountryController extends Controller
     public function edit($id)
     {
       $page = "edit";
-      $pageTitle = "Data Country";
+      $pageTitle = "List Country";
       $url = "/master-country/store/Update_".$id;
       $data = MasterCountry::where('id', $id)->first();
       $country_region = DB::table('mst_country_region')->get();

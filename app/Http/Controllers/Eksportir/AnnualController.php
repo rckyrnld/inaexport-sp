@@ -56,14 +56,14 @@ class AnnualController extends Controller
 			->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('sales.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                    <i class="fa fa-search text-white"></i> View
+                <a href="' . route('sales.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                    <i class="fa fa-eye text-white"></i> 
                 </a>
-                <a href="' . route('sales.detail', $mjl->id) . '" class="btn btn-sm btn-success">
-                    <i class="fa fa-edit text-white"></i> Edit
+                <a href="' . route('sales.detail', $mjl->id) . '" class="btn btn-sm btn-success"title="Edit">
+                    <i class="fa fa-edit text-white"></i> 
                 </a>
-                <a href="' . route('sales.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
-                    <i class="fa fa-trash text-white"></i> Delete
+                <a href="' . route('sales.delete', $mjl->id) . '" class="btn btn-sm btn-danger" title="Delete">
+                    <i class="fa fa-trash text-white"></i>
                 </a>
                 </center>
                 ';
@@ -118,13 +118,13 @@ class AnnualController extends Controller
     public function indexadminannualsales($id)
     {
 //        dd($id);
-        $pageTitle = "List Eksportir";
+        $pageTitle = "List Exportir";
         return view('eksportir.annual_sales.indexadminannualsales', compact('pageTitle', 'id'));
     }
 
     public function indexadmin()
     {
-        $pageTitle = "List Eksporter";
+        $pageTitle = "List Exporter";
         return view('eksportir.annual_sales.indexadmin', compact('pageTitle'));
     }
 

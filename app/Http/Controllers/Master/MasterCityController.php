@@ -19,7 +19,7 @@ class MasterCityController extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'Data City';
+      $pageTitle = 'List City';
       return view('master.city.index',compact('pageTitle'));
     }
 
@@ -59,7 +59,7 @@ class MasterCityController extends Controller
 
     public function create()
     {
-      $pageTitle = 'Data City';
+      $pageTitle = 'List City';
       $page = 'create';
       $url = "/master-city/store/Create";
       $country = MasterCountry::orderby('country','asc')->get();
@@ -93,16 +93,16 @@ class MasterCityController extends Controller
 
       if($data){
          Session::flash('success','Success '.$param.' Data');
-         return redirect('/master-city/');
+         return redirect('/master-city/')->with('success', 'Success '.$param.' Data!');
        }else{
          Session::flash('failed','Failed '.$param.' Data');
-         return redirect('/master-city/');
+         return redirect('/master-city/')->with('error', 'Failed '.$param .' Data!');
        }
     }
 
     public function view($id)
     {
-      $pageTitle = "Data City";
+      $pageTitle = "List City";
       $page = "view";
       $data = MasterCity::where('id', $id)->first();
       $country = MasterCountry::orderby('country','asc')->get();
@@ -112,7 +112,7 @@ class MasterCityController extends Controller
     public function edit($id)
     {
       $page = "edit";
-      $pageTitle = "Data City";
+      $pageTitle = "List City";
       $url = "/master-city/store/Update_".$id;
       $data = MasterCity::where('id', $id)->first();
       $country = MasterCountry::orderby('country','asc')->get();
