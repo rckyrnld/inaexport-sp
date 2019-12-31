@@ -39,6 +39,18 @@
                 </div>
 
                 <div class="box-body bg-light">
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block" style="text-align: center">
+                            {{--                            <button type="button" class="close" data-dismiss="alert">×</button>--}}
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger alert-block" style="text-align: center">
+                            {{--                                <button type="button" class="close" data-dismiss="alert">×</button>--}}
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
                     <a class="btn" href="{{url('event/create')}}"
                        style="background-color: #1089ff; color: white;"><i class="fa fa-plus-circle"></i>&nbsp; Add</a>
                     <div class="col-md-3" style="float: right;">
@@ -118,7 +130,8 @@
                                                     <tr>
                                                         <td style="padding-top: 10px;">
                                                             <a href="{{url('/')}}/event/show_detail/{{$ed->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a> 
-                                                            <a href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+{{--                                                            <a href="" class="btn btn-danger"><i class="fa fa-trash"></i></a>--}}
+                                                            <a onclick="return confirm('Are You Sure ?')" href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a>
                                                             <a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                                         </td>
                                                     </tr>
@@ -148,7 +161,16 @@
     </div>
 </div>
 <script type="text/javascript">
+    function ConfirmDelete()
+    {
+        var x = confirm("Are you sure you want to delete?");
+        if (x)
+            return true;
+        else
+            return false;
+    }
     $(document).ready(function () {
+        $(".alert").slideDown(300).delay(1000).slideUp(300);
         $('#tableexd').DataTable();
     });
 </script>

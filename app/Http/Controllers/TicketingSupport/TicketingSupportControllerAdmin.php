@@ -91,7 +91,7 @@ class TicketingSupportControllerAdmin extends Controller
               <center>
               <div class="btn-group">
 								<a href="' . route('ticket_support.view.admin', $data->id) . '" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-eye text-white" data-toggle="tooltip" ></i></a>&nbsp;&nbsp;
-								<a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Chat Ini ?\')" href="' . route('ticket_support.delete.admin', $data->id) . '" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete">&nbsp;<i class="fa fa-trash text-white"></i></a>
+								<a onclick="return confirm(\'Are You Sure ?\')" href="' . route('ticket_support.delete.admin', $data->id) . '" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete">&nbsp;<i class="fa fa-trash text-white"></i></a>
 								<!-- <a href="" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp; !>
               </div>
               </center>
