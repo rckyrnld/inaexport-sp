@@ -31,7 +31,7 @@
 				      </div>
 
 				      <div class="col-md-1">
-				      	{!!Form::submit(' Save.',['class' => 'btn btn-dark'])!!}
+				      	{!!Form::submit(' Save',['class' => 'btn btn-dark'])!!}
 				      </div>
 				    </div>
 				  </div>

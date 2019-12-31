@@ -80,7 +80,7 @@
                                         <label for="code" class="col-md-3"><b>Event Type</b></label>
                                         <div class="col-md-3 paddignya">
                                             <select class="form-control" name="eventype_en" id="eventype_en" required onchange="EventType(this)">
-                                                <option value="" style="display: none;">- Pilih Event Type -</option>
+                                                <option value="" style="display: none;">- Choose Event Type -</option>
                                                 <option value="Fair" @if($page!=='add') @if($e_detail->event_type_en == 'Fair') selected @endif @endif>Fair</option>
                                                 <option value="Spesial" @if($page!=='add') @if($e_detail->event_type_en == 'Spesial') selected @endif @endif>Special</option>
                                                 <option value="General" @if($page!=='add') @if($e_detail->event_type_en == 'General') selected @endif @endif>General</option>
@@ -100,7 +100,7 @@
                                                 <tr>
                                                     <td width="80%">
                                                         <select class="form-control" name="eventorgnzr_en" id="eventorgnzr_en" required onchange="EventOrg(this)">
-                                                            <option value="" style="display: none;">- Pilih Event Organizer -</option>
+                                                            <option value="" style="display: none;">- Choose Event Organizer -</option>
                                                             @foreach($e_organizer as $eo)
                                                                 <option value="{{$eo->id}}" @if($page!=='add') @if($e_detail->id_event_organizer == $eo->id) selected @endif @endif >{{$eo->name_en}}</option>
                                                             @endforeach
@@ -136,7 +136,7 @@
                                                 <tr>
                                                     <td width="80%">
                                                         <select class="form-control" name="eventplace_en" id="eventplace_en" required onchange="EventPlace(this)">
-                                                            <option value="" style="display: none;">- Pilih Event -</option>
+                                                            <option value="" style="display: none;">- Choose Event -</option>
                                                             @foreach($e_palce as $ep)
                                                                 <option value="{{$ep->id}}" @if($page!=='add') @if($e_detail->id_event_place == $ep->id) selected @endif @endif>{{$ep->name_en}}</option>
                                                             @endforeach
@@ -182,7 +182,7 @@
                                                 </button>
                                                 <input type="file" accept="image/*" id="image_1" name="image_1" style="display: none;"/>
                                                 <br>
-                                                <center>+ Photo Utama</center>
+                                                <center>+ Main Photo</center>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -249,10 +249,10 @@
                                         <div class="col-md-3"></div>
                                     </div><br>
                                     <div class="row">
-                                        <label for="code" class="col-md-3"><b>Jenis</b></label>
+                                        <label for="code" class="col-md-3"><b>Confirmation Type</b></label>
                                         <div class="col-md-3 paddignya">
                                             <select class="form-control" name="jenis_en" id="jenis_en" required onchange="Jenis(this)">
-                                                <option value="" style="display: none;">- Pilih Jenis -</option>
+                                                <option value="" style="display: none;">- Choose Confirmation Type -</option>
                                                 <option value="To Be Confirm" @if($page!=='add') @if($e_detail->jenis_en == 'To Be Confirm') selected @endif @endif>To Be Confirm</option>
                                                 <option value="Aktif" @if($page!=='add') @if($e_detail->jenis_en == 'Aktif') selected @endif @endif>Active</option>
                                                 <option value="Mandiri" @if($page!=='add') @if($e_detail->jenis_en == 'Mandiri') selected @endif @endif>Independent</option>
@@ -323,7 +323,7 @@
                                         <label for="code" class="col-md-3"><b>Status</b></label>
                                         <div class="col-md-3">
                                             <select class="form-control" name="status" id="status" required>
-                                                <option value="" style="display: none;">- Pilih-</option>
+                                                <option value="" style="display: none;">-Choose Status-</option>
                                                 <option value="Verified" @if($page!=='add') @if($e_detail->status_en == 'Verified') selected @endif @endif>Verified</option>
                                                 <option value="Tentatif" @if($page!=='add') @if($e_detail->status_en == 'Tentatif') selected @endif @endif>Tentatif</option>
                                             </select>
@@ -604,11 +604,11 @@
                 $("input[id='image_4']").click();
             });
 
-            $('#country').select2({ placeholder: 'Select Country' });
+            $('#country').select2({ placeholder: '-Choose Country-' });
 
             $('#com').select2({ 
               allowClear: true,
-              placeholder: 'Select Comodity',
+              placeholder: '-Choose Comodity-',
               ajax: {
                 url: "{{route('event.comodity')}}",
                 dataType: 'json',
@@ -656,7 +656,7 @@
             document.getElementById("image_4").addEventListener('change',handleFileSelect,false);
 
             $('#id_prod_cat').select2({
-                placeholder: 'Select Category',
+                placeholder: '-Choose Category-',
                 sorter: function(data) {
                     return data.sort(function(a, b) {
                         return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;

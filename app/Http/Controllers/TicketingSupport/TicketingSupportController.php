@@ -25,7 +25,7 @@ class TicketingSupportController extends Controller
 
     public function index()
     {
-        $pageTitle = 'Ticketing Support';
+        $pageTitle = 'Customer Support';
 //        dd(Auth::guard('eksmp')->user());
         return view('ticketingsupport.index', compact('pageTitle'));
     }
@@ -64,7 +64,7 @@ class TicketingSupportController extends Controller
 
         Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
             $mail->to($data['email1'], $data['username']);
-            $mail->subject('Requesting Ticketing Support');
+            $mail->subject('Requesting Customer Support');
         });
 
         return redirect('/ticketing');
@@ -134,7 +134,7 @@ class TicketingSupportController extends Controller
 
         $users = TicketingSupportModel::where('id', $id)->first();
 
-        $pageTitle = "Chat Ticketing Support";
+        $pageTitle = "Chat Customer Support";
         $jenis = 'chat';
 
         return view('ticketingsupport.vchat', compact('jenis', 'pageTitle', 'users', 'messages'));
@@ -164,7 +164,7 @@ class TicketingSupportController extends Controller
 
         $users = TicketingSupportModel::where('id', $id)->first();
 
-        $pageTitle = "Chat Ticketing Support";
+        $pageTitle = "Chat Customer Support";
         $jenis = 'view';
         return view('ticketingsupport.vchat', compact('jenis', 'pageTitle', 'users', 'messages'));
     }

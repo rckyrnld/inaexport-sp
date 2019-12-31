@@ -16,5 +16,5 @@ return [
 		
     ],
     "submit" => "Create My Account",
-    "modal" => "Check your mail for activate account !<br><br>You can use your account to Login. <br><br>For doing Inquiry and Buying Request, You need to wait to the representative activate your account first.",
+    "modal" => "Check your mail for activate account !<br><br>You can use your account to Login. <br><br>For doing inquiry and buying request, you need to wait to the representative activate your account first.",
 ];

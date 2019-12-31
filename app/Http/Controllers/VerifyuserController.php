@@ -234,7 +234,7 @@ class VerifyuserController extends Controller
 //        dd("mantap");die();
         $pageTitle = "Representative";
 		$data = DB::select("select * from itdp_admin_users where id_group='4' order by id desc ");
-        return view('verifyuser.index3', compact('pageTitle','data'));
+        return view('verifyuser.index3', compact('pageTitle','data'))->with('success');
     }
 
 	public function hapusimportir($id)
@@ -305,7 +305,7 @@ class VerifyuserController extends Controller
 	
 	public function editperwakilan($id)
     {
-		$pageTitle = "Edit Perwakilan";
+		$pageTitle = "Representative";
 		return view('verifyuser.editperwakilan', compact('pageTitle','id'));
 	}
 
@@ -419,7 +419,7 @@ class VerifyuserController extends Controller
 			
 		}
 		
-		return redirect('profilperwakilan');
+		return redirect('profilperwakilan')->with('success', 'Success Add Data!');
 	}
 	
 	public function updateperwakilan(Request $request)
@@ -480,7 +480,7 @@ class VerifyuserController extends Controller
 			
 		}
 		
-		return redirect('profilperwakilan');
+		return redirect('profilperwakilan')->with('success','Success Add Data!');
 	}
 	public function simpan_profil(Request $request)
     {

@@ -40,7 +40,7 @@
 								<th>No</th>
 								<th>Origin</th>
 								<th>Buyer</th>
-								<th>Eksportir</th>
+								<th>Exporter</th>
 								<th>Type Tracking</th>
 								<th>No Tracking</th>
 								<th>Status</th>

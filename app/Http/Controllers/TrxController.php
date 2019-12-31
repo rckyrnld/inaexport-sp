@@ -35,7 +35,7 @@ class TrxController extends Controller
             }
         }else{
             if(Auth::user()->id_group == 4){
-                $pageTitle = "Selling Transaction Perwakilan";
+                $pageTitle = "Selling Transaction Representative";
                 $data = DB::select("select * from csc_transaksi  order by id_transaksi desc ");
                 return view('trx.index_adm', compact('pageTitle','data'));
             }else{

@@ -26,7 +26,7 @@ class TicketingSupportControllerAdmin extends Controller
 
     public function index()
     {
-        $pageTitle = 'Ticketing Support';
+        $pageTitle = 'Customer Support';
         return view('ticketingsupport.indexAdmin', compact('pageTitle'));
     }
 

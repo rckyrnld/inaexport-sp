@@ -216,7 +216,7 @@
                                       <center>No</center>
                                     </th>
 									<th>
-                                      <center>Subyek</center>
+                                      <center>Subject</center>
                                     </th>
                                     <th>
                                       <center>Category</center>

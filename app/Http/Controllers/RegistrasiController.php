@@ -184,7 +184,7 @@ class RegistrasiController extends Controller
 		}
 		
 			
-			$data = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => $request->email];
+			$data = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => $request->email, 'user' => 'exporter'];
 
                 Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);

@@ -272,6 +272,14 @@
 			<img style="height:80px!important;" src="{{url('assets')}}/assets/images/mail.png" alt="." ><br><br>
 				  @lang("register2.modal")
 			</center></h5>
+            <h5 style="padding-left: 50px;">
+                <ol>
+                    <li>NPWP (Mandatory)</li>
+                    <li>TDP (Optional)</li>
+                    <li>SIUP (Optional)</li>
+                    <li>NIB (Mandatory)</li>
+                </ol>
+            </h5>
         </div>
         <div class="modal-footer">
           <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->

@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Edit Perwakilan</h5>
+                    <h5><i></i> Form Representative</h5>
                 </div>
 
                 <div class="box-body bg-light">

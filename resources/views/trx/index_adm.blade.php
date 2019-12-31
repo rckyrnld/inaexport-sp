@@ -70,7 +70,7 @@ body {font-family: Arial;}
                                         <center>Buyer</center>
                                     </th>
 									<th>
-                                        <center>Eksportir</center>
+                                        <center>Exporter</center>
                                     </th>
 									
 									 <th>
@@ -182,7 +182,7 @@ body {font-family: Arial;}
 	<hr>
 	<br>
 	<div align="right">
-	<center><h5>List Data Transaksi</h5></center><div id="btx"><!-- <a class="btn btn-success" style="font-align:right;"><font color="white"><i class="fa fa-download"></i> Export Excel</font></a>--></div>
+	<center><h5>List Transaction</h5></center><div id="btx"><!-- <a class="btn btn-success" style="font-align:right;"><font color="white"><i class="fa fa-download"></i> Export Excel</font></a>--></div>
 	</div>
 	<br>
 	<div class="form-row"><br>

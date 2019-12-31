@@ -27,7 +27,7 @@
                                         <center>Buyer</center>
                                     </th>
 									<th>
-                                        <center>Eksportir</center>
+                                        <center>Exporter</center>
                                     </th>
 									
 									 <th>

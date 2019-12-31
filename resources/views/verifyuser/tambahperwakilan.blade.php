@@ -17,12 +17,12 @@
 				{{Form::open(['url' => 'simpanperwakilan','method' => 'post'])}}
 				<div class="col-md-12">
           	 		<div class="form-group row">
-				      {!!Form::label('password_confirm','Tipe',['class' => 'col-sm-2 col-form-label '])!!}
+				      {!!Form::label('password_confirm','Type',['class' => 'col-sm-2 col-form-label '])!!}
 				      <div class="col-sm-4">
 				     
 						<select class="form-control" id="type" name="type" onchange="ganticity()">
 						<!-- <option>DJPEN</option> -->
-						<option value="">-- Pilih Tipe --</option>
+						<option value="">-- Choose Type --</option>
 						<option value="ITPC">ITPC</option>
 						<option value="KOMJEN">KOMJEN</option>
 						<option value="KBRI">KBRI</option>
@@ -44,7 +44,7 @@
 				    <div class="col-sm-4">
 						<select class="form-control" name="country">
 						<!-- <option>DJPEN</option> -->
-						<option value="0">-- Pilih Country --</option>
+						<option value="0">-- Choose Country --</option>
 						<?php $mst = DB::select("select * from mst_group_country order by group_country asc"); 
 						foreach($mst as $cu){
 						?>
@@ -74,7 +74,7 @@
 				</div>
 				<div class="col-md-12">
           	 		<div class="form-group row">
-				      {!!Form::label('password_confirm','Pejabat',['class' => 'col-sm-2 col-form-label '])!!}
+				      {!!Form::label('password_confirm','Official',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
 						<input type="text" class="form-control" name="pejabat">
 					</div>

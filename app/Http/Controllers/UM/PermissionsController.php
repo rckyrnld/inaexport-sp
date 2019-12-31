@@ -17,7 +17,7 @@ class PermissionsController extends Controller
      */
     public function index()
     {
-        $pageTitle = 'Pengaturan Menu';
+        $pageTitle = 'Setting Menu';
          $group = Group::all();
         return view('UM.permission.index',compact('pageTitle','group'));
     }
