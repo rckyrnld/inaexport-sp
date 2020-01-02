@@ -99,7 +99,7 @@
                 <div class="col-3" style="text-align: right;">
                     <div class="breadcrumb_content">
                         <b>@lang('frontend.liseksportir.sortby')</b> <select name="sortbyproduct" id="sortbyproduct" style="border: none;"class="sortproductnya">
-                                <option value="" @if(isset($sortbyproduct)) @if($sortbyproduct == "") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
+                                <option value="default" @if(isset($sortbyproduct)) @if($sortbyproduct == "default") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
                                 <option value="new" @if(isset($sortbyproduct)) @if($sortbyproduct == "new") selected @endif @endif>@lang('frontend.liseksportir.newest')</option>
                                 @if(!empty(Auth::guard('eksmp')->user()))
                                     @if(Auth::guard('eksmp')->user()->status == 1)

@@ -372,8 +372,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                 <div class="tab-content">
                                     <div id="products" class="container tab-pane active">
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_product')}}" id="formsprod">
-                                            {{ csrf_field() }}
-                                            <div class="search_box" style="width: 461px!Important;">
+                                            <div class="search_box">
                                                 <?php
                                                     if(isset($search)){
                                                         $cariprod = $search;
@@ -404,14 +403,13 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                                 <input type="hidden" name="cari_catnya" value="{{$caricat}}" id="cari_catnya">
                                                 <input type="hidden" name="eks_prod" value="{{$eksprod}}" id="eks_prod">
                                                 <input type="hidden" name="hl_prod" value="{{$hlprod}}" id="hl_prod">
-                                                <input type="hidden" name="sort_prod" value="" id="sort_prod">
+                                                <input type="hidden" name="sort_prod" value="default" id="sort_prod">
                                                 <button type="submit"><i class="ion-ios-search-strong" style="font-size: 22px;"></i></button>
                                             </div>
                                         </form>
                                     </div>
                                     <div id="eksportir" class="container tab-pane">
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_perusahaan')}}" id="formseksportir">
-                                            {{ csrf_field() }}
                                             <div class="search_box">
                                                 <?php
                                                     if(isset($search_eks)){

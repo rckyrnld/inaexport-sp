@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
 use Mail;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Collection;
 
 class FrontController extends Controller
 {
@@ -60,6 +61,74 @@ class FrontController extends Controller
         }else{
             $pagenow = 1;
         }
+        $lct = $request->locnya;
+        
+        if($request->cari_product){
+            $hl_sort = $request->hl_prod;
+            $getEks = $request->eks_prod;
+            if (strpos($request->cari_product, '-') !== false) {
+                $pecah = explode('-', $request->cari_product);
+                $search = $request->cari_product;
+                $searchnya = trim($pecah[0]);
+                if(strpos($pecah[1], ',') !== false){
+                    $pecah2 = explode(',', $pecah[1]);
+                    $pecah2 = array_map(function($query){
+                        $trim = trim($query);
+                        return strtolower($trim);
+                    }, $pecah2);
+
+                    $getEks = getAdvListEksportir($pecah2[0]);
+                    if(in_array('hot', $pecah2) && in_array('new', $pecah2)){
+                        $hl_sort = 'hot|new';
+                    } else if(in_array('hot', $pecah2) && !in_array('new', $pecah2)){
+                        $hl_sort = 'hot';
+                    } else if (!in_array('hot', $pecah2) && in_array('new', $pecah2)){
+                        $hl_sort = 'new';
+                    }
+                        //Delete Array
+                        if (($key = array_search('hot', $pecah2)) !== false) {
+                            unset($pecah2[$key]);
+                        }
+                        if (($key = array_search('new', $pecah2)) !== false) {
+                            unset($pecah2[$key]);
+                        }
+                } else {
+                    $getEks = getAdvListEksportir($pecah[1]);
+                } 
+            } else {
+                if(strpos($request->cari_product, ',') !== false){
+                    $pecah = explode(',', $request->cari_product);
+                    $search = $request->cari_product;
+                    $searchnya = trim($pecah[0]);
+                    $pecah = array_map(function($query){
+                        $trim = trim($query);
+                        return strtolower($trim);
+                    }, $pecah);
+
+                    if(in_array('hot', $pecah) && in_array('new', $pecah)){
+                        $hl_sort = 'hot|new';
+                    } else if(in_array('hot', $pecah) && !in_array('new', $pecah)){
+                        $hl_sort = 'hot';
+                    } else if (!in_array('hot', $pecah) && in_array('new', $pecah)){
+                        $hl_sort = 'new';
+                    }
+                        //Delete Array
+                        if (($key = array_search('hot', $pecah)) !== false) {
+                            unset($pecah[$key]);
+                        }
+                        if (($key = array_search('new', $pecah)) !== false) {
+                            unset($pecah[$key]);
+                        }
+                } else {
+                    $search = $searchnya = trim($request->cari_product);
+                }
+            }
+        } else {
+            $search = $searchnya = '';
+            $getEks = $request->eks_prod;
+            $hl_sort = $request->hl_prod;
+        }
+
         //List Category Product
         $categoryutama = DB::table('csc_product')
             ->where('level_1', 0)
@@ -70,7 +139,7 @@ class FrontController extends Controller
 
         //Sort By
         $sortbyproduct = NULL;
-        if($request->sort_prod != NULL || $request->sort_prod != ""){
+        if($request->sort_prod != NULL){
             if($request->sort_prod == "new"){
                 $col = "csc_product_single.created_at DESC NULLS LAST";
             }else if($request->sort_prod == "lowhigh"){
@@ -79,11 +148,13 @@ class FrontController extends Controller
                 $col = "csc_product_single.price_usd DESC NULLS LAST";
             }else if($request->sort_prod == "asc"){
                 $col = "csc_product_single.prodname_en ASC NULLS LAST";
+            } else {
+                $col = "updated_at DESC NULLS LAST";
             }
             $sortbyproduct = $request->sort_prod;
         }else{
             $col = "updated_at DESC NULLS LAST";
-            $sortbyproduct = "";
+            $sortbyproduct = "default";
         }
 
 
@@ -100,24 +171,20 @@ class FrontController extends Controller
                     ->where('itdp_company_users.status', 1)
                     ->where('csc_product_single.status', 2);
 
-            $search = "";
-            if($request->cari_product){
-                $search = $request->cari_product;
+            if($search != ''){
                 $nprod = "prodname_".$request->locnya;
-                $query->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%');
-                $coquery->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$search.'%');
+                $query->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$searchnya.'%');
+                $coquery->where('csc_product_single.'.$nprod, 'ILIKE', '%'.$searchnya.'%');
             }
 
-            $getEks = "";
-            if($request->eks_prod){
-                if (strstr($request->eks_prod, '|')){
-                    $eks = explode('|', $request->eks_prod);
+            if($getEks != ''){
+                if (strstr($getEks, '|')){
+                    $eks = explode('|', $getEks);
                 }else{
-                    $eks = [$request->eks_prod];
+                    $eks = [$getEks];
                 }
                 $query->whereIn('csc_product_single.id_itdp_company_user', $eks);
                 $coquery->whereIn('csc_product_single.id_itdp_company_user', $eks);
-                $getEks = $request->eks_prod;
             }
 
             //count Hot dan New Product
@@ -136,9 +203,8 @@ class FrontController extends Controller
             }
 
             //highlight
-            $hl_sort = NULL;
-            if($request->hl_prod != NULL || $request->hl_prod != ""){
-                if (strstr($request->hl_prod, '|')) {
+            if($hl_sort != ''){
+                if (strstr($hl_sort, '|')) {
                     $query->where(function ($query){
                         return $query->where(function ($query){
                             return $query->whereYear('csc_product_single.created_at', date('Y'))
@@ -152,15 +218,14 @@ class FrontController extends Controller
                         })->orWhereNotNull('csc_product_single.hot');
                     });                  
                 }else{
-                    if($request->hl_prod == "new"){
+                    if($hl_sort == "new"){
                         $query->whereYear('csc_product_single.created_at', date('Y'))->whereMonth('csc_product_single.created_at', date('m'));
                         $coquery->whereYear('csc_product_single.created_at', date('Y'))->whereMonth('csc_product_single.created_at', date('m'));
-                    }else if($request->hl_prod == "hot"){
+                    }else if($hl_sort == "hot"){
                             $query->whereNotNull('csc_product_single.hot');
                             $coquery->whereNotNull('csc_product_single.hot')->orderByRaw('hot desc');
                     }
                 }
-                $hl_sort = $request->hl_prod;
             }
 
             $coproduct = $coquery->orderByRaw($col)->count();
@@ -181,25 +246,17 @@ class FrontController extends Controller
                 $get_id_cat = $pisah;
             }
 
-            if($request->cari_product){
-                $search = $request->cari_product;
-            }else{
-                $search = "";
-            }
+            $query = $this->getQueryCategory($pisah, $request->locnya, $searchnya);
+            $coquery = $this->getQueryCategory($pisah, $request->locnya, $searchnya);
 
-            $query = $this->getQueryCategory($pisah, $request->locnya, $request->cari_product);
-            $coquery = $this->getQueryCategory($pisah, $request->locnya, $request->cari_product);
-
-            $getEks = "";
-            if($request->eks_prod){
-                if (strstr($request->eks_prod, '|')){
-                    $eks = explode('|', $request->eks_prod);
+            if($getEks != ''){
+                if (strstr($getEks, '|')){
+                    $eks = explode('|', $getEks);
                 }else{
-                    $eks = [$request->eks_prod];
+                    $eks = [$getEks];
                 }
                 $query->whereIn('csc_product_single.id_itdp_company_user', $eks);
                 $coquery->whereIn('csc_product_single.id_itdp_company_user', $eks);
-                $getEks = $request->eks_prod;
             }
 
             //count Hot dan New Product
@@ -218,9 +275,8 @@ class FrontController extends Controller
             }
 
             //highlight
-            $hl_sort = NULL;
-            if($request->hl_prod != NULL || $request->hl_prod != ""){
-                if (strstr($request->hl_prod, '|')) {
+            if($hl_sort != ""){
+                if (strstr($hl_sort, '|')) {
                     $query->where(function ($query){
                         return $query->where(function ($query){
                             return $query->whereYear('csc_product_single.created_at', date('Y'))
@@ -234,15 +290,14 @@ class FrontController extends Controller
                         })->orWhereNotNull('csc_product_single.hot');
                     });
                 }else{
-                    if($request->hl_prod == "new"){
+                    if($hl_sort == "new"){
                         $query->whereYear('csc_product_single.created_at', date('Y'))->whereMonth('csc_product_single.created_at', date('m'));
                         $coquery->whereYear('csc_product_single.created_at', date('Y'))->whereMonth('csc_product_single.created_at', date('m'));
-                    }else if($request->hl_prod == "hot"){
+                    }else if($hl_sort == "hot"){
                             $query->whereNotNull('csc_product_single.hot')->orderByRaw('hot desc');
                             $coquery->whereNotNull('csc_product_single.hot')->orderByRaw('hot desc');
                     }
                 }
-                $hl_sort = $request->hl_prod;
             }
 
 
@@ -251,15 +306,44 @@ class FrontController extends Controller
         }
 
         //Data Eksportir/Manufacturer
-        $manufacturer = DB::select(
-            "SELECT 
-                a.id, b.company, b.id as id_profil, (SELECT COUNT(*) FROM csc_product_single WHERE status = 2 AND id_itdp_company_user = a.id) as jml_produk
-            FROM itdp_company_users as a
-            JOIN itdp_profil_eks as b ON a.id_profil = b.id
-            WHERE a.status = '1'
-            ORDER BY jml_produk DESC
-            LIMIT 10"
-        );
+        // $manufacturer = DB::select(
+        //     "SELECT 
+        //         a.id, b.company, b.id as id_profil, (SELECT COUNT(*) FROM csc_product_single WHERE status = 2 AND id_itdp_company_user = a.id) as jml_produk
+        //     FROM itdp_company_users as a
+        //     JOIN itdp_profil_eks as b ON a.id_profil = b.id
+        //     WHERE a.status = '1'
+        //     ORDER BY jml_produk DESC
+        //     LIMIT 10"
+        // );
+        $query_manufacture = DB::table('itdp_company_users as a')->selectRaw('a.id, b.company, count(c.*) as jml_produk')
+            ->join('itdp_profil_eks as b', 'a.id_profil', 'b.id')
+            ->join('csc_product_single as c', 'a.id', 'c.id_itdp_company_user')
+            ->where('a.status', 1)
+            ->where('c.status', 2)
+            ->orderby('jml_produk', 'desc')
+            ->groupby('a.id')->groupby('b.company')
+            ->limit(10);
+        if($searchnya != ''){
+            $query_manufacture->where(function($query) use ($searchnya,$lct){
+                $query->where('c.prodname_en', 'ILIKE', '%'.$searchnya.'%');
+                $query->orwhere('c.prodname_'.$lct, 'ILIKE', '%'.$searchnya.'%');
+            });
+        }
+        $manufacturer = $query_manufacture->get();
+
+        if($getEks != ''){
+            if (strstr($getEks, '|')){
+                $eks = explode('|', $getEks);
+            }else{
+                $eks = [$getEks];
+            }
+            foreach ($eks as $key => $value) {
+                if(!$manufacturer->contains('id', $value)) {
+                    $collection = getCollectionManufacture($value, $searchnya, $lct);
+                    $manufacturer->push($collection, true);
+                }
+            }
+        }
 
         // return view('frontend.product.all_product', compact('product', 'catprod'));
         return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow','hot_product', 'hl_sort', 'countNew', 'countHot'));

@@ -963,3 +963,41 @@ if (! function_exists('getProductName')) {
       return $return;
     }
 }
+
+if (! function_exists('getAdvListEksportir')) {
+    function getAdvListEksportir($nama){
+      $nama = trim($nama);
+      $data = DB::table('itdp_company_users as a')->selectRaw('DISTINCT a.id, b.company')->join('itdp_profil_eks as b', 'a.id_profil', 'b.id')->join('csc_product_single as c', 'a.id', 'c.id_itdp_company_user')->where('a.status', 1)->where('b.company', 'ILIKE', '%'.$nama.'%')->get();
+      $return = '';
+      if($data){
+        foreach ($data as $key => $value) {
+          $return .= $value->id.'|';
+        }
+        $return = rtrim($return, '|');
+      } else {
+        $return = '0';
+      }
+
+      return $return;
+    }
+}
+
+if (! function_exists('getCollectionManufacture')) {
+    function getCollectionManufacture($id, $search, $lct){
+      $data = DB::table('itdp_company_users as a')->selectRaw('a.id, b.company')
+            ->join('itdp_profil_eks as b', 'a.id_profil', 'b.id')
+            ->where('a.id', $id)
+            ->first();
+      $banyak_data = DB::table('csc_product_single')->selectRaw('count(*)')
+            ->where('id_itdp_company_user', $id)
+            ->where(function($query) use ($search, $lct){
+                $query->where('prodname_en', 'ILIKE', '%'.$search.'%');
+                $query->orwhere('prodname_'.$lct, 'ILIKE', '%'.$search.'%');
+            })
+            ->first();
+      $collection = [];
+      $collection = (object) array("id" => $data->id, "company" => $data->company, "jml_produk" => $banyak_data->count);
+
+      return $collection;
+    }
+}
