@@ -3,7 +3,7 @@ return [
     "title" => "Front End | Kementerian Perdagangan RI",
     "title2" => "INDONESIAN TRADE DIGITAL PROMOTION",
     "a1" => "Administrator",
-    "a2" => "Exporter / Importer",
+    "a2" => "Indonesian Exporter / Buyer",
     "btn" => "Sign In",
     "lbl1" => "Exporter Registration",
     "lbl2" => "Importer Registration",

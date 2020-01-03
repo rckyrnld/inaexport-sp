@@ -195,9 +195,9 @@ class VerifyuserController extends Controller
             })
 			->addColumn('f6', function ($pesan) {
 				 if($pesan->id_admin_ln == null || $pesan->id_admin_ln == 0){ 
-				 return "<center>Dalam Negeri</center>";
+				 return "<center>Domestic</center>";
 				 }else{ 
-				 return "<center>Luar Negeri</center>";
+				 return "<center>Overseas</center>";
 				 }
             })
 			->addColumn('f7', function ($pesan) {
@@ -267,7 +267,7 @@ class VerifyuserController extends Controller
                 });
 			
 		
-		return redirect('verifyimportir');
+		return redirect('verifyimportir')->with('success','Success');
 	}
 	
 	public function reseteksportir($id)
@@ -288,7 +288,7 @@ class VerifyuserController extends Controller
                 });
 			
 		
-		return redirect('verifyuser');
+		return redirect('verifyuser')->with('success','Success');
 	}
 	
 	public function hapusperwakilan($id)
@@ -480,7 +480,7 @@ class VerifyuserController extends Controller
 			
 		}
 		
-		return redirect('profilperwakilan')->with('success','Success Add Data!');
+		return redirect('profilperwakilan')->with('success','Success Update Data!');
 	}
 	public function simpan_profil(Request $request)
     {
@@ -588,7 +588,7 @@ class VerifyuserController extends Controller
                 });
 		}
 		//UPDATE TAB 2
-		$updatetab2 = DB::select("update itdp_profil_imp set company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
+		$updatetab2 = DB::select("update itdp_profil_imp set company='".$request->company."', addres='".$request->addres."', city='".$request->city."' ,email='".$request->email."'
 		, id_mst_province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."' , status='".$request->staim."'
 		where id='".$id_user_b."'");
 		
@@ -615,8 +615,9 @@ class VerifyuserController extends Controller
         $mail->subject('Your account had Verified');
 		});
 		}
-		
-		return redirect('profil2/'.$id_role.'/'.$id_user);
+
+		return redirect('verifyimportir')->with('success','Success');
+//		return redirect('profil2/'.$id_role.'/'.$id_user);
 		
 	
 	}

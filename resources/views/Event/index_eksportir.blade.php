@@ -30,7 +30,7 @@
                                         <td>{{getTanggalIndo($ed->end_date)}}</td>
                                         <td>{{getEventComodity($ed->event_comodity)}}</td>
                                         <td>
-                                            <a href="{{url('/')}}/event/show_detail/{{$ed->id}}" class="btn btn-primary">Join</a>
+                                            <a href="{{url('/')}}/event/show_detail/{{$ed->id}}" class="btn btn-primary" title="Join"><i class="fa fa-plus"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

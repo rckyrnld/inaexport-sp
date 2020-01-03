@@ -69,6 +69,18 @@ body {font-family: Arial;}
 						</div>
 					</div>
 				<hr>
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block" style="text-align: center">
+                            {{--                            <button type="button" class="close" data-dismiss="alert">×</button>--}}
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger alert-block" style="text-align: center">
+                            {{--                                <button type="button" class="close" data-dismiss="alert">×</button>--}}
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
 				<br>
 				<a href="{{ url('br_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add</a><br><br>
                           
@@ -261,6 +273,7 @@ function xy(a){
 </script>
 <script type="text/javascript">
     $(function () {
+        $(".alert").slideDown(300).delay(1000).slideUp(300);
         $('#users-table0').DataTable({
             processing: true,
             serverSide: true,

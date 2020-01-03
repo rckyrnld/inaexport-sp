@@ -43,7 +43,7 @@
 					<div class="box-body bg-light">
 	          <table width="100%">
               <tr>
-                <td><div style="color: #465a6ed9;" align="left"><h4>Form Ticketing</h4></div></td>
+                <td><div style="color: #465a6ed9;" align="left"><h4>Form Customer Support</h4></div></td>
                 <td><div align="right"><a href="{{url('admin/ticketing')}}" style="width: 80px;" class="btn btn-danger"> Back</a></div></td>
               </tr>
             </table>

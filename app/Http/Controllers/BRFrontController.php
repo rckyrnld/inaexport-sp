@@ -317,12 +317,14 @@ class BRFrontController extends Controller
 		if(count($namaprod) == 0){
 		
 		}else{
-		foreach($namaprod as $prod){ $napro = $prod->id_itdp_company_user; 
-			$cekada=DB::select("select * from csc_buying_request_join where id_br='".$id."' and id_eks='".$napro."'");
+		foreach($namaprod as $prod){ $napro = $prod->id_itdp_company_user;
+//            dd($napro);
+            $cekada=DB::select("select * from csc_buying_request_join where id_br='".$id."' and id_eks='".(int)$napro."'");
+//			$cekada=DB::select("select * from csc_buying_request_join where id_br='".$id."' and id_eks='".$napro."'");
 			if(count($cekada) == 0){
 				
 				$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
-							('".$id."','".$napro."','".Date('Y-m-d H:m:s')."')");
+							('".$id."','".(int)$napro."','".Date('Y-m-d H:m:s')."')");
 				
 				//NOTIF
 				$id_terkait = "";
