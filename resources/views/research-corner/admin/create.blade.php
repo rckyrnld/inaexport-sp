@@ -154,7 +154,7 @@
                   <div align="right">
                     <a href="{{route('admin.research-corner.index')}}" class="btn btn-danger button_form">@if($page != 'view') Cancel @else Back @endif</a>
                     @if($page != 'view')
-                    <button class="btn btn-primary button_form" type="submit">Save</button>
+                    <button class="btn btn-primary button_form" type="submit">Submit</button>
                     @endif
                   </div>
                 </div>

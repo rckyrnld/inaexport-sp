@@ -14,7 +14,7 @@
                             <table id="tableexd" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                     <th>No</th>
-                                    <th>Event Nama</th>
+                                    <th>Event Name</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
                                     <th>Event Comodity</th>

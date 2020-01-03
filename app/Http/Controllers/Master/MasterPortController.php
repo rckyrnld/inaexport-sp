@@ -129,10 +129,10 @@ class MasterPortController extends Controller
       $data = MasterPort::where('id', $id)->delete();
       if($data){
          Session::flash('success','Success Delete Data');
-         return redirect('/master-port/');
+         return redirect('/master-port/')->with('success', 'Success Delete Data');
        }else{
          Session::flash('failed','Failed Delete Data');
-         return redirect('/master-port/');
+         return redirect('/master-port/')->with('error', 'Failed Delete Data');
        }
     }
 

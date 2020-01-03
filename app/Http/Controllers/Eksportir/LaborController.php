@@ -27,7 +27,7 @@ class LaborController extends Controller
         for ($year = $ldate - "10"; $year <= $ldate + "10"; $year++) $years[$year] = $year;
 //        dd($years);
         $url = '/eksportir/labor_save';
-        $pageTitle = 'Add Raw Material';
+        $pageTitle = 'Add Labor';
         return view('eksportir.labor.tambah', compact('pageTitle', 'url', 'years'));
     }
 

@@ -96,7 +96,7 @@
                         <label class="col-md-3"><b>File</b></label>
                         <div class="col-md-7">
                             @if($inquiry->file == "")
-                                <input type="text" class="btn btn-default" value="Dokumen Kosong" autocomplete="off" readonly style="color: orange; text-align: center;">
+                                <input type="text" class="btn btn-default" value="No File" autocomplete="off" readonly style="color: orange; text-align: center;">
                             @else
                                 <a href="{{ url('/').'/uploads/Inquiry/'.$inquiry->id }}/{{ $inquiry->file }}" target="_blank" class="btn btn-default" style="color: orange;">{{$inquiry->file}}</a>
                             @endif

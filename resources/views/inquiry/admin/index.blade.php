@@ -17,6 +17,10 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
+                    <h5><i></i> List Inquiry</h5><br>
+                    <a class="btn" href="{{url('/inquiry_admin/create')}}" style="background-color: #1089ff; color: white;"><i class="fa fa-plus-circle"></i> Add</a>
+                </div>
+                <div class="box-body bg-light">
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success alert-block" style="text-align: center">
                             {{--                            <button type="button" class="close" data-dismiss="alert">×</button>--}}
@@ -29,16 +33,12 @@
                             <strong>{{ $message }}</strong>
                         </div>
                     @endif
-                    <h5><i></i> List Inquiry</h5><br>
-                    <a class="btn" href="{{url('/inquiry_admin/create')}}" style="background-color: #1089ff; color: white;"><i class="fa fa-plus-circle"></i> Add</a>
-                </div>
-                <div class="box-body bg-light">
                     <div class="col-md-14">
                         <div id="exTab2" class="container"> 
                             <ul class="nav nav-tabs">
                                 <li class="nav-item"><a class="nav-link active" href="#admin" id="set_admin" data-toggle="tab"><h6><b>Admin</b></h6></a></li>
                                 <li class="nav-item"><a class="nav-link" href="#perwakilan" id="set_perwakilan" data-toggle="tab"><h6><b>Representative</b></h6></a></li>
-                                <li class="nav-item"><a class="nav-link" href="#importir" id="set_importir" data-toggle="tab"><h6><b>Importer</b></h6></a></li>
+                                <li class="nav-item"><a class="nav-link" href="#importir" id="set_importir" data-toggle="tab"><h6><b>Buyer</b></h6></a></li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="admin">

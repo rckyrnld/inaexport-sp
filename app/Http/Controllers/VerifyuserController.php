@@ -214,7 +214,7 @@ class VerifyuserController extends Controller
 
                 return '<center>
 			   <a class="btn btn-success" href="'.url('editperwakilan/'.$pesan->id).'" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
-			   <a class="btn btn-danger" href="'.url('hapusperwakilan/'.$pesan->id).'" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
+			   <a class="btn btn-danger" onclick="return confirm(\'Are You Sure ?\')" href="'.url('hapusperwakilan/'.$pesan->id).'" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
 			   
 			   </center>';
 				
@@ -240,13 +240,13 @@ class VerifyuserController extends Controller
 	public function hapusimportir($id)
     {
 		$delete = DB::select("delete from itdp_company_users where id='".$id."'");
-		return redirect('verifyimportir');
+		return redirect('verifyimportir')->with('success', 'Success Delete Data');
 	}
 	
 	public function hapuseksportir($id)
     {
 		$delete = DB::select("delete from itdp_company_users where id='".$id."'");
-		return redirect('verifyuser');
+		return redirect('verifyuser')->with('success', 'Success Delete Data');
 	}
 	
 	public function resetimportir($id)
@@ -294,7 +294,7 @@ class VerifyuserController extends Controller
 	public function hapusperwakilan($id)
     {
 		$delete = DB::select("delete from itdp_admin_users where id='".$id."'");
-		return redirect('profilperwakilan');
+		return redirect('profilperwakilan')->with('success','Success Delete Data');
 	}
 	
 	public function bacanotif($id)

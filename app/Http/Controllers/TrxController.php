@@ -78,7 +78,7 @@ class TrxController extends Controller
 
     public function input_transaksi($id)
     {
-        $pageTitle = "Transaksi Selling";
+        $pageTitle = "Selling Transaction";
         return view('trx.trx2', compact('id','pageTitle'));
     }
 

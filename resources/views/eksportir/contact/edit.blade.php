@@ -45,11 +45,10 @@
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <a style="color: white" href="{{url('/eksportir/contact')}}"
-                                       class="btn btn-primary"><i style="color: white"></i>
+                                       class="btn btn-danger"><i style="color: white"></i>
                                         Back
                                     </a>
-                                    <button class="btn btn-success" type="submit"><i
-                                                class="fa fa-plus-circle"></i> Update
+                                    <button class="btn btn-primary" type="submit">Update
                                     </button>
                                 </div>
                             </div>

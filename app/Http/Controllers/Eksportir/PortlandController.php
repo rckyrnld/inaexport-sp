@@ -24,7 +24,7 @@ class PortlandController extends Controller
 //        $brand = DB::table('itdp_eks_product_brand')->get();
         $port = DB::table('mst_port')->get();
         $url = '/eksportir/portland_save';
-        $pageTitle = 'Add Export Destination';
+        $pageTitle = 'Add Port of Loading';
         return view('eksportir.port_landing.tambah', compact('port', 'pageTitle', 'url'));
     }
 

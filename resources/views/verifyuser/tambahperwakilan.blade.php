@@ -109,7 +109,7 @@
 				      {!!Form::label('password_confirm','Status',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
 						<select class="form-control" name="status">
-							<option value="">-- Pilih Status --</value>
+							<option value="">-- Choose Status --</value>
 							<option value="1">Aktif</value>
 							<option value="0">Tidak Aktif</value>
 						</select>
@@ -118,7 +118,7 @@
 				</div>
 				
 				<div align="left">
-				<input class="btn btn-primary" type="submit" value=" Simpan">
+				<input class="btn btn-primary" type="submit" value=" Submit">
 				</div>
 				{{Form::close()}}
 
@@ -142,10 +142,10 @@
 function ganticity(){
 	var a = $('#type').val();
 	if(a == 'DINAS PERDAGANGAN'){
-		$('#ch1').html('<div class="col-md-12"><div class="form-group row"><label for="password_confirm" class="col-sm-2 col-form-label ">Province</label><div class="col-sm-4"><select class="form-control" name="country"><option value="0">-- Pilih Province --</option><?php $mst = DB::select("select * from mst_province order by province_en asc");foreach($mst as $cu){?><option value="<?php echo $cu->id; ?>"><?php echo $cu->province_en; ?></option><?php } ?></select></div></div></div>')
+		$('#ch1').html('<div class="col-md-12"><div class="form-group row"><label for="password_confirm" class="col-sm-2 col-form-label ">Province</label><div class="col-sm-4"><select class="form-control" name="country"><option value="0">-- Choose Province --</option><?php $mst = DB::select("select * from mst_province order by province_en asc");foreach($mst as $cu){?><option value="<?php echo $cu->id; ?>"><?php echo $cu->province_en; ?></option><?php } ?></select></div></div></div>')
 	
 	}else{
-		$('#ch1').html('<div class="col-md-12"><div class="form-group row"><label for="password_confirm" class="col-sm-2 col-form-label ">Group Country</label><div class="col-sm-4"><select class="form-control" name="country"><option value="0">-- Pilih Country --</option><?php $mst = DB::select("select * from mst_group_country order by group_country asc");foreach($mst as $cu){?><option value="<?php echo $cu->id; ?>"><?php echo $cu->group_country; ?></option><?php } ?></select></div></div></div>')
+		$('#ch1').html('<div class="col-md-12"><div class="form-group row"><label for="password_confirm" class="col-sm-2 col-form-label ">Group Country</label><div class="col-sm-4"><select class="form-control" name="country"><option value="0">-- Choose Country --</option><?php $mst = DB::select("select * from mst_group_country order by group_country asc");foreach($mst as $cu){?><option value="<?php echo $cu->id; ?>"><?php echo $cu->group_country; ?></option><?php } ?></select></div></div></div>')
 	}
 }
 </script>

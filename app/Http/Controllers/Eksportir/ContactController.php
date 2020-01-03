@@ -22,7 +22,7 @@ class ContactController extends Controller
     {
 //        dd($id_user);
         $url = '/eksportir/contact_save';
-        $pageTitle = 'Tambah Contact';
+        $pageTitle = 'Add Contact';
         return view('eksportir.contact.tambah', compact('pageTitle', 'url'));
     }
 

@@ -34,7 +34,7 @@
 				     
 						<select class="form-control" name="type">
 						<!-- <option>DJPEN</option> -->
-						<option value="">-- Pilih Tipe --</option>
+						<option value="">-- Choose Type --</option>
 						<option <?php if($qt->type=="ITPC"){ echo "selected"; } ?> value="ITPC">ITPC</option>
 						<option <?php if($qt->type=="KOMJEN"){ echo "selected"; } ?> value="KOMJEN">KOMJEN</option>
 						<option <?php if($qt->type=="KBRI"){ echo "selected"; } ?> value="KBRI">KBRI</option>
@@ -56,7 +56,7 @@
 				    <div class="col-sm-4">
 						<select class="form-control" name="country">
 						<!-- <option>DJPEN</option> -->
-						<option value="0">-- Pilih Country --</option>
+						<option value="0">-- Choose Country --</option>
 						<?php $mst = DB::select("select * from mst_province order by province_en asc"); 
 						foreach($mst as $cu){
 						?>
@@ -74,7 +74,7 @@
 				    <div class="col-sm-4">
 						<select class="form-control" name="country">
 						<!-- <option>DJPEN</option> -->
-						<option value="0">-- Pilih Country --</option>
+						<option value="0">-- Choose Country --</option>
 						<?php $mst = DB::select("select * from mst_group_country order by group_country asc"); 
 						foreach($mst as $cu){
 						?>
@@ -141,7 +141,7 @@
 				      {!!Form::label('password_confirm','Status',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
 						<select class="form-control" name="status">
-							<option value="">-- Pilih Status --</value>
+							<option value="">-- Choose Status --</value>
 							<option <?php if($qt->status==1){ echo "selected"; } ?> value="1">Aktif</value>
 							<option <?php if($qt->status==0){ echo "selected"; } ?> value="0">Tidak Aktif</value>
 						</select>

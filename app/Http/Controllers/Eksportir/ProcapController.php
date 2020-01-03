@@ -22,7 +22,7 @@ class ProcapController extends Controller
     {
 //        dd($id_user);
         $url = '/eksportir/procap_save';
-        $pageTitle = 'Tambah Product Capacity';
+        $pageTitle = 'Add Product Capacity';
         return view('eksportir.procap.tambah', compact('pageTitle', 'url'));
     }
 

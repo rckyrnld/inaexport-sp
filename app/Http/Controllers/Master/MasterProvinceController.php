@@ -118,10 +118,10 @@ class MasterProvinceController extends Controller
       $data = MasterProvince::where('id', $id)->delete();
       if($data){
          Session::flash('success','Success Delete Data');
-         return redirect('/master-province/');
+         return redirect('/master-province/')->with('success', 'Success Delete Data');
        }else{
          Session::flash('failed','Failed Delete Data');
-         return redirect('/master-province/');
+         return redirect('/master-province/')->with('error', 'Failed Delete Data');
        }
     }
 

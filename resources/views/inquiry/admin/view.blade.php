@@ -101,7 +101,7 @@
                     </div><br><br>
                     <div class="row">
                         <label class="col-md-12">
-                            <h5><b>List Company / Eksportir</b></h5>
+                            <h5><b>List Company / Indonesian Exportir</b></h5>
                         </label>
                     </div><br>
                     <div class="row">

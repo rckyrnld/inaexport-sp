@@ -79,7 +79,7 @@
                         </div>
                         <div class="col-md-4">
                             @if($data->file == "")
-                                <input type="text" class="btn btn-default" value="Dokumen Kosong" autocomplete="off" readonly style="color: orange; text-align: center;">
+                                <input type="text" class="btn btn-default" value="No File" autocomplete="off" readonly style="color: orange; text-align: center;">
                             @else
                                 <a href="{{ url('/') }}/uploads/Inquiry/{{$data->id}}/{{ $data->file }}" target="_blank" class="btn btn-default" style="color: orange;"><i class="fa fa-download"></i>&nbsp;{{ $data->file }} </a>
                             @endif
@@ -101,7 +101,7 @@
                     </div><br><br>
                     <div class="row">
                         <label class="col-md-12">
-                            <h5><b>List Company / Eksportir</b></h5>
+                            <h5><b>List Company / Indonesian Exportir</b></h5>
                         </label>
                     </div><br>
                     <div class="row">

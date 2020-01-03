@@ -243,8 +243,9 @@ body {font-family: Arial;}
 
 <div class="col-sm-12">
 <div align="right">
-<button class="btn btn-md btn-primary"><i class="fa fa-save"></i> Submit</button>
-<a href="{{ url('verifyimportir') }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Cancel</a>
+	<a href="{{ url('verifyimportir') }}" class="btn btn-md btn-danger">Cancel</a>
+	<button class="btn btn-md btn-primary">Submit</button>
+
 
 
 </div>

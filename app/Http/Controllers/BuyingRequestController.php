@@ -288,8 +288,8 @@ class BuyingRequestController extends Controller
 	
 	public function add()
     {
-        $pageTitle = "Add Buying Request Representative";
-		return view('buying-request.add', compact('pageTitle'));
+        $pageTitle = "Add Buying Request Admin";
+		return view('buying-request.add', compact('pageTitle'))->with('success','Success Add Data');
     }
 	
 	public function br_pw_lc($id)

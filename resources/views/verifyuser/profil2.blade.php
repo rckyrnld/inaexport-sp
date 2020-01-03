@@ -68,7 +68,7 @@
                                 <div class="form-row">
                                     <div class="col-md-7">
                                         <div class="box-body">
-                                            <b>Account Information Importir</b><br><br>
+                                            <b>Account Information Buyer</b><br><br>
                                             <?php
                                             $ca = DB::select("select * from itdp_company_users where id='$idb' limit 1");
                                             foreach($ca as $rhj){
@@ -260,7 +260,7 @@
 											
 											 <div class="form-row">
                                                 <div class="form-group col-sm-4">
-                                                    <label><b>Dokumen Pendukung</b></label>
+                                                    <label><b>Supporting Documents</b></label>
                                                 </div>
                                                 <div class="form-group col-sm-8">
                                                     <input type="file" name="filependukung"
@@ -270,7 +270,7 @@
 											
                                             <div class="form-row">
                                                 <div class="form-group col-sm-4">
-                                                    <label><b>Status Importir</b></label>
+                                                    <label><b>Status Buyer</b></label>
                                                 </div>
                                                 <div class="form-group col-sm-8">
                                                     <?php if(empty(Auth::user()->name)){
@@ -290,7 +290,7 @@
                                                             onchange="nv()">
                                                         <option <?php if ($rhj->status == 0) {
                                                             echo "selected";
-                                                        } ?> value="0">-- Pilih Status --
+                                                        } ?> value="0">-- Choose Status --
                                                         </option>
                                                         <option <?php if ($rhj->status == 1) {
                                                             echo "selected";

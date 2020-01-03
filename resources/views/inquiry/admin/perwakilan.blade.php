@@ -19,7 +19,7 @@
                 <div class="box-header bg-light">
                     <div class="row">
                         <div class="col-md-10">
-                            <h5><i></i> Data Inquiry : {{getPerwakilanName($id)}}</h5>  
+                            <h5><i></i> List Inquiry : {{getPerwakilanName($id)}}</h5>
                         </div>
                         <div class="col-md-2">
                             <a href="{{url('/inquiry_admin')}}" class="btn btn-danger" style="float: right;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>

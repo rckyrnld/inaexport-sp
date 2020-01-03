@@ -214,7 +214,7 @@ class EksProductController extends Controller
 //        dd($id_user);
         if(Auth::guard('eksmp')->user()){
             $url = '/eksportir/product_save';
-            $pageTitle = 'Tambah Product';
+            $pageTitle = 'Add Product';
             $hsco = DB::table('mst_hscodes')->orderBy('desc_eng', 'ASC')->limit(10)->get();
             $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
             return view('eksportir.eksproduct.tambah', compact('pageTitle', 'url', 'catprod', 'hsco'));

@@ -13,7 +13,7 @@
                                 <label>Brand</label>
                                 <select class="atc form-control select2" required id="brand"
                                         name="brand">
-                                    <option value="">- Pilih Brand -</option>
+                                    <option value="">- Choose Brand -</option>
                                     @foreach($brand as $sat)
                                         <option value="{{$sat->id}}">{{$sat->merek}}</option>
                                     @endforeach
@@ -24,7 +24,7 @@
                                 <label>Country</label>
                                 <select class="atc form-control select2" required id="country"
                                         name="country">
-                                    <option value="">- Pilih Country -</option>
+                                    <option value="">- Choose Country -</option>
                                     @foreach($country as $sa)
                                         <option value="{{$sa->id}}">{{$sa->country}}</option>
                                     @endforeach
