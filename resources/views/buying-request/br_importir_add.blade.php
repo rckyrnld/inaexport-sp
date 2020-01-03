@@ -116,14 +116,15 @@
 		</div>
 		
 	</div>
-	<input type="hidden" name="t2s" id="t2s" value="0">
-	<input type="hidden" name="t3s" id="t3s" value="0">
-	<!--<div id="t2">
 	
+	
+	<div id="t2">
+	<input type="hidden" name="t2s" id="t2s" value="0">
 	</div>
 	<div id="t3">
+	<input type="hidden" name="t3s" id="t3s" value="0">
 	
-	</div> -->
+	</div> 
 	<div class="form-row">
 		<div class="col-sm-12">
 		<label><b>Specification</b></label>
