@@ -64,6 +64,7 @@
     .single_product:hover{
         box-shadow: 0 0 15px rgba(178,221,255,1); 
     }
+    #delete_cat{ margin-left:10px; font-size:12px; color: #c4a6a6; cursor: pointer; }
 </style>
 <!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
@@ -263,6 +264,9 @@
                     <!--sidebar widget end-->
                 </div>
                 <div class="col-lg-9 col-md-12">
+                    @if(count($product) == 0 )
+                        <center>Product Not Found</center>
+                    @else
                     <div class="row shop_wrapper">
                         @foreach($product as $pro)
                             <?php
@@ -319,9 +323,21 @@
                                     $padImg = '10px 5px 0px 5px';
                                 }
                                 $minorder = '-';
+                                $minordernya = '-';
                                 if($pro->minimum_order != null){
                                     $minorder = $pro->minimum_order;
+                                    if(strlen($minorder) > 30){
+                                        $cut_desc = substr($minorder, 0, 30);
+                                        if ($minorder{30 - 1} != ' ') { 
+                                            $new_pos = strrpos($cut_desc, ' '); 
+                                            $cut_desc = substr($minorder, 0, $new_pos);
+                                        }
+                                        $minordernya = $cut_desc . '...';
+                                    }else{
+                                        $minordernya = $minorder;
+                                    }
                                 }
+
                                 $ukuran = '340px';
                                 if(!empty(Auth::guard('eksmp')->user())){
                                     if(Auth::guard('eksmp')->user()->status == 1){
@@ -448,7 +464,7 @@
                                                 @endif
                                             @endif
 
-                                            {{$order}}{{$minorder}}<br>
+                                            {{$order}}<span title="{{$minorder}}">{{$minordernya}}</span><br>
                                             <a href="{{url('front_end/list_perusahaan/view/'.$param)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$companame}}</a>
                                         </span>
                                     </div>
@@ -519,6 +535,7 @@
                             </div>
                         @endforeach
                     </div>
+                    @endif
                     <br>
                     @if($coproduct > 12)
                     <!-- <div class="shop_toolbar t_bottom"> -->
@@ -581,6 +598,37 @@
                     $("#manufacturlist").html(response);
                 }
             });
+        });
+
+        $('#delete_cat').on('click', function(){
+            var delete_cat = $('#cari_catnya').val();
+            var cekSearch = $('#cari_product').val();
+            //DOM with search box
+            if(cekSearch.indexOf(',') !== -1){
+                var cat = cekSearch.split(',');
+                cat = cat.map(function(val){
+                    value = val.trim();
+                    return value.toLowerCase();
+                })
+                var cat2 = [cat[0]];
+                for(var i=0; i<cat.length; i++){
+                    if(cat[i] == 'hot' || cat[i] == 'new'){
+                        cat2.push(cat[i]);
+                    }
+                }
+                searchnya = cat2.join(", ");
+                $('#cari_product').val(searchnya);
+            }
+            //End of DOM
+            if(delete_cat.indexOf('|') !== -1){
+                var pecah = delete_cat.split('|');
+                pecah.pop();
+                hasil = pecah.join("|");
+            } else {
+                hasil = '';
+            }
+            $('#cari_catnya').val(hasil);
+            $('#formsprod').submit();
         });
 
         $("#sortbyproduct").on('change', function () {
@@ -667,6 +715,21 @@
 
     function getProduct(val, isi, checked) {
         var isinya = "";
+        var cekSearch = $('#cari_product').val();
+        //DOM with search box
+        if(cekSearch.indexOf(',') !== -1){
+            var pecah = cekSearch.split(',');
+            pecah = pecah.map(function(val){
+                value = val.trim();
+                return value.toLowerCase();
+            })
+            if (pecah.includes(val)) {
+                var searchnya = pecah.filter(function(e) { return e !== val });
+                searchnya = searchnya.join(", ");
+                $('#cari_product').val(searchnya);
+            }
+        }
+        //end of DOM
         if(checked){
             if(isi == ""){
                 isinya = val;
@@ -695,6 +758,25 @@
 
     function getProductbyEksportir(val, isi, checked) {
         var isinya = "";
+        var cekSearch = $('#cari_product').val();
+        //DOM with search box
+        if(cekSearch.indexOf('-') !== -1){
+            var pecah = cekSearch.split('-');
+            if(cekSearch.indexOf(',') !== -1){
+                searchnya = pecah[0];
+                pecah = pecah[1].toString();
+                pecah = pecah.split(',');
+                pecah.splice(0,1);
+                searchnya += ',' + pecah.join(",");
+                $('#cari_product').val(searchnya);
+
+            } else {
+                pecah.splice(1,1);
+                searchnya = pecah.join("");
+                $('#cari_product').val(searchnya);
+            }
+        }
+        //end of DOM
         if(checked){
             if(isi == ""){
                 isinya = val;
