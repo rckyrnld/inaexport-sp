@@ -174,8 +174,19 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="widgets_container contact_us">
                             <div class="footer_logo" align="center">
-                                <img src="{{asset('front/assets/img/logo/inatrade.png')}}" alt="" width="100%">
-                                <img src="{{asset('front/assets/img/logo/asian-japan-centre.png')}}" alt="" width="100%">
+                                <a href="http://inatrade.kemendag.go.id"><img src="{{asset('front/assets/img/logo/inatrade.png')}}" alt="" width="100%"></a>
+                                <a href="http://exim.kemendag.go.id"><img src="{{asset('front/assets/img/logo/exim logo-01.png')}}" alt="" style="width:95%!important;height:40px!important;"></a>
+								<br><br>
+								<table width="100%">
+								<tr>
+									<td width="50%"><a href="https://play.google.com/store/apps/details?id=com.maxxima.kemendagmobile"><img src="{{asset('front/assets/icon/android.svg')}}" alt="" width="100%"></a></td>
+									<td width="50%"><a href=""><img src="{{asset('front/assets/icon/ios.svg')}}" alt="" width="100%"></a></td>
+								</tr>
+								</table>
+                                
+                                
+                                <!--<img src="{{asset('front/assets/img/logo/asian-japan-centre.png')}}" alt="" width="100%"> -->
+								
                             </div>
                         </div>
                     </div>

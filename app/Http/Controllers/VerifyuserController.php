@@ -65,7 +65,21 @@ class VerifyuserController extends Controller
 				 return $pesan->phone;
             })
 			->addColumn('f5', function ($pesan) {
-				 return $pesan->fax;
+				 $cariac = DB::select("select * from log_user where id_user='".$pesan->ida."' and id_role='".$pesan->id_role."' order by id_log desc limit 1");
+				 if(count($cariac) == 0){
+					return "No Action";
+				 }else{
+					 foreach($cariac as $cc){
+						 if($cc->keterangan == null){
+							 $kt ="Login";
+						 }else{
+							 
+							$kt = $cc->keterangan;
+						 }
+						 
+						 return $cc->date."(".$cc->waktu.") ".$kt;
+					 }
+				 }
             })
 			->addColumn('f6', function ($pesan) {
 				 if($pesan->agree == 1){ 
@@ -98,7 +112,7 @@ class VerifyuserController extends Controller
 				';
 				}
             })
-			->rawColumns(['action','f6','f7','f1'])
+			->rawColumns(['action','f6','f7','f1','f5'])
             ->make(true);
     }
 	
@@ -139,7 +153,21 @@ class VerifyuserController extends Controller
 				 return $pesan->phone;
             })
 			->addColumn('f5', function ($pesan) {
-				 return $pesan->fax;
+				 $cariac = DB::select("select * from log_user where id_user='".$pesan->ida."' and id_role='".$pesan->id_role."' order by id_log desc limit 1");
+				 if(count($cariac) == 0){
+					return "No Action";
+				 }else{
+					 foreach($cariac as $cc){
+						 if($cc->keterangan == null){
+							 $kt ="Login";
+						 }else{
+							 
+							$kt = $cc->keterangan;
+						 }
+						 
+						 return $cc->date."(".$cc->waktu.") ".$kt;
+					 }
+				 }
             })
 			->addColumn('f6', function ($pesan) {
 				 if($pesan->agree == 1){ 
@@ -176,7 +204,7 @@ class VerifyuserController extends Controller
            
                 
             })
-			->rawColumns(['action','f6','f7','f1'])
+			->rawColumns(['action','f6','f7','f1','f5'])
             ->make(true);
     }
 	
