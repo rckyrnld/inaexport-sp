@@ -343,7 +343,7 @@
 			              <th>Name</th>
 			              <th>Email</th>
 			              <th><center>Phone</center></th>
-			              <th><center>Aksi</center></th>
+			              <th><center>Action</center></th>
 			             
 			          </tr>
 					</thead>

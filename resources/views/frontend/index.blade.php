@@ -423,8 +423,19 @@
                                             $padImg = '10px 5px 0px 5px';
                                         }
                                         $minorder = '-';
+                                        $minordernya = '-';
                                         if($p->minimum_order != null){
                                             $minorder = $p->minimum_order;
+                                            if(strlen($minorder) > 18){
+                                                $cut_desc = substr($minorder, 0, 18);
+                                                if ($minorder{18 - 1} != ' ') { 
+                                                    $new_pos = strrpos($cut_desc, ' '); 
+                                                    $cut_desc = substr($minorder, 0, $new_pos);
+                                                }
+                                                $minordernya = $cut_desc . '...';
+                                            }else{
+                                                $minordernya = $minorder;
+                                            }
                                         }
                                         $ukuran = '340px';
                                         if(!empty(Auth::guard('eksmp')->user())){
@@ -517,7 +528,7 @@
                                                     @endif
                                                 @endif
 
-                                                {{$order}}{{$minorder}}<br>
+                                                {{$order}}<span title="{{$minorder}}"></span>{{$minordernya}}<br>
                                                 <a href="{{url('front_end/list_perusahaan/view/'.$param)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$companame}}</a>
                                             </span>
                                         </div>

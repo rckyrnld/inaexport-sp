@@ -289,7 +289,7 @@ class BuyingRequestController extends Controller
 	public function add()
     {
         $pageTitle = "Add Buying Request Admin";
-		return view('buying-request.add', compact('pageTitle'))->with('success','Success Add Data');
+		return view('buying-request.add', compact('pageTitle'));
     }
 	
 	public function br_pw_lc($id)
@@ -763,7 +763,7 @@ class BuyingRequestController extends Controller
 			,'0','0','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
 			,'".$ch2."','".$request->ntp."','".Auth::user()->id_group."','".Auth::user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat."')");
 		
-		return redirect('br_list');
+		return redirect('br_list')->with('success','Success Add Data');
 	}
 	
 	public function br_save_trx(Request $request)

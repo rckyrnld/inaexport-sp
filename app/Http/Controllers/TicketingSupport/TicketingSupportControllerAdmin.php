@@ -49,9 +49,9 @@ class TicketingSupportControllerAdmin extends Controller
             })
             ->addColumn('status', function ($data) {
                 if ($data->status == 1) {
-                    return 'No Respone';
+                    return 'No Response';
                 } else if ($data->status == 2) {
-                    return 'Respone';
+                    return 'Response';
                 } else if ($data->status == 3) {
                     return 'Closed';
                 }
@@ -113,7 +113,7 @@ class TicketingSupportControllerAdmin extends Controller
 
         $users = TicketingSupportModel::where('id', $id)->first();
 
-        $pageTitle = "Chat Ticketing Support";
+        $pageTitle = "Chat Customer Support";
         $jenis = 'chat';
         return view('ticketingsupport.vchatAdmin', compact('jenis', 'pageTitle', 'users', 'messages'));
     }
@@ -266,7 +266,7 @@ class TicketingSupportControllerAdmin extends Controller
 
         $users = TicketingSupportModel::where('id', $id)->first();
 
-        $pageTitle = "Chat Ticketing Support";
+        $pageTitle = "Chat Customer Support";
         $jenis = 'view';
         return view('ticketingsupport.vchatAdmin', compact('jenis', 'pageTitle', 'users', 'messages'));
     }
