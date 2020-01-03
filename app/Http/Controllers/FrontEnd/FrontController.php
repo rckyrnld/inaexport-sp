@@ -66,67 +66,86 @@ class FrontController extends Controller
         if($request->cari_product){
             $hl_sort = $request->hl_prod;
             $getEks = $request->eks_prod;
-            if (strpos($request->cari_product, '-') !== false) {
-                $pecah = explode('-', $request->cari_product);
-                $search = $request->cari_product;
-                $searchnya = trim($pecah[0]);
-                if(strpos($pecah[1], ',') !== false){
-                    $pecah2 = explode(',', $pecah[1]);
-                    $pecah2 = array_map(function($query){
-                        $trim = trim($query);
-                        return strtolower($trim);
-                    }, $pecah2);
+            $get_id_cat = $request->cari_catnya;
+            $search = $searchnya = trim($request->cari_product);
+            // if (strpos($request->cari_product, '-') !== false) {
+            //     $pecah = explode('-', $request->cari_product);
+            //     $search = $request->cari_product;
+            //     $searchnya = trim($pecah[0]);
+            //     if(strpos($pecah[1], ',') !== false){
+            //         $pecah2 = explode(',', $pecah[1]);
+            //         $nama_eksportir = trim($pecah2[0]);
+            //         $pecah2 = array_map(function($query){
+            //             $trim = trim($query);
+            //             return strtolower($trim);
+            //         }, $pecah2);
 
-                    $getEks = getAdvListEksportir($pecah2[0]);
-                    if(in_array('hot', $pecah2) && in_array('new', $pecah2)){
-                        $hl_sort = 'hot|new';
-                    } else if(in_array('hot', $pecah2) && !in_array('new', $pecah2)){
-                        $hl_sort = 'hot';
-                    } else if (!in_array('hot', $pecah2) && in_array('new', $pecah2)){
-                        $hl_sort = 'new';
-                    }
-                        //Delete Array
-                        if (($key = array_search('hot', $pecah2)) !== false) {
-                            unset($pecah2[$key]);
-                        }
-                        if (($key = array_search('new', $pecah2)) !== false) {
-                            unset($pecah2[$key]);
-                        }
-                } else {
-                    $getEks = getAdvListEksportir($pecah[1]);
-                } 
-            } else {
-                if(strpos($request->cari_product, ',') !== false){
-                    $pecah = explode(',', $request->cari_product);
-                    $search = $request->cari_product;
-                    $searchnya = trim($pecah[0]);
-                    $pecah = array_map(function($query){
-                        $trim = trim($query);
-                        return strtolower($trim);
-                    }, $pecah);
+            //         $getEks = getAdvListEksportir($pecah2[0]);
+            //         if(in_array('hot', $pecah2) && in_array('new', $pecah2)){
+            //             $hl_sort = 'hot|new';
+            //         } else if(in_array('hot', $pecah2) && !in_array('new', $pecah2)){
+            //             $hl_sort = 'hot';
+            //         } else if (!in_array('hot', $pecah2) && in_array('new', $pecah2)){
+            //             $hl_sort = 'new';
+            //         }
+            //             //Delete Array
+            //             if (($key = array_search('hot', $pecah2)) !== false) {
+            //                 unset($pecah2[$key]);
+            //             }
+            //             if (($key = array_search('new', $pecah2)) !== false) {
+            //                 unset($pecah2[$key]);
+            //             }
+            //             if (($key = array_search($nama_eksportir, $pecah2)) !== false) {
+            //                 unset($pecah2[$key]);
+            //             }
 
-                    if(in_array('hot', $pecah) && in_array('new', $pecah)){
-                        $hl_sort = 'hot|new';
-                    } else if(in_array('hot', $pecah) && !in_array('new', $pecah)){
-                        $hl_sort = 'hot';
-                    } else if (!in_array('hot', $pecah) && in_array('new', $pecah)){
-                        $hl_sort = 'new';
-                    }
-                        //Delete Array
-                        if (($key = array_search('hot', $pecah)) !== false) {
-                            unset($pecah[$key]);
-                        }
-                        if (($key = array_search('new', $pecah)) !== false) {
-                            unset($pecah[$key]);
-                        }
-                } else {
-                    $search = $searchnya = trim($request->cari_product);
-                }
-            }
+            //         if($pecah2){
+            //             sort($pecah2);
+            //             $get_id_cat = getCategorySearch($pecah2[0], $lct);
+            //         }
+            //     } else {
+            //         $getEks = getAdvListEksportir($pecah[1]);
+            //     } 
+            // } else {
+            //     if(strpos($request->cari_product, ',') !== false){
+            //         $pecah = explode(',', $request->cari_product);
+            //         $search = $request->cari_product;
+            //         $searchnya = trim($pecah[0]);
+            //         $pecah = array_map(function($query){
+            //             $trim = trim($query);
+            //             return strtolower($trim);
+            //         }, $pecah);
+
+            //         if(in_array('hot', $pecah) && in_array('new', $pecah)){
+            //             $hl_sort = 'hot|new';
+            //         } else if(in_array('hot', $pecah) && !in_array('new', $pecah)){
+            //             $hl_sort = 'hot';
+            //         } else if (!in_array('hot', $pecah) && in_array('new', $pecah)){
+            //             $hl_sort = 'new';
+            //         }
+            //             //Delete Array
+            //             if (($key = array_search('hot', $pecah)) !== false) {
+            //                 unset($pecah[$key]);
+            //             }
+            //             if (($key = array_search('new', $pecah)) !== false) {
+            //                 unset($pecah[$key]);
+            //             }
+            //             if (($key = array_search($searchnya, $pecah)) !== false) {
+            //                 unset($pecah[$key]);
+            //             }
+            //         if($pecah){
+            //             sort($pecah);
+            //             $get_id_cat = getCategorySearch($pecah[0], $lct);
+            //         }
+            //     } else {
+            //         $search = $searchnya = trim($request->cari_product);
+            //     }
+            // }
         } else {
             $search = $searchnya = '';
             $getEks = $request->eks_prod;
             $hl_sort = $request->hl_prod;
+            $get_id_cat = $request->cari_catnya;
         }
 
         //List Category Product
@@ -159,7 +178,7 @@ class FrontController extends Controller
 
 
         //Data Product
-        if($request->cari_catnya == NULL){
+        if($get_id_cat == ''){
             $query = DB::table('csc_product_single')
                     ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
                     ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
@@ -232,18 +251,21 @@ class FrontController extends Controller
             $product = $query->orderByRaw($col)->paginate(12);
 
             $catActive = NULL;
-            $get_id_cat = NULL;
         }else{
             $catActive = '';
-            if (strstr($request->cari_catnya, '|')) {
-                $pisah = explode('|', $request->cari_catnya);
+            if (strstr($get_id_cat, '|')) {
+                $pisah = explode('|', $get_id_cat);
                 $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$pisah[0]).'">'.getCategoryName($pisah[0], $request->locnya).'</a></li>';
-                $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$pisah[1]).'">'.getCategoryName($pisah[1], $request->locnya).'</a></li>';
-                $get_id_cat = $pisah[0].'|'.$pisah[1];
+                if(count($pisah) > 2){
+                    $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$pisah[1]).'">&nbsp;'.getCategoryName($pisah[1], $request->locnya).'</a></li>';
+                    $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$pisah[2]).'">&nbsp;'.getCategoryName($pisah[2], $request->locnya).'</a><i class="fa fa-window-close" id="delete_cat"></i></li>';
+                } else {
+                    $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$pisah[1]).'">&nbsp;'.getCategoryName($pisah[1], $request->locnya).'</a><i class="fa fa-window-close" id="delete_cat"></i></li>';
+
+                }
             } else {
-                $pisah = $request->cari_catnya;
-                $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$pisah).'">'.getCategoryName($pisah, $request->locnya).'</a></li>';
-                $get_id_cat = $pisah;
+                $pisah = $get_id_cat;
+                $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$pisah).'">&nbsp;'.getCategoryName($pisah, $request->locnya).'</a><i class="fa fa-window-close" id="delete_cat"></i></li>';
             }
 
             $query = $this->getQueryCategory($pisah, $request->locnya, $searchnya);
@@ -329,6 +351,20 @@ class FrontController extends Controller
                 $query->orwhere('c.prodname_'.$lct, 'ILIKE', '%'.$searchnya.'%');
             });
         }
+        if($get_id_cat != ''){
+            if(strstr($get_id_cat, '|')){
+                $pecah = explode('|', $get_id_cat);
+                $end = end($pecah);
+                $catnya = [$end];
+            } else {
+                $catnya = [$get_id_cat];
+            }
+            $query_manufacture->where(function($query) use ($catnya){
+                $query->whereIn('c.id_csc_product', $catnya);
+                $query->orWhereIn('c.id_csc_product_level1', $catnya);
+                $query->orWhereIn('c.id_csc_product_level2', $catnya);
+            });
+        }
         $manufacturer = $query_manufacture->get();
 
         if($getEks != ''){
@@ -388,9 +424,7 @@ class FrontController extends Controller
                     ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
                     ->where('itdp_company_users.status', 1)
                     ->where('csc_product_single.status', 2)
-                    ->where('csc_product_single.id_csc_product', $dt)
-                    ->orderBy($col, $ord)
-                    ->paginate(12);
+                    ->where('csc_product_single.id_csc_product', $dt);
             }
         }
         
@@ -484,30 +518,48 @@ class FrontController extends Controller
             ->get();
 
         //Data Eksportir/Manufacturer
-        $manufacturer = DB::select(
-            "SELECT 
-                a.id, b.company, b.id as id_profil, (SELECT COUNT(*) FROM csc_product_single WHERE status = 2 AND id_itdp_company_user = a.id) as jml_produk
-            FROM itdp_company_users as a
-            JOIN itdp_profil_eks as b ON a.id_profil = b.id
-            WHERE a.status = '1'
-            ORDER BY jml_produk DESC
-            LIMIT 10"
-        );
+        // $manufacturer = DB::select(
+        //     "SELECT 
+        //         a.id, b.company, b.id as id_profil, (SELECT COUNT(*) FROM csc_product_single WHERE status = 2 AND id_itdp_company_user = a.id) as jml_produk
+        //     FROM itdp_company_users as a
+        //     JOIN itdp_profil_eks as b ON a.id_profil = b.id
+        //     WHERE a.status = '1'
+        //     ORDER BY jml_produk DESC
+        //     LIMIT 10"
+        // );
+        $cek_cat = DB::table('csc_product')->where('id', $id)->first();
+        $tampung_cat = [$cek_cat->id];
+        $query_manufacture = DB::table('itdp_company_users as a')->selectRaw('a.id, b.company, count(c.*) as jml_produk')
+            ->join('itdp_profil_eks as b', 'a.id_profil', 'b.id')
+            ->join('csc_product_single as c', 'a.id', 'c.id_itdp_company_user')
+            ->where('a.status', 1)
+            ->where('c.status', 2)
+            ->orderby('jml_produk', 'desc')
+            ->groupby('a.id')->groupby('b.company')
+            ->limit(10);
+        if(count($tampung_cat) > 0){
+            $query_manufacture->where(function($query) use ($tampung_cat){
+                $query->whereIn('c.id_csc_product', $tampung_cat);
+                $query->orWhereIn('c.id_csc_product_level1', $tampung_cat);
+                $query->orWhereIn('c.id_csc_product_level2', $tampung_cat);
+            });
+        }
+        $manufacturer = $query_manufacture->get();
 
         $catActive = '';
         if($catdata->level_1 == 0 && $catdata->level_2 == 0){
-            $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->id).'">'.getCategoryName($catdata->id, $lct).'</a></li>';
+            $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->id).'">'.getCategoryName($catdata->id, $lct).'</a><i class="fa fa-window-close" id="delete_cat"></i></li>';
             $colnya = "id_csc_product";
             $get_id_cat = $catdata->id;
         }else if($catdata->level_1 != 0 && $catdata->level_2 == 0){
             $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->level_1).'">'.getCategoryName($catdata->level_1, $lct).'</a></li>';
-            $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->id).'">'.getCategoryName($catdata->id, $lct).'</a></li>';
+            $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->id).'">'.getCategoryName($catdata->id, $lct).'</a><i class="fa fa-window-close" id="delete_cat"></i></li>';
             $colnya = "id_csc_product_level1";
             $get_id_cat = $catdata->level_1.'|'.$catdata->id;
         }else if($catdata->level_1 != 0 && $catdata->level_2 != 0){
             $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->level_2).'">'.getCategoryName($catdata->level_2, $lct).'</a></li>';
             $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->level_1).'">'.getCategoryName($catdata->level_1, $lct).'</a></li>';
-            $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->id).'">'.getCategoryName($catdata->id, $lct).'</a></li>';
+            $catActive .= '<li><a href="'.url('/front_end/list_product/category/'.$catdata->id).'">'.getCategoryName($catdata->id, $lct).'</a><i class="fa fa-window-close" id="delete_cat"></i></li>';
             $colnya = "id_csc_product_level2";
             $get_id_cat = $catdata->level_2.'|'.$catdata->level_1.'|'.$catdata->id;
         }

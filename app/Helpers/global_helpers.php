@@ -964,6 +964,7 @@ if (! function_exists('getProductName')) {
     }
 }
 
+// Function for Advance Search
 if (! function_exists('getAdvListEksportir')) {
     function getAdvListEksportir($nama){
       $nama = trim($nama);
@@ -1001,3 +1002,33 @@ if (! function_exists('getCollectionManufacture')) {
       return $collection;
     }
 }
+
+
+if (! function_exists('getCategorySearch')) {
+    function getCategorySearch($nama, $lct){
+      $nama = trim($nama);
+      $return = '';
+      $data = DB::table('csc_product')->whereRaw('UPPER(nama_kategori_en) = UPPER(\''.$nama.'\')')->first();
+      if(!$data){
+        $data = DB::table('csc_product')->whereRaw('UPPER(nama_kategori_'.$lct.') = UPPER(\''.$nama.'\')')->first();
+        if(!$data){
+          $data = DB::table('csc_product')->where('nama_kategori_en', 'ILIKE', '%'.$nama.'%')->first();
+          if(!$data){
+            $data = DB::table('csc_product')->where('nama_kategori_'.$lct, 'ILIKE', '%'.$nama.'%')->first();
+          }  
+        }
+      }
+      if($data){
+        $return = $data->id;
+        if($data->level_2 != '0' || $data->level_2 != null){
+          $return = $data->level_2.'|'.$data->level_1.'|'.$return;
+        }
+        if($data->level_1 != '0' && $data->level_2 == '0' || $data->level_1 != null && $data->level_2 == '0'){
+          $return = $data->level_1.'|'.$return;
+        } 
+      }
+
+      return $return;
+    }
+}
+// End of Function Search
