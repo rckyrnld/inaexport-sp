@@ -352,7 +352,10 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                             <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>
                         </div>
                     </div>
-                    <div class="col-lg-10 col-md-6 col-12">
+					<div class="col-lg-1 col-md-1 col-12">
+                       &nbsp;
+                    </div>
+                    <div class="col-lg-9 col-md-5 col-12">
                         <div class="middel_right">
                             <div class="search-container" style="margin-bottom: 10px;">
                                 <!-- Nav pills -->
@@ -372,7 +375,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                 <div class="tab-content">
                                     <div id="products" class="container tab-pane active">
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_product')}}" id="formsprod">
-                                            <div class="search_box">
+                                            <div class="search_box" style="width: 479px!important;">
                                                 <?php
                                                     if(isset($search)){
                                                         $cariprod = $search;
