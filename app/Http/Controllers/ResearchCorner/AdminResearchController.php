@@ -274,7 +274,7 @@ class AdminResearchController extends Controller
          Session::flash('success','Success Delete Data');
          return redirect('admin/research-corner/');
        }else{
-         Session::flash('failed','Failed Delete Data');
+         Session::flash('error','Failed Delete Data');
          return redirect('admin/research-corner/');
        }
     }

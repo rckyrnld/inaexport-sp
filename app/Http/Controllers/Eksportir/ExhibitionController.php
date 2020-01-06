@@ -37,7 +37,7 @@ class ExhibitionController extends Controller
             'nilai_kontrak' => $request->value_contract,
             'subsidi' => $request->subsidi_djpen
         ]);
-        return redirect('eksportir/exhibition');
+        return redirect('eksportir/exhibition')->with('success','Success Add Data');
     }
 
     public function datanya()
@@ -57,7 +57,7 @@ class ExhibitionController extends Controller
                 <a href="' . route('exhibition.detail', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit">
                     <i class="fa fa-edit text-white"></i>
                 </a>
-                <a href="' . route('exhibition.delete', $mjl->id) . '" class="btn btn-sm btn-danger" title="Delete">
+                <a href="' . route('exhibition.delete', $mjl->id) . '" onclick="return confirm(\'Are You Sure ?\')" class="btn btn-sm btn-danger" title="Delete">
                     <i class="fa fa-trash text-white"></i>
                 </a>
                 </center>
@@ -107,7 +107,7 @@ class ExhibitionController extends Controller
 //        dd($id);
         DB::table('itdp_eks_event_participants')->where('id', $id)
             ->delete();
-        return redirect('eksportir/exhibition');
+        return redirect('eksportir/exhibition')->with('success','Success Delete Data');
     }
 
     public function update(Request $request)
@@ -122,7 +122,7 @@ class ExhibitionController extends Controller
                 'nilai_kontrak' => $request->value_contract,
                 'subsidi' => $request->subsidi_djpen
             ]);
-        return redirect('eksportir/exhibition');
+        return redirect('eksportir/exhibition')->with('success','Success Update Data');
     }
 
     public function indexadmin($id)
@@ -148,8 +148,8 @@ class ExhibitionController extends Controller
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('exhibition.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                    <i class="fa fa-search text-white"></i> View
+                <a href="' . route('exhibition.view', $mjl->id) . '" title="View" class="btn btn-sm btn-info">
+                    <i class="fa fa-eye text-white"></i>
                 </a>
                 </center>
                 ';

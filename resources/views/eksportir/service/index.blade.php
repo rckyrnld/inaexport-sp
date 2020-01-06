@@ -17,6 +17,18 @@
                 </div>
 
                 <div class="box-body bg-light">
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block" style="text-align: center">
+                            {{--                            <button type="button" class="close" data-dismiss="alert">×</button>--}}
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger alert-block" style="text-align: center">
+                            {{--                                <button type="button" class="close" data-dismiss="alert">×</button>--}}
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
                 	<a id="tambah" href="{{route('service.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
                     <div class="col-md-14"><br>
 		          	 <div class="table-responsive">
@@ -43,6 +55,7 @@
 @include('footer')
 <script type="text/javascript">
 	$(document).ready(function () {
+        $(".alert").slideDown(300).delay(1000).slideUp(300);
         $('#table').DataTable({
             "ordering": false,
             processing: true,

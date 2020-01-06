@@ -42,7 +42,7 @@ class RawmaterialController extends Controller
             'impor_persen' => $request->overseas,
             'nilai_impor' => $request->valuefromdomestic,
         ]);
-        return redirect('eksportir/rawmaterial');
+        return redirect('eksportir/rawmaterial')->with('success','Success Add Data');
     }
 
     public function datanya()
@@ -62,7 +62,7 @@ class RawmaterialController extends Controller
                 <a href="' . route('rawmaterial.detail', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit">
                     <i class="fa fa-edit text-white" ></i>
                 </a>
-                <a href="' . route('rawmaterial.delete', $mjl->id) . '" class="btn btn-sm btn-danger" title="Delete">
+                <a href="' . route('rawmaterial.delete', $mjl->id) . '" class="btn btn-sm btn-danger" onclick="return confirm(\'Are You Sure ?\')" title="Delete">
                     <i class="fa fa-trash text-white"></i> 
                 </a>
                 </center>
@@ -104,7 +104,7 @@ class RawmaterialController extends Controller
 //        dd($id);
         DB::table('itdp_eks_raw_material')->where('id', $id)
             ->delete();
-        return redirect('eksportir/rawmaterial');
+        return redirect('eksportir/rawmaterial')->with('success','Success Delete Data');
     }
 
     public function update(Request $request)
@@ -119,7 +119,8 @@ class RawmaterialController extends Controller
                 'impor_persen' => $request->overseas,
                 'nilai_impor' => $request->valuefromdomestic,
             ]);
-        return redirect('eksportir/rawmaterial');
+        return redirect('eksportir/rawmaterial')->with('success','Success Update Data')
+            ;
     }
 
     public function indexadmin($id)
@@ -141,8 +142,8 @@ class RawmaterialController extends Controller
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('rawmaterial.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                    <i class="fa fa-search text-white"></i> View
+                <a href="' . route('rawmaterial.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                    <i class="fa fa-eye text-white"></i> 
                 </a>
                 </center>
                 ';

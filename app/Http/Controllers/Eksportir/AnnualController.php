@@ -139,8 +139,8 @@ class AnnualController extends Controller
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('sales.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                    <i class="fa fa-search text-white"></i> View
+                <a href="' . route('sales.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                    <i class="fa fa-eye text-white"></i>
                 </a>
                 </center>
                 ';

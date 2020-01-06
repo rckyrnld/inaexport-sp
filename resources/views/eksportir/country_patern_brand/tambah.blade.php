@@ -49,11 +49,10 @@
                             </div>
                             <div class="form-group col-sm-6">
                                 <a style="color: white" href="{{url('/eksportir/country_patern_brand')}}"
-                                   class="btn btn-primary"><i style="color: white"></i>
+                                   class="btn btn-danger">
                                     Back
                                 </a>
-                                <button class="btn btn-success" type="submit"><i
-                                            class="fa fa-plus-circle"></i> Submit
+                                <button class="btn btn-primary" type="submit"> Submit
                                 </button>
                             </div>
                         </div>

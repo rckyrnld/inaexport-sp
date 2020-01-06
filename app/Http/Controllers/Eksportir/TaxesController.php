@@ -49,7 +49,7 @@ class TaxesController extends Controller
             'tunggakan_psl21' => $request->tunggakan_pasal_21,
             'idcompanytahun' => $id_user . $request->year,
         ]);
-        return redirect('eksportir/taxes');
+        return redirect('eksportir/taxes')->with('success','Success Add Data');
     }
 
     public function datanya()
@@ -72,7 +72,7 @@ class TaxesController extends Controller
                 <a href="' . route('taxes.detail', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit">
                     <i class="fa fa-edit text-white"></i>
                 </a>
-                <a href="' . route('taxes.delete', $mjl->id) . '" class="btn btn-sm btn-danger" title="Delete">
+                <a href="' . route('taxes.delete', $mjl->id) . '" onclick="return confirm(\'Are You Sure ?\')" class="btn btn-sm btn-danger" title="Delete">
                     <i class="fa fa-trash text-white"></i>
                 </a>
                 </center>
@@ -114,7 +114,7 @@ class TaxesController extends Controller
 //        dd($id);
         DB::table('itdp_eks_taxes')->where('id', $id)
             ->delete();
-        return redirect('eksportir/taxes');
+        return redirect('eksportir/taxes')->with('success','Success Delete Data');
     }
 
     public function update(Request $request)
@@ -136,7 +136,7 @@ class TaxesController extends Controller
                 'tunggakan_psl21' => $request->tunggakan_pasal_21,
                 'idcompanytahun' => $id_user . $request->year,
             ]);
-        return redirect('eksportir/taxes');
+        return redirect('eksportir/taxes')->with('success','Success Update Data');
     }
 
     public function indexadmin($id)

@@ -69,7 +69,7 @@
                                 <label>Country</label>
                                 <select class="atc form-control select2" required id="country"
                                         name="country">
-                                    <option value="">- Pilih Country -</option>
+                                    <option value="">- Choose Country -</option>
                                     @foreach($country as $sa)
                                         <option value="{{$sa->id}}">{{$sa->country}}</option>
                                     @endforeach

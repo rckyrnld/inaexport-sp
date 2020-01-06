@@ -37,7 +37,7 @@ class PortlandController extends Controller
             'id_mst_port' => $request->port,
             'pelcompany' => $id_user . $request->tahun . $request->port,
         ]);
-        return redirect('eksportir/portland');
+        return redirect('eksportir/portland')->with('success','Success Add Data');
     }
 
     public function datanya()
@@ -59,7 +59,7 @@ class PortlandController extends Controller
                 <a href="' . route('portland.detail', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit">
                     <i class="fa fa-edit text-white"></i> 
                 </a>
-                <a href="' . route('portland.delete', $mjl->id) . '" class="btn btn-sm btn-danger">
+                <a href="' . route('portland.delete', $mjl->id) . '" onclick="return confirm(\'Are You Sure ?\')" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash text-white"></i>
                 </a>
                 </center>
@@ -99,7 +99,7 @@ class PortlandController extends Controller
 //        dd($id);
         DB::table('itdp_eks_port')->where('id', $id)
             ->delete();
-        return redirect('eksportir/portland');
+        return redirect('eksportir/portland')->with('success','Success Delete Data');
     }
 
     public function update(Request $request)
@@ -112,7 +112,7 @@ class PortlandController extends Controller
                 'id_mst_port' => $request->port,
                 'pelcompany' => $id_user . $request->tahun . $request->port,
             ]);
-        return redirect('eksportir/portland');
+        return redirect('eksportir/portland')->with('success','Success Update Data');
     }
 
     public function indexadmin($id)
@@ -139,8 +139,8 @@ class PortlandController extends Controller
 			->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('portland.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                    <i class="fa fa-search text-white"></i> View
+                <a href="' . route('portland.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                    <i class="fa fa-eye text-white"></i> 
                 </a>
                 </center>
                 ';

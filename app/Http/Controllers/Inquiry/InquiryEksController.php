@@ -43,7 +43,7 @@ class InquiryEksController extends Controller
 
             if($jenis == 1){
                 $user = [];
-                $importir = DB::table('csc_inquiry_br')
+                $importer = DB::table('csc_inquiry_br')
                     ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
                     ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
@@ -51,7 +51,7 @@ class InquiryEksController extends Controller
                     ->orderBy('csc_inquiry_br.created_at', 'DESC')
                     ->get();
 //                dd($importir);
-                foreach ($importir as $key) {
+                foreach ($importer as $key) {
                     array_push($user, $key);
                 }
 //                dd($user);
@@ -67,14 +67,14 @@ class InquiryEksController extends Controller
                 }
             }else{
                 $user = [];
-                $importir = DB::table('csc_inquiry_br')
+                $importer = DB::table('csc_inquiry_br')
                     ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
                     ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
                     ->where('csc_inquiry_br.status', '!=', 1)
                     ->orderBy('csc_inquiry_br.created_at', 'DESC')
                     ->get();
-                foreach ($importir as $key) {
+                foreach ($importer as $key) {
                     array_push($user, $key);
                 }
                 $perwakilan = DB::table('csc_inquiry_br as a')
@@ -89,6 +89,7 @@ class InquiryEksController extends Controller
                 }
             }
 
+//            dd($user);
             return \Yajra\DataTables\DataTables::of($user)
                 ->addIndexColumn()
                 ->addColumn('category', function ($mjl) {

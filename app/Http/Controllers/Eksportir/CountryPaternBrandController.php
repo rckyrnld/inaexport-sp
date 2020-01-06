@@ -41,7 +41,7 @@ class CountryPaternBrandController extends Controller
             'bulan' => $request->bulan,
             'tahun' => $request->year,
         ]);
-        return redirect('eksportir/country_patern_brand');
+        return redirect('eksportir/country_patern_brand')->with('success','Success Add Data');
     }
 
     public function datanya()
@@ -67,7 +67,7 @@ class CountryPaternBrandController extends Controller
                 <a href="' . route('country_patern_brand.detail', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit">
                     <i class="fa fa-edit text-white"></i>
                 </a>
-                <a href="' . route('country_patern_brand.delete', $mjl->id) . '" class="btn btn-sm btn-danger" title="Delete">
+                <a href="' . route('country_patern_brand.delete', $mjl->id) . '" onclick="return confirm(\'Are You Sure ?\')" class="btn btn-sm btn-danger" title="Delete">
                     <i class="fa fa-trash text-white"></i>
                 </a>
                 </center>
@@ -121,7 +121,7 @@ class CountryPaternBrandController extends Controller
                 'bulan' => $request->bulan,
                 'tahun' => $request->year,
             ]);
-        return redirect('eksportir/country_patern_brand');
+        return redirect('eksportir/country_patern_brand')->with('success','Success Update Data');
     }
 
     public function indexadmin($id)
@@ -144,8 +144,8 @@ class CountryPaternBrandController extends Controller
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('country_patern_brand.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                    <i class="fa fa-search text-white"></i> View
+                <a href="' . route('country_patern_brand.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                    <i class="fa fa-eye text-white"></i> 
                 </a>
                
                 </center>

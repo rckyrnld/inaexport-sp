@@ -625,7 +625,7 @@ class InquiryAdminController extends Controller
 
                 $nama_file1 = NULL;
                 $destination= 'uploads\Inquiry\\'.$save;
-                if($request->hasFile('file')){ 
+                if($request->hasFile('file')){
                     $file1 = $request->file('file');
                     $nama_file1 = time().'_'.$request->subject.'_'.$file1->getClientOriginalName();
                     Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
@@ -634,8 +634,12 @@ class InquiryAdminController extends Controller
                 $savefile = DB::table('csc_inquiry_br')->where('id', $save)->update([
                     'file' => $nama_file1,
                 ]);
-
-                return redirect('/inquiry_admin')->with('success', 'Success Add Data');
+                if($save){
+                    return redirect('/inquiry_admin')->with('success', 'Success Add Data');
+                }
+                else{
+                    return redirect('/inquiry_admin')->with('error', 'Fail Add Data');
+                }
             }else{
                 return redirect('/home');    
             }

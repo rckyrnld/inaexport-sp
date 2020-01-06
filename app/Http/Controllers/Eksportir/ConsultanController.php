@@ -46,7 +46,7 @@ class ConsultanController extends Controller
             'pejabat' => $request->pejabat,
             'created_at' => $datenow
         ]);
-        return redirect('eksportir/consultan');
+        return redirect('eksportir/consultan')->with('success','Success Add Data');
     }
 
     public function datanya()
@@ -69,7 +69,7 @@ class ConsultanController extends Controller
                 <a href="' . route('consultan.detail', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit">
                     <i class="fa fa-edit text-white"></i>
                 </a>
-                <a href="' . route('consultan.delete', $mjl->id) . '" class="btn btn-sm btn-danger" title="Delete">
+                <a href="' . route('consultan.delete', $mjl->id) . '" onclick="return confirm(\'Are You Sure ?\')" class="btn btn-sm btn-danger" title="Delete">
                     <i class="fa fa-trash text-white"></i>
                 </a>
                 </center>
@@ -111,7 +111,7 @@ class ConsultanController extends Controller
 //        dd($id);
         DB::table('itdp_eks_consultation')->where('id', $id)
             ->delete();
-        return redirect('eksportir/consultan');
+        return redirect('eksportir/consultan')->with('success','Success Delete Data');
     }
 
     public function update(Request $request)
@@ -130,7 +130,7 @@ class ConsultanController extends Controller
                 'pejabat' => $request->pejabat,
                 'modified' => $datenow
             ]);
-        return redirect('eksportir/consultan');
+        return redirect('eksportir/consultan')->with('success','Success Update Data');
     }
 
     public function indexadmin($id)
@@ -153,8 +153,8 @@ class ConsultanController extends Controller
 			->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('consultan.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                    <i class="fa fa-search text-white"></i> View
+                <a href="' . route('consultan.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                    <i class="fa fa-eye text-white"></i> 
                 </a>
                
                 </center>

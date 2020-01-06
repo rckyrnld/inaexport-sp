@@ -37,7 +37,7 @@ class ProcapController extends Controller
             'outsourcing_persen' => $request->out_persen,
             'idcompanytahun' => $id_user . $request->year,
         ]);
-        return redirect('eksportir/product_capacity');
+        return redirect('eksportir/product_capacity')->with('success','Success Add Data');
     }
 
     public function datanya()
@@ -57,7 +57,7 @@ class ProcapController extends Controller
                 <a href="' . route('procap.detail', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit">
                     <i class="fa fa-edit text-white"></i> 
                 </a>
-                <a href="' . route('procap.delete', $mjl->id) . '" class="btn btn-sm btn-danger" title="Delete">
+                <a href="' . route('procap.delete', $mjl->id) . '" onclick="return confirm(\'Are You Sure ?\')" class="btn btn-sm btn-danger" title="Delete">
                     <i class="fa fa-trash text-white"></i> 
                 </a>
                 </center>
@@ -97,7 +97,7 @@ class ProcapController extends Controller
 //        dd($id);
         DB::table('itdp_eks_production')->where('id', $id)
             ->delete();
-        return redirect('eksportir/product_capacity');
+        return redirect('eksportir/product_capacity')->with('success','Success Add Data');
     }
 
     public function update(Request $request)
@@ -109,7 +109,7 @@ class ProcapController extends Controller
                 'sendiri_persen' => $request->persen_sendiri,
                 'outsourcing_persen' => $request->out_persen,
             ]);
-        return redirect('eksportir/product_capacity');
+        return redirect('eksportir/product_capacity')->with('success','Success Update Data');
     }
 
     public function indexadmin($id)
@@ -131,8 +131,8 @@ class ProcapController extends Controller
             ->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('procap.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                    <i class="fa fa-search text-white"></i> View
+                <a href="' . route('procap.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                    <i class="fa fa-eye text-white"></i> 
                 </a>
                 </center>
                 ';

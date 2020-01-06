@@ -127,10 +127,10 @@ class CategoryProductController extends Controller
 
       if($data){
          Session::flash('success','Success '.$param.' Data');
-         return redirect('management/category-product/')->with('success', 'Success '.$param.' Data!');
+         return redirect('management/category-product/')->with('success', 'Success '.$param.' Data');
        }else{
          Session::flash('failed','Failed '.$param.' Data');
-         return redirect('management/category-product/')->with('error', 'Failed '.$param .' Data!');
+         return redirect('management/category-product/')->with('error', 'Failed '.$param .' Data');
        }
     }
 

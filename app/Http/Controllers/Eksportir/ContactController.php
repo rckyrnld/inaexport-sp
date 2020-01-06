@@ -36,7 +36,7 @@ class ContactController extends Controller
             'job_title' => $request->position,
             'phone' => $request->phone,
         ]);
-        return redirect('eksportir/contact');
+        return redirect('eksportir/contact')->with('success','Success Add Data');
     }
 
     public function datanya()
@@ -56,7 +56,7 @@ class ContactController extends Controller
                 <a href="' . route('contact.detail', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit">
                     <i class="fa fa-edit text-white"></i>
                 </a>
-                <a href="' . route('contact.delete', $mjl->id) . '" class="btn btn-sm btn-danger" title="Delete">
+                <a href="' . route('contact.delete', $mjl->id) . '" onclick="return confirm(\'Are You Sure ?\')" class="btn btn-sm btn-danger" title="Delete">
                     <i class="fa fa-trash text-white"></i>
                 </a>
                 </center>
@@ -94,7 +94,7 @@ class ContactController extends Controller
 //        dd($id);
         DB::table('itdp_contact_eks')->where('id', $id)
             ->delete();
-        return redirect('eksportir/contact');
+        return redirect('eksportir/contact')->with('success','Success Delete Data');
     }
 
     public function update(Request $request)
@@ -106,7 +106,7 @@ class ContactController extends Controller
                 'job_title' => $request->position,
                 'phone' => $request->phone,
             ]);
-        return redirect('eksportir/contact');
+        return redirect('eksportir/contact')->with('success','Success Update Data');
     }
 
     public function indexadmin($id)
@@ -132,8 +132,8 @@ class ContactController extends Controller
 			->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('contact.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                    <i class="fa fa-search text-white"></i> View
+                <a href="' . route('contact.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                    <i class="fa fa-eye text-white"></i> 
                 </a>
                
                 </center>
