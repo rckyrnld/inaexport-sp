@@ -42,8 +42,9 @@
 									<th>
                                         <center>Telephone</center>
                                     </th>
+									
 									<th>
-                                        <center>Fax</center>
+                                        <center>Last Activity</center>
                                     </th>
                                     <th>
                                         <center>Email Confirmation</center>
