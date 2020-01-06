@@ -382,7 +382,7 @@ class EventController extends Controller
     {
         DB::table('event_detail')->where('id', $id)->delete();
         DB::table('event_detail_kategori')->where('id_event_detail', $id)->delete();
-        return redirect('event');
+        return redirect('event')->with('success','Success Delete Data');
     }
 
     public function show($id){

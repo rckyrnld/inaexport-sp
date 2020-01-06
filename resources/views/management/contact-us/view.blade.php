@@ -31,7 +31,7 @@
 
              <div class="form-group row">
               <div class="col-md-1"></div>
-                 <label class="control-label col-md-3">Subyek</label>
+                 <label class="control-label col-md-3">Subject</label>
                  <div class="col-md-7">
                      <input type="text" class="form-control" name="subyek" autocomplete="off" required placeholder="Input" disabled value="{{ $data->subyek }}">
                  </div>

@@ -65,7 +65,7 @@
                                 @elseif($loc == 'in')
                                 Eksportir
                                 @else
-                                Exporters
+                                Indonesian Exporters
                                 @endif 
                             </p>
                         </li>

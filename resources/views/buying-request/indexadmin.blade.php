@@ -82,7 +82,7 @@ body {font-family: Arial;}
                         </div>
                     @endif
 				<br>
-				<a href="{{ url('br_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add</a><br><br>
+				<a href="{{ url('br_add') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add</a><br><br>
                           
                    <div class="tab">
   <button class="tablinks active" onclick="openCity(event, 'London')"><font size="3px">Admin</font></button>

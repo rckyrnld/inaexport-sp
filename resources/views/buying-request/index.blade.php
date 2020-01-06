@@ -25,7 +25,7 @@
                     <div class="col-md-14">
                         
                         <div class="table-responsive">
-						<a href="{{ url('br_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add</a><br><br>
+						<a href="{{ url('br_add') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add</a><br><br>
                           
                            <table id="users-table" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
@@ -93,6 +93,7 @@ function xy(a){
 </script>
 <script type="text/javascript">
     $(function () {
+        $(".alert").slideDown(300).delay(1000).slideUp(300);
         $('#users-table').DataTable({
             processing: true,
             serverSide: true,

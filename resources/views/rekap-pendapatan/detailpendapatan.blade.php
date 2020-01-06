@@ -24,7 +24,7 @@ table, th, tr, td {
 									?></h5><br>
 					<div class="form-row">
 						<div class="form-group col-sm-2">
-							<b>Perusahaan Eksportir</b>
+							<b>Exporter Company</b>
 						</div>
 						<div class="form-group col-sm-4">
 							:<?php echo $na1; ?>
@@ -32,7 +32,7 @@ table, th, tr, td {
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-2">
-							<b>Alamat</b>
+							<b>Address</b>
 						</div>
 						<div class="form-group col-sm-4">
 							: <?php echo $na2; ?>

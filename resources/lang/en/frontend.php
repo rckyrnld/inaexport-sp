@@ -74,7 +74,7 @@ return [
     ],
     "home" => [
         "product" => "Products",
-        "eksporter" => "Exporters",
+        "eksporter" => "Indonesian Exporters",
         "sourcer" => "Sourcing Request",
         "wishlist" => "Wish List",
         "mycart" => "My Cart",
