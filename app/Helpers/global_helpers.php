@@ -1008,15 +1008,9 @@ if (! function_exists('getCategorySearch')) {
     function getCategorySearch($nama, $lct){
       $nama = trim($nama);
       $return = '';
-      $data = DB::table('csc_product')->whereRaw('UPPER(nama_kategori_en) = UPPER(\''.$nama.'\')')->first();
+      $data = DB::table('csc_product')->whereRaw('UPPER(nama_kategori_'.$lct.') = UPPER(\''.$nama.'\')')->first();
       if(!$data){
-        $data = DB::table('csc_product')->whereRaw('UPPER(nama_kategori_'.$lct.') = UPPER(\''.$nama.'\')')->first();
-        if(!$data){
-          $data = DB::table('csc_product')->where('nama_kategori_en', 'ILIKE', '%'.$nama.'%')->first();
-          if(!$data){
-            $data = DB::table('csc_product')->where('nama_kategori_'.$lct, 'ILIKE', '%'.$nama.'%')->first();
-          }  
-        }
+        $data = DB::table('csc_product')->whereRaw('UPPER(nama_kategori_en) = UPPER(\''.$nama.'\')')->first();
       }
       if($data){
         $return = $data->id;

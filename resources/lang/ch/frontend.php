@@ -147,6 +147,7 @@ return [
     "title-services" => "服务",
     "listprod" => [
         "highlight" => "突出",
+        "advanced" => "高级搜索",
         "hotprod" => "热销产品",
         "newarrival" => "新品到货",
     ],
