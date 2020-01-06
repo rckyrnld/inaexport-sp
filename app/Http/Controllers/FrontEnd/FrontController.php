@@ -560,7 +560,7 @@ class FrontController extends Controller
             }
             $result .= '<li>
                             <input type="checkbox" value="'.$man->id.'" onclick="getProductbyEksportir(this.value, this.checked)" '.$ceked.'>
-                            <a href="#">'.$man->company.$jumlahnya.'</a>
+                            <a href="#" onclick="stopProcess(event)" class="hover-none">'.$man->company.$jumlahnya.'</a>
                             <span class="checkmark"></span>
                         </li>';
             $numb++;

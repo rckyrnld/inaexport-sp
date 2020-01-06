@@ -584,6 +584,10 @@
 @include('frontend.layouts.footer')
 <script type="text/javascript">
     $(document).ready(function () {
+        $('.hover-none').bind('click', function(e) {
+          e.preventDefault();
+        });
+
         $('#cari_advance').keypress(function(event) {
             if (event.keyCode == 13 || event.which == 13) {
                 $('#cari_product').val(this.value);
@@ -880,5 +884,8 @@
         if($('#cari_advance').val() == '' && $('#cari_cat_advance').val() == ''){
             $('#formsprod').submit();
         }
+    }
+    function stopProcess(e){
+        e.preventDefault();
     }
 </script>
