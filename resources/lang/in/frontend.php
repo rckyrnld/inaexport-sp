@@ -146,6 +146,7 @@ return [
     "title-services" => "Pelayanan",
     "listprod" => [
         "highlight" => "Highlight",
+        "advanced" => "Pencarian Lanjutan",
         "hotprod" => "Hot Products",
         "newarrival" => "New Arrival",
     ],

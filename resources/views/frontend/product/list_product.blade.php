@@ -20,6 +20,12 @@
         font-size: 12px;
         color: #037CFF;
     }
+    .select2-results__options{
+        font-size:12px !important;
+    }
+    .select2-selection__rendered {
+        font-size: 12px !important;
+    }
     .list-group-item{
         background-color: #DDEFFD; 
         border: none;
@@ -65,6 +71,13 @@
         box-shadow: 0 0 15px rgba(178,221,255,1); 
     }
     #delete_cat{ margin-left:10px; font-size:12px; color: #c4a6a6; cursor: pointer; }
+    .select2-container, .select2-dropdown, .select2-search, .select2-results {
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -ms-transition: none !important;
+        -o-transition: none !important;
+        transition: none !important;
+    }
 </style>
 <!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
@@ -176,8 +189,15 @@
                         <div class="widget_inner">
                             <div class="widget_list widget_categories">
                                 <!-- <h2>Highlight</h2> -->
-                                <h2>@lang('frontend.listprod.highlight')</h2>
-                                <br>
+                                <h2>@lang('frontend.listprod.advanced')</h2>
+                                <h2 style="margin-bottom: 0px; font-size: 14px;">@lang('frontend.home.product')</h2>
+                                <input type="text" class="form-control" id="cari_advance" name="cari_advance" placeholder="@lang('frontend.home.cariproduct')" style="font-size: 12px;margin-bottom: 20px;">
+                                <h2 style="margin-bottom: 0px; font-size: 14px;">@lang('research-corner.kategori')</h2>
+                                <select class="form-control" id="cari_cat_advance" name="cari_cat_advance">
+                                    <option></option>
+                                </select>
+                                <!-- <input type="text" class="form-control"> -->
+                                <h2 style="margin-top: 20px; margin-bottom: 20px; font-size: 15px;">@lang('frontend.listprod.highlight')</h2>
                                 <?php
                                     $checkedna = '';
                                     $checkedhot = '';
@@ -201,21 +221,21 @@
                                         $hlsortnya = $hl_sort;
                                     }
                                 ?>
-                                <ul id="highlightlist">
+                                <ul id="highlightlist" style="margin-bottom: 0px;">
                                     <li>
-                                        <input type="checkbox" name="checkhl" value="hot" id="checkhl" class="check_hl" onclick="getProduct(this.value, '{{$hlsortnya}}', this.checked)" {{$checkedhot}}>
+                                        <input type="checkbox" name="checkhl" value="hot" id="checkhl" class="check_hl" onclick="getProduct(this.value, this.checked)" {{$checkedhot}}>
                                         <a href="#" class="hover-none">@lang('frontend.listprod.hotprod') ({{$countHot}})</a>
                                         <span class="checkmark"></span>
                                     </li>
                                     <li>
-                                        <input type="checkbox" name="checkhl" value="new" id="checkhl" class="check_hl" onclick="getProduct(this.value, '{{$hlsortnya}}', this.checked)" {{$checkedna}}>
+                                        <input type="checkbox" name="checkhl" value="new" id="checkhl" class="check_hl" onclick="getProduct(this.value, this.checked)" {{$checkedna}}>
                                         <a href="#" class="hover-none">@lang('frontend.listprod.newarrival') ({{$countNew}})</a>
                                         <span class="checkmark"></span>
                                     </li>
                                 </ul>
                             </div>
                             <div class="widget_list widget_categories">
-                                <h2>@lang('frontend.proddetail.bymanufacture')</h2>
+                                <h2 style="margin-bottom: 0px;">@lang('frontend.proddetail.bymanufacture')</h2>
                                 <?php
                                     if($loc == "ch"){
                                         $srchmanlang = "搜索制造商";
@@ -225,8 +245,7 @@
                                         $srchmanlang = "Search Manufacturer";
                                     }
                                 ?>
-                                <!-- <input type="text" class="form-control" id="cari_eksportir" name="cari_eksportir" placeholder="{{$srchmanlang}}" style="font-size: 12px;">
-                                <br> -->
+                                <input type="text" class="form-control" id="cari_manufacture" placeholder="{{$srchmanlang}}" style="font-size: 12px;margin-bottom: 20px;">
                                 <ul id="manufacturlist">
                                     @foreach($manufacturer as $man)
                                         <?php
@@ -249,7 +268,7 @@
                                             }
                                         ?>
                                         <li>
-                                            <input type="checkbox" name="checkexp" value="{{$man->id}}" id="checkexp" class="check_eks" onclick="getProductbyEksportir(this.value, '{{$prodbyeks}}', this.checked)" {{$checkednya}}>
+                                            <input type="checkbox"  value="{{$man->id}}" onclick="getProductbyEksportir(this.value, this.checked)" {{$checkednya}}>
                                             <a href="#" class="hover-none">{{$man->company}} ({{$man->jml_produk}})</a>
                                             <span class="checkmark"></span>
                                         </li>
@@ -386,8 +405,8 @@
                                         $prodn = getProductAttr($pro->id, 'prodname', $lct);
                                         if(strlen($prodn) > 29){
                                             $cut_text = substr($prodn, 0, $num_char);
-                                            if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                            if ($prodn{$num_char - 1} != ' ') { 
+                                                $new_pos = strrpos($cut_text, ' '); 
                                                 $cut_text = substr($prodn, 0, $new_pos);
                                             }
                                             $prodnama = $cut_text . '...';
@@ -400,8 +419,8 @@
                                         $compname = getCompanyName($pro->id_itdp_company_user);
                                         if(strlen($compname) > 25){
                                             $cut_text = substr($compname, 0, $num_charp);
-                                            if ($compname{$num_charp - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                            if ($compname{$num_charp - 1} != ' ') { 
+                                                $new_pos = strrpos($cut_text, ' '); 
                                                 $cut_text = substr($compname, 0, $new_pos);
                                             }
                                             $companame = $cut_text . '...';
@@ -412,8 +431,8 @@
                                         $num_chark = 32;
                                         if(strlen($categorynya) > 32){
                                             $cut_text = substr($categorynya, 0, $num_chark);
-                                            if ($categorynya{$num_chark - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                            if ($categorynya{$num_chark - 1} != ' ') { 
+                                                $new_pos = strrpos($cut_text, ' '); 
                                                 $cut_text = substr($categorynya, 0, $new_pos);
                                             }
                                             $category = $cut_text . '...';
@@ -484,8 +503,8 @@
                                                     $num_desc = 350;
                                                     if(strlen($proddesc) > $num_desc){
                                                         $cut_desc = substr($proddesc, 0, $num_desc);
-                                                        if ($proddesc{$num_desc - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                            $new_pos = strrpos($cut_desc, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                                        if ($proddesc{$num_desc - 1} != ' ') { 
+                                                            $new_pos = strrpos($cut_desc, ' '); 
                                                             $cut_desc = substr($proddesc, 0, $new_pos);
                                                         }
                                                         $product_desc = $cut_desc . '...';
@@ -561,9 +580,38 @@
     <!--shop  area end-->
 <!-- Plugins JS -->
 <script src="{{asset('front/assets/js/plugins.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 @include('frontend.layouts.footer')
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#cari_advance').keypress(function(event) {
+            if (event.keyCode == 13 || event.which == 13) {
+                $('#cari_product').val(this.value);
+                var searchCat = $('#cari_cat_advance').val() + '|searchByName';
+                $('#cari_catnya').val(searchCat);
+                $('#formsprod').submit();
+            }
+        });
+        $('#cari_cat_advance').select2({
+            placeholder: '{{$srchcatlang}}',
+            allowClear: true,
+            ajax: {
+                url: "{{route('front.all-category')}}",
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                  return {
+                    results: $.map(data, function (item) {
+                      return {
+                        text: item.nama_kategori_en,
+                        id: item.nama_kategori_en
+                      }
+                    })
+                  };
+                },
+                cache: true
+            }
+        });
         $("#cari_kategori").keyup(function(){
             var isi = this.value;
             $.ajax({
@@ -586,15 +634,23 @@
             $('.product_thumb').css({ "margin-top": "60px", "border-radius": "0px 10px 10px 0px" });
         });
 
-        $("#cari_eksportir").keyup(function(){
+        $("#cari_manufacture").keyup(function(){
             var isi = this.value;
+            var searchProd = $('#cari_product').val();
+            var catProd = $('#cari_catnya').val();
+            var cekEks = $('#eks_prod').val();
+            var lct = "{{$lct}}";
+            if(isi != ''){
+                var datanya = {"name":isi,"lang":lct,"ceked":cekEks};
+            } else {
+                var datanya = {"name":isi,"searchnya":searchProd,"catnya":catProd,"lang":lct,"ceked":cekEks};
+            }
             $.ajax({
                 url: "{{route('front.product.getManufactur')}}",
                 type: 'get',
-                data: {name:isi},
+                data: datanya,
                 success:function(response){
                     $("#manufacturlist").html("");
-                    // console.log(response);
                     $("#manufacturlist").html(response);
                 }
             });
@@ -604,21 +660,21 @@
             var delete_cat = $('#cari_catnya').val();
             var cekSearch = $('#cari_product').val();
             //DOM with search box
-            if(cekSearch.indexOf(',') !== -1){
-                var cat = cekSearch.split(',');
-                cat = cat.map(function(val){
-                    value = val.trim();
-                    return value.toLowerCase();
-                })
-                var cat2 = [cat[0]];
-                for(var i=0; i<cat.length; i++){
-                    if(cat[i] == 'hot' || cat[i] == 'new'){
-                        cat2.push(cat[i]);
-                    }
-                }
-                searchnya = cat2.join(", ");
-                $('#cari_product').val(searchnya);
-            }
+            // if(cekSearch.indexOf(',') !== -1){
+            //     var cat = cekSearch.split(',');
+            //     cat = cat.map(function(val){
+            //         value = val.trim();
+            //         return value.toLowerCase();
+            //     })
+            //     var cat2 = [cat[0]];
+            //     for(var i=0; i<cat.length; i++){
+            //         if(cat[i] == 'hot' || cat[i] == 'new'){
+            //             cat2.push(cat[i]);
+            //         }
+            //     }
+            //     searchnya = cat2.join(", ");
+            //     $('#cari_product').val(searchnya);
+            // }
             //End of DOM
             if(delete_cat.indexOf('|') !== -1){
                 var pecah = delete_cat.split('|');
@@ -713,23 +769,24 @@
         });
     }
 
-    function getProduct(val, isi, checked) {
+    function getProduct(val, checked) {
         var isinya = "";
         var cekSearch = $('#cari_product').val();
-        //DOM with search box
-        if(cekSearch.indexOf(',') !== -1){
-            var pecah = cekSearch.split(',');
-            pecah = pecah.map(function(val){
-                value = val.trim();
-                return value.toLowerCase();
-            })
-            if (pecah.includes(val)) {
-                var searchnya = pecah.filter(function(e) { return e !== val });
-                searchnya = searchnya.join(", ");
-                $('#cari_product').val(searchnya);
-            }
-        }
-        //end of DOM
+        var isi = $('#hl_prod').val();
+        // //DOM with search box
+        // if(cekSearch.indexOf(',') !== -1){
+        //     var pecah = cekSearch.split(',');
+        //     pecah = pecah.map(function(val){
+        //         value = val.trim();
+        //         return value.toLowerCase();
+        //     })
+        //     if (pecah.includes(val)) {
+        //         var searchnya = pecah.filter(function(e) { return e !== val });
+        //         searchnya = searchnya.join(", ");
+        //         $('#cari_product').val(searchnya);
+        //     }
+        // }
+        // //end of DOM
         if(checked){
             if(isi == ""){
                 isinya = val;
@@ -753,30 +810,33 @@
         }
 
         $('#hl_prod').val(isinya);
-        $('#formsprod').submit();
+        if($('#cari_advance').val() == '' && $('#cari_cat_advance').val() == ''){
+            $('#formsprod').submit();
+        }
     }
 
-    function getProductbyEksportir(val, isi, checked) {
+    function getProductbyEksportir(val, checked) {
         var isinya = "";
+        var isi = $('#eks_prod').val();
         var cekSearch = $('#cari_product').val();
-        //DOM with search box
-        if(cekSearch.indexOf('-') !== -1){
-            var pecah = cekSearch.split('-');
-            if(cekSearch.indexOf(',') !== -1){
-                searchnya = pecah[0];
-                pecah = pecah[1].toString();
-                pecah = pecah.split(',');
-                pecah.splice(0,1);
-                searchnya += ',' + pecah.join(",");
-                $('#cari_product').val(searchnya);
+        // //DOM with search box
+        // if(cekSearch.indexOf('-') !== -1){
+        //     var pecah = cekSearch.split('-');
+        //     if(cekSearch.indexOf(',') !== -1){
+        //         searchnya = pecah[0];
+        //         pecah = pecah[1].toString();
+        //         pecah = pecah.split(',');
+        //         pecah.splice(0,1);
+        //         searchnya += ',' + pecah.join(",");
+        //         $('#cari_product').val(searchnya);
 
-            } else {
-                pecah.splice(1,1);
-                searchnya = pecah.join("");
-                $('#cari_product').val(searchnya);
-            }
-        }
-        //end of DOM
+        //     } else {
+        //         pecah.splice(1,1);
+        //         searchnya = pecah.join("");
+        //         $('#cari_product').val(searchnya);
+        //     }
+        // }
+        // //end of DOM
         if(checked){
             if(isi == ""){
                 isinya = val;
@@ -803,9 +863,13 @@
                 var checkstring = isi.includes("|");
                 if(checkstring){
                     var isibar = isi.split('|');
-                    var isin = $.inArray(val, isibar);
-                    isibar.splice(isin, 1);
-                    isinya = isibar[0]; 
+                    // var isin = $.inArray(val, isibar);
+                    if (isibar.includes(val)) {
+                        isibar = isibar.filter(function(e) { return e !== val });
+                        isinya = isibar.join("|");
+                    }
+                    // isibar.splice(isin, 1);
+                    // isinya = isibar[0]; 
                 }else{
                     isinya = "";
                 }
@@ -813,6 +877,8 @@
         }
 
         $('#eks_prod').val(isinya);
-        $('#formsprod').submit();
+        if($('#cari_advance').val() == '' && $('#cari_cat_advance').val() == ''){
+            $('#formsprod').submit();
+        }
     }
 </script>

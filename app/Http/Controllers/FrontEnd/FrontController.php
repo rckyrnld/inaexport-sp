@@ -67,6 +67,10 @@ class FrontController extends Controller
             $hl_sort = $request->hl_prod;
             $getEks = $request->eks_prod;
             $get_id_cat = $request->cari_catnya;
+            if(strpos($get_id_cat, '|searchByName') !== false){
+                $categorynya = str_replace('|searchByName', '', $get_id_cat);
+                $get_id_cat = getCategorySearch($categorynya, $lct);
+            }
             $search = $searchnya = trim($request->cari_product);
             // if (strpos($request->cari_product, '-') !== false) {
             //     $pecah = explode('-', $request->cari_product);
@@ -146,6 +150,10 @@ class FrontController extends Controller
             $getEks = $request->eks_prod;
             $hl_sort = $request->hl_prod;
             $get_id_cat = $request->cari_catnya;
+            if(strpos($get_id_cat, '|searchByName') !== false){
+                $categorynya = str_replace('|searchByName', '', $get_id_cat);
+                $get_id_cat = getCategorySearch($categorynya, $lct);
+            }
         }
 
         //List Category Product
@@ -431,6 +439,17 @@ class FrontController extends Controller
         return $product;
     }
 
+    public function getCategoryAll(Request $request)
+    {
+        $categoryall = DB::table('csc_product')->orderby('nama_kategori_en','asc');
+        if (isset($request->q)) {
+          $categoryall->where('nama_kategori_en', 'ILIKE', '%'.$request->q.'%')->limit(10);
+        } else {
+          $categoryall->limit(10);
+        }
+        return response()->json($categoryall->get());
+    }
+
     public function getCategory(Request $request)
     {
         $name = $request->name;
@@ -440,6 +459,7 @@ class FrontController extends Controller
             ->where($srch, 'ILIKE', '%'.$name.'%')
             ->where('level_1', 0)
             ->where('level_2', 0)
+            ->orderby('nama_kategori_en','asc')
             ->limit(10)
             ->get();
 
@@ -468,28 +488,90 @@ class FrontController extends Controller
 
     public function getManufactur(Request $request)
     {
+        // $manufacturer = DB::table('itdp_company_users as a')
+        //     ->join('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
+        //     ->selectRaw('a.*, b.id as idprofil, b.company')
+        //     ->where('a.id_role', 2)
+        //     ->where('b.company', 'ILIKE', '%'.$name.'%')
+        //     ->limit(10)
+        //     ->get();
         $name = $request->name;
-        $manufacturer = DB::table('itdp_company_users as a')
-            ->join('itdp_profil_eks as b', 'a.id_profil', '=', 'b.id')
-            ->selectRaw('a.*, b.id as idprofil, b.company')
-            ->where('a.id_role', 2)
-            ->where('b.company', 'ILIKE', '%'.$name.'%')
-            ->limit(10)
-            ->get();
+        $searchProd = $request->searchnya;
+        $catnya = $request->catProd;
+        $lct = $request->lang;
+        $cek = $request->ceked;
+
+        if(strpos($catnya, '|searchByName') !== false){
+            $categorynya = str_replace('|searchByName', '', $catnya);
+            $catnya = getCategorySearch($categorynya, $lct);
+        }
+
+        if (strstr($cek, '|')){
+            $cek = explode('|', $cek);
+        }else{
+            $cek = [$cek];
+        }
+
+        $query_manufacture = DB::table('itdp_company_users as a')->selectRaw('a.id, b.company, count(c.*) as jml_produk')
+            ->join('itdp_profil_eks as b', 'a.id_profil', 'b.id')
+            ->join('csc_product_single as c', 'a.id', 'c.id_itdp_company_user')
+            ->where('a.status', 1)
+            ->where('c.status', 2)
+            ->groupby('a.id')->groupby('b.company')
+            ->limit(10);
+
+        if($name == ''){
+            if($searchProd != ''){
+                $query_manufacture->where(function($query) use ($searchProd,$lct){
+                    $query->where('c.prodname_en', 'ILIKE', '%'.$searchProd.'%');
+                    $query->orwhere('c.prodname_'.$lct, 'ILIKE', '%'.$searchProd.'%');
+                });
+            }
+            if($catnya != ''){
+                if(strstr($catnya, '|')){
+                    $pecah = explode('|', $catnya);
+                    $end = end($pecah);
+                    $catnya = [$end];
+                } else {
+                    $catnya = [$catnya];
+                }
+                $query_manufacture->where(function($query) use ($catnya){
+                    $query->whereIn('c.id_csc_product', $catnya);
+                    $query->orWhereIn('c.id_csc_product_level1', $catnya);
+                    $query->orWhereIn('c.id_csc_product_level2', $catnya);
+                });
+            }
+            $query_manufacture->orderby('jml_produk', 'desc');
+        } else {
+            $query_manufacture->where('b.company', 'ILIKE', '%'.$name.'%')->orderby('b.company','asc');
+        }
+        $manufacturer = $query_manufacture->get();
 
         $numb = 1;
         $result = "";
         foreach($manufacturer as $man){
+            $jumlahnya = '';
+            $ceked = '';
+            if($name == ''){
+                $jumlahnya = '('.$man->jml_produk.')';
+            }
+            if(in_array($man->id, $cek)){
+                $ceked = 'checked="true"';
+            }
             $result .= '<li>
-                            <input type="checkbox">
-                            <a href="#">'.$man->company.'('.getCountProduct('company', $man->id).')</a>
+                            <input type="checkbox" value="'.$man->id.'" onclick="getProductbyEksportir(this.value, this.checked)" '.$ceked.'>
+                            <a href="#">'.$man->company.$jumlahnya.'</a>
                             <span class="checkmark"></span>
                         </li>';
             $numb++;
         }
-        $result .= '<li>
-                        <a href="#">View All</a>
-                    </li>';
+        if($result == ''){
+            $result = '<center><span style="font-size:12px;color:red;">Not Found</span></center>';
+        } else {
+            $result .= '<li>
+                            <a href="#">View All</a>
+                        </li>';
+        }
 
         return $result;
     }
