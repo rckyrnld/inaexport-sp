@@ -267,7 +267,7 @@ class VerifyuserController extends Controller
                 });
 			
 		
-		return redirect('verifyimportir')->with('success','Success');
+		return redirect('verifyimportir')->with('success','Ask User to Check Email');
 	}
 	
 	public function reseteksportir($id)
@@ -288,7 +288,7 @@ class VerifyuserController extends Controller
                 });
 			
 		
-		return redirect('verifyuser')->with('success','Success');
+		return redirect('verifyuser')->with('success','Ask User to Check Email');
 	}
 	
 	public function hapusperwakilan($id)
@@ -327,13 +327,13 @@ class VerifyuserController extends Controller
 	public function profil($id,$id2)
     {
 		if($id == 2){
-			$pageTitle = "Profil Eksportir";
-			$tx = "Eksportir";
+			$pageTitle = "Exporter Profile";
+			$tx = "Exporter";
 		}else if($id == 3){
-			$pageTitle = "Profil Importir";
-			$tx = "Importir";
+			$pageTitle = "Importer Profile";
+			$tx = "Importer";
 		}else{
-			$pageTitle = "Profil ";
+			$pageTitle = "Profile ";
 			$tx ="";
 		}
 		$ida = $id;
@@ -543,7 +543,8 @@ class VerifyuserController extends Controller
 				where id='".$id_user_b."'");
 			}
 		}
-		return redirect('profil/'.$id_role.'/'.$id_user);
+//		return redirect('profil/'.$id_role.'/'.$id_user);
+		return redirect('/verifyuser')->with('success','Success Update Data');
 		
 	
 	}
@@ -616,7 +617,7 @@ class VerifyuserController extends Controller
 		});
 		}
 
-		return redirect('verifyimportir')->with('success','Success');
+		return redirect('verifyimportir')->with('success','Success Update Data');
 //		return redirect('profil2/'.$id_role.'/'.$id_user);
 		
 	

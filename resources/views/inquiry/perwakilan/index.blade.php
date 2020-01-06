@@ -21,6 +21,18 @@
                     <a class="btn" href="{{url('/inquiry_perwakilan/create')}}" style="background-color: #1089ff; color: white;"><i class="fa fa-plus-circle"></i> Add</a>
                 </div>
                 <div class="box-body bg-light">
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block" style="text-align: center">
+                            {{--                            <button type="button" class="close" data-dismiss="alert">×</button>--}}
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger alert-block" style="text-align: center">
+                            {{--                                <button type="button" class="close" data-dismiss="alert">×</button>--}}
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
                     <div class="col-md-14">
                         <div class="table-responsive">
                             <table id="tableinquiry" class="table  table-bordered table-striped" style="text-transform: capitalize;">
@@ -120,6 +132,7 @@
 
 <script>
     $(document).ready(function () {
+        $(".alert").slideDown(300).delay(1000).slideUp(300);
         $('#tableinquiry').DataTable({
             processing: true,
             serverSide: true,

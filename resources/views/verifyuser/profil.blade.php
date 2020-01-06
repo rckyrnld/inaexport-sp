@@ -64,7 +64,7 @@ body {font-family: Arial;}
 
 <div class="tab">
   <button class="tablinks active" onclick="openCity(event, 'London')"><font size="3px">Account Information <?php echo $tx; ?></font></button>
-  <button class="tablinks" onclick="openCity(event, 'Paris')"><font size="3px">Profil Company</font></button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')"><font size="3px">Company Profile</font></button>
   <?php if($ida == 2){ ?><button class="tablinks" onclick="openCity(event, 'Tokyo')"><font size="3px">Document</font></button> <?php } ?>
 </div>
 <form class="form-horizontal" method="POST" action="{{ url('simpan_profil') }}" enctype="multipart/form-data">
@@ -411,7 +411,7 @@ body {font-family: Arial;}
 		<?php 
 		}else{ ?>
 			<select class="form-control" name="staim">
-			<option <?php if($rhj->status == 0){ echo "selected"; } ?> value="0">-- Pilih Status --</option>
+			<option <?php if($rhj->status == 0){ echo "selected"; } ?> value="0">-- Choose Status --</option>
 			<option <?php if($rhj->status == 1){ echo "selected"; } ?> value="1">Verified</option>
 			<option <?php if($rhj->status == 2){ echo "selected"; } ?> value="2">Not Verified</option>
 			</select>

@@ -40,7 +40,7 @@ class AnnualController extends Controller
             'nilai_ekspor' => $request->nilai_ekspor,
             'idcompanytahun' => $id_user . $request->year,
         ]);
-        return redirect('eksportir/annual_sales');
+        return redirect('eksportir/annual_sales')->with('success','Success Add Data');
     }
 
     public function datanya()
@@ -62,7 +62,7 @@ class AnnualController extends Controller
                 <a href="' . route('sales.detail', $mjl->id) . '" class="btn btn-sm btn-success"title="Edit">
                     <i class="fa fa-edit text-white"></i> 
                 </a>
-                <a href="' . route('sales.delete', $mjl->id) . '" class="btn btn-sm btn-danger" title="Delete">
+                <a href="' . route('sales.delete', $mjl->id) . '" class="btn btn-sm btn-danger" onclick="return confirm(\'Are You Sure ?\')" title="Delete">
                     <i class="fa fa-trash text-white"></i>
                 </a>
                 </center>
@@ -100,7 +100,7 @@ class AnnualController extends Controller
     {
         DB::table('itdp_eks_sales')->where('id', $id)
             ->delete();
-        return redirect('eksportir/annual_sales');
+        return redirect('eksportir/annual_sales')->with('success','Success Delete Data');
     }
 
     public function update(Request $request)
@@ -112,13 +112,13 @@ class AnnualController extends Controller
                 'nilai_persen' => $request->persen,
                 'nilai_ekspor' => $request->nilai_ekspor,
             ]);
-        return redirect('eksportir/annual_sales');
+        return redirect('eksportir/annual_sales')->with('success','Succes Update Data');
     }
 
     public function indexadminannualsales($id)
     {
 //        dd($id);
-        $pageTitle = "List Exportir";
+        $pageTitle = "List Exporter";
         return view('eksportir.annual_sales.indexadminannualsales', compact('pageTitle', 'id'));
     }
 
@@ -188,7 +188,7 @@ class AnnualController extends Controller
             $company = $datanya->company;
         }
 //        dd($data);
-        $pageTitle = "List Eksportir";
+        $pageTitle = "List Exporter";
         return view('eksportir.annual_sales.listeksportir', compact('id', 'pageTitle', 'company'));
     }
 }

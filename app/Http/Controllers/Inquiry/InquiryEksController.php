@@ -193,17 +193,17 @@ class InquiryEksController extends Controller
                     if($mjl->status == 0 || $mjl->status == 2){
                         return '
                             <center>
-                            <a href="'.url('/inquiry/chatting').'/'.$mjl->id.'" class="btn btn-sm btn-warning" style="color: white;"><i class="fa fa-comments-o" aria-hidden="true"></i> '.Lang::get('button-name.chat').' <span class="badge badge-danger">'.$this->getCountChat($mjl->id, $id_user, $mjl->type).'</span></a>
+                            <a href="'.url('/inquiry/chatting').'/'.$mjl->id.'" class="btn btn-sm btn-warning" style="color: white;" title="'.Lang::get('button-name.chat').'"><i class="fa fa-comments-o" aria-hidden="true"></i> <span class="badge badge-danger">'.$this->getCountChat($mjl->id, $id_user, $mjl->type).'</span></a>
                             </center>';
                     }else if($mjl->status == 1){
                         return '
                             <center>
-                            <a href="'.url('/inquiry/joined').'/'.$mjl->id.'" class="btn btn-sm btn-success" style="width: 100%;">'.Lang::get('button-name.join').'</a>
+                            <a href="'.url('/inquiry/joined').'/'.$mjl->id.'" class="btn btn-sm btn-success" style="width: 100%;" title="'.Lang::get('button-name.join').'"><i class="fa fa-plus"></i></a>
                             </center>';
                     }else if($mjl->status == 3 || $mjl->status == 4 || $mjl->status == 5){
                         return '
                             <center>
-                            <a href="'.url('/inquiry/view').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> '.Lang::get('button-name.view').'</a>
+                            <a href="'.url('/inquiry/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="'.Lang::get('button-name.view').'"><i class="fa fa-search" aria-hidden="true"></i> </a>
                             </center>';
                     }else{
                         return '

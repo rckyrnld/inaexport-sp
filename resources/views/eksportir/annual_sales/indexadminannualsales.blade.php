@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Data Annual Sales</h5>
+                    <h5><i></i> List Annual Sales</h5>
                 </div>
 
                 <div class="box-body bg-light">
@@ -22,13 +22,13 @@
                                         Year
                                     </th>
                                     <th>
-                                        <center>Nilai (USD)</center>
+                                        <center>Value (USD)</center>
                                     </th>
                                     <th>
-                                        <center>Persen (%)</center>
+                                        <center>Percent (%)</center>
                                     </th>
                                     <th>
-                                        <center>Nilai Ekspor (USD)</center>
+                                        <center>Export Value (USD)</center>
                                     </th>
                                     <th>
                                         <center>Action</center>

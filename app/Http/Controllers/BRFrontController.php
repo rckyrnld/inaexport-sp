@@ -351,7 +351,7 @@ class BRFrontController extends Controller
 		}
 		}
 		$update = DB::select("update csc_buying_request set status='1' where id='".$id."'");
-        return redirect('br_list');
+        return redirect('br_list')->with('success','Success Broadcast Data');
     }
 	
 	public function ambilbroad($id)

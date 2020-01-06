@@ -70,7 +70,7 @@ body {font-family: Arial;}
                                         <center>Buyer</center>
                                     </th>
 									<th>
-                                        <center>Exporter</center>
+                                        <center>Indonesian Exporter</center>
                                     </th>
 									
 									 <th>
@@ -201,7 +201,7 @@ body {font-family: Arial;}
                                         <center>Buyer</center>
                                     </th>
 									<th>
-                                        <center>Eksportir</center>
+                                        <center>Indonesian Exporter</center>
                                     </th>
 									
 									 <th>
