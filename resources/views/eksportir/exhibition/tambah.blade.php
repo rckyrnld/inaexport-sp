@@ -53,8 +53,8 @@
 
                             </div>
                             <div class="form-group col-sm-6">
-                                <a style="color: white" href="{{url('/eksportir/product_capacity')}}"
-                                   class="btn btn-primary"><i style="color: white"></i>
+                                <a style="color: white" href="{{url('/eksportir/exhibition')}}"
+                                   class="btn btn-danger"><i style="color: white"></i>
                                     Back
                                 </a>
                                 <button class="btn btn-success" type="submit"><i

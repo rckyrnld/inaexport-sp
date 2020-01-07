@@ -143,11 +143,11 @@
 					 if(Auth::guard('eksmp')->user()->id_role == 2){
 					 ?>
 					  <a style="padding-top:10px;"class="dropdown-item" href="{{ url('profil/'.Auth::guard('eksmp')->user()->id_role.'/'.Auth::guard('eksmp')->user()->id) }}">
-                     <b> Profil <?php if(Auth::guard('eksmp')->user()->id_role == 2){ echo " Eksportir"; }else if(Auth::guard('eksmp')->user()->id_role == 3){ echo " Importir"; } ?></b>
+                     <b> <?php if(Auth::guard('eksmp')->user()->id_role == 2){ echo " Exporter"; }else if(Auth::guard('eksmp')->user()->id_role == 3){ echo " Buyer"; } ?> Profile</b>
                     </a>
 					 <?php } else { ?> 
 					 <a style="padding-top:10px;"class="dropdown-item" href="{{ url('profil2/'.Auth::guard('eksmp')->user()->id_role.'/'.Auth::guard('eksmp')->user()->id) }}">
-                     <b> Profil <?php if(Auth::guard('eksmp')->user()->id_role == 2){ echo " Eksportir"; }else if(Auth::guard('eksmp')->user()->id_role == 3){ echo " Importir"; } ?></b>
+                     <b> <?php if(Auth::guard('eksmp')->user()->id_role == 2){ echo " Exporter"; }else if(Auth::guard('eksmp')->user()->id_role == 3){ echo " Buyer"; } ?> Profile</b>
                     </a>
 					 <?php } }else{ ?>
 					 

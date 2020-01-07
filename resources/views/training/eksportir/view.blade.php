@@ -23,7 +23,7 @@
         <div class="box-body bg-light">
           <div class="col-md-14">
             <div class="table-responsive">
-              <h4>View Training</h4><hr>
+              <h4> Training</h4><hr>
               <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable">
                 <thead class="text-white" style="background-color: #1089ff;">
                   <tr>

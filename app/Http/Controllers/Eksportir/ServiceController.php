@@ -200,7 +200,7 @@ class ServiceController extends Controller
               return '
                 <center>
                   <div class="btn-group">
-                    <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info" title="View"> <i class="fa fa-search text-white"></i></a>&nbsp;&nbsp;
+                    <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info" title="View"> <i class="fa fa-eye text-white"></i></a>&nbsp;&nbsp;
                     <a href="'.route('service.verifikasi', $data->id).'" class="btn btn-sm btn-'.$class.'" title="Verifikasi">&nbsp;<i class="fa fa-edit text-white"></i></a>
                   </div>
                 </center>';
@@ -209,7 +209,7 @@ class ServiceController extends Controller
             return '
               <center>
                 <div class="btn-group">
-                  <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-search text-white"></i></a>&nbsp;&nbsp;
+                  <a href="'.route('service.view', $data->id).'" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-eye text-white"></i></a>&nbsp;&nbsp;
                   <a href="'.route('service.edit', $data->id).'" class="btn btn-sm btn-success" title="Edit">&nbsp;<i class="fa fa-edit text-white"></i></a>&nbsp;&nbsp;
                   <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('service.destroy', $data->id).'" class="btn btn-sm btn-danger" title="Delete">&nbsp;<i class="fa fa-trash text-white"></i></a>
                 </div>
@@ -349,10 +349,10 @@ class ServiceController extends Controller
 
           if($data){
              Session::flash('success','Success Store Data');
-             return redirect('/eksportir/service/');
+             return redirect('/eksportir/service/')->with('success','Success Add Data');
            }else{
              Session::flash('failed','Failed Store Data');
-             return redirect('/eksportir/service/');
+             return redirect('/eksportir/service/')->with('error','Success Add Data');
            }
       } else {
         return redirect('/login');
@@ -443,10 +443,10 @@ class ServiceController extends Controller
 
         if($data){
            Session::flash('success','Success Store Data');
-           return redirect('/eksportir/service/');
+           return redirect('/eksportir/service/')->with('success','Success Update Data');
          }else{
            Session::flash('failed','Failed Store Data');
-           return redirect('/eksportir/service/');
+           return redirect('/eksportir/service/')->with('error','Failed Update Data');
          }
       } else {
         return redirect('/login');
@@ -459,10 +459,10 @@ class ServiceController extends Controller
         $data = DB::table('itdp_service_eks')->where('id', $id)->delete();
         if($data){
            Session::flash('success','Success Delete Data');
-           return redirect('/eksportir/service/');
+           return redirect('/eksportir/service/')->with('success','Success Delete Data');
          }else{
            Session::flash('failed','Failed Delete Data');
-           return redirect('/eksportir/service/');
+           return redirect('/eksportir/service/')->with('error','Error Delete Data');
          }
       } else {
         return redirect('/login');

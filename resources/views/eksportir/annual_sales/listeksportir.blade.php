@@ -40,7 +40,7 @@
                     <br>
                     <div class="form-group col-sm-6">
                         <a style="color: white" href="{{ url('eksportir/admin') }}"
-                           class="btn btn-success"><i style="color: white"></i>
+                           class="btn btn-danger"><i style="color: white"></i>
                             Back
                         </a>
                     </div>

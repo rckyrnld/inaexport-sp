@@ -230,7 +230,7 @@ body {font-family: Arial;}
 									<th><center>Address</center></th>
 									<th><center>Email</center></th>
 									<th><center>Status</center></th>
-									<th><center>Aksi</center></th>
+									<th><center>Action</center></th>
                                 </thead>
 								<tbody>
 								<?php 

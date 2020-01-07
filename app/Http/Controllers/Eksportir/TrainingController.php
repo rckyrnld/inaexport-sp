@@ -49,7 +49,7 @@ class TrainingController extends Controller
             'id_mst_city' => $request->city,
             'lisensi_nafed' => $request->lisenced_dgned,
         ]);
-        return redirect('eksportir/training');
+        return redirect('eksportir/training')->with('success','Success Add Data');
     }
 
     public function datanya()
@@ -72,7 +72,7 @@ class TrainingController extends Controller
                 <a href="' . route('training.detail', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit">
                     <i class="fa fa-edit text-white"></i>
                 </a>
-                <a href="' . route('training.delete', $mjl->id) . '" class="btn btn-sm btn-danger" title="Delete">
+                <a href="' . route('training.delete', $mjl->id) . '" onclick="return confirm(\'Are You Sure ?\')" class="btn btn-sm btn-danger" title="Delete">
                     <i class="fa fa-trash text-white"></i>
                 </a>
                 </center>
@@ -119,7 +119,7 @@ class TrainingController extends Controller
 //        dd($id);
         DB::table('itdp_eks_training')->where('id', $id)
             ->delete();
-        return redirect('eksportir/training');
+        return redirect('eksportir/training')->with('success','Success Delete Data');
     }
 
     public function update(Request $request)
@@ -140,7 +140,7 @@ class TrainingController extends Controller
                 'id_mst_city' => $request->city,
                 'lisensi_nafed' => $request->lisenced_dgned,
             ]);
-        return redirect('eksportir/training');
+        return redirect('eksportir/training')->with('success','Success Update Data');
     }
 
     public function indexadmin($id)
@@ -165,8 +165,8 @@ class TrainingController extends Controller
 			->addColumn('action', function ($mjl) {
                 return '
                 <center>
-                <a href="' . route('training.vieweksportir', $mjl->id) . '" class="btn btn-sm btn-info">
-                    <i class="fa fa-search text-white"></i> View
+                <a href="' . route('training.vieweksportir', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                    <i class="fa fa-eye text-white"></i> 
                 </a>               
                 </center>
                 ';

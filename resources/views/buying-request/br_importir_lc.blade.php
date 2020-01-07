@@ -52,7 +52,7 @@
 	   if(!empty(Auth::guard('eksmp')->user()->status)){
 	   if (Auth::guard('eksmp')->user()->status == 1) {
 	   ?>
-	   <h5><center>List <?php echo $pageTitle; ?></center></h5>
+	   <h5><center><?php echo $pageTitle; ?></center></h5>
 	   <br><br>
 	   <a href="{{ url('br_importir') }}" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</a><br><br>
 		<table id="example1" border="0" class="table table-bordered table-striped">
@@ -62,7 +62,7 @@
 									<th><center>Address</center></th>
 									<th><center>Email</center></th>
 									<th><center>Status</center></th>
-									<th><center>Aksi</center></th>
+									<th><center>Action</center></th>
                                 </thead>
 								<tbody>
 								<?php 

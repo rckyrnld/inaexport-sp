@@ -386,10 +386,10 @@
                                 <div class="col-md-12">
                                     <div style="float: right;">
                                         @if($page=='show')
-                                            <a href="{{url('/event')}}" class="btn btn-danger" style="pointer-events: stroke;">Kembali</a>
+                                            <a href="{{url('/event')}}" class="btn btn-danger" style="pointer-events: stroke;">Back</a>
                                         @else
-                                            <button type="submit" class="btn btn-primary">Save</button>
                                             <a href="{{url('/event')}}" class="btn btn-danger">Cancel</a>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
                                         @endif
                                     </div>
                                 </div>

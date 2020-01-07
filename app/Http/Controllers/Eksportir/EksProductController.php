@@ -98,7 +98,7 @@ class EksProductController extends Controller
                     <a href="' . route('eksproduct.edit', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit">
                         <i class="fa fa-edit text-white"></i>
                     </a>
-                    <a href="' . route('eksproduct.delete', $mjl->id) . '" class="btn btn-sm btn-danger" title="Delete">
+                    <a href="' . route('eksproduct.delete', $mjl->id) . '" onclick="return confirm(\'Are You Sure ?\')" class="btn btn-sm btn-danger" title="Delete">
                         <i class="fa fa-trash text-white"></i>
                     </a>
                     </center>
@@ -185,19 +185,19 @@ class EksProductController extends Controller
                 if($mjl->status == 1){
                     return '
                     <center>
-                    <a href="' . route('eksproduct.verifikasi', $mjl->id) . '" class="btn btn-sm btn-success">
-                        <i class="fa fa-search text-white"></i> Verification
+                    <a href="' . route('eksproduct.verifikasi', $mjl->id) . '" class="btn btn-sm btn-success" title="Verification">
+                        <i class="fa fa-check text-white"></i>
                     </a>
-                    <a href="' . route('eksproduct.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                        <i class="fa fa-search text-white"></i> View
+                    <a href="' . route('eksproduct.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                        <i class="fa fa-eye text-white"></i>
                     </a>
                     </center>
                     ';
                 }else{
                     return '
                     <center>
-                    <a href="' . route('eksproduct.view', $mjl->id) . '" class="btn btn-sm btn-info">
-                        <i class="fa fa-search text-white"></i> View
+                    <a href="' . route('eksproduct.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                        <i class="fa fa-eye text-white"></i>
                     </a>
                     </center>
                     ';
@@ -333,7 +333,7 @@ class EksProductController extends Controller
 
         }
 
-        return redirect('eksportir/product');
+        return redirect('eksportir/product')->with('success','Success Add Data');
     }
 
 
@@ -391,9 +391,9 @@ class EksProductController extends Controller
         if(Auth::guard('eksmp')->user()){
             DB::table('csc_product_single')->where('id', $id)
                 ->delete();
-            return redirect('eksportir/product');
+            return redirect('eksportir/product')->with('success','Success Delete Data');
         }else{
-            return redirect('eksportir/product');
+            return redirect('eksportir/product')->with('success','Success Delete Data');
         }
     }
 
@@ -474,7 +474,7 @@ class EksProductController extends Controller
                 'updated_at' => $datenow,
             ]);
         }
-        return redirect('eksportir/product');
+        return redirect('eksportir/product')->with('success','Success Update Data');
     }
 
     public function verifikasi($id)

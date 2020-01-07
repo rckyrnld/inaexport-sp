@@ -170,7 +170,7 @@ class HistoryFrontController extends Controller
                 if($mjl->status == 0){
                     return '
                         <center>
-                        <a href="'.url('/front_end/ver_inquiry').'/'.$mjl->id.'" class="btn btn-sm btn-success" style="font-size: 12.5px;"><i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;&nbsp;'.Lang::get('button-name.verified').'</a>
+                        <a href="'.url('/front_end/ver_inquiry').'/'.$mjl->id.'" class="btn btn-sm btn-success" style="font-size: 12.5px;" title="'.Lang::get('button-name.verified').'"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
                         </center>';
                 }else if($mjl->status == 1){
                     return '
@@ -180,14 +180,14 @@ class HistoryFrontController extends Controller
                 }else if($mjl->status == 2){
                     return '
                         <center>
-                        <a href="'.url('/front_end/chat_inquiry').'/'.$mjl->id.'" class="btn btn-sm btn-warning" style="color: white; font-size: 12.5px;"><i class="fa fa-comments-o" aria-hidden="true"></i>&nbsp;&nbsp;'.Lang::get('button-name.chat').' <span class="badge badge-danger">'.$this->getCountChat($mjl->id, $id_user).'</span></a>
+                        <a href="'.url('/front_end/chat_inquiry').'/'.$mjl->id.'" class="btn btn-sm btn-warning" style="color: white; font-size: 12.5px;" title="'.Lang::get('button-name.chat').' "><i class="fa fa-comments-o" aria-hidden="true"></i><span class="badge badge-danger">'.$this->getCountChat($mjl->id, $id_user).'</span></a>
                         </center>';
                 }else if($mjl->status == 3 || $mjl->status == 4 || $mjl->status == 5){
                     return '
                         <center>
                         <div class="btn-group">
-                        <a href="'.url('/front_end/view_inquiry').'/'.$mjl->id.'" class="btn btn-sm btn-info" style="font-size: 12.5px;"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;'.Lang::get('button-name.view').'</a>
-                        <a href="'.url('/front_end/chat_inquiry').'/'.$mjl->id.'" class="btn btn-sm btn-warning" style="color: white; font-size: 12.5px;"><i class="fa fa-comments-o" aria-hidden="true"></i>&nbsp;&nbsp;'.Lang::get('button-name.chat').'</a>
+                        <a href="'.url('/front_end/view_inquiry').'/'.$mjl->id.'" class="btn btn-sm btn-info" style="font-size: 12.5px;" title="'.Lang::get('button-name.view').'"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        <a href="'.url('/front_end/chat_inquiry').'/'.$mjl->id.'" class="btn btn-sm btn-warning" style="color: white; font-size: 12.5px;" title="'.Lang::get('button-name.chat').'"><i class="fa fa-comments-o" aria-hidden="true"></i></a>
                         </div>
                         </center>';
                 }else{
@@ -241,7 +241,7 @@ class HistoryFrontController extends Controller
                     return '
                             <center>
                             <div class="btn-group">
-                                <a href="' . route('front.ticket.view', $data->id) . '" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i> '.Lang::get('button-name.view').' </a>&nbsp;&nbsp;
+                                <a href="' . route('front.ticket.view', $data->id) . '" class="btn btn-sm btn-info" title="'.Lang::get('button-name.view').'">&nbsp;<i class="fa fa-eye text-white"></i></a>&nbsp;&nbsp;
                             </div>
                             </center>
                             ';
@@ -249,8 +249,8 @@ class HistoryFrontController extends Controller
                     return '
                           <center>
                           <div class="btn-group">
-                                            <a href="' . route('front.ticket.view', $data->id) . '" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i> '.Lang::get('button-name.view').' </a>
-                            <a href="' . route('front.ticket.vchat', $data->id) . '" class="btn btn-sm btn-warning" style="color: white;"><i class="fa fa-comments-o" aria-hidden="true"></i> '.Lang::get('button-name.chat').'</a>
+                                            <a href="' . route('front.ticket.view', $data->id) . '" class="btn btn-sm btn-info" title=" '.Lang::get('button-name.view').' ">&nbsp;<i class="fa fa-eye text-white"></i></a>
+                            <a href="' . route('front.ticket.vchat', $data->id) . '" class="btn btn-sm btn-warning" style="color: white;" title=" '.Lang::get('button-name.chat').'"><i class="fa fa-comments-o" aria-hidden="true"></i></a>
                           </div>
                           </center>
                           ';
@@ -258,8 +258,8 @@ class HistoryFrontController extends Controller
                     return '
                           <center>
                           <div class="btn-group">
-                                            <a href="' . route('front.ticket.view', $data->id) . '" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i> '.Lang::get('button-name.view').' </a>
-                            <a onclick="return confirm(\'Apa Anda Yakin untuk Menghapus Chat Ini ?\')" href="' . route('front.ticket.delete', $data->id) . '" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i> '.Lang::get('button-name.delete').' </a>
+                                            <a href="' . route('front.ticket.view', $data->id) . '" class="btn btn-sm btn-info" title="'.Lang::get('button-name.view').'">&nbsp;<i class="fa fa-eye text-white"></i>  </a>
+                            <a onclick="return confirm(\'Are You Sure ?\')" href="' . route('front.ticket.delete', $data->id) . '" class="btn btn-sm btn-danger" title="'.Lang::get('button-name.delete').'">&nbsp;<i class="fa fa-trash text-white"></i></a>
                           </div>
                           </center>
                           ';

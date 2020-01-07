@@ -153,25 +153,25 @@ class InquiryWakilController extends Controller
                     if($mjl->status == 0){
                         return '
                             <center>
-                            <a href="'.url('/inquiry_perwakilan/view').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> View</a>
-                            <a href="'.url('/inquiry_perwakilan/delete').'/'.$mjl->id.'" class="btn btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
+                            <a href="'.url('/inquiry_perwakilan/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a href="'.url('/inquiry_perwakilan/delete').'/'.$mjl->id.'" class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </center>';
                     }else if($mjl->status == 1){
                         return '
                             <center>
-                            <button type="button" class="btn btn-warning" style="color: white;" onclick="broadcastInquiry(\''.$mjl->subyek_en.'|'.$mjl->id.'\')"><i class="fa fa-bullhorn" aria-hidden="true"></i> Broadcast</button>
-                            <a href="'.url('/inquiry_perwakilan/edit').'/'.$mjl->id.'" class="btn btn-sm btn-success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                            <button type="button" class="btn btn-warning" style="color: white;" onclick="broadcastInquiry(\''.$mjl->subyek_en.'|'.$mjl->id.'\')" title="Broadcast"><i class="fa fa-bullhorn" aria-hidden="true"></i> </button>
+                            <a href="'.url('/inquiry_perwakilan/edit').'/'.$mjl->id.'" class="btn btn-sm btn-success" title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                             </center>';
                     }else if($mjl->status == 2 || $mjl->status == 5){
                         return '
                             <center>
-                            <a href="'.url('/inquiry_perwakilan/view').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> View</a>
+                            <a href="'.url('/inquiry_perwakilan/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             </center>';
                     }else if($mjl->status == 3 || $mjl->status == 4){
                         return '
                             <center>
-                            <a href="'.url('/inquiry_perwakilan/view').'/'.$mjl->id.'" class="btn btn-sm btn-info"><i class="fa fa-search" aria-hidden="true"></i> View</a>
-                            <a href="'.url('/inquiry_perwakilan/delete').'/'.$mjl->id.'" class="btn btn-sm btn-danger" onclick="return confirm(\'Are You Sure?\')"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
+                            <a href="'.url('/inquiry_perwakilan/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a href="'.url('/inquiry_perwakilan/delete').'/'.$mjl->id.'" class="btn btn-sm btn-danger" onclick="return confirm(\'Are You Sure?\')" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </center>';
                     }else{
                         return '
@@ -277,7 +277,7 @@ class InquiryWakilController extends Controller
                     'file' => $nama_file1,
                 ]);
 
-                return redirect('/inquiry_perwakilan');
+                return redirect('/inquiry_perwakilan')->with('success','Success Add Data');
             }else{
                 return redirect('/home');    
             }
@@ -370,7 +370,7 @@ class InquiryWakilController extends Controller
                     'updated_at' => $datenow,
                 ]);
 
-                return redirect('/inquiry_perwakilan');
+                return redirect('/inquiry_perwakilan')->with('success','Success Update Data');
             }else{
                 return redirect('/home');    
             }
@@ -476,7 +476,7 @@ class InquiryWakilController extends Controller
                     $mail->to($users_admin);
                 });
 
-                return redirect('/inquiry_perwakilan');
+                return redirect('/inquiry_perwakilan')->with('success','Success Broadcast Data');
             }else{
                 return redirect('/home');    
             }
@@ -524,7 +524,7 @@ class InquiryWakilController extends Controller
             //delete broadcasting
             $del3 = DB::table('csc_inquiry_br')->where('id', $id)->delete();
             
-            return redirect('/inquiry_perwakilan/');
+            return redirect('/inquiry_perwakilan/')->with('success','Success Delete Data');
         }else{
             return redirect('/home');
         }

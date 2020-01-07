@@ -187,7 +187,7 @@
                                   <td width="30%">@lang('inquiry.file')</td>
                                   <td width="60%">
                                     @if($inquiry->file == "")
-                                        <input type="text" class="btn btn-document" value="Dokumen Kosong" autocomplete="off" readonly style="text-align: center; background: gray;">
+                                        <input type="text" class="btn btn-document" value="No File" autocomplete="off" readonly style="text-align: center; background: gray;">
                                     @else
                                         <a href="{{ url('/').'/uploads/Inquiry/'.$inquiry->id }}/{{ $inquiry->file }}" target="_blank" class="btn btn-document">{{$inquiry->file}}</a>
                                     @endif

@@ -72,7 +72,7 @@
 									
 									<td><center>
 									
-									<a href="{{ url('detailtrx/'.$ruu->id_transaksi) }}" class="btn btn-success"><font color="white"><i class="fa fa-list"></i>&nbsp; Detail</font></a>
+									<a href="{{ url('detailtrx/'.$ruu->id_transaksi) }}" class="btn btn-success" title="Detail"><font color="white"><i class="fa fa-list"></i></font></a>
 									
 									
 									</center></td>

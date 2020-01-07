@@ -58,7 +58,7 @@
                             </table>
                             <br>
                             <a style="color: white" href="{{ url('eksportir/listeksportir/'.$id_profil) }}"
-                               class="btn btn-success pull-right"><i style="color: white"></i>
+                               class="btn btn-danger pull-right"><i style="color: white"></i>
                                 Back
                             </a>
                         </div>

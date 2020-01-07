@@ -554,9 +554,9 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
 												<?php
                                                 // $userName
 												if(Auth::guard('eksmp')->user()->id_role == 3){
-                                                        echo "Importir";
+                                                        echo "Buyer";
                                                     }else if(Auth::guard('eksmp')->user()->id_role == 2){
-                                                        echo "Ekportir";
+                                                        echo "Exporter";
                                                     }
 													
 												?>

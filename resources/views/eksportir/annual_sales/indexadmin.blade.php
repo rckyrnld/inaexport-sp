@@ -29,7 +29,7 @@
                                         <center>Post Code</center>
                                     </th>
                                     <th>
-                                        <center>Telepon</center>
+                                        <center>Telephone</center>
                                     </th>
                                     <th>
                                         <center>Fax</center>

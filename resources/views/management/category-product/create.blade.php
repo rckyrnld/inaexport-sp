@@ -127,10 +127,10 @@
              <div class="form-group row">
                 <div class="col-md-11">
                   <div align="right">
-                    @if($page != 'view')
-                    <button class="btn btn-primary button_form" type="submit">Save</button>
-                    @endif
                     <a href="{{route('management.category-product.index')}}" class="btn btn-danger button_form">@if($page != 'view') Cancel @else Back @endif</a>
+                      @if($page != 'view')
+                          <button class="btn btn-primary button_form" type="submit">Submit</button>
+                      @endif
                   </div>
                 </div>
              </div>
