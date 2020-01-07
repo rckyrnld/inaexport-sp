@@ -89,10 +89,10 @@ body {font-family: Arial;}
 		<label><b>What are you looking for</b></label>
 		</div>
 		<div class="form-group col-sm-8">
-			<input type="text" value="" name="cmp" id="cmp" class="form-control" >
+			<input type="text" value="" name="cmp" id="cmp" class="form-control" required>
 		</div>
 		<div class="form-group col-sm-4">
-			<select class="form-control" name="valid" id="valid">
+			<select class="form-control" name="valid" id="valid" required>
 			<option value="0">None</option>
 			<option value="1">Valid within 1 day</option>
 			<option value="3">Valid within 3 day</option>
@@ -111,7 +111,7 @@ body {font-family: Arial;}
 			<?php 
 			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
 			?>
-			<select class="form-control select2" multiple name="category[]" id="category" >
+			<select class="form-control select2" multiple name="category[]" id="category" required>
 			<option value="">-- Select Category --</option>
 			<?php foreach($ms1 as $val1){ ?>
 			<option value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
@@ -133,7 +133,7 @@ body {font-family: Arial;}
 		<label><b>Specification</b></label>
 		</div>
 		<div class="form-group col-sm-12">
-			<textarea value="" name="spec" id="spec" class="form-control" ></textarea>
+			<textarea value="" name="spec" id="spec" class="form-control" required></textarea>
 		</div>
 		
 	</div>
@@ -147,9 +147,9 @@ body {font-family: Arial;}
 		</div>
 		<div class="form-group col-sm-6">
 			<div class="form-row">
-		<div class="col-sm-7"><input type="number" name="eo" id="eo" class="form-control"> </div>
+		<div class="col-sm-7"><input type="number" name="eo" id="eo" class="form-control" required> </div>
 		<div class="col-sm-5"> 
-		<select class="form-control select2" name="neo" id="neo">
+		<select class="form-control select2" name="neo" id="neo" required>
 		 
                   											                    											  <option value="Each">Each</option>
                   											                    											  <option value="Foot">Foot</option>
@@ -194,8 +194,8 @@ body {font-family: Arial;}
 		<div class="form-group col-sm-6">
 				
 			<div class="form-row">
-		<div class="col-sm-7"><input type="text" value="" name="tp" id="tp" class="amount form-control" ></div>
-		<div class="col-sm-5"> <select class="form-control" name="ntp" id="ntp"><option value="IDR">IDR</option><option value="USD">USD</option><option value="THB">THB</option></select></div>
+		<div class="col-sm-7"><input type="text" value="" name="tp" id="tp" class="amount form-control" required></div>
+		<div class="col-sm-5"> <select class="form-control" name="ntp" id="ntp" required><option value="IDR">IDR</option><option value="USD">USD</option><option value="THB">THB</option></select></div>
 		</div>
 		</div>
 		
@@ -217,7 +217,7 @@ body {font-family: Arial;}
 			?>
 			<select style="border-color: rgba(120, 130, 140, 0.5)!important;
     border-radius: 0.25rem!important;
-    color: inherit!important;" class="form-control select2" name="country" id="country">
+    color: inherit!important;" class="form-control select2" name="country" id="country" required>
 			<option value="">-- Select Country --</option>
 			<?php foreach($ms2 as $val2){ ?>
 			<option value="<?php echo $val2->id; ?>"><?php echo $val2->country; ?></option>
@@ -225,7 +225,7 @@ body {font-family: Arial;}
 			</select>
 		</div>
 		<div class="form-group col-sm-6">
-			<input type="text" value="" name="city" id="city" class="form-control" placeholder="City/State">
+			<input type="text" value="" name="city" id="city" class="form-control" placeholder="City/State" required>
 		</div>
 	</div>
 <div class="form-row">
@@ -233,7 +233,7 @@ body {font-family: Arial;}
 		<label><b>Shipping & Payment conditions</b></label>
 		</div>
 		<div class="form-group col-sm-12">
-			<textarea value="" name="ship" id="ship" class="form-control" ></textarea>
+			<textarea value="" name="ship" id="ship" class="form-control" required></textarea>
 		</div>
 		
 	</div>
@@ -242,7 +242,7 @@ body {font-family: Arial;}
 		<label><b>Add attachment (Relevant to  a request)</b></label>
 		</div>
 		<div class="form-group col-sm-12">
-			<input type="file" value="" name="doc" id="doc" class="form-control" >
+			<input type="file" value="" name="doc" id="doc" class="form-control" required>
 		</div>
 		
 	</div>
