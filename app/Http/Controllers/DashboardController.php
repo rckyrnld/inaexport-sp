@@ -261,7 +261,8 @@ class DashboardController extends Controller
             ->whereRaw('extract(year from created_at) in (' . $tahun . ')')
             ->groupby('year')
             ->get();
-
+        $last_year = $new_user[count($new_user)-1]->year;
+        $fetch_sub_data .='[';
         for ($i = 0; $i < 2; $i++) {
             if ($i == 0) {
                 $fetch_data_new_user .= '[{"name": "Exporter", "color": "#4cd25c", "data": [';
@@ -274,8 +275,8 @@ class DashboardController extends Controller
                 if ($i == 0) {
                     $jumlah = $value->eksportir;
                     $id = 'Ex-' . $value->year;
-                    if ($value->year == (date('Y') - count($new_user)) + 1) {
-                        $fetch_sub_data .= '[{"name": "Exporter", "id": "Ex-' . $value->year . '", "data": [';
+                    if ($value->year == $last_year) {
+                        $fetch_sub_data .= '{"name": "Exporter", "id": "Ex-' . $value->year . '", "data": [';
                     } else {
                         $fetch_sub_data .= '{"name": "Exporter", "id": "Ex-' . $value->year . '", "data": [';
                     }
@@ -284,14 +285,14 @@ class DashboardController extends Controller
                     $jumlah = $value->importir;
                     $id = 'Imp-' . $value->year;
                     $fetch_sub_data .= '{"name": "Importer", "id": "Imp-' . $value->year . '", "data": [';
-                    if ($value->year === date('Y')) {
-                        $endnya = ']}]';
+                    if ($value->year == $last_year) {
+                        $endnya = ']}';
                     } else {
                         $endnya = ']},';
                     }
                 }
 
-                if ($value->year === date('Y')) {
+                if ($value->year == $last_year) {
                     $fetch_data_new_user .= '{"name": "' . $value->year . '", "y": ' . $jumlah . ', "drilldown": "' . $id . '"}';
                 } else {
                     $fetch_data_new_user .= '{"name": "' . $value->year . '", "y": ' . $jumlah . ', "drilldown": "' . $id . '"},';
@@ -311,7 +312,7 @@ class DashboardController extends Controller
             }
             $fetch_data_new_user .= $end;
         }
-        $return = '[' . $fetch_data_new_user . ',' . $fetch_sub_data . ']';
+        $return = '[' . $fetch_data_new_user . ',' . $fetch_sub_data . ']]';
         return $return;
     }
 
@@ -563,6 +564,7 @@ class DashboardController extends Controller
             ->whereRaw('extract(year from created_at) in (' . $tahun . ')')
             ->orderby('year', 'asc')
             ->limit(5)->get();
+        $last_year = ($event[count($event)-1]->year);
 
         $fetch_event .= '[{"name": "Event", "data": [';
         foreach ($event as $key => $value) {
@@ -570,7 +572,7 @@ class DashboardController extends Controller
                 array_push($tampung_tahun, $value->year);
             }
 
-            if ($value->year === date('Y')) {
+            if ($value->year == $last_year) {
                 $fetch_event .= '{"name": "' . $value->year . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year . '"}';
                 $endnya = ']}]';
             } else {
@@ -621,6 +623,7 @@ class DashboardController extends Controller
             ->whereRaw('extract(year from start_date) in (' . $tahun . ')')
             ->orderby('year', 'asc')
             ->limit(5)->get();
+        $last_year = $training[count($training)-1]->year;
 
         $fetch_training .= '[{"name": "Training", "data": [';
         foreach ($training as $key => $value) {
@@ -628,7 +631,7 @@ class DashboardController extends Controller
                 array_push($tampung_tahun, $value->year);
             }
 
-            if ($value->year === date('Y')) {
+            if ($value->year == $last_year) {
                 $fetch_training .= '{"name": "' . $value->year . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year . '"}';
                 $endnya = ']}]';
             } else {
@@ -666,6 +669,12 @@ class DashboardController extends Controller
             ->orderby('jumlah', 'desc')
             ->limit(5)->get();
 
+        $top_download_company = DB::table('csc_download_research_corner')
+            ->join('itdp_company_users', 'itdp_company_users.id_profil','csc_download_research_corner.id_itdp_profil_eks')
+            ->select(DB::raw('count(*) as jumlah, id_itdp_profil_eks'))
+            ->groupby('id_itdp_profil_eks')
+            ->orderby('jumlah', 'desc')
+            ->limit(5)->get();
         $company = '';
         $color = array(
             0 => '#789ec5',
