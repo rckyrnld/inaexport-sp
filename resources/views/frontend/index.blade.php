@@ -204,7 +204,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-12">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <div id="myCarousel" style="width:114%!important;" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
                         <ol class="carousel-indicators">
                             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -213,17 +213,17 @@
                         </ol>
 
                     <!-- Wrapper for slides -->
-                        <div class="carousel-inner" style="padding-bottom:24px!important;padding-top:24px!important;">
+                        <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}" alt="Los Angeles" style="width:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}" alt="Los Angeles" style="width:100%; height:100%;">
                             </div>
 
                             <div class="carousel-item">
-                                <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}" alt="Chicago" style="width:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}" alt="Chicago" style="width:100%;height:100%;">
                             </div>
 
                             <div class="carousel-item">
-                                <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}" alt="New york" style="width:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}" alt="New york" style="width:100%;height:100%;">
                             </div>
                         </div>
                     </div>
