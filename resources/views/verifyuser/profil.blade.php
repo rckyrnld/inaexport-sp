@@ -376,7 +376,7 @@ body {font-family: Arial;}
 		<div class="form-group col-sm-3">
 			<label><b>
 			<?php 
-			  if(empty(Auth::user()->name)){ echo "Document"; }else{ echo "File Upload dari Eksportir"; } ?>
+			  if(empty(Auth::user()->name)){ echo "Document"; }else{ echo "File Upload from Exporter"; } ?>
 			</b></label>
 		</div>
 		<div class="form-group col-sm-4">
@@ -389,7 +389,7 @@ body {font-family: Arial;}
 			<span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->doc)}}"><?php echo $ryu->doc; ?></b></span>
 			<?php } ?>
 			  <?php } else{ ?>
-			  <span><?php if(empty($ryu->doc) || $ryu->doc == null){ echo "<font color='red'>Belum di upload oleh Eksportir</font>"; }else{ ?>
+			  <span><?php if(empty($ryu->doc) || $ryu->doc == null){ echo "<font color='red'>No File</font>"; }else{ ?>
 			  
 			  <a href="{{ asset('eksportir/'.$ryu->doc)}}"><?php echo $ryu->doc; ?></a>
 			  <?php } ?>
@@ -401,7 +401,7 @@ body {font-family: Arial;}
 	</div>
 	<div class="form-row">
 		<div class="form-group col-sm-3">
-			<label><b>Status Ekportir</b></label>
+			<label><b>Status Exporter</b></label>
 		</div>
 		<div class="form-group col-sm-4">
 		<?php if(empty(Auth::user()->name)){

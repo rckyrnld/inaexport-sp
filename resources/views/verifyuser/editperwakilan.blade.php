@@ -32,7 +32,7 @@
 				      {!!Form::label('password_confirm','Tipe',['class' => 'col-sm-2 col-form-label '])!!}
 				      <div class="col-sm-4">
 				     
-						<select class="form-control" name="type">
+						<select class="form-control" name="type" required>
 						<!-- <option>DJPEN</option> -->
 						<option value="">-- Choose Type --</option>
 						<option <?php if($qt->type=="ITPC"){ echo "selected"; } ?> value="ITPC">ITPC</option>
@@ -54,9 +54,9 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Province',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<select class="form-control" name="country">
+						<select class="form-control" name="country" required>
 						<!-- <option>DJPEN</option> -->
-						<option value="0">-- Choose Country --</option>
+						<option value="">-- Choose Country --</option>
 						<?php $mst = DB::select("select * from mst_province order by province_en asc"); 
 						foreach($mst as $cu){
 						?>
@@ -72,9 +72,9 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Group Country',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<select class="form-control" name="country">
+						<select class="form-control" name="country" required>
 						<!-- <option>DJPEN</option> -->
-						<option value="0">-- Choose Country --</option>
+						<option value="">-- Choose Country --</option>
 						<?php $mst = DB::select("select * from mst_group_country order by group_country asc"); 
 						foreach($mst as $cu){
 						?>
@@ -91,7 +91,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Email',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" name="email" value="<?php echo $eq->email; ?>">
+						<input type="email" class="form-control" name="email" value="<?php echo $eq->email; ?>" required>
 					</div>
 					</div>
 				</div>
@@ -99,7 +99,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Telp',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" name="phone" value="<?php echo $qt->telp; ?>">
+						<input type="text" class="form-control" name="phone" value="<?php echo $qt->telp; ?>" required>
 					</div>
 					</div>
 				</div>
@@ -107,7 +107,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Pejabat',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" name="pejabat" value="<?php echo $qt->nama; ?>">
+						<input type="text" class="form-control" name="pejabat" value="<?php echo $qt->nama; ?>" required>
 					</div>
 					</div>
 				</div>
@@ -115,7 +115,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Website',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" name="web" value="<?php echo $qt->website; ?>">
+						<input type="text" class="form-control" name="web" value="<?php echo $qt->website; ?>" required>
 					</div>
 					</div>
 				</div>
@@ -123,7 +123,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Username',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" name="username" value="<?php echo $qt->username; ?>">
+						<input type="text" class="form-control" name="username" value="<?php echo $qt->username; ?>" required>
 					</div>
 					</div>
 				</div>
@@ -140,7 +140,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Status',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<select class="form-control" name="status">
+						<select class="form-control" name="status" required>
 							<option value="">-- Choose Status --</value>
 							<option <?php if($qt->status==1){ echo "selected"; } ?> value="1">Aktif</value>
 							<option <?php if($qt->status==0){ echo "selected"; } ?> value="0">Tidak Aktif</value>
@@ -150,6 +150,7 @@
 				</div>
 				
 				<div align="left">
+				<a class="btn btn-danger" href="{{ URL::previous() }}">Cancel</a>
 				<input class="btn btn-primary" type="submit" value=" Update">
 				</div>
 				<?php } } ?>

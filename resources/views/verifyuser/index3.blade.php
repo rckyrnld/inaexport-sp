@@ -25,7 +25,7 @@
                     <div class="col-md-14">
                         <br>
                         <div class="table-responsive">
-						<a href="{{ url('tambahperwakilan') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add</a><br><br>
+						<a href="{{ url('tambahperwakilan') }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Add</a><br><br>
                            <table id="users-table" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
                                 <tr>

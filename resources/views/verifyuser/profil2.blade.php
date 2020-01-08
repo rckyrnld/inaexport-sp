@@ -93,7 +93,7 @@
 
                                                 </div>
                                                 <div class="form-group col-sm-8">
-                                                    <input type="text" value="<?php echo $rhj->email; ?>" name="email"
+                                                    <input type="email" value="<?php echo $rhj->email; ?>" name="email"
                                                            id="email"
                                                            class="form-control">
 
