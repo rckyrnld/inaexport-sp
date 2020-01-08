@@ -112,7 +112,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Publish Date</label>
                  <div class="col-md-7">
-                     <input type="text" class="form-control" id="date" name="date" placeholder="Date Time" autocomplete="off" {{$view}}  @isset($data) value="{{ $data->publish_date }}" @endisset>
+                     <input type="text" class="form-control" id="date" name="date" placeholder="Date Time" required autocomplete="off" {{$view}}  @isset($data) value="{{ $data->publish_date }}" @endisset>
                  </div>
              </div>
 
@@ -154,7 +154,8 @@
                   <div align="right">
                     <a href="{{route('admin.research-corner.index')}}" class="btn btn-danger button_form">@if($page != 'view') Cancel @else Back @endif</a>
                     @if($page != 'view')
-                    <button class="btn btn-primary button_form" type="submit">Submit</button>
+                        <button class="btn btn-primary button_form" type="button" id="simpan">Simpan</button>
+                        <button class="btn btn-primary button_form" type="submit" id="save" style="display: none;">Submit</button>
                     @endif
                   </div>
                 </div>
@@ -240,4 +241,25 @@
     }
     @endisset
   });
+  $('#simpan').on('click',function (e) {
+    e.preventDefault();
+    if($('#date').val() == ""){
+        alert('please complete the date field');
+        {{--$.ajax({--}}
+        {{--    type: "POST",--}}
+        {{--    url: '{{url('/admin/research-corner/store/Create')}}',--}}
+        {{--    data: { :company,username:username,email:email,website:website,phone:phone,fax:fax,password:password,city:city,prov:prov,postcode:postcode,alamat:alamat,_token:'{{csrf_token()}}' },--}}
+        {{--    success: function (data) {--}}
+        {{--        console.log(data);--}}
+        {{--    },--}}
+        {{--    error: function (data, textStatus, errorThrown) {--}}
+        {{--        console.log(data);--}}
+        {{--    },--}}
+        {{--});--}}
+    }
+    else{
+        $("#save").click();
+
+    }
+  })
 </script>
