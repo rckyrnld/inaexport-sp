@@ -300,49 +300,55 @@
                     <div class="breadcrumb_content">
                         <div class="row">
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/br_importir_all')}}"><img src="{{asset('front/assets/icon/inquiry.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/br_importir_all')}}"><img src="{{asset('front/assets/icon/inquiry_05.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>INQUIRY</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/br_importir_all')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                 <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/buying_request.png')}}" alt="" class="image img-menu"></a>
+                                 <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/buying-request_07.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>BUYING REQUEST</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/br_importir')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/ticketing_support')}}"><img src="{{asset('front/assets/icon/customer support.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/ticketing_support')}}"><img src="{{asset('front/assets/icon/customer-support_10.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>Customer Support</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/ticketing_support')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                            
                         </div>
                         <div class="row">
 							 <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/event')}}"><img src="{{asset('front/assets/icon/event.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/event')}}"><img src="{{asset('front/assets/icon/event_18.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>EVENTS</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/event')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/training')}}"><img src="{{asset('front/assets/icon/training.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/training')}}"><img src="{{asset('front/assets/icon/training_20.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>TRAINING</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/training')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/research-corner')}}"><img src="{{asset('front/assets/icon/research_corner.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/research-corner')}}"><img src="{{asset('front/assets/icon/research-corner_22.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>RESEARCH CORNER</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/research-corner')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
 							
 							</div>
