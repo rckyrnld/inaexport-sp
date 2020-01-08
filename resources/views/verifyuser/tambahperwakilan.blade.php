@@ -20,7 +20,7 @@
 				      {!!Form::label('password_confirm','Type',['class' => 'col-sm-2 col-form-label '])!!}
 				      <div class="col-sm-4">
 				     
-						<select class="form-control" id="type" name="type" onchange="ganticity()">
+						<select class="form-control" id="type" name="type" onchange="ganticity()" required>
 						<!-- <option>DJPEN</option> -->
 						<option value="">-- Choose Type --</option>
 						<option value="ITPC">ITPC</option>
@@ -42,9 +42,9 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Group Country',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<select class="form-control" name="country">
+						<select class="form-control" name="country" required>
 						<!-- <option>DJPEN</option> -->
-						<option value="0">-- Choose Country --</option>
+						<option value="">-- Choose Country --</option>
 						<?php $mst = DB::select("select * from mst_group_country order by group_country asc"); 
 						foreach($mst as $cu){
 						?>
@@ -60,7 +60,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Email',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" name="email">
+						<input type="email" class="form-control" name="email" required>
 					</div>
 					</div>
 				</div>
@@ -68,7 +68,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Telp',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" name="phone">
+						<input type="text" class="form-control" name="phone" required>
 					</div>
 					</div>
 				</div>
@@ -76,7 +76,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Official',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" name="pejabat">
+						<input type="text" class="form-control" name="pejabat" required>
 					</div>
 					</div>
 				</div>
@@ -84,7 +84,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Website',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" name="web">
+						<input type="text" class="form-control" name="web" required>
 					</div>
 					</div>
 				</div>
@@ -92,7 +92,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Username',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" name="username">
+						<input type="text" class="form-control" name="username" required>
 					</div>
 					</div>
 				</div>
@@ -100,7 +100,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Password',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="password" class="form-control" name="password">
+						<input type="password" class="form-control" name="password" required>
 					</div>
 					</div>
 				</div>
@@ -108,7 +108,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Status',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<select class="form-control" name="status">
+						<select class="form-control" name="status" required>
 							<option value="">-- Choose Status --</value>
 							<option value="1">Aktif</value>
 							<option value="0">Tidak Aktif</value>
@@ -118,6 +118,7 @@
 				</div>
 				
 				<div align="left">
+				<a class="btn btn-danger" href="{{ URL::previous() }}">Cancel</a>
 				<input class="btn btn-primary" type="submit" value=" Submit">
 				</div>
 				{{Form::close()}}
@@ -145,7 +146,7 @@ function ganticity(){
 		$('#ch1').html('<div class="col-md-12"><div class="form-group row"><label for="password_confirm" class="col-sm-2 col-form-label ">Province</label><div class="col-sm-4"><select class="form-control" name="country"><option value="0">-- Choose Province --</option><?php $mst = DB::select("select * from mst_province order by province_en asc");foreach($mst as $cu){?><option value="<?php echo $cu->id; ?>"><?php echo $cu->province_en; ?></option><?php } ?></select></div></div></div>')
 	
 	}else{
-		$('#ch1').html('<div class="col-md-12"><div class="form-group row"><label for="password_confirm" class="col-sm-2 col-form-label ">Group Country</label><div class="col-sm-4"><select class="form-control" name="country"><option value="0">-- Choose Country --</option><?php $mst = DB::select("select * from mst_group_country order by group_country asc");foreach($mst as $cu){?><option value="<?php echo $cu->id; ?>"><?php echo $cu->group_country; ?></option><?php } ?></select></div></div></div>')
+		$('#ch1').html('<div class="col-md-12"><div class="form-group row"><label for="password_confirm" class="col-sm-2 col-form-label ">Group Country</label><div class="col-sm-4"><select class="form-control" name="country"><option value="">-- Choose Country --</option><?php $mst = DB::select("select * from mst_group_country order by group_country asc");foreach($mst as $cu){?><option value="<?php echo $cu->id; ?>"><?php echo $cu->group_country; ?></option><?php } ?></select></div></div></div>')
 	}
 }
 </script>

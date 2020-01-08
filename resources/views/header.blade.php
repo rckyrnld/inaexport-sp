@@ -88,13 +88,7 @@
 
 <script type="text/javascript">
   $(function () {
-   $('#example1').DataTable({
-     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-    });
-	
-	$('#example2').DataTable({
-     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-    });
+   
 	
 	$('#yahoo').DataTable({
      
