@@ -466,8 +466,8 @@
     }
 
     function event() {
-        var data_year = JSON.parse('<?php echo addcslashes(json_encode($Event), '\'\\'); ?>');
-        var defaultTitle = "Number of Event This Year";
+        var data_year = JSON.parse('<?php echo addcslashes(json_encode($Event), '\'\\'); ?>')
+        var defaultTitle = "Top 5 Event of last 5 Years";
         var drilldownTitle = "Amount of Events Year ";
 
         var chart_event = Highcharts.chart('event', {
@@ -581,7 +581,7 @@
                 enabled: false
             },
             title: {
-                text: 'Top 5 Company (Reasearch Corner)'
+                text: 'Top 5 Company (Research Corner)'
             },
             legend: {
                 enabled: false
