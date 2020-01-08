@@ -1,6 +1,9 @@
 @include('frontend.layouts.header')
 <!--slider area start-->
 <style type="text/css">
+	.categories_menu_toggle > ul > li ul.categories_mega_menu > li > a {
+    text-transform: none!important;
+	}
     .row-menu{
         margin-top: 10%;
         margin-bottom: 10%;
@@ -212,15 +215,15 @@
                     <!-- Wrapper for slides -->
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="{{asset('front/assets/img/slider/home/slide_01.png')}}" alt="Los Angeles" style="width:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}" alt="Los Angeles" style="width:100%;">
                             </div>
 
                             <div class="carousel-item">
-                                <img src="{{asset('front/assets/img/slider/home/slide_02.png')}}" alt="Chicago" style="width:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}" alt="Chicago" style="width:100%;">
                             </div>
 
                             <div class="carousel-item">
-                                <img src="{{asset('front/assets/img/slider/home/slide_03.png')}}" alt="New york" style="width:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}" alt="New york" style="width:100%;">
                             </div>
                         </div>
                     </div>
