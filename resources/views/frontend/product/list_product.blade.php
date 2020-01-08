@@ -441,7 +441,7 @@
                                         }
                                         $param = $pro->id_itdp_company_user.'-'.getCompanyName($pro->id_itdp_company_user);
                                     ?>
-                                    <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 10px 10px 0px 0px;">
+                                    <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 0px 0px 0px 0px;">
                                         <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}" onclick="GoToProduct('{{$pro->id}}', event, this)"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
                                         <!-- <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
                                     </div>
@@ -631,11 +631,11 @@
         });
 
         $('#grid').on('click', function(){
-            $('.product_thumb').css({ "margin-top": "0px", "border-radius": "10px 10px 0px 0px" });
+            $('.product_thumb').css({ "margin-top": "0px", "border-radius": "0px 0px 0px 0px" });
         })
 
         $('#list').on('click', function(){
-            $('.product_thumb').css({ "margin-top": "60px", "border-radius": "0px 10px 10px 0px" });
+            $('.product_thumb').css({ "margin-top": "60px", "border-radius": "0px 0px 0px 0px" });
         });
 
         $("#cari_manufacture").keyup(function(){

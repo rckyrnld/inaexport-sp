@@ -1,6 +1,9 @@
 @include('frontend.layouts.header')
 <!--slider area start-->
 <style type="text/css">
+	.categories_menu_toggle > ul > li ul.categories_mega_menu > li > a {
+    text-transform: none!important;
+	}
     .row-menu{
         margin-top: 10%;
         margin-bottom: 10%;
@@ -210,17 +213,17 @@
                         </ol>
 
                     <!-- Wrapper for slides -->
-                        <div class="carousel-inner">
+                        <div class="carousel-inner" style="padding-bottom:24px!important;padding-top:24px!important;">
                             <div class="carousel-item active">
-                                <img src="{{asset('front/assets/img/slider/home/slide_01.png')}}" alt="Los Angeles" style="width:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}" alt="Los Angeles" style="width:100%;">
                             </div>
 
                             <div class="carousel-item">
-                                <img src="{{asset('front/assets/img/slider/home/slide_02.png')}}" alt="Chicago" style="width:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}" alt="Chicago" style="width:100%;">
                             </div>
 
                             <div class="carousel-item">
-                                <img src="{{asset('front/assets/img/slider/home/slide_03.png')}}" alt="New york" style="width:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}" alt="New york" style="width:100%;">
                             </div>
                         </div>
                     </div>
@@ -352,6 +355,70 @@
 	
 	
 <br>
+
+	<!--buyer & seller start-->
+    <div class="breadcrumbs_area" style="">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-12">
+                            <center>
+                            <?php
+                                $url = '/login';
+                                if(Auth::guard('eksmp')->user()){
+                                    if(Auth::guard('eksmp')->user()->id_role == 2){
+                                        $url = '/home';
+                                    }else if(Auth::guard('eksmp')->user()->id_role == 3){
+                                        $url = '/';
+                                    }
+                                }
+                            ?>
+                                @if(Auth::guard('eksmp')->user())
+                                @if(Auth::guard('eksmp')->user()->id_role == 3)
+                                <a href="{{url($url)}}" class="for-act">
+                                @endif
+                                @else
+                                <a href="{{url($url)}}" class="for-act">
+                                @endif
+                                  <img src="{{asset('front/assets/icon/fb.png')}}" alt="">
+                                @if(Auth::guard('eksmp')->user())
+                                @if(Auth::guard('eksmp')->user()->id_role == 3)
+                                </a>
+                                @endif
+                                @else
+                                </a>
+                                @endif
+                            </center>
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-12">
+                            <center>
+                                @if(Auth::guard('eksmp')->user())
+                                @if(Auth::guard('eksmp')->user()->id_role == 2)
+                                <a href="{{url($url)}}" class="for-act">
+                                @endif
+                                @else
+                                <a href="{{url($url)}}" class="for-act">
+                                @endif
+                                  <img src="{{asset('front/assets/icon/fi.png')}}" alt="" >
+                                @if(Auth::guard('eksmp')->user())
+                                @if(Auth::guard('eksmp')->user()->id_role == 2)
+                                </a>
+                                @endif
+                                @else
+                                </a>
+                                @endif
+                            </center>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--buyer & seller start-->
+	<br>
     <!--product category start-->
     <section class="product_area mb-50">
         <div class="container">
@@ -605,68 +672,6 @@
     </section>
     <!--product category end-->
 	
-	<!--buyer & seller start-->
-    <div class="breadcrumbs_area" style="">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumb_content">
-                        <div class="row">
-                          <div class="col-md-6 col-lg-6 col-12">
-                            <center>
-                            <?php
-                                $url = '/login';
-                                if(Auth::guard('eksmp')->user()){
-                                    if(Auth::guard('eksmp')->user()->id_role == 2){
-                                        $url = '/home';
-                                    }else if(Auth::guard('eksmp')->user()->id_role == 3){
-                                        $url = '/';
-                                    }
-                                }
-                            ?>
-                                @if(Auth::guard('eksmp')->user())
-                                @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                <a href="{{url($url)}}" class="for-act">
-                                @endif
-                                @else
-                                <a href="{{url($url)}}" class="for-act">
-                                @endif
-                                  <img src="{{asset('front/assets/icon/for-buyer.png')}}" alt="">
-                                @if(Auth::guard('eksmp')->user())
-                                @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                </a>
-                                @endif
-                                @else
-                                </a>
-                                @endif
-                            </center>
-                          </div>
-                          <div class="col-md-6 col-lg-6 col-12">
-                            <center>
-                                @if(Auth::guard('eksmp')->user())
-                                @if(Auth::guard('eksmp')->user()->id_role == 2)
-                                <a href="{{url($url)}}" class="for-act">
-                                @endif
-                                @else
-                                <a href="{{url($url)}}" class="for-act">
-                                @endif
-                                  <img src="{{asset('front/assets/icon/For-Indonesian-Exporter_10.png')}}" alt="" >
-                                @if(Auth::guard('eksmp')->user())
-                                @if(Auth::guard('eksmp')->user()->id_role == 2)
-                                </a>
-                                @endif
-                                @else
-                                </a>
-                                @endif
-                            </center>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--buyer & seller start-->
 
     <!--regis start-->
     <section class="breadcrumbs_area" style="padding-top: 4%;padding-bottom: 4%; margin-bottom: 0px;" data-bgimg="{{asset('front/assets/icon/homepage2.png')}}">
