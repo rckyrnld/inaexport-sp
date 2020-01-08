@@ -175,7 +175,7 @@
                         <div class="widgets_container contact_us">
                             <div class="footer_logo" align="center">
                                 <a href="http://inatrade.kemendag.go.id" target="_BLANK"><img src="{{asset('front/assets/img/logo/inatrade.png')}}" alt="" width="100%"></a>
-                                <a href="http://exim.kemendag.go.id" target="_BLANK"><img src="{{asset('front/assets/img/logo/logo-alt.png')}}" alt="" style="width:95%!important;height:55px!important;"></a>
+                                <a href="http://exim.kemendag.go.id" target="_BLANK"><img src="{{asset('front/assets/img/logo/logo-alt-01x.png')}}" alt="" style="width:95%!important;height:55px!important;"></a>
 								<br><br>
 								<table width="100%">
 								<tr>
