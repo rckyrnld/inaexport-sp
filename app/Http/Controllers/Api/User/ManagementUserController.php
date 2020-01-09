@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Models\ChatingTicketingSupportModel;
 use App\Models\TicketingSupportModel;
+use App\Models\EventInterest;
+use App\Models\TrainingInterest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -998,4 +1000,67 @@ class ManagementUserController extends Controller
 
     }
 
+
+    public function eventInterest(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $datenow = date("Y-m-d H:i:s");
+        $id_user = $request->id_user;
+        $event = EventInterest::updateOrCreate(
+            ['id_profile' => $id_user, 'id_event' => $request->id_event],
+            ['created_at' => $datenow]
+        );
+        if (count($event) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
+    public function trainingInterest(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $store = TrainingInterest::updateOrCreate(
+            ['id_profile' => $request->id_user, 'id_training' => $request->id_training],
+            ['created_at' => date('Y-m-d H:i:s')]
+        );
+        
+        if (count($store) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
 }

@@ -72,9 +72,11 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
 
     //training
     Route::post('joinTraining', 'Api\User\ManagementUserController@joinTraining');
+    Route::post('trainingInterest', 'Api\User\ManagementUserController@trainingInterest');
 
     //event
     Route::post('joinEvent', 'Api\User\ManagementUserController@joinEvent');
+    Route::post('eventInterest', 'Api\User\ManagementUserController@eventInterest');
 
     //tiketing
     Route::post('createTicket', 'Api\User\ManagementUserController@createTicketing');

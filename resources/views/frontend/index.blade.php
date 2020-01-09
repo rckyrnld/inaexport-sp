@@ -223,7 +223,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-12">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <div id="myCarousel" style="width:114%!important;" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
                         <ol class="carousel-indicators">
                             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -232,17 +232,17 @@
                         </ol>
 
                     <!-- Wrapper for slides -->
-                        <div class="carousel-inner" style="padding-bottom:24px!important;padding-top:24px!important;">
+                        <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}" alt="Los Angeles" style="width:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}" alt="Los Angeles" style="width:100%; height:100%;">
                             </div>
 
                             <div class="carousel-item">
-                                <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}" alt="Chicago" style="width:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}" alt="Chicago" style="width:100%;height:100%;">
                             </div>
 
                             <div class="carousel-item">
-                                <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}" alt="New york" style="width:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}" alt="New york" style="width:100%;height:100%;">
                             </div>
                         </div>
                     </div>
@@ -319,49 +319,55 @@
                     <div class="breadcrumb_content">
                         <div class="row">
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/br_importir_all')}}"><img src="{{asset('front/assets/icon/inquiry.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/br_importir_all')}}"><img src="{{asset('front/assets/icon/01-inquiry_05.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>INQUIRY</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/br_importir_all')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                 <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/buying_request.png')}}" alt="" class="image img-menu"></a>
+                                 <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/02-buying-request_07.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>BUYING REQUEST</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/br_importir')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/ticketing_support')}}"><img src="{{asset('front/assets/icon/customer support.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/ticketing_support')}}"><img src="{{asset('front/assets/icon/03-customer-support_10.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>Customer Support</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/ticketing_support')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                            
                         </div>
                         <div class="row">
 							 <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/event')}}"><img src="{{asset('front/assets/icon/event.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/event')}}"><img src="{{asset('front/assets/icon/04-event_18.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>EVENTS</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/event')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/training')}}"><img src="{{asset('front/assets/icon/training.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/training')}}"><img src="{{asset('front/assets/icon/05-training_20.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>TRAINING</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/training')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/research-corner')}}"><img src="{{asset('front/assets/icon/research_corner.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/research-corner')}}"><img src="{{asset('front/assets/icon/06-research-corner_22.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>RESEARCH CORNER</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/research-corner')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
 							
 							</div>
@@ -531,7 +537,7 @@
                                             }
                                         }
                                     ?>
-                                    <div class="single_product" style="height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
+                                    <div class="single_product" style="border-radius:0px!important; height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
                                         <?php
                                             //cut prod name
                                             $num_char = 19;
@@ -574,7 +580,7 @@
                                             }
                                             $param = $p->id_itdp_company_user.'-'.getCompanyName($p->id_itdp_company_user);
                                         ?>
-                                        <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 10px 10px 0px 0px;">
+                                        <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 0px 0px 0px 0px;">
                                                 <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}" onclick="GoToProduct('{{$p->id}}', event, this)"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
                                         </div>
                                         <div class="product_name grid_name" style="padding: 0px 13px 0px 13px;">

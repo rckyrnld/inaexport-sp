@@ -376,7 +376,7 @@
                                 }
                             ?>
                             <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product" style="height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
+                                <div class="single_product" style="border: 0px!Important;height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
                                     <div class="pro-type" style="{{$dis}}">
                                         <span class="pro-type-content">
                                              @if($loc == "ch")
@@ -442,7 +442,7 @@
                                         $param = $pro->id_itdp_company_user.'-'.getCompanyName($pro->id_itdp_company_user);
                                     ?>
                                     <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 0px 0px 0px 0px;">
-                                        <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}" onclick="GoToProduct('{{$pro->id}}', event, this)"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
+                                        <a class="primary_img" href="{{url('front_end/product/'.$pro->id)}}" onclick="GoToProduct('{{$pro->id}}', event, this)"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 0px 0px 0px 0px; padding: {{$padImg}}"></a>
                                         <!-- <a class="secondary_img" href="{{url('front_end/product/'.$pro->id)}}"><img src="{{url('/')}}{{$isimg2}}" alt=""></a> -->
                                     </div>
                                     <div class="product_name grid_name" style="padding: 0px 13px 0px 13px;">
