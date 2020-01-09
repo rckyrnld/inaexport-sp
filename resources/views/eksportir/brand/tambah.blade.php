@@ -11,7 +11,7 @@
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Brand</label>
-                                <input type="text" name="brand" id="brand" class="form-control">
+                                <input type="text" name="brand" id="brand" class="form-control" required>
                             </div>
 
                             <div class="form-group col-sm-6">
@@ -22,7 +22,7 @@
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label for="bulan">Month</label>
-                                <select class="form-control select2" id="bulan" name="bulan">
+                                <select class="form-control select2" id="bulan" name="bulan" required>
                                     <option value="00">--Select Month--</option>
                                     <option value="01">January</option>
                                     <option value="02">February</option>
@@ -41,7 +41,7 @@
                             <div class="form-group col-sm-6">
                                 <label>Year</label>
                                 <select class="atc form-control select2" required id="year"
-                                        name="year">
+                                        name="year" required>
                                     <option value="">- Select Years -</option>
                                     @foreach($years as $sa)
                                         <option value="{{$sa}}">{{$sa}}</option>
@@ -53,7 +53,7 @@
                         <div class="form-row">
                             <div class="form-group col-sm-6">
                                 <label>Copyright Number</label>
-                                <input type="text" class="form-control" name="copyright_number" id="copyright_number">
+                                <input type="text" class="form-control" name="copyright_number" id="copyright_number" required>
                             </div>
                             <div class="form-group col-sm-6">
 
