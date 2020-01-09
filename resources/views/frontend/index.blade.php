@@ -518,7 +518,7 @@
                                             }
                                         }
                                     ?>
-                                    <div class="single_product" style="height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
+                                    <div class="single_product" style="border-radius:0px!important; height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
                                         <?php
                                             //cut prod name
                                             $num_char = 19;
@@ -561,7 +561,7 @@
                                             }
                                             $param = $p->id_itdp_company_user.'-'.getCompanyName($p->id_itdp_company_user);
                                         ?>
-                                        <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 10px 10px 0px 0px;">
+                                        <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 0px 0px 0px 0px;">
                                                 <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}" onclick="GoToProduct('{{$p->id}}', event, this)"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
                                         </div>
                                         <div class="product_name grid_name" style="padding: 0px 13px 0px 13px;">

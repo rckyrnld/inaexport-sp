@@ -376,7 +376,7 @@
                                 }
                             ?>
                             <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product" style="height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
+                                <div class="single_product" style="border: 0px!Important;height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
                                     <div class="pro-type" style="{{$dis}}">
                                         <span class="pro-type-content">
                                              @if($loc == "ch")
