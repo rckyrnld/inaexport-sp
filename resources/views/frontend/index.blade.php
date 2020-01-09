@@ -1,6 +1,11 @@
 @include('frontend.layouts.header')
 <!--slider area start-->
 <style type="text/css">
+    .categories_menu_toggle > ul > li ul.categories_mega_menu > li{
+        width: 80%;
+        padding: 0px 0px 0px 15px
+    }
+
 	.categories_menu_toggle > ul > li ul.categories_mega_menu > li > a {
     text-transform: none!important;
 	}
@@ -77,7 +82,21 @@
     .single_product:hover{
         box-shadow: 0 0 15px rgba(178,221,255,1); 
     }
-	
+
+    @media only screen and (max-width: 767px) {
+        .categories_menu_toggle > ul > li > a {
+            /*line-height: 35px;*/
+            /*padding: 0;*/
+            color: #ffffff;
+        }
+    }
+
+    @media only screen and (max-width: 1199px) and (min-width: 992px){
+        .categories_menu_toggle > ul > li > a {
+            color: #ffffff;
+        }
+    }
+
 
 </style>
 <style>
@@ -178,7 +197,7 @@
                                         <li><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}}</a></li>
                                     @else
                                         <li class="menu_item_children categorie_list"><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}} <i class="fa fa-angle-right"></i></a>
-                                            <ul class="categories_mega_menu">
+                                            <ul class="categories_mega_menu" style="width: 130%; margin: 0px; padding: 15px  0px 0px 15px ">
                                                 @foreach($catprod1 as $key => $c1)
                                                   @if($key < 19)
                                                     <?php
@@ -188,11 +207,11 @@
                                                             $nk = "nama_kategori_en";
                                                         }
                                                     ?>
-                                                    <li class="menu_item_children next"><a href="{{url('/front_end/list_product/category/'.$c1->id)}}" style="text-transform: capitalize !important;">{{$c1->$nk}}</a></li>
+                                                    <li class="menu_item_children next" style="margin-bottom: 0px; width: 50%;"><a href="{{url('/front_end/list_product/category/'.$c1->id)}}" style="text-transform: capitalize !important; font-weight: lighter;font-size: 10px;line-height: 1.5;">{{$c1->$nk}}</a></li>
                                                   @endif
                                                 @endforeach
                                                 @if(count($catprod1) > 19)
-                                                <li class="menu_item_children"><a href="{{url('/front_end/list_product')}}" style="text-transform: capitalize !important;"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;@lang('frontend.home.morecategory')</a></li>
+                                                <li class="menu_item_children"><a href="{{url('/front_end/list_product')}}" style="text-transform: capitalize !important;font-weight: lighter;font-size: 10px;line-height: 0.5;"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;@lang('frontend.home.morecategory')</a></li>
                                                 @endif
                                             </ul>
                                         </li>

@@ -122,13 +122,13 @@
                                 <h6 style="text-transform: uppercase;"><b>{{$data->company}}</b></h6>
                                 <br>
                                 <table border="0" style="width: 100%; font-size: 13px;">
-                                    <tr>
-                                        <td>
-                                            <b>@lang('frontend.liseksportir.fax')</b>
-                                        </td>
-                                        <td>:</td>
-                                        <td>{{$data->fax}}</td>
-                                    </tr>
+{{--                                    <tr>--}}
+{{--                                        <td>--}}
+{{--                                            <b>@lang('frontend.liseksportir.fax')</b>--}}
+{{--                                        </td>--}}
+{{--                                        <td>:</td>--}}
+{{--                                        <td>{{$data->fax}}</td>--}}
+{{--                                    </tr>--}}
                                     <tr>
                                         <td>
                                             <b>@lang('frontend.liseksportir.website')</b>
@@ -136,13 +136,13 @@
                                         <td>:</td>
                                         <td>{{$data->website}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <b>@lang('frontend.liseksportir.phone')</b>
-                                        </td>
-                                        <td>:</td>
-                                        <td>{{$data->phone}}</td>
-                                    </tr>
+{{--                                    <tr>--}}
+{{--                                        <td>--}}
+{{--                                            <b>@lang('frontend.liseksportir.phone')</b>--}}
+{{--                                        </td>--}}
+{{--                                        <td>:</td>--}}
+{{--                                        <td>{{$data->phone}}</td>--}}
+{{--                                    </tr>--}}
                                 </table>
                                 <hr>
                                 <h6 style="text-transform: uppercase;"><b>@lang('frontend.liseksportir.address')</b></h6>
@@ -150,17 +150,17 @@
                                     {{$data->addres}}, {{$data->city}}, {{getProvinceName($data->id_mst_province, $lct)}}
                                 </p>
                                 <hr>
-                                <span style="font-size: 13px;">
-                                    @if($loc == "ch")
-                                        或通过电子邮件与出口商联系：
-                                    @elseif($loc == "in")
-                                        Atau hubungi eksportir melalui email:
-                                    @else
-                                        Or contact exporter via email :
-                                    @endif
-                                    <br>
-                                    <span style="color: #007bff;">{{$data->email}}</span>
-                                </span>
+{{--                                <span style="font-size: 13px;">--}}
+{{--                                    @if($loc == "ch")--}}
+{{--                                        或通过电子邮件与出口商联系：--}}
+{{--                                    @elseif($loc == "in")--}}
+{{--                                        Atau hubungi eksportir melalui email:--}}
+{{--                                    @else--}}
+{{--                                        Or contact exporter via email :--}}
+{{--                                    @endif--}}
+{{--                                    <br>--}}
+{{--                                    <span style="color: #007bff;">{{$data->email}}</span>--}}
+{{--                                </span>--}}
                             </div>
                         </div>
                     </aside>
