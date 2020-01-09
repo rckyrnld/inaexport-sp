@@ -223,7 +223,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-12">
-                    <div id="myCarousel" style="width:114%!important;" class="carousel slide" data-ride="carousel">
+                    <div id="myCarousel" style="margin-left:-3.5%!important; width:104%!important;" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
                         <ol class="carousel-indicators">
                             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -232,16 +232,16 @@
                         </ol>
 
                     <!-- Wrapper for slides -->
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}" alt="Los Angeles" style="width:100%; height:100%;">
+                        <div class="carousel-inner" style="height: 372px!Important;">
+                            <div class="carousel-item active" style="height: 372px!Important;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}" alt="Los Angeles" style="width:100%;height:100%;">
                             </div>
 
-                            <div class="carousel-item">
+                            <div class="carousel-item" style="height: 372px!Important;">
                                 <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}" alt="Chicago" style="width:100%;height:100%;">
                             </div>
 
-                            <div class="carousel-item">
+                            <div class="carousel-item" style="height: 372px!Important;">
                                 <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}" alt="New york" style="width:100%;height:100%;">
                             </div>
                         </div>
@@ -426,7 +426,7 @@
                                 @else
                                 <a href="{{url($url)}}" class="for-act">
                                 @endif
-                                  <img src="{{asset('front/assets/icon/fi.png')}}" alt="" >
+                                  <img src="{{asset('front/assets/icon/02-for indonesian exporter.png')}}" alt="" >
                                 @if(Auth::guard('eksmp')->user())
                                 @if(Auth::guard('eksmp')->user()->id_role == 2)
                                 </a>
