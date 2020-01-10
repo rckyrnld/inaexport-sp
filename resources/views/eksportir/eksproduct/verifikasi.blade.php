@@ -93,7 +93,7 @@
                                                             $cact = "";
                                                         }
                                                     ?>
-                                                    <a href="#" class="list-group-item list-group-item-action listbag1 {{$cact}}" id="kat1_{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
+                                                    <a href="#" class="list-group-item list-group-item-action listbag1 {{$cact}}" onclick="getSub(1,'{{$cp->id}}', '', '{{$cp->nama_kategori_en}}', event)" id="kat1_{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
                                                 @endforeach
                                             @else
                                             Category Not Found
@@ -112,7 +112,7 @@
                                                                 $cact1 = "";
                                                             }
                                                         ?>
-                                                        <a href="#" class="list-group-item list-group-item-action listbag2 {{$cact1}}" id="kat2_{{$cp1->id}}">{{$cp1->nama_kategori_en}}</a>
+                                                        <a href="#" class="list-group-item list-group-item-action listbag2 {{$cact1}}" onclick="getSub(2,'{{$cp1->level_1}}', '{{$cp1->id}}','{{$cp1->nama_kategori_en}}', event)" id="kat2_{{$cp1->id}}">{{$cp1->nama_kategori_en}}</a>
                                                     @endif
                                                 @endforeach
                                             @else
@@ -133,7 +133,7 @@
                                                                     $cact2 = "";
                                                                 }
                                                             ?>
-                                                            <a href="#" class="list-group-item list-group-item-action listbag3 {{$cact2}}" id="kat3_{{$cp2->id}}">{{$cp2->nama_kategori_en}}</a>
+                                                            <a href="#" class="list-group-item list-group-item-action listbag3 {{$cact2}}" onclick="getSub(3,'{{$cp2->level_1}}', '{{$cp2->id}}','{{$cp2->nama_kategori_en}}', event)" id="kat3_{{$cp2->id}}">{{$cp2->nama_kategori_en}}</a>
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -146,15 +146,15 @@
                                     <div class="col-md-8" style="margin-top: 20px;">
                                         @if($data->id_csc_product != NULL)
                                             <span id="select_1">{{getNameCategoryProduct($data->id_csc_product, 'en')}}</span>
-                                            <input type="hidden" name="id_csc_product" id="id_csc_product" value="{{$data->id_csc_product}}">
+                                            <input type="hidden" id="id_csc_product" value="{{$data->id_csc_product}}">
                                         @endif
                                         @if($data->id_csc_product_level1 != NULL)
                                             <span id="select_2">> {{getNameCategoryProduct($data->id_csc_product_level1, 'en')}}</span>
-                                            <input type="hidden" name="id_csc_product_level1" id="id_csc_product_level1" value="{{$data->id_csc_product_level1}}">
+                                            <input type="hidden" id="id_csc_product_level1" value="{{$data->id_csc_product_level1}}">
                                         @endif
                                         @if($data->id_csc_product_level2 != NULL)
                                             <span id="select_3">> {{getNameCategoryProduct($data->id_csc_product_level2, 'en')}}</span>
-                                            <input type="hidden" name="id_csc_product_level2" id="id_csc_product_level2" value="{{$data->id_csc_product_level2}}">
+                                            <input type="hidden" id="id_csc_product_level2" value="{{$data->id_csc_product_level2}}">
                                         @endif
                                     </div>
                                 </div><br>
@@ -411,6 +411,9 @@
                                                 <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{url($url)}}" id="formnya">
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="verifikasi" value="1">
+                                                    <input type="hidden" name="id_csc_product" value="{{$data->id_csc_product}}">
+                                                    <input type="hidden" name="id_csc_product_level1" value="{{$data->id_csc_product_level1}}">
+                                                    <input type="hidden" name="id_csc_product_level2" value="{{$data->id_csc_product_level2}}">
                                                     <button class="btn btn-success" type="submit"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
                                                 </form>&nbsp;&nbsp;&nbsp;
                                                 <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#modalDecline"><i class="fa fa-times" aria-hidden="true"></i> Decline</button>
@@ -560,10 +563,12 @@
         $('#'+next).addClass('active');
     }
 
-    function getSub(sub, idp, ids, name) {
+    function getSub(sub, idp, ids, name, e) {
+        e.preventDefault();
         if(sub == 3){
-            $('#select_3').text('>'+name);
+            $('#select_3').text('> '+name);
             $('#id_csc_product_level2').val(ids);
+            $('input[name="id_csc_product_level2"]').val(ids);
             $('.listbag3').removeClass('active');
             $('#kat3_'+ids).addClass('active');
         }else{
@@ -571,11 +576,25 @@
                 $('#select_1').text(name);
                 $('#cadprod_en').text(name);
                 $('#id_csc_product').val(idp);
+                $('input[name="id_csc_product"]').val(idp);
+                $('#select_2').text('');
+                $('#id_csc_product_level1').val('');
+                $('input[name="id_csc_product_level1"]').val('');
+                $('#select_3').text('');
+                $('#id_csc_product_level2').val('');
+                $('input[name="id_csc_product_level2"]').val('');
+                $('#prod2').html('');
+                $('#prod3').html('');
                 $('.listbag1').removeClass('active');
                 $('#kat1_'+idp).addClass('active');
             }else{
-                $('#select_2').text('>'+name);
+                $('#select_2').text('> '+name);
                 $('#id_csc_product_level1').val(ids);
+                $('input[name="id_csc_product_level1"]').val(ids);
+                $('#select_3').text('');
+                $('#id_csc_product_level2').val('');
+                $('input[name="id_csc_product_level2"]').val('');
+                $('#prod3').html('');
                 $('.listbag2').removeClass('active');
                 $('#kat2_'+ids).addClass('active');
             }

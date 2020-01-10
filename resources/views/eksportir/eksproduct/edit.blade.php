@@ -83,7 +83,7 @@
                                                             $cact = "";
                                                         }
                                                     ?>
-                                                    <a href="#" class="list-group-item list-group-item-action listbag1 {{$cact}}" onclick="getSub(1,'{{$cp->id}}', '', '{{$cp->nama_kategori_en}}')" id="kat1_{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
+                                                    <a href="#" class="list-group-item list-group-item-action listbag1 {{$cact}}" onclick="getSub(1,'{{$cp->id}}', '', '{{$cp->nama_kategori_en}}', event)" id="kat1_{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
                                                 @endforeach
                                             @else
                                             Category Not Found
@@ -102,7 +102,7 @@
                                                                 $cact1 = "";
                                                             }
                                                         ?>
-                                                        <a href="#" class="list-group-item list-group-item-action listbag2 {{$cact1}}" onclick="getSub(2,'{{$cp1->level_1}}', '{{$cp1->id}}','{{$cp1->nama_kategori_en}}')" id="kat2_{{$cp1->id}}">{{$cp1->nama_kategori_en}}</a>
+                                                        <a href="#" class="list-group-item list-group-item-action listbag2 {{$cact1}}" onclick="getSub(2,'{{$cp1->level_1}}', '{{$cp1->id}}','{{$cp1->nama_kategori_en}}', event)" id="kat2_{{$cp1->id}}">{{$cp1->nama_kategori_en}}</a>
                                                     @endif
                                                 @endforeach
                                             @else
@@ -123,7 +123,7 @@
                                                                     $cact2 = "";
                                                                 }
                                                             ?>
-                                                            <a href="#" class="list-group-item list-group-item-action listbag3 {{$cact2}}" onclick="getSub(3,'{{$cp2->level_1}}', '{{$cp2->id}}','{{$cp2->nama_kategori_en}}')" id="kat3_{{$cp2->id}}">{{$cp2->nama_kategori_en}}</a>
+                                                            <a href="#" class="list-group-item list-group-item-action listbag3 {{$cact2}}" onclick="getSub(3,'{{$cp2->level_1}}', '{{$cp2->id}}','{{$cp2->nama_kategori_en}}', event)" id="kat3_{{$cp2->id}}">{{$cp2->nama_kategori_en}}</a>
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -570,7 +570,8 @@
         $('#'+next).addClass('active');
     }
 
-    function getSub(sub, idp, ids, name) {
+    function getSub(sub, idp, ids, name, e) {
+        e.preventDefault();
         if(sub == 3){
             $('#select_3').text('> '+name);
             $('#id_csc_product_level2').val(ids);
