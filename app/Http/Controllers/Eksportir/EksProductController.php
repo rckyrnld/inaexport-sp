@@ -486,6 +486,9 @@ class EksProductController extends Controller
             $jenis = "admin";
 
             $data = DB::table('csc_product_single')->where('id', '=', $id)->first();
+            if($data->status == 2){
+                return redirect('eksportir/product_admin/'.$data->id_itdp_profil_eks);
+            }
 
             //Read Notification
             DB::table('notif')->where('dari_id', $data->id_itdp_company_user)->where('url_terkait', 'eksportir/verifikasi_product')->where('id_terkait', $id)->where('untuk_id', $id_user)->update([
@@ -547,6 +550,9 @@ class EksProductController extends Controller
             // var_dump($ket);
             // die();
             $update = DB::table('csc_product_single')->where('id', $id)->update([
+                'id_csc_product' => $request->id_csc_product,
+                'id_csc_product_level1' => $request->id_csc_product_level1,
+                'id_csc_product_level2' => $request->id_csc_product_level2,
                 'status' => $status,
                 'keterangan' => $ket,
                 'updated_at' => $datenow,
@@ -581,7 +587,7 @@ class EksProductController extends Controller
             if(count($catprod) > 0){
                 foreach ($catprod as $key => $value) {
                     $nama = "'".$value->nama_kategori_en."'";
-                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag2" onclick="getSub(2,'.$value->level_1.', '.$value->id.','.$nama.')" id="kat2_'.$value->id.'">'.$value->nama_kategori_en.'</a>';
+                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag2" onclick="getSub(2,'.$value->level_1.', '.$value->id.','.$nama.', event)" id="kat2_'.$value->id.'">'.$value->nama_kategori_en.'</a>';
                 }
             }else{
                 $result .= 'Category Not Found';
@@ -592,7 +598,7 @@ class EksProductController extends Controller
             if(count($catprod) > 0){
                 foreach ($catprod as $key => $value) {
                     $nama = "'".$value->nama_kategori_en."'";
-                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag3" onclick="getSub(3,'.$value->level_1.', '.$value->id.','.$nama.')" id="kat3_'.$value->id.'">'.$value->nama_kategori_en.'</a>';
+                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag3" onclick="getSub(3,'.$value->level_1.', '.$value->id.','.$nama.', event)" id="kat3_'.$value->id.'">'.$value->nama_kategori_en.'</a>';
                 }
             }else{
                 $result .= 'Category Not Found';

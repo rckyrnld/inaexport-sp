@@ -93,7 +93,7 @@
                                                             $cact = "";
                                                         }
                                                     ?>
-                                                    <a href="#" class="list-group-item list-group-item-action listbag1 {{$cact}}" id="kat1_{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
+                                                    <a href="#" class="list-group-item list-group-item-action listbag1 {{$cact}} prefent" id="kat1_{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
                                                 @endforeach
                                             @else
                                             Category Not Found
@@ -112,7 +112,7 @@
                                                                 $cact1 = "";
                                                             }
                                                         ?>
-                                                        <a href="#" class="list-group-item list-group-item-action listbag2 {{$cact1}}" id="kat2_{{$cp1->id}}">{{$cp1->nama_kategori_en}}</a>
+                                                        <a href="#" class="list-group-item list-group-item-action listbag2 {{$cact1}} prefent" id="kat2_{{$cp1->id}}">{{$cp1->nama_kategori_en}}</a>
                                                     @endif
                                                 @endforeach
                                             @else
@@ -133,7 +133,7 @@
                                                                     $cact2 = "";
                                                                 }
                                                             ?>
-                                                            <a href="#" class="list-group-item list-group-item-action listbag3 {{$cact2}}" id="kat3_{{$cp2->id}}">{{$cp2->nama_kategori_en}}</a>
+                                                            <a href="#" class="list-group-item list-group-item-action listbag3 {{$cact2}} prefent" id="kat3_{{$cp2->id}}">{{$cp2->nama_kategori_en}}</a>
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -438,7 +438,9 @@
         CKEDITOR.replace('product_description_en');
         CKEDITOR.replace('product_description_in');
         CKEDITOR.replace('product_description_chn');
-
+        $('.prefent').on('click', function(event){
+            event.preventDefault();
+        });
         // $("#img_utama").click(function() {
         //     $("input[id='image_utama']").click();
         // });

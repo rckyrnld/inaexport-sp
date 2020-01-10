@@ -75,7 +75,7 @@
                                         <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px; max-height: 450px;">
                                             <div id="prod1" class="list-group" style="height: 430px; overflow-y: auto;">
                                                 @foreach($catprod as $cp)
-                                                    <a href="#" class="list-group-item list-group-item-action listbag1" onclick="getSub(1,'{{$cp->id}}', '', '{{$cp->nama_kategori_en}}')" id="kat1_{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
+                                                    <a href="#" class="list-group-item list-group-item-action listbag1" onclick="getSub(1,'{{$cp->id}}', '', '{{$cp->nama_kategori_en}}', event)" id="kat1_{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -474,7 +474,8 @@
         $('#'+next).addClass('active');
     }
 
-    function getSub(sub, idp, ids, name) {
+    function getSub(sub, idp, ids, name, evt) {
+        evt.preventDefault();
         if(sub == 3){
             $('#select_3').text('> '+name);
             $('#id_csc_product_level2').val(ids);
