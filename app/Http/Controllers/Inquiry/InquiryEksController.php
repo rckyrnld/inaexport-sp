@@ -199,7 +199,7 @@ class InquiryEksController extends Controller
                     }else if($mjl->status == 1){
                         return '
                             <center>
-                            <a href="'.url('/inquiry/joined').'/'.$mjl->id.'" class="btn btn-sm btn-success" style="width: 100%;" title="'.Lang::get('button-name.join').'"><i class="fa fa-plus"></i></a>
+                            <a href="'.url('/inquiry/joined').'/'.$mjl->id.'" class="btn btn-sm btn-success" style="" title="'.Lang::get('button-name.join').'"><i class="fa fa-plus"></i></a>
                             </center>';
                     }else if($mjl->status == 3 || $mjl->status == 4 || $mjl->status == 5){
                         return '
