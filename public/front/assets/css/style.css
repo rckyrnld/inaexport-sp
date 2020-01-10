@@ -1760,14 +1760,14 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .categories_menu_toggle > ul > li > a {
     line-height: 38px; 
-    color: #333;
+    color: #fff;
   }
 }
 @media only screen and (max-width: 767px) {
   .categories_menu_toggle > ul > li > a {
     line-height: 35px;
     padding: 0;
-    color: #333;
+    color: #fff;
   }
 }
 .categories_menu_toggle > ul > li > a i.fa-angle-right {

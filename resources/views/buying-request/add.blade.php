@@ -242,7 +242,7 @@ body {font-family: Arial;}
 		<label><b>Add attachment (Relevant to  a request)</b></label>
 		</div>
 		<div class="form-group col-sm-12">
-			<input type="file" value="" name="doc" id="doc" class="form-control" required>
+			<input type="file" value="" name="doc" id="doc" class="form-control">
 		</div>
 		
 	</div>

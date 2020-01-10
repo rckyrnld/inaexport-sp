@@ -155,7 +155,7 @@ class VerifyuserController extends Controller
 			->addColumn('f5', function ($pesan) {
 				 $cariac = DB::select("select * from log_user where id_user='".$pesan->ida."' and id_role='".$pesan->id_role."' order by id_log desc limit 1");
 				 if(count($cariac) == 0){
-					return "No Action";
+					return "<font color='red'>No Action</font>";
 				 }else{
 					 foreach($cariac as $cc){
 						 if($cc->keterangan == null){
@@ -165,7 +165,7 @@ class VerifyuserController extends Controller
 							$kt = $cc->keterangan;
 						 }
 						 
-						 return $cc->date."(".$cc->waktu.") ".$kt;
+						 return '<a target="_BLANK" href="'.url('listactv/'.$pesan->ida).'">'.$cc->date."(".$cc->waktu.") ".$kt.'</a>';
 					 }
 				 }
             })
