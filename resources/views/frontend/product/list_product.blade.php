@@ -70,6 +70,7 @@
     .single_product:hover{
         box-shadow: 0 0 15px rgba(178,221,255,1); 
     }
+    .cat-prod:hover{text-decoration: none;}
     #delete_cat{ margin-left:10px; font-size:12px; color: #c4a6a6; cursor: pointer; }
     .select2-container, .select2-dropdown, .select2-search, .select2-results {
         -webkit-transition: none !important;
@@ -171,10 +172,38 @@
                                         @if(count($catprod1) == 0)
                                             <a href="{{url('/front_end/list_product/category/'.$cu->id)}}" class="list-group-item">{{$cu->$nk}}</a>
                                         @else
-                                            <a onclick="openCollapse('{{$cu->id}}')" href="#menus{{$cu->id}}" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu"> {{$cu->$nk}} <i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop{{$cu->id}}"></i></a>
+                                            <div class="list-group-item">
+                                                <a class="cat-prod" href="{{url('/front_end/list_product/category/'.$cu->id)}}"> {{$cu->$nk}} </a><a onclick="openCollapse('{{$cu->id}}')" href="#menus{{$cu->id}}" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop{{$cu->id}}"></i></a>
+                                            </div>
                                                 <div class="collapse" id="menus{{$cu->id}}">
                                                     @foreach($catprod1 as $cat1)
-                                                        <a href="{{url('/front_end/list_product/category/'.$cat1->id)}}" class="list-group-item">{{$cat1->$nk}}</a>
+                                                     <?php
+                                                        $catprod2 = getCategoryLevel(2, $cu->id, $cat1->id);
+                                                        $nk = "nama_kategori_".$lct; 
+                                                        if($cat1->$nk == NULL){
+                                                            $nk = "nama_kategori_en";
+                                                        }
+                                                    ?>
+                                                    @if(count($catprod2) == 0 )
+                                                        <a href="{{url('/front_end/list_product/category/'.$cat1->id)}}" class="list-group-item" style="margin-left: 10px;">{{$cat1->$nk}}</a>
+                                                    @else
+                                                        <div class="list-group-item" style="margin-left: 10px;">
+                                                            <a class='cat-prod' href="{{url('/front_end/list_product/category/'.$cat1->id)}}"> {{$cat1->$nk}} </a>
+                                                            <a onclick="openCollapse('{{$cat1->id}}')" href="#menus{{$cat1->id}}" data-toggle="collapse" data-parent="#SubMenu"><i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop{{$cat1->id}}"></i></a>
+                                                        </div>
+                                                            <div class="collapse" id="menus{{$cat1->id}}">
+                                                                @foreach($catprod2 as $cat2)
+                                                                <?php
+                                                                    $catprod2 = getCategoryLevel(2, $cu->id, $cat1->id);
+                                                                    $nk = "nama_kategori_".$lct; 
+                                                                    if($cat2->$nk == NULL){
+                                                                        $nk = "nama_kategori_en";
+                                                                    }
+                                                                ?>
+                                                                <a href="{{url('/front_end/list_product/category/'.$cat2->id)}}" class="list-group-item" style="margin-left: 20px;">{{$cat2->$nk}}</a>
+                                                                @endforeach
+                                                            </div>
+                                                    @endif
                                                     @endforeach
                                                 </div>
                                         @endif
@@ -584,6 +613,7 @@
 @include('frontend.layouts.footer')
 <script type="text/javascript">
     $(document).ready(function () {
+        var timer
         $('.hover-none').bind('click', function(e) {
           e.preventDefault();
         });
@@ -616,18 +646,21 @@
                 cache: true
             }
         });
-        $("#cari_kategori").keyup(function(){
+        $("#cari_kategori").on('keyup', function(){
             var isi = this.value;
-            $.ajax({
-                url: "{{route('front.product.getCategory')}}",
-                type: 'get',
-                data: {name:isi, loc: "{{$lct}}"},
-                success:function(response){
-                    $("#catlist").html("");
-                    // console.log(response);
-                    $("#catlist").html(response);
-                }
-            });
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+                $.ajax({
+                    url: "{{route('front.product.getCategory')}}",
+                    type: 'get',
+                    data: {name:isi, loc: "{{$lct}}"},
+                    success:function(response){
+                        $("#catlist").html("");
+                        $("#catlist").html(response);
+                    }
+                });
+            }, 1000);
+            
         });
 
         $('#grid').on('click', function(){

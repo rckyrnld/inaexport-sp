@@ -455,31 +455,80 @@ class FrontController extends Controller
         $name = $request->name;
         $loc = $request->loc;
         $srch = "nama_kategori_".$loc;
-        $categoryutama = DB::table('csc_product')
-            ->where($srch, 'ILIKE', '%'.$name.'%')
-            ->where('level_1', 0)
-            ->where('level_2', 0)
-            ->orderby('nama_kategori_en','asc')
-            ->limit(10)
-            ->get();
-
+        $tampung_cat_utama = [];
+        $tampung_cat_level_1 = [];
+        $tampung_return = [];
+        $query = DB::table('csc_product')->where($srch, 'ILIKE', '%'.$name.'%')
+            ->orderByRaw('level_2 = 0, level_2')
+            ->orderByRaw('level_1 = 0, level_1')
+            ->orderby('nama_kategori_en','asc');
+        if(strlen($name) < 4){
+            $query->limit(1000);
+        }
+        $categoryutama = $query->get();
+        $batas = count($categoryutama)-1;
+        
         $result = "";
-        foreach($categoryutama as $cu){
-            $catprod1 = getCategoryLevel(1, $cu->id, "");
-            $nk = "nama_kategori_".$loc; 
-            if($cu->$nk == NULL){
-                $nk = "nama_kategori_en";
-            }
-
-            if(count($catprod1) == 0){
-                $result .= '<a href="'.url('/front_end/list_product/category/'.$cu->id).'" class="list-group-item">'.$cu->$nk.'</a>';
-            }else{
-                $result .= '<a onclick="openCollapse(\''.$cu->id.'\')" href="#menus'.$cu->id.'" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu"> '.$cu->$nk.' <i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop'.$cu->id.'"></i></a>
-                        <div class="collapse" id="menus'.$cu->id.'">';
-                foreach($catprod1 as $cat1){
-                    $result .= '<a href="'.url('/front_end/list_product/category/'.$cat1->id).'" class="list-group-item">'.$cat1->$nk.'</a>';
+        $array_cat = $categoryutama->toArray();
+        foreach ($categoryutama as $key => $value) { 
+            ${"result_".$value->id} = '';
+            ${"result_".$value->level_1} = '';
+            ${"result_".$value->level_2} = '';
+        }
+        foreach($categoryutama as $key => $cu){
+            if($cu->level_2 != 0){
+                if(!in_array($cu->level_2, $tampung_cat_utama)){
+                    array_push($tampung_cat_utama, $cu->level_2);
+                    ${"result_".$cu->level_2} .= '<div class="list-group-item">
+                                    <a href="'.url('/front_end/list_product/category/'.$cu->level_2).'"> '.getCategoryName($cu->level_2, $loc).' </a><a onclick="openCollapse(\''.$cu->level_2.'\')" href="#menus'.$cu->level_2.'" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop'.$cu->level_2.'"></i></a>
+                                </div>
+                                <div class="collapse" id="menus'.$cu->level_2.'">';
                 }
-                $result .= '</div>';
+                if(!in_array($cu->level_1, $tampung_cat_level_1)){
+                    array_push($tampung_cat_level_1, $cu->level_1);
+                    ${"result_".$cu->level_2} .= '<div class="list-group-item" style="margin-left: 10px;">
+                                    <a href="'.url('/front_end/list_product/category/'.$cu->level_1).'"> '.getCategoryName($cu->level_1, $loc).' </a>
+                                    <a onclick="openCollapse(\''.$cu->level_1.'\')" href="#menus'.$cu->level_1.'" data-toggle="collapse" data-parent="#SubMenu"><i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop'.$cu->level_1.'"></i></a>
+                                </div>
+                                <div class="collapse" id="menus'.$cu->level_1.'">';
+                }
+
+                ${"result_".$cu->level_2} .= '<a href="'.url('/front_end/list_product/category/'.$cu->id).'" class="list-group-item" style="margin-left: 20px;">'.getCategoryName($cu->id, $loc).'</a>';
+                if($key != $batas)
+                if($array_cat[$key+1]->level_1 != $cu->level_1){
+                    ${"result_".$cu->level_2} .= '</div>';
+                }
+            } else if($cu->level_1 != 0 && $cu->level_2 == 0){
+                if(!in_array($cu->level_1, $tampung_cat_utama)){
+                    array_push($tampung_cat_utama, $cu->level_1);
+                    ${"result_".$cu->level_1} .= '<div class="list-group-item">
+                                    <a href="'.url('/front_end/list_product/category/'.$cu->level_1).'"> '.getCategoryName($cu->level_1, $loc).' </a><a onclick="openCollapse(\''.$cu->level_1.'\')" href="#menus'.$cu->level_1.'" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop'.$cu->level_1.'"></i></a>
+                                </div><div class="collapse" id="menus'.$cu->level_1.'">';
+                }
+
+                if(!in_array($cu->id, $tampung_cat_level_1)){
+                    array_push($tampung_cat_level_1, $cu->id);
+                    ${"result_".$cu->level_1} .= '<a href="'.url('/front_end/list_product/category/'.$cu->id).'" class="list-group-item" style="margin-left: 10px;">'.getCategoryName($cu->id, $loc).'</a>';
+                }
+            } else {
+                if(!in_array($cu->id, $tampung_cat_utama)){
+                    array_push($tampung_cat_utama, $cu->id);
+                    ${"result_".$cu->id} .= '<a href="'.url('/front_end/list_product/category/'.$cu->id).'" class="list-group-item">'.getCategoryName($cu->id, $loc).'</a>';
+                }
+            }
+        }
+        foreach ($categoryutama as $key => $val) {
+            if(!in_array($val->level_2, $tampung_return) && $val->level_2 != ''){
+                array_push($tampung_return, $val->level_2);
+                $result .= ${"result_".$val->level_2}.'</div>';
+            }
+            if(!in_array($val->level_1, $tampung_return) && $val->level_1 != ''){
+                array_push($tampung_return, $val->level_1);
+                $result .= ${"result_".$val->level_1}.'</div>';
+            }
+            if(!in_array($val->id, $tampung_return) && $val->id != ''){
+                array_push($tampung_return, $val->id);
+                $result .= ${"result_".$val->id}.'</div>';
             }
         }
 

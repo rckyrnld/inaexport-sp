@@ -223,7 +223,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-12">
-                    <div id="myCarousel" style="width:114%!important;" class="carousel slide" data-ride="carousel">
+                    <div id="myCarousel" style="margin-left:-3.5%!important; width:104%!important;" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
                         <ol class="carousel-indicators">
                             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -232,16 +232,16 @@
                         </ol>
 
                     <!-- Wrapper for slides -->
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}" alt="Los Angeles" style="width:100%; height:100%;">
+                        <div class="carousel-inner" style="height: 372px!Important;">
+                            <div class="carousel-item active" style="height: 372px!Important;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}" alt="Los Angeles" style="width:100%;height:100%;">
                             </div>
 
-                            <div class="carousel-item">
+                            <div class="carousel-item" style="height: 372px!Important;">
                                 <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}" alt="Chicago" style="width:100%;height:100%;">
                             </div>
 
-                            <div class="carousel-item">
+                            <div class="carousel-item" style="height: 372px!Important;">
                                 <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}" alt="New york" style="width:100%;height:100%;">
                             </div>
                         </div>
@@ -319,7 +319,7 @@
                     <div class="breadcrumb_content">
                         <div class="row">
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/br_importir_all')}}"><img src="{{asset('front/assets/icon/01-inquiry_05.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/br_importir_all')}}"><img src="{{asset('front/assets/icon/01 inquiry-02.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
 								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/br_importir_all')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
@@ -327,7 +327,7 @@
 								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                 <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/02-buying-request_07.png')}}" alt="" class="image img-menu"></a>
+                                 <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/02 buying request-03.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
 								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/br_importir')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
@@ -335,7 +335,7 @@
 								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/ticketing_support')}}"><img src="{{asset('front/assets/icon/03-customer-support_10.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/ticketing_support')}}"><img src="{{asset('front/assets/icon/03 customer support-04.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
 								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/ticketing_support')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
@@ -346,7 +346,7 @@
                         </div>
                         <div class="row">
 							 <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/event')}}"><img src="{{asset('front/assets/icon/04-event_18.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/event')}}"><img src="{{asset('front/assets/icon/04 event-05.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
 								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/event')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
@@ -354,7 +354,7 @@
 								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/training')}}"><img src="{{asset('front/assets/icon/05-training_20.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/training')}}"><img src="{{asset('front/assets/icon/05 training-06.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
 								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/training')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
@@ -362,7 +362,7 @@
 								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/research-corner')}}"><img src="{{asset('front/assets/icon/06-research-corner_22.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/research-corner')}}"><img src="{{asset('front/assets/icon/06 research corner-07.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
 								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/research-corner')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
@@ -426,7 +426,7 @@
                                 @else
                                 <a href="{{url($url)}}" class="for-act">
                                 @endif
-                                  <img src="{{asset('front/assets/icon/fi.png')}}" alt="" >
+                                  <img src="{{asset('front/assets/icon/02-for indonesian exporter.png')}}" alt="" >
                                 @if(Auth::guard('eksmp')->user())
                                 @if(Auth::guard('eksmp')->user()->id_role == 2)
                                 </a>
@@ -593,7 +593,7 @@
                                             <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
                                                 @if(!empty(Auth::guard('eksmp')->user()))
                                                     @if(Auth::guard('eksmp')->user()->status == 1)
-                                                    Price :
+                                                    
                                                         @if(is_numeric($p->price_usd))
                                                             <?php 
                                                                 $pricenya = "$ ".number_format($p->price_usd,0,",",".");
@@ -615,7 +615,7 @@
                                                             ?>
                                                         @endif
                                                     <span style="color: #fd5018;" title="{{$price}}">
-                                                        {{$pricenya}}
+                                                      <b>  {{$pricenya}} </b>
                                                     </span>
                                                     <br>
                                                     @endif
