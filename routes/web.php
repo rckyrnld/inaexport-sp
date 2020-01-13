@@ -193,6 +193,8 @@ Route::post('/simpan_kontak', 'VerifyuserController@simpan_kontak');
 
 // Master Slide
 Route::resource('/master-slide', 'Master\MasterSliderController');
+Route::get('/tambah-slide', 'Master\MasterSliderController@create');
+Route::post('/save-slider', 'Master\MasterSliderController@store');
 
 
 // Group
