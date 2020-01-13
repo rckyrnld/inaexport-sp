@@ -19,7 +19,7 @@ class MasterSliderController extends Controller
     }
 
     public function index(){
-      $pageTitle = 'List Slider';
+      $pageTitle = 'Master Slider';
       return view('master.slider.index',compact('pageTitle'));
     }
 
@@ -81,6 +81,15 @@ class MasterSliderController extends Controller
       $pageTitle = "Edit Slide";
       
       return view('master.slider.edit',compact('pageTitle','page','id'));
+    }
+	
+	public function hapus($id)
+    {
+      $insert = DB::select("
+			delete from mst_slide where id='".$id."'
+			");
+		
+		return redirect('master-slide')->with('success','Success Delete Data');
     }
 
     public function destroy($id)
