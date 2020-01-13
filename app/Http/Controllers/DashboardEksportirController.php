@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use auth;
+use Illuminate\Support\Facades\Input;
 
 class DashboardEksportirController extends Controller
 {
@@ -18,14 +19,15 @@ class DashboardEksportirController extends Controller
     {
        if(Auth::guard('eksmp')->user()->id_role == 2){
             $pageTitle = "Dashboard";
-            $product = DB::table('csc_product_single')
-                    ->where('id_itdp_company_user', Auth::guard('eksmp')->user()->id)
-                    ->get();
+            $query = DB::table('csc_product_single')
+                    ->where('id_itdp_company_user', Auth::guard('eksmp')->user()->id);
+            $jumlah = $query->count();
+            $product = $query->paginate(8);
             $top_product = $this->getTopProduct();
             $incomes = $this->getIncomes();
             $interest = $this->getInterest();
 
-            return view('Dashboard.Eksportir', compact('pageTitle', 'product'))->with('top_product', json_decode($top_product, true))->with('incomes', json_decode($incomes, true))->with('interest', json_decode($interest, true));
+            return view('Dashboard.Eksportir', ['product' => $product->appends(Input::except('page'))], compact('pageTitle','jumlah'))->with('top_product', json_decode($top_product, true))->with('incomes', json_decode($incomes, true))->with('interest', json_decode($interest, true));
         } else {
             return redirect('/');
         }
@@ -74,7 +76,7 @@ class DashboardEksportirController extends Controller
         );
 
         $product = DB::table('csc_transaksi')
-            ->select(DB::raw('count(*) as jumlah, id_product'))
+            ->selectRaw('count(*) as jumlah, id_product')
             ->where('id_eksportir', Auth::guard('eksmp')->user()->id)
             ->groupby('id_product')->orderby('jumlah', 'desc')
             ->limit(5)->get();
