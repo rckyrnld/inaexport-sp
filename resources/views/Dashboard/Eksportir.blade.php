@@ -131,14 +131,14 @@
                                 <div class="col-lg-3 col-md-3 col-12">
                                     <div class="single_product"  style="border: 0px!important;height: 345px; background-color: #fdfdfc; padding: 0px !important;">
                                         <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 0px 0px 0px 0px; position: relative;">
-                                            <a class="primary_img" href="{{url('front_end/product/'.$data->id)}}" onclick="GoToProduct('{{$data->id}}', event, this)"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: 210px; width:235px;  border-radius: 0px 0px 0px 0px; padding: {{$padImg}}"></a>
+                                            <a class="primary_img" href="{{url('front_end/product/'.$data->id)}}" onclick="GoToProduct('{{$data->id}}', event, this)" target="_blank"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: 210px; width:235px;  border-radius: 0px 0px 0px 0px; padding: {{$padImg}}"></a>
                                         </div>
                                         <div class="product_name grid_name" style="padding: 0px 13px 0px 13px;">
                                             <p class="manufacture_product" style="color: #007bff;">
-                                                <a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}" class="href-category">{{$category}}</a>
+                                                <a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}" class="href-category" target="_blank">{{$category}}</a>
                                             </p>
                                             <h3 style="color: black;">
-                                                <a href="{{url('front_end/product/'.$data->id)}}" title="{{$prodn}}" class="href-name" onclick="GoToProduct('{{$data->id}}', event, this)"><b>{{$prodnama}}</b></a>
+                                                <a href="{{url('front_end/product/'.$data->id)}}" title="{{$prodn}}" class="href-name" onclick="GoToProduct('{{$data->id}}', event, this)" target="_blank"><b>{{$prodnama}}</b></a>
                                             </h3>
                                             <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
                                                 @if(is_numeric($data->price_usd))
