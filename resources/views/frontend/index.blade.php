@@ -226,24 +226,47 @@
                     <div id="myCarousel" style="margin-left:-3.5%!important; width:104%!important;" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
                         <ol class="carousel-indicators">
+							<?php
+						$dasa = DB::select("select file_img from mst_slide where publish='1' order by id desc");
+						$ndy = 0;
+						foreach($dasa as $ds){
+						
+						?>
+						<li data-target="#myCarousel" data-slide-to="<?php echo $ndy ?>" <?php if($ndy == 0){?>class="active" <?php }?>></li>
+						<?php $ndy++; } ?>
+						
+						<?php /*
                             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                             <li data-target="#myCarousel" data-slide-to="1"></li>
                             <li data-target="#myCarousel" data-slide-to="2"></li>
+						*/ ?>
                         </ol>
 
                     <!-- Wrapper for slides -->
                         <div class="carousel-inner" style="height: 372px!Important;">
+						<?php
+						$dasa = DB::select("select file_img from mst_slide where publish='1' order by id desc");
+						$nds = 1;
+						foreach($dasa as $ds){
+						
+						?>
+							<div class="carousel-item <?php if($nds == 1){ echo "active";} ?>" style="height: 372px!Important;">
+                                <img src="{{asset('uploads/slider')}}<?php echo "/".$ds->file_img; ?>"  style="width:100%;height:100%;">
+                            </div>
+						<?php $nds++; } ?>
+						<?php /*
                             <div class="carousel-item active" style="height: 372px!Important;">
-                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}" alt="Los Angeles" style="width:100%;height:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}"  style="width:100%;height:100%;">
                             </div>
 
                             <div class="carousel-item" style="height: 372px!Important;">
-                                <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}" alt="Chicago" style="width:100%;height:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}"  style="width:100%;height:100%;">
                             </div>
 
                             <div class="carousel-item" style="height: 372px!Important;">
-                                <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}" alt="New york" style="width:100%;height:100%;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}"  style="width:100%;height:100%;">
                             </div>
+						*/ ?>
                         </div>
                     </div>
                 </div>
