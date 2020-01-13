@@ -157,19 +157,31 @@ class DashboardController extends Controller
             $arrayJumlah[$value->id] = $total;
             $data[$value->id] = [$value->name, intval($value->inquiry), intval($value->br), intval($value->rc)];
         } */
-		$ambil = DB::select(
-            "SELECT b.username,b.id, a.tp FROM csc_transaksi a, itdp_company_users b, itdp_profil_eks c where a.id_eksportir = b.id and b.id_profil = c.id and (b.id='40042' or b.id='40043' or b.id='40092' or b.id='40049' or b.id='40084') group by b.username,b.id,a.tp order by a.tp DESC" );
+        $year = date('Y');
+
+        $ambil = DB::select(
+            "SELECT c.company,b.id, a.tp, DATE_PART('year', to_date(a.created_at::TEXT,'YYYY')) as date FROM csc_transaksi a, itdp_company_users b, itdp_profil_eks c where a.id_eksportir = b.id and b.id_profil = c.id group by c.company,b.id,a.tp, a.created_at order by a.tp DESC" );
+
         foreach ($ambil as $value) {
-			$qw = DB::select("select sum(tp) as suma from csc_transaksi where id_eksportir='".$value->id."' ");
+			$qw = DB::select("select sum(tp) as suma from csc_transaksi where id_eksportir='".$value->id."' AND DATE_PART('year', to_date(csc_transaksi.created_at::TEXT,'YYYY')) = $year-2 ");
 			foreach($qw as $r1){ $al1 = $r1->suma; }
-			$qw2 = DB::select("select sum(tp) as sumb from csc_transaksi where id_eksportir='".$value->id."' ");
+			$qw2 = DB::select("select sum(tp) as sumb from csc_transaksi where id_eksportir='".$value->id."' AND DATE_PART('year', to_date(csc_transaksi.created_at::TEXT,'YYYY')) = $year-1 ");
 			foreach($qw2 as $r2){ $al2 = $r2->sumb; }
-			$qw3 = DB::select("select sum(tp) as sumc from csc_transaksi where id_eksportir='".$value->id."' ");
-			foreach($qw3 as $r3){ $al3 = $r3->sumc; }
+            $qw3 = DB::select("select sum(tp) as sumc from csc_transaksi where id_eksportir='".$value->id."' AND DATE_PART('year', to_date(csc_transaksi.created_at::TEXT,'YYYY')) = $year ");
+            foreach($qw3 as $r3){ $al3 = $r3->sumc; }
             $total = 3;
-            $arrayJumlah[$value->id] = $total;
-            $data[$value->id] = [$value->username, intval($al1), intval($al2), intval($al3)];
+//            $arrayJumlah[$value->id] = $total;
+            $data[$value->id] = [$value->company, intval($al1), intval($al2), intval($al3)];
         }
+
+        for($f = 0 ; $f < count($data); $f++){
+            $arrayJumlah[$f] = $total;
+        }
+
+        usort($data, function($a, $b) {
+            if($a[3]==$b[3]) return 0;
+            return $a[3] < $b[3]?1:-1;
+        });
 		/*
 		$data[0] = ["12", intval(200), intval(200), intval(200)];
 		$data[1] = ["57", intval(200), intval(200), intval(200)];
@@ -181,11 +193,11 @@ class DashboardController extends Controller
         $LastKey = key($arrayJumlah);
         for ($i=0; $i < 3; $i++) { 
             if($i == 0){
-                $fetch_data .= '{"name":"'.Date('Y').'", "data":[';
+                $fetch_data .= '{"name":"'.(Date('Y')-2).'", "data":[';
             } else if($i == 1){
                 $fetch_data .= '{"name":"'.(Date('Y')- 1).'", "color":"#28a745", "data":[';
             } else if($i == 2){
-                $fetch_data .= '{"name":"'.(Date('Y')- 2).'", "color":"#fd7e14", "data":[';
+                $fetch_data .= '{"name":"'.Date('Y').'", "color":"#fd7e14", "data":[';
             } 
 			/*else if($i == 3){
                 $fetch_data .= '{"name":"'.(Date('Y')- 3).'", "color":"#ffc107", "data":[';
