@@ -19,7 +19,7 @@ class MasterSliderController extends Controller
     }
 
     public function index(){
-      $pageTitle = 'List Slider';
+      $pageTitle = 'Master Slider';
       return view('master.slider.index',compact('pageTitle'));
     }
 
@@ -48,6 +48,23 @@ class MasterSliderController extends Controller
 		
 		return redirect('master-slide')->with('success','Success Add Data');
     }
+	
+	public function update(Request $request)
+    { 
+		if(empty($request->file('file_img'))){
+			$file = $request->last_file;
+		}else{
+			$file = $request->file('file_img')->getClientOriginalName();
+			$destinationPath = public_path() . "/uploads/slider";
+			$request->file('file_img')->move($destinationPath, $file);
+		}
+		$insert = DB::select("
+			update mst_slide set file_img='".$file."', keterangan='".$request->keterangan."', publish='".$request->publish."'
+			where id='".$request->idnya."'
+			");
+		
+		return redirect('master-slide')->with('success','Success Update Data');
+    }
 
     public function view($id)
     {
@@ -61,11 +78,18 @@ class MasterSliderController extends Controller
     public function edit($id)
     {
       $page = "edit";
-      $pageTitle = "List Port";
-      $url = "/master-port/store/Update_".$id;
-      $data = MasterPort::where('id', $id)->first();
-      $province = MasterProvince::orderby('province_en','asc')->get();
-      return view('master.port.create',compact('url','data','pageTitle','page','province'));
+      $pageTitle = "Edit Slide";
+      
+      return view('master.slider.edit',compact('pageTitle','page','id'));
+    }
+	
+	public function hapus($id)
+    {
+      $insert = DB::select("
+			delete from mst_slide where id='".$id."'
+			");
+		
+		return redirect('master-slide')->with('success','Success Delete Data');
     }
 
     public function destroy($id)

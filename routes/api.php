@@ -179,5 +179,12 @@ Route::namespace('Api')->group(function () {
     //hscode
     Route::get('getHscode', 'ManagementNoAuthController@getHscode');
     Route::get('getHscodeFilter', 'ManagementNoAuthController@getHscodeFilter');
+
+    // Populer Categories
+    Route::get('populerCategories', 'ProductNonAuthController@populerCategories');
+
+    // Get Product By Categories
+    Route::post('productByCategories', 'ProductNonAuthController@productByCategories');
+
 });
 // });

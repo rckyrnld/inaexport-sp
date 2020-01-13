@@ -609,4 +609,111 @@ class ProductNonAuthController extends Controller
         }
     }
 
+    public function populerCategories()
+    {
+        $categoryutama = DB::table('csc_product')
+            ->where('level_1', 0)
+            ->where('level_2', 0)
+            ->orderBy('nama_kategori_en', 'ASC')
+            ->limit(6)
+            ->get();
+
+        if (count($categoryutama) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $res['meta'] = $meta;
+            $res['data'] = $categoryutama;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = $categoryutama;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
+    public function productByCategories(Request $request)
+    {
+        $offset = $request->offset;
+        $categories = DB::table('csc_product')
+                        ->select('id')
+                        ->where('id', $request->id_csc)
+                        ->orWhere('level_1', $request->id_csc)
+                        ->orWhere('level_2', $request->id_csc)
+                        ->get();
+
+        foreach ($categories as $nilai) {
+            $id_csc[] = $nilai->id;
+        }
+
+        $dataProduk = DB::table('csc_product_single')
+                    ->select('csc_product_single.id', 'itdp_company_users.id_profil', 'itdp_company_users.id_role', 'csc_product_single.*',
+                        'csc_product_single.image_1', 'csc_product_single.product_description_en', 'csc_product_single.image_2', 'csc_product_single.image_3',
+                        'csc_product_single.image_4', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd', 'csc_product_single.code_en', 'csc_product_single.color_en', 'csc_product_single.size_en', 'csc_product_single.raw_material_en')
+                    ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                    ->whereIn('id_csc_product', $id_csc)
+                    ->orWhereIn('id_csc_product_level1', $id_csc)
+                    ->orWhereIn('id_csc_product_level2', $id_csc)
+                    ->limit(10)
+                    ->offset($offset)
+                    ->get();
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($dataProduk); $i++) {
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
+            $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
+            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
+            $jsonResult[$i]["type"] = $dataProduk[$i]->type;
+            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+            $id_role = $dataProduk[$i]->id_role;
+            $id_profil = $dataProduk[$i]->id_profil;
+            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+            $jsonResult[$i]["product_description_en"] = $dataProduk[$i]->product_description_en;
+
+            $list_k = array();
+            $list_k["code_en"] = $dataProduk[$i]->code_en;
+            $list_k["color_en"] = $dataProduk[$i]->color_en;
+            $list_k["size_en"] = $dataProduk[$i]->size_en;
+            $list_k["raw_material_en"] = $dataProduk[$i]->raw_material_en;
+            // $list_k["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
+            $jsonResult[$i]["product_information"] = $list_k;
+
+        }
+
+        if (count($dataProduk) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $res['meta'] = $meta;
+            $res['data'] = $jsonResult;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+
 }
