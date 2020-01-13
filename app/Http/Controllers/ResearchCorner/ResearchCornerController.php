@@ -94,12 +94,12 @@ class ResearchCornerController extends Controller
                         ->first();
                     if ($download) {
                         return '<center>
-                      <a href="' . route("research-corner.view", $data->id) . '" style="width:100px;" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye"></i></a>
+                      <a href="' . route("research-corner.view", $data->id) . '" style="" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye"></i></a>
                       </center>';
                     } else {
                         return '<center>
-                      <a href="' . url('/') . '/uploads/Research Corner/File/' . $data->exum . '" style="width:100px;" onclick="cek_download(' . $data->id . ', event, this)" class="btn btn-sm btn-warning text-white" title="Download"><i class="fa fa-download"></i></a>&nbsp;&nbsp;
-                      <a href="' . route("research-corner.view", $data->id) . '" style="width:100px;" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye"></i></a>
+                      <a href="' . url('/') . '/uploads/Research Corner/File/' . $data->exum . '" style="" onclick="cek_download(' . $data->id . ', event, this)" class="btn btn-sm btn-warning text-white" title="Download"><i class="fa fa-download"></i></a>&nbsp;&nbsp;
+                      <a href="' . route("research-corner.view", $data->id) . '" style="" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye"></i></a>
                       </center>';
                     }
                 })

@@ -22,7 +22,7 @@ return [
         "contact" => "HUBUNGI",
         "with-us" => "KAMI",
         "about" => "TENTANG LAYANAN",
-        "membership" => "KEANGGOTAAN",
+        "membership" => "INAEXPORT.ID",
         "our" => "PELAYANAN",
         "service" => "KAMI",
         "ministry" => "Kementerian Perdagangan Republik Indonesia",

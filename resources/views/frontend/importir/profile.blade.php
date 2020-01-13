@@ -1,7 +1,7 @@
 @include('frontend.layouts.header')
 <?php
 $loc = app()->getLocale();
-$img1 = "front/assets/icon/icon logo.png";
+$img1 = "front/assets/icon/icon account.png";
 if($profile->foto_profil != NULL){
         $imge1 = 'uploads/Profile/Importir/'.$id_user.'/'.$profile->foto_profil;
         if(file_exists($imge1)) {
@@ -18,9 +18,7 @@ if($profile->foto_profil != NULL){
     .btn.navigasi{
         background-color: #f5f5f5 !important;
         border-color: #1a70bb !important;
-        color: #1a70bb !important; 
-        border-radius: 30px;
-        border-top-right-radius: 0px; 
+        color: #1a70bb !important;
     }
     input.form-control, select.form-control{
         background-color: #f5f5f5;
@@ -30,7 +28,6 @@ if($profile->foto_profil != NULL){
         overflow: hidden;
         text-align: center; 
         width: 100%;
-        border-radius: 10px;
         background-color: #2492eb;
         font-weight: 600;
         color: #f5f5f5;
@@ -70,12 +67,12 @@ if($profile->foto_profil != NULL){
     }
 </style>
 <!-- Profile Start -->
-<div class="product_d_info" style="background-color: #ddeffd; margin: 5% 10% 5% 10%; border-radius: 15px">
+<div class="product_d_info" style="background-color: #ddeffd; margin: 5% 10% 5% 10%; border-radius: 15px;">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12" style="padding-left: 5%; padding-right: 5%;">
                 <ul class="nav" role="tablist">
-                    <li>
+                    <li style="margin-right: 8px;">
                         <button class="btn navigasi active" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false" style="min-width: 100%; width:200px; margin-right: 5px; font-weight: 600;">Account Information</button>
                     </li>
                     <li>
@@ -90,9 +87,9 @@ if($profile->foto_profil != NULL){
                             <div class="col-lg-3 col-md-3">
                                 <span class="logo">Logo</span>
                                 <br>
-                                <img id="thumbnail" src="{{asset($img1)}}" style="width: 220px; height: 225px; border-radius: 20px;">
+                                <img id="thumbnail" src="{{asset($img1)}}" style="width: 220px; height: 225px; ">
                                 <p style="padding: 6px; padding-top: 10px;">
-                                    <span class="btn btn-primary btn-file">
+                                    <span class="btn btn-primary btn-file" style="border-radius: 0px;">
                                         Upload <input type="file" name="avatar" accept="image/*" id="avatar" />
                                     </span>
                                 </p>
@@ -118,7 +115,7 @@ if($profile->foto_profil != NULL){
                             </div>
                         </div>
                         <div class="row justify-content-center" style="padding-top: 20px">
-                            <div class="col-lg-10 col-md-10"><hr style="border: 1px solid #99cdf5; border-radius: 5px;"></div>
+                            <div class="col-lg-10 col-md-10"><hr style="border: 1px solid #99cdf5;"></div>
                         </div>
                         <div class="row" style="padding-top: 20px">
                             <div class="col-lg-12 col-md-12">
@@ -187,7 +184,7 @@ if($profile->foto_profil != NULL){
                                     </tr>
                                     <tr>
                                         <td colspan="2" align="right">
-                                            <button type="button" class="btn navigasi active" style="width: 20%;border-radius: 10px;font-weight: 600;" onclick="send('#profile')">Update</button>
+                                            <button type="button" class="btn navigasi active" style="width: 20%;font-weight: 600;" onclick="send('#profile')">Update</button>
                                         </td>
                                     </tr>
                                 </table>
@@ -225,7 +222,7 @@ if($profile->foto_profil != NULL){
                                     </table>
                                 </div>
                                 <br>
-                                <div align="right"><button class="btn navigasi active" type="submit" style="width: 20%;border-radius: 10px;font-weight: 600;">Update</button></div>
+                                <div align="right"><button class="btn navigasi active" type="submit" style="width: 20%;font-weight: 600;">Update</button></div>
                             </div>
                         </div>
                         </form>

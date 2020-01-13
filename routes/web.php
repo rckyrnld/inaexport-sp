@@ -168,6 +168,7 @@ Route::get('/dashboard-seller', 'DashboardEksportirController@index');
 Route::get('ceknpwp', 'VerifyuserController@ceknpwp');
 Route::get('/bacanotif/{id}', 'VerifyuserController@bacanotif');
 Route::get('/verifyuser', 'VerifyuserController@index');
+Route::get('/listactv/{id}', 'VerifyuserController@listactv');
 Route::get('/geteksportir', 'VerifyuserController@geteksportir');
 Route::get('/verifyimportir', 'VerifyuserController@index2');
 Route::get('/hapuseksportir/{id}', 'VerifyuserController@hapuseksportir');
@@ -189,6 +190,15 @@ Route::post('/simpan_profil2', 'VerifyuserController@simpan_profil2');
 Route::post('/simpanperwakilan', 'VerifyuserController@simpanperwakilan');
 Route::post('/updateperwakilan', 'VerifyuserController@updateperwakilan');
 Route::post('/simpan_kontak', 'VerifyuserController@simpan_kontak');
+
+// Master Slide
+Route::resource('/master-slide', 'Master\MasterSliderController');
+Route::get('/tambah-slide', 'Master\MasterSliderController@create');
+Route::post('/save-slider', 'Master\MasterSliderController@store');
+Route::get('/edit-slide/{id}', 'Master\MasterSliderController@edit');
+Route::post('/update-slider', 'Master\MasterSliderController@update');
+Route::get('/hapus-slide/{id}', 'Master\MasterSliderController@hapus');
+
 
 // Group
 Route::resource('/group', 'UM\GroupController');

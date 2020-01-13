@@ -1,6 +1,11 @@
 @include('frontend.layouts.header')
 <!--slider area start-->
 <style type="text/css">
+    .categories_menu_toggle > ul > li ul.categories_mega_menu > li{
+        width: 80%;
+        padding: 0px 0px 0px 15px
+    }
+
 	.categories_menu_toggle > ul > li ul.categories_mega_menu > li > a {
     text-transform: none!important;
 	}
@@ -77,7 +82,21 @@
     .single_product:hover{
         box-shadow: 0 0 15px rgba(178,221,255,1); 
     }
-	
+
+    @media only screen and (max-width: 767px) {
+        .categories_menu_toggle > ul > li > a {
+            /*line-height: 35px;*/
+            /*padding: 0;*/
+            color: #ffffff;
+        }
+    }
+
+    @media only screen and (max-width: 1199px) and (min-width: 992px){
+        .categories_menu_toggle > ul > li > a {
+            color: #ffffff;
+        }
+    }
+
 
 </style>
 <style>
@@ -178,7 +197,7 @@
                                         <li><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}}</a></li>
                                     @else
                                         <li class="menu_item_children categorie_list"><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}} <i class="fa fa-angle-right"></i></a>
-                                            <ul class="categories_mega_menu">
+                                            <ul class="categories_mega_menu" style="width: 130%; margin: 0px; padding: 15px  0px 0px 15px ">
                                                 @foreach($catprod1 as $key => $c1)
                                                   @if($key < 19)
                                                     <?php
@@ -188,11 +207,11 @@
                                                             $nk = "nama_kategori_en";
                                                         }
                                                     ?>
-                                                    <li class="menu_item_children next"><a href="{{url('/front_end/list_product/category/'.$c1->id)}}" style="text-transform: capitalize !important;">{{$c1->$nk}}</a></li>
+                                                    <li class="menu_item_children next" style="margin-bottom: 0px; width: 50%;"><a href="{{url('/front_end/list_product/category/'.$c1->id)}}" style="text-transform: capitalize !important; font-weight: lighter;font-size: 10px;line-height: 1.5;">{{$c1->$nk}}</a></li>
                                                   @endif
                                                 @endforeach
                                                 @if(count($catprod1) > 19)
-                                                <li class="menu_item_children"><a href="{{url('/front_end/list_product')}}" style="text-transform: capitalize !important;"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;@lang('frontend.home.morecategory')</a></li>
+                                                <li class="menu_item_children"><a href="{{url('/front_end/list_product')}}" style="text-transform: capitalize !important;font-weight: lighter;font-size: 10px;line-height: 0.5;"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;@lang('frontend.home.morecategory')</a></li>
                                                 @endif
                                             </ul>
                                         </li>
@@ -204,27 +223,50 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-12">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <div id="myCarousel" style="margin-left:-3.5%!important; width:104%!important;" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
                         <ol class="carousel-indicators">
+							<?php
+						$dasa = DB::select("select file_img from mst_slide where publish='1' order by id desc");
+						$ndy = 0;
+						foreach($dasa as $ds){
+						
+						?>
+						<li data-target="#myCarousel" data-slide-to="<?php echo $ndy ?>" <?php if($ndy == 0){?>class="active" <?php }?>></li>
+						<?php $ndy++; } ?>
+						
+						<?php /*
                             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                             <li data-target="#myCarousel" data-slide-to="1"></li>
                             <li data-target="#myCarousel" data-slide-to="2"></li>
+						*/ ?>
                         </ol>
 
                     <!-- Wrapper for slides -->
-                        <div class="carousel-inner" style="padding-bottom:24px!important;padding-top:24px!important;">
-                            <div class="carousel-item active">
-                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}" alt="Los Angeles" style="width:100%;">
+                        <div class="carousel-inner" style="height: 372px!Important;">
+						<?php
+						$dasa = DB::select("select file_img from mst_slide where publish='1' order by id desc");
+						$nds = 1;
+						foreach($dasa as $ds){
+						
+						?>
+							<div class="carousel-item <?php if($nds == 1){ echo "active";} ?>" style="height: 372px!Important;">
+                                <img src="{{asset('uploads/slider')}}<?php echo "/".$ds->file_img; ?>"  style="width:100%;height:100%;">
+                            </div>
+						<?php $nds++; } ?>
+						<?php /*
+                            <div class="carousel-item active" style="height: 372px!Important;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}"  style="width:100%;height:100%;">
                             </div>
 
-                            <div class="carousel-item">
-                                <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}" alt="Chicago" style="width:100%;">
+                            <div class="carousel-item" style="height: 372px!Important;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}"  style="width:100%;height:100%;">
                             </div>
 
-                            <div class="carousel-item">
-                                <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}" alt="New york" style="width:100%;">
+                            <div class="carousel-item" style="height: 372px!Important;">
+                                <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}"  style="width:100%;height:100%;">
                             </div>
+						*/ ?>
                         </div>
                     </div>
                 </div>
@@ -300,49 +342,55 @@
                     <div class="breadcrumb_content">
                         <div class="row">
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/br_importir_all')}}"><img src="{{asset('front/assets/icon/inquiry.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/br_importir_all')}}"><img src="{{asset('front/assets/icon/01 inquiry-02.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>INQUIRY</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/br_importir_all')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                 <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/buying_request.png')}}" alt="" class="image img-menu"></a>
+                                 <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/02 buying request-03.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>BUYING REQUEST</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/br_importir')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/ticketing_support')}}"><img src="{{asset('front/assets/icon/customer support.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/ticketing_support')}}"><img src="{{asset('front/assets/icon/03 customer support-04.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>Customer Support</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/ticketing_support')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                            
                         </div>
                         <div class="row">
 							 <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/event')}}"><img src="{{asset('front/assets/icon/event.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/event')}}"><img src="{{asset('front/assets/icon/04 event-05.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>EVENTS</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/event')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/training')}}"><img src="{{asset('front/assets/icon/training.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/training')}}"><img src="{{asset('front/assets/icon/05 training-06.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>TRAINING</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/training')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
                             <div class="col-md-4 hoveraja">
-                                <a href="{{url('/front_end/research-corner')}}"><img src="{{asset('front/assets/icon/research_corner.png')}}" alt="" class="image img-menu"></a>
+                                <a href="{{url('/front_end/research-corner')}}"><img src="{{asset('front/assets/icon/06 research corner-07.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b>RESEARCH CORNER</b></font></p></center>
+								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/research-corner')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
+								<br>
 							</div>
 							
 							</div>
@@ -401,7 +449,7 @@
                                 @else
                                 <a href="{{url($url)}}" class="for-act">
                                 @endif
-                                  <img src="{{asset('front/assets/icon/fi.png')}}" alt="" >
+                                  <img src="{{asset('front/assets/icon/02-for indonesian exporter.png')}}" alt="" >
                                 @if(Auth::guard('eksmp')->user())
                                 @if(Auth::guard('eksmp')->user()->id_role == 2)
                                 </a>
@@ -512,7 +560,7 @@
                                             }
                                         }
                                     ?>
-                                    <div class="single_product" style="height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
+                                    <div class="single_product" style="border-radius:0px!important; height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
                                         <?php
                                             //cut prod name
                                             $num_char = 19;
@@ -555,7 +603,7 @@
                                             }
                                             $param = $p->id_itdp_company_user.'-'.getCompanyName($p->id_itdp_company_user);
                                         ?>
-                                        <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 10px 10px 0px 0px;">
+                                        <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 0px 0px 0px 0px;">
                                                 <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}" onclick="GoToProduct('{{$p->id}}', event, this)"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
                                         </div>
                                         <div class="product_name grid_name" style="padding: 0px 13px 0px 13px;">
@@ -568,7 +616,7 @@
                                             <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
                                                 @if(!empty(Auth::guard('eksmp')->user()))
                                                     @if(Auth::guard('eksmp')->user()->status == 1)
-                                                    Price :
+                                                    
                                                         @if(is_numeric($p->price_usd))
                                                             <?php 
                                                                 $pricenya = "$ ".number_format($p->price_usd,0,",",".");
@@ -590,7 +638,7 @@
                                                             ?>
                                                         @endif
                                                     <span style="color: #fd5018;" title="{{$price}}">
-                                                        {{$pricenya}}
+                                                      <b>  {{$pricenya}} </b>
                                                     </span>
                                                     <br>
                                                     @endif

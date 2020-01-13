@@ -47,7 +47,7 @@
                                         <center>Value Contract</center>
                                     </th>
                                     <th>
-                                        <center>Subsidi Djpen</center>
+                                        <center>Subsidy DGNED</center>
                                     </th>
                                     <th>
                                         <center>Action</center>

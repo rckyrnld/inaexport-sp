@@ -22,7 +22,7 @@ return [
         "contact" => "CONTACT",
         "with-us" => "WITH US",
         "about" => "ABOUT",
-        "membership" => "MEMBERSHIP SERVICE",
+        "membership" => "INAEXPORT.ID",
         "our" => "OUR",
         "service" => "SERVICES",
         "ministry" => "Ministry of Trade Republic of Indonesia",
