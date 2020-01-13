@@ -26,7 +26,7 @@
                                     <input type="hidden" class="form-control" value="{{$val->id}}" name="id_sales" id="id_sales">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label>Subsidi djpen</label>
+                                    <label>Subsidy DGNED</label>
                                     <select class="form-control select2"  id="subsidi_djpen" name="subsidi_djpen">
                                         <option value="00" {{($val->subsidi == '00')?'selected':''}}>--Select--</option>
                                         <option value="Yes" {{($val->subsidi == 'Y')?'selected':''}}>Yes</option>

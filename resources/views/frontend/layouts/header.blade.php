@@ -413,7 +413,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                     </div>
                                     <div id="eksportir" class="container tab-pane">
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_perusahaan')}}" id="formseksportir">
-                                            <div class="search_box">
+                                            <div class="search_box" style="width: 479px!important;">
                                                 <?php
                                                     if(isset($search_eks)){
                                                         $carieks = $search_eks;
