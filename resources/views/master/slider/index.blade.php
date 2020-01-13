@@ -55,7 +55,7 @@
 							<td width="12%"><img src="{{asset('uploads/slider')}}<?php echo "/".$val->file_img;?>" width="120px"></td>
 							<td><?php echo $val->keterangan; ?></td>
 							<td><?php if($val->publish == 1){ echo "Yes";}else{ echo "No"; } ?></td>
-							<td></td>
+							<td><a href="{{ url('edit-slide/'.$val->id) }}" class="btn btn-success"><font color="white"><i class="fa fa-pencil"></i></font></a></td>
 						  </tr>
 						  <?php $no++; } ?>
 						  </tbody>

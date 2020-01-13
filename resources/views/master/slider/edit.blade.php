@@ -22,13 +22,21 @@
       	 </div>
       	 <div class="box-body">
           <div class="col-md-12">
-          <form class="form-horizontal" method="POST" action="{{ url('save-slider') }}" enctype="multipart/form-data">
+          <form class="form-horizontal" method="POST" action="{{ url('update-slider') }}" enctype="multipart/form-data">
            {{ csrf_field() }}<br>
+		   
+		   <?php 
+		   $cq = DB::select("select * from mst_slide where id='".$id."'");
+		   foreach($cq as $qc){
+		   ?>
              <div class="form-group row">
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">File Image</label>
                  <div class="col-md-7">
-                     <input type="file" class="form-control" id="file_img" name="file_img" required>
+					<img src="{{asset('uploads/slider')}}<?php echo "/".$qc->file_img;?>" width="350px"><br><br>
+					<input type="hidden" name="last_file" id="last_file" value="<?php echo $qc->file_img;?>">
+					<input type="hidden" name="idnya" id="idnya" value="<?php echo $qc->id;?>">
+                     <input type="file" class="form-control" id="file_img" name="file_img">
                     
                  </div>
              </div> 
@@ -37,7 +45,7 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Note</label>
                  <div class="col-md-7">
-                     <textarea class="form-control" id="keterangan" name="keterangan"></textarea>
+                     <textarea class="form-control" id="keterangan" name="keterangan"><?php echo $qc->keterangan; ?></textarea>
                     
                  </div>
              </div>
@@ -47,8 +55,8 @@
                  <label class="control-label col-md-3">Publish</label>
                  <div class="col-md-2">
                      <select class="form-control" name="publish" id="publish">
-						<option value="1">Yes</option>
-						<option value="0">No</option>
+						<option value="1" <?php if($qc->publish == 1){ echo "selected"; } ?>>Yes</option>
+						<option value="0" <?php if($qc->publish == 0){ echo "selected"; } ?>>No</option>
 					 </select>
                     
                  </div>
@@ -68,6 +76,7 @@
                   </div>
                 </div>
              </div>
+		   <?php } ?>
           </form>
           </div>
       	 </div>
