@@ -559,9 +559,9 @@ class ProductNonAuthController extends Controller
         }
     }
 	
-	public function getSubKategorina($id)
+	public function getSubKategorina(Request $request)
     {
-
+		$id = $request->level_1;
         $dataProduk = DB::table('csc_product')
             ->where('csc_product.level_1', $id)
             ->orderBy('nama_kategori_en', 'ASC')
