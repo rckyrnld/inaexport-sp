@@ -617,6 +617,12 @@ class ProductNonAuthController extends Controller
             ->orderBy('nama_kategori_en', 'ASC')
             ->limit(6)
             ->get();
+        $i = 0;
+        foreach ($categoryutama as $value) {
+            $categoryutama[$i]->logo = url('uploads/Product/Icon/' . $value->logo);
+            $i++;
+        }
+
 
         if (count($categoryutama) > 0) {
             $meta = [
