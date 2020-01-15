@@ -1,7 +1,7 @@
 <img height="20%" width="100%" src="{{url('assets')}}/assets/images/headeremail.jpg" alt="." >
 <img height="50%" width="100%" src="{{url('assets')}}/assets/images/iconpengumuman.jpg" alt="." >
 <p>Dear User, </P>
-<p>Super Admin Respond Chat On Your Ticketing Request !</p>
+<p>Super Admin Respond Chat On Your Ticketing Request</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>

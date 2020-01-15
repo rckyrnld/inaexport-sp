@@ -1,5 +1,5 @@
 <p>Dear User, </P>
-<p>You Respond Chat On Ticketing Request !</p>
+<p>You Respond Chat On Ticketing Request</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>
