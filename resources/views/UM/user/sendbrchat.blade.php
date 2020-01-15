@@ -1,5 +1,5 @@
-<p>Dear Eksportir, </P>
-<p>{{$username}} Verified Buying Request !</p>
+<p>Dear Exporter, </P>
+<p>{{$username}} Verified Buying Request</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>

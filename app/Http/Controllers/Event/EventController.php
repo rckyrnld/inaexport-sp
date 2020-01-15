@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Mail;
 
 class EventController extends Controller
 {
@@ -199,7 +200,6 @@ class EventController extends Controller
 	        	$pengirim = DB::table('itdp_admin_users')->where('id',$id_user)->first();
 	        	$account_penerima = DB::table('itdp_company_users')->where('id',$array[$user])->first();
 	        	$profile_penerima = DB::table('itdp_profil_eks')->where('id',$account_penerima->id_profil)->first();
-
                 if($profile_penerima){
     	        	$notif = DB::table('notif')->insert([
     		            'dari_nama' => $pengirim->name,
@@ -214,6 +214,17 @@ class EventController extends Controller
     		            'to_role' => 2
     		        ]);
                 }
+
+                $data = [
+                    'email' => $profile_penerima->email,
+                    'company' =>$profile_penerima->company,
+                    'pengirim' => $pengirim->name,
+                ];
+
+                Mail::send('Event.mail.emailaddevent', $data, function ($mail) use ($data) {
+                    $mail->to($data['email']);
+                    $mail->subject('Event Baru');
+                });
 	        }
 
         }

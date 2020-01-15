@@ -104,7 +104,7 @@ class TicketingSupportControllerAdmin extends Controller
     }
 
     public function vchat($id)
-    {
+        {
         $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
             ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
             ->where('ts.id', $id)
@@ -297,13 +297,13 @@ class TicketingSupportControllerAdmin extends Controller
             $data3 = $v2->id_role;
             $data4 = $v2->id;
         }
-        $data = [
-            'email' => "",
-            'email1' => $data2,
-            'username' => "",
-            'main_messages' => "",
-            'id' => $req->id
-        ];
+//        $data = [
+//            'email' => "",
+//            'email1' => $data2,
+//            'username' => "",
+//            'main_messages' => "",
+//            'id' => $req->id
+//        ];
 
         /*
         $data2 = [
@@ -315,10 +315,10 @@ class TicketingSupportControllerAdmin extends Controller
         ];
         */
 
-        Mail::send('UM.user.sendticketclosed2', $data, function ($mail) use ($data) {
-            $mail->to($data['email1'], $data['username']);
-            $mail->subject('Ticketing Support Closed');
-        });
+//        Mail::send('UM.user.sendticketclosed2', $data, function ($mail) use ($data) {
+//            $mail->to($data['email1'], $data['username']);
+//            $mail->subject('Ticketing Support Closed');
+//        });
 
         /*
         Mail::send('UM.user.sendticketclosed', $data2, function ($mail) use ($data2) {
@@ -327,10 +327,10 @@ class TicketingSupportControllerAdmin extends Controller
         });
         */
 
-        $ket = "Super Admin Closed Your Ticketing Request !";
-        $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-				('" . $data3 . "','Super Admin','1','" . $data1 . "','" . $data4 . "','" . $ket . "','front_end/ticketing_support/chatview','" . $req->id . "','" . Date('Y-m-d H:m:s') . "','0')
-				");
+//        $ket = "Super Admin Closed Your Ticketing Request !";
+//        $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//				('" . $data3 . "','Super Admin','1','" . $data1 . "','" . $data4 . "','" . $ket . "','front_end/ticketing_support/chatview','" . $req->id . "','" . Date('Y-m-d H:m:s') . "','0')
+//				");
 
         $update = TicketingSupportModel::where('id', $req->id)->update([
             'status' => 3

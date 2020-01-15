@@ -802,6 +802,7 @@ class InquiryAdminController extends Controller
                             'status_baca' => 0,
                             'waktu' => $datenow,
                             'to_role' => 2,
+                            'id_terkait' => $id_inquiry,
                         ]);
 
                         array_push($users, $untuk->email);
@@ -825,15 +826,15 @@ class InquiryAdminController extends Controller
                 array_push($users_admin, "kementerianperdagangan.max@gmail.com");
 
                 //Notif email ke admin
-                $dataadmin = [
-                    'pembuat' => $adminnya->name,
-                    'dari' => "admin"
-                ];
-
-                Mail::send('inquiry.mail.SendToAdmin', $dataadmin, function ($mail) use ($dataadmin, $users_admin) {
-                    $mail->subject('Inquiry Information');
-                    $mail->to($users_admin);
-                });
+//                $dataadmin = [
+//                    'pembuat' => $adminnya->name,
+//                    'dari' => "admin"
+//                ];
+//
+//                Mail::send('inquiry.mail.SendToAdmin', $dataadmin, function ($mail) use ($dataadmin, $users_admin) {
+//                    $mail->subject('Inquiry Information');
+//                    $mail->to($users_admin);
+//                });
 
                 return redirect('/inquiry_admin')->with('success','Success Broadcast Data');
             }else{
@@ -1187,7 +1188,8 @@ class InquiryAdminController extends Controller
             'type' => "admin",
             'sender' => getAdminName($sender),
             'receiver' => getCompanyName($receiver),
-            'subjek' => $data->subyek_en
+            'subjek' => $data->subyek_en,
+            'url' => "url('assets')}}/assets/images/icon product-22.png",
         ];
 
         Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {

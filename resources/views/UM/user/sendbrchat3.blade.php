@@ -1,5 +1,5 @@
 <p>Dear Admin, </P>
-<p>{{$username}} Was Verified Buying Request  !</p>
+<p>{{$username}} Was Verified Buying Request </p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>

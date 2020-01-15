@@ -1,5 +1,5 @@
 <p>Dear Admin, </P>
-<p>{{$username}} Was Respond Chat On Buying Request !</p>
+<p>{{$username}} Was Respond Chat On Buying Request</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>

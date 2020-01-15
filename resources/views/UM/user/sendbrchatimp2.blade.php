@@ -1,5 +1,5 @@
 <p>Dear Importir, </P>
-<p>You Was Respond Chat On Buying Request !</p>
+<p>You Was Respond Chat On Buying Request</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>

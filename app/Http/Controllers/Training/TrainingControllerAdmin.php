@@ -216,6 +216,28 @@ class TrainingControllerAdmin extends Controller
         $data = DB::table('training_admin')->where('id', $id)->update([
             'status' => 1
         ]);
+
+//        $data_eks = DB::table('itdp_profil_eks')->count();
+//
+//
+//        $pengirim = DB::table('itdp_admin_users')->where('id',$id_user)->first();
+//        $account_penerima = DB::table('itdp_company_users')->where('id',$array[$user])->first();
+//        $profile_penerima = DB::table('itdp_profil_eks')->where('id',$account_penerima->id_profil)->first();
+//        if($profile_penerima){
+//            $notif = DB::table('notif')->insert([
+//                'dari_nama' => $pengirim->name,
+//                'dari_id' => $pengirim->id,
+//                'untuk_nama' => $profile_penerima->company,
+//                'untuk_id' => $array[$user],
+//                'keterangan' => 'New Event from '.$pengirim->name.' with Title  "'.$req->eventname_en.'"',
+//                'url_terkait' => 'event/show/read',
+//                'status_baca' => 0,
+//                'waktu' => date('Y-m-d H:i:s'),
+//                'id_terkait' => $id,
+//                'to_role' => 2
+//            ]);
+//        }
+
         if ($data) {
             Session::flash('success', 'Success Publish Data');
             return redirect('/admin/training');

@@ -394,31 +394,33 @@ class VerifyuserController extends Controller
 	
 	public function simpanperwakilan(Request $request)
 	{
+
 		$data = [
             'email' => "",
             'email1' => $request->email,
             'username' => $request->username,
             'password' => $request->password,
             'main_messages' => "",
-            'id' => 0
+            'id' => 0,
 			];
+//		dd($data);
 		Mail::send('UM.user.sendpw', $data, function ($mail) use ($data) {
         $mail->to($data['email1'], $data['username']);
         $mail->subject('Admin Had Created and Set you as Representative');
 		});
 		
-		$data22 = [
-            'email' => $request->email,
-            'email1' => "kementerianperdagangan.max@gmail.com",
-            'username' => $request->username,
-            'password' => $request->password,
-            'main_messages' => "",
-            'id' => 0
-			];
-		Mail::send('UM.user.sendpw2', $data22, function ($mail) use ($data22) {
-        $mail->to($data22['email1'], $data22['username']);
-        $mail->subject('You Had Created and Set Representative');
-		});
+//		$data22 = [
+//            'email' => $request->email,
+//            'email1' => "kementerianperdagangan.max@gmail.com",
+//            'username' => $request->username,
+//            'password' => $request->password,
+//            'main_messages' => "",
+//            'id' => 0
+//			];
+//		Mail::send('UM.user.sendpw2', $data22, function ($mail) use ($data22) {
+//        $mail->to($data22['email1'], $data22['username']);
+//        $mail->subject('You Had Created and Set Representative');
+//		});
 		// echo "hello";die();
 		if($request->type == "DINAS PERDAGANGAN"){
 			$insert1 = DB::select("
@@ -518,6 +520,7 @@ class VerifyuserController extends Controller
 	}
 	public function simpan_profil(Request $request)
     {
+//        dd($request);
 		$id_role = $request->id_role;
 		$id_user = $request->id_user;
 		$id_user_b = $request->idu;
@@ -555,6 +558,19 @@ class VerifyuserController extends Controller
                     $mail->subject('Your Account Was Verifed');
 
                 });
+            $date = date('Y-m-d H:i:s');
+            $notif = DB::table('notif')->insert([
+                'dari_nama' =>auth::user()->name,
+                'dari_id' => auth::id(),
+                'untuk_nama' => $request->company,
+                'untuk_id' => $id_user,
+                'keterangan' => 'Your account is verified by "'.auth::user()->name.'"',
+                'url_terkait' => 'profil/2',
+                'status_baca' => 0,
+                'waktu' => $date,
+                'id_terkait' => $id_user,
+                'to_role' => $id_role,
+            ]);
 		}
 		//UPDATE TAB 2
 		if($id_role == 2){
@@ -596,6 +612,7 @@ class VerifyuserController extends Controller
 		$id_role = $request->id_role;
 		$id_user = $request->id_user;
 		$id_user_b = $request->idu;
+		$date = date('Y-m-d H:i:s');
 		if(empty($request->file('foto_profil'))){
 			$file = "";
 		}else{
@@ -621,6 +638,18 @@ class VerifyuserController extends Controller
                     $mail->subject('Your Account Was Verifed');
 
                 });
+            $notif = DB::table('notif')->insert([
+                'dari_nama' =>auth::user()->name,
+                'dari_id' => auth::id(),
+                'untuk_nama' => $request->company,
+                'untuk_id' => $id_user,
+                'keterangan' => 'Your account is verified by "'.auth::user()->name.'"',
+                'url_terkait' => 'profil2/3',
+                'status_baca' => 0,
+                'waktu' => $date,
+                'id_terkait' => $id_user,
+                'to_role' => $id_role,
+            ]);
 		}
 		//UPDATE TAB 2
 		$updatetab2 = DB::select("update itdp_profil_imp set company='".$request->company."', addres='".$request->addres."', city='".$request->city."' ,email='".$request->email."'
@@ -636,20 +665,20 @@ class VerifyuserController extends Controller
 		
 			}
 		}
-		if($request->staim == 1){
-			$it = "3".$id_user_b;
-			$data = [
-            'email' => "",
-            'email1' => $request->email,
-            'username' => $request->username,
-            'main_messages' => "",
-            'id' => $it
-			];
-		Mail::send('UM.user.sendverif', $data, function ($mail) use ($data) {
-        $mail->to($data['email1'], $data['username']);
-        $mail->subject('Your account had Verified');
-		});
-		}
+//		if($request->staim == 1){
+//			$it = "3".$id_user_b;
+//			$data = [
+//            'email' => "",
+//            'email1' => $request->email,
+//            'username' => $request->username,
+//            'main_messages' => "",
+//            'id' => $it
+//			];
+//		Mail::send('UM.user.sendverif', $data, function ($mail) use ($data) {
+//        $mail->to($data['email1'], $data['username']);
+//        $mail->subject('Your account had Verified');
+//		});
+//		}
 
 		return redirect('verifyimportir')->with('success','Success Update Data');
 //		return redirect('profil2/'.$id_role.'/'.$id_user);

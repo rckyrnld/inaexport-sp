@@ -14,8 +14,8 @@ class EksProductController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth');
-        // $this->middleware('auth:eksmp');
+//         $this->middleware('auth');
+//         $this->middleware('auth:eksmp', ['except' => array('view')]);
     }
 
     public function index()
@@ -356,13 +356,24 @@ class EksProductController extends Controller
 
     public function view($id)
     {
-        if(Auth::guard('eksmp')->user()){
-            $jenis = "eksportir";
-            $id_user = Auth::guard('eksmp')->user()->id;
-        }else{
-            $jenis = "admin";
-            $id_user = Auth::user()->id;
+//        dd($id);
+//        if(empty(Auth::guard('eksmp')->user()) or empty(Auth::user()->id)){
+//            return redirect('/login');
+//        }else{
+        if (Auth::guard('eksmp')->user()) {
+            if (Auth::guard('eksmp')->user()) {
+//                dd('tes');
+                $jenis = "eksportir";
+                $id_user = Auth::guard('eksmp')->user()->id;
+            } else {
+                $jenis = "admin";
+                $id_user = Auth::user()->id;
+            }
+        } else {
+            return redirect('/login');
         }
+//        }
+
 
         $pageTitle = 'Detail Product';
         $data = DB::table('csc_product_single')
@@ -501,7 +512,8 @@ class EksProductController extends Controller
             $hsco = DB::table('mst_hscodes')->where('id', $data->id_mst_hscodes)->first();
             return view('eksportir.eksproduct.verifikasi', compact('pageTitle', 'data', 'url', 'catprod', 'catprod2', 'catprod3', 'jenis', 'hsco'));
         }else{
-            return redirect('eksportir/product');
+//            return redirect('eksportir/product');
+            return redirect('login');
         }
     }
 
@@ -522,9 +534,13 @@ class EksProductController extends Controller
                 $status = 2;
                 $ket = "This product has been added on the front page";
                 $notifnya = "has been accepted";
-				$ket = "Your product ".$data->prodname_en." got verified !";
+				$ket = "Your product ".$data->prodname_en." got verified";
+				$ket2 = $data->prodname_en." has been accepted by Super Admin";
 				$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
 				('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
+				");
+                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+				('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket2."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
 				");
 			$data33 = [
             'email' => "",
@@ -535,8 +551,12 @@ class EksProductController extends Controller
 			];
 			Mail::send('UM.user.sendproduct', $data33, function ($mail) use ($data33) {
 			$mail->to($data33['email1'], $data33['username']);
-			$mail->subject("Your product got verified !");
+			$mail->subject("Your product got verified");
 			});
+			Mail::send('UM.user.sendproduct2', $data33, function ($mail) use ($data33) {
+                $mail->to($data33['email1'], $data33['username']);
+                $mail->subject("Your product got verified");
+            });
 			// echo $data->prodname_en;die();
             }else{
                 $keterangan = $request->keterangan;

@@ -18,10 +18,12 @@
 		background: #afcde8;
 	}
 </style>
+<img height="20%" width="100%" src="{{url('assets')}}/assets/images/headeremail.jpg" alt="." >
+<img height="50%" width="100%" src="{{url('assets')}}/assets/images/icon isi pengumuman.jpg" alt="." >
 <p style="color: #8bbbe8; font-size: 20px;">Information</p>
 <hr>
-<p>Dear {{$company}},</P>
-<p>There is a new inquiry from the {{$dari}}, please respond immediately to the inquiry.</p>
-<p>To knows, please enter the Inaexport.id application with an account that is already registered.</p>
-<br>
-<a href="{{url('/login')}}" class="button">Next Log In</a>
+<p>Yth. {{$company}},</P>
+<p>Terdapat permintaan hubungan baru dari {{$dari}}, apabila anda berminat silahkan meresponnya segera.</p>
+<P>Untuk melihat permintaan hubungan dagang tersebut, silahkan login <a href="{{url('/login')}}" class="button">disini</a></P>
+<img height="30%" width="100%" src="{{url('assets')}}/assets/images/footeremail.jpg" alt="." >
+

@@ -317,15 +317,17 @@ class BRFrontController extends Controller
 		if(count($namaprod) == 0){
 		
 		}else{
-		foreach($namaprod as $prod){ $napro = $prod->id_itdp_company_user;
+
+		foreach($namaprod as $prod){
+		    $napro = $prod->id_itdp_company_user;
 //            dd($napro);
             $cekada=DB::select("select * from csc_buying_request_join where id_br='".$id."' and id_eks='".(int)$napro."'");
 //			$cekada=DB::select("select * from csc_buying_request_join where id_br='".$id."' and id_eks='".$napro."'");
 			if(count($cekada) == 0){
-				
+
 				$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
 							('".$id."','".(int)$napro."','".Date('Y-m-d H:m:s')."')");
-				
+
 				//NOTIF
 				$id_terkait = "";
 				$ket = "Buying Request created by ".$namapembuat;
@@ -336,12 +338,18 @@ class BRFrontController extends Controller
 				//EMAIL
 				$caridataeks = DB::select("select * from itdp_company_users where id='".$napro."'");
 				foreach($caridataeks as $vm){ $vc1 = $vm->email; }
-				$data = ['username' => $namapembuat, 'id2' => '0', 'nama' => $namapembuat, 'password' => '', 'email' => $vc1];
-
+                $datacomeks = DB::select("select * from itdp_profil_eks where id = '".$vm->id_profil."'");
+//				dd($datacomeks[0]->company);
+				$data = [
+				    'username' => $namapembuat,
+                    'id2' => '0', 'nama' => $namapembuat,
+                    'password' => '',
+                    'email' => $vc1,
+                    'company' => $datacomeks[0]->company
+                ];
                 Mail::send('UM.user.emailbr', $data, function ($mail) use ($data) {
-                    $mail->to($data['email'], $data['username']);
+                    $mail->to($data['email'], $data['company']);
                     $mail->subject('Buying Was Created');
-
                 });
 				//END EMAIL
 			}else{
@@ -433,14 +441,15 @@ class BRFrontController extends Controller
 			('".$idb."','".$request->catatan."','".Date('Y-m-d H:i:s')."','".$request->idc."','".$request->ide."','".$request->idd."','".$idq."','".$file."')");
 			
 			if($request->ide == 1){
-			$ket = "Super Admin Upload Invoice On Buying Request !";
+			$ket = "Super Admin Upload Invoice On Buying Request";
 			$it = $request->idq;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
 			('2','Admin','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
 			");
+
 			}else{
-			$ket = "Perwakilan Upload Invoice On Buying Request !";
+			$ket = "Perwakilan Upload Invoice On Buying Request";
 			$it = $request->idq;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	

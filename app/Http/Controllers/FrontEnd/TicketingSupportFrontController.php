@@ -21,7 +21,7 @@ class TicketingSupportFrontController extends Controller
 
     public function __construct()
     {
-        // $this->middleware('auth');
+//         $this->middleware('auth');
     }
 
     public function index()
@@ -124,16 +124,20 @@ class TicketingSupportFrontController extends Controller
 
     public function vchat($id)
     {
-		$id_user = Auth::guard('eksmp')->user()->id;
-        $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
-            ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
-            ->where('ts.id', $id)
-            ->orderby('cts.messages_send', 'asc')
-            ->get();
+        if(Auth::guard('eksmp')->user()){
+            $id_user = Auth::guard('eksmp')->user()->id;
+            $messages = ChatingTicketingSupportModel::from('chating_ticketing_support as cts')
+                ->leftJoin('ticketing_support as ts', 'cts.id_ticketing_support', '=', 'ts.id')
+                ->where('ts.id', $id)
+                ->orderby('cts.messages_send', 'asc')
+                ->get();
 
-        $ticket = TicketingSupportModel::where('id', $id)->first();
+            $ticket = TicketingSupportModel::where('id', $id)->first();
 
-        return view('frontend.ticketing.chatting', compact('ticket', 'messages', 'id_user'));
+            return view('frontend.ticketing.chatting', compact('ticket', 'messages', 'id_user'));
+        }else{
+            return redirect('login');
+        }
 
     }
 

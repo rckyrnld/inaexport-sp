@@ -1,10 +1,15 @@
 <img height="20%" width="100%" src="{{url('assets')}}/assets/images/headeremail.jpg" alt="." >
 <img height="50%" width="100%" src="{{url('assets')}}/assets/images/icon isi pengumuman.jpg" alt="." >
-<p style="color: #8bbbe8; font-size: 20px;">Information</p>
+<p>Dear Exporter, </P>
+<p>{{$username}} has been accepted</p>
 <hr>
-<p>Yth. {{$username}}</p>
-<br>
-<p> Terdapat dokumen baru yang diterbitkan di Research Corner dengan judul {{$judul}}</p>
-Klik <a href="{{url('research-corner/list')}}">disini</a> untuk mengaksesnya
+<!-- <ol>
+    <ul>Name : {{$username}}</ul>
+    <ul>Email : {{$email}}</ul>
+</ol> 
+<hr>-->
+<p>
+  <!-- {{$main_messages}} -->
+</p>
+click <a href="{{url('eksportir/product_view', $id)}}">Here</a> to check your product.
 <img height="30%" width="100%" src="{{url('assets')}}/assets/images/footeremail.jpg" alt="." >
-

@@ -1,5 +1,5 @@
 <p>Dear Importir, </P>
-<p>You Was Verified Buying Request {{$username}} !</p>
+<p>You Was Verified Buying Request {{$username}}</p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>

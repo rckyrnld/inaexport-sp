@@ -29,8 +29,9 @@
                 <li class="dropdown notifications-menu d-flex align-items-center">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-			  <?php 
-			  if(empty(Auth::user()->name)){ 
+
+			  <?php
+			  if(empty(Auth::user()->name)){
 			  $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc"); 
 			  $querynotif = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc limit 4"); 
 			  }else{
