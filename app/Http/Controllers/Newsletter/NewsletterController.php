@@ -21,10 +21,13 @@ class NewsletterController extends Controller
 
 	  public function index(){
       $pageTitle = 'Newsletter';
-      if(Auth::user()){
-        return view('newsletter.index',compact('pageTitle'));
+      if(isset(Auth::user()->id)){
+        if(Auth::user()->id_group == 1)
+          return view('newsletter.index',compact('pageTitle'));
+        else
+          return redirect('/home');
       } else {
-        dd(Auth::user());
+        return redirect('/');
       }
     }
 
@@ -63,7 +66,14 @@ class NewsletterController extends Controller
       $pageTitle = 'Newsletter';
       $page = 'create';
       $url = "/newsletter/store/Create";
-      return view('newsletter.create',compact('url','pageTitle','page'));
+      if(isset(Auth::user()->id)){
+        if(Auth::user()->id_group == 1)
+          return view('newsletter.create',compact('url','pageTitle','page'));
+        else
+          return redirect('/home');
+      } else {
+        return redirect('/');
+      }
     }
 
     public function store(Request $req, $param)
@@ -98,11 +108,11 @@ class NewsletterController extends Controller
       }
 
       if($data){
-         Session::flash('success','Success '.$param.' Data');
-         return redirect('/newsletter/')->with('success', 'Success '.$param.' Data!');
+         Session::flash('success','Success '.$param.'d Data');
+         return redirect('/newsletter/')->with('success', 'Success '.$param.'d Data!');
        }else{
-         Session::flash('failed','Failed '.$param.' Data');
-         return redirect('/newsletter/')->with('error', 'Failed '.$param .' Data!');
+         Session::flash('failed','Failed '.$param.'d Data');
+         return redirect('/newsletter/')->with('error', 'Failed '.$param .'d Data!');
        }
     }
 
@@ -111,7 +121,14 @@ class NewsletterController extends Controller
       $pageTitle = "Newsletter";
       $page = "view";
       $data =  DB::table('itdp_newsletter')->where('id', $id)->first();
-      return view('newsletter.create',compact('page','data','pageTitle'));
+      if(isset(Auth::user()->id)){
+        if(Auth::user()->id_group == 1)
+          return view('newsletter.create',compact('page','data','pageTitle'));
+        else
+          return redirect('/home');
+      } else {
+        return redirect('/');
+      }
     }
 
     public function edit($id)
@@ -120,18 +137,25 @@ class NewsletterController extends Controller
       $pageTitle = "Newsletter";
       $url = "/newsletter/store/Update|".$id;
       $data =  DB::table('itdp_newsletter')->where('id', $id)->first();
-      return view('newsletter.create',compact('url','data','pageTitle','page'));
+      if(isset(Auth::user()->id)){
+        if(Auth::user()->id_group == 1)
+          return view('newsletter.create',compact('url','data','pageTitle','page'));
+        else
+          return redirect('/home');
+      } else {
+        return redirect('/');
+      }
     }
 
     public function destroy($id)
     {
       $data =  DB::table('itdp_newsletter')->where('id', $id)->delete();
       if($data){
-         Session::flash('success','Success Delete Data');
-         return redirect('/newsletter/')->with('success', 'Success Delete Data');
+         Session::flash('success','Success Deleted Data');
+         return redirect('/newsletter/')->with('success', 'Success Deleted Data');
        }else{
-         Session::flash('failed','Failed Delete Data');
-         return redirect('/newsletter/')->with('error', 'Failed Delete Data');
+         Session::flash('failed','Failed Deleted Data');
+         return redirect('/newsletter/')->with('error', 'Failed Deleted Data');
        }
     }
 
