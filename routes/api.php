@@ -143,6 +143,8 @@ Route::namespace('Api')->group(function () {
     Route::post('detailProdukFe', 'ProductNonAuthController@detailProduk');
     Route::get('getImageProduk/{id}/{image}', 'ProductNonAuthController@getImageProduk');
     Route::get('getRandomProduct', 'ProductNonAuthController@getRandomProduct');
+    Route::get('getParentCategory', 'ProductNonAuthController@getKategorina');
+    Route::post('getLevel1Category', 'ProductNonAuthController@getSubKategorina');
     Route::get('getprodukBaru', 'ProductNonAuthController@getprodukBaru');
     Route::post('browseProductListBynameAndKategori', 'ProductNonAuthController@browseProductDetailBynameAndKategori');
     Route::post('suggestProductkategorisearch', 'ProductNonAuthController@browseProductBynameAndKategori');

@@ -520,6 +520,81 @@ class ProductNonAuthController extends Controller
             return response($res);
         }
     }
+	
+	public function getKategorina()
+    {
+
+        $dataProduk = DB::table('csc_product')
+            ->where('csc_product.level_1', 0)
+            ->where('csc_product.level_2', 0)
+            ->orderBy('nama_kategori_en', 'ASC')
+            ->get();
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($dataProduk); $i++) {
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
+            $jsonResult[$i]["logo"] = $path = ($dataProduk[$i]->logo) ? url('uploads/Product/Icon/' . $dataProduk[$i]->logo) : url('image/noimage.jpg');
+
+        }
+//        dd($dataProduk);
+        if (count($dataProduk) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $res['meta'] = $meta;
+            $res['data'] = $jsonResult;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
+    }
+	
+	public function getSubKategorina(Request $request)
+    {
+		$id = $request->level_1;
+        $dataProduk = DB::table('csc_product')
+            ->where('csc_product.level_1', $id)
+            ->orderBy('nama_kategori_en', 'ASC')
+            ->get();
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($dataProduk); $i++) {
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
+            $jsonResult[$i]["logo"] = $path = ($dataProduk[$i]->logo) ? url('uploads/Product/Icon/' . $dataProduk[$i]->logo) : url('image/noimage.jpg');
+
+        }
+//        dd($dataProduk);
+        if (count($dataProduk) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $res['meta'] = $meta;
+            $res['data'] = $jsonResult;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
+    }
 
     public function getprodukBaru()
     {
@@ -617,6 +692,12 @@ class ProductNonAuthController extends Controller
             ->orderBy('nama_kategori_en', 'ASC')
             ->limit(6)
             ->get();
+        $i = 0;
+        foreach ($categoryutama as $value) {
+            $categoryutama[$i]->logo = url('uploads/Product/Icon/' . $value->logo);
+            $i++;
+        }
+
 
         if (count($categoryutama) > 0) {
             $meta = [
