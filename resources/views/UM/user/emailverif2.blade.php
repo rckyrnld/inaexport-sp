@@ -1,10 +1,18 @@
-<img height="20%" width="100%" src="{{url('assets')}}/assets/images/headeremail.jpg" alt="." >
-<img height="50%" width="100%" src="{{url('assets')}}/assets/images/iconpengumuman.jpg" alt="." >
-<p>Dear Importer, </P>
-<p>Your Account Had Activated :</p>
-<ol>
-    <ul>Name : {{$nama}}</ul>
-    <ul>Username : {{$username}}</ul>
-</ol>
-click <a href="{{url('login/')}}">here</a> for check and login.
-<img height="30%" width="100%" src="{{url('assets')}}/assets/images/footeremail.jpg" alt="." >
+<div align="center" style="width: 100%">
+    <div align="center" style="width: 580px;">
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
+{{--        <p style="text-align: left">Dear Importer, </P>--}}
+{{--        <p style="text-align: left">Your Account Had Activated :</p>--}}
+{{--        <ol style="text-align: left">--}}
+{{--            <ul>Name : {{$nama}}</ul>--}}
+{{--            <ul>Username : {{$username}}</ul>--}}
+{{--        </ol>--}}
+{{--        <p style="text-align: left">click <a href="{{url('login/')}}">here</a> for check and login.</p>--}}
+
+        <p style="text-align: left">Dear {{$company}},</p>
+        <p style="text-align: left">this account has been activated by super admin, so you can use Indonesian Trade Digital Promotion.</p>
+
+        <p style="text-align: left">Thanks</p>
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
+    </div>
+</div>

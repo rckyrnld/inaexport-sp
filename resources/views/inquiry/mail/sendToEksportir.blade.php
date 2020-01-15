@@ -18,12 +18,16 @@
 		background: #afcde8;
 	}
 </style>
-<img height="20%" width="100%" src="{{url('assets')}}/assets/images/headeremail.jpg" alt="." >
-<img height="50%" width="100%" src="{{url('assets')}}/assets/images/iconpengumuman.jpg" alt="." >
-<p style="color: #8bbbe8; font-size: 20px;">Information</p>
-<hr>
-<p>Yth. {{$company}},</P>
-<p>Terdapat permintaan hubungan baru dari {{$dari}}, apabila anda berminat silahkan meresponnya segera.</p>
-<P>Untuk melihat permintaan hubungan dagang tersebut, silahkan login <a href="{{url('/login')}}" class="button">disini</a></P>
-<img height="30%" width="100%" src="{{url('assets')}}/assets/images/footeremail.jpg" alt="." >
+<div align="center" style="width: 100%">
+    <div align="center" style="width: 580px;">
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
+        <p style="color: #8bbbe8; font-size: 20px;text-align: left">Information</p>
+        <hr>
+        <p style="text-align: left">Yth. {{$company}},</P>
+        <p style="text-align: left">Terdapat permintaan hubungan baru dari {{$dari}}, apabila anda berminat silahkan meresponnya segera.</p>
+        <P style="text-align: left">Untuk melihat permintaan hubungan dagang tersebut, silahkan login <a href="{{url('/login')}}" class="button">disini</a></P>
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
+    </div>
+</div>
+
 

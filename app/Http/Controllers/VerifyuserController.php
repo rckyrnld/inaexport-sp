@@ -551,8 +551,8 @@ class VerifyuserController extends Controller
 			
 		}
 		if($request->staim == 1){
-			$data3 = ['username' => $request->username, 'id2' => 0, 'nama' => $request->company, 'password' => $request->password, 'email' => $request->email];
-
+			$data3 = ['username' => $request->username, 'id2' => 0, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email];
+//			dd($data3);
                 Mail::send('UM.user.emailverif1', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);
                     $mail->subject('Your Account Was Verifed');
@@ -631,7 +631,7 @@ class VerifyuserController extends Controller
 			
 		}
 		if($request->staim == 1){
-			$data3 = ['username' => $request->username, 'id2' => 0, 'nama' => $request->company, 'password' => $request->password, 'email' => $request->email];
+			$data3 = ['username' => $request->username, 'id2' => 0, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email];
 
                 Mail::send('UM.user.emailverif2', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);

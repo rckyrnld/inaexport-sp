@@ -4,9 +4,12 @@
     <ul>Username : {{$username}}</ul>
     <ul>Password : {{$password}}</ul>
 </ol> -->
-<img height="20%" width="100%" src="{{url('assets')}}/assets/images/headeremail.jpg" alt="." >
-<img height="50%" width="100%" src="{{url('assets')}}/assets/images/iconpengumuman.jpg" alt="." >
-<p>Yth. {{$company}},</P>
-<p>Terdapat buying request baru dari {{$nama}}, apabila anda berminat silahkan meresponnya segera.</p>
-<p> Untuk melihat buying request tersebut, silahkan login <a href="{{url('br_list/')}}">disini</a>.</p>
-<img height="30%" width="100%" src="{{url('assets')}}/assets/images/footeremail.jpg" alt="." >
+<div align="center" style="width: 100%">
+    <div align="center" style="width: 580px;">
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
+        <p style="text-align: left">Yth. {{$company}},</P>
+        <p style="text-align: left">Terdapat buying request baru dari {{$nama}}, apabila anda berminat silahkan meresponnya segera.</p>
+        <p style="text-align: left"> Untuk melihat buying request tersebut, silahkan login <a href="{{url('br_list/')}}">disini</a>.</p>
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
+    </div>
+</div>

@@ -18,11 +18,15 @@
 		background: #afcde8;
 	}
 </style>
-<img height="20%" width="100%" src="{{url('assets')}}/assets/images/headeremail.jpg" alt="." >
-<img height="50%" width="100%" src="{{url('assets')}}/assets/images/iconpengumuman.jpg" alt="." >
-<p style="color: #8bbbe8; font-size: 20px;">Information</p>
-<hr>
-<p>Yth. {{$receiver}},</P>
-<p>Silahkan cek bukti pembayaran yang telah diupload oleh {{$sender}}</p>
-<p>Silahkan login <a href="{{url('/login')}}">disini</a></p>
-<img height="30%" width="100%" src="{{url('assets')}}/assets/images/footeremail.jpg" alt="." >
+<div align="center" style="width: 100%">
+    <div align="center" style="width: 580px;">
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
+        <p style="color: #8bbbe8; font-size: 20px;text-align: left;">Information</p>
+        <hr>
+        <p style="text-align: left;">Yth. {{$receiver}},</P>
+        <p style="text-align: left;">Silahkan cek bukti pembayaran yang telah diupload oleh {{$sender}}</p>
+        <p style="text-align: left;">Silahkan login <a href="{{url('/login')}}">disini</a></p>
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
+    </div>
+</div>
+
