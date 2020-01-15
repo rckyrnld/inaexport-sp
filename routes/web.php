@@ -369,7 +369,19 @@ Route::namespace('Management')->group(function () {
     });
 // Angga End
 });
-
+Route::namespace('Newsletter')->prefix('newsletter')->name('newsletter.')->group(function () {
+    // Angga Start
+    Route::get('/', 'NewsletterController@index')->name('index');
+    Route::get('/getData', 'NewsletterController@getData')->name('getData');
+    Route::get('/create/', 'NewsletterController@create')->name('create');
+    Route::get('/edit/{id}', 'NewsletterController@edit')->name('edit');
+    Route::get('/view/{id}', 'NewsletterController@view')->name('view');
+    Route::post('/store/{param}', 'NewsletterController@store')->name('store');
+    Route::get('/destroy/{id}', 'NewsletterController@destroy')->name('destroy');
+    Route::post('/broadcast/', 'NewsletterController@broadcast')->name('broadcast');
+    Route::get('/unsubscribe/{id}', 'NewsletterController@unsubscribe')->name('unsubscribe');
+    // Angga End
+});
 Route::namespace('ResearchCorner')->group(function () {
 // Angga Start
     Route::prefix('admin/research-corner')->group(function () {
