@@ -38,9 +38,11 @@ class NewsletterController extends Controller
       return \Yajra\DataTables\DataTables::of($news)
           ->addIndexColumn()
           ->addColumn('messages', function($data){
-            $pecah = explode('<p>', $data->messages);
-            $text = str_replace('</p>', '', $pecah[1]);
-            if(count($pecah) > 2){ $text = $text.'&hellip;'; }
+            $text = strtok($data->messages, "\n");
+            $hitung = substr_count( $data->messages, "\n" );
+            if($hitung > 0){
+              $text .= '&hellip;';
+            }
             return strip_tags($text, "");
           })
           ->addColumn('action', function ($data) {
