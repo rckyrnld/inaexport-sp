@@ -143,6 +143,8 @@ Route::namespace('Api')->group(function () {
     Route::post('detailProdukFe', 'ProductNonAuthController@detailProduk');
     Route::get('getImageProduk/{id}/{image}', 'ProductNonAuthController@getImageProduk');
     Route::get('getRandomProduct', 'ProductNonAuthController@getRandomProduct');
+    Route::get('getParentCategory', 'ProductNonAuthController@getKategorina');
+    Route::post('getLevel1Category', 'ProductNonAuthController@getSubKategorina');
     Route::get('getprodukBaru', 'ProductNonAuthController@getprodukBaru');
     Route::post('browseProductListBynameAndKategori', 'ProductNonAuthController@browseProductDetailBynameAndKategori');
     Route::post('suggestProductkategorisearch', 'ProductNonAuthController@browseProductBynameAndKategori');
@@ -179,5 +181,12 @@ Route::namespace('Api')->group(function () {
     //hscode
     Route::get('getHscode', 'ManagementNoAuthController@getHscode');
     Route::get('getHscodeFilter', 'ManagementNoAuthController@getHscodeFilter');
+
+    // Populer Categories
+    Route::get('populerCategories', 'ProductNonAuthController@populerCategories');
+
+    // Get Product By Categories
+    Route::post('productByCategories', 'ProductNonAuthController@productByCategories');
+
 });
 // });

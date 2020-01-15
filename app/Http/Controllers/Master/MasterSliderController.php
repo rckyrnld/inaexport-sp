@@ -11,7 +11,7 @@ use App\Exports\PortExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Session;
 
-class MasterPortController extends Controller
+class MasterSliderController extends Controller
 {
 
   public function __construct(){
@@ -19,90 +19,51 @@ class MasterPortController extends Controller
     }
 
     public function index(){
-      $pageTitle = 'List Port';
-      return view('master.port.index',compact('pageTitle'));
+      $pageTitle = 'Master Slider';
+      return view('master.slider.index',compact('pageTitle'));
     }
 
-    public function getData()
-    {
-      $port = MasterPort::leftjoin('mst_province as a', 'mst_port.id_mst_province','=','a.id')
-            ->orderby('mst_port.name_port', 'asc')
-            ->select('mst_port.*')
-            ->get();
-
-      return \Yajra\DataTables\DataTables::of($port)
-          ->addColumn('province_en', function ($port) {
-              $data = MasterProvince::where('id', $port->id_mst_province)->first();
-              if($data){
-                return '<div align="left">'.$data->province_en.'</div>';
-              } else {
-                return '<div align="left">PROVINCE NOT FOUND</div>';
-              }
-          })
-		  ->addColumn('name_port', function ($port) {
-              
-                return '<div align="left">'.$port->name_port.'</div>';
-             
-          })
-          ->addColumn('action', function ($data) {
-//              return '
-//              <center>
-//              <div class="btn-group">
-//                <a href="'.route('master.port.view', $data->id).'" class="btn btn-sm btn-info">&nbsp;<i class="fa fa-search text-white"></i>&nbsp;View&nbsp;</a>&nbsp;&nbsp;
-//                <a href="'.route('master.port.edit', $data->id).'" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp;
-//                <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('master.port.destroy', $data->id).'" class="btn btn-sm btn-danger">&nbsp;<i class="fa fa-trash text-white"></i>&nbsp;Delete&nbsp;</a>
-//              </div>
-//              </center>
-//              ';
-              return '
-              <center>
-              <div class="btn-group">
-                <a href="'.route('master.port.view', $data->id).'" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-eye text-white"></i></a>&nbsp;&nbsp;
-                <a href="'.route('master.port.edit', $data->id).'" class="btn btn-sm btn-success" title="Edit">&nbsp;<i class="fa fa-edit text-white"></i></a>&nbsp;&nbsp;
-                <a onclick="return confirm(\'Are You Sure ?\')" href="'.route('master.port.destroy', $data->id).'" class="btn btn-sm btn-danger" title="Delete">&nbsp;<i class="fa fa-trash text-white"></i></a>
-              </div>
-              </center>
-              ';
-          })
-          ->rawColumns(['action','province_en','name_port'])
-          ->make(true);
-    }
-
+    
     public function create()
     {
-      $pageTitle = 'List Port';
+      $pageTitle = 'Add Slider';
       $page = 'create';
       $url = "/master-port/store/Create";
       $province = MasterProvince::orderby('province_en','asc')->get();
-      return view('master.port.create',compact('url','pageTitle','page','province'));
+      return view('master.slider.create',compact('url','pageTitle','page','province'));
     }
 
-    public function store(Request $req, $param)
+    public function store(Request $request)
     { 
-      if($param == 'Create'){
-        $data = MasterPort::insert([
-          'id' => $req->id,
-          'id_mst_province' => $req->province,
-          'name_port' => $req->port
-        ]);
-      } else {
-        $pecah = explode('_', $param);
-        $param = $pecah[0];
-
-        $data = MasterPort::where('id', $pecah[1])->update([
-          'id' => $req->id,
-          'id_mst_province' => $req->province,
-          'name_port' => $req->port
-        ]);
-      }
-
-      if($data){
-         Session::flash('success','Success '.$param.' Data');
-         return redirect('/master-port/')->with('success', 'Success '.$param.' Data!');
-       }else{
-         Session::flash('failed','Failed '.$param.' Data');
-         return redirect('/master-port/')->with('error', 'Failed '.$param .' Data!');
-       }
+		if(empty($request->file('file_img'))){
+			$file = "";
+		}else{
+			$file = $request->file('file_img')->getClientOriginalName();
+			$destinationPath = public_path() . "/uploads/slider";
+			$request->file('file_img')->move($destinationPath, $file);
+		}
+		$insert = DB::select("
+			insert into mst_slide (file_img,keterangan,publish,created_at) values
+			('".$file."','".$request->keterangan."','".$request->publish."','".Date('Y-m-d H:i:s')."')");
+		
+		return redirect('master-slide')->with('success','Success Add Data');
+    }
+	
+	public function update(Request $request)
+    { 
+		if(empty($request->file('file_img'))){
+			$file = $request->last_file;
+		}else{
+			$file = $request->file('file_img')->getClientOriginalName();
+			$destinationPath = public_path() . "/uploads/slider";
+			$request->file('file_img')->move($destinationPath, $file);
+		}
+		$insert = DB::select("
+			update mst_slide set file_img='".$file."', keterangan='".$request->keterangan."', publish='".$request->publish."'
+			where id='".$request->idnya."'
+			");
+		
+		return redirect('master-slide')->with('success','Success Update Data');
     }
 
     public function view($id)
@@ -117,11 +78,18 @@ class MasterPortController extends Controller
     public function edit($id)
     {
       $page = "edit";
-      $pageTitle = "List Port";
-      $url = "/master-port/store/Update_".$id;
-      $data = MasterPort::where('id', $id)->first();
-      $province = MasterProvince::orderby('province_en','asc')->get();
-      return view('master.port.create',compact('url','data','pageTitle','page','province'));
+      $pageTitle = "Edit Slide";
+      
+      return view('master.slider.edit',compact('pageTitle','page','id'));
+    }
+	
+	public function hapus($id)
+    {
+      $insert = DB::select("
+			delete from mst_slide where id='".$id."'
+			");
+		
+		return redirect('master-slide')->with('success','Success Delete Data');
     }
 
     public function destroy($id)
