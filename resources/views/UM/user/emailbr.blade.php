@@ -5,7 +5,7 @@
     <ul>Password : {{$password}}</ul>
 </ol> -->
 <img height="20%" width="100%" src="{{url('assets')}}/assets/images/headeremail.jpg" alt="." >
-<img height="50%" width="100%" src="{{url('assets')}}/assets/images/icon isi pengumuman.jpg" alt="." >
+<img height="50%" width="100%" src="{{url('assets')}}/assets/images/iconpengumuman.jpg" alt="." >
 <p>Yth. {{$company}},</P>
 <p>Terdapat buying request baru dari {{$nama}}, apabila anda berminat silahkan meresponnya segera.</p>
 <p> Untuk melihat buying request tersebut, silahkan login <a href="{{url('br_list/')}}">disini</a>.</p>

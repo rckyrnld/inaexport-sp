@@ -1,5 +1,5 @@
 <img height="20%" width="100%" src="{{url('assets')}}/assets/images/headeremail.jpg" alt="." >
-<img height="50%" width="100%" src="{{url('assets')}}/assets/images/icon isi pengumuman.jpg" alt="." >
+<img height="50%" width="100%" src="{{url('assets')}}/assets/images/iconpengumuman.jpg" alt="." >
 <p style="color: #8bbbe8; font-size: 20px;">Information</p>
 <hr>
 <p>Yth. {{$username}}</p>
