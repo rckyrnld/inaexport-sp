@@ -45,6 +45,7 @@ class EksProductController extends Controller
             $id_user = Auth::guard('eksmp')->user()->id;
             $user = DB::table('csc_product_single')
             ->where('id_itdp_company_user', '=', $id_user)
+            ->where('status', '!=', 9)
             ->orderBy('product_description_en', 'ASC')
             ->get();
 
@@ -90,14 +91,16 @@ class EksProductController extends Controller
                     }
                 })
                 ->addColumn('action', function ($mjl) {
+                    $edit = '<a href="' . route('eksproduct.edit', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit"><i class="fa fa-edit text-white"></i></a>';
+                    if($mjl->status == 2){
+                        $edit = '<button class="btn btn-sm btn-success" title="Edit" disabled><i class="fa fa-edit text-white"></i></button>';
+                    }
                     return '
                     <center>
                     <a href="' . route('eksproduct.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
                         <i class="fa fa-eye text-white"></i>
                     </a>
-                    <a href="' . route('eksproduct.edit', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit">
-                        <i class="fa fa-edit text-white"></i>
-                    </a>
+                    '.$edit.'
                     <a href="' . route('eksproduct.delete', $mjl->id) . '" onclick="return confirm(\'Are You Sure ?\')" class="btn btn-sm btn-danger" title="Delete">
                         <i class="fa fa-trash text-white"></i>
                     </a>
@@ -177,6 +180,8 @@ class EksProductController extends Controller
                     return "Publish - Verified";
                 }else if($mjl->status == 3){
                     return "Publish - Verification Rejected";
+                }else if($mjl->status == 9){
+                        return "Unpublish - Verified";
                 }else{
                     return "Hide";
                 }
@@ -344,6 +349,7 @@ class EksProductController extends Controller
             $url = '/eksportir/product_update/'.$id;
 
             $data = DB::table('csc_product_single')->where('id', '=', $id)->first();
+            if($data->status == 9){ return redirect('/eksportir/product'); }
             $catprod = DB::table('csc_product')->where('level_1', 0)->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
             $catprod2 = DB::table('csc_product')->whereNotNull('level_1')->where('level_2', 0)->orderBy('nama_kategori_en', 'ASC')->get();
             $catprod3 = DB::table('csc_product')->whereNotNull('level_1')->whereNotNull('level_2')->orderBy('nama_kategori_en', 'ASC')->get();
@@ -360,7 +366,7 @@ class EksProductController extends Controller
 //        if(empty(Auth::guard('eksmp')->user()) or empty(Auth::user()->id)){
 //            return redirect('/login');
 //        }else{
-        if (Auth::guard('eksmp')->user()) {
+        if (Auth::guard('eksmp')->user() || Auth::user()) {
             if (Auth::guard('eksmp')->user()) {
 //                dd('tes');
                 $jenis = "eksportir";
@@ -379,6 +385,8 @@ class EksProductController extends Controller
         $data = DB::table('csc_product_single')
             ->where('id', '=', $id)
             ->first();
+
+        if($data->status == 9 && $jenis == "eksportir"){ return redirect('/eksportir/product'); }
 
 
         //Read Notification
@@ -399,10 +407,17 @@ class EksProductController extends Controller
 
     public function delete($id)
     {
-        if(Auth::guard('eksmp')->user()){
-            DB::table('csc_product_single')->where('id', $id)
-                ->delete();
-            return redirect('eksportir/product')->with('success','Success Delete Data');
+        if(Auth::guard('eksmp')->user()->id_role == 2){
+            $cek = DB::table('csc_product_single')->where('id', $id)->first();
+            if($cek->status == 2 || $cek->status == 9){
+                $delete = DB::table('csc_product_single')->where('id', $id)->update(['status' => 9]);
+            } else {
+                $delete = DB::table('csc_product_single')->where('id', $id)->delete();
+            }
+            if($delete)
+                return redirect('eksportir/product')->with('success','Success Delete Data');
+            else
+                return redirect('eksportir/product')->with('failed','Failed Delete Data');
         }else{
             return redirect('eksportir/product')->with('success','Success Delete Data');
         }
