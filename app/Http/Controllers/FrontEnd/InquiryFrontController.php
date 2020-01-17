@@ -144,7 +144,7 @@ class InquiryFrontController extends Controller
 
                 $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
                 $users_admin = [];
-                array_push($users_admin, "kementerianperdagangan.max@gmail.com");
+                array_push($users_admin, env('MAIL_USERNAME'));
                 foreach ($admin as $adm) {
                     array_push($users_admin, $adm->email);
                 }

@@ -120,7 +120,7 @@ class TrxController extends Controller
 
                 $data22 = [
                     'email' => "",
-                    'email1' => "kementerianperdagangan.max@gmail.com",
+                    'email1' => env('MAIL_USERNAME'),
                     'username' => Auth::guard('eksmp')->user()->username,
                     'main_messages' => "",
                     'id' => $request->id_transaksi
@@ -139,7 +139,7 @@ class TrxController extends Controller
 
                 $data22 = [
                     'email' => "",
-                    'email1' => "kementerianperdagangan.max@gmail.com",
+                    'email1' => env('MAIL_USERNAME'),
                     'username' => Auth::guard('eksmp')->user()->username,
                     'main_messages' => "",
                     'id' => $request->id_transaksi

@@ -201,7 +201,7 @@ class ManagementUserController extends Controller
         //kementerianperdagangan.max@gmail.com
         $data = [
             'email' => $request->email,
-            'email1' => 'kementerianperdagangan.max@gmail.com',
+            'email1' => env('MAIL_USERNAME'),
             'username' => $request->name,
             'main_messages' => $request->messages,
             'id' => $id_ticketing
@@ -929,7 +929,7 @@ class ManagementUserController extends Controller
 
                 $data22 = [
                     'email' => "",
-                    'email1' => "kementerianperdagangan.max@gmail.com",
+                    'email1' => env('MAIL_USERNAME'),
                     'username' => $request->username,
                     'main_messages' => "",
                     'id' => $request->id_transaksi
@@ -947,7 +947,7 @@ class ManagementUserController extends Controller
 
                 $data22 = [
                     'email' => "",
-                    'email1' => "kementerianperdagangan.max@gmail.com",
+                    'email1' => env('MAIL_USERNAME'),
                     'username' => $request->username,
                     'main_messages' => "",
                     'id' => $request->id_transaksi
