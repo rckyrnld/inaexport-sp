@@ -198,6 +198,7 @@ class EventController extends Controller
 	        for ($user=0; $user < count($array) ; $user++) {
 	        	$pengirim = DB::table('itdp_admin_users')->where('id',$id_user)->first();
 	        	$account_penerima = DB::table('itdp_company_users')->where('id',$array[$user])->first();
+				if(count($account_penerima) != 0){
 	        	$profile_penerima = DB::table('itdp_profil_eks')->where('id',$account_penerima->id_profil)->first();
                 if($profile_penerima){
     	        	$notif = DB::table('notif')->insert([
@@ -224,6 +225,8 @@ class EventController extends Controller
                     $mail->to($data['email']);
                     $mail->subject('Event Baru');
                 });
+				}
+				
 	        }
 
         }

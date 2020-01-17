@@ -686,18 +686,56 @@ class ProductNonAuthController extends Controller
 
     public function populerCategories()
     {
+		$tambahan[0] = array(
+			"id" => 0,
+			"level_1" => 0,
+			"level_2" => 0,
+			"nama_kategori_en" => "All Categories",
+			"nama_kategori_in" => "Semua Kategori",
+			"nama_kategori_chn" => "农业",
+			"created_at" => null,
+			"updated_at" => null,
+			"type" => "-",
+			"logo" =>  url('uploads/Product/Icon/allkat.png')
+		);
+		
         $categoryutama = DB::table('csc_product')
             ->where('level_1', 0)
             ->where('level_2', 0)
             ->orderBy('nama_kategori_en', 'ASC')
             ->limit(6)
             ->get();
+		/*$categoryutama[0] = 
+		([
+		 "id": 0,
+        "level_1": 0,
+        "level_2": 0,
+        "nama_kategori_en": "All Categories",
+        "nama_kategori_in": "Semua Kategori",
+        "nama_kategori_chn": "农业",
+        "created_at": null,
+        "updated_at": null,
+        "type": "-",
+        "logo": "http://localhost:7777/itdp2/public/uploads/Product/Icon/1575873599_icon-Agriculture_00-homepage-slicing_17.png"	
+		]);*/
         $i = 0;
+		
         foreach ($categoryutama as $value) {
+			$tambahan[] = array(
+				"id" => $value->id,
+				"level_1" => $value->level_1,
+				"level_2" => $value->level_2,
+				"nama_kategori_en" => $value->nama_kategori_en,
+				"nama_kategori_in" => $value->nama_kategori_in,
+				"nama_kategori_chn" => $value->nama_kategori_chn,
+				"created_at" => $value->created_at,
+				"updated_at" => $value->updated_at,
+				"type" => $value->type,
+				"logo" => url('uploads/Product/Icon/' . $value->logo)
+			);
             $categoryutama[$i]->logo = url('uploads/Product/Icon/' . $value->logo);
             $i++;
         }
-
 
         if (count($categoryutama) > 0) {
             $meta = [
@@ -706,7 +744,7 @@ class ProductNonAuthController extends Controller
                 'status' => 'OK'
             ];
             $res['meta'] = $meta;
-            $res['data'] = $categoryutama;
+            $res['data'] = $tambahan;
             return response($res);
         } else {
             $meta = [

@@ -267,14 +267,16 @@ class BRFrontController extends Controller
 				//END NOTIF
 				//EMAIL
 				$caridataeks = DB::select("select * from itdp_company_users where id='".$napro."'");
+				if(count($caridataeks) != 0){
 				foreach($caridataeks as $vm){ $vc1 = $vm->email; }
-				$data = ['username' => $namapembuat, 'id2' => '0', 'nama' => $namapembuat, 'password' => '', 'email' => $vc1];
+				$data = ['username' => $namapembuat, 'id2' => '0', 'nama' => $namapembuat, 'company' => $namapembuat, 'password' => '', 'email' => $vc1];
 
                 Mail::send('UM.user.emailbr', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
                     $mail->subject('Buying Was Created');
 
                 });
+				}
 				//END EMAIL
 			}else{
 				
@@ -337,6 +339,7 @@ class BRFrontController extends Controller
 				//END NOTIF
 				//EMAIL
 				$caridataeks = DB::select("select * from itdp_company_users where id='".$napro."'");
+				if(count($caridataeks) != 0){
 				foreach($caridataeks as $vm){ $vc1 = $vm->email; }
                 $datacomeks = DB::select("select * from itdp_profil_eks where id = '".$vm->id_profil."'");
 //				dd($datacomeks[0]->company);
@@ -351,6 +354,7 @@ class BRFrontController extends Controller
                     $mail->to($data['email'], $data['company']);
                     $mail->subject('Buying Was Created');
                 });
+				}
 				//END EMAIL
 			}else{
 				

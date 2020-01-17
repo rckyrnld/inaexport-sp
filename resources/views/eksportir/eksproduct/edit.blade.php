@@ -1,5 +1,4 @@
 @include('header')
-<title>E-Reporting | Tambah User</title>
 <div class="padding">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
@@ -547,6 +546,11 @@
             }
         });
         @isset($data)
+            @if($data->status == 2)
+                $('input').prop('disabled', 'true');
+                $('select').prop('disabled', 'true');
+                $('#hal3').prop('disabled', 'true');
+            @endif
         var hscode = "{{$data->id_mst_hscodes}}";
         if (hscode != null) {
             $.ajax({
