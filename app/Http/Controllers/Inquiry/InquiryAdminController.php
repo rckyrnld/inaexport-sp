@@ -805,6 +805,7 @@ class InquiryAdminController extends Controller
                             'id_terkait' => $id_inquiry,
                         ]);
 
+						
                         array_push($users, $untuk->email);
                     }
                 }
