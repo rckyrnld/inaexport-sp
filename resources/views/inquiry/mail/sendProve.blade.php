@@ -21,21 +21,11 @@
 <div align="center" style="width: 100%">
     <div align="center" style="width: 580px;">
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
-        <p style="color: #8bbbe8; font-size: 20px;text-align: left">Information</p>
+        <p style="color: #8bbbe8; font-size: 20px;text-align: left;">Information</p>
         <hr>
-        <p style="text-align: left">Dear {{$receiver}}, </P>
-        <p style="text-align: left">{{$sender}} Respond Chat On Your Ticketing Request</p>
-    <!-- <ol>
-            <ul>Name : {{$username}}</ul>
-            <ul>Email : {{$email}}</ul>
-        </ol>
-        <hr>-->
-{{--        <p style="text-align: left">--}}
-{{--            {{$main_messages}}--}}
-{{--        </p>--}}
-
-{{--        <hr>--}}
-        <p style="text-align: left;">click <a href="{{url('inquiry/chatting', $id)}}">Here</a>.</p>
+        <p style="text-align: left;">Yth. {{$receiver}},</P>
+        <p style="text-align: left;">Silahkan cek bukti pembayaran yang telah diupload oleh {{$sender}}</p>
+        <p style="text-align: left;">Silahkan login <a href="{{url('/login')}}">disini</a></p>
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
     </div>
 </div>

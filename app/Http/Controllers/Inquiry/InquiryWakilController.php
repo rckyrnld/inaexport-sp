@@ -441,40 +441,46 @@ class InquiryWakilController extends Controller
                             'to_role' => 2,
                         ]);
 
+                        $data = [
+                            'email' => $untuk->email,
+                            'type' => "eksportir",
+                            'company' => getCompanyName($array[$k]),
+                            'dari' => "representative"
+                        ];
+
+                        Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data, $users) {
+                            $mail->subject('Inquiry Information');
+                            $mail->to($data['email']);
+                        });
+
                         array_push($users, $untuk->email);
                     }
                 }
 
+
+
+
                 //Tinggal Ganti Email1 dengan email kemendag
-                $data = [
-                    'type' => "eksportir",
-                    'company' => "Eksporter",
-                    'dari' => "representative"
-                ];
 
-                Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data, $users) {
-                    $mail->subject('Inquiry Information');
-                    $mail->to($users);
-                });
 
-                //Notif ke Admin
-                $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
-                $users_admin = [];
-                array_push($users_admin, "kementerianperdagangan.max@gmail.com");
-                foreach ($admin as $adm) {
-                    array_push($users_admin, $adm->email);
-                }
-
-                //Notif email ke admin
-                $dataadmin = [
-                    'pembuat' => getPerwakilanName($id_user),
-                    'dari' => "Perwakilan"
-                ];
-
-                Mail::send('inquiry.mail.SendToAdmin', $dataadmin, function ($mail) use ($dataadmin, $users_admin) {
-                    $mail->subject('Inquiry Information');
-                    $mail->to($users_admin);
-                });
+//                //Notif ke Admin
+//                $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+//                $users_admin = [];
+//                array_push($users_admin, "kementerianperdagangan.max@gmail.com");
+//                foreach ($admin as $adm) {
+//                    array_push($users_admin, $adm->email);
+//                }
+//
+//                //Notif email ke admin
+//                $dataadmin = [
+//                    'pembuat' => getPerwakilanName($id_user),
+//                    'dari' => "Perwakilan"
+//                ];
+//
+//                Mail::send('inquiry.mail.SendToAdmin', $dataadmin, function ($mail) use ($dataadmin, $users_admin) {
+//                    $mail->subject('Inquiry Information');
+//                    $mail->to($users_admin);
+//                });
 
                 return redirect('/inquiry_perwakilan')->with('success','Success Broadcast Data');
             }else{
@@ -755,7 +761,8 @@ class InquiryWakilController extends Controller
                 'type' => "perwakilan",
                 'sender' => getPerwakilanName($sender),
                 'receiver' => getCompanyName($receiver),
-                'subjek' => $data->subyek_en
+                'subjek' => $data->subyek_en,
+                'id' => $id
             ];
 
             Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
@@ -828,10 +835,11 @@ class InquiryWakilController extends Controller
             'type' => "perwakilan",
             'sender' => getPerwakilanName($sender),
             'receiver' => getCompanyName($receiver),
-            'subjek' => $data->subyek_en
+            'subjek' => $data->subyek_en,
+            'id' => $id
         ];
 
-        Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+        Mail::send('inquiry.mail.sendProve', $data2, function ($mail) use ($data2) {
             $mail->to($data2['email'], $data2['username']);
             $mail->subject('Inquiry Chatting Information');
         });
