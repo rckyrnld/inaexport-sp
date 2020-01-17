@@ -129,11 +129,21 @@
                                                     <tr><td title="{{$comodity}}">{{$comodityName}}</td></tr>
                                                     <tr>
                                                         <td style="padding-top: 10px;">
+														<?php if($ed->status_bc == 1){ ?>
+														
                                                             <a href="{{url('/')}}/event/show_detail/{{$ed->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a> 
-{{--                                                            <a href="" class="btn btn-danger"><i class="fa fa-trash"></i></a>--}}
+
                                                             <a onclick="return confirm('Are You Sure ?')" href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a>
-                                                            <a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                                                        </td>
+                                                            <!--<a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>-->
+                                                        <?php }else{ ?>
+								</a>
+														 <a data-toggle="modal" data-target="#myModal" class="btn btn-info" title="Broadcast"><i class="fa fa-bullhorn"></i></a>
+														    
+														<a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><font color="white"><i class="fa fa-edit"></i></font></a>
+														<a onclick="return confirm('Are You Sure ?')" href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a>
+                                                        
+														<?php } ?>
+														</td>
                                                     </tr>
                                                 </table>
                                                </div>
@@ -160,6 +170,37 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Upload Proof of Payment</h6>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+         
+        </div>
+		<form id="formId" action="{{ url('uploadpop') }}" enctype="multipart/form-data" method="post">
+		   {{ csrf_field() }}
+        <div class="modal-body">
+		
+	<div class="form-row">
+		<div class="col-sm-12">
+		<p><center>Are you sure Broadcast this event ?</center></p>
+		</div>
+		
+		
+	</div>
+         
+		  
+        </div>
+        <div class="modal-footer">
+			<button type="submit" class="btn btn-success" ><font color="white">Broadcast</font></button>
+			<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div> 
+		</form>
+      </div>
+    </div>
+  </div>
+
+
 <script type="text/javascript">
     function ConfirmDelete()
     {
