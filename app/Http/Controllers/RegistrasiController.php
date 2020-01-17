@@ -130,7 +130,7 @@ class RegistrasiController extends Controller
 
                 });
 			
-			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => env('MAIL_USERNAME')];
+			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => env('MAIL_USERNAME','admin@inaexport.id')];
 
                 Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
                     $mail->to($data2['email'], $data2['username']);
@@ -193,7 +193,7 @@ class RegistrasiController extends Controller
                 });
 
 //			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => 'kementerianperdagangan.max@gmail.com'];
-			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => env('MAIL_USERNAME'),'type'=> 'Indonesian Exporter'];
+			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => env('MAIL_USERNAME','admin@inaexport.id'),'type'=> 'Indonesian Exporter'];
 
                 Mail::send('UM.user.emailsadmin', $data2, function ($mail) use ($data2) {
                     $mail->to($data2['email'], $data2['username']);

@@ -173,7 +173,7 @@
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Upload Proof of Payment</h6>
+        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Broadcast Event</h6>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
          
         </div>
@@ -192,7 +192,7 @@
 		  
         </div>
         <div class="modal-footer">
-			<button type="submit" class="btn btn-success" ><font color="white">Broadcast</font></button>
+			<button type="submit" class="btn btn-warning" ><font color="white">Broadcast</font></button>
 			<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div> 
 		</form>

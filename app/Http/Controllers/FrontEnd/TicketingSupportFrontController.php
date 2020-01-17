@@ -67,7 +67,7 @@ class TicketingSupportFrontController extends Controller
 
         $data = [
             'email' => $req->email,
-            'email1' => env('MAIL_USERNAME'),
+            'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
             'username' => $req->name,
             'company' =>$companyname->company,
             'ticketing' => $id_ticketing,
@@ -170,7 +170,7 @@ class TicketingSupportFrontController extends Controller
 		*/	
 			$data2 = [
             'email' => "",
-            'email1' => env('MAIL_USERNAME'),
+            'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
             'username' => "",
             'main_messages' => $req->messages,
             'id' => $req->id
@@ -234,7 +234,7 @@ class TicketingSupportFrontController extends Controller
         */  
             $data2 = [
             'email' => "",
-            'email1' => env('MAIL_USERNAME'),
+            'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
             'username' => "",
             'main_messages' => $req->messages,
             'id' => $req->id
