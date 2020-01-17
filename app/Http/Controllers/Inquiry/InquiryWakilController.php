@@ -461,6 +461,27 @@ class InquiryWakilController extends Controller
 
 
                 //Tinggal Ganti Email1 dengan email kemendag
+<<<<<<< HEAD
+=======
+                $data = [
+                    'type' => "eksportir",
+                    'company' => "Eksporter",
+                    'dari' => "representative"
+                ];
+
+                Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data, $users) {
+                    $mail->subject('Inquiry Information');
+                    $mail->to($users);
+                });
+
+                //Notif ke Admin
+                $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+                $users_admin = [];
+                array_push($users_admin, env('MAIL_USERNAME','admin@inaexport.id'));
+                foreach ($admin as $adm) {
+                    array_push($users_admin, $adm->email);
+                }
+>>>>>>> e8e36e4a005d03315f4bb18f1c4ef7b23a4511ec
 
 
 //                //Notif ke Admin

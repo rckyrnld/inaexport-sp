@@ -168,7 +168,7 @@ class EventController extends Controller
                 'id_type' => $id,
             ]);
           }
-
+		/*
         for ($i=0; $i < count($req->id_prod_cat) ; $i++) { 
         	$var=$req->id_prod_cat[$i];
         	$idn=DB::table('event_detail_kategori')->max('id');
@@ -230,6 +230,7 @@ class EventController extends Controller
 	        }
 
         }
+		*/
 
         return redirect('event')->with('success', 'Success Add Data!');
 	}
