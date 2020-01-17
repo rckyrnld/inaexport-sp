@@ -18,11 +18,17 @@
 		background: #afcde8;
 	}
 </style>
-<p style="color: #8bbbe8; font-size: 20px;">Information</p>
-<hr>
-<p>Dear {{$penerima}},</P>
-<p>Inquiry with subject {{$subjek}} has been Deal by Exporter {{$company}}.</p>
-<p><a href="{{url('/login')}}">Click here</a> to login in application.</p>
-<br>
-<p>Thanks</p>
-<!-- <a href="{{url('/login')}}" class="button">Next Log In</a> -->
+<div align="center" style="width: 100%">
+    <div align="center" style="width: 580px;">
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
+        <p style="color: #8bbbe8; font-size: 20px;text-align: left">Information</p>
+        <hr>
+        <p style="text-align: left">Dear {{$penerima}},</P>
+        <p style="text-align: left">Inquiry with subject {{$subjek}} has been Deal by Exporter {{$company}}.</p>
+        <p style="text-align: left"><a href="{{url('/login')}}">Click here</a> to login in application.</p>
+        <br>
+        <p style="text-align: left">Thanks</p>
+        <!-- <a href="{{url('/login')}}" class="button">Next Log In</a> -->
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
+    </div>
+</div>

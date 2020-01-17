@@ -28,9 +28,10 @@
 <div align="center" style="width: 100%">
     <div align="center" style="width: 580px;">
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
-        <p style="text-align: left">Yth {{$company}},</p>
-        <p style="text-align: left">Terima kasih telah melakukan pendaftaran akun perusahaan anda di inaexport.</p>
-        <p style="text-align: left">Segera verifikasi akun tersebut dengan cara mengunggah dokumen perusahaan (SIUP, NIB dan NPWP perusahaan) pada aplikasi inaexport.</p>
+        <p style="text-align: left">Dear Admin,</p>
+        <p style="text-align: left">There is new {{$type}} register to inaexport.id.</p>
+        <p style="text-align: left">Click <a href="{{url('/admin')}}">here</a></p>
+{{--        <p style="text-align: left">Click <a href="{{url('profil', 2)}}">here</a> to check the new user</p>--}}
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
     </div>
 </div>

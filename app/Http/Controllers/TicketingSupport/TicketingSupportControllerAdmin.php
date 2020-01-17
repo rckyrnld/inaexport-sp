@@ -151,6 +151,7 @@ class TicketingSupportControllerAdmin extends Controller
         ];
         */
 
+        //notif email untuk user
         Mail::send('UM.user.sendticketchat2', $data, function ($mail) use ($data) {
             $mail->to($data['email1'], $data['username']);
             $mail->subject('Chat Ticketing Support');
@@ -163,8 +164,8 @@ class TicketingSupportControllerAdmin extends Controller
         });
         */
 
-
-        $ket = "Super Admin Respond Your Ticketing Request !";
+        //notif app untuk user
+        $ket = "Super Admin Respond Your Ticketing Request";
         $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 				('" . $data3 . "','Super Admin','1','" . $data1 . "','" . $data4 . "','" . $ket . "','front_end/ticketing_support/chatview','" . $req->id . "','" . Date('Y-m-d H:m:s') . "','0')
 				");
@@ -237,7 +238,7 @@ class TicketingSupportControllerAdmin extends Controller
         */
 
 
-        $ket = "Super Admin Respond Your Ticketing Request !";
+        $ket = "Super Admin Respond Your Ticketing Request";
         $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
                 ('" . $data3 . "','Super Admin','1','" . $data1 . "','" . $data4 . "','" . $ket . "','front_end/ticketing_support/chatview','" . $req->id . "','" . Date('Y-m-d H:m:s') . "','0')
                 ");
