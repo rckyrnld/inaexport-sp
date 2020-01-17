@@ -554,6 +554,7 @@ class InquiryEksController extends Controller
                 $mail->subject('Inquiry Chatting Information');
             });
         }else if($inquiry->type == "perwakilan" || $inquiry->type == "admin"){
+            $cek = Db::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $sender)->first();
             $broadcast = DB::table('csc_inquiry_broadcast')->where('id_itdp_company_users', $id_user)->where('id_inquiry', $id)->first();
             $save = DB::table('csc_chatting_inquiry')->insertGetId([
                 'id_inquiry' => $id,
@@ -750,7 +751,28 @@ class InquiryEksController extends Controller
                 Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
                     $mail->to($data2['email'], $data2['username']);
                     $mail->subject('Inquiry Deal Information');
-                }); 
+                });
+
+//                //notif untuk admin
+//                $notif = DB::table('notif')->insert([
+//                    'dari_nama' => getCompanyName($id_user),
+//                    'dari_id' => $id_user,
+//                    'untuk_nama' => 'Super Admin',
+//                    'untuk_id' => 1,
+//                    'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getCompanyName($id_user),
+//                    'url_terkait' => 'front_end/view_inquiry',
+//                    'status_baca' => 0,
+//                    'waktu' => $datenow,
+//                    'to_role' => 1,
+//                    'id_terkait' => $id
+//                ]);
+//
+//                Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
+//                    $mail->to($data2['email'], $data2['username']);
+//                    $mail->subject('Inquiry Deal Information');
+//                });
+
+
             }
         }
 

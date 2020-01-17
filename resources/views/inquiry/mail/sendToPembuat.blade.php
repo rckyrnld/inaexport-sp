@@ -18,10 +18,16 @@
 		background: #afcde8;
 	}
 </style>
-<p style="color: #8bbbe8; font-size: 20px;">Information</p>
-<hr>
-<p>Dear {{$company}},</P>
-<p>There are responses that have been made by the eksporters, please look immediately.</p>
-<p>To knows, please enter the Inaexport.id application with an account that is already registered.</p>
-<br>
-<a href="{{url('/login')}}" class="button">Next Log In</a>
+<div align="center" style="width: 100%">
+    <div align="center" style="width: 580px;">
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
+        <p style="color: #8bbbe8; font-size: 20px;text-align: left">Information</p>
+        <hr>
+        <p style="text-align: left">Dear {{$company}},</P>
+        <p style="text-align: left">There are responses that have been made by the eksporters, please look immediately.</p>
+        <p style="text-align: left">To knows, please enter the Inaexport.id application with an account that is already registered.</p>
+        <br>
+        <p style="text-align: left"><a href="{{url('/login')}}" class="button">Next Log In</a></p>
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
+    </div>
+</div>

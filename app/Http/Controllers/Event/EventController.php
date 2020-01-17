@@ -194,7 +194,6 @@ class EventController extends Controller
 	          }
 	        }
 
-
 	        sort($array);
 	        for ($user=0; $user < count($array) ; $user++) {
 	        	$pengirim = DB::table('itdp_admin_users')->where('id',$id_user)->first();

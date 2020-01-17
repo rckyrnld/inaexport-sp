@@ -99,7 +99,7 @@ class RegistrasiController extends Controller
 		}
 		// notif 
 		$id_terkait = "3/".$id2;
-		$ket = "User baru Importir dengan nama ".$request->company;
+		$ket = "New user Indonesian Exporter with name ".$request->company;
 		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil2','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 		");
@@ -112,7 +112,7 @@ class RegistrasiController extends Controller
 			$insertpw = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 			('4','".$request->company."','".$id1."','Perwakilan','".$rq->id."','".$ket."','profil2','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 			");
-			$data3 = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => $rq->email];
+			$data3 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email];
 
                 Mail::send('UM.user.emailsuser', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);
@@ -122,7 +122,7 @@ class RegistrasiController extends Controller
 		}
 		
 			
-			$data = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => $request->email];
+			$data = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email];
 
                 Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
@@ -130,7 +130,7 @@ class RegistrasiController extends Controller
 
                 });
 			
-			$data2 = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => 'kementerianperdagangan.max@gmail.com'];
+			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => 'kementerianperdagangan.max@gmail.com'];
 
                 Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
                     $mail->to($data2['email'], $data2['username']);
@@ -167,33 +167,35 @@ class RegistrasiController extends Controller
 			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 		");
 		
-		//notif untuk perwakilan
-		$qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'");
-		// echo "select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'";die();
-		foreach($qr as $rq){
-			$insertpw = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('4','".$request->company."','".$id1."','Perwakilan','".$rq->id."','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
-			");
-			$data3 = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => $rq->email];
-
-                Mail::send('UM.user.emailsuser', $data3, function ($mail) use ($data3) {
-                    $mail->to($data3['email'], $data3['username']);
-                    $mail->subject('Notifikasi Aktifasi Akun');
-
-                });
-		}
+//		//notif untuk perwakilan
+//		$qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'");
+//		// echo "select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'";die();
+//		foreach($qr as $rq){
+//			$insertpw = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//			('4','".$request->company."','".$id1."','Perwakilan','".$rq->id."','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+//			");
+//			$data3 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email];
+//
+//                Mail::send('UM.user.emailsuser', $data3, function ($mail) use ($data3) {
+//                    $mail->to($data3['email'], $data3['username']);
+//                    $mail->subject('Notifikasi Aktifasi Akun');
+//
+//                });
+//		}
 		
 			
-			$data = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => $request->email, 'user' => 'exporter'];
+			$data = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email, 'user' => 'exporter', 'type'=> 'Indonesian Exporter'];
 
                 Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
                     $mail->subject('Notifikasi Aktifasi Akun');
 
                 });
-			$data2 = ['username' => $request->username, 'id2' => $id2, 'nama' => $request->company, 'password' => $request->password, 'email' => 'kementerianperdagangan.max@gmail.com'];
 
-                Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
+//			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => 'kementerianperdagangan.max@gmail.com'];
+			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => 'kementerianperdagangan.max@gmail.com','type'=> 'Indonesian Exporter'];
+
+                Mail::send('UM.user.emailsadmin', $data2, function ($mail) use ($data2) {
                     $mail->to($data2['email'], $data2['username']);
                     $mail->subject('Notifikasi Aktifasi Akun');
 
