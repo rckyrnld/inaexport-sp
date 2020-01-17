@@ -378,6 +378,7 @@ Route::namespace('Newsletter')->prefix('newsletter')->name('newsletter.')->group
     // Angga Start
     Route::get('/', 'NewsletterController@index')->name('index');
     Route::get('/getData', 'NewsletterController@getData')->name('getData');
+    // Route::get('/getDataCompany', 'NewsletterController@getDataCompany')->name('getDataCompany');
     Route::get('/create/', 'NewsletterController@create')->name('create');
     Route::get('/edit/{id}', 'NewsletterController@edit')->name('edit');
     Route::get('/view/{id}', 'NewsletterController@view')->name('view');
@@ -385,6 +386,7 @@ Route::namespace('Newsletter')->prefix('newsletter')->name('newsletter.')->group
     Route::get('/destroy/{id}', 'NewsletterController@destroy')->name('destroy');
     Route::post('/broadcast/', 'NewsletterController@broadcast')->name('broadcast');
     Route::get('/unsubscribe/{id}', 'NewsletterController@unsubscribe')->name('unsubscribe');
+    Route::post('/toggle/', 'NewsletterController@toggleCompany')->name('toggleCompany');
     // Angga End
 });
 Route::namespace('ResearchCorner')->group(function () {

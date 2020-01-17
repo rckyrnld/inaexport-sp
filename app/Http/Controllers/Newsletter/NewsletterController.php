@@ -21,9 +21,10 @@ class NewsletterController extends Controller
 
 	  public function index(){
       $pageTitle = 'Newsletter';
+      $comp = DB::table('itdp_company_users')->whereIn('newsletter', [1,2])->orderBy('email','asc')->get();
       if(isset(Auth::user()->id)){
         if(Auth::user()->id_group == 1)
-          return view('newsletter.index',compact('pageTitle'));
+          return view('newsletter.index',compact('pageTitle', 'comp'));
         else
           return redirect('/home');
       } else {
@@ -60,6 +61,32 @@ class NewsletterController extends Controller
             return $p;
           })
           ->rawColumns(['action','status'])
+          ->make(true);
+    }
+
+    public function getDataCompany()
+    {
+      $comp = DB::table('itdp_company_users')->whereIn('newsletter', [1,2])->orderBy('email','asc')->get();
+
+      return \Yajra\DataTables\DataTables::of($comp)
+          ->addIndexColumn()
+          ->addColumn('email', function ($data) {
+            // return '<div align="left">'.$data->email.'</div>';
+            return $data->email;
+          })
+          ->addColumn('company', function ($data) {
+            // return '<div align="left">'.getProfileCompany($data->id_profil).'</div>';
+            return getProfileCompany($data->id_profil);
+          })
+          ->addColumn('action', function ($data) {
+            if($data->status == 1){
+              $p = '<input type="checkbox" checked data-toggle="toggle" data-on="Publish" data-off="Hide" data-onstyle="info" data-offstyle="default" id="statusnya"><input type="hidden" name="status" id="status" value="1">';
+            } else {
+              $p = '<input type="checkbox" data-toggle="toggle" data-on="Publish" data-off="Hide" data-onstyle="info" data-offstyle="default" id="statusnya"><input type="hidden" name="status" id="status" value="2">';
+            }
+            return $p;
+          })
+          ->rawColumns(['action'])
           ->make(true);
     }
 
@@ -193,7 +220,7 @@ class NewsletterController extends Controller
     public function unsubscribe($lock_id)
     {
       $id = Crypt::decryptString($lock_id);
-      $data = DB::table('itdp_company_users')->where('id', $id)->update(['newsletter' => 0]);
+      $data = DB::table('itdp_company_users')->where('id', $id)->update(['newsletter' => 2]);
       if($data){
          $message = ['title' => 'You\'ve been unsubscribed.', 'body' => 'You will not get another newsletter. if you have any feedback or questions please contact us.'];
          return view('newsletter.unsubscribe', $message);
@@ -201,5 +228,19 @@ class NewsletterController extends Controller
          $message = ['title' => 'Unsubscribed Failed.', 'body' => 'Unsubscribe failed due to a data error. if you have any feedback or questions please contact us.'];
          return view('newsletter.unsubscribe', $message);
        }
+    }
+
+    public function toggleCompany(Request $req)
+    {
+      $pecah = explode('|', $req->id);
+      if($pecah[1] == 1){
+        $data = DB::table('itdp_company_users')->where('id', $pecah[0])->update(['newsletter' => 2]);
+      } else {
+        $data = DB::table('itdp_company_users')->where('id', $pecah[0])->update(['newsletter' => 1]);
+      }
+      if($data)
+        return 'Success';
+      else
+        return 'Failed';
     }
 }
