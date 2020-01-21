@@ -1137,7 +1137,8 @@ class InquiryAdminController extends Controller
                 'type' => "admin",
                 'sender' => getAdminName($sender),
                 'receiver' => getCompanyName($receiver),
-                'subjek' => $data->subyek_en
+                'subjek' => $data->subyek_en,
+                'id' => $id,
             ];
 
             Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
