@@ -137,7 +137,7 @@
                                                             <!--<a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>-->
                                                         <?php }else{ ?>
 								</a>
-														 <a data-toggle="modal" data-target="#myModal" class="btn btn-info" title="Broadcast"><i class="fa fa-bullhorn"></i></a>
+														 <a onclick="ihid(<?php echo $ed->id; ?>)" data-toggle="modal" data-target="#myModal" class="btn btn-info" title="Broadcast"><font color="white"><i class="fa fa-bullhorn"></i></font></a>
 														    
 														<a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><font color="white"><i class="fa fa-edit"></i></font></a>
 														<a onclick="return confirm('Are You Sure ?')" href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a>
@@ -177,13 +177,14 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
          
         </div>
-		<form id="formId" action="{{ url('uploadpop') }}" enctype="multipart/form-data" method="post">
+		<form id="formId" action="{{ url('event/bcevent') }}" enctype="multipart/form-data" method="post">
 		   {{ csrf_field() }}
         <div class="modal-body">
 		
 	<div class="form-row">
 		<div class="col-sm-12">
 		<p><center>Are you sure Broadcast this event ?</center></p>
+		<input type="hidden" id="idet" name="idet">
 		</div>
 		
 		
@@ -192,7 +193,7 @@
 		  
         </div>
         <div class="modal-footer">
-			<button type="submit" class="btn btn-warning" ><font color="white">Broadcast</font></button>
+			<button type="submit" class="btn btn-warning" ><font color="white">Broadcast</font></a>
 			<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div> 
 		</form>
@@ -202,6 +203,10 @@
 
 
 <script type="text/javascript">
+
+function ihid(x){
+	$('#idet').val(x);
+}
     function ConfirmDelete()
     {
         var x = confirm("Are you sure you want to delete?");

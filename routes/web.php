@@ -438,6 +438,7 @@ Route::namespace('Event')->prefix('event')->group(function () {
     Route::get('/comodity', 'EventController@comodity')->name('event.comodity');
     Route::get('/create', 'EventController@create');
     Route::post('/store', 'EventController@store');
+    Route::post('/bcevent', 'EventController@bcevent');
     Route::get('/edit/{id}', 'EventController@edit');
     Route::post('/update/{id}', 'EventController@update');
     Route::get('/delete/{id}', 'EventController@delete');

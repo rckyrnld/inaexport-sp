@@ -46,6 +46,8 @@ class EventController extends Controller
 		return view('Event.create', compact('pageTitle', 'url_store', 'page', 'e_organizer','e_palce','e_comodity','country'));
 	}
 
+	
+		
 	public function store(Request $req){
 		//admin
 		$datenow = date("Y-m-d H:i:s");
@@ -168,7 +170,7 @@ class EventController extends Controller
                 'id_type' => $id,
             ]);
           }
-		/*
+		
         for ($i=0; $i < count($req->id_prod_cat) ; $i++) { 
         	$var=$req->id_prod_cat[$i];
         	$idn=DB::table('event_detail_kategori')->max('id');
@@ -230,9 +232,77 @@ class EventController extends Controller
 	        }
 
         }
-		*/
+		
 
         return redirect('event')->with('success', 'Success Add Data!');
+	}
+	
+	public function bcevent(Request $req){
+		$udpate = DB::select("update event_detail set status_bc='1' where id='".$req->idet."'");
+		return redirect('event')->with('success', 'Success Broadcast Event!');
+		/*
+		for ($i=0; $i < count($req->id_prod_cat) ; $i++) { 
+        	$var=$req->id_prod_cat[$i];
+        	$idn=DB::table('event_detail_kategori')->max('id');
+        	if($idn){ $idn = $idn+1; } else { $idn = 1; }
+
+	        DB::table('event_detail_kategori')->insert([
+	        	'id' => $idn,
+	        	'id_event_detail'	=> $id,
+				'id_prod_cat'	=> $req->id_prod_cat[$i],
+	        	'created_at' => $datenow
+	        ]);
+
+	        $perusahaan = DB::table('csc_product_single')->where('id_itdp_company_user', '!=', null)
+                ->where(function ($query) use ($var) {
+                    $query->where('id_csc_product', $var)
+                          ->orWhere('id_csc_product_level1', $var)
+                          ->orWhere('id_csc_product_level2', $var);
+                   })
+                ->select('id_itdp_company_user')->distinct('id_itdp_company_user')->get();
+            foreach ($perusahaan as $key) {
+	          if (!in_array($key->id_itdp_company_user, $array)){
+	            array_push($array, $key->id_itdp_company_user);
+	          }
+	        }
+
+	        sort($array);
+	        for ($user=0; $user < count($array) ; $user++) {
+	        	$pengirim = DB::table('itdp_admin_users')->where('id',$id_user)->first();
+	        	$account_penerima = DB::table('itdp_company_users')->where('id',$array[$user])->first();
+				if(count($account_penerima) != 0){
+	        	$profile_penerima = DB::table('itdp_profil_eks')->where('id',$account_penerima->id_profil)->first();
+                if($profile_penerima){
+    	        	$notif = DB::table('notif')->insert([
+    		            'dari_nama' => $pengirim->name,
+    		            'dari_id' => $pengirim->id,
+    		            'untuk_nama' => $profile_penerima->company,
+    		            'untuk_id' => $array[$user],
+    		            'keterangan' => 'New Event from '.$pengirim->name.' with Title  "'.$req->eventname_en.'"',
+    		            'url_terkait' => 'event/show/read',
+    		            'status_baca' => 0,
+    		            'waktu' => date('Y-m-d H:i:s'),
+    		            'id_terkait' => $id,
+    		            'to_role' => 2
+    		        ]);
+                }
+
+                $data = [
+                    'email' => $profile_penerima->email,
+                    'company' =>$profile_penerima->company,
+                    'pengirim' => $pengirim->name,
+                ];
+
+                Mail::send('Event.mail.emailaddevent', $data, function ($mail) use ($data) {
+                    $mail->to($data['email']);
+                    $mail->subject('Event Baru');
+                });
+				}
+				
+	        }
+
+        }
+		*/
 	}
 
 	public function edit($id){

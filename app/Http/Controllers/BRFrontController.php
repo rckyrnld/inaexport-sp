@@ -199,7 +199,7 @@ class BRFrontController extends Controller
 		
 		$data33 = [
             'email' => "",
-            'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+            'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
             'username' => Auth::guard('eksmp')->user()->username,
             'main_messages' => Auth::guard('eksmp')->user()->username,
             'id' => $id,

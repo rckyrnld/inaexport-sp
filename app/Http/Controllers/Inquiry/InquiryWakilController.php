@@ -460,7 +460,7 @@ class InquiryWakilController extends Controller
                 //Notif ke Admin
                 $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
                 $users_admin = [];
-                array_push($users_admin, env('MAIL_USERNAME','admin@inaexport.id'));
+                array_push($users_admin, env('MAIL_USERNAME','no-reply@inaexport.id'));
                 foreach ($admin as $adm) {
                     array_push($users_admin, $adm->email);
                 }

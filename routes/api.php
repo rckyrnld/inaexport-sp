@@ -40,6 +40,9 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 
     Route::post('getDetailVerifikasiEksportir', 'Api\Admin\ManagementController@detailVerifikasiEksportir');
     Route::post('submitVerifikasiEksportir', 'Api\Admin\ManagementController@submitVerifikasiEksportir');
+	
+	//Buying Request
+	Route::post('list_br_admin', 'Api\Admin\ManagementController@list_br_admin');
 
 });
 

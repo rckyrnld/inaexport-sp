@@ -434,5 +434,94 @@ class ManagementController extends Controller
         $res['data'] = $data;
         return response($res);
     }
+	
+	public function list_br_admin(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request order by id desc ");
+		//echo count($buy);die();
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($buy); $i++) {
+            
+            $jsonResult[$i]["row"] = $buy[$i]->row;
+            $jsonResult[$i]["id"] = $buy[$i]->id;
+            $jsonResult[$i]["id_mst_country"] = $buy[$i]->id_mst_country;
+            $jsonResult[$i]["id_csc_prod_cat"] = $buy[$i]->id_csc_prod_cat;
+            $jsonResult[$i]["id_csc_prod_cat_level1"] = $buy[$i]->id_csc_prod_cat_level1;
+            $jsonResult[$i]["id_csc_prod_cat_level2"] = $buy[$i]->id_csc_prod_cat_level2;
+            $jsonResult[$i]["jenis_perihal_en"] = $buy[$i]->jenis_perihal_en;
+            $jsonResult[$i]["subyek"] = $buy[$i]->subyek;
+            $jsonResult[$i]["message"] = $buy[$i]->message;
+            $jsonResult[$i]["files"] = $buy[$i]->files;
+            $jsonResult[$i]["message_answer"] = $buy[$i]->message_answer;
+            $jsonResult[$i]["file_answer"] = $buy[$i]->file_answer;
+            $jsonResult[$i]["date"] = $buy[$i]->date;
+            $jsonResult[$i]["st_approve"] = $buy[$i]->st_approve;
+            $jsonResult[$i]["date_approve"] = $buy[$i]->date_approve;
+            $jsonResult[$i]["date_answer"] = $buy[$i]->date_answer;
+            $jsonResult[$i]["by_role"] = $buy[$i]->by_role;
+            $jsonResult[$i]["id_pembuat"] = $buy[$i]->id_pembuat;
+            $jsonResult[$i]["city"] = $buy[$i]->city;
+            $jsonResult[$i]["shipping"] = $buy[$i]->shipping;
+            $jsonResult[$i]["spec"] = $buy[$i]->spec;
+            $jsonResult[$i]["eo"] = $buy[$i]->eo;
+            $jsonResult[$i]["neo"] = $buy[$i]->neo;
+            $jsonResult[$i]["tp"] = $buy[$i]->tp;
+            $jsonResult[$i]["ntp"] = $buy[$i]->ntp;
+            $jsonResult[$i]["valid"] = $buy[$i]->valid;
+            if ($buy[$i]->valid == 0) {
+                $jsonResult[$i]["valid_desc"] = 'No Limit';
+            } else {
+                $jsonResult[$i]["valid_desc"] = 'Valid ' . $buy[$i]->valid . " days";
+            }
+            $jsonResult[$i]["status"] = $buy[$i]->status;
+            if ($buy[$i]->status == null || $buy[$i]->status == 0 || empty($buy[$i]->status) || $buy[$i]->status == 1) {
+                $jsonResult[$i]["status_desc"] = "Negosiation";
+            } else if ($buy[$i]->status == 4) {
+                $jsonResult[$i]["status_desc"] = "Deal";
+            }
+            $jsonResult[$i]["jenis_perihal_in"] = $buy[$i]->jenis_perihal_in;
+            $jsonResult[$i]["jenis_perihal_chn"] = $buy[$i]->jenis_perihal_chn;
+            $jsonResult[$i]["message_perihal_en"] = $buy[$i]->message_perihal_en;
+            $jsonResult[$i]["message_perihal_in"] = $buy[$i]->message_perihal_in;
+            $jsonResult[$i]["message_perihal_chn"] = $buy[$i]->message_perihal_chn;
+            $jsonResult[$i]["subyek_en"] = $buy[$i]->subyek_en;
+            $jsonResult[$i]["subyek_in"] = $buy[$i]->subyek_in;
+            $jsonResult[$i]["subyek_chn"] = $buy[$i]->subyek_chn;
+            $jsonResult[$i]["deal"] = $buy[$i]->deal;
+            $jsonResult[$i]["id_csc_prod"] = $buy[$i]->id_csc_prod;
+            $jsonResult[$i]["type_tracking"] = $buy[$i]->type_tracking;
+            $jsonResult[$i]["no_track"] = $buy[$i]->no_track;
+            $jsonResult[$i]["status_trx"] = $buy[$i]->status_trx;
+            $id_csc = explode(",", $buy[$i]->id_csc_prod);
+		}
+
+
+        if ($buy) {
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $jsonResult;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+
+    
+	}
 
 }

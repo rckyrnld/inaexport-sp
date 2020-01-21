@@ -824,7 +824,7 @@ class InquiryAdminController extends Controller
 
                 $users_admin = [];
                 $adminnya = DB::table('itdp_admin_users')->where('id', $id_user)->first();
-                array_push($users_admin, env('MAIL_USERNAME','admin@inaexport.id'));
+                array_push($users_admin, env('MAIL_USERNAME','no-reply@inaexport.id'));
 
                 //Notif email ke admin
 //                $dataadmin = [
