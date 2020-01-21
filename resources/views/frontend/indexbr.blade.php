@@ -112,7 +112,7 @@ if ($loc == "ch") {
                                     <?php
                                     $ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
                                     ?>
-                                    <select style="color:black;font-size:12px;" class="form-control select2 col-sm-11" multiple name="category[]"
+                                    <select style="color:black;font-size:12px;" class="form-control select2 col-sm-11" name="category[]"
                                             id="category" onchange="t1()" required>
                                         <option value="">@lang("login.forms.by11")</option>
                                         <?php foreach($ms1 as $val1){ ?>

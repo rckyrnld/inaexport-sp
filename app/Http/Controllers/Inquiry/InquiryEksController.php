@@ -48,7 +48,7 @@ class InquiryEksController extends Controller
                     ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
                     ->where('csc_inquiry_br.status', 1)
-                    ->orderBy('csc_inquiry_br.created_at', 'DESC')
+                    ->orderBy('csc_inquiry_br.date', 'DESC')
                     ->get();
 //                dd($importir);
                 foreach ($importer as $key) {
@@ -72,7 +72,7 @@ class InquiryEksController extends Controller
                     ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
                     ->where('csc_inquiry_br.status', '!=', 1)
-                    ->orderBy('csc_inquiry_br.created_at', 'DESC')
+                    ->orderBy('csc_inquiry_br.date', 'DESC')
                     ->get();
                 foreach ($importer as $key) {
                     array_push($user, $key);

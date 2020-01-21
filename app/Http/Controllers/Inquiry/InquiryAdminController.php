@@ -43,7 +43,7 @@ class InquiryAdminController extends Controller
             $user = DB::table('csc_inquiry_br')
                 ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
                 ->where('type', 'admin')
-                ->orderBy('csc_inquiry_br.created_at', 'DESC')
+                ->orderBy('csc_inquiry_br.date', 'DESC')
                 ->get();
 
             return \Yajra\DataTables\DataTables::of($user)
@@ -845,7 +845,7 @@ class InquiryAdminController extends Controller
 
                 $users_admin = [];
                 $adminnya = DB::table('itdp_admin_users')->where('id', $id_user)->first();
-                array_push($users_admin, env('MAIL_USERNAME','admin@inaexport.id'));
+                array_push($users_admin, env('MAIL_USERNAME','no-reply@inaexport.id'));
 
                 //Notif email ke admin
 //                $dataadmin = [

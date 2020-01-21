@@ -396,6 +396,7 @@ class BuyingRequestController extends Controller
                 }
 
 
+
 //                $data22 = [
 //                    'email' => "",
 //                    'email1' => Auth::guard('eksmp')->user()->email,
@@ -419,6 +420,19 @@ class BuyingRequestController extends Controller
 //                    $mail->to($data33['email1'], $data33['username']);
 //                    $mail->subject('Ekportir Respond Chat On Buying Request');
 //                });
+
+//                $data33 = [
+//                    'email' => "",
+//                    'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
+//                    'username' => Auth::guard('eksmp')->user()->username,
+//                    'main_messages' => "",
+//                    'id' => $id6
+//                ];
+//                Mail::send('UM.user.sendbrchateks3', $data33, function ($mail) use ($data33) {
+//                    $mail->to($data33['email1'], $data33['username']);
+//                    $mail->subject('Ekportir Respond Chat On Buying Request');
+//                });
+
 
 
             } else if (Auth::guard('eksmp')->user()->id_role == 3) {
@@ -467,8 +481,9 @@ class BuyingRequestController extends Controller
 
                 $data33 = [
                     'email' => "",
-                    'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+                    'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
                     'username' => $company->company ,
+
                     'main_messages' => "",
                     'id' => $id6,
                     'bu' => $company->badanusaha,
@@ -789,12 +804,12 @@ class BuyingRequestController extends Controller
                     $mail->subject('Exporter Join to Your Buying Request');
                 });
 
+
 //            $data33 = [
 //                'email' => "",
-//                'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+//                'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
 //                'username' => Auth::guard('eksmp')->user()->username,
 //                'main_messages' => "",
-//                'receiver' =>"Admin" ,
 //                'id' => $data2
 //            ];
 //            Mail::send('UM.user.sendbrjoin3', $data33, function ($mail) use ($data33) {
@@ -802,7 +817,7 @@ class BuyingRequestController extends Controller
 //                $mail->subject('Exporter Join to Buying Request');
 //            });
 
-            } else if ($data5 == 1) {
+                    } else if ($data5 == 1) {
                 $ket = $datacompany->company . " Join to your Buying Request";
                 $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
                 ('1','".$datacompany->company."','" . Auth::guard('eksmp')->user()->id . "','Super Admin','1','" . $ket . "','br_pw_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
@@ -810,7 +825,7 @@ class BuyingRequestController extends Controller
 
                 $data = [
                     'email' => "",
-                    'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+                    'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
                     'username' => $datacompany->company,
                     'main_messages' => "",
                     'receiver' => "Admin",

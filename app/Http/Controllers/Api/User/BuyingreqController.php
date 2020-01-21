@@ -640,7 +640,7 @@ class BuyingreqController extends Controller
 
         $data33 = [
             'email' => "",
-            'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+            'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
             'username' => $getusernameeks,
             'main_messages' => "",
             'id' => $data2
@@ -797,7 +797,7 @@ class BuyingreqController extends Controller
 
         $data33 = [
             'email' => "",
-            'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+            'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
             'username' => $getusernameimp,
             'main_messages' => $getusernameimp,
             'id' => $id,
@@ -1037,7 +1037,7 @@ class BuyingreqController extends Controller
 
             $data33 = [
                 'email' => "",
-                'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+                'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
                 'username' => $id5,
                 'main_messages' => "",
                 'id' => $id6
@@ -1094,7 +1094,7 @@ class BuyingreqController extends Controller
 
             $data33 = [
                 'email' => "",
-                'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+                'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
                 'username' => $id5,
                 'main_messages' => "",
                 'id' => $id6
@@ -1346,7 +1346,7 @@ class BuyingreqController extends Controller
 
             $data33 = [
                 'email' => "",
-                'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+                'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
                 'username' => $id5,
                 'main_messages' => "",
                 'id' => $id6
@@ -1403,7 +1403,7 @@ class BuyingreqController extends Controller
 
             $data33 = [
                 'email' => "",
-                'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+                'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
                 'username' => $id5,
                 'main_messages' => "",
                 'id' => $id6
