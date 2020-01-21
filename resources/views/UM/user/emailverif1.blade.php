@@ -9,7 +9,7 @@
 {{--        </ol>--}}
 {{--        <p style="text-align: left;">click <a href="{{url('login/')}}">here</a> for check and login.</p>--}}
         <p style="text-align: left">Dear {{$company}},</p>
-        <p style="text-align: left">this account has been activated by super admin, so you can use Indonesian Trade Digital Promotion.</p>
+        <p style="text-align: left">this account has been activated by {{$by}}, so you can use Indonesian Trade Digital Promotion.</p>
 
         <p style="text-align: left">Thanks</p>
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >

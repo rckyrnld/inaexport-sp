@@ -370,7 +370,7 @@ foreach($q2 as $p2){
 </div>
 </center>
 <div align="right"><br><br>
-<a href="{{url('br_list')}}" class="btn btn-danger"><font color="white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-left "></i> Kembali&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></a>
+<a href="{{url('br_list')}}" class="btn btn-danger"><font color="white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-left "></i> Back&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></a>
 </div>
 <!--
 <a href="{{ url('br_save_join/'.$id) }}" class="btn btn-md btn-primary"><i class="fa fa-comment"></i> Chat</a>

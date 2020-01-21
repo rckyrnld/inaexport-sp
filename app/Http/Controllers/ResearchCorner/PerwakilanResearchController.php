@@ -228,6 +228,7 @@ class PerwakilanResearchController extends Controller
               $data = [
                   'email' => $account_penerima->email,
                   'username' => $profile_penerima->company,
+                  'bu' => $profile_penerima->badanusaha,
                   'judul' => $req->title_en,
               ];
 

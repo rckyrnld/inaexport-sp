@@ -551,26 +551,28 @@ class VerifyuserController extends Controller
 			
 		}
 		if($request->staim == 1){
-			$data3 = ['username' => $request->username, 'id2' => 0, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email];
+            if(auth::user()) {
+                $data3 = ['username' => $request->username, 'id2' => 0, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email, 'by' => auth::user()->name];
 //			dd($data3);
                 Mail::send('UM.user.emailverif1', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);
                     $mail->subject('Your Account Was Verifed');
 
                 });
-            $date = date('Y-m-d H:i:s');
-            $notif = DB::table('notif')->insert([
-                'dari_nama' =>auth::user()->name,
-                'dari_id' => auth::id(),
-                'untuk_nama' => $request->company,
-                'untuk_id' => $id_user,
-                'keterangan' => 'Your account is verified by "'.auth::user()->name.'"',
-                'url_terkait' => 'profil/2',
-                'status_baca' => 0,
-                'waktu' => $date,
-                'id_terkait' => $id_user,
-                'to_role' => $id_role,
-            ]);
+                $date = date('Y-m-d H:i:s');
+                $notif = DB::table('notif')->insert([
+                    'dari_nama' =>auth::user()->name,
+                    'dari_id' => auth::id(),
+                    'untuk_nama' => $request->company,
+                    'untuk_id' => $id_user,
+                    'keterangan' => 'Your account is verified by "'.auth::user()->name.'"',
+                    'url_terkait' => 'profil/2',
+                    'status_baca' => 0,
+                    'waktu' => $date,
+                    'id_terkait' => $id_user,
+                    'to_role' => $id_role,
+                ]);
+            }
 		}
 		//UPDATE TAB 2
 		if($id_role == 2){
@@ -631,25 +633,27 @@ class VerifyuserController extends Controller
 			
 		}
 		if($request->staim == 1){
-			$data3 = ['username' => $request->username, 'id2' => 0, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email];
+		    if(auth::user()){
+                $data3 = ['username' => $request->username, 'id2' => 0, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email, 'by' => auth::user()->name];
 
                 Mail::send('UM.user.emailverif2', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);
                     $mail->subject('Your Account Was Verifed');
 
                 });
-            $notif = DB::table('notif')->insert([
-                'dari_nama' =>auth::user()->name,
-                'dari_id' => auth::id(),
-                'untuk_nama' => $request->company,
-                'untuk_id' => $id_user,
-                'keterangan' => 'Your account is verified by "'.auth::user()->name.'"',
-                'url_terkait' => 'profil2/3',
-                'status_baca' => 0,
-                'waktu' => $date,
-                'id_terkait' => $id_user,
-                'to_role' => $id_role,
-            ]);
+                $notif = DB::table('notif')->insert([
+                    'dari_nama' =>auth::user()->name,
+                    'dari_id' => auth::id(),
+                    'untuk_nama' => $request->company,
+                    'untuk_id' => $id_user,
+                    'keterangan' => 'Your account is verified by "'.auth::user()->name.'"',
+                    'url_terkait' => 'profil2/3',
+                    'status_baca' => 0,
+                    'waktu' => $date,
+                    'id_terkait' => $id_user,
+                    'to_role' => $id_role,
+                ]);
+            }
 		}
 		//UPDATE TAB 2
 		$updatetab2 = DB::select("update itdp_profil_imp set company='".$request->company."', addres='".$request->addres."', city='".$request->city."' ,email='".$request->email."'

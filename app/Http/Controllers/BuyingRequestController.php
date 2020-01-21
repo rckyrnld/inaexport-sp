@@ -300,13 +300,13 @@ class BuyingRequestController extends Controller
 
     public function br_pw_lc($id)
     {
-        $pageTitle = "List Chat Request Representative";
+        $pageTitle = "List Chat Buying Request ";
         return view('buying-request.lc', compact('id', 'pageTitle'));
     }
 
     public function br_pw_dt($id)
     {
-        $pageTitle = "List Chat Request Representative";
+        $pageTitle = "List Chat Buying Request Request";
         return view('buying-request.dt', compact('id', 'pageTitle'));
     }
 
@@ -324,63 +324,115 @@ class BuyingRequestController extends Controller
 			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join) values
 			('" . $id2 . "','" . $a . "','" . Date('Y-m-d H:i:s') . "','" . $id4 . "','" . $id3 . "','" . $id5 . "','" . $id6 . "')");
         $cari = DB::select("select * from csc_buying_request where id='" . $id2 . "'");
+//        dd($cari);
         foreach ($cari as $aja) {
             $data1 = $aja->id_pembuat;
         }
-        $cari2 = DB::select("select * from itdp_company_users where id='" . $data1 . "'");
-        foreach ($cari2 as $aja2) {
-            $data2 = $aja2->email;
+        //di representative gak dipake, gak tau di importer
+//        $cari2 = DB::select("select * from itdp_company_users where id='" . $data1 . "'");
+//        foreach ($cari2 as $aja2) {
+//            $data2 = $aja2->email;
+//        }
+        $cari3 = DB::select("select * from itdp_admin_users where id='" . $data1 . "'");
+
+        foreach ($cari3 as $aja3) {
+            $data3 = $aja3->email;
+            $data4 = $aja3->name;
+            $data5 = $aja3->id_group;
         }
 
-
         if (empty(Auth::user()->name)) {
+//            dd();
+            if(Auth::guard('eksmp')->user()->id_profil){
+                $company = DB::table('itdp_profil_eks')->where('id', Auth::guard('eksmp')->user()->id_profil)->first();
+            }
             if (Auth::guard('eksmp')->user()->id_role == 2) {
-                $ket = "Eksportir " . Auth::guard('eksmp')->user()->username . " Respond Chat Buying Request !";
-                $it = $id2 . "/" . $id6;
-                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('3','Eksportir','" . Auth::guard('eksmp')->user()->id . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:i:s') . "','0')
-		");
+                if($data5 == 1){
+                   //pembuat buying requestnya admin
+                    $ket = "Exporter " . $company->company . " Respond Chat Buying Request";
+                    //  $it = $id2 . "/" . $id6;
+                    //notif app untuk pembuat buying request
+                    $ket2 = "Exporter " . $company->company  . " Respond Chat Buying Request";
+                    $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+                    ('1','".$company->company ."','" . Auth::guard('eksmp')->user()->id . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:i:s') . "','0')
+                    ");
+                    //notif email untuk pembuat buying request.
+                    $data = [
+                        'email' => "",
+                        'email1' => $data3,
+                        'username' => $company->company ,
+                        'main_messages' => "",
+                        'receiver' => $data4,
+//                    'id' => $it
+                        'id' => $id6,
+                    ];
+                    Mail::send('UM.user.sendbrchateks', $data, function ($mail) use ($data) {
+                        $mail->to($data['email1'], $data['username']);
+                        $mail->subject('Exporter Respond Chat On Buying Request');
+                    });
+                }
+                else if($data5 == 4){
+                    //pembuat buying requestnya representative
+                    $ket = "Exporter " . $company->company  . " Respond Chat Buying Request";
+//                $it = $id2 . "/" . $id6;
+                    //notif app untuk pembuat buying request
+                    $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+                    ('4','".$company->company ."','" . Auth::guard('eksmp')->user()->id . "','".$data4."','" . $data1 . "','" . $ket . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:i:s') . "','0')
+                    ");
+                    //notif email untuk pembuat buying request.
+                    $data = [
+                        'email' => "",
+                        'email1' => $data3,
+                        'username' => $company->company ,
+                        'main_messages' => "",
+                        'receiver' => $data4,
+//                    'id' => $it
+                        'id' => $id6,
+                    ];
+                    Mail::send('UM.user.sendbrchateks', $data, function ($mail) use ($data) {
+                        $mail->to($data['email1'], $data['username']);
+                        $mail->subject('Exporter Respond Chat On Buying Request');
+                    });
+                }
 
-                $ket2 = "Eksportir " . Auth::guard('eksmp')->user()->username . " Respond Chat Buying Request !";
-                $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('1','Eksportir','" . Auth::guard('eksmp')->user()->id . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:i:s') . "','0')
-		");
 
-                $data = [
-                    'email' => "",
-                    'email1' => $data2,
-                    'username' => Auth::guard('eksmp')->user()->username,
-                    'main_messages' => "",
-                    'id' => $it
-                ];
-                Mail::send('UM.user.sendbrchateks', $data, function ($mail) use ($data) {
-                    $mail->to($data['email1'], $data['username']);
-                    $mail->subject('Eksportir Respond Chat On Buying Request');
-                });
 
-                $data22 = [
-                    'email' => "",
-                    'email1' => Auth::guard('eksmp')->user()->email,
-                    'username' => Auth::guard('eksmp')->user()->username,
-                    'main_messages' => "",
-                    'id' => $id6
-                ];
-                Mail::send('UM.user.sendbrchateks2', $data22, function ($mail) use ($data22) {
-                    $mail->to($data22['email1'], $data22['username']);
-                    $mail->subject('You Was Respond Chat On Buying Request');
-                });
+//                $data22 = [
+//                    'email' => "",
+//                    'email1' => Auth::guard('eksmp')->user()->email,
+//                    'username' => Auth::guard('eksmp')->user()->username,
+//                    'main_messages' => "",
+//                    'id' => $id6
+//                ];
+//                Mail::send('UM.user.sendbrchateks2', $data22, function ($mail) use ($data22) {
+//                    $mail->to($data22['email1'], $data22['username']);
+//                    $mail->subject('You Was Respond Chat On Buying Request');
+//                });
 
-                $data33 = [
-                    'email' => "",
-                    'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
-                    'username' => Auth::guard('eksmp')->user()->username,
-                    'main_messages' => "",
-                    'id' => $id6
-                ];
-                Mail::send('UM.user.sendbrchateks3', $data33, function ($mail) use ($data33) {
-                    $mail->to($data33['email1'], $data33['username']);
-                    $mail->subject('Ekportir Respond Chat On Buying Request');
-                });
+//                $data33 = [
+//                    'email' => "",
+//                    'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+//                    'username' => Auth::guard('eksmp')->user()->username,
+//                    'main_messages' => "",
+//                    'id' => $id6
+//                ];
+//                Mail::send('UM.user.sendbrchateks3', $data33, function ($mail) use ($data33) {
+//                    $mail->to($data33['email1'], $data33['username']);
+//                    $mail->subject('Ekportir Respond Chat On Buying Request');
+//                });
+
+//                $data33 = [
+//                    'email' => "",
+//                    'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
+//                    'username' => Auth::guard('eksmp')->user()->username,
+//                    'main_messages' => "",
+//                    'id' => $id6
+//                ];
+//                Mail::send('UM.user.sendbrchateks3', $data33, function ($mail) use ($data33) {
+//                    $mail->to($data33['email1'], $data33['username']);
+//                    $mail->subject('Ekportir Respond Chat On Buying Request');
+//                });
+
 
 
             } else if (Auth::guard('eksmp')->user()->id_role == 3) {
@@ -392,21 +444,21 @@ class BuyingRequestController extends Controller
                 foreach ($cari4 as $aja4) {
                     $data4 = $aja4->email;
                 }
-                $ket = "Importir " . Auth::guard('eksmp')->user()->username . " Respond Chat Buying Request !";
+                $ket = "Importer " . $company->company  . " Respond Chat Buying Request";
                 $it = $id2 . "/" . $id6;
                 $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('2','Importir','" . Auth::guard('eksmp')->user()->id . "','Eksportir','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
-		");
+                ('2','".$company->company ."','" . Auth::guard('eksmp')->user()->id . "','Eksportir','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+                ");
 
-                $ket2 = "Importir " . Auth::guard('eksmp')->user()->username . " Respond Chat Buying Request !";
+                $ket2 = "Importer " . Auth::guard('eksmp')->user()->username . " Respond Chat Buying Request";
                 $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('1','Importir','" . Auth::guard('eksmp')->user()->id . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
-		");
+                ('1','".$company->company ."','" . Auth::guard('eksmp')->user()->id . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+                ");
 
                 $data = [
                     'email' => "",
                     'email1' => $data4,
-                    'username' => Auth::guard('eksmp')->user()->username,
+                    'username' => $company->company ,
                     'main_messages' => "",
                     'id' => $id6
                 ];
@@ -418,7 +470,7 @@ class BuyingRequestController extends Controller
                 $data22 = [
                     'email' => "",
                     'email1' => Auth::guard('eksmp')->user()->email,
-                    'username' => Auth::guard('eksmp')->user()->username,
+                    'username' => $company->company ,
                     'main_messages' => "",
                     'id' => $it
                 ];
@@ -430,9 +482,11 @@ class BuyingRequestController extends Controller
                 $data33 = [
                     'email' => "",
                     'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
-                    'username' => Auth::guard('eksmp')->user()->username,
+                    'username' => $company->company ,
+
                     'main_messages' => "",
-                    'id' => $id6
+                    'id' => $id6,
+                    'bu' => $company->badanusaha,
                 ];
                 Mail::send('UM.user.sendbrchateks3', $data33, function ($mail) use ($data33) {
                     $mail->to($data33['email1'], $data33['username']);
@@ -450,25 +504,29 @@ class BuyingRequestController extends Controller
                 $cari4 = DB::select("select * from itdp_company_users where id='" . $data3 . "'");
                 foreach ($cari4 as $aja4) {
                     $data4 = $aja4->email;
+                    $data5 = $aja4->id_profil;
                 }
+                $company = DB::table('itdp_profil_eks')->where('id', $data5)->first();
 
-                $ket = "Super Admin Respond Chat Buying Request !";
+                $ket = "Super Admin Respond Chat Buying Request";
                 $it = $id2 . "/" . $id6;
                 $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
 				('2','Super Admin','1','Eksportir','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
 				");
 
-                $ket2 = "You Had Respond Chat Buying Request !";
-                $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-				('1','Super Admin','1','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
-				");
+//                $ket2 = "You Had Respond Chat Buying Request !";
+//                $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//				('1','Super Admin','1','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+//				");
 
                 $data = [
                     'email' => "",
                     'email1' => $data4,
                     'username' => "",
                     'main_messages' => "",
-                    'id' => $id6
+                    'id' => $id6,
+                    'receiver' => $company->company,
+                    'bu' => $company->badanusaha,
                 ];
                 Mail::send('UM.user.sendbrchatimp', $data, function ($mail) use ($data) {
                     $mail->to($data['email1'], $data['username']);
@@ -476,19 +534,59 @@ class BuyingRequestController extends Controller
                 });
 
 
-                $data33 = [
+//                $data33 = [
+//                    'email' => "",
+//                    'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+//                    'username' => "",
+//                    'main_messages' => "",
+//                    'id' => $id6
+//                ];
+//                Mail::send('UM.user.sendbrchateks3', $data33, function ($mail) use ($data33) {
+//                    $mail->to($data33['email1'], $data33['username']);
+//                    $mail->subject('You Respond Chat On Buying Request');
+//                });
+
+
+            }
+            elseif (Auth::user()->id_group == 4){
+//                dd('b');
+                $cari3 = DB::select("select * from csc_buying_request_join where id='" . $id6 . "'");
+                foreach ($cari3 as $aja3) {
+                    $data3 = $aja3->id_eks;
+                }
+
+                $cari4 = DB::select("select * from itdp_company_users where id='" . $data3 . "'");
+//                dd($cari4);
+                foreach ($cari4 as $aja4) {
+                    $data4 = $aja4->email;
+                    $data5 = $aja4 ->id_profil;
+                }
+                $company = DB::table('itdp_profil_eks')->where('id', $data5)->first();
+
+                $ket = Auth::user()->name." Respond Chat Buying Request";
+                $it = $id2 . "/" . $id6;
+                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+				('2','Super Admin','1','".Auth::user()->name."','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+				");
+
+//                $ket2 = "You Had Respond Chat Buying Request !";
+//                $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//				('1','Super Admin','1','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+//				");
+//                dd();
+                $data = [
                     'email' => "",
-                    'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
-                    'username' => "",
+                    'email1' => $data4,
+                    'username' => Auth::user()->name,
                     'main_messages' => "",
-                    'id' => $id6
+                    'receiver' => $company->company,
+                    'id' => $id6,
+                    'bu' => $company->badanusaha,
                 ];
-                Mail::send('UM.user.sendbrchateks3', $data33, function ($mail) use ($data33) {
-                    $mail->to($data33['email1'], $data33['username']);
-                    $mail->subject('You Respond Chat On Buying Request');
+                Mail::send('UM.user.sendbrchatimp', $data, function ($mail) use ($data) {
+                    $mail->to($data['email1'], $data['username']);
+                    $mail->subject('Representative Respond Chat On Buying Request');
                 });
-
-
             }
         }
 
@@ -509,6 +607,7 @@ class BuyingRequestController extends Controller
 
     public function br_deal($id, $id2, $id3)
     {
+        //notif ke admin dan pembuat buying request saat eskporter deal buying request
         date_default_timezone_set('Asia/Jakarta');
         $cari1 = DB::select("select id_pembuat,by_role from csc_buying_request where id='" . $id2 . "'");
         foreach ($cari1 as $aja1) {
@@ -519,53 +618,86 @@ class BuyingRequestController extends Controller
         foreach ($cari2 as $aja2) {
             $data2 = $aja2->email;
         }
+        $cari3 = DB::select("select name,email from itdp_admin_users where id='" . $data1 . "'");
+        foreach ($cari3 as $aja2a) {
+            $data2email = $aja2a->email;
+            $data2name = $aja2a->name;
+        }
+//        dd($id2);
 
-        $ket = Auth::guard('eksmp')->user()->username . " Deal Buying Request!";
         $it = $id2 . "/" . $id;
-        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('3','Eksportir','" . Auth::guard('eksmp')->user()->id . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
-		");
-
-        $ket2 = Auth::guard('eksmp')->user()->username . " Deal Buying Request!";
-        $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('1','Eksportir','" . Auth::guard('eksmp')->user()->id . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id . "','" . Date('Y-m-d H:m:s') . "','0')
-		");
-
+//        dd('a');
+//        dd(Auth::guard('eksmp')->user()->id_profil);
+        if(Auth::guard('eksmp')->user()->id_profil){
+            $company = DB::table('itdp_profil_eks')->where('id', Auth::guard('eksmp')->user()->id_profil)->first();
+        }
         if ($data3 == 3) {
+            $ket = $company->company. " Deal Buying Request";
+            $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+            ('3','Eksportir','" . Auth::guard('eksmp')->user()->id . "','Importir','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . Date('Y-m-d H:m:s') . "','0')
+            ");
             $data = [
                 'email' => "",
                 'email1' => $data2,
-                'username' => Auth::guard('eksmp')->user()->username,
+                'username' => $company->company,
                 'main_messages' => "",
+                'receiver' =>"importer",
                 'id' => $it
             ];
             Mail::send('UM.user.sendbrdeal', $data, function ($mail) use ($data) {
                 $mail->to($data['email1'], $data['username']);
-                $mail->subject('Eksportir Deal Buying Request');
+                $mail->subject('Exporter Deal Buying Request');
             });
         }
-        $data22 = [
-            'email' => "",
-            'email1' => Auth::guard('eksmp')->user()->email,
-            'username' => Auth::guard('eksmp')->user()->username,
-            'main_messages' => "",
-            'id' => $id
-        ];
-        Mail::send('UM.user.sendbrdeal2', $data22, function ($mail) use ($data22) {
-            $mail->to($data22['email1'], $data22['username']);
-            $mail->subject('You Was Deal Buying Request');
-        });
+        else if($data3 == 4){
+//            dd('b');
+            //notif untuk representative
+            $ket = $company->company . " Deal Buying Request";
+            $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+            ('4','Eksportir','" . Auth::guard('eksmp')->user()->id . "','".$data2name."','" . $data1 . "','" . $ket . "','br_pw_chat','" . $id . "','" . Date('Y-m-d H:m:s') . "','0')
+            ");
+            $data = [
+                'email' => "",
+                'email1' => $data2email,
+                'username' => $company->company,
+                'main_messages' => "",
+                'receiver' => "$data2name",
+                'id' => $id
+            ];
+            Mail::send('UM.user.sendbrdeal', $data, function ($mail) use ($data) {
+                $mail->to($data['email1'], $data['username']);
+                $mail->subject('Exporter Deal Buying Request');
+            });
+        }
+//        dd('c');
+//        $data22 = [
+//            'email' => "",
+//            'email1' => Auth::guard('eksmp')->user()->email,
+//            'username' => Auth::guard('eksmp')->user()->username,
+//            'main_messages' => "",
+//            'id' => $id
+//        ];
+//        Mail::send('UM.user.sendbrdeal2', $data22, function ($mail) use ($data22) {
+//            $mail->to($data22['email1'], $data22['username']);
+//            $mail->subject('You Was Deal Buying Request');
+//        });
+
+        $ket2 = $company->company . " Deal Buying Request";
+        $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+		('1','".$company->company."','" . Auth::guard('eksmp')->user()->id . "','Super Admin','1','" . $ket2 . "','br_pw_chat','" . $id . "','" . Date('Y-m-d H:m:s') . "','0')
+		");
 
         $data33 = [
             'email' => "",
-            'email1' => "fahrisafari95@gmail.com",
-            'username' => Auth::guard('eksmp')->user()->username,
+            'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
+            'username' => $company->company,
             'main_messages' => "",
+            'receiver' => "Admin",
             'id' => $id
         ];
         Mail::send('UM.user.sendbrdeal3', $data33, function ($mail) use ($data33) {
             $mail->to($data33['email1'], $data33['username']);
-            $mail->subject('Eksportir Was Deal Buying Request');
+            $mail->subject('Exporter Was Deal Buying Request');
         });
 
 
@@ -603,7 +735,7 @@ class BuyingRequestController extends Controller
 
     public function br_pw_chat($id)
     {
-        $pageTitle = "Chat Buying Request Representative";
+        $pageTitle = "Chat Buying Request";
         return view('buying-request.chat2', compact('id', 'pageTitle'));
     }
 
@@ -629,99 +761,116 @@ class BuyingRequestController extends Controller
         $caribrs3 = DB::select("select * from itdp_company_users where id='" . $data3 . "'");
         foreach ($caribrs3 as $val3) {
             $data4 = $val3->email;
+            $id_profil = $val3->id_profil;
         }
         $caribrs4 = DB::select("select * from itdp_admin_users where id='" . $data3 . "'");
         $greed = "greed@gmail.com";
         if (count($caribrs4) != 0) {
+//            dd($caribrs4);
             foreach ($caribrs4 as $cb4) {
                 $greed = $cb4->email;
+                $name = $cb4->name;
+            }
+        }
+//        dd($data5);
+//        dd($id_profil);
+//        if($id_profil){
+//            $companyname = DB::table('itdp_profil_eks')->where('id', $id_profil)->get();
+//        }
+//        dd($companyname);
+//        dd();
+        $datacompany = db::table('itdp_profil_eks')->where('id', Auth::guard('eksmp')->user()->id_profil)->first();
+        if($datacompany){
+//            dd();
+            if ($data5 == 3) {
+                $ket = $datacompany->company . " Join to your Buying Request";
+                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+                ('3','".$datacompany->company."','" . Auth::guard('eksmp')->user()->id . "','Importir','" . $data3 . "','" . $ket . "','br_importir_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
+                ");
+//            $ket2 = Auth::guard('eksmp')->user()->username . " Join to Buying Request";
+//            $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//		('1','Eksportir','" . Auth::guard('eksmp')->user()->id . "','Super Admin','1','" . $ket2 . "','br_pw_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
+//		");
+                $data = [
+                    'email' => "",
+                    'email1' => $data4,
+                    'username' => $datacompany->company,
+                    'main_messages' => "",
+                    'receiver' => "Importer",
+                    'id' => $data2
+                ];
+                Mail::send('UM.user.sendbrjoin', $data, function ($mail) use ($data) {
+                    $mail->to($data['email1'], $data['username']);
+                    $mail->subject('Exporter Join to Your Buying Request');
+                });
+
+
+//            $data33 = [
+//                'email' => "",
+//                'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
+//                'username' => Auth::guard('eksmp')->user()->username,
+//                'main_messages' => "",
+//                'id' => $data2
+//            ];
+//            Mail::send('UM.user.sendbrjoin3', $data33, function ($mail) use ($data33) {
+//                $mail->to($data33['email1'], $data33['username']);
+//                $mail->subject('Exporter Join to Buying Request');
+//            });
+
+                    } else if ($data5 == 1) {
+                $ket = $datacompany->company . " Join to your Buying Request";
+                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+                ('1','".$datacompany->company."','" . Auth::guard('eksmp')->user()->id . "','Super Admin','1','" . $ket . "','br_pw_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
+                ");
+
+                $data = [
+                    'email' => "",
+                    'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
+                    'username' => $datacompany->company,
+                    'main_messages' => "",
+                    'receiver' => "Admin",
+                    'id' => $data2
+                ];
+                Mail::send('UM.user.sendbrjoin', $data, function ($mail) use ($data) {
+                    $mail->to($data['email1'], $data['username']);
+                    $mail->subject('Exporter Join to Your Buying Request');
+                });
+
+            } else if ($data5 == 4) {
+                $ket = $datacompany->company . " Join to your Buying Request";
+                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+                ('4','".$datacompany->company."','" . Auth::guard('eksmp')->user()->id . "','Perwakilan','" . $data3 . "','" . $ket . "','br_pw_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
+                ");
+
+                $data = [
+                    'email' => "",
+                    'email1' => $greed,
+                    'username' => $datacompany->company,
+                    'main_messages' => "",
+                    'id' => $data2,
+                    'receiver' => $name,
+                ];
+                Mail::send('UM.user.sendbrjoin', $data, function ($mail) use ($data) {
+                    $mail->to($data['email1'], $data['username']);
+                    $mail->subject('Exporter Join to Your Buying Request');
+                });
+
             }
         }
 
-        if ($data5 == 3) {
 
-            $ket = Auth::guard('eksmp')->user()->username . " Join to your Buying Request!";
-            $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('3','Eksportir','" . Auth::guard('eksmp')->user()->id . "','Importir','" . $data3 . "','" . $ket . "','br_importir_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
-		");
-            $ket2 = Auth::guard('eksmp')->user()->username . " Join to Buying Request!";
-            $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('1','Eksportir','" . Auth::guard('eksmp')->user()->id . "','Super Admin','1','" . $ket2 . "','br_pw_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
-		");
-            $data = [
-                'email' => "",
-                'email1' => $data4,
-                'username' => Auth::guard('eksmp')->user()->username,
-                'main_messages' => "",
-                'id' => $data2
-            ];
-            Mail::send('UM.user.sendbrjoin', $data, function ($mail) use ($data) {
-                $mail->to($data['email1'], $data['username']);
-                $mail->subject('Exporter Join to Your Buying Request');
-            });
-
-            $data33 = [
-                'email' => "",
-                'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
-                'username' => Auth::guard('eksmp')->user()->username,
-                'main_messages' => "",
-                'id' => $data2
-            ];
-            Mail::send('UM.user.sendbrjoin3', $data33, function ($mail) use ($data33) {
-                $mail->to($data33['email1'], $data33['username']);
-                $mail->subject('Exporter Join to Buying Request');
-            });
-
-        } else if ($data5 == 1) {
-            $ket = Auth::guard('eksmp')->user()->username . " Join to your Buying Request!";
-            $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('1','Eksportir','" . Auth::guard('eksmp')->user()->id . "','Super Admin','1','" . $ket . "','br_pw_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
-		");
-
-            $data = [
-                'email' => "",
-                'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
-                'username' => Auth::guard('eksmp')->user()->username,
-                'main_messages' => "",
-                'id' => $data2
-            ];
-            Mail::send('UM.user.sendbrjoin', $data, function ($mail) use ($data) {
-                $mail->to($data['email1'], $data['username']);
-                $mail->subject('Exporter Join to Your Buying Request');
-            });
-
-        } else if ($data5 == 4) {
-            $ket = Auth::guard('eksmp')->user()->username . " Join to your Buying Request!";
-            $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-		('4','Eksportir','" . Auth::guard('eksmp')->user()->id . "','Perwakilan','" . $data3 . "','" . $ket . "','br_pw_lc','" . $data2 . "','" . Date('Y-m-d H:m:s') . "','0')
-		");
-
-            $data = [
-                'email' => "",
-                'email1' => $greed,
-                'username' => Auth::guard('eksmp')->user()->username,
-                'main_messages' => "",
-                'id' => $data2
-            ];
-            Mail::send('UM.user.sendbrjoin', $data, function ($mail) use ($data) {
-                $mail->to($data['email1'], $data['username']);
-                $mail->subject('Exporter Join to Your Buying Request');
-            });
-
-        }
-
-        $data22 = [
-            'email' => "",
-            'email1' => Auth::guard('eksmp')->user()->email,
-            'username' => "",
-            'main_messages' => Auth::guard('eksmp')->user()->username,
-            'id' => $id
-        ];
-
-        Mail::send('UM.user.sendbrjoin2', $data22, function ($mail) use ($data22) {
-            $mail->to($data22['email1'], $data22['username']);
-            $mail->subject('You Join To Buying Request');
-        });
+//        $data22 = [
+//            'email' => "",
+//            'email1' => Auth::guard('eksmp')->user()->email,
+//            'username' => "",
+//            'main_messages' => Auth::guard('eksmp')->user()->username,
+//            'id' => $id
+//        ];
+//
+//        Mail::send('UM.user.sendbrjoin2', $data22, function ($mail) use ($data22) {
+//            $mail->to($data22['email1'], $data22['username']);
+//            $mail->subject('You Join To Buying Request');
+//        });
 
 
         $update = DB::select("update csc_buying_request_join set status_join='1' where id='" . $id . "' ");

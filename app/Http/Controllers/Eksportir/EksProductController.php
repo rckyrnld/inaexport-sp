@@ -308,21 +308,22 @@ class EksProductController extends Controller
                 $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
                 $users_email = [];
                 foreach ($admin as $adm) {
-                    $notif = DB::table('notif')->insert([
-                        'dari_nama' => getCompanyName($id_user),
-                        'dari_id' => $id_user,
-                        'untuk_nama' => $adm->name,
-                        'untuk_id' => $adm->id,
-                        'keterangan' => 'New Product Published By '.getCompanyName($id_user).' with Title  "'.$request->prodname_en.'"',
-                        'url_terkait' => 'eksportir/verifikasi_product',
-                        'status_baca' => 0,
-                        'waktu' => $datenow,
-                        'id_terkait' => $save,
-                        'to_role' => 1,
-                    ]);
+                    $admname = $adm->name;
 
                     array_push($users_email, $adm->email);
                 }
+                $notif = DB::table('notif')->insert([
+                    'dari_nama' => getCompanyName($id_user),
+                    'dari_id' => $id_user,
+                    'untuk_nama' => "Admin",
+                    'untuk_id' => 1,
+                    'keterangan' => 'New Product Published By '.getCompanyName($id_user).' with Title  "'.$request->prodname_en.'"',
+                    'url_terkait' => 'eksportir/verifikasi_product',
+                    'status_baca' => 0,
+                    'waktu' => $datenow,
+                    'id_terkait' => $save,
+                    'to_role' => 1,
+                ]);
 
                 //Tinggal Ganti Email1 dengan email kemendag
                 $data = [
