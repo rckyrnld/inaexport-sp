@@ -485,7 +485,8 @@ class InquiryEksController extends Controller
                 'type' => $type,
                 'sender' => getCompanyName($sender),
                 'receiver' => $untuk_nama,
-                'subjek' => $data->subyek_en
+                'subjek' => $data->subyek_en,
+                'id' =>$cek->id
             ];
 
             Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
@@ -601,10 +602,11 @@ class InquiryEksController extends Controller
                 'type' => $inquiry->type,
                 'sender' => getCompanyName($sender),
                 'receiver' => $untuk_nama,
-                'subjek' => $inquiry->subyek_en
+                'subjek' => $inquiry->subyek_en,
+                'id' => $cek->id
             ];
 
-            Mail::send('inquiry.mail.sendChat', $data, function ($mail) use ($data) {
+            Mail::send('inquiry.mail.sendProve', $data, function ($mail) use ($data) {
                 $mail->to($data['email'], $data['username']);
                 $mail->subject('Inquiry Chatting Information');
             });
@@ -668,6 +670,42 @@ class InquiryEksController extends Controller
                     $untuk_nama = getPerwakilanName($inquiry->id_pembuat);
                     $to_role = 4;
                     $url_terkait = 'inquiry_perwakilan/view_detail';
+
+                    //Notif Admin
+
+                    //Notif sistem
+                    $notif = DB::table('notif')->insert([
+                        'dari_nama' => getCompanyName($id_user),
+                        'dari_id' => $id_user,
+                        'untuk_nama' => "",
+                        'untuk_id' => "",
+                        'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getCompanyName($id_user),
+                        'url_terkait' => $url_terkait,
+                        'status_baca' => 0,
+                        'waktu' => $datenow,
+                        'to_role' => 1,
+                        'id_terkait' => $broad->id
+                    ]);
+
+                    $users = DB::table('itdp_admin_users')->where('id', $inquiry->id_pembuat)->first();
+                    $email = $users->email;
+                    $username = $users->name;
+                    //Tinggal Ganti Email1 dengan email kemendag
+                    $data2 = [
+                        'email' => $email,
+                        'username' => $username,
+                        'type' => $inquiry->type,
+                        'penerima' => "Admin",
+                        'company' => getCompanyName($id_user),
+                        'subjek' => $inquiry->subyek_en
+                    ];
+
+                    Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
+                        $mail->to($data2['email'], $data2['username']);
+                        $mail->subject('Inquiry Deal Information');
+                    });
+
+
                 }
 
                 //Notif sistem

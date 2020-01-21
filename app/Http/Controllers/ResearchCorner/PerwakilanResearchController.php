@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Session;
 use Auth;
+use Mail;
 
 class PerwakilanResearchController extends Controller
 {
@@ -223,6 +224,18 @@ class PerwakilanResearchController extends Controller
                 'id_terkait' => $req->research,
                 'to_role' => '2',
             ]);
+
+              $data = [
+                  'email' => $account_penerima->email,
+                  'username' => $profile_penerima->company,
+                  'judul' => $req->title_en,
+              ];
+
+              Mail::send('UM.user.sendnotifrceks', $data, function ($mail) use ($data) {
+                  $mail->to($data['email'], $data['username']);
+                  $mail->subject('Dokumen Baru di Research Corner');
+              });
+
           }
         }
       }
