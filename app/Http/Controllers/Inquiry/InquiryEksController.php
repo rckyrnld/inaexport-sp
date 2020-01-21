@@ -385,6 +385,7 @@ class InquiryEksController extends Controller
 
     public function sendChat(Request $request)
     {
+        //notif ke admin atau eksportir saat eksportir send chat tulisan
 		date_default_timezone_set('Asia/Jakarta');
         $datenow = date('Y-m-d H:i:s');
         $id = $request->idinquiry;
@@ -504,6 +505,7 @@ class InquiryEksController extends Controller
 
     public function fileChat(Request $request)
     {
+
         date_default_timezone_set('Asia/Jakarta');
         $datenow = date('Y-m-d H:i:s');
         $id_user = Auth::guard('eksmp')->user()->id;
@@ -630,6 +632,7 @@ class InquiryEksController extends Controller
 
     public function dealing($id, $status)
     {
+        //notif ke admin dan pembuat inquiry saat ekspoter melakukan dealing.
         $id_user = Auth::guard('eksmp')->user()->id;
         $datenow = date('Y-m-d H:i:s');
         if($status == 1){
@@ -672,13 +675,12 @@ class InquiryEksController extends Controller
                     $url_terkait = 'inquiry_perwakilan/view_detail';
 
                     //Notif Admin
-
                     //Notif sistem
                     $notif = DB::table('notif')->insert([
                         'dari_nama' => getCompanyName($id_user),
                         'dari_id' => $id_user,
                         'untuk_nama' => "",
-                        'untuk_id' => "",
+                        'untuk_id' => 0,
                         'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getCompanyName($id_user),
                         'url_terkait' => $url_terkait,
                         'status_baca' => 0,
@@ -692,7 +694,7 @@ class InquiryEksController extends Controller
                     $username = $users->name;
                     //Tinggal Ganti Email1 dengan email kemendag
                     $data2 = [
-                        'email' => $email,
+                        'email' => env('MAIL_USERNAME','admin@inaexport.id'),
                         'username' => $username,
                         'type' => $inquiry->type,
                         'penerima' => "Admin",

@@ -15,7 +15,7 @@
 <div align="center" style="width: 100%">
     <div align="center" style="width: 580px;">
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
-        <p style="text-align: left;">Yth. {{$company}},</p>
+        <p style="text-align: left;">Yth.{{($bu== '-')? '':$bu}} {{$company}},</p>
 
         <p style="text-align: left;">Terima kasih menggunakan layanan Ticketing inaexport. Nomor tiket anda adalah {{$ticketing}}</p>
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >

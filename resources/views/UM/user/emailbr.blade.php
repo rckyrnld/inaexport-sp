@@ -7,7 +7,7 @@
 <div align="center" style="width: 100%">
     <div align="center" style="width: 580px;">
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
-        <p style="text-align: left">Yth. {{$company}},</P>
+        <p style="text-align: left">Yth. {{($bu== '-')? '':$bu}} {{$company}},</P>
         <p style="text-align: left">Terdapat buying request baru dari {{$nama}}, apabila anda berminat silahkan meresponnya segera.</p>
         <p style="text-align: left"> Untuk melihat buying request tersebut, silahkan login <a href="{{url('br_list/')}}">disini</a>.</p>
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >

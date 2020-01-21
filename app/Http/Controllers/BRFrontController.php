@@ -326,7 +326,6 @@ class BRFrontController extends Controller
             $cekada=DB::select("select * from csc_buying_request_join where id_br='".$id."' and id_eks='".(int)$napro."'");
 //			$cekada=DB::select("select * from csc_buying_request_join where id_br='".$id."' and id_eks='".$napro."'");
 			if(count($cekada) == 0){
-
 				$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
 							('".$id."','".(int)$napro."','".Date('Y-m-d H:m:s')."')");
 
@@ -342,13 +341,13 @@ class BRFrontController extends Controller
 				if(count($caridataeks) != 0){
 				foreach($caridataeks as $vm){ $vc1 = $vm->email; }
                 $datacomeks = DB::select("select * from itdp_profil_eks where id = '".$vm->id_profil."'");
-//				dd($datacomeks[0]->company);
 				$data = [
 				    'username' => $namapembuat,
                     'id2' => '0', 'nama' => $namapembuat,
                     'password' => '',
                     'email' => $vc1,
-                    'company' => $datacomeks[0]->company
+                    'company' => $datacomeks[0]->company,
+                    'bu' => $datacomeks[0]->badanusaha,
                 ];
                 Mail::send('UM.user.emailbr', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['company']);
@@ -423,7 +422,8 @@ class BRFrontController extends Controller
 	}
 	
 	public function uploadpop2(Request $request)
-    {		
+    {
+        //upload bukti pembayaran buying request
 			date_default_timezone_set('Asia/Jakarta');
 			$cari = DB::select("select * from csc_buying_request_join where id='".$request->idq."'");
 			foreach($cari as $cr1){
@@ -451,18 +451,59 @@ class BRFrontController extends Controller
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
 			('2','Admin','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
 			");
+                $users = DB::table('itdp_company_users')->where('id', $data1)->first();
+                $email = $users->email;
+                $username = $users->username;
+                if($users){
+                    $company = DB::table('itdp_profil_eks')->where('id', $users->id_profil)->first();
+                    $data2 = [
+                        'email' => $email,
+                        'username' => $username,
+                        'type' => "perwakilan",
+                        'sender' => auth::user()->name,
+                        'receiver' => $company->company,
+                        'bu' => $company->badanusaha,
+//                    'id' => $it,
+                    ];
+
+                    Mail::send('UM.user.sendbrProve', $data2, function ($mail) use ($data2) {
+                        $mail->to($data2['email'], $data2['username']);
+                        $mail->subject('Buying Request Payment Information');
+                    });
+                }
+                //Tinggal Ganti Email1 dengan email kemendag
 
 			}else{
 			$ket = "Perwakilan Upload Invoice On Buying Request";
 			$it = $request->idq;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('2','Admin','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
+			('2','Perwakilan','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
 			");
+                $users = DB::table('itdp_company_users')->where('id', $data1)->first();
+                $email = $users->email;
+                $username = $users->username;
+                if($users){
+                    $company = DB::table('itdp_profil_eks')->where('id', $users->id_profil)->first();
+                    $data2 = [
+                        'email' => $email,
+                        'username' => $username,
+                        'type' => "perwakilan",
+                        'sender' => auth::user()->name,
+                        'receiver' => $company->company,
+                        'bu' => $company->badanusaha,
+//                    'id' => $it,
+                    ];
+
+                    Mail::send('UM.user.sendbrProve', $data2, function ($mail) use ($data2) {
+                        $mail->to($data2['email'], $data2['username']);
+                        $mail->subject('Buying Request Payment Information');
+                    });
+                }
+                //Tinggal Ganti Email1 dengan email kemendag
+
 			}
-			
-			
-			
+
 			return redirect('br_pw_chat/'.$idq);
 	}	
 	
@@ -565,6 +606,4 @@ class BRFrontController extends Controller
 		echo "<a href='".url('br_importir_bc/'.$maxid)."' class='btn btn-warning'><font color='white'>Broadcast</font></a>";
 		//return redirect('br_importir');
 	}
-	
-	
 }

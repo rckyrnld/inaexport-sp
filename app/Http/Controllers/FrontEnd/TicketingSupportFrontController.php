@@ -72,7 +72,8 @@ class TicketingSupportFrontController extends Controller
             'company' =>$companyname->company,
             'ticketing' => $id_ticketing,
             'main_messages' => $req->messages,
-            'id' => $id_ticketing
+            'id' => $id_ticketing,
+            'bu' => $companyname->badanusaha,
         ];
 
 		$data2 = [
@@ -82,12 +83,13 @@ class TicketingSupportFrontController extends Controller
             'ticketing' => $id_ticketing,
             'company' =>$companyname->company,
             'main_messages' => $req->messages,
-            'id' => $id_ticketing
+            'id' => $id_ticketing,
+            'bu' => $companyname->badanusaha,
         ];
 
 
 		
-		$ket = "Ticketing was created by ".Auth::guard('eksmp')->user()->username;
+		$ket = "Ticketing was created by ".$companyname->company;
 //		$ket2 = "You was create ticketing";
 		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 			('1','".Auth::guard('eksmp')->user()->username."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$id_ticketing."','".Date('Y-m-d H:m:s')."','0')
@@ -173,7 +175,8 @@ class TicketingSupportFrontController extends Controller
             'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
             'username' => "",
             'main_messages' => $req->messages,
-            'id' => $req->id
+            'id' => $req->id,
+            'user' => 'Admin',
 			];
 		     /*
 			 Mail::send('UM.user.sendticketchat2', $data, function ($mail) use ($data) {
@@ -224,6 +227,8 @@ class TicketingSupportFrontController extends Controller
             $data3 = $v2->id_role; 
             $data4 = $v2->id; 
             }
+
+
         /* $data = [
             'email' => "",
             'email1' => $data2,
@@ -237,7 +242,8 @@ class TicketingSupportFrontController extends Controller
             'email1' => env('MAIL_USERNAME','admin@inaexport.id'),
             'username' => "",
             'main_messages' => $req->messages,
-            'id' => $req->id
+            'id' => $req->id,
+            'user' => 'User',
             ];
              /*
              Mail::send('UM.user.sendticketchat2', $data, function ($mail) use ($data) {

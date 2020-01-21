@@ -213,6 +213,7 @@ class AdminResearchController extends Controller
         $account_penerima = DB::table('itdp_company_users')->where('id',$array[$user])->first();
         if($account_penerima){
           $profile_penerima = DB::table('itdp_profil_eks')->where('id',$account_penerima->id_profil)->first();
+//          dd($profile_penerima);
           if($profile_penerima){
             $notif = DB::table('notif')->insert([
                 'dari_nama' => $pengirim->name,
@@ -229,6 +230,7 @@ class AdminResearchController extends Controller
              $data = [
                   'email' => $account_penerima->email,
                   'username' => $profile_penerima->company,
+                  'bu' => $profile_penerima->badanusaha,
                   'judul' => $req->title_en,
               ];
               Mail::send('UM.user.sendnotifrceks', $data, function ($mail) use ($data) {

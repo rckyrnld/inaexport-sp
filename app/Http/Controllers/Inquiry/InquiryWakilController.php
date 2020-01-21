@@ -381,6 +381,7 @@ class InquiryWakilController extends Controller
 
     public function broadcasting(Request $request)
     {
+       //broadcast inquiry dari perwakilan
         if(Auth::user()){
             $id_user = Auth::user()->id;
             if(Auth::user()->id_group == 4){
@@ -416,12 +417,16 @@ class InquiryWakilController extends Controller
                       }
                     }
                 }
+
+//                dd();
                 
                 sort($array);
                 $users = [];
                 for ($k=0; $k <count($array) ; $k++) { 
                     $untuk = DB::table('itdp_company_users')->where('id', $array[$k])->first();
+//                    dd($untuk);
                     if($untuk != NULL){
+                        $company = DB::table('itdp_profil_eks')->where('id', $untuk->id_profil)->first();
                         $save = DB::table('csc_inquiry_broadcast')->insert([
                             'id_inquiry' => $id_inquiry,
                             'id_itdp_company_users' => $array[$k],
@@ -445,7 +450,8 @@ class InquiryWakilController extends Controller
                             'email' => $untuk->email,
                             'type' => "eksportir",
                             'company' => getCompanyName($array[$k]),
-                            'dari' => "representative"
+                            'dari' => auth::user()->name,
+                            'bu' =>$company->badanusaha,
                         ];
 
                         Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data, $users) {
@@ -461,27 +467,6 @@ class InquiryWakilController extends Controller
 
 
                 //Tinggal Ganti Email1 dengan email kemendag
-<<<<<<< HEAD
-=======
-                $data = [
-                    'type' => "eksportir",
-                    'company' => "Eksporter",
-                    'dari' => "representative"
-                ];
-
-                Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data, $users) {
-                    $mail->subject('Inquiry Information');
-                    $mail->to($users);
-                });
-
-                //Notif ke Admin
-                $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
-                $users_admin = [];
-                array_push($users_admin, env('MAIL_USERNAME','admin@inaexport.id'));
-                foreach ($admin as $adm) {
-                    array_push($users_admin, $adm->email);
-                }
->>>>>>> e8e36e4a005d03315f4bb18f1c4ef7b23a4511ec
 
 
 //                //Notif ke Admin
@@ -736,6 +721,7 @@ class InquiryWakilController extends Controller
 
     public function sendChat(Request $request)
     {
+        //notif ke eksportir saat admin atau perwakilan send chat tulisan
 		date_default_timezone_set('Asia/Jakarta');
         $datenow = date('Y-m-d H:i:s');
         $id = $request->idinquiry;
@@ -798,6 +784,7 @@ class InquiryWakilController extends Controller
 
     public function fileChat(Request $request)
     {
+        //Notif ke eksportir saat admin/perwakilan kirim bukti bayar
         date_default_timezone_set('Asia/Jakarta');
         $datenow = date('Y-m-d H:i:s');
         $id = $request->id_inquiry;
@@ -849,23 +836,28 @@ class InquiryWakilController extends Controller
         $users = DB::table('itdp_company_users')->where('id', $receiver)->first();
         $email = $users->email;
         $username = $users->username;
+        if($users){
+            $company = DB::table('itdp_profil_eks')->where('id', $users->id_profil)->first();
+            $data2 = [
+                'email' => $email,
+                'username' => $username,
+                'type' => "perwakilan",
+                'sender' => getPerwakilanName($sender),
+                'receiver' => getCompanyName($receiver),
+                'subjek' => $data->subyek_en,
+                'id' => $id,
+                'bu' => $company->badanusaha,
+            ];
+
+            Mail::send('inquiry.mail.sendProve', $data2, function ($mail) use ($data2) {
+                $mail->to($data2['email'], $data2['username']);
+                $mail->subject('Inquiry Payment Information');
+            });
+        }
         //Tinggal Ganti Email1 dengan email kemendag
-        $data2 = [
-            'email' => $email,
-            'username' => $username,
-            'type' => "perwakilan",
-            'sender' => getPerwakilanName($sender),
-            'receiver' => getCompanyName($receiver),
-            'subjek' => $data->subyek_en,
-            'id' => $id
-        ];
 
-        Mail::send('inquiry.mail.sendProve', $data2, function ($mail) use ($data2) {
-            $mail->to($data2['email'], $data2['username']);
-            $mail->subject('Inquiry Chatting Information');
-        });
 
-        return redirect('/inquiry_perwakilan/chatting/'.$id_broadcast); 
+        return redirect('/inquiry_perwakilan/chatting/'.$id_broadcast);
         
     }
 

@@ -1,5 +1,5 @@
 <p>Dear Eksportir, </P>
-<p>You Had Joined To Buying Request !</p>
+<p>You Had Joined To Buying Request </p>
 <hr>
 <!-- <ol>
     <ul>Name : {{$username}}</ul>

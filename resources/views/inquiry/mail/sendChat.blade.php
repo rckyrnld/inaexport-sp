@@ -24,7 +24,7 @@
         <p style="color: #8bbbe8; font-size: 20px;text-align: left">Information</p>
         <hr>
         <p style="text-align: left">Dear {{$receiver}}, </P>
-        <p style="text-align: left">{{$sender}} Respond Chat On Your Ticketing Request</p>
+        <p style="text-align: left">{{$sender}} Respond Chat On Your Inquiry</p>
     <!-- <ol>
             <ul>Name : {{$username}}</ul>
             <ul>Email : {{$email}}</ul>
