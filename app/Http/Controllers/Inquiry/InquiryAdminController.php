@@ -43,7 +43,7 @@ class InquiryAdminController extends Controller
             $user = DB::table('csc_inquiry_br')
                 ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
                 ->where('type', 'admin')
-                ->orderBy('csc_inquiry_br.created_at', 'DESC')
+                ->orderBy('csc_inquiry_br.date', 'DESC')
                 ->get();
 
             return \Yajra\DataTables\DataTables::of($user)

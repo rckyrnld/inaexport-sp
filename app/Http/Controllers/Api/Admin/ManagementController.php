@@ -523,5 +523,105 @@ class ManagementController extends Controller
 
     
 	}
+	
+	public function list_br_join(Request $request)
+    {
+		date_default_timezone_set('Asia/Jakarta');
+        $buy = DB::select("select a.*,a.id as idjoin,b.*,c.* from csc_buying_request_join a, itdp_company_users b, itdp_profil_eks c 
+		where a.id_eks = b.id and b.id_profil = c.id and a.id_br='".$request->id_br."' ");
+		//echo count($buy);die();
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($buy); $i++) {
+            
+            $jsonResult[$i]["id"] = $buy[$i]->idjoin;
+            $jsonResult[$i]["id_br"] = $buy[$i]->id_br;
+            $jsonResult[$i]["date"] = $buy[$i]->date;
+            $jsonResult[$i]["expired_at"] = $buy[$i]->expired_at;
+            if ($buy[$i]->status_join == 1) {
+                $jsonResult[$i]["status_j"] = 'Join';
+            }else if ($buy[$i]->status_join == 2) {
+                $jsonResult[$i]["status_j"] = 'Negosiation';
+            }else if ($buy[$i]->status_join == 4) {
+                $jsonResult[$i]["status_j"] = 'Deal';
+            } else {
+                $jsonResult[$i]["status_j"] = '-';
+            }
+            $jsonResult[$i]["email"] = $buy[$i]->email;
+            $jsonResult[$i]["username"] = $buy[$i]->username;
+            $jsonResult[$i]["id_profil"] = $buy[$i]->id_profil;
+            $jsonResult[$i]["company"] = $buy[$i]->company;
+            
+		}
+
+
+        if ($buy) {
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $jsonResult;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+	}
+	
+	public function list_br_chat(Request $request)
+    {
+		date_default_timezone_set('Asia/Jakarta');
+        $buy = DB::select("select * from csc_buying_request_chat where id_join='".$request->id_join."' order by tanggal desc");
+		//echo count($buy);die();
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($buy); $i++) {
+            
+            $jsonResult[$i]["id"] = $buy[$i]->id;
+            $jsonResult[$i]["id_br"] = $buy[$i]->id_br;
+            $jsonResult[$i]["id_join"] = $buy[$i]->id_join;
+            $jsonResult[$i]["date"] = $buy[$i]->tanggal;
+            $jsonResult[$i]["id_pengirim"] = $buy[$i]->id_pengirim;
+            $jsonResult[$i]["id_role"] = $buy[$i]->id_role;
+            $jsonResult[$i]["username_pengirim"] = $buy[$i]->username_pengirim;
+            $jsonResult[$i]["pesan"] = $buy[$i]->pesan;
+            
+		}
+
+
+        if ($buy) {
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $jsonResult;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+	}
 
 }

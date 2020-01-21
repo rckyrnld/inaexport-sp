@@ -43,6 +43,8 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	
 	//Buying Request
 	Route::post('list_br_admin', 'Api\Admin\ManagementController@list_br_admin');
+	Route::post('list_br_join', 'Api\Admin\ManagementController@list_br_join');
+	Route::post('list_br_chat', 'Api\Admin\ManagementController@list_br_chat');
 
 });
 
@@ -148,6 +150,7 @@ Route::namespace('Api')->group(function () {
     Route::get('getRandomProduct', 'ProductNonAuthController@getRandomProduct');
     Route::get('getParentCategory', 'ProductNonAuthController@getKategorina');
     Route::post('getLevel1Category', 'ProductNonAuthController@getSubKategorina');
+    Route::post('getLevel2Category', 'ProductNonAuthController@getSubKategorina2');
     Route::get('getprodukBaru', 'ProductNonAuthController@getprodukBaru');
     Route::post('browseProductListBynameAndKategori', 'ProductNonAuthController@browseProductDetailBynameAndKategori');
     Route::post('suggestProductkategorisearch', 'ProductNonAuthController@browseProductBynameAndKategori');
