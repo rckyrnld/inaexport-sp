@@ -600,7 +600,7 @@ class ProductNonAuthController extends Controller
     {
 		$id = $request->level_2;
         $dataProduk = DB::table('csc_product')
-            ->where('csc_product.level_2', $id)
+            ->where('csc_product.level_1', $id)
             ->orderBy('nama_kategori_en', 'ASC')
             ->get();
 
