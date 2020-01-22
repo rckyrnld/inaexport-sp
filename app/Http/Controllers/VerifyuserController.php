@@ -511,9 +511,7 @@ class VerifyuserController extends Controller
 			where id='".$request->ida."'
 			");
 			}
-			
-			
-			
+
 		}
 		
 		return redirect('profilperwakilan')->with('success','Success Update Data!');
@@ -595,6 +593,7 @@ class VerifyuserController extends Controller
 				where id='".$id_user_b."'");
 			}
 		}
+
 //		return redirect('profil/'.$id_role.'/'.$id_user);
 		return redirect('/verifyuser')->with('success','Success Update Data');
 		
@@ -611,6 +610,7 @@ class VerifyuserController extends Controller
 	
 	public function simpan_profil2(Request $request)
     {
+
 		$id_role = $request->id_role;
 		$id_user = $request->id_user;
 		$id_user_b = $request->idu;

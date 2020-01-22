@@ -129,12 +129,17 @@ class InquiryFrontController extends Controller
 
                 //Tinggal Ganti Email1 dengan email kemendag
                 $untuk = DB::table('itdp_company_users')->where('id', $dtproduct->id_itdp_company_user)->first();
+//                dd($untuk->id_profil);
+                if($untuk){
+                    $company = DB::table('itdp_profil_eks')->where('id', $untuk->id_profil)->first();
+                }
                 $data = [
                     'email' => $untuk->email,
                     'username' => $untuk->username,
                     'type' => "eksportir",
                     'company' => getCompanyName($dtproduct->id_itdp_company_user),
-                    'dari' => "Importer"
+                    'dari' => "Importer",
+                    'bu' => "$company->badanusaha"
                 ];
 
                 Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data) {
@@ -275,7 +280,8 @@ class InquiryFrontController extends Controller
                 'type' => 'importir',
                 'sender' => getCompanyNameImportir($sender),
                 'receiver' => getCompanyName($receiver),
-                'subjek' => $data->subyek_en
+                'subjek' => $data->subyek_en,
+                'id' =>$id,
             ];
 
             Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
@@ -347,12 +353,13 @@ class InquiryFrontController extends Controller
             'type' => 'importir',
             'sender' => getCompanyNameImportir($sender),
             'receiver' => getCompanyName($receiver),
-            'subjek' => $data->subyek_en
+            'subjek' => $data->subyek_en,
+            'id' => $id,
         ];
 
         Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
             $mail->to($data2['email'], $data2['username']);
-            $mail->subject('Inquiry Chatting Information');
+            $mail->subject('Inquiry Payment Information');
         });
 
         return redirect('/front_end/chat_inquiry/'.$id); 

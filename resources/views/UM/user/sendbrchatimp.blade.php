@@ -9,7 +9,7 @@
         <ul>Email : {{$email}}</ul>
     </ol>
     <hr>-->
-    <p>
+    <p style="text-align: left">
       <!-- {{$main_messages}} -->
     </p>
     <p style="text-align: left">click <a href="{{url('br_chat', $id)}}">Here</a>.</p>
