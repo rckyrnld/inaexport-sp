@@ -66,7 +66,7 @@ class ProfileController extends Controller
                 $idFoto = $rt->foto_profil;
             }
 //            $id_profil = DB::table('itdp_company_users')->where('id', $id_user)->first()->id_profil;
-            $path = ($idFoto) ? url('uploads/Profile/Eksportir/' . $id_user . '/' . $idFoto) : url('image/nia.png');
+            $path = ($idFoto) ? url('uploads/Profile/Eksportir/' . $id_user . '/' . $idFoto) : url('image/nia3.png');
 //            $destination= 'uploads\Profile\Importir\\'.$id_user;
 //            $path2 = (string)Image::make($path)->resize(96, 96)->encode('data-url');
 //        $path3 = base64_encode(file_get_contents($path2));
@@ -351,8 +351,8 @@ class ProfileController extends Controller
 
 //        $path = asset('image/fotoprofil/' . $idFoto);
 //        $path2 = base64_encode(file_get_contents($path));
-//            $path = ($idaFoto) ? url('image/fotoprofil/' . $idaFoto) : url('image/nia.png');
-            $path = ($idaFoto) ? url('uploads/Profile/Importir/' . $id_user . '/' . $idaFoto) : url('image/nia.png');
+//            $path = ($idaFoto) ? url('image/fotoprofil/' . $idaFoto) : url('image/nia3.png');
+            $path = ($idaFoto) ? url('uploads/Profile/Importir/' . $id_user . '/' . $idaFoto) : url('image/nia3.png');
 //            $destination= 'uploads\Profile\Importir\\'.$id_user;
 //            $path2 = (string)Image::make($path)->resize(96, 96)->encode('data-url');
 
