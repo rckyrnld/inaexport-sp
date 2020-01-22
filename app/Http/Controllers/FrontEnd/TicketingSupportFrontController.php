@@ -28,13 +28,31 @@ class TicketingSupportFrontController extends Controller
     {
         $pageTitle = 'Ticketing Support';
 //        dd(Auth::guard('eksmp')->user());
+
         return view('ticketingsupport.index', compact('pageTitle'));
     }
 
     public function create()
     {
+//        dd(Auth::guard('eksmp')->user());
+        if(Auth::guard('eksmp')->user()) {
+            if(Auth::guard('eksmp')->user()->id_role == 3){
+//                dd('a');
+                $company = db::table('itdp_profil_imp')->where('id', Auth::guard('eksmp')->user()->id_profil)->first();
+                $name = $company->company;
+                $email = $company->email;
+            }else if(Auth::guard('eksmp')->user()->id_role == 2){
+//                dd('b');
+                $company = db::table('itdp_profil_eks')->where('id', Auth::guard('eksmp')->user()->id_profil)->first();
+                $name = $company->company;
+                $email = $company->email;
+            }
+        }else{
+            $name = "";
+            $email = "";
+        }
         // if(Auth::guard('eksmp')->user()){
-            return view('frontend.ticketing.create');
+            return view('frontend.ticketing.create', compact('name','email'));
         // }else{
         //     return redirect('/front_end');
         // }
@@ -62,55 +80,100 @@ class TicketingSupportFrontController extends Controller
 //        dd($id_ticketing);
         //Tinggal Ganti Email1 dengan email kemendag
 		//kementerianperdagangan.max@gmail.com
+//        dd(Auth::guard('eksmp')->user()->id_role = 3);
+        if(Auth::guard('eksmp')->user()->id_role == 2){
+            $data = [
+                'email' => $req->email,
+                'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
+                'username' => $req->name,
+                'company' =>getCompanyName(auth::guard('eksmp')->user()->id),
+                'ticketing' => $id_ticketing,
+                'main_messages' => $req->messages,
+                'id' => $id_ticketing,
+                'bu' => getExBadan(auth::guard('eksmp')->user()->id),
+            ];
 
-		$companyname = DB::table('itdp_profil_eks')->where('id',auth::guard('eksmp')->user()->id_profil)->get()->first();
-
-        $data = [
-            'email' => $req->email,
-            'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
-            'username' => $req->name,
-            'company' =>$companyname->company,
-            'ticketing' => $id_ticketing,
-            'main_messages' => $req->messages,
-            'id' => $id_ticketing,
-            'bu' => $companyname->badanusaha,
-        ];
-
-		$data2 = [
-            'email' => $req->email,
-            'email1' => Auth::guard('eksmp')->user()->email,
-            'username' => $req->name,
-            'ticketing' => $id_ticketing,
-            'company' =>$companyname->company,
-            'main_messages' => $req->messages,
-            'id' => $id_ticketing,
-            'bu' => $companyname->badanusaha,
-        ];
+            $data2 = [
+                'email' => $req->email,
+                'email1' => Auth::guard('eksmp')->user()->email,
+                'username' => $req->name,
+                'ticketing' => $id_ticketing,
+                'company' =>getCompanyName(auth::guard('eksmp')->user()->id),
+                'main_messages' => $req->messages,
+                'id' => $id_ticketing,
+                'bu' => getExBadan(auth::guard('eksmp')->user()->id),
+            ];
 
 
-		
-		$ket = "Ticketing was created by ".$companyname->company;
+            $ket = "Ticketing was created by ".getExBadan(auth::guard('eksmp')->user()->id).getCompanyName(auth::guard('eksmp')->user()->id);
 //		$ket2 = "You was create ticketing";
-		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('1','".Auth::guard('eksmp')->user()->username."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$id_ticketing."','".Date('Y-m-d H:m:s')."','0')
-		");
+            $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+			('1','".getcompanyname(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$id_ticketing."','".Date('Y-m-d H:m:s')."','0')
+            ");
 
 //		$insert4 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 //			('".Auth::guard('eksmp')->user()->id_role."','Super Admin','1','".Auth::guard('eksmp')->user()->username."','".Auth::guard('eksmp')->user()->id."','".$ket2."','front_end/ticketing_support/view','".$id_ticketing."','".Date('Y-m-d H:m:s')."','0')
 //		");
 
-		
-		//notif email for admin
-        Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
-            $mail->to($data['email1'], $data['username']);
-            $mail->subject('Requesting Ticketing Support');
-        });
 
-        //notif email for user
-		Mail::send('UM.user.sendticket2', $data2, function ($mail) use ($data2) {
-            $mail->to($data2['email1'], $data2['username']);
-            $mail->subject('You Requesting Ticketing Support');
-        });
+            //notif email for admin
+            Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
+                $mail->to($data['email1'], $data['username']);
+                $mail->subject('Requesting Ticketing Support');
+            });
+
+            //notif email for user
+            Mail::send('UM.user.sendticket2', $data2, function ($mail) use ($data2) {
+                $mail->to($data2['email1'], $data2['username']);
+                $mail->subject('You Requesting Ticketing Support');
+            });
+        }
+        else if(Auth::guard('eksmp')->user()->id_role == 3){
+            $data = [
+                'email' => $req->email,
+                'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
+                'username' => $req->name,
+                'company' =>getCompanyNameImportir(Auth::guard('eksmp')->user()->id),
+                'ticketing' => $id_ticketing,
+                'main_messages' => $req->messages,
+                'id' => $id_ticketing,
+                'bu' => getExBadanImportir(Auth::guard('eksmp')->user()->id),
+            ];
+
+            $data2 = [
+                'email' => $req->email,
+                'email1' => Auth::guard('eksmp')->user()->email,
+                'username' => $req->name,
+                'ticketing' => $id_ticketing,
+                'company' =>getCompanyNameImportir(Auth::guard('eksmp')->user()->id),
+                'main_messages' => $req->messages,
+                'id' => $id_ticketing,
+                'bu' => getExBadanImportir(Auth::guard('eksmp')->user()->id),
+            ];
+
+            $ket = "Ticketing was created by ".getExBadanImportir(Auth::guard('eksmp')->user()->id)." ".getCompanyNameImportir(Auth::guard('eksmp')->user()->id);
+//		$ket2 = "You was create ticketing";
+            $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+			('1','".getCompanyNameImportir(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$id_ticketing."','".Date('Y-m-d H:m:s')."','0')
+            ");
+
+//		$insert4 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//			('".Auth::guard('eksmp')->user()->id_role."','Super Admin','1','".Auth::guard('eksmp')->user()->username."','".Auth::guard('eksmp')->user()->id."','".$ket2."','front_end/ticketing_support/view','".$id_ticketing."','".Date('Y-m-d H:m:s')."','0')
+//		");
+
+
+            //notif email for admin
+            Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
+                $mail->to($data['email1'], $data['username']);
+                $mail->subject('Requesting Ticketing Support');
+            });
+
+            //notif email for user
+            Mail::send('UM.user.sendticket2', $data2, function ($mail) use ($data2) {
+                $mail->to($data2['email1'], $data2['username']);
+                $mail->subject('You Requesting Ticketing Support');
+            });
+        }
 
 
         //dd();

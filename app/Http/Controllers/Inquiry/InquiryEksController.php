@@ -433,9 +433,10 @@ class InquiryEksController extends Controller
                 'receiver' => getCompanyNameImportir($receiver),
                 'subjek' => $data->subyek_en,
                 'id' =>$id,
+                'bu' => getExBadan($sender),
             ];
 
-            Mail::send('inquiry.mail.sendChat', $data, function ($mail) use ($data) {
+            Mail::send('inquiry.mail.sendChat2', $data, function ($mail) use ($data) {
                 $mail->to($data['email'], $data['username']);
                 $mail->subject('Inquiry Chatting Information');
             });
@@ -469,7 +470,7 @@ class InquiryEksController extends Controller
                 'dari_id' => $sender,
                 'untuk_nama' => $untuk_nama,
                 'untuk_id' => $receiver,
-                'keterangan' => 'New Message from '.getCompanyName($sender).' about Inquiry '.$data->subyek_en,
+                'keterangan' => 'New Message from '.getExBadan($sender)." ".getCompanyName($sender).' about Inquiry '.$data->subyek_en,
                 'url_terkait' => $url_terkait,
                 'status_baca' => 0,
                 'waktu' => $datenow,
@@ -488,10 +489,11 @@ class InquiryEksController extends Controller
                 'sender' => getCompanyName($sender),
                 'receiver' => $untuk_nama,
                 'subjek' => $data->subyek_en,
-                'id' =>$cek->id
+                'id' =>$cek->id,
+                'bu' => getExBadan($sender),
             ];
 
-            Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+            Mail::send('inquiry.mail.sendChat2', $data2, function ($mail) use ($data2) {
                 $mail->to($data2['email'], $data2['username']);
                 $mail->subject('Inquiry Chatting Information');
             });

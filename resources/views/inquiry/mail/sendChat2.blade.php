@@ -23,8 +23,8 @@
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
         <p style="color: #8bbbe8; font-size: 20px;text-align: left">Information</p>
         <hr>
-        <p style="text-align: left">Dear {{($bu== '-')? '': $bu." "}}{{$receiver}}, </P>
-        <p style="text-align: left">{{$sender}} Respond Chat on Your Inquiry</p>
+        <p style="text-align: left">Dear {{$receiver}}, </P>
+        <p style="text-align: left">{{($bu== '-')? '': $bu." "}}{{$sender}} Respond Chat on Your Inquiry</p>
     <!-- <ol>
             <ul>Name : {{$username}}</ul>
             <ul>Email : {{$email}}</ul>

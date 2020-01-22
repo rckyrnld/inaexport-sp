@@ -54,7 +54,7 @@
 					              <th>Country</th>
 					              <th>Download</th>
 					              <th>Publish Date</th>
-					              <th width="20%">Action</th>
+					              <th width="15%">Action</th>
 					          </tr>
 					      </thead>
 					    </table>

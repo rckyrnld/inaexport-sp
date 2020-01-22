@@ -1025,4 +1025,46 @@ if (! function_exists('getCategorySearch')) {
       return $return;
     }
 }
+
+if (! function_exists('getExBadan')) {
+    function getExBadan($id){
+        $badanusaha = "";
+        $data = DB::table('itdp_company_users')->where('id', $id)->first();
+        if($data){
+            if($data->id_profil != NULL){
+                $badanusaha = DB::table('itdp_profil_eks')->where('id', $data->id_profil)->first();
+                if($badanusaha){
+                    if($badanusaha->badanusaha == "-"){
+                        $badanusaha = "";
+                    }else{
+                        $badanusaha = $badanusaha->badanusaha." ";
+                    }
+                }
+            }
+        }
+
+        return $badanusaha;
+    }
+}
+
+if (! function_exists('getExBadanImportir')) {
+    function getExBadanImportir($id){
+        $badanusaha = "";
+        $data = DB::table('itdp_company_users')->where('id', $id)->first();
+        if($data){
+            if($data->id_profil != NULL){
+                $badanusaha = DB::table('itdp_profil_imp')->where('id', $data->id_profil)->first();
+                if($badanusaha){
+                    if($badanusaha->badanusaha == "-"){
+                        $badanusaha = "";
+                    }else{
+                        $badanusaha = $badanusaha->badanusaha." ";
+                    }
+                }
+            }
+        }
+
+        return $badanusaha;
+    }
+}
 // End of Function Search
