@@ -44,7 +44,7 @@ class ManagementUserController extends Controller
             foreach ($research as $img) {
                 $coba = $img->exum;
             }
-            $path = ($coba) ? url('uploads/Research Corner/File/' . $coba) : url('image/noimage.jpg');
+            $path = ($coba) ? url('uploads/Research Corner/File/' . $coba) : url('image/nia3.png');
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
@@ -65,7 +65,7 @@ class ManagementUserController extends Controller
             foreach ($research as $img) {
                 $coba = $img->exum;
             }
-            $path = ($coba) ? url('uploads/Research Corner/File/' . $coba) : url('image/noimage.jpg');
+            $path = ($coba) ? url('uploads/Research Corner/File/' . $coba) : url('image/nia3.png');
 //            dd($path);
             $id = DB::table('csc_download_research_corner')->orderby('id', 'desc')->first();
             if ($id) {
@@ -778,10 +778,10 @@ class ManagementUserController extends Controller
 //        $dataProduka->csc_product_desc = DB::table('csc_product')->where('id', $dataProduka->id_csc_product)->first()->nama_kategori_en;
 //        $dataProduka->csc_product_level1_desc = ($dataProduka->id_csc_product_level1) ? DB::table('csc_product')->where('id', $dataProduka->id_csc_product_level1)->first()->nama_kategori_en : null;
 //        $dataProduka->csc_product_level2_desc = ($dataProduka->id_csc_product_level2) ? DB::table('csc_product')->where('id', $dataProduka->id_csc_product_level2)->first()->nama_kategori_en : null;
-//        $dataProduka->link_image_1 = $path = ($dataProduka->image_1) ? url('uploads/buy_request/' . $dataProduka->id . '/' . $dataProduka->image_1) : url('image/noimage.jpg');
-//        $dataProduka->link_image_2 = $path = ($dataProduka->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_2) : url('image/noimage.jpg');
-//        $dataProduka->link_image_3 = $path = ($dataProduka->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_3) : url('image/noimage.jpg');
-//        $dataProduka->link_image_4 = $path = ($dataProduka->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_4) : url('image/noimage.jpg');
+//        $dataProduka->link_image_1 = $path = ($dataProduka->image_1) ? url('uploads/buy_request/' . $dataProduka->id . '/' . $dataProduka->image_1) : url('image/nia3.png');
+//        $dataProduka->link_image_2 = $path = ($dataProduka->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_2) : url('image/nia3.png');
+//        $dataProduka->link_image_3 = $path = ($dataProduka->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_3) : url('image/nia3.png');
+//        $dataProduka->link_image_4 = $path = ($dataProduka->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_4) : url('image/nia3.png');
 //        $dataProduka->name_mst_hscodes = ($dataProduka->id_mst_hscodes) ? DB::table('mst_hscodes')->where('id', $dataProduka->id_mst_hscodes)->first()->desc_eng : "";
 
 //        for ($i = 0; $i < count($user); $i++) {

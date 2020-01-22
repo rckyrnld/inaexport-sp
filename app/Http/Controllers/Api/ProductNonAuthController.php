@@ -44,10 +44,82 @@ class ProductNonAuthController extends Controller
             $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
             $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
-            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
-            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
-            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
-            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/nia3.png');
+            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/nia3.png');
+            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/nia3.png');
+            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/nia3.png');
+            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
+            $jsonResult[$i]["type"] = $dataProduk[$i]->type;
+            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+            $id_role = $dataProduk[$i]->id_role;
+            $id_profil = $dataProduk[$i]->id_profil;
+            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+            $jsonResult[$i]["product_description_en"] = $dataProduk[$i]->product_description_en;
+
+            $list_k = array();
+            $list_k["code_en"] = $dataProduk[$i]->code_en;
+            $list_k["color_en"] = $dataProduk[$i]->color_en;
+            $list_k["size_en"] = $dataProduk[$i]->size_en;
+            $list_k["raw_material_en"] = $dataProduk[$i]->raw_material_en;
+            $list_k["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
+            $jsonResult[$i]["product_information"] = $list_k;
+
+        }
+
+        if (count($dataProduk) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $res['meta'] = $meta;
+            $res['data'] = $jsonResult;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+	
+	public function findProduct(Request $request)
+    {
+        $offset = $request->offset;
+		$id = $request->id_kategori;
+        $dataProduk = DB::table('itdp_company_users')
+            ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
+            ->where('itdp_company_users.status', '=', 1)
+            ->where('csc_product_single.status', 2)
+            ->where('csc_product_single.id_csc_product', $id)
+            ->orwhere('csc_product_single.id_csc_product_level1', $id)
+            ->orwhere('csc_product_single.id_csc_product_level2', $id)
+//            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
+            ->select('csc_product_single.id', 'itdp_company_users.id_profil', 'itdp_company_users.id_role', 'csc_product_single.*',
+                'csc_product_single.image_1', 'csc_product_single.product_description_en', 'csc_product_single.image_2', 'csc_product_single.image_3',
+                'csc_product_single.image_4', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd',
+                'csc_product.nama_kategori_en', 'csc_product_single.code_en', 'csc_product_single.color_en', 'csc_product_single.size_en', 'csc_product_single.raw_material_en')
+            ->orderBy('csc_product_single.id', 'desc')
+            ->limit(10)
+            ->offset($offset)
+            ->get();
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($dataProduk); $i++) {
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
+            $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
+            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/nia3.png');
+            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/nia3.png');
+            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/nia3.png');
+            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/nia3.png');
             $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
             $jsonResult[$i]["type"] = $dataProduk[$i]->type;
             $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
@@ -154,10 +226,10 @@ class ProductNonAuthController extends Controller
             $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
             $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
-            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
-////            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
-////            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
-////            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/nia3.png');
+////            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/nia3.png');
+////            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/nia3.png');
+////            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/nia3.png');
             $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
             $jsonResult[$i]["type"] = $dataProduk[$i]->type;
             $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
@@ -230,10 +302,10 @@ class ProductNonAuthController extends Controller
 ////            $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
 ////            $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
 //            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
-////            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
-////            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
-////            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
-////            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+////            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/nia3.png');
+////            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/nia3.png');
+////            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/nia3.png');
+////            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/nia3.png');
 ////            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
 ////            $jsonResult[$i]["type"] = $dataProduk[$i]->type;
 ////            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
@@ -353,10 +425,10 @@ class ProductNonAuthController extends Controller
         $dataProduka->csc_product_desc = DB::table('csc_product')->where('id', $dataProduka->id_csc_product)->first()->nama_kategori_en;
         $dataProduka->csc_product_level1_desc = ($dataProduka->id_csc_product_level1) ? DB::table('csc_product')->where('id', $dataProduka->id_csc_product_level1)->first()->nama_kategori_en : null;
         $dataProduka->csc_product_level2_desc = ($dataProduka->id_csc_product_level2) ? DB::table('csc_product')->where('id', $dataProduka->id_csc_product_level2)->first()->nama_kategori_en : null;
-        $dataProduka->link_image_1 = $path = ($dataProduka->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_1) : url('image/noimage.jpg');
-        $dataProduka->link_image_2 = $path = ($dataProduka->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_2) : url('image/noimage.jpg');
-        $dataProduka->link_image_3 = $path = ($dataProduka->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_3) : url('image/noimage.jpg');
-        $dataProduka->link_image_4 = $path = ($dataProduka->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_4) : url('image/noimage.jpg');
+        $dataProduka->link_image_1 = $path = ($dataProduka->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_1) : url('image/nia3.png');
+        $dataProduka->link_image_2 = $path = ($dataProduka->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_2) : url('image/nia3.png');
+        $dataProduka->link_image_3 = $path = ($dataProduka->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_3) : url('image/nia3.png');
+        $dataProduka->link_image_4 = $path = ($dataProduka->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduka->id . '/' . $dataProduka->image_4) : url('image/nia3.png');
         $dataProduka->name_mst_hscodes = ($dataProduka->id_mst_hscodes) ? DB::table('mst_hscodes')->where('id', $dataProduka->id_mst_hscodes)->first()->desc_eng : "";
         $dataProduka->product_description_en = ($dataProduka->product_description_en) ? strip_tags($dataProduka->product_description_en) : null;
 //        dd($dataProduka);
@@ -400,7 +472,7 @@ class ProductNonAuthController extends Controller
         if (is_file($path)) {
             return response()->download($path);
         } else {
-            return response()->download(public_path() . '/image/noimage.jpg');
+            return response()->download(public_path() . '/image/nia3.png');
         }
     }
 
@@ -465,10 +537,10 @@ class ProductNonAuthController extends Controller
             $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
             $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
-            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
-            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
-            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
-            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/nia3.png');
+            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/nia3.png');
+            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/nia3.png');
+            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/nia3.png');
             $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
             $jsonResult[$i]["type"] = $dataProduk[$i]->type;
             $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
@@ -500,7 +572,7 @@ class ProductNonAuthController extends Controller
 //                    "prodname_en" => $item->prodname_en,
 //                    "id_csc_product" => $item->id_csc_product,
 //                    "type" => $item->type,
-//                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
+//                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/nia3.png'),
 //                    "nama_kategori_en" => $item->nama_kategori_en,
 //                    "price_usd" => $item->price_usd
 //                ));
@@ -534,7 +606,7 @@ class ProductNonAuthController extends Controller
         for ($i = 0; $i < count($dataProduk); $i++) {
             $jsonResult[$i]["id"] = $dataProduk[$i]->id;
             $jsonResult[$i]["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
-            $jsonResult[$i]["logo"] = $path = ($dataProduk[$i]->logo) ? url('uploads/Product/Icon/' . $dataProduk[$i]->logo) : url('image/noimage.jpg');
+            $jsonResult[$i]["logo"] = $path = ($dataProduk[$i]->logo) ? url('uploads/Product/Icon/' . $dataProduk[$i]->logo) : url('image/nia3.png');
 
         }
 //        dd($dataProduk);
@@ -571,7 +643,7 @@ class ProductNonAuthController extends Controller
         for ($i = 0; $i < count($dataProduk); $i++) {
             $jsonResult[$i]["id"] = $dataProduk[$i]->id;
             $jsonResult[$i]["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
-            $jsonResult[$i]["logo"] = $path = ($dataProduk[$i]->logo) ? url('uploads/Product/Icon/' . $dataProduk[$i]->logo) : url('image/noimage.jpg');
+            $jsonResult[$i]["logo"] = $path = ($dataProduk[$i]->logo) ? url('uploads/Product/Icon/' . $dataProduk[$i]->logo) : url('image/nia3.png');
 
         }
 //        dd($dataProduk);
@@ -608,7 +680,7 @@ class ProductNonAuthController extends Controller
         for ($i = 0; $i < count($dataProduk); $i++) {
             $jsonResult[$i]["id"] = $dataProduk[$i]->id;
             $jsonResult[$i]["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
-            $jsonResult[$i]["logo"] = $path = ($dataProduk[$i]->logo) ? url('uploads/Product/Icon/' . $dataProduk[$i]->logo) : url('image/noimage.jpg');
+            $jsonResult[$i]["logo"] = $path = ($dataProduk[$i]->logo) ? url('uploads/Product/Icon/' . $dataProduk[$i]->logo) : url('image/nia3.png');
 
         }
 //        dd($dataProduk);
@@ -666,10 +738,10 @@ class ProductNonAuthController extends Controller
             $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
             $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
-            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
-            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
-            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
-            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/nia3.png');
+            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/nia3.png');
+            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/nia3.png');
+            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/nia3.png');
             $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
             $jsonResult[$i]["type"] = $dataProduk[$i]->type;
             $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
@@ -700,7 +772,7 @@ class ProductNonAuthController extends Controller
 //                    "prodname_en" => $item->prodname_en,
 //                    "id_csc_product" => $item->id_csc_product,
 //                    "type" => $item->type,
-//                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/noimage.jpg'),
+//                    "image_1" => $path = ($item->image_1) ? url('uploads/Eksportir_Product/Image/' . $item->id . '/' . $item->image_1) : url('image/nia3.png'),
 //                    "nama_kategori_en" => $item->nama_kategori_en,
 //                    "price_usd" => $item->price_usd
 //                ));
@@ -828,10 +900,10 @@ class ProductNonAuthController extends Controller
             $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
             $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
-            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
-            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
-            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
-            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/nia3.png');
+            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/nia3.png');
+            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/nia3.png');
+            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/nia3.png');
             $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
             $jsonResult[$i]["type"] = $dataProduk[$i]->type;
             $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;

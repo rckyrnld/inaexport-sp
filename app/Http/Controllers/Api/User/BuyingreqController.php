@@ -260,7 +260,7 @@ class BuyingreqController extends Controller
 //            print_r($id_csc);
 
 
-//            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+//            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/nia3.png');
 //
 //            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
         }
@@ -989,7 +989,7 @@ class BuyingreqController extends Controller
 ////        $list_k["ext"] = $extension;
 //
 ////        dd($list_k);
-////        $users->file_desc = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/noimage.jpg');
+////        $users->file_desc = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/nia3.png');
         $cari = DB::select("select * from csc_buying_request where id='" . $id2 . "'");
         foreach ($cari as $aja) {
             $data1 = $aja->id_pembuat;

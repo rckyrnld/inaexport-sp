@@ -333,7 +333,7 @@ class InquiryController extends Controller
         $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
         $product = DB::table('csc_product_single')->where('id', $inquiry->to)->where('id_itdp_company_user', $id_user)->first();
 
-        $path = ($inquiry->file) ? url('uploads/Inquiry/' . $id_inquiry . '/' . $inquiry->file) : url('image/noimage.jpg');
+        $path = ($inquiry->file) ? url('uploads/Inquiry/' . $id_inquiry . '/' . $inquiry->file) : url('image/nia3.png');
         $product->file = $path;
 
         if (count($product) > 0) {
