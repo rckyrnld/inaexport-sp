@@ -81,6 +81,7 @@ class TicketingSupportFrontController extends Controller
         //Tinggal Ganti Email1 dengan email kemendag
 		//kementerianperdagangan.max@gmail.com
 //        dd(Auth::guard('eksmp')->user()->id_role = 3);
+
         if(Auth::guard('eksmp')->user()->id_role == 2){
             $data = [
                 'email' => $req->email,
@@ -105,6 +106,7 @@ class TicketingSupportFrontController extends Controller
             ];
 
 
+
             $ket = "Ticketing was created by ".getExBadan(auth::guard('eksmp')->user()->id).getCompanyName(auth::guard('eksmp')->user()->id);
 //		$ket2 = "You was create ticketing";
             $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
@@ -127,6 +129,24 @@ class TicketingSupportFrontController extends Controller
                 $mail->to($data2['email1'], $data2['username']);
                 $mail->subject('You Requesting Ticketing Support');
             });
+
+            $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+            foreach($admin_all as $aa){
+                $data = [
+                    'email' => $aa->email,
+                    'email1' => $aa->email,
+                    'username' => $aa->name,
+                    'company' =>getCompanyName(auth::guard('eksmp')->user()->id),
+                    'ticketing' => $id_ticketing,
+                    'main_messages' => $req->messages,
+                    'id' => $id_ticketing,
+                    'bu' => getExBadan(auth::guard('eksmp')->user()->id),
+                ];
+                Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
+                    $mail->to($data['email1'], $data['username']);
+                    $mail->subject('Requesting Ticketing Support');
+                });
+            }
         }
         else if(Auth::guard('eksmp')->user()->id_role == 3){
             $data = [
@@ -173,6 +193,25 @@ class TicketingSupportFrontController extends Controller
                 $mail->to($data2['email1'], $data2['username']);
                 $mail->subject('You Requesting Ticketing Support');
             });
+
+            $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+            foreach($admin_all as $aa){
+                $data = [
+                    'email' => $aa->email,
+                    'email1' => $aa->email,
+                    'username' => $aa->name,
+                    'company' =>getCompanyNameImportir(auth::guard('eksmp')->user()->id),
+                    'ticketing' => $id_ticketing,
+                    'main_messages' => $req->messages,
+                    'id' => $id_ticketing,
+                    'bu' => getExBadanImportir(auth::guard('eksmp')->user()->id),
+                ];
+                Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
+                    $mail->to($data['email1'], $data['username']);
+                    $mail->subject('Requesting Ticketing Support');
+                });
+            }
+
         }
 
 
