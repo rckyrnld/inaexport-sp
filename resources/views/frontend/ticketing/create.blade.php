@@ -71,7 +71,7 @@ if (Auth::user()) {
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="text" autocomplete="off" class="form-control" name="name"
                                    title="@lang('frontend.yourname')" placeholder="@lang('frontend.yourname')"
-                                   style="font-size: 14px;" required>
+                                   style="font-size: 14px;" value="{{$name}}" required>
                         </div>
                     </div>
                     <br>
@@ -82,7 +82,7 @@ if (Auth::user()) {
                         <div class="col-md-7">
                             <input type="text" autocomplete="off" class="form-control" name="email"
                                    title="@lang('frontend.youremail')" placeholder="@lang('frontend.youremail')"
-                                   style="font-size: 14px;" required>
+                                   style="font-size: 14px;" value="{{$email}}" required>
                         </div>
                     </div>
                     <br>

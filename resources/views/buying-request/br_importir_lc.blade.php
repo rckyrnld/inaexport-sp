@@ -81,11 +81,11 @@
 								</center></td>
 								<td><center>
 								<?php if($ryu->status_join == 1){ ?>
-								<a href="{{url('br_konfirm/'.$ryu->idb.'/'.$id)}}" class="btn btn-success"><i class="fa fa-check"></i> Verifikasi</a>
+								<a href="{{url('br_konfirm/'.$ryu->idb.'/'.$id)}}" class="btn btn-success" title="Verify"><i class="fa fa-check"></i></a>
 								<?php }else if($ryu->status_join == 2){ ?>
-								<a href="{{url('br_importir_chat/'.$id.'/'.$ryu->idb)}}" class="btn btn-info"><i class="fa fa-comment"></i> Chat</a>
+								<a href="{{url('br_importir_chat/'.$id.'/'.$ryu->idb)}}" class="btn btn-info" title="Chat"><i class="fa fa-comment"></i></a>
 								<?php }else if($ryu->status_join == 4){ ?>
-								<a href="{{url('br_importir_chat/'.$id.'/'.$ryu->idb)}}" class="btn btn-success"><i class="fa fa-list"></i> View</a>
+								<a href="{{url('br_importir_chat/'.$id.'/'.$ryu->idb)}}" class="btn btn-success" title="View"><i class="fa fa-list"></i></a>
 								<?php } ?>
 								</center></td>
 								</tr>

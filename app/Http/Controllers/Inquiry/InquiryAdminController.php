@@ -805,7 +805,6 @@ class InquiryAdminController extends Controller
                             'status_baca' => 0,
                             'waktu' => $datenow,
                             'to_role' => 2,
-                            'id_terkait' => $id_inquiry,
                         ]);
 
                         $data = [
@@ -1139,6 +1138,7 @@ class InquiryAdminController extends Controller
                 'receiver' => getCompanyName($receiver),
                 'subjek' => $data->subyek_en,
                 'id' => $id,
+                'bu' => getExBadan($receiver),
             ];
 
             Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
