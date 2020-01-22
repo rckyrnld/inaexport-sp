@@ -820,7 +820,6 @@ class BuyingRequestController extends Controller
 
     public function br_deal($id, $id2, $id3)
     {
-//        dd('kesini ? ');
         //notif ke admin dan pembuat buying request saat eskporter deal buying request
         date_default_timezone_set('Asia/Jakarta');
         $cari1 = DB::select("select id_pembuat,by_role from csc_buying_request where id='" . $id2 . "'");

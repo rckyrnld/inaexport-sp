@@ -104,13 +104,13 @@ class TrxController extends Controller
                         foreach($caripembuat as $cp){ $mailimp = $cp->email; }
                         $ket = "Transaction Created by ".$company->badanusaha." ".$company->company;
                         $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                ('3','".$company->company."','".Auth::guard('eksmp')->user()->id."','Importir','".$request->id_pembuat."','".$ket."','detailtrx','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
-                ");
+                        ('3','".$company->company."','".Auth::guard('eksmp')->user()->id."','Importir','".$request->id_pembuat."','".$ket."','detailtrx','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
+                        ");
 
                         $ket2 = "Transaction Created by ".$company->badanusaha." ".$company->company;
                         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                ('1','".$company->company."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_trx2','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
-                ");
+                        ('1','".$company->company."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_trx2','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
+                        ");
 
                         $data = [
                             'email' => "",
