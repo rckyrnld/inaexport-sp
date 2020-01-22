@@ -12,7 +12,7 @@
     <p>
       <!-- {{$main_messages}} -->
     </p>
-    <p style="text-align: left">click <a href="{{url('br_pw_chat', $id2)}}">Here</a>.</p>
+    <p style="text-align: left">click <a href="{{url('br_pw_chat', $id)}}">Here</a>.</p>
     <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
   </div>
 </div>

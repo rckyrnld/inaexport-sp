@@ -105,7 +105,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <center>
-                                <a href="{{url('/inquiry/accept_chat')}}/{{$inquiry->id}}" class="btn btn-primary" style="width: 100px; margin-right: 10px;">Chat</a>
+                                <a href="{{url('/inquiry/accept_chat')}}/{{$inquiry->id}}" class="btn btn-primary" style="width: 100px; margin-right: 10px;">Join</a>
                                 <a href="{{url('/inquiry')}}" class="btn btn-danger" style="width: 100px;">Cancel</a>
                             </center>
                         </div>

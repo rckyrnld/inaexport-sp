@@ -196,8 +196,8 @@ foreach($q2 as $p2){
 
 <div class="col-sm-12">
 <div align="center"><br>
-<a href="{{ url('br_save_join/'.$id) }}" class="btn btn-md btn-primary"><i class="fa fa-comment"></i> Chat</a>
-<a href="{{ url('br_list') }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Decline</a>
+<a href="{{ url('br_save_join/'.$id) }}" class="btn btn-md btn-primary">Join</a>
+<a href="{{ url('br_list') }}" class="btn btn-md btn-danger">Back</a>
 
 
 </div>
