@@ -143,6 +143,7 @@ Route::namespace('Api')->group(function () {
     /*Contact Us*/
 
     Route::post('browseProdukFe', 'ProductNonAuthController@browseProduct');
+    Route::post('FindProdukByKategori', 'ProductNonAuthController@findProduct');
     Route::post('browseProdukFeByKategori', 'ProductNonAuthController@browseProductByKategori');
     Route::get('getKategori', 'ProductNonAuthController@findKategori');
     Route::post('detailProdukFe', 'ProductNonAuthController@detailProduk');

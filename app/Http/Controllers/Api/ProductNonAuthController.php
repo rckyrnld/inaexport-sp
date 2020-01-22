@@ -87,6 +87,78 @@ class ProductNonAuthController extends Controller
             return response($res);
         }
     }
+	
+	public function findProduct(Request $request)
+    {
+        $offset = $request->offset;
+		$id = $request->id_kategori;
+        $dataProduk = DB::table('itdp_company_users')
+            ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
+            ->where('itdp_company_users.status', '=', 1)
+            ->where('csc_product_single.status', 2)
+            ->where('csc_product_single.id_csc_product', $id)
+            ->orwhere('csc_product_single.id_csc_product_level1', $id)
+            ->orwhere('csc_product_single.id_csc_product_level2', $id)
+//            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
+            ->select('csc_product_single.id', 'itdp_company_users.id_profil', 'itdp_company_users.id_role', 'csc_product_single.*',
+                'csc_product_single.image_1', 'csc_product_single.product_description_en', 'csc_product_single.image_2', 'csc_product_single.image_3',
+                'csc_product_single.image_4', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd',
+                'csc_product.nama_kategori_en', 'csc_product_single.code_en', 'csc_product_single.color_en', 'csc_product_single.size_en', 'csc_product_single.raw_material_en')
+            ->orderBy('csc_product_single.id', 'desc')
+            ->limit(10)
+            ->offset($offset)
+            ->get();
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($dataProduk); $i++) {
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
+            $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
+            $jsonResult[$i]["prodname_en"] = $dataProduk[$i]->prodname_en;
+            $jsonResult[$i]["image_1"] = $path = ($dataProduk[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_1) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_2"] = $path = ($dataProduk[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_2) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_3"] = $path = ($dataProduk[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_3) : url('image/noimage.jpg');
+            $jsonResult[$i]["image_4"] = $path = ($dataProduk[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $dataProduk[$i]->id . '/' . $dataProduk[$i]->image_4) : url('image/noimage.jpg');
+            $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
+            $jsonResult[$i]["type"] = $dataProduk[$i]->type;
+            $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+            $id_role = $dataProduk[$i]->id_role;
+            $id_profil = $dataProduk[$i]->id_profil;
+            $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+            $jsonResult[$i]["product_description_en"] = $dataProduk[$i]->product_description_en;
+
+            $list_k = array();
+            $list_k["code_en"] = $dataProduk[$i]->code_en;
+            $list_k["color_en"] = $dataProduk[$i]->color_en;
+            $list_k["size_en"] = $dataProduk[$i]->size_en;
+            $list_k["raw_material_en"] = $dataProduk[$i]->raw_material_en;
+            $list_k["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
+            $jsonResult[$i]["product_information"] = $list_k;
+
+        }
+
+        if (count($dataProduk) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $res['meta'] = $meta;
+            $res['data'] = $jsonResult;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
 
     public function browseProductByKategori(Request $request)
     {
