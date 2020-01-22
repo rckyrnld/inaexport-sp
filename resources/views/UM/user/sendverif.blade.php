@@ -1,4 +1,10 @@
-<p>Dear user, </P>
-<p>Your account ( {{$username}} ) had verified</p>
+<div align="center" style="width: 100%">
+    <div align="center" style="width: 580px;">
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
+        <p style="text-align: left">Dear user, </P>
+        <p style="text-align: left">Your account ( {{$username}} ) had verified</p>
 
-click <a href="{{url('profil2/'.$id)}}">here</a> for open your profil !.
+        <p style="text-align: left">click <a href="{{url('profil2/'.$id)}}">here</a> for open your profil.</p>
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
+    </div>
+</div>
