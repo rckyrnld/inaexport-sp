@@ -284,7 +284,22 @@ body {font-family: Arial;}
 			<label><b><font color="red">(*)</font> Upload NPWP</b></label>
 		</div>
 		<div class="form-group col-sm-4">
+		 <?php 
+			  if(empty(Auth::user()->name)){  ?>
 			<input type="file" name="npwpfile" id="npwpfile" class="form-control" >
+			<?php if($ryu->uploadnpwp == null){
+				echo "";
+			}else { ?>
+			<span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->uploadnpwp)}}"><?php echo $ryu->uploadnpwp; ?></b></span>
+			<?php } ?>
+			  <?php } else{ ?>
+			  <span><?php if(empty($ryu->uploadnpwp) || $ryu->uploadnpwp == null){ echo "<font color='red'>No File</font>"; }else{ ?>
+			  
+			  <a href="{{ asset('eksportir/'.$ryu->uploadnpwp)}}"><?php echo $ryu->uploadnpwp; ?></a>
+			  <?php } ?>
+			  </span>
+			  <?php } ?>
+			
 			
 		</div>
 		
@@ -305,7 +320,22 @@ body {font-family: Arial;}
 			<label><b> Upload Tanda Daftar Perusahaan</b></label>
 		</div>
 		<div class="form-group col-sm-4">
+			
+			<?php 
+			  if(empty(Auth::user()->name)){  ?>
 			<input type="file" name="tdpfile" id="tdpfile" class="form-control" >
+			<?php if($ryu->uploadtdp == null){
+				echo "";
+			}else { ?>
+			<span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->uploadtdp)}}"><?php echo $ryu->uploadtdp; ?></b></span>
+			<?php } ?>
+			  <?php } else{ ?>
+			  <span><?php if(empty($ryu->uploadtdp) || $ryu->uploadtdp == null){ echo "<font color='red'>No File</font>"; }else{ ?>
+			  
+			  <a href="{{ asset('eksportir/'.$ryu->uploadtdp)}}"><?php echo $ryu->uploadtdp; ?></a>
+			  <?php } ?>
+			  </span>
+			  <?php } ?>
 			
 		</div>
 		
@@ -317,6 +347,7 @@ body {font-family: Arial;}
 		</div>
 		<div class="form-group col-sm-4">
 			<input type="text" value="<?php echo $ryu->siup; ?>" name="siup" id="siup" class="form-control" >
+			
 		</div>
 		
 		
@@ -326,7 +357,22 @@ body {font-family: Arial;}
 			<label><b> Upload Surat Izin Usaha Perdagangan</b></label>
 		</div>
 		<div class="form-group col-sm-4">
+			
+			<?php 
+			  if(empty(Auth::user()->name)){  ?>
 			<input type="file" name="siupfile" id="siupfile" class="form-control" >
+			<?php if($ryu->uploadsiup == null){
+				echo "";
+			}else { ?>
+			<span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->uploadsiup)}}"><?php echo $ryu->uploadsiup; ?></b></span>
+			<?php } ?>
+			  <?php } else{ ?>
+			  <span><?php if(empty($ryu->uploadsiup) || $ryu->uploadsiup == null){ echo "<font color='red'>No File</font>"; }else{ ?>
+			  
+			  <a href="{{ asset('eksportir/'.$ryu->uploadsiup)}}"><?php echo $ryu->uploadsiup; ?></a>
+			  <?php } ?>
+			  </span>
+			  <?php } ?>
 			
 		</div>
 		

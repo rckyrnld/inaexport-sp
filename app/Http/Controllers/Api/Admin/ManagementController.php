@@ -623,5 +623,67 @@ class ManagementController extends Controller
             return $res;
         }
 	}
+	
+	public function br_admin_save(Request $request)
+    {
+        $kumpulcat = "";
+        date_default_timezone_set('Asia/Jakarta');
+        $g = count($request->category);
+        for ($a = 0; $a < $g; $a++) {
+            $kumpulcat = $kumpulcat . $request->category[$a] . ",";
+        }
+		
+        if (empty($request->file('doc'))) {
+            $file = "";
+        } else {
+            $file = $request->file('doc')->getClientOriginalName();
+            $destinationPath = public_path() . "/uploads/buy_request";
+            $request->file('doc')->move($destinationPath, $file);
+        }
+        $insert = DB::table('csc_buying_request')->insert([
+            'subyek' => $request->subyek,
+            'valid' => $request->valid,
+            'id_mst_country' => $request->country,
+            'city' => $request->city,
+//            'id_csc_prod_cat' => $h[0],
+            'id_csc_prod_cat_level1' => '0',
+            'id_csc_prod_cat_level2' => '0',
+            'shipping' => $request->ship,
+            'spec' => $request->spec,
+            'files' => $file,
+            'eo' => $request->eo,
+            'neo' => $request->neo,
+            'tp' => $request->tp,
+            'ntp' => $request->ntp,
+            'by_role' => '3',
+            'id_pembuat' => $request->id_user,
+            'date' => date('Y-m-d H:i:s'),
+            'id_csc_prod' => $kumpulcat,
+        ]);
+        if ($insert) {
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+
+    }
+
 
 }

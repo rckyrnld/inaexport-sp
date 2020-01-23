@@ -45,6 +45,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	Route::post('list_br_admin', 'Api\Admin\ManagementController@list_br_admin');
 	Route::post('list_br_join', 'Api\Admin\ManagementController@list_br_join');
 	Route::post('list_br_chat', 'Api\Admin\ManagementController@list_br_chat');
+	Route::post('br_admin_save', 'Api\Admin\ManagementController@br_admin_save');
 
 });
 
