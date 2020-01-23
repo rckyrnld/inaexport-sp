@@ -100,7 +100,7 @@ class TrxController extends Controller
                         foreach($caripembuat as $cp){ $mailimp = $cp->email; }
                         $ket = "Transaction Created by ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id);
                         $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                        ('3','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Importir','".$request->id_pembuat."','".$ket."','detailtrx','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
+                        ('3','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getCompanyNameImportir($request->id_pembuat)."','".$request->id_pembuat."','".$ket."','detailtrx','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
                         ");
 
                         $ket2 = "Transaction Created by ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id);
@@ -111,10 +111,12 @@ class TrxController extends Controller
                         $data = [
                             'email' => "",
                             'email1' => $mailimp,
+                            'receiver' =>getCompanyNameImportir($request->id_pembuat),
                             'username' => getCompanyName(Auth::guard('eksmp')->user()->id),
                             'main_messages' => "",
                             'id' => $request->id_transaksi,
                             'bu' => getExBadan(Auth::guard('eksmp')->user()->id),
+                            'bur' =>getExBadanImportir($request->id_pembuat),
                         ];
                         Mail::send('UM.user.sendtrx', $data, function ($mail) use ($data) {
                             $mail->to($data['email1'], $data['username']);
