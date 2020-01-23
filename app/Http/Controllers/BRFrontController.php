@@ -241,7 +241,7 @@ class BRFrontController extends Controller
 	
 	public function br_importir_bc($id)
     {
-//		dd($id);
+		//broadcast buying request importer
 		date_default_timezone_set('Asia/Jakarta');
 		$cariprod = DB::select("select * from csc_buying_request where id='".$id."'");
 		foreach($cariprod as $prodcari) { $rrr = $prodcari->id_csc_prod; $zzz = $prodcari->id_pembuat; }
@@ -266,9 +266,9 @@ class BRFrontController extends Controller
 				
 				//NOTIF
 				$id_terkait = "";
-				$ket = "Buying Request created by ".$namapembuat;
+				$ket = "Buying Request created by ".getExBadanImportir($zzz).getCompanyNameImportir($zzz);
 				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-					('2','".$namapembuat."','".$zzz."','Eksportir','".$napro."','".$ket."','br_list','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+					('2','".getCompanyNameImportir($zzz)."','".$zzz."','".getCompanyName($napro)."','".$napro."','".$ket."','br_list','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 				");
 				//END NOTIF
 				//EMAIL
@@ -276,9 +276,9 @@ class BRFrontController extends Controller
 				if(count($caridataeks) != 0){
 				foreach($caridataeks as $vm){ $vc1 = $vm->email; $vc2 = $vm->id_profil;}
 				$company = Db::table('itdp_profil_eks')->where('id', $vc2)->first();
-				$data = ['username' => $namapembuat, 'id2' => '0', 'nama' => $namapembuat, 'company' => $namapembuat, 'password' => '', 'email' => $vc1,'bu' => $company->badanusaha];
+				$data = ['username' => getCompanyName($zzz), 'id2' => '0', 'nama' => getCompanyNameImportir($zzz), 'company' => getCompanyName($napro), 'password' => '', 'email' => getUserMail($napro),'bu' => getExBadan($napro), 'bur' => getExBadanImportir($zzz)];
 //				dd($data);
-                Mail::send('UM.user.emailbr', $data, function ($mail) use ($data) {
+                Mail::send('UM.user.emailbr2', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
                     $mail->subject('Buying Was Created');
                 });

@@ -1067,4 +1067,31 @@ if (! function_exists('getExBadanImportir')) {
         return $badanusaha;
     }
 }
+
+if (! function_exists('getAdminMail')) {
+    function getAdminMail($id){
+        $mail = "-";
+        $data = DB::table('itdp_admin_users')->where('id', $id)->first();
+        if($data){
+            if($data->name != NULL){
+                $mail = $data->email;
+            }
+        }
+
+        return $mail;
+    }
+}
+
+if (! function_exists('getUserMail')) {
+    function getUserMail($id){
+        $email = "";
+        $data = DB::table('itdp_company_users')->where('id', $id)->first();
+        if($data){
+            $email = $data->email;
+        }
+        return $email;
+    }
+}
+
+
 // End of Function Search

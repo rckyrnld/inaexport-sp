@@ -4,6 +4,9 @@
     .badge {
         font-size: 95% !important;
     }
+    .form-control{
+        font-size: 13px;
+    }
 </style>
 <div id="content-bodys" class="product_area" style="color: black">
     <div class="py-1 w-100">

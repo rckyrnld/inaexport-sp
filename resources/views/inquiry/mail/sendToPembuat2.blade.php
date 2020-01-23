@@ -23,11 +23,11 @@
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
         <p style="color: #8bbbe8; font-size: 20px;text-align: left">Information</p>
         <hr>
-        <p style="text-align: left">Yth. {{($bu== '-')? '':$bu." "}}{{$company}},</P>
-        <p style="text-align: left">Terdapat permintaan hubungan baru dari {{$dari}}, apabila anda berminat silahkan meresponnya segera.</p>
-        <P style="text-align: left">Untuk melihat permintaan hubungan dagang tersebut, silahkan login <a href="{{url('/login')}}" class="button">disini</a></P>
+        <p style="text-align: left">Dear {{($bu== '-')? '':$bu." "}}{{$company}},</P>
+        <p style="text-align: left">There are responses that have been made by the eksporters, please look immediately.</p>
+        <p style="text-align: left">To knows, please enter the Inaexport.id application with an account that is already registered.</p>
+        <br>
+        <p style="text-align: left"><a href="{{url('/login')}}" class="button">Next Log In</a></p>
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
     </div>
 </div>
-
-

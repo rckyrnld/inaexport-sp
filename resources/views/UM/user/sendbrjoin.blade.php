@@ -2,7 +2,7 @@
   <div align="center" style="width: 580px;">
     <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
     <p style="text-align: left">Dear {{$receiver}}, </P>
-    <p style="text-align: left">{{$username}} Had Joined To Your Buying Request</p>
+    <p style="text-align: left">{{($bu== '-')? '':$bu." "}}{{$username}} Had Joined To Your Buying Request</p>
     <hr>
     <!-- <ol>
         <ul>Name : {{$username}}</ul>

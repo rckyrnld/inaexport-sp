@@ -120,7 +120,7 @@ class InquiryFrontController extends Controller
                     'dari_id' => $id_user,
                     'untuk_nama' => getCompanyName($dtproduct->id_itdp_company_user),
                     'untuk_id' => $dtproduct->id_itdp_company_user,
-                    'keterangan' => 'New Inquiry By '.getCompanyNameImportir($id_user).' with Subyek  "'.$request->subject.'"',
+                    'keterangan' => 'New Inquiry By '.getExBadanImportir($id_user).getCompanyNameImportir($id_user).' with Subyek  "'.$request->subject.'"',
                     'url_terkait' => 'inquiry',
                     'status_baca' => 0,
                     'waktu' => $datenow,
@@ -133,37 +133,39 @@ class InquiryFrontController extends Controller
                 if($untuk){
                     $company = DB::table('itdp_profil_eks')->where('id', $untuk->id_profil)->first();
                 }
+//                dd (getExBadanImportir($id_user));
                 $data = [
                     'email' => $untuk->email,
                     'username' => $untuk->username,
                     'type' => "eksportir",
                     'company' => getCompanyName($dtproduct->id_itdp_company_user),
-                    'dari' => "Importer",
-                    'bu' => "$company->badanusaha"
+                    'dari' => getCompanyNameImportir($id_user),
+                    'bu' => getExBadan($dtproduct->id_itdp_company_user),
+                    'bur' => getExBadanImportir($id_user),
                 ];
 
-                Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data) {
+                Mail::send('inquiry.mail.sendToEksportir2', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
                     $mail->subject('Inquiry Information');
                 });
 
-                $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
-                $users_admin = [];
-                array_push($users_admin, env('MAIL_USERNAME','no-reply@inaexport.id'));
-                foreach ($admin as $adm) {
-                    array_push($users_admin, $adm->email);
-                }
-
-                //Notif email ke admin
-                $dataadmin = [
-                    'pembuat' => getCompanyNameImportir($id_user),
-                    'dari' => "Importir"
-                ];
-
-                Mail::send('inquiry.mail.SendToAdmin', $dataadmin, function ($mail) use ($dataadmin, $users_admin) {
-                    $mail->subject('Inquiry Information');
-                    $mail->to($users_admin);
-                });
+//                $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+//                $users_admin = [];
+//                array_push($users_admin, env('MAIL_USERNAME','no-reply@inaexport.id'));
+//                foreach ($admin as $adm) {
+//                    array_push($users_admin, $adm->email);
+//                }
+//
+//                //Notif email ke admin
+//                $dataadmin = [
+//                    'pembuat' => getCompanyNameImportir($id_user),
+//                    'dari' => "Importir"
+//                ];
+//
+//                Mail::send('inquiry.mail.SendToAdmin', $dataadmin, function ($mail) use ($dataadmin, $users_admin) {
+//                    $mail->subject('Inquiry Information');
+//                    $mail->to($users_admin);
+//                });
             }
 
             return redirect('/front_end/history');
@@ -262,7 +264,7 @@ class InquiryFrontController extends Controller
                 'dari_id' => $sender,
                 'untuk_nama' => getCompanyName($receiver),
                 'untuk_id' => $receiver,
-                'keterangan' => 'New Message from '.getCompanyNameImportir($sender).' about Inquiry '.$data->subyek_en,
+                'keterangan' => 'New Message from '.getExBadanImportir($sender).getCompanyNameImportir($sender).' about Inquiry '.$data->subyek_en,
                 'url_terkait' => 'inquiry/chatting',
                 'status_baca' => 0,
                 'waktu' => $datenow,
@@ -282,9 +284,11 @@ class InquiryFrontController extends Controller
                 'receiver' => getCompanyName($receiver),
                 'subjek' => $data->subyek_en,
                 'id' =>$id,
+                'bu' => getExBadanImportir($sender),
+                'bur' => getExBadan($receiver)
             ];
 
-            Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+            Mail::send('inquiry.mail.sendChat3', $data2, function ($mail) use ($data2) {
                 $mail->to($data2['email'], $data2['username']);
                 $mail->subject('Inquiry Chatting Information');
             });
@@ -335,7 +339,7 @@ class InquiryFrontController extends Controller
             'dari_id' => $sender,
             'untuk_nama' => getCompanyName($receiver),
             'untuk_id' => $receiver,
-            'keterangan' => 'New Message from '.getCompanyNameImportir($sender).' about Inquiry '.$data->subyek_en,
+            'keterangan' => 'New Invoice from '.getExBadanImportir($sender).getCompanyNameImportir($sender).' about Inquiry '.$data->subyek_en,
             'url_terkait' => 'inquiry/chatting',
             'status_baca' => 0,
             'waktu' => $datenow,
@@ -355,9 +359,11 @@ class InquiryFrontController extends Controller
             'receiver' => getCompanyName($receiver),
             'subjek' => $data->subyek_en,
             'id' => $id,
+            'bu' => getExBadanImportir($sender),
+            'bur' => getExBadan($receiver)
         ];
 
-        Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
+        Mail::send('inquiry.mail.sendChat3', $data2, function ($mail) use ($data2) {
             $mail->to($data2['email'], $data2['username']);
             $mail->subject('Inquiry Payment Information');
         });

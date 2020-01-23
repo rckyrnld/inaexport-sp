@@ -24,7 +24,7 @@
         <p style="color: #8bbbe8; font-size: 20px;text-align: left">Information</p>
         <hr>
         <p style="text-align: left">Dear {{$penerima}},</P>
-        <p style="text-align: left">Inquiry with subject {{$subjek}} has been Deal by Exporter {{$company}}.</p>
+        <p style="text-align: left">Inquiry with subject {{$subjek}} has been Deal by Exporter {{($bu== '-')? '': $bu." "}}{{$company}}.</p>
         <p style="text-align: left"><a href="{{url('/login')}}">Click here</a> to login in application.</p>
         <br>
         <p style="text-align: left">Thanks</p>

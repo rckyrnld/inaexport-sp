@@ -268,7 +268,7 @@ class InquiryEksController extends Controller
                     'dari_id' => $id_user,
                     'untuk_nama' => getCompanyNameImportir($data->id_pembuat),
                     'untuk_id' => $data->id_pembuat,
-                    'keterangan' => 'Exporter '.getCompanyName($id_user).' has joined Inquiry '.$data->subyek_en,
+                    'keterangan' => 'Exporter '.getExBadan($id_user).getCompanyName($id_user).' has joined Inquiry '.$data->subyek_en,
                     'url_terkait' => 'front_end/history',
                     'status_baca' => 0,
                     'waktu' => $datenow,
@@ -281,10 +281,11 @@ class InquiryEksController extends Controller
                     'username' => $username,
                     'type' => "importir",
                     'company' => getCompanyNameImportir($data->id_pembuat),
-                    'dari' => "Eksportir"
+                    'dari' => "Eksportir",
+                    'bu' => getExBadanImportir($data->id_pembuat),
                 ];
 
-                Mail::send('inquiry.mail.sendToPembuat', $data, function ($mail) use ($data) {
+                Mail::send('inquiry.mail.sendToPembuat2', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
                     $mail->subject('Inquiry Information');
                 });
@@ -310,7 +311,7 @@ class InquiryEksController extends Controller
                     'dari_id' => $id_user,
                     'untuk_nama' => $name,
                     'untuk_id' => $data->id_pembuat,
-                    'keterangan' => 'Exporter '.getCompanyName($id_user).' has joined Inquiry '.$data->subyek_en,
+                    'keterangan' => 'Exporter '.getExBadan($id_user).getCompanyName($id_user).' has joined Inquiry '.$data->subyek_en,
                     'url_terkait' => $url_terkait,
                     'status_baca' => 0,
                     'waktu' => $datenow,
@@ -413,7 +414,7 @@ class InquiryEksController extends Controller
                 'dari_id' => $sender,
                 'untuk_nama' => getCompanyNameImportir($receiver),
                 'untuk_id' => $receiver,
-                'keterangan' => 'New Message from '.getCompanyName($sender).' about Inquiry '.$data->subyek_en,
+                'keterangan' => 'New Message from '.getExBadan($sender).getCompanyName($sender).' about Inquiry '.$data->subyek_en,
                 'url_terkait' => 'front_end/chat_inquiry',
                 'status_baca' => 0,
                 'waktu' => $datenow,
@@ -434,9 +435,10 @@ class InquiryEksController extends Controller
                 'subjek' => $data->subyek_en,
                 'id' =>$id,
                 'bu' => getExBadan($sender),
+                'bur' => getExBadanImportir($receiver),
             ];
 
-            Mail::send('inquiry.mail.sendChat2', $data, function ($mail) use ($data) {
+            Mail::send('inquiry.mail.sendChat3', $data, function ($mail) use ($data) {
                 $mail->to($data['email'], $data['username']);
                 $mail->subject('Inquiry Chatting Information');
             });
@@ -648,6 +650,7 @@ class InquiryEksController extends Controller
 
         if($inquiry->type == "perwakilan" || $inquiry->type == "admin"){
             if($stat == 3){
+//                dd($inquiry);
                 // $updatebr = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->update([
                 //     'status' => 4,
                 // ]);
@@ -679,36 +682,36 @@ class InquiryEksController extends Controller
 
                     //Notif Admin
                     //Notif sistem
-                    $notif = DB::table('notif')->insert([
-                        'dari_nama' => getCompanyName($id_user),
-                        'dari_id' => $id_user,
-                        'untuk_nama' => "",
-                        'untuk_id' => 0,
-                        'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getCompanyName($id_user),
-                        'url_terkait' => $url_terkait,
-                        'status_baca' => 0,
-                        'waktu' => $datenow,
-                        'to_role' => 1,
-                        'id_terkait' => $broad->id
-                    ]);
+//                    $notif = DB::table('notif')->insert([
+//                        'dari_nama' => getCompanyName($id_user),
+//                        'dari_id' => $id_user,
+//                        'untuk_nama' => "",
+//                        'untuk_id' => 0,
+//                        'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getCompanyName($id_user),
+//                        'url_terkait' => $url_terkait,
+//                        'status_baca' => 0,
+//                        'waktu' => $datenow,
+//                        'to_role' => 1,
+//                        'id_terkait' => $broad->id
+//                    ]);
 
-                    $users = DB::table('itdp_admin_users')->where('id', $inquiry->id_pembuat)->first();
-                    $email = $users->email;
-                    $username = $users->name;
-                    //Tinggal Ganti Email1 dengan email kemendag
-                    $data2 = [
-                        'email' => env('MAIL_USERNAME','admin@inaexport.id'),
-                        'username' => $username,
-                        'type' => $inquiry->type,
-                        'penerima' => "Admin",
-                        'company' => getCompanyName($id_user),
-                        'subjek' => $inquiry->subyek_en
-                    ];
-
-                    Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
-                        $mail->to($data2['email'], $data2['username']);
-                        $mail->subject('Inquiry Deal Information');
-                    });
+//                    $users = DB::table('itdp_admin_users')->where('id', $inquiry->id_pembuat)->first();
+//                    $email = $users->email;
+//                    $username = $users->name;
+//                    //Tinggal Ganti Email1 dengan email kemendag
+//                    $data2 = [
+//                        'email' => env('MAIL_USERNAME','admin@inaexport.id'),
+//                        'username' => $username,
+//                        'type' => $inquiry->type,
+//                        'penerima' => "Admin",
+//                        'company' => getCompanyName($id_user),
+//                        'subjek' => $inquiry->subyek_en
+//                    ];
+//
+//                    Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
+//                        $mail->to($data2['email'], $data2['username']);
+//                        $mail->subject('Inquiry Deal Information');
+//                    });
 
 
                 }
@@ -719,7 +722,7 @@ class InquiryEksController extends Controller
                     'dari_id' => $id_user,
                     'untuk_nama' => $untuk_nama,
                     'untuk_id' => $inquiry->id_pembuat,
-                    'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getCompanyName($id_user),
+                    'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getExBadan($id_user).getCompanyName($id_user),
                     'url_terkait' => $url_terkait,
                     'status_baca' => 0,
                     'waktu' => $datenow,
@@ -730,14 +733,14 @@ class InquiryEksController extends Controller
                 $users = DB::table('itdp_admin_users')->where('id', $inquiry->id_pembuat)->first();
                 $email = $users->email;
                 $username = $users->name;
-                //Tinggal Ganti Email1 dengan email kemendag
                 $data2 = [
                     'email' => $email,
                     'username' => $username,
                     'type' => $inquiry->type,
                     'penerima' => $untuk_nama,
                     'company' => getCompanyName($id_user),
-                    'subjek' => $inquiry->subyek_en
+                    'subjek' => $inquiry->subyek_en,
+                    'bu' => getExBadan($id_user),
                 ];
 
                 Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
@@ -788,7 +791,8 @@ class InquiryEksController extends Controller
                     'type' => $inquiry->type,
                     'penerima' => getCompanyNameImportir($inquiry->id_pembuat),
                     'company' => getCompanyName($id_user),
-                    'subjek' => $inquiry->subyek_en
+                    'subjek' => $inquiry->subyek_en,
+                    'bu' => getExBadanImportir($inquiry->id_pembuat)
                 ];
 
                 Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
@@ -796,28 +800,28 @@ class InquiryEksController extends Controller
                     $mail->subject('Inquiry Deal Information');
                 });
 
-                $data3 = [
-                    'email' => env('MAIL_USERNAME','no-reply@inaexport.id'),
-                    'username' => $username,
-                    'type' => $inquiry->type,
-                    'penerima' => 'Admin',
-                    'company' => getCompanyName($id_user),
-                    'subjek' => $inquiry->subyek_en
-                ];
+//                $data3 = [
+//                    'email' => env('MAIL_USERNAME','no-reply@inaexport.id'),
+//                    'username' => $username,
+//                    'type' => $inquiry->type,
+//                    'penerima' => 'Admin',
+//                    'company' => getCompanyName($id_user),
+//                    'subjek' => $inquiry->subyek_en
+//                ];
 
                 //notif untuk admin
-                $notif = DB::table('notif')->insert([
-                    'dari_nama' => getCompanyName($id_user),
-                    'dari_id' => $id_user,
-                    'untuk_nama' => 'Super Admin',
-                    'untuk_id' => 1,
-                    'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getCompanyName($id_user),
-                    'url_terkait' => 'inquiry_admin/view_importir',
-                    'status_baca' => 0,
-                    'waktu' => $datenow,
-                    'to_role' => 1,
-                    'id_terkait' => $id
-                ]);
+//                $notif = DB::table('notif')->insert([
+//                    'dari_nama' => getCompanyName($id_user),
+//                    'dari_id' => $id_user,
+//                    'untuk_nama' => 'Super Admin',
+//                    'untuk_id' => 1,
+//                    'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getCompanyName($id_user),
+//                    'url_terkait' => 'inquiry_admin/view_importir',
+//                    'status_baca' => 0,
+//                    'waktu' => $datenow,
+//                    'to_role' => 1,
+//                    'id_terkait' => $id
+//                ]);
 
                 Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
                     $mail->to($data2['email'], $data2['username']);
