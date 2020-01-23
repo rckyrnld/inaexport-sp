@@ -118,7 +118,7 @@ class TicketingSupportFrontController extends Controller
 //		");
 
 
-            //notif email for admin
+            //notif email for env email
             Mail::send('UM.user.sendticket', $data, function ($mail) use ($data) {
                 $mail->to($data['email1'], $data['username']);
                 $mail->subject('Requesting Ticketing Support');
@@ -130,6 +130,7 @@ class TicketingSupportFrontController extends Controller
                 $mail->subject('You Requesting Ticketing Support');
             });
 
+            //notif email for all admin
             $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
             foreach($admin_all as $aa){
                 $data = [

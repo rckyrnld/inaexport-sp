@@ -95,75 +95,88 @@ class TrxController extends Controller
 			$update = DB::select("update csc_transaksi set id_product='".$request->id_product."' where id_transaksi='".$request->id_transaksi."' ");
 		}
 		if($request->tipekirim == 1){
-//		    dd(Auth::guard('eksmp')->user()->id_profil);
-            if(Auth::guard('eksmp')->user()->id_profil){
-                $company = Db::table('itdp_profil_eks')->where('id',Auth::guard('eksmp')->user()->id_profil)->first();
-                if($company){
                     if($request->by_role == 3){
                         $caripembuat = DB::select("select * from itdp_company_users where id='".$request->id_pembuat."'");
                         foreach($caripembuat as $cp){ $mailimp = $cp->email; }
-                        $ket = "Transaction Created by ".$company->badanusaha." ".$company->company;
+                        $ket = "Transaction Created by ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id);
                         $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                        ('3','".$company->company."','".Auth::guard('eksmp')->user()->id."','Importir','".$request->id_pembuat."','".$ket."','detailtrx','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
+                        ('3','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Importir','".$request->id_pembuat."','".$ket."','detailtrx','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
                         ");
 
-                        $ket2 = "Transaction Created by ".$company->badanusaha." ".$company->company;
+                        $ket2 = "Transaction Created by ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id);
                         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                        ('1','".$company->company."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_trx2','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
+                        ('1','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_trx2','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
                         ");
 
                         $data = [
                             'email' => "",
                             'email1' => $mailimp,
-                            'username' => $company->company,
+                            'username' => getCompanyName(Auth::guard('eksmp')->user()->id),
                             'main_messages' => "",
                             'id' => $request->id_transaksi,
-                            'bu' => $company->badanusaha,
+                            'bu' => getExBadan(Auth::guard('eksmp')->user()->id),
                         ];
                         Mail::send('UM.user.sendtrx', $data, function ($mail) use ($data) {
                             $mail->to($data['email1'], $data['username']);
                             $mail->subject('Transaction Created By '.$data['username']);
                         });
 
-                        $data22 = [
-                            'email' => "",
-                            'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
-                            'username' => $company->company,
-                            'main_messages' => "",
-                            'id' => $request->id_transaksi,
-                            'bu' => $company->badanusaha,
-                            'url' => "inquiry_admin/view",
-                        ];
-                        Mail::send('UM.user.sendtrx2', $data22, function ($mail) use ($data22) {
-                            $mail->to($data22['email1'], $data22['username']);
-                            $mail->subject('Transaction Created By '.$data22['username']);
-                        });
+                        //notif email for env email
+//                        $data22 = [
+//                            'email' => "",
+//                            'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
+//                            'username' => getCompanyName(Auth::guard('eksmp')->user()->id),
+//                            'main_messages' => "",
+//                            'id' => $request->id_transaksi,
+//                            'bu' => getExBadan(Auth::guard('eksmp')->user()->id),
+//                            'url' => "inquiry_admin/view",
+//                        ];
+//                        Mail::send('UM.user.sendtrx2', $data22, function ($mail) use ($data22) {
+//                            $mail->to($data22['email1'], $data22['username']);
+//                            $mail->subject('Transaction Created By '.$data22['username']);
+//                        });
+
+                        //notif email for all admin
+                        $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+                        foreach($admin_all as $aa){
+                            $data2 = [
+                                'email' => $aa->email,
+                                'email1' => $aa->email,
+                                'admin' => $aa->name,
+                                'company' =>getCompanyName(auth::guard('eksmp')->user()->id),
+                                'url' =>  "inquiry_admin/view",
+                                'id' => $request->id_transaksi,
+                                'bu' => getExBadan(auth::guard('eksmp')->user()->id),
+                            ];
+                            Mail::send('UM.user.sendtrx2', $data2, function ($mail) use ($data2) {
+                                $mail->to($data2['email1']);
+                                $mail->subject('Requesting Ticketing Support');
+                            });
+                        }
 
 
                     }else{
-//			    dd($request);
-                        $caripenerima = DB::select("select * from itdp_admin_users where id = '".$request->id_pembuat."'");
-                        $caripembuat = DB::select ("select * from itdp_profil_eks where id = '".Auth::guard('eksmp')->user()->id_profil."'");
-                        $namapembuat = $caripembuat[0]->company;
-                        $namapenerima = $caripenerima[0]->name;
-                        $bupembuat = $caripembuat[0]->badanusaha;
-                        if($bupembuat == "-"){
-                            $bupembuat2 = "";
-                        }
-                        else{
-                            $bupembuat2 = $bupembuat;
-                        }
-//			    dd($bupembuat);
-//                $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-//                ('4',$namapembuat,'".Auth::guard('eksmp')->user()->id_profil."',$namapenerima,$request->id_pembuat,'".$ket."','br_trx2','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
-//                ");
-                        if($request->origin == 2){
-//                    dd('a');
+//                        $caripenerima = DB::select("select * from itdp_admin_users where id = '".$request->id_pembuat."'");
+//                        $caripembuat = DB::select ("select * from itdp_profil_eks where id = '".Auth::guard('eksmp')->user()->id_profil."'");
+//                        $namapembuat = $caripembuat[0]->company;
+//                        $namapenerima = $caripenerima[0]->name;
+//                        $bupembuat = $caripembuat[0]->badanusaha;
+//                        if($bupembuat == "-"){
+//                            $bupembuat2 = "";
+//                        }
+//                        else{
+//                            $bupembuat2 = $bupembuat;
+//                        }
+        //                $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+        //                ('4',$namapembuat,'".Auth::guard('eksmp')->user()->id_profil."',$namapenerima,$request->id_pembuat,'".$ket."','br_trx2','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
+        //                ");
+//                        dd($request->id_transaksi);
+                        if($request->origin == 2 || $request->origin == 1){
                             //transaksi buying request
+                            // $request->origin == 1 inquiry di perwakilan
                             $url = "br_trx2";
                             $idnya = $request->id_transaksi;
                         }else{
-//                    dd('b');
                             //transaksi inqury
                             $url = "inquiry_perwakilan/view";
                             $idnya = $request->id_in;
@@ -171,49 +184,52 @@ class TrxController extends Controller
 //                dd(auth::guard('eksmp')->user()->id_profil);
 
 
-                        $ket = "Transaction Created by ".$bupembuat2." ".$namapembuat;
+                        $ket = "Transaction Created by ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id);
                         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                    ('4','$namapembuat','".Auth::guard('eksmp')->user()->id."','".$namapembuat."',$request->id_pembuat,'".$ket."','".$url."','".$idnya."','".Date('Y-m-d H:m:s')."','0')
-                    ");
+                        ('4','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getAdminName($request->id_pembuat)."',$request->id_pembuat,'".$ket."','".$url."','".$idnya."','".Date('Y-m-d H:m:s')."','0')
+                        ");
                         $data22 = [
                             'email' => "",
-                            'email1' => $caripenerima[0]->email,
-                            'username' => $namapembuat,
+                            'email1' => getAdminMail($request->id_pembuat),
+                            'username' => getCompanyName(Auth::guard('eksmp')->user()->id),
                             'main_messages' => "",
                             'id' => $idnya,
-                            'sender' => $caripembuat[0]->company,
-                            'receiver' => $namapenerima,
+                            'sender' => getCompanyName(Auth::guard('eksmp')->user()->id),
+                            'receiver' => getAdminName($request->id_pembuat),
                             'url' => $url,
-                            'bu' => $bupembuat,
+                            'bu' => getExBadan(Auth::guard('eksmp')->user()->id),
                         ];
                         Mail::send('UM.user.sendtrx3', $data22, function ($mail) use ($data22) {
                             $mail->to($data22['email1'], $data22['username']);
 //                    $mail->subject('Transaction Created By '.Auth::guard('eksmp')->user()->username);
-                            $mail->subject('Transaction Created By '.$data22['sender']);
+                            $mail->subject('Transaction Created By Exporter');
                         });
 
-
-                        $ket2 = "Transaction Created by ".$bupembuat2." ".$namapembuat;
+                        //notif system for admin
+                        $ket2 = "Transaction Created by ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id);
                         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                    ('1','$namapembuat','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','".$url."','".$idnya."','".Date('Y-m-d H:m:s')."','0')
-                    ");
+                        ('1','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','".$url."','".$idnya."','".Date('Y-m-d H:m:s')."','0')
+                        ");
 
-                        $data22 = [
-                            'email' => "",
-                            'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
-                            'username' => $namapembuat,
-                            'main_messages' => "",
-                            'id' => $idnya,
-                            'url' => $url,
-                            'bu' => $bupembuat,
-                        ];
-                        Mail::send('UM.user.sendtrx2', $data22, function ($mail) use ($data22) {
-                            $mail->to($data22['email1'], $data22['username']);
-                            $mail->subject('Transaction Created By '.$data22['username']);
-                        });
+                        //notif email for all admin
+                        $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+                        foreach($admin_all as $aa){
+                            $data2 = [
+                                'email' => $aa->email,
+                                'email1' => $aa->email,
+                                'admin' => $aa->name,
+                                'company' =>getCompanyName(auth::guard('eksmp')->user()->id),
+                                'url' =>  "inquiry_admin/view",
+                                'id' => $request->id_transaksi,
+                                'bu' => getExBadan(auth::guard('eksmp')->user()->id),
+                            ];
+                            Mail::send('UM.user.sendtrx2', $data2, function ($mail) use ($data2) {
+                                $mail->to($data2['email1']);
+                                $mail->subject('Requesting Ticketing Support');
+                            });
+                        }
                     }
-                }
-            }
+
 
 //            $ket3 = "Transaction Created By You";
 //            $insertnotif3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values

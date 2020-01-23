@@ -788,7 +788,8 @@ class InquiryWakilController extends Controller
                 'sender' => getPerwakilanName($sender),
                 'receiver' => getCompanyName($receiver),
                 'subjek' => $data->subyek_en,
-                'id' => $id
+                'id' => $id,
+                'bu' => getExBadan($receiver),
             ];
 
             Mail::send('inquiry.mail.sendChat', $data2, function ($mail) use ($data2) {
