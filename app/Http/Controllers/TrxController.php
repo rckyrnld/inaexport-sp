@@ -120,7 +120,7 @@ class TrxController extends Controller
                         ];
                         Mail::send('UM.user.sendtrx', $data, function ($mail) use ($data) {
                             $mail->to($data['email1'], $data['username']);
-                            $mail->subject('Transaction Created By '.$data['username']);
+                            $mail->subject('Transaction Created By Exporters');
                         });
 
                         //notif email for env email
@@ -152,7 +152,7 @@ class TrxController extends Controller
                             ];
                             Mail::send('UM.user.sendtrx2', $data2, function ($mail) use ($data2) {
                                 $mail->to($data2['email1']);
-                                $mail->subject('Requesting Ticketing Support');
+                                $mail->subject('Transaction Created By Exporters');
                             });
                         }
 
@@ -227,7 +227,7 @@ class TrxController extends Controller
                             ];
                             Mail::send('UM.user.sendtrx2', $data2, function ($mail) use ($data2) {
                                 $mail->to($data2['email1']);
-                                $mail->subject('Requesting Ticketing Support');
+                                $mail->subject('Transaction Created By Exporter');
                             });
                         }
                     }

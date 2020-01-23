@@ -774,7 +774,7 @@ class InquiryEksController extends Controller
                     'dari_id' => $id_user,
                     'untuk_nama' => getCompanyNameImportir($inquiry->id_pembuat),
                     'untuk_id' => $inquiry->id_pembuat,
-                    'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getCompanyName($id_user),
+                    'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getExBadan($id_user).getCompanyName($id_user),
                     'url_terkait' => 'front_end/view_inquiry',
                     'status_baca' => 0,
                     'waktu' => $datenow,
@@ -792,10 +792,11 @@ class InquiryEksController extends Controller
                     'penerima' => getCompanyNameImportir($inquiry->id_pembuat),
                     'company' => getCompanyName($id_user),
                     'subjek' => $inquiry->subyek_en,
-                    'bu' => getExBadanImportir($inquiry->id_pembuat)
+                    'bu' => getExBadanImportir($inquiry->id_pembuat),
+                    'bur' => getExBadan($id_user),
                 ];
 
-                Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
+                Mail::send('inquiry.mail.sendDeal2', $data2, function ($mail) use ($data2) {
                     $mail->to($data2['email'], $data2['username']);
                     $mail->subject('Inquiry Deal Information');
                 });

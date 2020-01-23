@@ -395,11 +395,11 @@ class BRFrontController extends Controller
                 $id_profil = $cr2->id_profil;
 			}
 			
-			$ket = "Importer ".Auth::guard('eksmp')->user()->username." Upload Invoice On Buying Request";
+			$ket = "Importer ".getExBadanImportir(Auth::guard('eksmp')->user()->id).getCompanyNameImportir(Auth::guard('eksmp')->user()->id)." Upload Invoice On Buying Request";
 			$it = $request->idb;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('2','Importir','".Auth::guard('eksmp')->user()->id."','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
+			('2','".getCompanyNameImportir(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getCompanyName($data1)."','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
 			");
 
             $company = DB::table('itdp_profil_eks')->where('id', $id_profil)->first();
@@ -407,13 +407,14 @@ class BRFrontController extends Controller
                 'email' => $data2,
 //                'username' => $username,
                 'type' => "",
-                'sender' => Auth::guard('eksmp')->user()->username,
-                'receiver' => $company->company,
-                'bu' => $company->badanusaha,
+                'sender' => getCompanyNameImportir(Auth::guard('eksmp')->user()->id),
+                'receiver' => getCompanyName($data1),
+                'bu' => getExBadan($data1),
+                'bur' => getExBadanImportir(Auth::guard('eksmp')->user()->id)
     //                    'id' => $it,
             ];
 
-            Mail::send('UM.user.sendbrProve', $data2, function ($mail) use ($data2) {
+            Mail::send('UM.user.sendbrProve2', $data2, function ($mail) use ($data2) {
                 $mail->to($data2['email']);
                 $mail->subject('Buying Request Payment Information');
             });
