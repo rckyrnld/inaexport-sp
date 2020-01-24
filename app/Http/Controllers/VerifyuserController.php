@@ -372,6 +372,7 @@ class VerifyuserController extends Controller
 		}
 		$ida = $id;
 		$idb = $id2;
+
 		return view('verifyuser.profil', compact('pageTitle','tx','ida','idb'));
 	}
 	
@@ -518,11 +519,66 @@ class VerifyuserController extends Controller
 	}
 	public function simpan_profil(Request $request)
     {
-//        dd($request);
+//        dd($request->idu);
 		$id_role = $request->id_role;
 		$id_user = $request->id_user;
 		$id_user_b = $request->idu;
+//		dd($id_user_b);
+		if(Auth::guard('eksmp')->user()) {
+            //di edit indonesian exporter
+            //ini yang masih mau di edit
+            if(empty($request->file('doc'))){
+                $file = "";
+            }else{
+                $file = $request->file('doc')->getClientOriginalName();
+                $destinationPath = public_path() . "/eksportir";
+                $request->file('doc')->move($destinationPath, $file);
+                $updatetabd = DB::select("update itdp_profil_eks set doc='".$file."' where id='".$id_user_b."'");
+            }
 
+            if(empty($request->file('npwpfile'))){
+                $file = "";
+            }else{
+                $file = $request->file('npwpfile')->getClientOriginalName();
+                $destinationPath = public_path() . "/eksportir";
+                $request->file('npwpfile')->move($destinationPath, $file);
+                $updatetabd = DB::select("update itdp_profil_eks set uploadnpwp='".$file."' where id='".$id_user_b."'");
+            }
+
+            if(empty($request->file('tdpfile'))){
+                $file = "";
+            }else{
+                $file = $request->file('tdpfile')->getClientOriginalName();
+                $destinationPath = public_path() . "/eksportir";
+                $request->file('tdpfile')->move($destinationPath, $file);
+                $updatetabd = DB::select("update itdp_profil_eks set uploadtdp='".$file."' where id='".$id_user_b."'");
+            }
+
+            if(empty($request->file('siupfile'))){
+                $file = "";
+            }else{
+                $file = $request->file('siupfile')->getClientOriginalName();
+                $destinationPath = public_path() . "/eksportir";
+                $request->file('siupfile')->move($destinationPath, $file);
+                $updatetabd = DB::select("update itdp_profil_eks set uploadsiup='".$file."' where id='".$id_user_b."'");
+            }
+
+            $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+            foreach($admin_all as $aa){
+                $data = [
+                    'email' => $aa->email,
+                    'email1' => $aa->email,
+                    'username' => $aa->name,
+                    'company' =>getCompanyName(auth::guard('eksmp')->user()->id),
+                    'id' => $id_user,
+                    'bu' => getExBadan(auth::guard('eksmp')->user()->id),
+                ];
+                Mail::send('UM.user.emailexupload', $data, function ($mail) use ($data) {
+                    $mail->to($data['email1'], $data['username']);
+                    $mail->subject('Exporter Update their Profile');
+                });
+            }
+        }
 		$destination= 'uploads\Profile\Eksportir\\'.$id_user;
         if($request->hasFile('image_1')){ 
             $file1 = $request->file('image_1');
@@ -533,14 +589,7 @@ class VerifyuserController extends Controller
             ]);
         }
 		
-		if(empty($request->file('doc'))){
-			$file = "";
-		}else{
-			$file = $request->file('doc')->getClientOriginalName();
-			$destinationPath = public_path() . "/eksportir";
-			$request->file('doc')->move($destinationPath, $file);
-			$updatetabd = DB::select("update itdp_profil_eks set doc='".$file."' where id='".$id_user_b."'");
-		}
+
 		//UPDATE TAB 1
 		if($request->password == null ){
 		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', email='".$request->email."', status='".$request->staim."' where id='".$request->id_user."' ");
@@ -548,14 +597,13 @@ class VerifyuserController extends Controller
 		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->staim."', email='".$request->email."' where id='".$request->id_user."' ");
 			
 		}
-		if($request->staim == 1){
+
+        if($request->staim == 1){
             if(auth::user()) {
                 $data3 = ['username' => $request->username, 'id2' => 0, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email, 'by' => auth::user()->name];
-//			dd($data3);
                 Mail::send('UM.user.emailverif1', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);
                     $mail->subject('Your Account Was Verifed');
-
                 });
                 $date = date('Y-m-d H:i:s');
                 $notif = DB::table('notif')->insert([
@@ -594,9 +642,16 @@ class VerifyuserController extends Controller
 			}
 		}
 
-//		return redirect('profil/'.$id_role.'/'.$id_user);
-		return redirect('/verifyuser')->with('success','Success Update Data');
-		
+
+
+//
+        if(Auth::guard('eksmp')->user()){
+//            return redirect('profil/'.$id_role.'/'.$id_user)->with('success','Success Update Data');
+            return redirect('/home')->with('success','Success Update Data');
+        }else{
+            return redirect('/verifyuser')->with('success','Success Update Data');
+        }
+
 	
 	}
 	
@@ -610,7 +665,6 @@ class VerifyuserController extends Controller
 	
 	public function simpan_profil2(Request $request)
     {
-
 		$id_role = $request->id_role;
 		$id_user = $request->id_user;
 		$id_user_b = $request->idu;

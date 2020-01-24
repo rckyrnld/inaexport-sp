@@ -290,7 +290,8 @@ body {font-family: Arial;}
 			<?php if($ryu->uploadnpwp == null){
 				echo "";
 			}else { ?>
-			<span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->uploadnpwp)}}"><?php echo $ryu->uploadnpwp; ?></b></span>
+			 <span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->uploadnpwp)}}"></a>
+				 <?php echo $ryu->uploadnpwp; ?></span>
 			<?php } ?>
 			  <?php } else{ ?>
 			  <span><?php if(empty($ryu->uploadnpwp) || $ryu->uploadnpwp == null){ echo "<font color='red'>No File</font>"; }else{ ?>
@@ -327,7 +328,7 @@ body {font-family: Arial;}
 			<?php if($ryu->uploadtdp == null){
 				echo "";
 			}else { ?>
-			<span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->uploadtdp)}}"><?php echo $ryu->uploadtdp; ?></b></span>
+				<span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->uploadtdp)}}"></a><?php echo $ryu->uploadtdp; ?></span>
 			<?php } ?>
 			  <?php } else{ ?>
 			  <span><?php if(empty($ryu->uploadtdp) || $ryu->uploadtdp == null){ echo "<font color='red'>No File</font>"; }else{ ?>
@@ -364,7 +365,7 @@ body {font-family: Arial;}
 			<?php if($ryu->uploadsiup == null){
 				echo "";
 			}else { ?>
-			<span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->uploadsiup)}}"><?php echo $ryu->uploadsiup; ?></b></span>
+				<span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->uploadsiup)}}"></a><?php echo $ryu->uploadsiup; ?></span>
 			<?php } ?>
 			  <?php } else{ ?>
 			  <span><?php if(empty($ryu->uploadsiup) || $ryu->uploadsiup == null){ echo "<font color='red'>No File</font>"; }else{ ?>
