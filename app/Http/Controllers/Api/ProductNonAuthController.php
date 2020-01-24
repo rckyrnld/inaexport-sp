@@ -944,7 +944,7 @@ class ProductNonAuthController extends Controller
         }
     }
 	
-	public function getslide(Request $request)
+	public function getslide()
     {
         $dataProduk = DB::table('mst_slide')
             ->where('mst_slide.publish', '=', 1)
