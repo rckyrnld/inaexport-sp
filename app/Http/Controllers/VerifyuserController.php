@@ -565,37 +565,39 @@ class VerifyuserController extends Controller
             }
 
             $date = date('Y-m-d H:i:s');
-            if($request->file('doc') and $request->file('npwpfile') and $request->file('tdpfile') and $request->file('siupfile')){
-                $notif = DB::table('notif')->insert([
-                    'dari_nama' =>getCompanyName(auth::guard('eksmp')->user()->id),
-                    'dari_id' => auth::guard('eksmp')->user()->id,
-                    'untuk_nama' => "Super Admin",
-                    'untuk_id' => '1',
-                    'keterangan' => 'Exporter "'.getExBadan(auth::guard('eksmp')->user()->id).getCompanyName(auth::guard('eksmp')->user()->id).'" Update The Company Data',
-                    'url_terkait' => 'profil/2',
-                    'status_baca' => 0,
-                    'waktu' => $date,
-                    'id_terkait' => $id_user,
-                    'to_role' => $id_role,
-                ]);
+            $notif = DB::table('notif')->insert([
+                'dari_nama' =>getCompanyName(auth::guard('eksmp')->user()->id),
+                'dari_id' => auth::guard('eksmp')->user()->id,
+                'untuk_nama' => "Super Admin",
+                'untuk_id' => '1',
+                'keterangan' => 'Exporter "'.getExBadan(auth::guard('eksmp')->user()->id).getCompanyName(auth::guard('eksmp')->user()->id).'" Update The Company Data',
+                'url_terkait' => 'profil/2',
+                'status_baca' => 0,
+                'waktu' => $date,
+                'id_terkait' => $id_user,
+                'to_role' => "1",
+            ]);
 
-                $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
-                foreach($admin_all as $aa){
-                    $data = [
-                        'email' => $aa->email,
-                        'email1' => $aa->email,
-                        'username' => $aa->name,
-                        'company' =>getCompanyName(auth::guard('eksmp')->user()->id),
-                        'id' => $id_user,
-                        'bu' => getExBadan(auth::guard('eksmp')->user()->id),
-                    ];
-                    Mail::send('UM.user.emailexupload', $data, function ($mail) use ($data) {
-                        $mail->to($data['email1'], $data['username']);
-                        $mail->subject('Exporter Update their Profile');
-                    });
-                }
+            $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+            foreach($admin_all as $aa){
+                $data = [
+                    'email' => $aa->email,
+                    'email1' => $aa->email,
+                    'username' => $aa->name,
+                    'company' =>getCompanyName(auth::guard('eksmp')->user()->id),
+                    'id' => $id_user,
+                    'bu' => getExBadan(auth::guard('eksmp')->user()->id),
+                ];
+                Mail::send('UM.user.emailexupload', $data, function ($mail) use ($data) {
+                    $mail->to($data['email1'], $data['username']);
+                    $mail->subject('Exporter Update their Profile');
+                });
             }
 
+
+//            if($request->file('doc') and $request->file('npwpfile') and $request->file('tdpfile') and $request->file('siupfile')){
+//
+//            }
         }
 		$destination= 'uploads\Profile\Eksportir\\'.$id_user;
         if($request->hasFile('image_1')){ 
