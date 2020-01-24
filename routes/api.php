@@ -143,7 +143,7 @@ Route::namespace('Api')->group(function () {
     Route::post('contactUs', 'ManagementNoAuthController@contactUs');
     /*Contact Us*/
 	/* Slide Content */
-    Route::post('getslide', 'ProductNonAuthController@getslide');
+    Route::get('getslide', 'ProductNonAuthController@getslide');
 	/* end slide content */
     Route::post('browseProdukFe', 'ProductNonAuthController@browseProduct');
     Route::post('FindProdukByKategori', 'ProductNonAuthController@findProduct');

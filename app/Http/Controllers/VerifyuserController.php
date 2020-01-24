@@ -125,13 +125,13 @@ class VerifyuserController extends Controller
 	public function geteksportir()
     {
 	if(Auth::user()->id_group == 1) {
-      $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
+      $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
 	}else if(Auth::user()->id_group == 4){
 		$a = Auth::user()->id;
 		if(Auth::user()->id_admin_dn == 0){
 		// luar
 		$b = Auth::user()->id_admin_ln;
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '9999999' and a.id_profil = b.id and id_role='2' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '9999999' and a.id_profil = b.id and id_role='2' order by a.id desc ");
 	
 		}else{
 		//dalam
@@ -139,7 +139,7 @@ class VerifyuserController extends Controller
 		$quer = DB::select("select * from  itdp_admin_dn where id='".$b."'");
 		foreach($quer as $t1){ $ic = $t1->id_country; }
 		// echo $ic;die();
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '".$ic."' and a.id_profil = b.id and id_role='2' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '".$ic."' and a.id_profil = b.id and id_role='2' order by a.id desc ");
 	
 		
 		}
