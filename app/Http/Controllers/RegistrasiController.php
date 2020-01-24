@@ -80,7 +80,8 @@ class RegistrasiController extends Controller
 
 	public function simpan_rpembeli(Request $request)
     {
-		$insert1 = DB::select("
+        $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+        $insert1 = DB::select("
 			insert into itdp_profil_imp (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
 			('".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
 			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1','".$request->city."','".$request->country."')
@@ -120,8 +121,7 @@ class RegistrasiController extends Controller
 
                 });
 		    }
-		
-			
+
 			$data = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email];
 
                 Mail::send('UM.user.emailsuser2', $data, function ($mail) use ($data) {
@@ -130,7 +130,7 @@ class RegistrasiController extends Controller
 
                 });
 
-            $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+
             foreach($admin_all as $aa){
                 $data = [
                     'email' => $aa->email,
@@ -160,7 +160,10 @@ class RegistrasiController extends Controller
 	
 	public function simpan_rpenjual(Request $request)
     {
-		$insert1 = DB::select("
+
+        $qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'");
+//        dd($qr);
+        $insert1 = DB::select("
 			insert into itdp_profil_eks (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_province) values
 			('".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
 			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1','".$request->city."','".$request->prov."')
@@ -180,10 +183,10 @@ class RegistrasiController extends Controller
 		
 		// notif 
 		$id_terkait = "2/".$id2;
-		$ket = "User baru Eksportir dengan nama ".$request->company;
-		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
-		");
+//		$ket = "User baru Eksportir dengan nama ".$request->company;
+//		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+//		");
 		
 //		//notif untuk perwakilan
 		$qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'");
@@ -192,7 +195,7 @@ class RegistrasiController extends Controller
 			$insertpw = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 			('4','".$request->company."','".$id1."','".getAdminName($rq->id)."','".$rq->id."','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 			");
-			$data3 = ['username' => getAdminName($rq->id), 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email];
+			$data3 = ['username' => getAdminName($rq->id), 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email, 'type' => 'Exporter'];
 
                 Mail::send('UM.user.emailsperwakilan', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);
@@ -218,7 +221,7 @@ class RegistrasiController extends Controller
 //                    $mail->subject('Notifikasi Aktifasi Akun');
 
 //                });
-        return view('auth.waitmail',compact('pageTitle'));
+//        return view('auth.waitmail',compact('pageTitle'));
     }
 	
 	public function data_br2()
