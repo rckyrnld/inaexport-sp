@@ -25,7 +25,7 @@
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
         <p style="color: #8bbbe8; font-size: 20px;text-align: left">Information</p>
         <hr>
-        <p style="text-align: left">Yth. {{$company}},</P>
+        <p style="text-align: left">Yth. {{($bu== '-')? '':$bu." "}} {{$company}},</P>
         <p style="text-align: left">Terdapat event baru dari {{$pengirim}}, apabila anda berminat silahkan meresponnya segera.</p>
         <p style="text-align: left"> Untuk melihat event tersebut, silahkan login <a href="{{url('login/')}}">disini</a>.</p>
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >

@@ -80,7 +80,8 @@ class RegistrasiController extends Controller
 
 	public function simpan_rpembeli(Request $request)
     {
-		$insert1 = DB::select("
+        $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+        $insert1 = DB::select("
 			insert into itdp_profil_imp (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
 			('".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
 			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1','".$request->city."','".$request->country."')
@@ -120,8 +121,7 @@ class RegistrasiController extends Controller
 
                 });
 		    }
-		
-			
+
 			$data = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email];
 
                 Mail::send('UM.user.emailsuser2', $data, function ($mail) use ($data) {
@@ -130,7 +130,7 @@ class RegistrasiController extends Controller
 
                 });
 
-            $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+
             foreach($admin_all as $aa){
                 $data = [
                     'email' => $aa->email,
