@@ -29,8 +29,8 @@ return [
         "directorate" => "Direktorat Jenderal Pengembangan Ekspor Nasional",
         "event" => "Pameran",
         "training" => "Pelatihan",
-        "research" => "Hasil Analisan",
-        "inquiry" => "Penyelidikan Online",
+        "research" => "Pusat Riset",
+        "inquiry" => "Permintaan Hubungan Dagang",
         "trade-expo" => "Pameran Dagang",
     ]
 ];
