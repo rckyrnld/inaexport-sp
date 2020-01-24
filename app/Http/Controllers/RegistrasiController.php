@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mail;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class RegistrasiController extends Controller
 {
@@ -80,7 +81,8 @@ class RegistrasiController extends Controller
 
 	public function simpan_rpembeli(Request $request)
     {
-        $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+
+//        dd($admin_all);
         $insert1 = DB::select("
 			insert into itdp_profil_imp (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
 			('".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
@@ -100,7 +102,7 @@ class RegistrasiController extends Controller
 		}
 		// notif 
 		$id_terkait = "3/".$id2;
-		$ket = "New user Indonesian Exporter with name ".$request->company;
+		$ket = "New user Buyer with name ".$request->company;
 		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil2','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 		");
@@ -113,7 +115,7 @@ class RegistrasiController extends Controller
 			$insertpw = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 			('4','".$request->company."','".$id1."','".getAdminName($rq->id)."','".$rq->id."','".$ket."','profil2','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 			");
-			$data3 = ['username' => getAdminName($rq->id), 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email, 'type' => 'Exporter'];
+			$data3 = ['username' => getAdminName($rq->id), 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email, 'type' => 'Buyer'];
 
                 Mail::send('UM.user.emailsperwakilan', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);
@@ -121,6 +123,22 @@ class RegistrasiController extends Controller
 
                 });
 		    }
+
+        $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+        foreach($admin_all as $aa){
+            $data = [
+                'email' => $aa->email,
+                'email1' => $aa->email,
+                'username' => $aa->name,
+                'company' =>$request->company,
+                'type' => "Buyer",
+                'bu' => "",
+            ];
+            Mail::send('UM.user.emailsadmin', $data, function ($mail) use ($data) {
+                $mail->to($data['email1'], $data['username']);
+                $mail->subject('Notifikasi Aktifasi Akun');
+            });
+        }
 
 			$data = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email];
 
@@ -131,20 +149,7 @@ class RegistrasiController extends Controller
                 });
 
 
-            foreach($admin_all as $aa){
-                $data = [
-                    'email' => $aa->email,
-                    'email1' => $aa->email,
-                    'username' => $aa->name,
-                    'company' =>getCompanyName(auth::guard('eksmp')->user()->id),
-                    'type' => "Buyer",
-                    'bu' => getExBadan(auth::guard('eksmp')->user()->id),
-                ];
-                Mail::send('UM.user.emailsadmin', $data, function ($mail) use ($data) {
-                    $mail->to($data['email1'], $data['username']);
-                    $mail->subject('Notifikasi Aktifasi Akun');
-                });
-            }
+
 
 //			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => env('MAIL_USERNAME','no-reply@inaexport.id'),'type' => 'Exporter'];
 //
