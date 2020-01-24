@@ -30,7 +30,7 @@ return [
         "event" => "Event",
         "training" => "Training",
         "research" => "Research Corner",
-        "inquiry" => "Inquiry Online",
+        "inquiry" => "Online Inquiry",
         "trade-expo" => "Trade Expo",
     ]
 ];
