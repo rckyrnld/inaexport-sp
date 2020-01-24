@@ -943,5 +943,44 @@ class ProductNonAuthController extends Controller
             return response($res);
         }
     }
+	
+	public function getslide(Request $request)
+    {
+        $dataProduk = DB::table('mst_slide')
+            ->where('mst_slide.publish', '=', 1)
+            ->orderBy('mst_slide.id', 'desc')
+            ->get();
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($dataProduk); $i++) {
+            $jsonResult[$i]["id"] = $dataProduk[$i]->id;
+            $jsonResult[$i]["keterangan"] = $dataProduk[$i]->keterangan;
+            $jsonResult[$i]["file_img"] = $path = ($dataProduk[$i]->file_img) ? url('uploads/slider/' . $dataProduk[$i]->file_img) : url('image/nia3.png');
+			$jsonResult[$i]["created_at"] = $dataProduk[$i]->created_at;
+            
+
+        }
+
+        if (count($dataProduk) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $res['meta'] = $meta;
+            $res['data'] = $jsonResult;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+            $data = $dataProduk;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
 
 }
