@@ -359,6 +359,8 @@ $cr = explode(',',$p3->id_csc_prod);
 		$cd2 = $cdt->id_csc_prod_cat;
 		$cd3 = $cdt->id_csc_prod_cat_level1;
 		$cd4 = $cdt->id_csc_prod_cat_level2;
+		$cd5 = $cdt->type;
+		$cd6 = $cdt->to;
 	}
 	//echo $cd1."aaaa";
 	?>
@@ -367,7 +369,26 @@ $cr = explode(',',$p3->id_csc_prod);
 			<b>Category</b>
 		</div>
 		<div class="form-group col-sm-4">
-
+			<?php 
+			if($cd5 == "importir"){
+				$caripr = DB::select("select * from  csc_product_single where id='".$cd6."'");
+				foreach($caripr as $xd){
+					echo $xd->prodname_en;
+				}
+				//echo $cd6;
+			}else if($cd5 == "admin" || $cd5 == "perwakilan"){
+				$caripr = DB::select("select * from  csc_inquiry_category where id_inquiry='".$cd1."'");
+				foreach($caripr as $xd){
+					$idsao = $xd->id_cat_prod;
+					$caripr2 = DB::select("select * from  csc_product where id='".$idsao."'");
+					foreach($caripr2 as $xd2){
+						echo $xd2->nama_kategori_en;
+					}
+				}
+			}else{
+				
+			}
+	?>
 		</div>
 	</div>
 	<div class="form-row">
