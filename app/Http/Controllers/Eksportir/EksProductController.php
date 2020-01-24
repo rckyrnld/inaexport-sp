@@ -326,15 +326,15 @@ class EksProductController extends Controller
                 ]);
 
                 //Tinggal Ganti Email1 dengan email kemendag
-                $data = [
-                    'company' => getCompanyName($id_user),
-                    'dari' => "Eksportir"
-                ];
-
-                Mail::send('eksportir.eksproduct.sendToAdmin', $data, function ($mail) use ($data, $users_email) {
-                    $mail->subject('Product Information');
-                    $mail->to($users_email);
-                });
+//                $data = [
+//                    'company' => getCompanyName($id_user),
+//                    'dari' => "Eksportir"
+//                ];
+//
+//                Mail::send('eksportir.eksproduct.sendToAdmin', $data, function ($mail) use ($data, $users_email) {
+//                    $mail->subject('Product Information');
+//                    $mail->to($users_email);
+//                });
             }
 
         }
@@ -552,9 +552,9 @@ class EksProductController extends Controller
                 $notifnya = "has been accepted";
 				$ket = "Your product ".$data->prodname_en." got verified";
 				$ket2 = $data->prodname_en." has been accepted by Super Admin";
-				$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-				('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
-				");
+//				$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+//				('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
+//				");
                 $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
 				('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket2."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
 				");
@@ -565,10 +565,10 @@ class EksProductController extends Controller
             'main_messages' => "",
             'id' => $id
 			];
-			Mail::send('UM.user.sendproduct', $data33, function ($mail) use ($data33) {
-			$mail->to($data33['email1'], $data33['username']);
-			$mail->subject("Your product got verified");
-			});
+//			Mail::send('UM.user.sendproduct', $data33, function ($mail) use ($data33) {
+//			$mail->to($data33['email1'], $data33['username']);
+//			$mail->subject("Your product got verified");
+//			});
 			Mail::send('UM.user.sendproduct2', $data33, function ($mail) use ($data33) {
                 $mail->to($data33['email1'], $data33['username']);
                 $mail->subject("Your product got verified");

@@ -110,11 +110,11 @@ class RegistrasiController extends Controller
 		$qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_ln b  where a.id_admin_ln = b.id and b.id_country='".$groupcountry."'");
 		foreach($qr as $rq){
 			$insertpw = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('4','".$request->company."','".$id1."','Perwakilan','".$rq->id."','".$ket."','profil2','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+			('4','".$request->company."','".$id1."','".getAdminName($rq->id)."','".$rq->id."','".$ket."','profil2','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 			");
-			$data3 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email, 'type' => 'Exporter'];
+			$data3 = ['username' => getAdminName($rq->id), 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email, 'type' => 'Exporter'];
 
-                Mail::send('UM.user.emailsadmin', $data3, function ($mail) use ($data3) {
+                Mail::send('UM.user.emailsperwakilan', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);
                     $mail->subject('Notifikasi Aktifasi Akun');
 
@@ -130,14 +130,30 @@ class RegistrasiController extends Controller
 
                 });
 
-			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => env('MAIL_USERNAME','no-reply@inaexport.id'),'type' => 'Exporter'];
-
-
-                Mail::send('UM.user.emailsadmin', $data2, function ($mail) use ($data2) {
-                    $mail->to($data2['email'], $data2['username']);
+            $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+            foreach($admin_all as $aa){
+                $data = [
+                    'email' => $aa->email,
+                    'email1' => $aa->email,
+                    'username' => $aa->name,
+                    'company' =>getCompanyName(auth::guard('eksmp')->user()->id),
+                    'type' => "Buyer",
+                    'bu' => getExBadan(auth::guard('eksmp')->user()->id),
+                ];
+                Mail::send('UM.user.emailsadmin', $data, function ($mail) use ($data) {
+                    $mail->to($data['email1'], $data['username']);
                     $mail->subject('Notifikasi Aktifasi Akun');
-
                 });
+            }
+
+//			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => env('MAIL_USERNAME','no-reply@inaexport.id'),'type' => 'Exporter'];
+//
+//
+//                Mail::send('UM.user.emailsadmin', $data2, function ($mail) use ($data2) {
+//                    $mail->to($data2['email'], $data2['username']);
+//                    $mail->subject('Notifikasi Aktifasi Akun');
+//
+//                });
 
         return view('auth.waitmail',compact('pageTitle'));
     }
@@ -170,20 +186,20 @@ class RegistrasiController extends Controller
 		");
 		
 //		//notif untuk perwakilan
-//		$qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'");
-//		// echo "select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'";die();
-//		foreach($qr as $rq){
-//			$insertpw = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-//			('4','".$request->company."','".$id1."','Perwakilan','".$rq->id."','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
-//			");
-//			$data3 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email];
-//
-//                Mail::send('UM.user.emailsperwakilan', $data3, function ($mail) use ($data3) {
-//                    $mail->to($data3['email'], $data3['username']);
-//                    $mail->subject('Notifikasi Aktifasi Akun');
-//
-//                });
-//		}
+		$qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'");
+		// echo "select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'";die();
+		foreach($qr as $rq){
+			$insertpw = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+			('4','".$request->company."','".$id1."','".getAdminName($rq->id)."','".$rq->id."','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+			");
+			$data3 = ['username' => getAdminName($rq->id), 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email];
+
+                Mail::send('UM.user.emailsperwakilan', $data3, function ($mail) use ($data3) {
+                    $mail->to($data3['email'], $data3['username']);
+                    $mail->subject('Notifikasi Aktifasi Akun');
+
+                });
+		}
 		
 			
 			$data = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email, 'user' => 'exporter', 'type'=> 'Indonesian Exporter'];
@@ -195,13 +211,13 @@ class RegistrasiController extends Controller
                 });
 
 //			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => 'kementerianperdagangan.max@gmail.com'];
-			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => env('MAIL_USERNAME','no-reply@inaexport.id'),'type'=> 'Indonesian Exporter'];
+//			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => env('MAIL_USERNAME','no-reply@inaexport.id'),'type'=> 'Indonesian Exporter'];
 
-                Mail::send('UM.user.emailsadmin', $data2, function ($mail) use ($data2) {
-                    $mail->to($data2['email'], $data2['username']);
-                    $mail->subject('Notifikasi Aktifasi Akun');
+//                Mail::send('UM.user.emailsadmin', $data2, function ($mail) use ($data2) {
+//                    $mail->to($data2['email'], $data2['username']);
+//                    $mail->subject('Notifikasi Aktifasi Akun');
 
-                });
+//                });
         return view('auth.waitmail',compact('pageTitle'));
     }
 	

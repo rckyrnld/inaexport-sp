@@ -366,6 +366,7 @@ class BuyingRequestController extends Controller
                                     'username' => getCompanyName(Auth::guard('eksmp')->user()->id) ,
                                     'main_messages' => "",
                                     'receiver' => $data4,
+                                    'bu' => getExBadan(Auth::guard('eksmp')->user()->id),
 //                    'id' => $it
                                     'id' => $id6,
                                 ];
@@ -389,6 +390,7 @@ class BuyingRequestController extends Controller
                                     'username' => getCompanyName(Auth::guard('eksmp')->user()->id),
                                     'main_messages' => "",
                                     'receiver' => getAdminName($data1),
+                                    'bu' => getExBadan(Auth::guard('eksmp')->user()->id),
 //                    'id' => $it
                                     'id' => $id6,
                                 ];
