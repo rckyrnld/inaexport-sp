@@ -188,11 +188,20 @@ class RegistrasiController extends Controller
 		
 		// notif 
 		$id_terkait = "2/".$id2;
-//		$ket = "User baru Eksportir dengan nama ".$request->company;
+		$ket = "User baru Eksportir dengan nama ".$request->company;
 //		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 //			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 //		");
-		
+
+        $data = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email, 'user' => 'exporter', 'type'=> 'Indonesian Exporter'];
+
+        Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
+            $mail->to($data['email'], $data['username']);
+            $mail->subject('Notifikasi Aktifasi Akun');
+
+        });
+
+
 //		//notif untuk perwakilan
 		$qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'");
 		// echo "select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'";die();
@@ -210,13 +219,6 @@ class RegistrasiController extends Controller
 		}
 		
 			
-			$data = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email, 'user' => 'exporter', 'type'=> 'Indonesian Exporter'];
-
-                Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
-                    $mail->to($data['email'], $data['username']);
-                    $mail->subject('Notifikasi Aktifasi Akun');
-
-                });
 
 //			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => 'kementerianperdagangan.max@gmail.com'];
 //			$data2 = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => env('MAIL_USERNAME','no-reply@inaexport.id'),'type'=> 'Indonesian Exporter'];
