@@ -13,6 +13,7 @@
   }
 </style>
 <?php
+if(Auth::user()->id_admin_dn == 0){ $group = 'Country'; } else { $group = 'Province'; } 
   if($User != null){
     $user = 1;
   } else {
@@ -36,33 +37,47 @@
         {{-- <div class="box-header">
         </div> --}}
         <div class="box-divider m-0"></div>
-      
+        <div class="nav-active-border b-primary top box">
+            <div class="nav nav-md">
+                <a class="nav-link active" data-toggle="tab" data-target="#tab1">
+                    <i class="fa fa-plus-circle"></i> Member
+                </a>
+                <a class="nav-link" data-toggle="tab" data-target="#tab2">
+                    <i class="fa fa-plus-circle"></i> Inquiry
+                </a>
+                <a class="nav-link" data-toggle="tab" data-target="#tab3">
+                    <i class="fa fa-plus-circle"></i> Buying Request
+                </a>
+            </div>
+        </div>
         <div class="box-body">
           <div class="tab-content p-3 mb-3">
-            <div class="tab-pane animate fadeIn text-muted active show" id="tab4">
+            <div class="tab-pane animate fadeIn text-muted active show" id="tab1">
               <div class="row justify-content-center">
-                @if($user != null)
+                @if($user == 1)
                 <div id="user_year" style="min-width: 100%; height: 400px; margin: 0 auto;"></div>
                 @else
-                <h3>No Member in This Country</h3>
+                <h3>No Member in This {{$group}}</h3>
                 @endif
-              </div><br><br><br>
+              </div>
+            </div>
+            <div class="tab-pane animate fadeIn text-muted" id="tab2">
               <div class="row justify-content-center">
-                @if($Inquiry != null)
+                @if($inquiry == 1)
                 <div id="inquiry" style="min-width: 100%; height: 400px; margin: 0 auto;"></div>
                 @else
                 <h3>No Inquiry in This Account</h3>
                 @endif
-              </div><br><br><br>
+              </div>
+            </div>
+            <div class="tab-pane animate fadeIn text-muted" id="tab3">
               <div class="row justify-content-center">
-                @if($Buying != null)
+                @if($buying == 1)
                 <div id="buying" style="min-width: 100%; height: 400px; margin: 0 auto;"></div>
                 @else
                 <h3>No Buying Request in This Account</h3>
                 @endif
-              </div><br><br><br>
-            </div>
-            <div class="tab-pane animate fadeIn text-muted" id="tab5">
+              </div>
             </div>
           </div>
         </div>
@@ -94,7 +109,7 @@ if("{{$user}}" == 1){
   function user() {
     var data = JSON.parse('<?php echo addcslashes(json_encode($User),'\'\\'); ?>');
     if("{{Auth::user()->id_admin_dn}}" == 0){
-      var negara = " in {{getPerwakilanCountry2(Auth::user()->id)}}";
+      var negara = " in {{getPerwakilanCountry3(Auth::user()->id)}}";
     } else {
       var negara = "";
     }
