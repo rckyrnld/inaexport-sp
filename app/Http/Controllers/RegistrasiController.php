@@ -264,22 +264,69 @@ class RegistrasiController extends Controller
 				 return 'Valid '.$buy->valid." days";
             })
 			->addColumn('col5', function ($buy) {
-				 if($buy->deal == null || $buy->deal == 0 || empty($buy->deal)){
+				if($buy->deal == null || $buy->deal == 0 || empty($buy->deal)){
+					if(app()->getLocale() == "en"){
+						return "Negotiation";
+					}else if(app()->getLocale() == "in"){
+						return "Negosiasi";
+					}else if(app()->getLocale() == "ch"){
+						return "谈判";
+					}else{
+						return "";
+					}
+                }else{
+                    if(app()->getLocale() == "en"){
+						return "Deal";
+					}else if(app()->getLocale() == "in"){
+						return "Sepakat";
+					}else if(app()->getLocale() == "ch"){
+						return "成交";
+					}else{
+						return "";
+					}
+                }
+				/*
+				if($buy->deal == null || $buy->deal == 0 || empty($buy->deal)){
 					return "Negosiation";
 				 }else{
 					return "Deal";
 				 }
+				 */
             })
 			->addColumn('col6', function ($buy) {
 				 if($buy->by_role == 3){
-					return "Importir";
-				 }else if($buy->by_role == 4){
-					return "Perwakilan";
-				 }else if($buy->by_role == 1){
-					return "Admin";
-				 }else{
-					 return "";
-				 }
+                    if(app()->getLocale() == "en"){
+						return "Importer";
+					}else if(app()->getLocale() == "in"){
+						return "Importir";
+					}else if(app()->getLocale() == "ch"){
+						return "进口商";
+					}else{
+						return "";
+					}
+                }else if($buy->by_role == 4){
+                    if(app()->getLocale() == "en"){
+						return "Representative";
+					}else if(app()->getLocale() == "in"){
+						return "Perwakilan";
+					}else if(app()->getLocale() == "ch"){
+						return "代表人物";
+					}else{
+						return "";
+					}
+                }else if($buy->by_role == 1){
+                    if(app()->getLocale() == "en"){
+						return "Admin";
+					}else if(app()->getLocale() == "in"){
+						return "Admin";
+					}else if(app()->getLocale() == "ch"){
+						return "管理员";
+					}else{
+						return "";
+					}
+                }else{
+                    return "";
+                }
             })
 			
 			

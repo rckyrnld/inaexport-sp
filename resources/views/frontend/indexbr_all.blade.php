@@ -62,8 +62,8 @@
 								<th><center>Category</center></th>
 								<th><center>Created at</center></th>
 								<th><center>Valid Time</center></th>
-								<th><center>Status</center></th>
 								<th><center>Created By</center></th>
+								<th><center>Status</center></th>
                                 </thead>
 								
 
@@ -77,8 +77,8 @@
 								<th><center>Category</center></th>
 								<th><center>Created at</center></th>
 								<th><center>Valid Time</center></th>
-								<th><center>Status</center></th>
 								<th><center>Created By</center></th>
+								<th><center>Status</center></th>
                                 </thead>
 								
 
