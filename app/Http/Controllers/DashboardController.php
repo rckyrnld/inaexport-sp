@@ -940,10 +940,14 @@ class DashboardController extends Controller
             $profil = 'imp';
             $nama = 'Buyer';
             $db = DB::table('mst_country')->where('id',$country)->first();
-            $db = DB::table('mst_country')->where('mst_country_group_id',$db->mst_country_group_id)->get();
-            $country = [];
-            foreach ($db as $key => $value) {
-                array_push($country, $value->id);
+            if($db){
+                $db = DB::table('mst_country')->where('mst_country_group_id',$db->mst_country_group_id)->get();
+                $country = [];
+                foreach ($db as $key => $value) {
+                    array_push($country, $value->id);
+                }
+            } else {
+                $country = [$country];
             }
         }
 
