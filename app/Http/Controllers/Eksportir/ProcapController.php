@@ -97,7 +97,7 @@ class ProcapController extends Controller
 //        dd($id);
         DB::table('itdp_eks_production')->where('id', $id)
             ->delete();
-        return redirect('eksportir/product_capacity')->with('success','Success Add Data');
+        return redirect('eksportir/product_capacity')->with('error','Success Add Data');
     }
 
     public function update(Request $request)

@@ -108,7 +108,7 @@ class CountryPaternBrandController extends Controller
 //        dd($id);
         DB::table('itdp_eks_country_patents')->where('id', $id)
             ->delete();
-        return redirect('eksportir/country_patern_brand')->with('success', 'Success Delete Data');
+        return redirect('eksportir/country_patern_brand')->with('error', 'Success Delete Data');
     }
 
     public function update(Request $request)

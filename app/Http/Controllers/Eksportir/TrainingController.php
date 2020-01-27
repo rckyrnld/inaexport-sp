@@ -119,7 +119,7 @@ class TrainingController extends Controller
 //        dd($id);
         DB::table('itdp_eks_training')->where('id', $id)
             ->delete();
-        return redirect('eksportir/training')->with('success','Success Delete Data');
+        return redirect('eksportir/training')->with('error','Success Delete Data');
     }
 
     public function update(Request $request)

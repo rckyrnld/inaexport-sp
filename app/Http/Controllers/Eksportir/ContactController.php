@@ -94,7 +94,7 @@ class ContactController extends Controller
 //        dd($id);
         DB::table('itdp_contact_eks')->where('id', $id)
             ->delete();
-        return redirect('eksportir/contact')->with('success','Success Delete Data');
+        return redirect('eksportir/contact')->with('error','Success Delete Data');
     }
 
     public function update(Request $request)

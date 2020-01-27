@@ -157,10 +157,10 @@ class CategoryProductController extends Controller
     {
       $data = DB::table('csc_product')->where('id', $id)->delete();
       if($data){
-         Session::flash('success','Success Delete Data');
+         Session::flash('error','Success Delete Data');
          return redirect('management/category-product/');
        }else{
-         Session::flash('failed','Failed Delete Data');
+         Session::flash('error','Failed Delete Data');
          return redirect('management/category-product/');
        }
     }

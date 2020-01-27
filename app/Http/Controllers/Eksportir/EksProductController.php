@@ -230,6 +230,7 @@ class EksProductController extends Controller
 
     public function store(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         if(Auth::guard('eksmp')->user()){
             $id_user = Auth::guard('eksmp')->user()->id;
             $id_profil = Auth::guard('eksmp')->user()->id_profil;
@@ -416,11 +417,11 @@ class EksProductController extends Controller
                 $delete = DB::table('csc_product_single')->where('id', $id)->delete();
             }
             if($delete)
-                return redirect('eksportir/product')->with('success','Success Delete Data');
+                return redirect('eksportir/product')->with('error','Success Delete Data');
             else
-                return redirect('eksportir/product')->with('failed','Failed Delete Data');
+                return redirect('eksportir/product')->with('error','Failed Delete Data');
         }else{
-            return redirect('eksportir/product')->with('success','Success Delete Data');
+            return redirect('eksportir/product')->with('error','Success Delete Data');
         }
     }
 
@@ -535,6 +536,7 @@ class EksProductController extends Controller
 
     public function verifikasi_act($id, Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         if(Auth::user()){
             $id_user = Auth::user()->id;
             $datenow = date("Y-m-d H:i:s");

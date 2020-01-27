@@ -459,7 +459,7 @@ class ServiceController extends Controller
         $data = DB::table('itdp_service_eks')->where('id', $id)->delete();
         if($data){
            Session::flash('success','Success Delete Data');
-           return redirect('/eksportir/service/')->with('success','Success Delete Data');
+           return redirect('/eksportir/service/')->with('error','Success Delete Data');
          }else{
            Session::flash('failed','Failed Delete Data');
            return redirect('/eksportir/service/')->with('error','Error Delete Data');

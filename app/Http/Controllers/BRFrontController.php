@@ -396,15 +396,16 @@ class BRFrontController extends Controller
                 $id_profil = $cr2->id_profil;
 			}
 			
-			$ket = "Importer ".getExBadanImportir(Auth::guard('eksmp')->user()->id).getCompanyNameImportir(Auth::guard('eksmp')->user()->id)." Upload Invoice On Buying Request";
+			$ket = "Importer ".getExBadanImportir(Auth::guard('eksmp')->user()->id).getCompanyNameImportir(Auth::guard('eksmp')->user()->id)." Payment Information On Buying Request";
 			$it = $request->idb;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
 			('2','".getCompanyNameImportir(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getCompanyName($data1)."','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
 			");
 
+			//tadi sempet dirubah yang $data2b
             $company = DB::table('itdp_profil_eks')->where('id', $id_profil)->first();
-            $data2 = [
+            $data2b = [
                 'email' => $data2,
 //                'username' => $username,
                 'type' => "",
@@ -415,8 +416,8 @@ class BRFrontController extends Controller
     //                    'id' => $it,
             ];
 
-            Mail::send('UM.user.sendbrProve2', $data2, function ($mail) use ($data2) {
-                $mail->to($data2['email']);
+            Mail::send('UM.user.sendbrProve2', $data2b, function ($mail) use ($data2b) {
+                $mail->to($data2b['email']);
                 $mail->subject('Buying Request Payment Information');
             });
 			//notif gak perlu ke admin dan importer, cukup exporter
@@ -469,7 +470,7 @@ class BRFrontController extends Controller
 			('".$idb."','".$request->catatan."','".Date('Y-m-d H:i:s')."','".$request->idc."','".$request->ide."','".$request->idd."','".$idq."','".$file."')");
 			
 			if($request->ide == 1){
-			$ket = "Super Admin Upload Invoice On Buying Request";
+			$ket = "Super Admin Upload Payment Information On Buying Request";
 			$it = $request->idq;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
@@ -498,7 +499,7 @@ class BRFrontController extends Controller
                 //Tinggal Ganti Email1 dengan email kemendag
 
 			}else{
-			$ket = "Representative Upload Invoice On Buying Request";
+			$ket = "Representative Upload Payment Information On Buying Request";
 			$it = $request->idq;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	

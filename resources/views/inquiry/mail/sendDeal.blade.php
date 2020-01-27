@@ -25,7 +25,7 @@
         <hr>
         <p style="text-align: left">Dear {{$penerima}},</P>
         <p style="text-align: left">Inquiry with subject {{$subjek}} has been Deal by Exporter {{($bu== '-')? '': $bu." "}}{{$company}}.</p>
-        <p style="text-align: left"><a href="{{url('/login')}}">Click here</a> to login in application.</p>
+        <p style="text-align: left">Click <a href="{{url('/front_end/history')}}">here</a> to login in application.</p>
         <br>
         <p style="text-align: left">Thanks</p>
         <!-- <a href="{{url('/login')}}" class="button">Next Log In</a> -->

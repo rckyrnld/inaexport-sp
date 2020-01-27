@@ -102,7 +102,7 @@ class BrandController extends Controller
 //        dd($id);
         DB::table('itdp_eks_product_brand')->where('id', $id)
             ->delete();
-        return redirect('eksportir/brand')->with('success','Success Delete Data');
+        return redirect('eksportir/brand')->with('error','Success Delete Data');
     }
 
     public function update(Request $request)

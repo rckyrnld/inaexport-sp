@@ -906,7 +906,7 @@ class InquiryAdminController extends Controller
             //delete broadcasting
             $del3 = DB::table('csc_inquiry_br')->where('id', $id)->delete();
             
-            return redirect('/inquiry_admin/')->with('success','Success Delete Data');
+            return redirect('/inquiry_admin/')->with('error','Success Delete Data');
         }else{
             return redirect('/home');
         }

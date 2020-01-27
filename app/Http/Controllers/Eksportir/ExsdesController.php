@@ -101,7 +101,7 @@ class ExsdesController extends Controller
 //        dd($id);
         DB::table('itdp_eks_destination')->where('id', $id)
             ->delete();
-        return redirect('eksportir/export_destination')->with('success','Success Delete Data');
+        return redirect('eksportir/export_destination')->with('error','Success Delete Data');
     }
 
     public function update(Request $request)

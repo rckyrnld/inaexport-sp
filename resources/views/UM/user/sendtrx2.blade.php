@@ -12,7 +12,8 @@
 {{--    <p style="text-align: left">--}}
 {{--       {{$main_messages}}--}}
 {{--    </p>--}}
-    <p style="text-align: left">click <a href="{{url($url, $id)}}">Here</a>.</p>
+{{--    <p style="text-align: left">click <a href="{{url($url, $id)}}">Here</a>.</p>--}}
+    <p style="text-align: left">click <a href="{{url('trx_list')}}">Here</a>.</p>
     <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
   </div>
 </div>

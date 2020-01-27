@@ -962,6 +962,7 @@ class FrontController extends Controller
     }
 
     public function event_interest(Request $req){
+        date_default_timezone_set('Asia/Jakarta');
         $id_profil = Auth::guard('eksmp')->user()->id_profil;
         $cek = DB::table('event_interest')->where('id_profile', $id_profil)->where('id_event', $req->id)->first();
         $return = 'failed';
@@ -979,6 +980,7 @@ class FrontController extends Controller
     }
 
     public function training_interest(Request $req){
+        date_default_timezone_set('Asia/Jakarta');
         $id_profil = Auth::guard('eksmp')->user()->id_profil;
         $cek = DB::table('training_interest')->where('id_profile', $id_profil)->where('id_training', $req->id)->first();
         $return = 'failed';

@@ -240,6 +240,7 @@ class InquiryEksController extends Controller
 
     public function accept_chat($id)
     {
+        date_default_timezone_set('Asia/Jakarta');
         if(Auth::guard('eksmp')->user()){
             $pageTitle = "Inquiry";
             $id_user = Auth::guard('eksmp')->user()->id;

@@ -12,7 +12,7 @@
     <p style="text-align: left">
       <!-- {{$main_messages}} -->
     </p>
-    <p style="text-align: left">click <a href="{{url('br_importir_lc', $id)}}">Here</a>.</p>
+    <p style="text-align: left">click <a href="{{url('/br_list')}}">Here</a>.</p>
     <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
   </div>
 </div>

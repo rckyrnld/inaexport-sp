@@ -130,10 +130,10 @@ class MasterCountryController extends Controller
     {
       $data = MasterCountry::where('id', $id)->delete();
       if($data){
-         Session::flash('success','Success Delete Data');
+         Session::flash('error','Success Delete Data');
          return redirect('/master-country/');
        }else{
-         Session::flash('failed','Failed Delete Data');
+         Session::flash('error','Failed Delete Data');
          return redirect('/master-country/');
        }
     }

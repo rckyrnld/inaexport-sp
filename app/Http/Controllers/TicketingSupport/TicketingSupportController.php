@@ -174,10 +174,10 @@ class TicketingSupportController extends Controller
         $data2 = ChatingTicketingSupportModel::where('id_ticketing_support', $id)->delete();
         $data = TicketingSupportModel::where('id', $id)->delete();
         if ($data) {
-            Session::flash('success', 'Success Delete Data');
+            Session::flash('error', 'Success Delete Data');
             return redirect('/ticketing');
         } else {
-            Session::flash('failed', 'Failed Delete Data');
+            Session::flash('error', 'Failed Delete Data');
             return redirect('/ticketing');
         }
     }

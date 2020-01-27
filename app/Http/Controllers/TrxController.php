@@ -86,7 +86,7 @@ class TrxController extends Controller
     {
 //        dd($request);
 //        dd(Auth::guard('eksmp')->user()->id);
-
+        date_default_timezone_set('Asia/Jakarta');
 		$ch1 = str_replace(".","",$request->tp);
 		$ch2 = str_replace(",",".",$ch1);
 		if($request->origin == 2){

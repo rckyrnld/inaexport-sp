@@ -382,6 +382,7 @@ class InquiryWakilController extends Controller
     public function broadcasting(Request $request)
     {
        //broadcast inquiry dari perwakilan
+        date_default_timezone_set('Asia/Jakarta');
         if(Auth::user()){
             $id_user = Auth::user()->id;
             if(Auth::user()->id_group == 4){
@@ -555,7 +556,7 @@ class InquiryWakilController extends Controller
             //delete broadcasting
             $del3 = DB::table('csc_inquiry_br')->where('id', $id)->delete();
             
-            return redirect('/inquiry_perwakilan/')->with('success','Success Delete Data');
+            return redirect('/inquiry_perwakilan/')->with('error','Success Delete Data');
         }else{
             return redirect('/home');
         }
@@ -845,7 +846,7 @@ class InquiryWakilController extends Controller
             'dari_id' => $sender,
             'untuk_nama' => getCompanyName($receiver),
             'untuk_id' => $receiver,
-            'keterangan' => 'New Invoice from '.getPerwakilanName($sender).' about Inquiry '.$data->subyek_en,
+            'keterangan' => 'New Payment Information from '.getPerwakilanName($sender).' about Inquiry '.$data->subyek_en,
             'url_terkait' => 'inquiry/chatting',
             'status_baca' => 0,
             'waktu' => $datenow,

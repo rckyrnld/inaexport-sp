@@ -107,7 +107,7 @@ class LaborController extends Controller
 //        dd($id);
         DB::table('itdp_eks_labor')->where('id', $id)
             ->delete();
-        return redirect('eksportir/labor')->with('success','Success Delete Data');
+        return redirect('eksportir/labor')->with('error','Success Delete Data');
     }
 
     public function update(Request $request)

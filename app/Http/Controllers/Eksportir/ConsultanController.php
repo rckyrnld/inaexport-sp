@@ -111,7 +111,7 @@ class ConsultanController extends Controller
 //        dd($id);
         DB::table('itdp_eks_consultation')->where('id', $id)
             ->delete();
-        return redirect('eksportir/consultan')->with('success','Success Delete Data');
+        return redirect('eksportir/consultan')->with('error','Success Delete Data');
     }
 
     public function update(Request $request)
