@@ -81,7 +81,7 @@ class RegistrasiController extends Controller
 
 	public function simpan_rpembeli(Request $request)
     {
-
+        date_default_timezone_set('Asia/Jakarta');
 //        dd($admin_all);
         $insert1 = DB::select("
 			insert into itdp_profil_imp (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
@@ -165,7 +165,7 @@ class RegistrasiController extends Controller
 	
 	public function simpan_rpenjual(Request $request)
     {
-
+        date_default_timezone_set('Asia/Jakarta');
         $qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'");
 //        dd($qr);
         $insert1 = DB::select("
@@ -306,6 +306,7 @@ class RegistrasiController extends Controller
 	
 	public function resetpass(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
 		$id_role = $request->id_role;
 		$email = $request->email;
 		if($id_role == 1){

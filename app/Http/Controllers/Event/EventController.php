@@ -206,7 +206,7 @@ class EventController extends Controller
 	}
 	
 	public function bcevent(Request $req){
-
+        date_default_timezone_set('Asia/Jakarta');
         $eventnya = db::table('event_detail')->where('id', $req->idet)->first();
 
 		$kategori = db::select("Select * from event_detail_kategori where id_event_detail = '".$req->idet."'");

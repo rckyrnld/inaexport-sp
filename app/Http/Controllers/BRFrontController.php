@@ -306,6 +306,7 @@ class BRFrontController extends Controller
 	
 	public function br_pw_bc($id)
     {
+        date_default_timezone_set('Asia/Jakarta');
 		/*
 		$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
 							('".$id."','40001','".Date('Y-m-d H:m:s')."')");

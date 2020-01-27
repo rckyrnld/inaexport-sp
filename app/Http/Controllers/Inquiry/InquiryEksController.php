@@ -637,6 +637,7 @@ class InquiryEksController extends Controller
 
     public function dealing($id, $status)
     {
+        date_default_timezone_set('Asia/Jakarta');
         //notif ke admin dan pembuat inquiry saat ekspoter melakukan dealing.
         $id_user = Auth::guard('eksmp')->user()->id;
         $datenow = date('Y-m-d H:i:s');

@@ -743,6 +743,7 @@ class InquiryAdminController extends Controller
 
     public function broadcasting(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         if(Auth::user()){
             $id_user = Auth::user()->id;
             if(Auth::user()->id_group == 1){
