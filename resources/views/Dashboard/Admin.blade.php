@@ -238,6 +238,9 @@
             },
             legend: {
                 enabled: true
+            },
+            tooltip: {
+                valuePrefix: '$ '
             }
         });
         $('#export_pdf_8').click(function() {

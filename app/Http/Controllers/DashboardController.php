@@ -27,6 +27,7 @@ class DashboardController extends Controller
             $training = $this->getDataTraining();
             $statistik = $this->getDataStatistik();
             $zeke = $this->getDataZeke();
+//            dd($zeke);
             $table_top_event = [];
             $table_top_join_event = [];
 
@@ -206,6 +207,8 @@ class DashboardController extends Controller
                 if($value == 0){
                     break;
                 }
+                //ini dirubah yaa $ nya
+//                $fetch_data .= '{"name": "'.$data[$key][0].'", "y": $'.$data[$key][$i+1].'},';
                 $fetch_data .= '{"name": "'.$data[$key][0].'", "y": '.$data[$key][$i+1].'},';
             }
             $fetch_data = rtrim($fetch_data, ", ");
@@ -258,6 +261,7 @@ class DashboardController extends Controller
         }
         $fetch_data = rtrim($fetch_data, ", ");
         $fetch_data .= ']';
+//        dd($fetch_data);
         return $fetch_data;
     }
 
