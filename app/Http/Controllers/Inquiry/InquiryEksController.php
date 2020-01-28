@@ -537,7 +537,7 @@ class InquiryEksController extends Controller
                 'dari_id' => $sender,
                 'untuk_nama' => getCompanyNameImportir($receiver),
                 'untuk_id' => $receiver,
-                'keterangan' => 'New Message from '.getCompanyName($sender).' about Inquiry '.$inquiry->subyek_en,
+                'keterangan' => 'New Payment Information from '.getCompanyName($sender).' about Inquiry '.$inquiry->subyek_en,
                 'url_terkait' => 'front_end/chat_inquiry',
                 'status_baca' => 0,
                 'waktu' => $datenow,
@@ -560,7 +560,7 @@ class InquiryEksController extends Controller
 
             Mail::send('inquiry.mail.sendChat', $data, function ($mail) use ($data) {
                 $mail->to($data['email'], $data['username']);
-                $mail->subject('Inquiry Chatting Information');
+                $mail->subject('Inquiry Payment Information');
             });
         }else if($inquiry->type == "perwakilan" || $inquiry->type == "admin"){
             $cek = Db::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $sender)->first();
@@ -592,7 +592,7 @@ class InquiryEksController extends Controller
                 'dari_id' => $sender,
                 'untuk_nama' => $untuk_nama,
                 'untuk_id' => $receiver,
-                'keterangan' => 'New Message from '.getCompanyName($sender).' about Inquiry '.$inquiry->subyek_en,
+                'keterangan' => 'New Payment Information from '.getCompanyName($sender).' about Inquiry '.$inquiry->subyek_en,
                 'url_terkait' => $url_terkait,
                 'status_baca' => 0,
                 'waktu' => $datenow,
@@ -616,7 +616,7 @@ class InquiryEksController extends Controller
 
             Mail::send('inquiry.mail.sendProve', $data, function ($mail) use ($data) {
                 $mail->to($data['email'], $data['username']);
-                $mail->subject('Inquiry Chatting Information');
+                $mail->subject('Inquiry Payment Information');
             });
         }
 

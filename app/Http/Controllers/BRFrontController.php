@@ -243,6 +243,7 @@ class BRFrontController extends Controller
     {
 		//broadcast buying request importer
 		date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
 		$cariprod = DB::select("select * from csc_buying_request where id='".$id."'");
 		foreach($cariprod as $prodcari) { $rrr = $prodcari->id_csc_prod; $zzz = $prodcari->id_pembuat; }
 		$namacom = DB::select("select * from itdp_company_users where id='".$zzz."'");
@@ -268,7 +269,7 @@ class BRFrontController extends Controller
 				$id_terkait = "";
 				$ket = "Buying Request created by ".getExBadanImportir($zzz).getCompanyNameImportir($zzz);
 				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-					('2','".getCompanyNameImportir($zzz)."','".$zzz."','".getCompanyName($napro)."','".$napro."','".$ket."','br_list','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+					('2','".getCompanyNameImportir($zzz)."','".$zzz."','".getCompanyName($napro)."','".$napro."','".$ket."','br_list','".$id_terkait."','".$date."','0')
 				");
 				//END NOTIF
 				//EMAIL
@@ -307,6 +308,7 @@ class BRFrontController extends Controller
 	public function br_pw_bc($id)
     {
         date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
 		/*
 		$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
 							('".$id."','40001','".Date('Y-m-d H:m:s')."')");
@@ -341,7 +343,7 @@ class BRFrontController extends Controller
 				$id_terkait = "";
 				$ket = "Buying Request created by ".$namapembuat;
 				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-					('2','".$namapembuat."','".$zzz."','Eksportir','".$napro."','".$ket."','br_list','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+					('2','".$namapembuat."','".$zzz."','Eksportir','".$napro."','".$ket."','br_list','".$id_terkait."','".$date."','0')
 				");
 				//END NOTIF
 				//EMAIL
@@ -386,6 +388,7 @@ class BRFrontController extends Controller
 	public function uploadpop(Request $request)
     {
 			date_default_timezone_set('Asia/Jakarta');
+            $date = date('Y-m-d H:i:s');
 			$cari = DB::select("select * from csc_buying_request_join where id='".$request->idb."'");
 			foreach($cari as $cr1){
 				$data1 = $cr1->id_eks;
@@ -400,7 +403,7 @@ class BRFrontController extends Controller
 			$it = $request->idb;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('2','".getCompanyNameImportir(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getCompanyName($data1)."','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
+			('2','".getCompanyNameImportir(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getCompanyName($data1)."','".$data1."','".$ket."','br_chat','".$it."','".$date."','0')
 			");
 
 			//tadi sempet dirubah yang $data2b
@@ -441,7 +444,7 @@ class BRFrontController extends Controller
 			$request->file('filez')->move($destinationPath, $file);
 			$insert = DB::select("
 			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
-			('".$idq."','".$request->catatan."','".Date('Y-m-d H:i:s')."','".$request->idc."','".$request->ide."','".$request->idd."','".$idb."','".$file."')");
+			('".$idq."','".$request->catatan."','".$date."','".$request->idc."','".$request->ide."','".$request->idd."','".$idb."','".$file."')");
 			
 			return redirect('br_importir_chat/'.$idq.'/'.$idb);
 	}
@@ -450,6 +453,7 @@ class BRFrontController extends Controller
     {
         //upload bukti pembayaran buying request
 			date_default_timezone_set('Asia/Jakarta');
+            $date = date('Y-m-d H:i:s');
 			$cari = DB::select("select * from csc_buying_request_join where id='".$request->idq."'");
 			foreach($cari as $cr1){
 				$data1 = $cr1->id_eks;
@@ -467,14 +471,14 @@ class BRFrontController extends Controller
 			$request->file('filez')->move($destinationPath, $file);
 			$insert = DB::select("
 			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
-			('".$idb."','".$request->catatan."','".Date('Y-m-d H:i:s')."','".$request->idc."','".$request->ide."','".$request->idd."','".$idq."','".$file."')");
+			('".$idb."','".$request->catatan."','".$date."','".$request->idc."','".$request->ide."','".$request->idd."','".$idq."','".$file."')");
 			
 			if($request->ide == 1){
 			$ket = "Super Admin Upload Payment Information On Buying Request";
 			$it = $request->idq;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('2','Admin','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
+			('2','Admin','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".$date."','0')
 			");
                 $users = DB::table('itdp_company_users')->where('id', $data1)->first();
                 $email = $users->email;
@@ -503,7 +507,7 @@ class BRFrontController extends Controller
 			$it = $request->idq;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-			('2','Perwakilan','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".Date('Y-m-d H:i:s')."','0')
+			('2','Perwakilan','1','Eksportir','".$data1."','".$ket."','br_chat','".$it."','".$date."','0')
 			");
                 $users = DB::table('itdp_company_users')->where('id', $data1)->first();
                 $email = $users->email;

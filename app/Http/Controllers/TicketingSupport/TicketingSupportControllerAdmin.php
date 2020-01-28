@@ -122,6 +122,7 @@ class TicketingSupportControllerAdmin extends Controller
     {
         // echo $req->id;die();
         date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
         $cari1 = DB::select("select * from ticketing_support where id='" . $req->id . "'");
         foreach ($cari1 as $v1) {
             $id_company = $v1->id_pembuat;
@@ -167,7 +168,7 @@ class TicketingSupportControllerAdmin extends Controller
         //notif app untuk user
         $ket = "Super Admin Respond Your Ticketing Request";
         $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-				('" . $data3 . "','Super Admin','1','" . $data1 . "','" . $data4 . "','" . $ket . "','front_end/ticketing_support/chatview','" . $req->id . "','" . Date('Y-m-d H:m:s') . "','0')
+				('" . $data3 . "','Super Admin','1','" . $data1 . "','" . $data4 . "','" . $ket . "','front_end/ticketing_support/chatview','" . $req->id . "','" . $date . "','0')
 				");
 
         $chat = ChatingTicketingSupportModel::insert([
@@ -187,7 +188,7 @@ class TicketingSupportControllerAdmin extends Controller
     {
         // echo $req->id;die();
         date_default_timezone_set('Asia/Jakarta');
-
+        $date = date('Y-m-d H:i:s');
         $nama_file1 = NULL;
         $destination= 'uploads\ticketing\\';
         if($req->hasFile('upload_file2')){ 
@@ -240,7 +241,7 @@ class TicketingSupportControllerAdmin extends Controller
 
         $ket = "Super Admin Respond Your Ticketing Request";
         $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-                ('" . $data3 . "','Super Admin','1','" . $data1 . "','" . $data4 . "','" . $ket . "','front_end/ticketing_support/chatview','" . $req->id . "','" . Date('Y-m-d H:m:s') . "','0')
+                ('" . $data3 . "','Super Admin','1','" . $data1 . "','" . $data4 . "','" . $ket . "','front_end/ticketing_support/chatview','" . $req->id . "','" . $date . "','0')
                 ");
 
         $chat = ChatingTicketingSupportModel::insert([

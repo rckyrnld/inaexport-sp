@@ -154,7 +154,7 @@ class InquiryWakilController extends Controller
                         return '
                             <center>
                             <a href="'.url('/inquiry_perwakilan/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                            <a href="'.url('/inquiry_perwakilan/delete').'/'.$mjl->id.'" class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="'.url('/inquiry_perwakilan/delete').'/'.$mjl->id.'" class="btn btn-sm btn-danger" onclick="return confirm(\'Are You Sure?\')" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </center>';
                     }else if($mjl->status == 1){
                         return '

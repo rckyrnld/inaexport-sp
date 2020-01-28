@@ -156,6 +156,20 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
 .title-lang{
     color: black; font-size: 13px;
 }
+
+.product_tab_button.nav div a.active, .product_tab_button.nav div a:hover {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px!important;
+    font-family: 'Myriad-pro';
+    color: #4497e5!important;
+}
+
+.product_tab_button.nav div a {
+    font-size: 16px!important;
+    color: black!important;
+}
+
 </style> 
 </head>
 

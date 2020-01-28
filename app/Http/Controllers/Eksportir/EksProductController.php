@@ -557,9 +557,21 @@ class EksProductController extends Controller
 //				$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 //				('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
 //				");
-                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-				('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket2."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
-				");
+                $insertnotif = DB::table('notif')->insert([
+                            'dari_nama' => 'Super Admin',
+                            'dari_id' => 1,
+                            'untuk_nama' => 'Eksportir',
+                            'untuk_id' => $data->id_itdp_company_user,
+                            'keterangan' => $ket2,
+                            'url_terkait' => 'eksportir/product_view',
+                            'id_terkait' => $id,
+                            'status_baca' => 0,
+                            'waktu' => $datenow,
+                            'to_role' => 2,
+                        ]);
+    //             $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+				// ('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket2."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
+				// ");
 			$data33 = [
             'email' => "",
             'email1' => $maileks,

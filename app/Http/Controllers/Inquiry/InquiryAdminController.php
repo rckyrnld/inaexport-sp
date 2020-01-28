@@ -155,7 +155,7 @@ class InquiryAdminController extends Controller
                         return '
                             <center>
                             <a href="'.url('/inquiry_admin/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                            <a href="'.url('/inquiry_admin/delete').'/'.$mjl->id.'" class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash" aria-hidden="true" ></i></a>
+                            <a href="'.url('/inquiry_admin/delete').'/'.$mjl->id.'" class="btn btn-sm btn-danger" onclick="return confirm(\'Are You Sure?\')" title="Delete"><i class="fa fa-trash" aria-hidden="true" ></i></a>
                             </center>';
                     }else if($mjl->status == 1){
                         return '
@@ -1194,7 +1194,7 @@ class InquiryAdminController extends Controller
             'dari_id' => $sender,
             'untuk_nama' => getCompanyName($receiver),
             'untuk_id' => $receiver,
-            'keterangan' => 'New Message from '.getAdminName($sender).' about Inquiry '.$data->subyek_en,
+            'keterangan' => 'New Payment Information from '.getAdminName($sender).' about Inquiry '.$data->subyek_en,
             'url_terkait' => 'inquiry/chatting',
             'status_baca' => 0,
             'waktu' => $datenow,

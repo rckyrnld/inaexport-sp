@@ -124,9 +124,9 @@ class MasterCityController extends Controller
       $data = MasterCity::where('id', $id)->delete();
       if($data){
          Session::flash('error','Success Delete Data');
-         return redirect('/master-city/')->with('success', 'Success Delete Data');
+         return redirect('/master-city/')->with('error', 'Success Delete Data');
        }else{
-         Session::flash('errror','Failed Delete Data');
+         Session::flash('error','Failed Delete Data');
          return redirect('/master-city/')->with('error', 'Failed Delete Data');
        }
     }

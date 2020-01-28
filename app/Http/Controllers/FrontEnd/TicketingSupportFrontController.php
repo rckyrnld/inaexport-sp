@@ -62,6 +62,7 @@ class TicketingSupportFrontController extends Controller
     {
 
 		date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
         $id_user = Auth::guard('eksmp')->user()->id;
         $type = Auth::guard('eksmp')->user()->type;
 
@@ -110,7 +111,7 @@ class TicketingSupportFrontController extends Controller
             $ket = "Ticketing was created by ".getExBadan(auth::guard('eksmp')->user()->id).getCompanyName(auth::guard('eksmp')->user()->id);
 //		$ket2 = "You was create ticketing";
             $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('1','".getcompanyname(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$id_ticketing."','".Date('Y-m-d H:m:s')."','0')
+			('1','".getcompanyname(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$id_ticketing."','".$date."','0')
             ");
 
 //		$insert4 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
@@ -175,7 +176,7 @@ class TicketingSupportFrontController extends Controller
             $ket = "Ticketing was created by ".getExBadanImportir(Auth::guard('eksmp')->user()->id)." ".getCompanyNameImportir(Auth::guard('eksmp')->user()->id);
 //		$ket2 = "You was create ticketing";
             $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('1','".getCompanyNameImportir(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$id_ticketing."','".Date('Y-m-d H:m:s')."','0')
+			('1','".getCompanyNameImportir(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$id_ticketing."','".$date."','0')
             ");
 
 //		$insert4 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
@@ -256,6 +257,7 @@ class TicketingSupportFrontController extends Controller
     public function sendchat(Request $req)
     {
 		date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
 		$cari1 = DB::select("select * from ticketing_support where id='".$req->id."'");
 			foreach($cari1 as $v1){ $id_company = $v1->id_pembuat; }
 			$cari2 = DB::select("select * from itdp_company_users where id='".$id_company."'");
@@ -296,7 +298,7 @@ class TicketingSupportFrontController extends Controller
 			});
 		$ket = "User Reply Chat on Ticketing Request";
 				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-				('1','".$data1."','".$data4."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$req->id."','".Date('Y-m-d H:m:s')."','0')
+				('1','".$data1."','".$data4."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$req->id."','".$date."','0')
 				");
 		
         $chat = ChatingTicketingSupportModel::insert([

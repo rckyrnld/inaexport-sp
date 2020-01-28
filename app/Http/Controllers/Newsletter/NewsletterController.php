@@ -181,7 +181,7 @@ class NewsletterController extends Controller
       $data =  DB::table('itdp_newsletter')->where('id', $id)->delete();
       if($data){
          Session::flash('error','Success Deleted Data');
-         return redirect('/newsletter/')->with('success', 'Success Deleted Data');
+         return redirect('/newsletter/')->with('error', 'Success Deleted Data');
        }else{
          Session::flash('error','Failed Deleted Data');
          return redirect('/newsletter/')->with('error', 'Failed Deleted Data');
