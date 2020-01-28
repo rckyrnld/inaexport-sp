@@ -360,20 +360,24 @@ class VerifyuserController extends Controller
 	
 	public function profil($id,$id2)
     {
-		if($id == 2){
-			$pageTitle = "Exporter Profile";
-			$tx = "Exporter";
-		}else if($id == 3){
-			$pageTitle = "Importer Profile";
-			$tx = "Importer";
-		}else{
-			$pageTitle = "Profile ";
-			$tx ="";
-		}
-		$ida = $id;
-		$idb = $id2;
+        if (Auth::guard('eksmp')->user() || Auth::user()) {
+            if($id == 2){
+                $pageTitle = "Exporter Profile";
+                $tx = "Exporter";
+            }else if($id == 3){
+                $pageTitle = "Importer Profile";
+                $tx = "Importer";
+            }else{
+                $pageTitle = "Profile ";
+                $tx ="";
+            }
+            $ida = $id;
+            $idb = $id2;
 
-		return view('verifyuser.profil', compact('pageTitle','tx','ida','idb'));
+            return view('verifyuser.profil', compact('pageTitle','tx','ida','idb'));
+        }else {
+            return redirect('/login');
+        }
 	}
 	
 	public function profil2($id,$id2)
