@@ -35,7 +35,7 @@ class CategoryProductController extends Controller
 
     public function getData()
     {
-      $product = DB::table('csc_product')->orderby('nama_kategori_en', 'asc')->get();
+      $product = DB::table('csc_product')->orderby('level_1', 'asc')->orderby('level_2', 'asc')->orderby('nama_kategori_en', 'asc')->get();
 
       return \Yajra\DataTables\DataTables::of($product)
           ->addIndexColumn()

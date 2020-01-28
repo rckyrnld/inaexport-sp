@@ -346,7 +346,7 @@
     function inquiry() {
         var data_year = JSON.parse('<?php echo addcslashes(json_encode($Inquiry), '\'\\'); ?>');
         var data_top = JSON.parse('<?php echo addcslashes(json_encode($Top_Inquiry), '\'\\'); ?>');
-        var defaultTitle = "Number of Inquiry This Year";
+        var defaultTitle = "Number of Inquiry";
         var drilldownTitle = "Amount of Inquiry Year ";
 
         var chart_inquiry_1 = Highcharts.chart('inquiry', {
@@ -411,7 +411,7 @@
             tooltip: {
                 useHTML: true,
                 headerFormat: '',
-                pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">{point.name}</span><br/>'
+                pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">Number of Inquiry : {point.y}x</span><br/>'
             }
         });
         $('#export_pdf_3').click(function() {
@@ -470,7 +470,7 @@
 
     function event() {
         var data_year = JSON.parse('<?php echo addcslashes(json_encode($Event), '\'\\'); ?>')
-        var defaultTitle = "Top 5 Event of last 5 Years";
+        var defaultTitle = "Number of Events";
         var drilldownTitle = "Amount of Events Year ";
 
         var chart_event = Highcharts.chart('event', {
@@ -517,7 +517,7 @@
 
     function training() {
         var data_year = JSON.parse('<?php echo addcslashes(json_encode($Training), '\'\\'); ?>');
-        var defaultTitle = "Number of Training This Year";
+        var defaultTitle = "Number of Trainings";
         var drilldownTitle = "Amount of Training Year ";
 
         var chart_training = Highcharts.chart('training', {
@@ -592,7 +592,7 @@
             tooltip: {
                 useHTML: true,
                 headerFormat: '',
-                pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">{point.name}</span><br/>'
+                pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">Number of Downloads : {point.y}x</span><br/>'
             }
         });
 
@@ -622,7 +622,7 @@
             tooltip: {
                 useHTML: true,
                 headerFormat: '',
-                pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">{point.name}</span><br/>'
+                pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">Downloaded : {point.y}x</span><br/>'
             }
         });
         $('#export_pdf_2').click(function() {
