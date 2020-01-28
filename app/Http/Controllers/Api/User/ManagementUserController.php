@@ -204,7 +204,8 @@ class ManagementUserController extends Controller
             'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
             'username' => $request->name,
             'main_messages' => $request->messages,
-            'id' => $id_ticketing
+            'id' => $id_ticketing,
+            'bu' => ''
         ];
 
         $ket = "Ticketing was created by " . $request->name;
