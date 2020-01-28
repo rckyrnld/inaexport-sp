@@ -277,66 +277,13 @@
 	
 	
 
-    <!--category product start-->
-    <section class="product_area mb-50" style="background-color: #ddeffd;">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section_title" style="margin-bottom: 0px;">
-                        <!-- <div class="row product_tab_button nav" role="tablist" style="background-color: inherit; width: 100%">
-                            <div class="col-md-2">
-                                
-                            </div>
-                        </div> -->
-                        <div class="row product_tab_button nav justify-content-center" role="tablist" style="background-color: inherit; width: 100%">
-                            <?php
-                                $numb = 1;
-                            ?>
-                            @foreach($categoryutama2 as $cut)
-                            <?php
-                                $cls = "";
-                                if($numb == 1){
-                                    $cls = "active";
-                                }
-                            ?>
-                            <div class="col-md-2 col-lg-2 col-4" align="center">
-                                <?php
-                                    $nkat = "nama_kategori_".$lct; 
-                                    if($cut->$nkat == NULL){
-                                        $nkat = "nama_kategori_en";
-                                    }
-
-                                    $num_char = 30;
-                                    $textkat = $cut->$nkat;
-                                    if(strlen($textkat) > 30){
-                                        $cut_text = substr($textkat, 0, $num_char);
-                                        if ($textkat{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                            $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                                            $cut_text = substr($textkat, 0, $new_pos);
-                                        }
-                                        $kategorinya = $cut_text . '...';
-                                    }else{
-                                        $kategorinya = $textkat;
-                                    }
-                                ?>
-                                <a class="tabnya {{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
-                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 40px">
-                                    <p>{{$kategorinya}}</p>
-                                </a>
-                            </div>
-                            <?php $numb++; ?>
-                            @endforeach
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--category product end-->
-	
+   
+	<br>
 	<div class="breadcrumbs_area">
-        <div class="container">
+        <div class="container" style="
+    background-color: white;
+    /* padding-left: 200px; */
+">
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumb_content">
@@ -404,7 +351,11 @@
 	
 <br>
 
+
+
 	<!--buyer & seller start-->
+	<?php 
+	/*
     <div class="breadcrumbs_area" style="">
         <div class="container">
             <div class="row">
@@ -465,11 +416,74 @@
             </div>
         </div>
     </div>
+	
+	*/ ?>
+	
     <!--buyer & seller start-->
+	<?php /*
 	<br>
+	 <!--category product start-->
+    <section class="product_area mb-50" style="background-color: #ddeffd;">
+        <div class="container">
+            <div class="row">
+                
+            </div>
+        </div>
+    </section>
+	*/ ?>
+    <!--category product end-->
     <!--product category start-->
     <section class="product_area mb-50">
-        <div class="container">
+        <div class="container" style="background-color:white!important;">
+			<div class="col-12">
+                    <div class="section_title" style="margin-bottom: 0px;">
+                        <!-- <div class="row product_tab_button nav" role="tablist" style="background-color: inherit; width: 100%">
+                            <div class="col-md-2">
+                                
+                            </div>
+                        </div> -->
+                        <div class="row product_tab_button nav justify-content-center" role="tablist" style="background-color: inherit; width: 100%">
+                            <?php
+                                $numb = 1;
+                            ?>
+                            @foreach($categoryutama2 as $cut)
+                            <?php
+                                $cls = "";
+                                if($numb == 1){
+                                    $cls = "active";
+                                }
+                            ?>
+                            <div class="col-md-2 col-lg-2 col-4" align="center">
+                                <?php
+                                    $nkat = "nama_kategori_".$lct; 
+                                    if($cut->$nkat == NULL){
+                                        $nkat = "nama_kategori_en";
+                                    }
+
+                                    $num_char = 30;
+                                    $textkat = $cut->$nkat;
+                                    if(strlen($textkat) > 30){
+                                        $cut_text = substr($textkat, 0, $num_char);
+                                        if ($textkat{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                            $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                            $cut_text = substr($textkat, 0, $new_pos);
+                                        }
+                                        $kategorinya = $cut_text . '...';
+                                    }else{
+                                        $kategorinya = $textkat;
+                                    }
+                                ?>
+                                <a class="tabnya {{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
+                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 40px">
+                                    <p>{{$kategorinya}}</p>
+                                </a>
+                            </div>
+                            <?php $numb++; ?>
+                            @endforeach
+                        </div>
+                    </div>
+
+                </div>
             <div class="tab-content" id="tabing-product">
                 <?php
                     $numbe = 1;
@@ -499,7 +513,7 @@
                             </span>
                         </center>
                         @else
-                        <div class="product_carousel product_column5 owl-carousel">
+                        <div class="product_carousel product_column5 owl-carousel" style="padding-top: 25px;padding-bottom: 25px;">
                                 @foreach($product as $key => $p)
                                     <?php
                                         $cat1 = getCategoryName($p->id_csc_product, $lct);

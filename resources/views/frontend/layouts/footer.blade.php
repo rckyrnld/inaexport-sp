@@ -109,7 +109,7 @@
     </section>
 
 <!--footer area start-->
-<footer class="footer_widgets mt-50">
+<footer class="footer_widgets" style="background-color:white">
         <div class="container">
             <div class="footer_top">
                 <div class="row">

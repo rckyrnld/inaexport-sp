@@ -20,7 +20,7 @@ return [
 	"joined" => "已加入",
 	"foot" => [
         "contact" => "CONTACT",
-        "with-us" => "WITH US",
+        "with-us" => "US",
         "about" => "ABOUT",
         "membership" => "INAEXPORT.ID",
         "our" => "OUR",
