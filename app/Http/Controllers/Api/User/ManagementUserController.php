@@ -205,7 +205,8 @@ class ManagementUserController extends Controller
             'username' => $request->name,
             'main_messages' => $request->messages,
             'id' => $id_ticketing,
-            'bu' => ''
+            'bu' => '',
+            'company' => $request->name
         ];
 
         $ket = "Ticketing was created by " . $request->name;
