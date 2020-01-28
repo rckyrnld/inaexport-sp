@@ -169,13 +169,14 @@ class PerwakilanResearchController extends Controller
          Session::flash('success','Success '.$param.' Data');
          return redirect('perwakilan/research-corner/');
        }else{
-         Session::flash('failed','Failed '.$param.' Data');
+         Session::flash('error','Failed '.$param.' Data');
          return redirect('perwakilan/research-corner/');
        }
     }
 
     public function broadcast(Request $req)
     {
+      date_default_timezone_set('Asia/Jakarta');
       $id_user = Auth::user()->id;
       $array = array();
       $date = date('Y-m-d H:i:s');
@@ -245,7 +246,7 @@ class PerwakilanResearchController extends Controller
          Session::flash('success','Success Broadcast Data');
          return redirect('perwakilan/research-corner/');
        }else{
-         Session::flash('failed','Failed Broadcast Data');
+         Session::flash('error','Failed Broadcast Data');
          return redirect('perwakilan/research-corner/');
        }
     }
@@ -283,7 +284,7 @@ class PerwakilanResearchController extends Controller
     {
       $data = DB::table('csc_research_corner')->where('id', $id)->delete();
       if($data){
-         Session::flash('success','Success Delete Data');
+         Session::flash('error','Success Delete Data');
          return redirect('perwakilan/research-corner/');
        }else{
          Session::flash('failed','Failed Delete Data');

@@ -29,7 +29,7 @@
 				<input type="hidden" value="<?php echo $qt->idb; ?>" name="idb">
 				<div class="col-md-12">
           	 		<div class="form-group row">
-				      {!!Form::label('password_confirm','Tipe',['class' => 'col-sm-2 col-form-label '])!!}
+				      {!!Form::label('password_confirm','Type',['class' => 'col-sm-2 col-form-label '])!!}
 				      <div class="col-sm-4">
 				     
 						<select class="form-control" name="type" required>
@@ -105,7 +105,7 @@
 				</div>
 				<div class="col-md-12">
           	 		<div class="form-group row">
-				      {!!Form::label('password_confirm','Pejabat',['class' => 'col-sm-2 col-form-label '])!!}
+				      {!!Form::label('password_confirm','Official',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
 						<input type="text" class="form-control" name="pejabat" value="<?php echo $qt->nama; ?>" required>
 					</div>

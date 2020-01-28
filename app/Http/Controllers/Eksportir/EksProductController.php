@@ -230,6 +230,7 @@ class EksProductController extends Controller
 
     public function store(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         if(Auth::guard('eksmp')->user()){
             $id_user = Auth::guard('eksmp')->user()->id;
             $id_profil = Auth::guard('eksmp')->user()->id_profil;
@@ -416,11 +417,11 @@ class EksProductController extends Controller
                 $delete = DB::table('csc_product_single')->where('id', $id)->delete();
             }
             if($delete)
-                return redirect('eksportir/product')->with('success','Success Delete Data');
+                return redirect('eksportir/product')->with('error','Success Delete Data');
             else
-                return redirect('eksportir/product')->with('failed','Failed Delete Data');
+                return redirect('eksportir/product')->with('error','Failed Delete Data');
         }else{
-            return redirect('eksportir/product')->with('success','Success Delete Data');
+            return redirect('eksportir/product')->with('error','Success Delete Data');
         }
     }
 
@@ -535,6 +536,7 @@ class EksProductController extends Controller
 
     public function verifikasi_act($id, Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         if(Auth::user()){
             $id_user = Auth::user()->id;
             $datenow = date("Y-m-d H:i:s");
@@ -555,9 +557,21 @@ class EksProductController extends Controller
 //				$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 //				('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
 //				");
-                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-				('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket2."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
-				");
+                $insertnotif = DB::table('notif')->insert([
+                            'dari_nama' => 'Super Admin',
+                            'dari_id' => 1,
+                            'untuk_nama' => 'Eksportir',
+                            'untuk_id' => $data->id_itdp_company_user,
+                            'keterangan' => $ket2,
+                            'url_terkait' => 'eksportir/product_view',
+                            'id_terkait' => $id,
+                            'status_baca' => 0,
+                            'waktu' => $datenow,
+                            'to_role' => 2,
+                        ]);
+    //             $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+				// ('2','Super Admin','1','Eksportir','".$data->id_itdp_company_user."','".$ket2."','eksportir/product_view','".$id."','".Date('Y-m-d H:m:s')."','0')
+				// ");
 			$data33 = [
             'email' => "",
             'email1' => $maileks,

@@ -48,6 +48,7 @@ class InquiryFrontController extends Controller
 
     public function store($id, Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         if(Auth::guard('eksmp')->user()->id_role == 3){
             $id_user = Auth::guard('eksmp')->user()->id;
             $id_product = $request->id_product;
@@ -339,7 +340,7 @@ class InquiryFrontController extends Controller
             'dari_id' => $sender,
             'untuk_nama' => getCompanyName($receiver),
             'untuk_id' => $receiver,
-            'keterangan' => 'New Invoice from '.getExBadanImportir($sender).getCompanyNameImportir($sender).' about Inquiry '.$data->subyek_en,
+            'keterangan' => 'New Payment Information from '.getExBadanImportir($sender).getCompanyNameImportir($sender).' about Inquiry '.$data->subyek_en,
             'url_terkait' => 'inquiry/chatting',
             'status_baca' => 0,
             'waktu' => $datenow,

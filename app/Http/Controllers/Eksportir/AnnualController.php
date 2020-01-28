@@ -100,7 +100,7 @@ class AnnualController extends Controller
     {
         DB::table('itdp_eks_sales')->where('id', $id)
             ->delete();
-        return redirect('eksportir/annual_sales')->with('success','Success Delete Data');
+        return redirect('eksportir/annual_sales')->with('error','Success Delete Data');
     }
 
     public function update(Request $request)

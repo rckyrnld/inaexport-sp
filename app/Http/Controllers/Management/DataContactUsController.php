@@ -69,10 +69,10 @@ class DataContactUsController extends Controller
     {
       $data = DB::table('csc_contact_us')->where('id',$id)->delete();
       if($data){
-         Session::flash('success','Success Delete Data');
+         Session::flash('error','Success Delete Data');
          return redirect('/management/contact-us/')->with('success','Success Delete Data');
        }else{
-         Session::flash('failed','Failed Delete Data');
+         Session::flash('error','Failed Delete Data');
          return redirect('/management/contact-us/')->with('error','Failed Delete Data');
        }
     }

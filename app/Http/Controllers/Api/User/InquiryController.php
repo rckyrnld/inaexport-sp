@@ -743,7 +743,7 @@ class InquiryController extends Controller
             'dari_id' => $sender,
             'untuk_nama' => (getCompanyNameImportir($receiver) == "-") ? getCompanyName($receiver) : getCompanyNameImportir($receiver),
             'untuk_id' => $receiver,
-            'keterangan' => 'New Message from ' . getCompanyNameImportir($sender) . ' about Inquiry ' . $data->subyek_en,
+            'keterangan' => 'New Payment Information from ' . getCompanyNameImportir($sender) . ' about Inquiry ' . $data->subyek_en,
             'url_terkait' => 'inquiry/chatting',
             'status_baca' => 0,
             'waktu' => $datenow,

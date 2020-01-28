@@ -99,7 +99,7 @@ class PortlandController extends Controller
 //        dd($id);
         DB::table('itdp_eks_port')->where('id', $id)
             ->delete();
-        return redirect('eksportir/portland')->with('success','Success Delete Data');
+        return redirect('eksportir/portland')->with('error','Success Delete Data');
     }
 
     public function update(Request $request)

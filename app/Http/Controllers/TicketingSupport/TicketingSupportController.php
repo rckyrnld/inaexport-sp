@@ -38,6 +38,7 @@ class TicketingSupportController extends Controller
     public function store(Request $req)
     {
         $id_user = Auth::guard('eksmp')->user()->id;
+        $date = date('Y-m-d H:i:s');
         $type = Auth::guard('eksmp')->user()->type;
 
         $store = TicketingSupportModel::create([
@@ -48,7 +49,7 @@ class TicketingSupportController extends Controller
             'subyek' => $req->subject,
             'main_messages' => $req->messages,
             'status' => 1,
-            'created_at' => date('Y-m-d H:i:s')
+            'created_at' => $date
         ]);
 
         $id_ticketing = $store->id;
@@ -174,10 +175,10 @@ class TicketingSupportController extends Controller
         $data2 = ChatingTicketingSupportModel::where('id_ticketing_support', $id)->delete();
         $data = TicketingSupportModel::where('id', $id)->delete();
         if ($data) {
-            Session::flash('success', 'Success Delete Data');
+            Session::flash('error', 'Success Delete Data');
             return redirect('/ticketing');
         } else {
-            Session::flash('failed', 'Failed Delete Data');
+            Session::flash('error', 'Failed Delete Data');
             return redirect('/ticketing');
         }
     }

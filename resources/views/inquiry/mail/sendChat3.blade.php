@@ -35,7 +35,7 @@
 {{--        </p>--}}
 
 {{--        <hr>--}}
-        <p style="text-align: left;">click <a href="{{url('inquiry/chatting', $id)}}">Here</a>.</p>
+        <p style="text-align: left;">click <a href="{{url('front_end/chat_inquiry', $id)}}">Here</a>.</p>
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
     </div>
 </div>

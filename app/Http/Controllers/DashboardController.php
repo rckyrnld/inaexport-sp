@@ -27,6 +27,7 @@ class DashboardController extends Controller
             $training = $this->getDataTraining();
             $statistik = $this->getDataStatistik();
             $zeke = $this->getDataZeke();
+//            dd($zeke);
             $table_top_event = [];
             $table_top_join_event = [];
 
@@ -170,7 +171,7 @@ class DashboardController extends Controller
             $qw3 = DB::select("select sum(tp) as sumc from csc_transaksi where id_eksportir='".$value->id."' AND DATE_PART('year', to_date(csc_transaksi.created_at::TEXT,'YYYY')) = $year ");
             foreach($qw3 as $r3){ $al3 = $r3->sumc; }
             $total = 3;
-//            $arrayJumlah[$value->id] = $total;
+        //  $arrayJumlah[$value->id] = $total;
             $data[$value->id] = [$value->company, intval($al1), intval($al2), intval($al3)];
         }
 
@@ -206,6 +207,8 @@ class DashboardController extends Controller
                 if($value == 0){
                     break;
                 }
+                //ini dirubah yaa $ nya
+//                $fetch_data .= '{"name": "'.$data[$key][0].'", "y": $'.$data[$key][$i+1].'},';
                 $fetch_data .= '{"name": "'.$data[$key][0].'", "y": '.$data[$key][$i+1].'},';
             }
             $fetch_data = rtrim($fetch_data, ", ");
@@ -258,6 +261,7 @@ class DashboardController extends Controller
         }
         $fetch_data = rtrim($fetch_data, ", ");
         $fetch_data .= ']';
+//        dd($fetch_data);
         return $fetch_data;
     }
 
@@ -919,8 +923,7 @@ class DashboardController extends Controller
     private function getMemberPerwakilan($country, $jenis)
     {
         $fetch_data_new_user = '';
-        $fetch_sub_data = '';
-        $tampung_tahun = [];
+        $fetch_sub_data = '[';
         $tahun = $this->tahun();
 
         $color = array(
@@ -935,15 +938,26 @@ class DashboardController extends Controller
             $param = 'id_mst_province';
             $profil = 'eks';
             $nama = 'Exporter';
+            $country = [$country];
         } else {
             $param = 'id_mst_country';
             $profil = 'imp';
             $nama = 'Buyer';
+            $db = DB::table('mst_country')->where('id',$country)->first();
+            if($db){
+                $db = DB::table('mst_country')->where('mst_country_group_id',$db->mst_country_group_id)->get();
+                $country = [];
+                foreach ($db as $key => $value) {
+                    array_push($country, $value->id);
+                }
+            } else {
+                $country = [$country];
+            }
         }
 
         $new_user = DB::table('itdp_company_users as a')->selectRaw('extract(year from created_at) as year, count(b.id) as jumlah')
             ->leftjoin('itdp_profil_' . $profil . ' as b', 'a.id_profil', '=', 'b.id')
-            ->where('b.' . $param, $country)
+            ->whereIn('b.' . $param, $country)
             ->whereRaw('extract(year from created_at) in (' . $tahun . ')')
             ->groupby('year')
             ->limit(5)->get();
@@ -951,35 +965,22 @@ class DashboardController extends Controller
         if (count($new_user) > 0) {
             $fetch_data_new_user .= '[{"name": "' . $nama . '", "data": [';
             foreach ($new_user as $key => $value) {
-                if (!in_array($value->year, $tampung_tahun)) {
-                    array_push($tampung_tahun, $value->year);
-                }
+                $fetch_data_new_user .= '{"name": "' . $value->year . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year . '"},';
 
-                if ($value->year === date('Y')) {
-                    $fetch_data_new_user .= '{"name": "' . $value->year . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year . '"}';
-                    $endnya = ']}]';
-                } else {
-                    $fetch_data_new_user .= '{"name": "' . $value->year . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year . '"},';
-                    $endnya = ']},';
-                }
                 // Data Drilldown
-                if ($value->year == min($tampung_tahun)) {
-                    $fetch_sub_data .= '[{"name": "' . $nama . '", "id": "' . $value->year . '", "data": [';
-                } else {
-                    $fetch_sub_data .= '{"name": "' . $nama . '", "id": "' . $value->year . '", "data": [';
-                }
-
+                $fetch_sub_data .= '{"name": "' . $nama . '", "id": "' . $value->year . '", "data": [';
                 for ($m = 1; $m < 13; $m++) {
                     $fetch_sub_data .= $this->getDataSubPerwakilan($m, $value->year, $country, 'user', $jenis);
-                    if ($m != 12) {
+                    if ($m != 12)
                         $fetch_sub_data .= ',';
-                    }
+                    else
+                        $fetch_sub_data .= ']},';
                 }
 
-                $fetch_sub_data .= $endnya;
             }
 
-            $fetch_data_new_user .= ']}]';
+            $fetch_data_new_user = rtrim($fetch_data_new_user, ',').']}]';
+            $fetch_sub_data = rtrim($fetch_sub_data, ',').']';
             $return = '[' . $fetch_data_new_user . ',' . $fetch_sub_data . ']';
         } else {
             $return = null;
@@ -1201,7 +1202,7 @@ class DashboardController extends Controller
             }
             $data = DB::table('itdp_company_users as a')->selectRaw('extract(month from created_at) as month, count(b.id) as jumlah')
                 ->leftjoin('itdp_profil_' . $profil . ' as b', 'a.id_profil', '=', 'b.id')
-                ->where('b.' . $country . '', $param)
+                ->whereIn('b.' . $country . '', $param)
                 ->whereRaw('extract(year from created_at) in (' . $year . ')')
                 ->whereRaw('extract(month from created_at) in (' . $month . ')')
                 ->groupby('month')

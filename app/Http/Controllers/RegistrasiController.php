@@ -81,7 +81,8 @@ class RegistrasiController extends Controller
 
 	public function simpan_rpembeli(Request $request)
     {
-
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
 //        dd($admin_all);
         $insert1 = DB::select("
 			insert into itdp_profil_imp (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
@@ -104,7 +105,7 @@ class RegistrasiController extends Controller
 		$id_terkait = "3/".$id2;
 		$ket = "New user Buyer with name ".$request->company;
 		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil2','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil2','".$id_terkait."','".$date."','0')
 		");
 		
 		//notif untuk perwakilan
@@ -113,7 +114,7 @@ class RegistrasiController extends Controller
 		$qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_ln b  where a.id_admin_ln = b.id and b.id_country='".$groupcountry."'");
 		foreach($qr as $rq){
 			$insertpw = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('4','".$request->company."','".$id1."','".getAdminName($rq->id)."','".$rq->id."','".$ket."','profil2','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+			('4','".$request->company."','".$id1."','".getAdminName($rq->id)."','".$rq->id."','".$ket."','profil2','".$id_terkait."','".$date."','0')
 			");
 			$data3 = ['username' => getAdminName($rq->id), 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email, 'type' => 'Buyer'];
 
@@ -165,7 +166,8 @@ class RegistrasiController extends Controller
 	
 	public function simpan_rpenjual(Request $request)
     {
-
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
         $qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'");
 //        dd($qr);
         $insert1 = DB::select("
@@ -207,7 +209,7 @@ class RegistrasiController extends Controller
 		// echo "select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'";die();
 		foreach($qr as $rq){
 			$insertpw = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('4','".$request->company."','".$id1."','".getAdminName($rq->id)."','".$rq->id."','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+			('4','".$request->company."','".$id1."','".getAdminName($rq->id)."','".$rq->id."','".$ket."','profil','".$id_terkait."','".$date."','0')
 			");
 			$data3 = ['username' => getAdminName($rq->id), 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email, 'type' => 'Exporter'];
 
@@ -228,7 +230,7 @@ class RegistrasiController extends Controller
 //                    $mail->subject('Notifikasi Aktifasi Akun');
 
 //                });
-//        return view('auth.waitmail',compact('pageTitle'));
+        return view('auth.waitmail',compact('pageTitle'));
     }
 	
 	public function data_br2()
@@ -353,6 +355,7 @@ class RegistrasiController extends Controller
 	
 	public function resetpass(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
 		$id_role = $request->id_role;
 		$email = $request->email;
 		if($id_role == 1){

@@ -23,26 +23,30 @@ class TrxController extends Controller
 
     public function index()
     {
-        if(!empty(Auth::guard('eksmp')->user()->id)){
-            if(Auth::guard('eksmp')->user()->id_role == 2){
-                $pageTitle = "Selling Transaction";
-                $data = DB::select("select * from csc_transaksi where  id_eksportir='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc ");
-                return view('trx.index_eks', compact('pageTitle','data'));
-            }else if(Auth::guard('eksmp')->user()->id_role == 3){
-                $pageTitle = "Selling Transaction Admin";
-                $data = DB::select("select * from csc_transaksi where  id_pembuat='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc");
-                return view('trx.index_imp', compact('pageTitle','data'));
-            }
-        }else{
-            if(Auth::user()->id_group == 4){
-                $pageTitle = "Selling Transaction Representative";
-                $data = DB::select("select * from csc_transaksi  order by id_transaksi desc ");
-                return view('trx.index_adm', compact('pageTitle','data'));
+        if (Auth::guard('eksmp')->user() || Auth::user()) {
+            if(!empty(Auth::guard('eksmp')->user()->id)){
+                if(Auth::guard('eksmp')->user()->id_role == 2){
+                    $pageTitle = "Selling Transaction";
+                    $data = DB::select("select * from csc_transaksi where  id_eksportir='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc ");
+                    return view('trx.index_eks', compact('pageTitle','data'));
+                }else if(Auth::guard('eksmp')->user()->id_role == 3){
+                    $pageTitle = "Selling Transaction Admin";
+                    $data = DB::select("select * from csc_transaksi where  id_pembuat='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc");
+                    return view('trx.index_imp', compact('pageTitle','data'));
+                }
             }else{
-                $pageTitle = "Selling Transaction Admin";
-                $data = DB::select("select * from csc_transaksi  order by id_transaksi desc ");
-                return view('trx.index_adm', compact('pageTitle','data'));
+                if(Auth::user()->id_group == 4){
+                    $pageTitle = "Selling Transaction Representative";
+                    $data = DB::select("select * from csc_transaksi  order by id_transaksi desc ");
+                    return view('trx.index_adm', compact('pageTitle','data'));
+                }else{
+                    $pageTitle = "Selling Transaction Admin";
+                    $data = DB::select("select * from csc_transaksi  order by id_transaksi desc ");
+                    return view('trx.index_adm', compact('pageTitle','data'));
+                }
             }
+        } else {
+            return redirect('/login');
         }
     }
 
@@ -86,7 +90,8 @@ class TrxController extends Controller
     {
 //        dd($request);
 //        dd(Auth::guard('eksmp')->user()->id);
-
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
 		$ch1 = str_replace(".","",$request->tp);
 		$ch2 = str_replace(",",".",$ch1);
 		if($request->origin == 2){
@@ -100,12 +105,12 @@ class TrxController extends Controller
                         foreach($caripembuat as $cp){ $mailimp = $cp->email; }
                         $ket = "Transaction Created by ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id);
                         $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                        ('3','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getCompanyNameImportir($request->id_pembuat)."','".$request->id_pembuat."','".$ket."','detailtrx','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
+                        ('3','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getCompanyNameImportir($request->id_pembuat)."','".$request->id_pembuat."','".$ket."','detailtrx','".$request->id_transaksi."','".$date."','0')
                         ");
 
                         $ket2 = "Transaction Created by ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id);
                         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                        ('1','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_trx2','".$request->id_transaksi."','".Date('Y-m-d H:m:s')."','0')
+                        ('1','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','br_trx2','".$request->id_transaksi."','".$date."','0')
                         ");
 
                         $data = [
@@ -188,7 +193,7 @@ class TrxController extends Controller
 
                         $ket = "Transaction Created by ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id);
                         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                        ('4','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getAdminName($request->id_pembuat)."',$request->id_pembuat,'".$ket."','".$url."','".$idnya."','".Date('Y-m-d H:m:s')."','0')
+                        ('4','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getAdminName($request->id_pembuat)."',$request->id_pembuat,'".$ket."','".$url."','".$idnya."','".$date."','0')
                         ");
                         $data22 = [
                             'email' => "",
@@ -210,7 +215,7 @@ class TrxController extends Controller
                         //notif system for admin
                         $ket2 = "Transaction Created by ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id);
                         $insertnotif2 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                        ('1','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','".$url."','".$idnya."','".Date('Y-m-d H:m:s')."','0')
+                        ('1','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','Super Admin','1','".$ket2."','".$url."','".$idnya."','".$date."','0')
                         ");
 
                         //notif email for all admin

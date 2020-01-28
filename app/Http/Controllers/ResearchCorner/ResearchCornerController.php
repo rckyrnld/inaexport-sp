@@ -113,6 +113,7 @@ class ResearchCornerController extends Controller
 
     public function download(Request $req)
     {
+        date_default_timezone_set('Asia/Jakarta');
         if (Auth::guard('eksmp')->user()->id_role == 2) {
             $id_profil = Auth::guard('eksmp')->user()->id_profil;
             $id_user = Auth::guard('eksmp')->user()->id;

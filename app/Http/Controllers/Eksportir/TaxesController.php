@@ -114,7 +114,7 @@ class TaxesController extends Controller
 //        dd($id);
         DB::table('itdp_eks_taxes')->where('id', $id)
             ->delete();
-        return redirect('eksportir/taxes')->with('success','Success Delete Data');
+        return redirect('eksportir/taxes')->with('error','Success Delete Data');
     }
 
     public function update(Request $request)

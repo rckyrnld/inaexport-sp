@@ -107,7 +107,7 @@ class ExhibitionController extends Controller
 //        dd($id);
         DB::table('itdp_eks_event_participants')->where('id', $id)
             ->delete();
-        return redirect('eksportir/exhibition')->with('success','Success Delete Data');
+        return redirect('eksportir/exhibition')->with('error','Success Delete Data');
     }
 
     public function update(Request $request)

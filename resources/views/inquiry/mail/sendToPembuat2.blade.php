@@ -27,7 +27,7 @@
         <p style="text-align: left">There are responses that have been made by the eksporters, please look immediately.</p>
         <p style="text-align: left">To knows, please enter the Inaexport.id application with an account that is already registered.</p>
         <br>
-        <p style="text-align: left"><a href="{{url('/login')}}" class="button">Next Log In</a></p>
+        <p style="text-align: left">Click <a href="{{url('/front_end/history')}}" class="button">here</a></p>
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
     </div>
 </div>
