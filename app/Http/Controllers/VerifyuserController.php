@@ -274,13 +274,13 @@ class VerifyuserController extends Controller
 	public function hapusimportir($id)
     {
 		$delete = DB::select("delete from itdp_company_users where id='".$id."'");
-		return redirect('verifyimportir')->with('success', 'Success Delete Data');
+		return redirect('verifyimportir')->with('error', 'Success Delete Data');
 	}
 	
 	public function hapuseksportir($id)
     {
 		$delete = DB::select("delete from itdp_company_users where id='".$id."'");
-		return redirect('verifyuser')->with('success', 'Success Delete Data');
+		return redirect('verifyuser')->with('error', 'Success Delete Data');
 	}
 	
 	public function resetimportir($id)
@@ -328,7 +328,7 @@ class VerifyuserController extends Controller
 	public function hapusperwakilan($id)
     {
 		$delete = DB::select("delete from itdp_admin_users where id='".$id."'");
-		return redirect('profilperwakilan')->with('success','Success Delete Data');
+		return redirect('profilperwakilan')->with('error','Success Delete Data');
 	}
 	
 	public function bacanotif($id)
