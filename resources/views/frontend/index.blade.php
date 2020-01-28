@@ -157,6 +157,8 @@
 
     $imgarray = ['agriculture','apparel','automotive','jewelry','health_beauty','electrics','furniture','industrial_parts','gift_card','food'];
 ?>
+<!-- buat background aja -->
+<div style="background-color: #dddee5;!important">
     <!--menu & category start-->
     <section class="slider_section mb-50" style="margin-bottom: 0px;">
         <div class="container">
@@ -910,7 +912,7 @@
     </section>
     <!--regis end-->
 
-
+</div>
 <!-- Plugins JS -->
 <script src="{{asset('front/assets/js/plugins.js')}}"></script>
 @include('frontend.layouts.footer')
