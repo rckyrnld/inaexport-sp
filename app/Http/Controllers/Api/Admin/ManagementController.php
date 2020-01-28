@@ -685,5 +685,77 @@ class ManagementController extends Controller
 
     }
 
+    public function listCompany(Request $request)
+    {
+        $listCompany = DB::table('itdp_company_users')
+                        ->select('itdp_company_users.id','id_profil', 'foto_profil', 'company', 'province_in', 'itdp_company_users.email', 'postcode', 'phone', 'agree', 'itdp_company_users.status')
+                        ->leftJoin('itdp_profil_eks', 'itdp_company_users.id_profil', '=', 'itdp_profil_eks.id')
+                        ->leftJoin('mst_province', 'itdp_profil_eks.id_mst_province', '=', 'mst_province.id')
+                        ->where("id_role", 2)
+                        ->limit(10)
+                        ->offset($request->offset)
+                        ->get();
 
+        $i = 0;
+        foreach ($listCompany as $dataCom) {
+            $last_activity = DB::table('log_user')
+                                ->select('date', 'waktu', 'keterangan')
+                                ->where('id_user', $dataCom->id)
+                                ->orderBy('id_log', 'DESC')
+                                ->limit(1)
+                                ->first();
+
+            if (isset($last_activity)) {
+                $listCompany[$i]->last_activity = isset($last_activity->date) ? $last_activity->date : '' . ' ' . isset($last_activity->waktu) ? $last_activity->waktu : '' . ' ' . isset($last_activity->keterangan) ? $last_activity->keterangan : '';
+            } else {
+                $listCompany[$i]->last_activity = "No Action";
+            }
+
+            if (isset($dataCom->foto_profil)) {
+                $listCompany[$i]->foto_profil = url('uploads/Profile/Eksportir/' . $dataCom->id . '/' . $dataCom->foto_profil);
+            }
+
+            $listCompany[$i]->email_confirmation = ($dataCom->id == 1) ? 'Yes' : 'No';
+
+            if ($dataCom->status == 1) {
+                $verif_by_admin = 'Verified';
+            } else if ($dataCom->status == 2) {
+                $verif_by_admin = 'Not Verified';
+            } else {
+                $verif_by_admin = 'Wait Administrator';
+            }
+
+            $listCompany[$i]->verif_by_admin = $verif_by_admin;
+
+            $i++;
+        }
+
+        if ($listCompany) {
+
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $listCompany;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+    }
+
+    public function listProducyCompany(Request $request)
+    {
+        # code...
+    }
 }
