@@ -323,7 +323,7 @@
 								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/event')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
-								<br>
+								
 							</div>
                             <div class="col-md-4 hoveraja">
                                 <a href="{{url('/front_end/training')}}"><img src="{{asset('front/assets/icon/05 training-06.png')}}" alt="" class="image img-menu"></a>
@@ -331,7 +331,7 @@
 								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/training')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
-								<br>
+								
 							</div>
                             <div class="col-md-4 hoveraja">
                                 <a href="{{url('/front_end/research-corner')}}"><img src="{{asset('front/assets/icon/06 research corner-07.png')}}" alt="" class="image img-menu"></a>
@@ -339,7 +339,7 @@
 								<center><p><font color="black"><b></b></font></p></center>
 								<div class="text"><a href="{{url('/front_end/research-corner')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
 								</div>
-								<br>
+								
 							</div>
 							
 							</div>
@@ -436,7 +436,8 @@
     <!--category product end-->
     <!--product category start-->
     <section class="product_area mb-50">
-        <div class="container" style="background-color:white!important;">
+        <div class="container" style="background-color:white!important;"><br>
+		<center><h4>Popular Product</h4></center>
 			<div class="col-12">
                     <div class="section_title" style="margin-bottom: 0px;">
                         <!-- <div class="row product_tab_button nav" role="tablist" style="background-color: inherit; width: 100%">
