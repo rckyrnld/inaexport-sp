@@ -173,7 +173,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
 </style> 
 </head>
 
-<body style="background-color: #dddee5;">
+<body>
     <?php 
         $loc = app()->getLocale(); 
         if($loc == "ch"){
