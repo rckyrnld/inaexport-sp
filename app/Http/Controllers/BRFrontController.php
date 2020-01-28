@@ -269,7 +269,7 @@ class BRFrontController extends Controller
 				$id_terkait = "";
 				$ket = "Buying Request created by ".getExBadanImportir($zzz).getCompanyNameImportir($zzz);
 				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-					('2','".getCompanyNameImportir($zzz)."','".$zzz."','".getCompanyName($napro)."','".$napro."','".$ket."','br_list','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
+					('2','".getCompanyNameImportir($zzz)."','".$zzz."','".getCompanyName($napro)."','".$napro."','".$ket."','br_list','".$id_terkait."','".$date."','0')
 				");
 				//END NOTIF
 				//EMAIL

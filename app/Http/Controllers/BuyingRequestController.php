@@ -479,7 +479,7 @@ class BuyingRequestController extends Controller
                         $ket = "Importer " .getExBadanImportir(Auth::guard('eksmp')->user()->id). getCompanyNameImportir(Auth::guard('eksmp')->user()->id)  . " Respond Chat Buying Request";
                         $it = $id2 . "/" . $id6;
                         $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                        ('2','".getCompanyNameImportir(Auth::guard('eksmp')->user()->id) ."','" . Auth::guard('eksmp')->user()->id . "','".getCompanyName($data3)."','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+                        ('2','".getCompanyNameImportir(Auth::guard('eksmp')->user()->id) ."','" . Auth::guard('eksmp')->user()->id . "','".getCompanyName($data3)."','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . $date . "','0')
                         ");
 
 //                        $ket2 = "Importer " . getExBadanImportir(Auth::guard('eksmp')->user()->id). getCompanyNameImportir(Auth::guard('eksmp')->user()->id) . " Respond Chat Buying Request";
@@ -605,7 +605,7 @@ class BuyingRequestController extends Controller
                 $ket = Auth::user()->name." Respond Chat Buying Request";
                 $it = $id2 . "/" . $id6;
                 $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-				('2','".auth::user()->name."','".auth::user()->id."','".getNameCompany($data3)."','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . Date('Y-m-d H:m:s') . "','0')
+				('2','".auth::user()->name."','".auth::user()->id."','".getNameCompany($data3)."','" . $data3 . "','" . $ket . "','br_chat','" . $id6 . "','" . $date . "','0')
 				");
 
 //                $ket2 = "You Had Respond Chat Buying Request !";
