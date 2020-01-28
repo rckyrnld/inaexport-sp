@@ -793,15 +793,26 @@ class BuyingRequestController extends Controller
 
     public function br_chat($id)
     {
-        $pageTitle = "Chat Buying Request Indonesian Exporter";
-        return view('buying-request.chat', compact('id', 'pageTitle'));
+//        dd(auth::guard('eksmp'));
+        if (Auth::guard('eksmp')->user() || Auth::user()) {
+            $pageTitle = "Chat Buying Request Indonesian Exporter";
+            return view('buying-request.chat', compact('id', 'pageTitle'));
+        }else{
+            return redirect('/login');
+        }
+
+
     }
 
     public function br_pw_chat($id)
     {
-        $pageTitle = "Chat Buying Request";
-        return view('buying-request.chat2', compact('id', 'pageTitle'));
-    }
+        if (Auth::guard('eksmp')->user() || Auth::user()) {
+            $pageTitle = "Chat Buying Request";
+            return view('buying-request.chat2', compact('id', 'pageTitle'));
+        } else {
+            return redirect('/login');
+            }
+        }
 
     public function br_save_join($id)
     {

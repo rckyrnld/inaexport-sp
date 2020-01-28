@@ -23,26 +23,30 @@ class TrxController extends Controller
 
     public function index()
     {
-        if(!empty(Auth::guard('eksmp')->user()->id)){
-            if(Auth::guard('eksmp')->user()->id_role == 2){
-                $pageTitle = "Selling Transaction";
-                $data = DB::select("select * from csc_transaksi where  id_eksportir='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc ");
-                return view('trx.index_eks', compact('pageTitle','data'));
-            }else if(Auth::guard('eksmp')->user()->id_role == 3){
-                $pageTitle = "Selling Transaction Admin";
-                $data = DB::select("select * from csc_transaksi where  id_pembuat='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc");
-                return view('trx.index_imp', compact('pageTitle','data'));
-            }
-        }else{
-            if(Auth::user()->id_group == 4){
-                $pageTitle = "Selling Transaction Representative";
-                $data = DB::select("select * from csc_transaksi  order by id_transaksi desc ");
-                return view('trx.index_adm', compact('pageTitle','data'));
+        if (Auth::guard('eksmp')->user() || Auth::user()) {
+            if(!empty(Auth::guard('eksmp')->user()->id)){
+                if(Auth::guard('eksmp')->user()->id_role == 2){
+                    $pageTitle = "Selling Transaction";
+                    $data = DB::select("select * from csc_transaksi where  id_eksportir='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc ");
+                    return view('trx.index_eks', compact('pageTitle','data'));
+                }else if(Auth::guard('eksmp')->user()->id_role == 3){
+                    $pageTitle = "Selling Transaction Admin";
+                    $data = DB::select("select * from csc_transaksi where  id_pembuat='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc");
+                    return view('trx.index_imp', compact('pageTitle','data'));
+                }
             }else{
-                $pageTitle = "Selling Transaction Admin";
-                $data = DB::select("select * from csc_transaksi  order by id_transaksi desc ");
-                return view('trx.index_adm', compact('pageTitle','data'));
+                if(Auth::user()->id_group == 4){
+                    $pageTitle = "Selling Transaction Representative";
+                    $data = DB::select("select * from csc_transaksi  order by id_transaksi desc ");
+                    return view('trx.index_adm', compact('pageTitle','data'));
+                }else{
+                    $pageTitle = "Selling Transaction Admin";
+                    $data = DB::select("select * from csc_transaksi  order by id_transaksi desc ");
+                    return view('trx.index_adm', compact('pageTitle','data'));
+                }
             }
+        } else {
+            return redirect('/login');
         }
     }
 
