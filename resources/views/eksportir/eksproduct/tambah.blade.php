@@ -369,7 +369,7 @@
                   return {
                     results: $.map(data, function (item) {
                       return {
-                        text: item.desc_eng,
+                        text: item.fullhs + "  -  " + item.desc_eng,
                         id: item.id
                       }
                     })

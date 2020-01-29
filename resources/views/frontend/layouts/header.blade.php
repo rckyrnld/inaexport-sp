@@ -471,7 +471,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                         <table style="width: 150px;">
                                             <tr>
                                                 <td rowspan="2" style="width: 50px">
-                                                    <img src="{{asset('front/assets/icon/PRODUCT.png')}}" alt="" style="width: 70px;">
+                                                    <img src="{{asset('front/assets/icon/product2.png')}}" alt="" style="width: 70px;">
                                                 </td>
                                                 <td style="">
                                                     <span class="header-span" style="font-family: 'Myriad-pro';">
@@ -492,7 +492,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                     <table style="width: 150px;">
                                         <tr>
                                             <td rowspan="2" style="width: 50px">
-                                                <img src="{{asset('front/assets/icon/TRACKING(1).png')}}" alt="" style="width: 70px;">
+                                                <img src="{{asset('front/assets/icon/tracking2.png')}}" alt="" style="width: 70px;">
                                             </td>
                                             <td style="">
                                                 <span class="header-span" style="font-family: 'Myriad-pro';">
@@ -508,17 +508,18 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                     </table>
                                 </div>
                                 </a>
+                                @if(Auth::guard('eksmp')->check())
                                 <div class="header_wishlist">
                                     <table style="width: 150px;">
                                         <tr>
                                             <td rowspan="2" style="width: 50px">
-                                            @if(Auth::guard('eksmp')->user())
+                                                @if(Auth::guard('eksmp')->user())
                                                 
                                                     @if(Auth::guard('eksmp')->user()->id_role == 3)
                                                         
                                                 <?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
                                                 
-                                                <img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
+                                                <img src="{{asset('front/assets/icon/profile2a.png')}}" alt="" class="img-profil-header">
                                                 <?php }else{ ?>
                                                 
                                                 <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
@@ -581,6 +582,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                     </table>
                                     <!-- <span class="wishlist_quantity">0</span> -->
                                 </div>
+                                @endif
                             </div>
 
                         </div>
