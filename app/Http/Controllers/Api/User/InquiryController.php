@@ -255,6 +255,8 @@ class InquiryController extends Controller
 //        dd($request);
         $id_user = $request->id_user;
         $user = DB::table('csc_inquiry_br')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_inquiry_br.id_pembuat')
+            ->join('itdp_profil_imp', 'itdp_profil_imp.id', '=', 'itdp_company_users.id_profil')
             ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
             ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product, csc_product_single.id_itdp_profil_eks, csc_product_single.prodname_en')
             ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
@@ -290,17 +292,18 @@ class InquiryController extends Controller
             $jsonResult[$i]["due_date"] = $user[$i]->due_date;
             $jsonResult[$i]["id_product"] = $user[$i]->id_product;
 
+			//echo $user[$i]->id_pembuat;die();
             $id_profil = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_profil;
-//            dd($id_profil);
+            // 
             $id_role = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_role;
-//            dd($id_role);
+			//	dd($id_role);
             $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
 
             //            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
             $jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat)->first()->nama_kategori_en;
             $jsonResult[$i]["csc_product_level1_desc"] = ($user[$i]->id_csc_prod_cat_level1) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level1)->first()->nama_kategori_en : null;
             $jsonResult[$i]["csc_product_level2_desc"] = ($user[$i]->id_csc_prod_cat_level2) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level2)->first()->nama_kategori_en : null;
-        }
+      }
 //        dd($jsonResult);
         if (count($user) > 0) {
             $meta = [

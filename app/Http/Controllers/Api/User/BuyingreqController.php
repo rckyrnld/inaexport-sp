@@ -411,9 +411,18 @@ class BuyingreqController extends Controller
                 }
                 $jsonResult[$i]["company_name"] = DB::table('itdp_profil_imp')->where('id', $id_profile)->first()->company;
             } else if ($id_role == 1) {
-                $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $data[$i]->id_pembuat)->first()->name;
+                $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $data[$i]->id_pembuat)->first();
+                if (isset($jsonResult[$i]["company_name"])) {
+                    $jsonResult[$i]["company_name"] = $jsonResult[$i]["company_name"]->name;
+                } else {
+                    $jsonResult[$i]["company_name"] = '-';
+                }
             } else {
-                $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $data[$i]->id_pembuat)->first()->name;
+                $companyUser = DB::table('itdp_company_users')->where('id', $data[$i]->id_pembuat)->first();
+                if ($companyUser != null) {
+                    $id_profile = DB::table('itdp_company_users')->where('id', $data[$i]->id_pembuat)->first()->id_profil;
+                }
+                $jsonResult[$i]["company_name"] = DB::table('itdp_profil_eks')->where('id', $id_profile)->first()->company;
             }
             $jsonResult[$i]["city"] = $data[$i]->city;
             $jsonResult[$i]["shipping"] = $data[$i]->shipping;

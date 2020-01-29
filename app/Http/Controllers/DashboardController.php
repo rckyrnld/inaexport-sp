@@ -27,94 +27,11 @@ class DashboardController extends Controller
             $training = $this->getDataTraining();
             $statistik = $this->getDataStatistik();
             $zeke = $this->getDataZeke();
-//            dd($zeke);
-            $table_top_event = [];
-            $table_top_join_event = [];
+            $top_event = $this->getDataTopEvent();
+            $top_training = $this->getDataTopTraining();
+            //            dd($zeke);
 
-            // DATA TABLE TOP TOP-AN
-            // $table_download_company = DB::table('csc_download_research_corner')
-            //     ->select(DB::raw('count(*) as jumlah, id_itdp_profil_eks'))
-            //     ->groupby('id_itdp_profil_eks')
-            //     ->orderby('jumlah', 'desc')
-            //     ->limit(5)->get();
-
-            // $table_download_rc = DB::table('csc_download_research_corner')
-            //     ->select(DB::raw('count(*) as jumlah, id_research_corner'))
-            //     ->groupby('id_research_corner')->orderby('jumlah', 'desc')
-            //     ->limit(5)->get();
-
-            // $table_inquiry = DB::table('csc_inquiry_br')
-            //     ->select(DB::raw('count(*) as jumlah, id_pembuat, type'))
-            //     ->groupby('id_pembuat')
-            //     ->groupby('type')
-            //     ->orderby('jumlah', 'desc')
-            //     ->limit(5)->get();
-
-            // $table_top_buying = DB::table('csc_buying_request_join')
-            //     ->select(DB::raw('count(*) as jumlah, id_eks'))
-            //     ->groupby('id_eks')
-            //     ->orderby('jumlah', 'desc')
-            //     ->limit(5)->get();
-
-            // $table_top_training = DB::table('training_join')
-            //     ->select(DB::raw('count(*) as jumlah, id_training_admin'))
-            //     ->where('status', 1)
-            //     ->groupby('id_training_admin')
-            //     ->orderby('jumlah', 'desc')->get();
-
-            // $table_top_join_training = DB::table('training_join')
-            //     ->select(DB::raw('count(*) as jumlah, id_profil_eks'))
-            //     ->where('status', 1)
-            //     ->groupby('id_profil_eks')
-            //     ->orderby('jumlah', 'desc')->get();
-            // // DATA EVENT
-            // $notif_event = DB::table('notif')
-            //     ->select(DB::raw('count(*) as jumlah, untuk_id as id_itdp_profil_eks'))
-            //     ->where('url_terkait', 'event/show/read')
-            //     ->where('status', 2)
-            //     ->groupby('untuk_id')
-            //     ->orderby('jumlah', 'desc')
-            //     ->get();
-            // $tambahan_event = DB::table('event_company_add')
-            //     ->select(DB::raw('count(*) as jumlah, id_itdp_profil_eks'))
-            //     ->where('status', 2)
-            //     ->groupby('id_itdp_profil_eks')
-            //     ->orderby('jumlah', 'desc')->get();
-            // $merge = $tambahan_event->merge($notif_event);
-            // foreach ($merge as $key => $value) {
-            //     if (isset($table_top_join_event[$value->id_itdp_profil_eks])) {
-            //         $table_top_join_event[$value->id_itdp_profil_eks] += $value->jumlah;
-            //     } else {
-            //         $table_top_join_event[$value->id_itdp_profil_eks] = intval($value->jumlah);
-            //     }
-            // }
-            // arsort($table_top_join_event);
-            // $table_top_join_event = array_slice($table_top_join_event, 0, 5, true);
-
-            // $notif_event2 = DB::table('notif')
-            //     ->select(DB::raw('count(*) as jumlah, id_terkait as id_event'))
-            //     ->where('url_terkait', 'event/show/read')
-            //     ->where('status', 2)
-            //     ->groupby('id_terkait')
-            //     ->orderby('jumlah', 'desc')
-            //     ->get();
-            // $tambahan_event2 = DB::table('event_company_add')
-            //     ->select(DB::raw('count(*) as jumlah, id_event_detail as id_event'))
-            //     ->where('status', 2)
-            //     ->groupby('id_event_detail')
-            //     ->orderby('jumlah', 'desc')->get();
-            // $merge2 = $tambahan_event2->merge($notif_event2);
-            // foreach ($merge2 as $key => $value) {
-            //     if (isset($table_top_event[$value->id_event])) {
-            //         $table_top_event[$value->id_event] += $value->jumlah;
-            //     } else {
-            //         $table_top_event[$value->id_event] = intval($value->jumlah);
-            //     }
-            // }
-            // arsort($table_top_event);
-            // $table_top_event = array_slice($table_top_event, 0, 5, true);
-            // END OF DATA EVENT
-            return view('Dashboard.Admin', compact('pageTitle'))->with('Top_Company_Download', json_decode($company, true))->with('Top_Downloaded_RC', json_decode($rc, true))->with('User', json_decode($user, true))->with('Inquiry', json_decode($inquiry, true))->with('Top_Inquiry', json_decode($top_inquiry, true))->with('Buying', json_decode($buying, true))->with('Event', json_decode($event, true))->with('Training', json_decode($training, true))->with('Statistik', json_decode($statistik, true))->with('zeke', json_decode($zeke, true));
+            return view('Dashboard.Admin', compact('pageTitle'))->with('Top_Company_Download', json_decode($company, true))->with('Top_Downloaded_RC', json_decode($rc, true))->with('User', json_decode($user, true))->with('Inquiry', json_decode($inquiry, true))->with('Top_Inquiry', json_decode($top_inquiry, true))->with('Buying', json_decode($buying, true))->with('Event', json_decode($event, true))->with('Training', json_decode($training, true))->with('Statistik', json_decode($statistik, true))->with('zeke', json_decode($zeke, true))->with('Top_Event', json_decode($top_event, true))->with('Top_Training', json_decode($top_training, true));
 
         } elseif (Auth::user()->id_group == 4) {
             $pageTitle = "Dashboard";
@@ -208,7 +125,7 @@ class DashboardController extends Controller
                     break;
                 }
                 //ini dirubah yaa $ nya
-//                $fetch_data .= '{"name": "'.$data[$key][0].'", "y": $'.$data[$key][$i+1].'},';
+            //                $fetch_data .= '{"name": "'.$data[$key][0].'", "y": $'.$data[$key][$i+1].'},';
                 $fetch_data .= '{"name": "'.$data[$key][0].'", "y": '.$data[$key][$i+1].'},';
             }
             $fetch_data = rtrim($fetch_data, ", ");
@@ -261,14 +178,14 @@ class DashboardController extends Controller
         }
         $fetch_data = rtrim($fetch_data, ", ");
         $fetch_data .= ']';
-//        dd($fetch_data);
+        //        dd($fetch_data);
         return $fetch_data;
     }
 
     private function getDataUser()
     {
-        $fetch_data_new_user = '';
-        $fetch_sub_data = '';
+        $fetch_data_new_user = '[';
+        $fetch_sub_data = '[';
         $tahun = $this->tahun();
 
         $new_user = DB::table('itdp_company_users as a')->selectRaw('extract(year from created_at) as year, count(b.id) as eksportir, count(c.id) as importir')
@@ -277,42 +194,25 @@ class DashboardController extends Controller
             ->whereRaw('extract(year from created_at) in (' . $tahun . ')')
             ->groupby('year')
             ->get();
-        $last_year = $new_user[count($new_user)-1]->year;
-        $fetch_sub_data .='[';
+            
         for ($i = 0; $i < 2; $i++) {
             if ($i == 0) {
-                $fetch_data_new_user .= '[{"name": "Exporter", "color": "#4cd25c", "data": [';
-                $end = ']},';
+                $fetch_data_new_user .= '{"name": "Exporter", "color": "#4cd25c", "data": [';
             } else {
                 $fetch_data_new_user .= '{"name": "Importer", "color": "#8085e9", "data": [';
-                $end = ']}]';
             }
             foreach ($new_user as $key => $value) {
                 if ($i == 0) {
                     $jumlah = $value->eksportir;
                     $id = 'Ex-' . $value->year;
-                    if ($value->year == $last_year) {
-                        $fetch_sub_data .= '{"name": "Exporter", "id": "Ex-' . $value->year . '", "data": [';
-                    } else {
-                        $fetch_sub_data .= '{"name": "Exporter", "id": "Ex-' . $value->year . '", "data": [';
-                    }
-                    $endnya = ']},';
+                    $fetch_sub_data .= '{"name": "Exporter", "id": "Ex-' . $value->year . '", "data": [';
                 } else {
                     $jumlah = $value->importir;
                     $id = 'Imp-' . $value->year;
                     $fetch_sub_data .= '{"name": "Importer", "id": "Imp-' . $value->year . '", "data": [';
-                    if ($value->year == $last_year) {
-                        $endnya = ']}';
-                    } else {
-                        $endnya = ']},';
-                    }
                 }
 
-                if ($value->year == $last_year) {
-                    $fetch_data_new_user .= '{"name": "' . $value->year . '", "y": ' . $jumlah . ', "drilldown": "' . $id . '"}';
-                } else {
-                    $fetch_data_new_user .= '{"name": "' . $value->year . '", "y": ' . $jumlah . ', "drilldown": "' . $id . '"},';
-                }
+                $fetch_data_new_user .= '{"name": "' . $value->year . '", "y": ' . $jumlah . ', "drilldown": "' . $id . '"},';
 
                 for ($m = 1; $m < 13; $m++) {
                     if ($i == 0) {
@@ -324,20 +224,20 @@ class DashboardController extends Controller
                         $fetch_sub_data .= ',';
                     }
                 }
-                $fetch_sub_data .= $endnya;
+                $fetch_sub_data .= ']},';
             }
-            $fetch_data_new_user .= $end;
+            $fetch_data_new_user = rtrim($fetch_data_new_user,',').']},';
         }
-        $return = '[' . $fetch_data_new_user . ',' . $fetch_sub_data . ']]';
+        $fetch_sub_data = rtrim($fetch_sub_data, ',').']';
+        $fetch_data_new_user = rtrim($fetch_data_new_user, ',').']';
+        $return = '[' . $fetch_data_new_user . ',' . $fetch_sub_data . ']';
         return $return;
     }
 
     private function getDataInquiry()
     {
-        $fetch_inquiry = '';
-        $fetch_sub_data = '';
-        $tahun_awal = [];
-        $tahun_akhir = $this->getLastCondition('csc_inquiry_br', 'created_at', 'type', 'importir');
+        $fetch_inquiry = '[';
+        $fetch_sub_data = '[';
         $tahun = $this->tahun();
 
         $inquiry = DB::table('csc_inquiry_br')
@@ -349,37 +249,20 @@ class DashboardController extends Controller
 
         for ($i = 0; $i < 3; $i++) {
             if ($i == 0) {
-                $fetch_inquiry .= '[{"name": "Admin", "color": "#789ec5", "data": [';
-                $end = ']},';
+                $fetch_inquiry .= '{"name": "Admin", "color": "#789ec5", "data": [';
             } elseif ($i == 1) {
                 $fetch_inquiry .= '{"name": "Representative", "color": "#f3cb3a", "data": [';
-                $end = ']},';
             } else {
                 $fetch_inquiry .= '{"name": "Importer", "color": "#52e440", "data": [';
-                $end = ']}]';
             }
 
-            $tahun = 9999;
             foreach ($inquiry as $key => $value) {
                 if ($i == 0 && $value->type == 'admin') {
-                    if (!in_array($value->year, $tahun_awal)) {
-                        array_push($tahun_awal, $value->year);
-                    }
                     $id = 'Admin-' . $value->year;
-                    if (intval($value->year) > intval($tahun)) {
-                        $fetch_inquiry .= ',{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"}';
-                        $tahun = $value->year;
-                    } else {
-                        $fetch_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"}';
-                        $tahun = $value->year;
-                    }
+                    $fetch_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"},';
 
                     // Data Drilldown
-                    if ($value->year == min($tahun_awal)) {
-                        $fetch_sub_data .= '[{"name": "Admin", "id": "' . $id . '", "data": [';
-                    } else {
-                        $fetch_sub_data .= '{"name": "Admin", "id": "' . $id . '", "data": [';
-                    }
+                    $fetch_sub_data .= '{"name": "Admin", "id": "' . $id . '", "data": [';
 
                     for ($m = 1; $m < 13; $m++) {
                         $fetch_sub_data .= $this->getDataSub($m, $value->year, 'admin', 'inquiry');
@@ -393,13 +276,7 @@ class DashboardController extends Controller
 
                 if ($i == 1 && $value->type == 'perwakilan') {
                     $id = 'Perwakilan-' . $value->year;
-                    if (intval($value->year) > intval($tahun)) {
-                        $fetch_inquiry .= ',{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"}';
-                        $tahun = $value->year;
-                    } else {
-                        $fetch_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"}';
-                        $tahun = $value->year;
-                    }
+                    $fetch_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"},';
 
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Perwakilan", "id": "' . $id . '", "data": [';
@@ -416,13 +293,8 @@ class DashboardController extends Controller
 
                 if ($i == 2 && $value->type == 'importir') {
                     $id = 'Importir-' . $value->year;
-                    if (intval($value->year) > intval($tahun)) {
-                        $fetch_inquiry .= ',{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"}';
-                        $tahun = $value->year;
-                    } else {
-                        $fetch_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"}';
-                        $tahun = $value->year;
-                    }
+                    $fetch_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"},';
+                    
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Importir", "id": "' . $id . '", "data": [';
 
@@ -433,27 +305,22 @@ class DashboardController extends Controller
                         }
                     }
 
-                    if ($value->year == $tahun_akhir) {
-                        $fetch_sub_data .= ']}]';
-                    } else {
-                        $fetch_sub_data .= ']},';
-                    }
+                    $fetch_sub_data .= ']},';
                 }
             }
-            $fetch_inquiry .= $end;
+            $fetch_inquiry = rtrim($fetch_inquiry,',').']},';
         }
+        $fetch_sub_data = rtrim($fetch_sub_data,',').']';
+        $fetch_inquiry = rtrim($fetch_inquiry,',').']';
         $return = '[' . $fetch_inquiry . ',' . $fetch_sub_data . ']';
         return $return;
     }
 
     private function getDataBuying()
     {
-        $fetch_buying = '';
-        $fetch_sub_data = '';
+        $fetch_buying = '[';
+        $fetch_sub_data = '[';
         $tahun = $this->tahun();
-        $tahun_akhir = $this->getLastCondition('csc_buying_request', 'date', 'by_role', 3);
-        $tahun_awal = [];
-
 
         $buying = DB::table('csc_buying_request')
             ->select(DB::raw('extract(year from date) as year, count(*) as jumlah, by_role as type'))
@@ -464,106 +331,71 @@ class DashboardController extends Controller
 
         for ($i = 0; $i < 3; $i++) {
             if ($i == 0) {
-                $fetch_buying .= '[{"name": "Admin", "color": "#4cd25c", "data": [';
-                $end = ']},';
+                $fetch_buying .= '{"name": "Admin", "color": "#4cd25c", "data": [';
             } elseif ($i == 1) {
                 $fetch_buying .= '{"name": "Representative", "color": "#8085e9", "data": [';
-                $end = ']},';
             } else {
                 $fetch_buying .= '{"name": "Importer", "color": "#855c9a", "data": [';
-                $end = ']}]';
             }
 
-            $tahun = 9999;
             foreach ($buying as $key => $value) {
                 if ($i == 0 && $value->type == 1) {
-                    if (!in_array($value->year, $tahun_awal)) {
-                        array_push($tahun_awal, $value->year);
-                    }
                     $id = 'Admin-' . $value->year;
-                    if (intval($value->year) > intval($tahun)) {
-                        $fetch_buying .= ',{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"}';
-                        $tahun = $value->year;
-                    } else {
-                        $fetch_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"}';
-                        $tahun = $value->year;
-                    }
-                    // Data Drilldown
-                    if ($value->year == min($tahun_awal)) {
-                        $fetch_sub_data .= '[{"name": "Admin", "id": "' . $id . '", "data": [';
-                    } else {
-                        $fetch_sub_data .= '{"name": "Admin", "id": "' . $id . '", "data": [';
-                    }
+                    $fetch_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"},';
 
+                    // Data Drilldown
+                    $fetch_sub_data .= '{"name": "Admin", "id": "' . $id . '", "data": [';
                     for ($m = 1; $m < 13; $m++) {
                         $fetch_sub_data .= $this->getDataSub($m, $value->year, 1, 'buying');
                         if ($m != 12) {
                             $fetch_sub_data .= ',';
                         }
                     }
-
                     $fetch_sub_data .= ']},';
                 }
 
                 if ($i == 1 && $value->type == 4) {
                     $id = 'Perwakilan-' . $value->year;
-                    if (intval($value->year) > intval($tahun)) {
-                        $fetch_buying .= ',{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"}';
-                        $tahun = $value->year;
-                    } else {
-                        $fetch_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"}';
-                        $tahun = $value->year;
-                    }
+                    $fetch_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"},';
+
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Perwakilan", "id": "' . $id . '", "data": [';
-
                     for ($m = 1; $m < 13; $m++) {
                         $fetch_sub_data .= $this->getDataSub($m, $value->year, 4, 'buying');
                         if ($m != 12) {
                             $fetch_sub_data .= ',';
                         }
                     }
-
                     $fetch_sub_data .= ']},';
                 }
 
                 if ($i == 2 && $value->type == 3) {
                     $id = 'Importir-' . $value->year;
-                    if (intval($value->year) > intval($tahun)) {
-                        $fetch_buying .= ',{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"}';
-                        $tahun = $value->year;
-                    } else {
-                        $fetch_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"}';
-                        $tahun = $value->year;
-                    }
+                    $fetch_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"},';
+
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Importir", "id": "' . $id . '", "data": [';
-
                     for ($m = 1; $m < 13; $m++) {
                         $fetch_sub_data .= $this->getDataSub($m, $value->year, 3, 'buying');
                         if ($m != 12) {
                             $fetch_sub_data .= ',';
                         }
                     }
-
-                    if ($value->year == $tahun_akhir) {
-                        $fetch_sub_data .= ']}]';
-                    } else {
-                        $fetch_sub_data .= ']},';
-                    }
+                    $fetch_sub_data .= ']},';
                 }
             }
-            $fetch_buying .= $end;
+            $fetch_buying = rtrim($fetch_buying, ',').']},';
         }
+        $fetch_sub_data = rtrim($fetch_sub_data,',').']';
+        $fetch_buying = rtrim($fetch_buying,',').']';
         $return = '[' . $fetch_buying . ',' . $fetch_sub_data . ']';
         return $return;
     }
 
     private function getDataEvent()
     {
-        $fetch_event = '';
-        $fetch_sub_data = '';
-        $tampung_tahun = [];
+        $fetch_event = '[';
+        $fetch_sub_data = '[';
         $tahun = $this->tahun();
 
         $color = array(
@@ -580,49 +412,58 @@ class DashboardController extends Controller
             ->whereRaw('extract(year from created_at) in (' . $tahun . ')')
             ->orderby('year', 'asc')
             ->limit(5)->get();
-        $last_year = ($event[count($event)-1]->year);
 
-        $fetch_event .= '[{"name": "Event", "data": [';
+        $fetch_event .= '{"name": "Event", "data": [';
         foreach ($event as $key => $value) {
-            if (!in_array($value->year, $tampung_tahun)) {
-                array_push($tampung_tahun, $value->year);
-            }
+            $fetch_event .= '{"name": "' . $value->year . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year . '"},';
 
-            if ($value->year == $last_year) {
-                $fetch_event .= '{"name": "' . $value->year . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year . '"}';
-                $endnya = ']}]';
-            } else {
-                $fetch_event .= '{"name": "' . $value->year . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year . '"},';
-                $endnya = ']},';
-            }
             // Data Drilldown
-            if ($value->year == min($tampung_tahun)) {
-                $fetch_sub_data .= '[{"name": "Event", "id": "' . $value->year . '", "data": [';
-            } else {
-                $fetch_sub_data .= '{"name": "Event", "id": "' . $value->year . '", "data": [';
-            }
-
+            $fetch_sub_data .= '{"name": "Event", "id": "' . $value->year . '", "data": [';
             for ($m = 1; $m < 13; $m++) {
                 $fetch_sub_data .= $this->getDataSub($m, $value->year, 0, 'event');
                 if ($m != 12) {
                     $fetch_sub_data .= ',';
                 }
             }
-
-            $fetch_sub_data .= $endnya;
+            $fetch_sub_data .= ']},';
         }
 
-        $fetch_event .= ']}]';
+        $fetch_sub_data = rtrim($fetch_sub_data, ',').']';
+        $fetch_event = rtrim($fetch_event, ',').']}]';
 
         $return = '[' . $fetch_event . ',' . $fetch_sub_data . ']';
         return $return;
     }
 
+    private function getDataTopEvent()
+    {
+        $event = DB::table('event_detail as a')
+            ->join('event_interest as b', 'a.id','b.id_event')
+            ->select(DB::raw('count(b.*) as jumlah, id_event, a.event_name_en as nama'))
+            ->groupby('id_event')
+            ->groupby('nama')
+            ->orderby('jumlah', 'desc')
+            ->limit(5)->get();
+        $fetch_data = '[{"name": "Event", "data":[';
+        $color = array(
+            0 => '#789ec5',
+            1 => '#44c742',
+            2 => '#c74242',
+            3 => '#e69419',
+            4 => '#855c9a',
+        );
+
+        foreach ($event as $key => $value) {
+            $fetch_data .= '{"name": "' . $value->nama . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
+        }
+        $fetch_data = rtrim($fetch_data, ',').']}]';
+        return $fetch_data;
+    }
+
     private function getDataTraining()
     {
-        $fetch_training = '';
-        $fetch_sub_data = '';
-        $tampung_tahun = [];
+        $fetch_training = '[';
+        $fetch_sub_data = '[';
         $tahun = $this->tahun();
 
         $color = array(
@@ -639,28 +480,13 @@ class DashboardController extends Controller
             ->whereRaw('extract(year from start_date) in (' . $tahun . ')')
             ->orderby('year', 'asc')
             ->limit(5)->get();
-        $last_year = $training[count($training)-1]->year;
 
-        $fetch_training .= '[{"name": "Training", "data": [';
+        $fetch_training .= '{"name": "Training", "data": [';
         foreach ($training as $key => $value) {
-            if (!in_array($value->year, $tampung_tahun)) {
-                array_push($tampung_tahun, $value->year);
-            }
+            $fetch_training .= '{"name": "' . $value->year . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year . '"},';
 
-            if ($value->year == $last_year) {
-                $fetch_training .= '{"name": "' . $value->year . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year . '"}';
-                $endnya = ']}]';
-            } else {
-                $fetch_training .= '{"name": "' . $value->year . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . ', "drilldown": "' . $value->year . '"},';
-                $endnya = ']},';
-            }
             // Data Drilldown
-            if ($value->year == min($tampung_tahun)) {
-                $fetch_sub_data .= '[{"name": "Training", "id": "' . $value->year . '", "data": [';
-            } else {
-                $fetch_sub_data .= '{"name": "Training", "id": "' . $value->year . '", "data": [';
-            }
-
+            $fetch_sub_data .= '{"name": "Training", "id": "' . $value->year . '", "data": [';
             for ($m = 1; $m < 13; $m++) {
                 $fetch_sub_data .= $this->getDataSub($m, $value->year, 0, 'training');
                 if ($m != 12) {
@@ -668,30 +494,50 @@ class DashboardController extends Controller
                 }
             }
 
-            $fetch_sub_data .= $endnya;
+            $fetch_sub_data .= ']},';
         }
 
-        $fetch_training .= ']}]';
+        $fetch_sub_data = rtrim($fetch_sub_data, ',').']';
+        $fetch_training = rtrim($fetch_training, ',').']}]';
 
         $return = '[' . $fetch_training . ',' . $fetch_sub_data . ']';
         return $return;
     }
 
-    private function getDataTopDownloadCompany()
+    private function getDataTopTraining()
     {
-        $top_download_company = DB::table('csc_download_research_corner')
-            ->select(DB::raw('count(*) as jumlah, id_itdp_profil_eks'))
-            ->groupby('id_itdp_profil_eks')
+        $training = DB::table('training_admin as a')
+            ->join('training_interest as b', 'a.id','b.id_training')
+            ->select(DB::raw('count(b.*) as jumlah, id_training, a.training_en as nama'))
+            ->groupby('id_training')
+            ->groupby('nama')
             ->orderby('jumlah', 'desc')
             ->limit(5)->get();
+        $fetch_data = '[{"name": "Training", "data":[';
+        $color = array(
+            0 => '#855c9a',
+            1 => '#e69419',
+            2 => '#44c742',
+            3 => '#c74242',
+            4 => '#789ec5',
+        );
 
+        foreach ($training as $key => $value) {
+            $fetch_data .= '{"name": "' . $value->nama . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
+        }
+        $fetch_data = rtrim($fetch_data, ',').']}]';
+        return $fetch_data;
+    }
+
+    private function getDataTopDownloadCompany()
+    {
         $top_download_company = DB::table('csc_download_research_corner')
             ->join('itdp_company_users', 'itdp_company_users.id_profil','csc_download_research_corner.id_itdp_profil_eks')
             ->select(DB::raw('count(*) as jumlah, id_itdp_profil_eks'))
             ->groupby('id_itdp_profil_eks')
             ->orderby('jumlah', 'desc')
             ->limit(5)->get();
-        $company = '';
+        $company = '[{"name": "Company", "data":[';
         $color = array(
             0 => '#789ec5',
             1 => '#44c742',
@@ -701,14 +547,9 @@ class DashboardController extends Controller
         );
 
         foreach ($top_download_company as $key => $value) {
-            if ($key == 0) {
-                $company .= '[{"name": "Company", "data":[{"name": "' . $this->getCompanyName($value->id_itdp_profil_eks, $key) . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
-            } else if ($key == count($top_download_company) - 1) {
-                $company .= '{"name": "' . $this->getCompanyName($value->id_itdp_profil_eks, $key) . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '}]}]';
-            } else {
-                $company .= '{"name": "' . $this->getCompanyName($value->id_itdp_profil_eks, $key) . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
-            }
+            $company .= '{"name": "' . $this->getCompanyName($value->id_itdp_profil_eks, $key) . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
         }
+        $company = rtrim($company, ',').']}]';
         return $company;
     }
 
@@ -719,7 +560,7 @@ class DashboardController extends Controller
             ->groupby('id_research_corner')->orderby('jumlah', 'desc')
             ->limit(5)->get();
 
-        $rc = '';
+        $rc = '[{"name": "Research Corner", "data":[';
         $color = array(
             0 => '#855c9a',
             1 => '#e69419',
@@ -729,15 +570,9 @@ class DashboardController extends Controller
         );
 
         foreach ($top_download_rc as $key => $value) {
-            if ($key == 0) {
-                $rc .= '[{"name": "Research Corner", "data":[{"name": "' . $this->getRcName($value->id_research_corner, $key) . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
-            } else if ($key == count($top_download_rc) - 1) {
-                $rc .= '{"name": "' . $this->getRcName($value->id_research_corner, $key) . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '}]}]';
-            } else {
-                $rc .= '{"name": "' . $this->getRcName($value->id_research_corner, $key) . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
-            }
+           $rc .= '{"name": "' . $this->getRcName($value->id_research_corner, $key) . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
         }
-
+        $rc = rtrim($rc, ',').']}]';
         return $rc;
     }
 
@@ -750,7 +585,7 @@ class DashboardController extends Controller
             ->orderby('jumlah', 'desc')
             ->limit(5)->get();
 
-        $inquiry = '';
+        $inquiry = '[{"name": "Inquiry", "data":[';
         $color = array(
             0 => '#e45344',
             1 => '#AF7AC5',
@@ -772,15 +607,9 @@ class DashboardController extends Controller
                     $name = getCompanyNameImportir($value->id_pembuat);
                     break;
             }
-
-            if ($key == 0) {
-                $inquiry .= '[{"name": "Inquiry", "data":[{"name": "' . $name . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
-            } else if ($key == count($top_inquiry) - 1) {
-                $inquiry .= '{"name": "' . $name . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '}]}]';
-            } else {
-                $inquiry .= '{"name": "' . $name . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
-            }
+            $inquiry .= '{"name": "' . $name . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
         }
+        $inquiry = rtrim($inquiry, ',').']}]';
         return $inquiry;
     }
 
@@ -841,80 +670,6 @@ class DashboardController extends Controller
         } else {
             return '["' . $this->getMonth($month) . '", 0]';
         }
-    }
-
-    private function getMonth($month)
-    {
-        $array = array(
-            1 => 'January',
-            2 => 'February',
-            3 => 'March',
-            4 => 'April',
-            5 => 'May',
-            6 => 'June',
-            7 => 'July',
-            8 => 'August',
-            9 => 'September',
-            10 => 'October',
-            11 => 'November',
-            12 => 'December'
-        );
-        return $array[$month];
-    }
-
-    private function getCompanyName($id, $key)
-    {
-        $data = DB::table('itdp_profil_eks')->where('id', $id)->first();
-        if ($data) {
-            return $data->company;
-        } else {
-            $number = $key + 1;
-            return 'Company not Found ' . $number;
-        }
-    }
-
-    private function getRcName($id, $key)
-    {
-        $data = DB::table('csc_research_corner')->where('id', $id)->first();
-        if ($data) {
-            $banyak = DB::table('csc_research_corner')->where('title_en', $data->title_en)->get();
-            if (count($banyak) > 1) {
-                $space = '';
-                for ($i = 0; $i < $key + 1; $i++) {
-                    $space .= ' ';
-                }
-                return $data->title_en . $space;
-            } else {
-                return $data->title_en;
-            }
-        } else {
-            $number = $key + 1;
-            return 'Name not Found ' . $number;
-        }
-    }
-
-    private function tahun()
-    {
-        $tahun = '';
-        for ($year = intval(date('Y')); $year >= date('Y') - 4; $year--) {
-            if ($year == date('Y') - 4) {
-                $tahun .= $year;
-            } else {
-                $tahun .= $year . ',';
-            }
-        }
-        return $tahun;
-    }
-
-    private function getLastCondition($table, $param, $type, $param_type)
-    {
-        $data = DB::table($table)
-            ->select(DB::raw('extract(year from ' . $param . ') as year'))
-            ->groupby('year')
-            ->where($type, $param_type)
-            ->orderby('year', 'desc')
-            ->first();
-        return $data->year;
     }
 
 // End Data Dashboard Admin
@@ -991,9 +746,8 @@ class DashboardController extends Controller
 
     private function getInquiryPerwakilan($id_user)
     {
-        $fetch_data_inquiry = '';
-        $fetch_sub_data = '';
-        $tampung_tahun = [];
+        $fetch_data_inquiry = '[';
+        $fetch_sub_data = '[';
         $tahun = $this->tahun();
 
         $inquiry = DB::table('csc_inquiry_br as a')->selectRaw('extract(year from created_at) as year, count(*) as jumlah')
@@ -1003,10 +757,6 @@ class DashboardController extends Controller
             ->groupby('year')
             ->limit(5)->get();
 
-        if (count($inquiry) > 0) {
-            $tahun_akhir = $this->getLastConditionPerwakilan('csc_inquiry_br', 'created_at', 'id_pembuat = ' . $id_user, 'type = \'perwakilan\'', 'type = \'perwakilan\'');
-        }
-
         $inquiry_deal = DB::table('csc_inquiry_br as a')->selectRaw('extract(year from created_at) as year, count(*) as jumlah')
             ->where('id_pembuat', $id_user)
             ->where('type', 'perwakilan')
@@ -1014,53 +764,27 @@ class DashboardController extends Controller
             ->whereRaw('extract(year from created_at) in (' . $tahun . ')')
             ->groupby('year')
             ->limit(5)->get();
-        if (count($inquiry_deal) > 0) {
-            $tahun_akhir_2 = $this->getLastConditionPerwakilan('csc_inquiry_br', 'created_at', 'id_pembuat = ' . $id_user, 'type = \'perwakilan\'', 'status = 3');
-        }
 
         if (count($inquiry) > 0) {
             for ($i = 0; $i < 2; $i++) {
                 if ($i == 0) {
-                    $fetch_data_inquiry .= '[{"name": "Inquiry", "color": "#789ec5", "data": [';
+                    $fetch_data_inquiry .= '{"name": "Inquiry", "color": "#789ec5", "data": [';
+                    $jenis = 'all';
                     $data = $inquiry;
                 } else {
                     $fetch_data_inquiry .= '{"name": "Deal", "color": "#44c742", "data": [';
+                    $jenis = 'deal';
                     $data = $inquiry_deal;
                 }
                 foreach ($data as $key => $value) {
-                    if ($i == 0) {
-                        $jenis = 'all';
-                    } else {
-                        $jenis = 'deal';
-                    }
                     $drilldown = $value->year . $i;
+                    $fetch_data_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $drilldown . '"},';
 
-                    if (!in_array($value->year, $tampung_tahun)) {
-                        array_push($tampung_tahun, $value->year);
-                    }
-
-                    if ($i == 0 && $value->year == $tahun_akhir) {
-                        $fetch_data_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $drilldown . '"}';
-                    } else if ($i == 1 && $value->year == $tahun_akhir_2) {
-                        $fetch_data_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $drilldown . '"}';
-                    } else {
-                        $fetch_data_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $drilldown . '"},';
-                    }
-
-                    if ($i == 1 && $value->year == $tahun_akhir_2 || $i == 0 && count($inquiry_deal) == 0) {
-                        $endnya = ']}]';
-                    } else {
-                        $endnya = ']},';
-                    }
                     // Data Drilldown
-                    if ($value->year == min($tampung_tahun) && $i == 0) {
-                        $fetch_sub_data .= '[{"name": "Inquiry", "id": "' . $drilldown . '", "data": [';
+                    if ($i == 0) {
+                        $fetch_sub_data .= '{"name": "Inquiry", "id": "' . $drilldown . '", "data": [';
                     } else {
-                        if ($i == 0) {
-                            $fetch_sub_data .= '{"name": "Inquiry", "id": "' . $drilldown . '", "data": [';
-                        } else {
-                            $fetch_sub_data .= '{"name": "Deal", "id": "' . $drilldown . '", "data": [';
-                        }
+                        $fetch_sub_data .= '{"name": "Deal", "id": "' . $drilldown . '", "data": [';
                     }
 
                     for ($m = 1; $m < 13; $m++) {
@@ -1070,14 +794,12 @@ class DashboardController extends Controller
                         }
                     }
 
-                    $fetch_sub_data .= $endnya;
+                    $fetch_sub_data .= ']},';
                 }
-                if ($i == 0) {
-                    $fetch_data_inquiry .= ']},';
-                } else {
-                    $fetch_data_inquiry .= ']}]';
-                }
+                $fetch_data_inquiry = rtrim($fetch_data_inquiry,',').']},';
             }
+            $fetch_sub_data = rtrim($fetch_sub_data,',').']';
+            $fetch_data_inquiry = rtrim($fetch_data_inquiry,',').']';
             $return = '[' . $fetch_data_inquiry . ',' . $fetch_sub_data . ']';
         } else {
             $return = null;
@@ -1088,9 +810,8 @@ class DashboardController extends Controller
 
     private function getBuyingPerwakilan($id_user)
     {
-        $fetch_data_buying = '';
-        $fetch_sub_data = '';
-        $tampung_tahun = [];
+        $fetch_data_buying = '[';
+        $fetch_sub_data = '[';
         $tahun = $this->tahun();
 
         $color = array(
@@ -1107,9 +828,6 @@ class DashboardController extends Controller
             ->whereRaw('extract(year from date) in (' . $tahun . ')')
             ->groupby('year')
             ->limit(5)->get();
-        if (count($buying) > 0) {
-            $tahun_akhir = $this->getLastConditionPerwakilan('csc_buying_request', 'date', 'id_pembuat = ' . $id_user, 'by_role = 4', 'by_role = 4');
-        }
 
         $buying_deal = DB::table('csc_buying_request as a')->selectRaw('extract(year from date) as year, count(*) as jumlah')
             ->where('id_pembuat', $id_user)
@@ -1118,53 +836,27 @@ class DashboardController extends Controller
             ->whereRaw('extract(year from date) in (' . $tahun . ')')
             ->groupby('year')
             ->limit(5)->get();
-        if (count($buying_deal) > 0) {
-            $tahun_akhir_2 = $this->getLastConditionPerwakilan('csc_buying_request', 'date', 'id_pembuat = ' . $id_user, 'by_role = 4', 'status = 4');
-        }
 
         if (count($buying) > 0) {
             for ($i = 0; $i < 2; $i++) {
                 if ($i == 0) {
-                    $fetch_data_buying .= '[{"name": "Buying Request", "color": "#789ec5", "data": [';
+                    $fetch_data_buying .= '{"name": "Buying Request", "color": "#855c9a", "data": [';
+                    $jenis = 'all';
                     $data = $buying;
                 } else {
                     $fetch_data_buying .= '{"name": "Deal", "color": "#44c742", "data": [';
+                    $jenis = 'deal';
                     $data = $buying_deal;
                 }
                 foreach ($data as $key => $value) {
-                    if ($i == 0) {
-                        $jenis = 'all';
-                    } else {
-                        $jenis = 'deal';
-                    }
                     $drilldown = $value->year . $i;
-
-                    if (!in_array($value->year, $tampung_tahun)) {
-                        array_push($tampung_tahun, $value->year);
-                    }
-
-                    if ($i == 0 && $value->year == $tahun_akhir) {
-                        $fetch_data_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $drilldown . '"}';
-                    } else if ($i == 1 && $value->year == $tahun_akhir_2) {
-                        $fetch_data_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $drilldown . '"}';
-                    } else {
-                        $fetch_data_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $drilldown . '"},';
-                    }
-
-                    if ($i == 1 && $value->year == $tahun_akhir_2 || $i == 0 && count($buying_deal) == 0) {
-                        $endnya = ']}]';
-                    } else {
-                        $endnya = ']},';
-                    }
+                    $fetch_data_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $drilldown . '"},';
+                    
                     // Data Drilldown
-                    if ($value->year == min($tampung_tahun) && $i == 0) {
-                        $fetch_sub_data .= '[{"name": "Buying Request", "id": "' . $drilldown . '", "data": [';
+                    if ($i == 0) {
+                        $fetch_sub_data .= '{"name": "Buying Request", "id": "' . $drilldown . '", "data": [';
                     } else {
-                        if ($i == 0) {
-                            $fetch_sub_data .= '{"name": "Buying Request", "id": "' . $drilldown . '", "data": [';
-                        } else {
-                            $fetch_sub_data .= '{"name": "Deal", "id": "' . $drilldown . '", "data": [';
-                        }
+                        $fetch_sub_data .= '{"name": "Deal", "id": "' . $drilldown . '", "data": [';
                     }
 
                     for ($m = 1; $m < 13; $m++) {
@@ -1174,14 +866,13 @@ class DashboardController extends Controller
                         }
                     }
 
-                    $fetch_sub_data .= $endnya;
+                    $fetch_sub_data = rtrim($fetch_sub_data).']},';
                 }
-                if ($i == 0) {
-                    $fetch_data_buying .= ']},';
-                } else {
-                    $fetch_data_buying .= ']}]';
-                }
+
+                $fetch_data_buying = rtrim($fetch_data_buying,',').']},';
             }
+            $fetch_sub_data = rtrim($fetch_sub_data,',').']';
+            $fetch_data_buying = rtrim($fetch_data_buying,',').']';
             $return = '[' . $fetch_data_buying . ',' . $fetch_sub_data . ']';
         } else {
             $return = null;
@@ -1273,18 +964,72 @@ class DashboardController extends Controller
             return '["' . $this->getMonth($month) . '", 0]';
         }
     }
-
-    private function getLastConditionPerwakilan($table, $param, $where, $where2, $where3)
-    {
-        $data = DB::table($table)
-            ->select(DB::raw('extract(year from ' . $param . ') as year'))
-            ->groupby('year')
-            ->whereRaw($where)
-            ->whereRaw($where2)
-            ->whereRaw($where3)
-            ->orderby('year', 'desc')
-            ->first();
-        return $data->year;
-    }
 // End Data Dashboard Perwakilan
+
+// Start General Private Function
+
+    private function getMonth($month)
+    {
+        $array = array(
+            1 => 'January',
+            2 => 'February',
+            3 => 'March',
+            4 => 'April',
+            5 => 'May',
+            6 => 'June',
+            7 => 'July',
+            8 => 'August',
+            9 => 'September',
+            10 => 'October',
+            11 => 'November',
+            12 => 'December'
+        );
+        return $array[$month];
+    }
+
+    private function getCompanyName($id, $key)
+    {
+        $data = DB::table('itdp_profil_eks')->where('id', $id)->first();
+        if ($data) {
+            return $data->company;
+        } else {
+            $number = $key + 1;
+            return 'Company not Found ' . $number;
+        }
+    }
+
+    private function getRcName($id, $key)
+    {
+        $data = DB::table('csc_research_corner')->where('id', $id)->first();
+        if ($data) {
+            $banyak = DB::table('csc_research_corner')->where('title_en', $data->title_en)->get();
+            if (count($banyak) > 1) {
+                $space = '';
+                for ($i = 0; $i < $key + 1; $i++) {
+                    $space .= ' ';
+                }
+                return $data->title_en .' ( '.rc_country($data->id_mst_country).' )' . $space;
+            } else {
+                return $data->title_en;
+            }
+        } else {
+            $number = $key + 1;
+            return 'Name not Found ' . $number;
+        }
+    }
+
+    private function tahun()
+    {
+        $tahun = '';
+        for ($year = intval(date('Y')); $year >= date('Y') - 4; $year--) {
+            if ($year == date('Y') - 4) {
+                $tahun .= $year;
+            } else {
+                $tahun .= $year . ',';
+            }
+        }
+        return $tahun;
+    }
+
+// End General Private Function
 }

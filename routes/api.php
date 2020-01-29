@@ -47,6 +47,11 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	Route::post('list_br_chat', 'Api\Admin\ManagementController@list_br_chat');
 	Route::post('br_admin_save', 'Api\Admin\ManagementController@br_admin_save');
 
+    // LIST COMPANY
+    Route::post('listCompany', 'Api\Admin\ManagementController@listCompany');
+
+    // PRODUCT BY EKS
+    Route::post('listProducyCompany', 'Api\Admin\ManagementController@listProducyCompany');
 });
 
 Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function () {

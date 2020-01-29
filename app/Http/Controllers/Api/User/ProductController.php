@@ -216,37 +216,37 @@ class ProductController extends Controller
                 'status' => $request->status,
                 'created_at' => $datenow,
             ]);
-            if($insertRecord && $request->status == "1"){
-                $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
-                $users_email = [];
-                foreach ($admin as $adm) {
-                    $notif = DB::table('notif')->insert([
-                        'dari_nama' => getCompanyName($id_user),
-                        'dari_id' => $id_user,
-                        'untuk_nama' => $adm->name,
-                        'untuk_id' => $adm->id,
-                        'keterangan' => 'New Product Published By '.getCompanyName($id_user).' with Title  "'.$request->prodname_en.'"',
-                        'url_terkait' => 'eksportir/verifikasi_product',
-                        'status_baca' => 0,
-                        'waktu' => $datenow,
-                        'id_terkait' => $insertRecord,
-                        'to_role' => 1,
-                    ]);
+            // if($insertRecord && $request->status == "1"){
+            //     $admin = DB::table('itdp_admin_users')->where('id_group', 1)->get();
+            //     $users_email = [];
+            //     foreach ($admin as $adm) {
+            //         $notif = DB::table('notif')->insert([
+            //             'dari_nama' => getCompanyName($id_user),
+            //             'dari_id' => $id_user,
+            //             'untuk_nama' => $adm->name,
+            //             'untuk_id' => $adm->id,
+            //             'keterangan' => 'New Product Published By '.getCompanyName($id_user).' with Title  "'.$request->prodname_en.'"',
+            //             'url_terkait' => 'eksportir/verifikasi_product',
+            //             'status_baca' => 0,
+            //             'waktu' => $datenow,
+            //             'id_terkait' => $insertRecord,
+            //             'to_role' => 1,
+            //         ]);
 
-                    array_push($users_email, $adm->email);
-                }
+            //         array_push($users_email, $adm->email);
+            //     }
 
-                //Tinggal Ganti Email1 dengan email kemendag
-                $data = [
-                    'company' => getCompanyName($id_user),
-                    'dari' => "Eksportir"
-                ];
+            //     //Tinggal Ganti Email1 dengan email kemendag
+            //     $data = [
+            //         'company' => getCompanyName($id_user),
+            //         'dari' => "Eksportir"
+            //     ];
 
-                Mail::send('eksportir.eksproduct.sendToAdmin', $data, function ($mail) use ($data, $users_email) {
-                    $mail->subject('Product Information');
-                    $mail->to($users_email);
-                });
-            }
+            //     Mail::send('eksportir.eksproduct.sendToAdmin', $data, function ($mail) use ($data, $users_email) {
+            //         $mail->subject('Product Information');
+            //         $mail->to($users_email);
+            //     });
+            // }
             if ($insertRecord) {
                 $meta = [
                     'code' => '200',
