@@ -143,12 +143,22 @@
                                      style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
 
                             </div>
+                            <div class="row">
+                                <div id="top_event"
+                                     style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
+
+                            </div>
                             <a id="export_pdf_5" class="btn btn-success"><font color="white"><i
                                             class="fa fa-download"></i> Export PDF</font></a>
                         </div>
                         <div class="tab-pane animate fadeIn text-muted" id="tab6">
                             <div class="row">
                                 <div id="training"
+                                     style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
+
+                            </div>
+                            <div class="row">
+                                <div id="top_training"
                                      style="height: 300px; width: 100%; margin: 0 auto; float: left;"></div>
 
                             </div>
@@ -470,6 +480,7 @@
 
     function event() {
         var data_year = JSON.parse('<?php echo addcslashes(json_encode($Event), '\'\\'); ?>')
+        var data_top = JSON.parse('<?php echo addcslashes(json_encode($Top_Event), '\'\\'); ?>')
         var defaultTitle = "Number of Events";
         var drilldownTitle = "Amount of Events Year ";
 
@@ -508,8 +519,37 @@
                 series: data_year[1]
             }
         });
+        var chart_event_2 = Highcharts.chart('top_event', {
+            chart: {
+                type: 'column'
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                allowDecimals: false,
+                title: {
+                    text: ''
+                }
+            },
+            series: data_top,
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: 'Most Interest Event'
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                useHTML: true,
+                headerFormat: '',
+                pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">Number of Intereted : {point.y}x</span><br/>'
+            }
+        });
         $('#export_pdf_5').click(function() {
-          Highcharts.exportCharts([chart_event], {
+          Highcharts.exportCharts([chart_event, chart_event_2], {
             type: 'application/pdf'
           });
         });
@@ -517,6 +557,7 @@
 
     function training() {
         var data_year = JSON.parse('<?php echo addcslashes(json_encode($Training), '\'\\'); ?>');
+        var data_top = JSON.parse('<?php echo addcslashes(json_encode($Top_Training), '\'\\'); ?>');
         var defaultTitle = "Number of Trainings";
         var drilldownTitle = "Amount of Training Year ";
 
@@ -555,8 +596,37 @@
                 series: data_year[1]
             }
         });
+        var chart_training_2 = Highcharts.chart('top_training', {
+            chart: {
+                type: 'column'
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                allowDecimals: false,
+                title: {
+                    text: ''
+                }
+            },
+            series: data_top,
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: 'Most Interest Training'
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                useHTML: true,
+                headerFormat: '',
+                pointFormat: '<i class="fa fa-circle" aria-hidden="true" style="color:{point.color}"></i>  <span style="color:{point.color}">Number of Intereted : {point.y}x</span><br/>'
+            }
+        });
         $('#export_pdf_6').click(function() {
-          Highcharts.exportCharts([chart_training], {
+          Highcharts.exportCharts([chart_training, chart_training_2], {
             type: 'application/pdf'
           });
         });

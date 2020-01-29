@@ -27,94 +27,11 @@ class DashboardController extends Controller
             $training = $this->getDataTraining();
             $statistik = $this->getDataStatistik();
             $zeke = $this->getDataZeke();
+            $top_event = $this->getDataTopEvent();
+            $top_training = $this->getDataTopTraining();
             //            dd($zeke);
-            $table_top_event = [];
-            $table_top_join_event = [];
 
-            // DATA TABLE TOP TOP-AN
-            // $table_download_company = DB::table('csc_download_research_corner')
-            //     ->select(DB::raw('count(*) as jumlah, id_itdp_profil_eks'))
-            //     ->groupby('id_itdp_profil_eks')
-            //     ->orderby('jumlah', 'desc')
-            //     ->limit(5)->get();
-
-            // $table_download_rc = DB::table('csc_download_research_corner')
-            //     ->select(DB::raw('count(*) as jumlah, id_research_corner'))
-            //     ->groupby('id_research_corner')->orderby('jumlah', 'desc')
-            //     ->limit(5)->get();
-
-            // $table_inquiry = DB::table('csc_inquiry_br')
-            //     ->select(DB::raw('count(*) as jumlah, id_pembuat, type'))
-            //     ->groupby('id_pembuat')
-            //     ->groupby('type')
-            //     ->orderby('jumlah', 'desc')
-            //     ->limit(5)->get();
-
-            // $table_top_buying = DB::table('csc_buying_request_join')
-            //     ->select(DB::raw('count(*) as jumlah, id_eks'))
-            //     ->groupby('id_eks')
-            //     ->orderby('jumlah', 'desc')
-            //     ->limit(5)->get();
-
-            // $table_top_training = DB::table('training_join')
-            //     ->select(DB::raw('count(*) as jumlah, id_training_admin'))
-            //     ->where('status', 1)
-            //     ->groupby('id_training_admin')
-            //     ->orderby('jumlah', 'desc')->get();
-
-            // $table_top_join_training = DB::table('training_join')
-            //     ->select(DB::raw('count(*) as jumlah, id_profil_eks'))
-            //     ->where('status', 1)
-            //     ->groupby('id_profil_eks')
-            //     ->orderby('jumlah', 'desc')->get();
-            // // DATA EVENT
-            // $notif_event = DB::table('notif')
-            //     ->select(DB::raw('count(*) as jumlah, untuk_id as id_itdp_profil_eks'))
-            //     ->where('url_terkait', 'event/show/read')
-            //     ->where('status', 2)
-            //     ->groupby('untuk_id')
-            //     ->orderby('jumlah', 'desc')
-            //     ->get();
-            // $tambahan_event = DB::table('event_company_add')
-            //     ->select(DB::raw('count(*) as jumlah, id_itdp_profil_eks'))
-            //     ->where('status', 2)
-            //     ->groupby('id_itdp_profil_eks')
-            //     ->orderby('jumlah', 'desc')->get();
-            // $merge = $tambahan_event->merge($notif_event);
-            // foreach ($merge as $key => $value) {
-            //     if (isset($table_top_join_event[$value->id_itdp_profil_eks])) {
-            //         $table_top_join_event[$value->id_itdp_profil_eks] += $value->jumlah;
-            //     } else {
-            //         $table_top_join_event[$value->id_itdp_profil_eks] = intval($value->jumlah);
-            //     }
-            // }
-            // arsort($table_top_join_event);
-            // $table_top_join_event = array_slice($table_top_join_event, 0, 5, true);
-
-            // $notif_event2 = DB::table('notif')
-            //     ->select(DB::raw('count(*) as jumlah, id_terkait as id_event'))
-            //     ->where('url_terkait', 'event/show/read')
-            //     ->where('status', 2)
-            //     ->groupby('id_terkait')
-            //     ->orderby('jumlah', 'desc')
-            //     ->get();
-            // $tambahan_event2 = DB::table('event_company_add')
-            //     ->select(DB::raw('count(*) as jumlah, id_event_detail as id_event'))
-            //     ->where('status', 2)
-            //     ->groupby('id_event_detail')
-            //     ->orderby('jumlah', 'desc')->get();
-            // $merge2 = $tambahan_event2->merge($notif_event2);
-            // foreach ($merge2 as $key => $value) {
-            //     if (isset($table_top_event[$value->id_event])) {
-            //         $table_top_event[$value->id_event] += $value->jumlah;
-            //     } else {
-            //         $table_top_event[$value->id_event] = intval($value->jumlah);
-            //     }
-            // }
-            // arsort($table_top_event);
-            // $table_top_event = array_slice($table_top_event, 0, 5, true);
-            // END OF DATA EVENT
-            return view('Dashboard.Admin', compact('pageTitle'))->with('Top_Company_Download', json_decode($company, true))->with('Top_Downloaded_RC', json_decode($rc, true))->with('User', json_decode($user, true))->with('Inquiry', json_decode($inquiry, true))->with('Top_Inquiry', json_decode($top_inquiry, true))->with('Buying', json_decode($buying, true))->with('Event', json_decode($event, true))->with('Training', json_decode($training, true))->with('Statistik', json_decode($statistik, true))->with('zeke', json_decode($zeke, true));
+            return view('Dashboard.Admin', compact('pageTitle'))->with('Top_Company_Download', json_decode($company, true))->with('Top_Downloaded_RC', json_decode($rc, true))->with('User', json_decode($user, true))->with('Inquiry', json_decode($inquiry, true))->with('Top_Inquiry', json_decode($top_inquiry, true))->with('Buying', json_decode($buying, true))->with('Event', json_decode($event, true))->with('Training', json_decode($training, true))->with('Statistik', json_decode($statistik, true))->with('zeke', json_decode($zeke, true))->with('Top_Event', json_decode($top_event, true))->with('Top_Training', json_decode($top_training, true));
 
         } elseif (Auth::user()->id_group == 4) {
             $pageTitle = "Dashboard";
@@ -343,7 +260,6 @@ class DashboardController extends Controller
                 if ($i == 0 && $value->type == 'admin') {
                     $id = 'Admin-' . $value->year;
                     $fetch_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"},';
-                    $tahun = $value->year;
 
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Admin", "id": "' . $id . '", "data": [';
@@ -361,7 +277,6 @@ class DashboardController extends Controller
                 if ($i == 1 && $value->type == 'perwakilan') {
                     $id = 'Perwakilan-' . $value->year;
                     $fetch_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"},';
-                    $tahun = $value->year;
 
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Perwakilan", "id": "' . $id . '", "data": [';
@@ -379,7 +294,6 @@ class DashboardController extends Controller
                 if ($i == 2 && $value->type == 'importir') {
                     $id = 'Importir-' . $value->year;
                     $fetch_inquiry .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"},';
-                    $tahun = $value->year;
                     
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Importir", "id": "' . $id . '", "data": [';
@@ -428,7 +342,6 @@ class DashboardController extends Controller
                 if ($i == 0 && $value->type == 1) {
                     $id = 'Admin-' . $value->year;
                     $fetch_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"},';
-                    $tahun = $value->year;
 
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Admin", "id": "' . $id . '", "data": [';
@@ -444,7 +357,6 @@ class DashboardController extends Controller
                 if ($i == 1 && $value->type == 4) {
                     $id = 'Perwakilan-' . $value->year;
                     $fetch_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"},';
-                    $tahun = $value->year;
 
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Perwakilan", "id": "' . $id . '", "data": [';
@@ -460,7 +372,6 @@ class DashboardController extends Controller
                 if ($i == 2 && $value->type == 3) {
                     $id = 'Importir-' . $value->year;
                     $fetch_buying .= '{"name": "' . $value->year . '", "y": ' . $value->jumlah . ', "drilldown": "' . $id . '"},';
-                    $tahun = $value->year;
 
                     // Data Drilldown
                     $fetch_sub_data .= '{"name": "Importir", "id": "' . $id . '", "data": [';
@@ -524,6 +435,31 @@ class DashboardController extends Controller
         return $return;
     }
 
+    private function getDataTopEvent()
+    {
+        $event = DB::table('event_detail as a')
+            ->join('event_interest as b', 'a.id','b.id_event')
+            ->select(DB::raw('count(b.*) as jumlah, id_event, a.event_name_en as nama'))
+            ->groupby('id_event')
+            ->groupby('nama')
+            ->orderby('jumlah', 'desc')
+            ->limit(5)->get();
+        $fetch_data = '[{"name": "Event", "data":[';
+        $color = array(
+            0 => '#789ec5',
+            1 => '#44c742',
+            2 => '#c74242',
+            3 => '#e69419',
+            4 => '#855c9a',
+        );
+
+        foreach ($event as $key => $value) {
+            $fetch_data .= '{"name": "' . $value->nama . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
+        }
+        $fetch_data = rtrim($fetch_data, ',').']}]';
+        return $fetch_data;
+    }
+
     private function getDataTraining()
     {
         $fetch_training = '[';
@@ -568,14 +504,33 @@ class DashboardController extends Controller
         return $return;
     }
 
-    private function getDataTopDownloadCompany()
+    private function getDataTopTraining()
     {
-        $top_download_company = DB::table('csc_download_research_corner')
-            ->select(DB::raw('count(*) as jumlah, id_itdp_profil_eks'))
-            ->groupby('id_itdp_profil_eks')
+        $training = DB::table('training_admin as a')
+            ->join('training_interest as b', 'a.id','b.id_training')
+            ->select(DB::raw('count(b.*) as jumlah, id_training, a.training_en as nama'))
+            ->groupby('id_training')
+            ->groupby('nama')
             ->orderby('jumlah', 'desc')
             ->limit(5)->get();
+        $fetch_data = '[{"name": "Training", "data":[';
+        $color = array(
+            0 => '#855c9a',
+            1 => '#e69419',
+            2 => '#44c742',
+            3 => '#c74242',
+            4 => '#789ec5',
+        );
 
+        foreach ($training as $key => $value) {
+            $fetch_data .= '{"name": "' . $value->nama . '", "color": "' . $color[$key] . '", "y": ' . $value->jumlah . '},';
+        }
+        $fetch_data = rtrim($fetch_data, ',').']}]';
+        return $fetch_data;
+    }
+
+    private function getDataTopDownloadCompany()
+    {
         $top_download_company = DB::table('csc_download_research_corner')
             ->join('itdp_company_users', 'itdp_company_users.id_profil','csc_download_research_corner.id_itdp_profil_eks')
             ->select(DB::raw('count(*) as jumlah, id_itdp_profil_eks'))

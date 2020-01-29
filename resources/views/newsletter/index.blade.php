@@ -59,11 +59,11 @@
                                     <table id="table" class="table table-bordered table-striped" data-plugin="dataTable">
                                       <thead class="text-white" style="background-color: #1089ff;">
                                           <tr>
-                                              <th width="10%">No</th>
-                                              <th>About</th>
+                                              <th width="8%">No</th>
+                                              <th width="20%">About</th>
                                               <th>Messages</th>
-                                              <th width="12%">Status</th>
-                                              <th width="20%">Action</th>
+                                              <th width="8%">Status</th>
+                                              <th width="10%">Action</th>
                                           </tr>
                                       </thead>
                                     </table>
