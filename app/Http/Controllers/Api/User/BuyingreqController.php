@@ -418,7 +418,7 @@ class BuyingreqController extends Controller
                     $jsonResult[$i]["company_name"] = '-';
                 }
             } else {
-                $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $data[$i]->id_pembuat)->first();
+                $jsonResult[$i]["company_name"] = DB::table('itdp_profil_eks')->where('id', $data[$i]->id_pembuat)->first();
                 if (isset($jsonResult[$i]["company_name"])) {
                     $jsonResult[$i]["company_name"] = $jsonResult[$i]["company_name"]->name;
                 } else {
