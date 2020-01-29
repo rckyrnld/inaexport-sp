@@ -94,8 +94,8 @@ class RegistrasiController extends Controller
 			$id1 = $rt->maxid;
 		}
 		$insert2 = DB::select("
-			insert into itdp_company_users (id_profil,username,password,email,status,id_role,type) values
-			('".$id1."','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','3','Dalam Negeri')
+			insert into itdp_company_users (id_profil,username,password,email,status,id_role,type,created_at) values
+			('".$id1."','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','3','Dalam Negeri','".Date('Y-m-d H:m:s')."')
 		");
 		$ambilmaxid2 = DB::select("select max(id) as maxid2 from itdp_company_users");
 		foreach($ambilmaxid2 as $rt2){
@@ -180,8 +180,8 @@ class RegistrasiController extends Controller
 			$id1 = $rt->maxid;
 		}
 		$insert2 = DB::select("
-			insert into itdp_company_users (id_profil,type,username,password,email,status,id_role) values
-			('".$id1."','Luar Negeri','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','2')
+			insert into itdp_company_users (id_profil,type,username,password,email,status,id_role,created_at) values
+			('".$id1."','Luar Negeri','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','2','".Date('Y-m-d H:m:s')."')
 		");
 		$ambilmaxid2 = DB::select("select max(id) as maxid2 from itdp_company_users");
 		foreach($ambilmaxid2 as $rt2){
