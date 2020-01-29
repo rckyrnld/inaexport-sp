@@ -76,7 +76,7 @@ class BuyingRequestController extends Controller
 
     public function getcsc()
     {
-        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='4' order by id desc ");
+        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where id_pembuat='".Auth::user()->id."' and by_role='4' order by id desc ");
         return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
                 return '<div align="left">' . $pesan->subyek . '</div>';
