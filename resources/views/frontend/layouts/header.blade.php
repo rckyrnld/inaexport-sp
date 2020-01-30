@@ -208,7 +208,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                             <li><a href="{{route('profile')}}" style="text-decoration: none">@lang('frontend.lbl5')</a></li>
 											@endif
                                             @if(Auth::guard('eksmp')->user()->id_role == 2)
-                                                <li><a href="{{route('login')}}" style="text-decoration: none">Indonesian Exporter</a></li>
+                                                <li><a href="{{route('login')}}" style="text-decoration: none">@lang('frontend.lbl14')</a></li>
                                             @endif
 											<li><a href="{{url('front_end/history')}}" style="text-decoration: none">@lang('frontend.lbl7')</a></li>
 											<li><a href="{{url('trx_list')}}" style="text-decoration: none">@lang('frontend.lbl11')</a></li>

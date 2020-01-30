@@ -18,6 +18,7 @@ return [
     "lbl11" => "Transaksi",
     "lbl12" => "Anda perlu login untuk memproses",
     "lbl13" => "Acara hanya untuk eksportir",
+    "lbl14" => "Eksportir",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
