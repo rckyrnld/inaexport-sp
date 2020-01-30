@@ -195,6 +195,9 @@
 .table-bordered td, .table-bordered th {
     border: transparent;
 }
+    .form-control[readonly]{
+        font-size:12px;
+    }
 
   </style>
     <!--product area start-->
