@@ -18,6 +18,7 @@ return [
     "lbl11" => "交易",
     "lbl12" => "您需要登录才能处理",
     "lbl13" => "该活动仅适用于出口商",
+    "lbl14" => "出口商",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",

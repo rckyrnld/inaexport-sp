@@ -390,6 +390,16 @@ function simpanpenjual2(){
 	var alamat = $('textarea#alamat').val();
 	var chp = $('#chp').val();
 	var token = $('meta[name="csrf-token"]').attr('content');
+    if($("#ckk2").prop('checked') == true){
+        var ckk2send = 1;
+    }else{
+        var ckk2send = 0;
+    }
+    if($("#ckk").prop('checked') == true){
+        var ckksend = 1;
+    }else{
+        var ckksend = 0;
+    }
 
 	console.log(company);
 	console.log(username);
@@ -400,6 +410,7 @@ function simpanpenjual2(){
     console.log(city);
     console.log(alamat);
     console.log(chp);
+
     console.log("end");
 
 	// console.log(fax);
@@ -412,7 +423,7 @@ function simpanpenjual2(){
 
 
 	if(password == kpassword){
-	if(company == "" || username == "" || email == "" || phone == "" || password == "" || city == "" || prov == "" || chp == ""){
+	if(company == "" || username == "" || email == "" || phone == "" || password == "" || city == "" || prov == "" || chp == "" ||ckksend == "0"){
 		alert("Please complete the field !")
         refresh();
 		$('#captchainput').val('');
@@ -425,7 +436,7 @@ function simpanpenjual2(){
 		$.ajax({
 			type: "POST",
 			url: '{{url('/simpan_rpenjual')}}',
-			data: { company:company,username:username,email:email,website:website,phone:phone,fax:fax,password:password,city:city,prov:prov,postcode:postcode,alamat:alamat,_token:'{{csrf_token()}}' },
+			data: { company:company,username:username,email:email,website:website,phone:phone,fax:fax,password:password,city:city,prov:prov,postcode:postcode,alamat:alamat,_token:'{{csrf_token()}}',ckk2send :ckk2send  },
 			success: function (data) {
 			   console.log(data);
 			},

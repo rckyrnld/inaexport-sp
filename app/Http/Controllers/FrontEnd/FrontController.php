@@ -22,6 +22,7 @@ class FrontController extends Controller
 
     public function index()
     {
+        $hot_product = hotProduct();
         //Data Product yang paling banyak di br dan inquiry (query masih menggunakan query sementara)
         // $product = DB::table('csc_product_single')
         //     ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
@@ -48,7 +49,7 @@ class FrontController extends Controller
             ->orderBy('a.number', 'ASC')
             ->limit(6)
             ->get();
-        return view('frontend.index', compact('categoryutama', 'categoryutama2'));
+        return view('frontend.index', compact('categoryutama', 'categoryutama2','hot_product'));
         // return view('frontend.index');
     }
 
@@ -388,6 +389,7 @@ class FrontController extends Controller
                 }
             }
         }
+
 
         // return view('frontend.product.all_product', compact('product', 'catprod'));
         return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow','hot_product', 'hl_sort', 'countNew', 'countHot'));

@@ -299,8 +299,13 @@ class AdminResearchController extends Controller
                         ->select('id', 'desc_eng','fullhs')
                         ->orderby('desc_eng', 'asc');
       if (isset($request->q)) {
+          $search = $request->q;
+          $hscode->where(function ($query) use ($search) {
+              $query->where('fullhs', 'like', '%' . $search . '%')
+                  ->orwhere('desc_eng','like','%'.$search.'%');
+          });
 //          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
-          $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake desc_eng
+//          $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake desc_eng
       } else if (isset($request->code)) {
           $hscode->where('id', $request->code);
       } else {

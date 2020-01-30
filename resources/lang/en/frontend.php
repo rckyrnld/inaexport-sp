@@ -18,6 +18,7 @@ return [
     "lbl11" => "Transaction",
     "lbl12" => "You need to login to process",
     "lbl13" => "The event only for exporters",
+    "lbl14" => "Indonesian Exporter",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
