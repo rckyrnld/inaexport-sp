@@ -150,6 +150,11 @@ Route::namespace('Api')->group(function () {
 	/* Slide Content */
     Route::get('getslide', 'ProductNonAuthController@getslide');
 	/* end slide content */
+	/* Event */
+	Route::post('event_suggest', 'EventNonAuthController@event_suggest');
+	Route::post('event_list', 'EventNonAuthController@event_list');
+	/*end event */
+	
     Route::post('browseProdukFe', 'ProductNonAuthController@browseProduct');
     Route::post('FindProdukByKategori', 'ProductNonAuthController@findProduct');
     Route::post('browseProdukFeByKategori', 'ProductNonAuthController@browseProductByKategori');
