@@ -667,9 +667,10 @@ class EksProductController extends Controller
     public function getHsCode(Request $request)
     {
         $hscode = DB::table('mst_hscodes')
-                ->select('id', 'desc_eng')
+                ->select('id', 'desc_eng','fullhs')
                 ->orderby('desc_eng', 'asc');
         if (isset($request->q)) {
+ //          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
             $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');
         } else if (isset($request->code)) {
             $hscode->where('id', $request->code);

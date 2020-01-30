@@ -84,7 +84,7 @@ if (! function_exists('rc_hscodes')) {
     function rc_hscodes($id){
         $data = DB::table('mst_hscodes')->where('id', $id)->first();
 
-        return $data->desc_eng;
+        return $data->fullhs." - ".$data->desc_eng ;
     }
 }
 

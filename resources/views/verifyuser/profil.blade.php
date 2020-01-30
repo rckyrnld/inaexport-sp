@@ -200,7 +200,7 @@ body {font-family: Arial;}
 					<label><b>Province</b></label>
 				</div>
 				<div class="form-group col-sm-8">
-					<select name="province" id="province" class="form-control select2" >
+					<select name="province" id="province" class="form-control select2" style="width: 100%">
 					<?php
 					$qc = DB::select("select id,province_en from mst_province order by province_en asc");
 					foreach($qc as $cq){

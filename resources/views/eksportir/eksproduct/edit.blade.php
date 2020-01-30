@@ -536,7 +536,7 @@
                   return {
                     results: $.map(data, function (item) {
                       return {
-                        text: item.desc_eng,
+                        text: item.fullhs + "  -  " + item.desc_eng,
                         id: item.id
                       }
                     })
@@ -558,7 +558,7 @@
                 url: "{{route('eksproduct.getHsCode')}}",
                 data: { code: hscode }
             }).then(function (data) {
-                var option = new Option(data[0].desc_eng, data[0].id, true, true);
+                var option = new Option(data[0].fullhs+ " - " +data[0].desc_eng, data[0].id, true, true);
 
                 $('#hscode').append(option).trigger('change');
             });

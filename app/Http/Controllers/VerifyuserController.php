@@ -262,6 +262,22 @@ class VerifyuserController extends Controller
 		$pageTitle = "Add Representative";
 		return view('verifyuser.tambahperwakilan', compact('pageTitle'));
 	}
+
+    public function type(Request $request)
+    {
+        $type = DB::table('mst_catper')
+            ->select('id', 'type')
+            ->orderby('type', 'asc');
+        if (isset($request->q)) {
+//          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
+            $type->where('type', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake desc_eng
+        } else if (isset($request->code)) {
+            $type->where('type', $request->code);
+        } else {
+            $type->limit(10);
+        }
+        return response()->json($type->get());
+    }
 	
 	public function index3()
     {
@@ -340,6 +356,7 @@ class VerifyuserController extends Controller
 	public function editperwakilan($id)
     {
 		$pageTitle = "Representative";
+
 		return view('verifyuser.editperwakilan', compact('pageTitle','id'));
 	}
 
@@ -399,7 +416,6 @@ class VerifyuserController extends Controller
 	
 	public function simpanperwakilan(Request $request)
 	{
-
 		$data = [
             'email' => "",
             'email1' => $request->email,

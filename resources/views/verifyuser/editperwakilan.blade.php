@@ -31,17 +31,7 @@
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Type',['class' => 'col-sm-2 col-form-label '])!!}
 				      <div class="col-sm-4">
-				     
-						<select class="form-control" name="type" required>
-						<!-- <option>DJPEN</option> -->
-						<option value="">-- Choose Type --</option>
-						<option <?php if($qt->type=="ITPC"){ echo "selected"; } ?> value="ITPC">ITPC</option>
-						<option <?php if($qt->type=="KOMJEN"){ echo "selected"; } ?> value="KOMJEN">KOMJEN</option>
-						<option <?php if($qt->type=="KBRI"){ echo "selected"; } ?> value="KBRI">KBRI</option>
-						<option <?php if($qt->type=="ATASE PERDAGANGAN"){ echo "selected"; } ?> value="ATASE PERDAGANGAN">ATASE PERDAGANGAN</option>
-						<option <?php if($qt->type=="DINAS PERDAGANGAN"){ echo "selected"; } ?> value="DINAS PERDAGANGAN">DINAS PERDAGANGAN</option>
-						
-						</select>
+						  <select class="form-control" id="type" name="type" required></select>
 
 
 
@@ -141,9 +131,9 @@
 				      {!!Form::label('password_confirm','Status',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
 						<select class="form-control" name="status" required>
-							<option value="">-- Choose Status --</value>
-							<option <?php if($qt->status==1){ echo "selected"; } ?> value="1">Aktif</value>
-							<option <?php if($qt->status==0){ echo "selected"; } ?> value="0">Tidak Aktif</value>
+							<option value="">-- Choose Status --</option>
+							<option <?php if($qt->status==1){ echo "selected"; } ?> value="1">Aktif</option>
+							<option <?php if($qt->status==0){ echo "selected"; } ?> value="0">Tidak Aktif</option>
 						</select>
 					</div>
 					</div>
@@ -167,3 +157,45 @@
 </div>
 
 @include('footer')
+
+<script>
+
+	$(document).ready(function () {
+		$('#type').select2({
+			allowClear: true,
+			placeholder: 'Select Type',
+			ajax: {
+				url: "{{route('admin.perwakilan.type')}}",
+				dataType: 'json',
+				delay: 250,
+				processResults: function (data) {
+					return {
+						results: $.map(data, function (item) {
+							return {
+								text: item.type,
+								// text: item.desc_eng ,
+								id: item.type,
+							}
+						})
+					};
+				},
+				cache: true
+			}
+		});
+		@isset($id)
+		var type = "{{$eq->type}}";
+		if (type != null) {
+			$.ajax({
+				type: 'GET',
+				url: "{{route('admin.perwakilan.type')}}",
+				data: { code: type }
+			}).then(function (data) {
+				var option = new Option( data[0].type, data[0].type, true, true);
+				// var option = new Option(data[0].desc_eng, data[0].id, true, true);
+
+				$('#type').append(option).trigger('change');
+			});
+		}
+		@endisset
+	})
+</script>

@@ -805,4 +805,13 @@ Route::namespace('Training')->group(function () {
 //start mindy
 Route::post('/captchaValidate', 'CaptchaController@captchaValidate')->name('captcha');
 Route::get('refreshcaptcha', 'CaptchaController@refreshCaptcha')->name('refreshcaptcha');
+
+//master perwakilan
+Route::resource('/master-catper', 'Master\CatperController');
+Route::get('/tambah-catper', 'Master\CatperController@create');
+Route::post('/save-catper', 'Master\CatperController@store')->name('catper.save');
+Route::get('/hapus-catper/{id}', 'Master\CatperController@hapus');
+
+Route::get('/type', 'VerifyuserController@type')->name('admin.perwakilan.type');
+
 //end mindy

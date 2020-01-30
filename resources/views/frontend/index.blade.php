@@ -170,7 +170,7 @@
                         </div>
                         <div class="categories_menu_toggle" style="padding: 0px 0 0px!important;">
                             <ul>
-                                @foreach($categoryutama as $key => $cu)
+                                @foreach($categoryutama2 as $key => $cu)
                                     <?php
                                         $catprod1 = getCategoryLevel(1, $cu->id, "");
                                         $nk = "nama_kategori_".$lct; 
@@ -450,6 +450,7 @@
                         <div class="row product_tab_button nav justify-content-center" role="tablist" style="background-color: inherit; width: 100%">
                             <?php
                                 $numb = 1;
+                                $warna = ['red','DarkKhaki','orange','SeaGreen','Cyan','yellow']
                             ?>
                             @foreach($categoryutama2 as $cut)
                             <?php
@@ -478,9 +479,14 @@
                                         $kategorinya = $textkat;
                                     }
                                 ?>
+
+
                                 <a class="tabnya {{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
-                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 40px">
-                                    <p>{{$kategorinya}}</p>
+{{--                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 40px">--}}
+                                    <div style="border-radius: 50%; background-color: {{$warna[$numb-1]}}; vertical-align: middle; width: 85px;height: 85px;">
+                                        <img src="{{asset('uploads/Product/Icon')}}/{{$cut->logo}}" alt="" style="height: 80px">
+                                    </div>
+                                        <p>{{$kategorinya}}</p>
                                 </a>
                             </div>
                             <?php $numb++; ?>
