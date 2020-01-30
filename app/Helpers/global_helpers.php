@@ -1125,3 +1125,14 @@ if (! function_exists('getPerwakilanCountry3')) {
 }
 
 // End of Function Search
+
+if (! function_exists('getOptionProvince')) {
+    function getOptionProvince(){
+        $return = "";
+        $data = DB::table('mst_province')->orderBy('province_en','asc')->get();
+        foreach ($data as $key => $value) {
+          $return .= '<option value="'.$value->id.'">'.$value->province_en.'</option>';
+        }
+        echo $return;
+    }
+}
