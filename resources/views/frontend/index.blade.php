@@ -484,7 +484,7 @@
                                 <a class="tabnya {{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
 {{--                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 40px">--}}
                                     <div style="border-radius: 50%; background-color: {{$warna[$numb-1]}}; vertical-align: middle; width: 85px;height: 85px;">
-                                        <img src="{{asset('uploads/Product/icon')}}/{{$cut->logo}}" alt="" style="height: 80px">
+                                        <img src="{{asset('uploads/Product/Icon')}}/{{$cut->logo}}" alt="" style="height: 80px">
                                     </div>
                                         <p>{{$kategorinya}}</p>
                                 </a>
