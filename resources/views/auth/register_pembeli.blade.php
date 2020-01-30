@@ -393,10 +393,20 @@
         var postcode = $('#postcode').val();
         var alamat = $('#alamat').val();
         var chp = $('#chp').val();
+        if($("#ckk2").prop('checked') == true){
+            var ckk2send = 1;
+        }else{
+            var ckk2send = 0;
+        }
+        if($("#ckk").prop('checked') == true){
+            var ckksend = 1;
+        }else{
+            var ckksend = 0;
+        }
 
         var token = $('meta[name="csrf-token"]').attr('content');
         if (password == kpassword) {
-            if (company == "" || username == "" || email == "" || phone == "" || password == "" || country == "" || city == "" || alamat == "" || chp == "") {
+            if (company == "" || username == "" || email == "" || phone == "" || password == "" || country == "" || city == "" || alamat == "" || chp == ""|| ckksend == "0") {
                 alert("Please complete the field !")
                 refresh();
                 $('#captchainput').val('');
@@ -416,7 +426,8 @@
                         country: country,
                         postcode: postcode,
                         alamat: alamat,
-                        _token: '{{csrf_token()}}'
+                        _token: '{{csrf_token()}}',
+                        ckk2send : ckk2send
                     },
                     success: function (data) {
                         console.log(data);

@@ -87,15 +87,15 @@ class RegistrasiController extends Controller
         $insert1 = DB::select("
 			insert into itdp_profil_imp (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
 			('".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
-			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1','".$request->city."','".$request->country."')
+			,'".$request->email."','".$request->website."','".$date."','1','".$request->city."','".$request->country."')
 		");
 		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_imp");
 		foreach($ambilmaxid as $rt){
 			$id1 = $rt->maxid;
 		}
 		$insert2 = DB::select("
-			insert into itdp_company_users (id_profil,username,password,email,status,id_role,type,created_at) values
-			('".$id1."','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','3','Dalam Negeri','".Date('Y-m-d H:m:s')."')
+			insert into itdp_company_users (id_profil,username,password,email,status,id_role,type,created_at,newsletter) values
+			('".$id1."','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','3','Dalam Negeri','".$date."',$request->ckk2send)
 		");
 		$ambilmaxid2 = DB::select("select max(id) as maxid2 from itdp_company_users");
 		foreach($ambilmaxid2 as $rt2){
@@ -180,8 +180,8 @@ class RegistrasiController extends Controller
 			$id1 = $rt->maxid;
 		}
 		$insert2 = DB::select("
-			insert into itdp_company_users (id_profil,type,username,password,email,status,id_role,created_at) values
-			('".$id1."','Luar Negeri','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','2','".Date('Y-m-d H:m:s')."')
+			insert into itdp_company_users (id_profil,type,username,password,email,status,id_role,created_at,newsletter) values
+			('".$id1."','Luar Negeri','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','2','".date('Y-m-d H:m:s')."',$request->ckk2send)
 		");
 		$ambilmaxid2 = DB::select("select max(id) as maxid2 from itdp_company_users");
 		foreach($ambilmaxid2 as $rt2){

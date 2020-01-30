@@ -450,7 +450,7 @@
                         <div class="row product_tab_button nav justify-content-center" role="tablist" style="background-color: inherit; width: 100%">
                             <?php
                                 $numb = 1;
-                                $warna = ['red','DarkKhaki','orange','SeaGreen','Cyan','yellow']
+                                $warna = ['red','DarkKhaki','orange','SeaGreen','Cyan','blue']
                             ?>
                             @foreach($categoryutama2 as $cut)
                             <?php

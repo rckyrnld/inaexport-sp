@@ -973,6 +973,8 @@ class BuyingRequestController extends Controller
 
     public function br_save(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
         $ch1 = str_replace(".", "", $request->tp);
         $ch2 = str_replace(",", ".", $ch1);
 
@@ -995,7 +997,7 @@ class BuyingRequestController extends Controller
 			,eo,neo,tp,ntp,by_role,id_pembuat,date,id_csc_prod) values
 			('" . $request->cmp . "','" . $request->valid . "','" . $request->country . "','" . $request->city . "','" . $h[0] . "'
 			,'0','0','" . $request->ship . "','" . $request->spec . "','" . $file . "','" . $request->eo . "','" . $request->neo . "'
-			,'" . $ch2 . "','" . $request->ntp . "','" . Auth::user()->id_group . "','" . Auth::user()->id . "','" . Date('Y-m-d H:m:s') . "','" . $kumpulcat . "')");
+			,'" . $ch2 . "','" . $request->ntp . "','" . Auth::user()->id_group . "','" . Auth::user()->id . "','" . $date . "','" . $kumpulcat . "')");
 
         return redirect('br_list')->with('success', 'Success Add Data');
     }
