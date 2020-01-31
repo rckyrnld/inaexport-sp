@@ -396,6 +396,54 @@ class VerifyuserController extends Controller
             return redirect('/login');
         }
 	}
+
+    public function profilb()
+    {
+        if (Auth::guard('eksmp')->user() || Auth::user()) {
+            $id = Auth::guard('eksmp')->user()->id_role;
+            $id2 = Auth::guard('eksmp')->user()->id;
+            if($id == 2){
+                $pageTitle = "Exporter Profile";
+                $tx = "Exporter";
+            }else if($id == 3){
+                $pageTitle = "Importer Profile";
+                $tx = "Importer";
+            }else{
+                $pageTitle = "Profile ";
+                $tx ="";
+            }
+            $ida = $id;
+            $idb = $id2;
+
+            return view('verifyuser.profilb', compact('pageTitle','tx','ida','idb'));
+        }else {
+            return redirect('/login');
+        }
+    }
+
+    public function profildocb()
+    {
+        if (Auth::guard('eksmp')->user() || Auth::user()) {
+            $id = Auth::guard('eksmp')->user()->id_role;
+            $id2 = Auth::guard('eksmp')->user()->id;
+            if($id == 2){
+                $pageTitle = "Exporter Document";
+                $tx = "Exporter";
+            }else if($id == 3){
+                $pageTitle = "Importer Document";
+                $tx = "Importer";
+            }else{
+                $pageTitle = "Profile ";
+                $tx ="";
+            }
+            $ida = $id;
+            $idb = $id2;
+
+            return view('verifyuser.profildoc', compact('pageTitle','tx','ida','idb'));
+        }else {
+            return redirect('/login');
+        }
+    }
 	
 	public function profil2($id,$id2)
     {
@@ -539,13 +587,23 @@ class VerifyuserController extends Controller
 	}
 	public function simpan_profil(Request $request)
     {
-//        dd($request->idu);
+
         date_default_timezone_set('Asia/Jakarta');
 		$id_role = $request->id_role;
 		$id_user = $request->id_user;
 		$id_user_b = $request->idu;
-//		dd($id_user_b);
-		if(Auth::guard('eksmp')->user()) {
+
+		$destination= 'uploads\Profile\Eksportir\\'.$id_user;
+        if($request->hasFile('image_1')){
+            $file1 = $request->file('image_1');
+            $nama_file1 = time().'_'.$request->file('image_1')->getClientOriginalName();
+            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+            $updfoto = DB::table('itdp_company_users')->where('id', $id_user)->update([
+            	"foto_profil" => $nama_file1,
+            ]);
+        }
+
+        if(Auth::guard('eksmp')->user()) {
             //di edit indonesian exporter
             //ini yang masih mau di edit
             if(empty($request->file('doc'))){
@@ -614,28 +672,29 @@ class VerifyuserController extends Controller
                 });
             }
 
+            //UPDATE TAB 3
+            if($id_role == 2){
+                if($request->npwp == "null"){
+
+                }else{
+                    $updatetab2 = DB::select("update itdp_profil_eks set npwp='".$request->npwp."', tdp='".$request->tanda_daftar."', siup='".$request->siup."' 
+				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$request->staim."' 
+				where id='".$id_user_b."'");
+                }
+            }
+
 
 //            if($request->file('doc') and $request->file('npwpfile') and $request->file('tdpfile') and $request->file('siupfile')){
 //
 //            }
         }
-		$destination= 'uploads\Profile\Eksportir\\'.$id_user;
-        if($request->hasFile('image_1')){ 
-            $file1 = $request->file('image_1');
-            $nama_file1 = time().'_'.$request->file('image_1')->getClientOriginalName();
-            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
-            $updfoto = DB::table('itdp_company_users')->where('id', $id_user)->update([
-            	"foto_profil" => $nama_file1,
-            ]);
-        }
-		
 
 		//UPDATE TAB 1
 		if($request->password == null ){
 		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', email='".$request->email."', status='".$request->staim."' where id='".$request->id_user."' ");
 		}else{
 		$updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->staim."', email='".$request->email."' where id='".$request->id_user."' ");
-			
+
 		}
 
         if($request->staim == 1){
@@ -670,21 +729,7 @@ class VerifyuserController extends Controller
 		, province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."' 
 		where id='".$id_user_b."'");
 		}
-		
-		//UPDATE TAB 3
-		if($id_role == 2){
-			if($request->npwp == null){
-				
-			}else{
-				$updatetab2 = DB::select("update itdp_profil_eks set npwp='".$request->npwp."', tdp='".$request->tanda_daftar."', siup='".$request->siup."' 
-				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$request->staim."' 
-				where id='".$id_user_b."'");
-			}
-		}
 
-
-
-//
         if(Auth::guard('eksmp')->user()){
 //            return redirect('profil/'.$id_role.'/'.$id_user)->with('success','Success Update Data');
             return redirect('/home')->with('success','Success Update Data');
@@ -694,6 +739,152 @@ class VerifyuserController extends Controller
 
 	
 	}
+
+	public function simpan_profilb(Request $request){
+        date_default_timezone_set('Asia/Jakarta');
+        $id_role = $request->id_role;
+        $id_user = $request->id_user;
+        $id_user_b = $request->idu;
+
+        $destination= 'uploads\Profile\Eksportir\\'.$id_user;
+        if($request->hasFile('image_1')){
+            $file1 = $request->file('image_1');
+            $nama_file1 = time().'_'.$request->file('image_1')->getClientOriginalName();
+            Storage::disk('uploads')->putFileAs($destination, $file1, $nama_file1);
+            $updfoto = DB::table('itdp_company_users')->where('id', $id_user)->update([
+                "foto_profil" => $nama_file1,
+            ]);
+        }
+
+
+        //UPDATE TAB 1
+        if($request->password == null ){
+            $updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', email='".$request->email."', status='".$request->staim."' where id='".$request->id_user."' ");
+        }else{
+            $updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->staim."', email='".$request->email."' where id='".$request->id_user."' ");
+
+        }
+
+        //UPDATE TAB 2
+        if($id_role == 2){
+            $updatetab2 = DB::select("update itdp_profil_eks set badanusaha='".$request->badanusaha."', company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
+		, id_mst_province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."', email='".$request->email."' 
+		where id='".$id_user_b."'");
+        }else{
+            $updatetab2 = DB::select("update itdp_profil_imp set badanusaha='".$request->badanusaha."', company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
+		, province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."' 
+		where id='".$id_user_b."'");
+        }
+
+//
+        if(Auth::guard('eksmp')->user()){
+//            return redirect('profil/'.$id_role.'/'.$id_user)->with('success','Success Update Data');
+            return redirect('/home')->with('success','Success Update Data');
+        }else{
+            return redirect('/verifyuser')->with('success','Success Update Data');
+        }
+
+    }
+
+	public function simpan_dokumenb(Request $request){
+        date_default_timezone_set('Asia/Jakarta');
+        $id_role = $request->id_role;
+        $id_user = $request->id_user;
+        $id_user_b = $request->idu;
+        if(Auth::guard('eksmp')->user()) {
+            //di edit indonesian exporter
+            //ini yang masih mau di edit
+            if(empty($request->file('doc'))){
+                $file = "";
+            }else{
+                $file = $request->file('doc')->getClientOriginalName();
+                $destinationPath = public_path() . "/eksportir";
+                $request->file('doc')->move($destinationPath, $file);
+                $updatetabd = DB::select("update itdp_profil_eks set doc='".$file."' where id='".$id_user_b."'");
+            }
+
+            if(empty($request->file('npwpfile'))){
+                $file = "";
+            }else{
+                $file = $request->file('npwpfile')->getClientOriginalName();
+                $destinationPath = public_path() . "/eksportir";
+                $request->file('npwpfile')->move($destinationPath, $file);
+                $updatetabd = DB::select("update itdp_profil_eks set uploadnpwp='".$file."' where id='".$id_user_b."'");
+            }
+
+            if(empty($request->file('tdpfile'))){
+                $file = "";
+            }else{
+                $file = $request->file('tdpfile')->getClientOriginalName();
+                $destinationPath = public_path() . "/eksportir";
+                $request->file('tdpfile')->move($destinationPath, $file);
+                $updatetabd = DB::select("update itdp_profil_eks set uploadtdp='".$file."' where id='".$id_user_b."'");
+            }
+
+            if(empty($request->file('siupfile'))){
+                $file = "";
+            }else{
+                $file = $request->file('siupfile')->getClientOriginalName();
+                $destinationPath = public_path() . "/eksportir";
+                $request->file('siupfile')->move($destinationPath, $file);
+                $updatetabd = DB::select("update itdp_profil_eks set uploadsiup='".$file."' where id='".$id_user_b."'");
+            }
+
+            $date = date('Y-m-d H:i:s');
+            $notif = DB::table('notif')->insert([
+                'dari_nama' =>getCompanyName(auth::guard('eksmp')->user()->id),
+                'dari_id' => auth::guard('eksmp')->user()->id,
+                'untuk_nama' => "Super Admin",
+                'untuk_id' => '1',
+                'keterangan' => 'Exporter "'.getExBadan(auth::guard('eksmp')->user()->id).getCompanyName(auth::guard('eksmp')->user()->id).'" Update The Company Data',
+                'url_terkait' => 'profil/2',
+                'status_baca' => 0,
+                'waktu' => $date,
+                'id_terkait' => $id_user,
+                'to_role' => "1",
+            ]);
+
+            $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
+            foreach($admin_all as $aa){
+                $data = [
+                    'email' => $aa->email,
+                    'email1' => $aa->email,
+                    'username' => $aa->name,
+                    'company' =>getCompanyName(auth::guard('eksmp')->user()->id),
+                    'id' => $id_user,
+                    'bu' => getExBadan(auth::guard('eksmp')->user()->id),
+                ];
+                Mail::send('UM.user.emailexupload', $data, function ($mail) use ($data) {
+                    $mail->to($data['email1'], $data['username']);
+                    $mail->subject('Exporter Update their Profile');
+                });
+            }
+
+            if($request->staim == null){
+                $staim = 0;
+            }else{
+                $staim =1;
+            }
+
+            //UPDATE TAB 3
+            if($id_role == 2){
+                if($request->npwp == "null"){
+                    $updatetab2 = DB::select("update itdp_profil_eks set tdp='".$request->tanda_daftar."', siup='".$request->siup."' 
+				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$staim."' 
+				where id='".$id_user_b."'");
+                }else{
+                    $updatetab2 = DB::select("update itdp_profil_eks set npwp='".$request->npwp."', tdp='".$request->tanda_daftar."', siup='".$request->siup."' 
+				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$staim."' 
+				where id='".$id_user_b."'");
+                }
+            }
+
+
+//            if($request->file('doc') and $request->file('npwpfile') and $request->file('tdpfile') and $request->file('siupfile')){
+//
+//            }
+        }
+    }
 	
 	public function simpan_kontak(Request $request)
     {
