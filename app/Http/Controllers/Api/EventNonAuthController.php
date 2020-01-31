@@ -15,16 +15,16 @@ class EventNonAuthController extends Controller
 
     public function event_suggest(Request $request)
     {
-		$name = $request->search;
-		$offset = $request->offset;
+		//$name = $request->search;
+		// $offset = $request->offset;
         // $data = DB::select("select * from event_detail where event_name_en like '%".$name."%' or event_name_in like '%".$name."%' or event_name_chn like '%".$name."%' order by event_name_en asc");
         $data = DB::table('event_detail')
-			->where('event_detail.event_name_en', 'like', '%' . $name . '%')
-			->orwhere('event_detail.event_name_in', 'like', '%' . $name . '%')
-			->orwhere('event_detail.event_name_chn', 'like', '%' . $name . '%')
-			->orderBy('event_detail.event_name_en', 'asc')
-            ->limit(10)
-            ->offset($offset)
+		//	->where('event_detail.event_name_en', 'like', '%' . $name . '%')
+		//	->orwhere('event_detail.event_name_in', 'like', '%' . $name . '%')
+		//	->orwhere('event_detail.event_name_chn', 'like', '%' . $name . '%')
+		//	->orderBy('event_detail.event_name_en', 'asc')
+        //    ->limit(10)
+        //    ->offset($offset)
             ->get();
 		$jsonResult = array();
         for ($i = 0; $i < count($data); $i++) {
@@ -63,15 +63,15 @@ class EventNonAuthController extends Controller
 	public function event_list(Request $request)
     {
 		$name = $request->search;
-		$offset = $request->offset;
+		//$offset = $request->offset;
         // $data = DB::select("select * from event_detail where event_name_en like '%".$name."%' or event_name_in like '%".$name."%' or event_name_chn like '%".$name."%' order by event_name_en asc");
         $data = DB::table('event_detail')
 			->where('event_detail.event_name_en', 'like', '%' . $name . '%')
 			->orwhere('event_detail.event_name_in', 'like', '%' . $name . '%')
 			->orwhere('event_detail.event_name_chn', 'like', '%' . $name . '%')
 			->orderBy('event_detail.event_name_en', 'asc')
-            ->limit(10)
-            ->offset($offset)
+        //   ->limit(10)
+            //->offset($offset)
             ->get();
 		$jsonResult = array();
         for ($i = 0; $i < count($data); $i++) {
