@@ -241,13 +241,40 @@ class NewsletterController extends Controller
 
     public function broadcast(Request $req)
     {
-      $data =  DB::table('itdp_newsletter')->where('id', $req->newsletter)->first();
+      $newsletter =  DB::table('itdp_newsletter')->where('id', $req->newsletter)->first();
       $data = [
-          'subject' => $data->about,
-          'messages' => $data->messages,
-          'file' => $data->file
+          'subject' => $newsletter->about,
+          'messages' => $newsletter->messages,
+          'file' => $newsletter->file
       ];
-      $user = DB::table('itdp_company_users')->where('newsletter', 1)->get();
+
+      $query = DB::table('itdp_company_users as a')->selectRaw('a.id,a.email')->join('itdp_profil_eks as b', 'a.id_profil','b.id')->where('a.newsletter', 1); 
+      if(strstr($newsletter->send_to, 'All')){
+        $user = $query->groupBy('a.id')->groupBy('a.email')->get();
+      }  else {
+        if(strstr($newsletter->send_to, 'Province')){
+          $arrProv = [];
+          $province = DB::table('newsletter_province')->where('id_newsletter',$req->newsletter)->get();
+          foreach ($province as $key => $prov) {
+            array_push($arrProv, $prov->id_province);
+          }
+          $query->whereIn('b.id_mst_province',$arrProv);
+        }
+        if(strstr($newsletter->send_to, 'Category')){
+          $arrCat = [];
+          $category = DB::table('newsletter_category')->where('id_newsletter',$req->newsletter)->get();
+          foreach ($category as $key => $prov) {
+            array_push($arrCat, $prov->id_category);
+          }
+          $query->join('csc_product_single as c', 'a.id','c.id_itdp_company_user');
+          $query->where(function ($query) use ($arrCat){
+            $query->whereIn('c.id_csc_product',$arrCat)->orWhereIn('c.id_csc_product_level1',$arrCat)->orWhereIn('c.id_csc_product_level2',$arrCat);
+          });
+        }
+        $query->groupBy('a.id')->groupBy('a.email');
+        $user = $query->get();
+      }
+
       foreach ($user as $key => $value) {
         $data['email'] = $value->email;
         $data['email_unsub'] = Crypt::encryptString($value->id);
