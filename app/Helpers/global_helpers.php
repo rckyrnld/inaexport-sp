@@ -641,6 +641,26 @@ if (! function_exists('getProductByCategory')) {
     }
 }
 
+if (! function_exists('getProductByCategory2')) {
+    function getProductByCategory2($category){
+        $product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
+            ->where('csc_product_single.id_csc_product', $category)
+            ->orderByRaw('csc_product_single.hot DESC NULLS LAST')
+//            ->orderBy(DB::raw('csc_product_single.hot IS NULL, csc_product_single.hot'), 'asc')
+//            ->whereNotNull('hot')
+//            ->orderByRaw('ISNULL(csc_product_single.hot), csc_product_single.hot ASC')
+//            ->orderByRaw('csc_product_single.hot desc')
+            ->limit(6)
+            ->get();
+
+        return $product;
+    }
+}
+
 if (! function_exists('getPerwakilanCountry2')) {
     function getPerwakilanCountry2($id){
         $nama = "-";
@@ -1125,3 +1145,14 @@ if (! function_exists('getPerwakilanCountry3')) {
 }
 
 // End of Function Search
+
+if (! function_exists('getOptionProvince')) {
+    function getOptionProvince(){
+        $return = "";
+        $data = DB::table('mst_province')->orderBy('province_en','asc')->get();
+        foreach ($data as $key => $value) {
+          $return .= '<option value="'.$value->id.'">'.$value->province_en.'</option>';
+        }
+        echo $return;
+    }
+}

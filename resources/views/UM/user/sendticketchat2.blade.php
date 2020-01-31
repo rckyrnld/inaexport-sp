@@ -1,7 +1,7 @@
 <div align="center" style="width: 100%">
     <div align="center" style="width: 580px;">
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
-        <p style="text-align: left">Dear User, </P>
+        <p style="text-align: left">Dear {{($bu== '-')? '':$bu." "}}{{$exporter}}, </P>
         <p style="text-align: left">Super Admin Respond Chat On Your Ticketing Request</p>
         <hr>
         <!-- <ol>

@@ -231,10 +231,10 @@ class EksProductController extends Controller
     public function store(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
+        $datenow = date("Y-m-d H:i:s");
         if(Auth::guard('eksmp')->user()){
             $id_user = Auth::guard('eksmp')->user()->id;
             $id_profil = Auth::guard('eksmp')->user()->id_profil;
-            $datenow = date("Y-m-d H:i:s");
 
             $save = DB::table('csc_product_single')->insertGetId([
                 'id_csc_product' => $request->id_csc_product,
