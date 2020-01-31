@@ -340,7 +340,7 @@ class BuyingreqController extends Controller
                         foreach ($caridataeks as $vm) {
                             $vc1 = $vm->email;
                         }
-                        $data = ['username' => $namapembuat, 'id2' => '0', 'nama' => $namapembuat, 'bu' => '' ,  'password' => '', 'email' => $vc1];
+                        $data = ['username' => $namapembuat, 'id2' => '0', 'nama' => $namapembuat, 'bu' => '', 'company' => '' ,  'password' => '', 'email' => $vc1];
 
                         Mail::send('UM.user.emailbr', $data, function ($mail) use ($data) {
                             $mail->to($data['email'], $data['username']);
