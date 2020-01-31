@@ -229,7 +229,10 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label for="code" class="col-md-2"><b>Image (.png)</b></label>
+                                        <div class="col-md-2">
+                                            <label for="code"><b>Image (.png, .jpg, .jpeg, .gif)</b></label>
+                                            <label style="color: red">*maksimum file size</label>
+                                        </div>
                                         <!-- <div class="col-md-2">
                                             <div id="ambil_ttd_utama" style="width: 100%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
                                                 <button type="button" id="img_utama" style="width: 100%; height: 120px;" class="img_upl">
