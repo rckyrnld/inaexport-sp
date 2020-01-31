@@ -123,6 +123,9 @@
                             <b >Log Out </b>
                         </a>
                     </div>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </li>
                 <!-- Navarbar toggle btn -->
                 <li class="d-lg-none d-flex align-items-center">
