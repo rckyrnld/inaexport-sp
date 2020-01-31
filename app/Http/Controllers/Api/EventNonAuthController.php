@@ -95,6 +95,10 @@ class EventNonAuthController extends Controller
             $jsonResult[$i]["status_en"] = $data[$i]->status_en;
             $jsonResult[$i]["created_at"] = $data[$i]->created_at;
             $jsonResult[$i]["reg_date"] = $data[$i]->reg_date;
+            $jsonResult[$i]["image_1"] = $path = ($data[$i]->image_1) ? url('uploads/Event/Image/' . $data[$i]->id . '/' . $data[$i]->image_1) : url('image/nia3.png');
+            $jsonResult[$i]["image_2"] = $path = ($data[$i]->image_2) ? url('uploads/Event/Image/' . $data[$i]->id . '/' . $data[$i]->image_2) : url('image/nia3.png');
+            $jsonResult[$i]["image_3"] = $path = ($data[$i]->image_3) ? url('uploads/Event/Image/' . $data[$i]->id . '/' . $data[$i]->image_3) : url('image/nia3.png');
+            $jsonResult[$i]["image_4"] = $path = ($data[$i]->image_4) ? url('uploads/Event/Image/' . $data[$i]->id . '/' . $data[$i]->image_4) : url('image/nia3.png');
             
         }
 //        dd($jsonResult);
