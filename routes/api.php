@@ -151,7 +151,7 @@ Route::namespace('Api')->group(function () {
     Route::get('getslide', 'ProductNonAuthController@getslide');
 	/* end slide content */
 	/* Event */
-	Route::post('event_suggest', 'EventNonAuthController@event_suggest');
+	Route::get('event_suggest', 'EventNonAuthController@event_suggest');
 	Route::post('event_list', 'EventNonAuthController@event_list');
 	/*end event */
 	
