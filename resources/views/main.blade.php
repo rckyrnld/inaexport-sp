@@ -118,54 +118,11 @@
 					  </span>
                     </span>
                   </a>
-                  <div class="dropdown-menu dropdown-menu-right w pt-0 mt-2 animate fadeIn">
-				  
-                   <!--  <div class="row no-gutters b-b mb-2">
-                      <div class="col-4 b-r">
-                        <a href="app.user.html" class="py-2 pt-3 d-block text-center">
-                          <i class="fa text-md fa-phone-square text-muted"></i>
-                          <small class="d-block">Call</small>
+                    <div class="dropdown-menu dropdown-menu-right w pt-0 mt-2 animate fadeIn">
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <b >Log Out </b>
                         </a>
-                      </div>
-                      <div class="col-4 b-r">
-                        <a href="app.message.html" class="py-2 pt-3 d-block text-center">
-                          <i class="fa text-md fa-comment text-muted"></i>
-                          <small class="d-block">Chat</small>
-                        </a>
-                      </div>
-                      <div class="col-4">
-                        <a href="app.inbox.html" class="py-2 pt-3 d-block text-center">
-                          <i class="fa text-md fa-envelope text-muted"></i>
-                          <small class="d-block">Email</small>
-                        </a>
-                      </div>
-                    </div> -->
-					 <?php if(empty(Auth::user()->id_group)){  
-					 if(Auth::guard('eksmp')->user()->id_role == 2){
-					 ?>
-					  <a style="padding-top:10px;"class="dropdown-item" href="{{ url('profil/'.Auth::guard('eksmp')->user()->id_role.'/'.Auth::guard('eksmp')->user()->id) }}">
-                     <b> <?php if(Auth::guard('eksmp')->user()->id_role == 2){ echo " Exporter"; }else if(Auth::guard('eksmp')->user()->id_role == 3){ echo " Buyer"; } ?> Profile</b>
-                    </a>
-					 <?php } else { ?> 
-					 <a style="padding-top:10px;"class="dropdown-item" href="{{ url('profil2/'.Auth::guard('eksmp')->user()->id_role.'/'.Auth::guard('eksmp')->user()->id) }}">
-                     <b> <?php if(Auth::guard('eksmp')->user()->id_role == 2){ echo " Exporter"; }else if(Auth::guard('eksmp')->user()->id_role == 3){ echo " Buyer"; } ?> Profile</b>
-                    </a>
-					 <?php } }else{ ?>
-					 
-					  <?php } ?>
-                   
-					<!-- <a style="padding-top:10px;"class="dropdown-item" href="{{ url('gantipass') }}">
-                     <b> Ganti Password </b>
-                    </a> -->
-					<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                      <b >Log Out </b>
-                     </a>
-					
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                    </form>
-                    
-                  </div>
+                    </div>
                 </li>
                 <!-- Navarbar toggle btn -->
                 <li class="d-lg-none d-flex align-items-center">
