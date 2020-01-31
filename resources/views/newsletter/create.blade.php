@@ -26,22 +26,19 @@
 <?php 
   $view = ''; $all_chck = ''; $prov_chck = ''; $cat_chck = '';
   $display_prov = 'none'; $display_cat = 'none';
+  $req_prov = ''; $req_cat = '';
   if($page == 'view'){ $view = 'disabled'; }
   if(isset($data->send_to)){
     if(strstr($data->send_to, 'Province')){
-      $prov_chck = 'checked';
-      $display_prov = '';
+      $prov_chck = 'checked'; $req_prov = 'required'; $display_prov = '';
     }
     if(strstr($data->send_to, 'Category')){
-      $cat_chck = 'checked';
-      $display_cat = '';
+      $cat_chck = 'checked'; $req_cat = 'required'; $display_cat = '';
     }
     if(strstr($data->send_to, 'All')){
-      $all_chck = 'checked';
-      $prov_chck = 'disabled';  
-      $cat_chck = 'disabled';  
-      $display_prov = 'none';
-      $display_cat = 'none';
+      $all_chck = 'checked'; $prov_chck = 'disabled'; $cat_chck = 'disabled';  
+      $display_prov = 'none'; $display_cat = 'none';
+      $req_prov = ''; $req_cat = '';
     }
   }
 ?>
@@ -154,8 +151,8 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-2">Province</label>
                  <div class="col-md-7">
-                    <select class="form-control" id="province" style="width: 100%;" name="province[]" multiple="multiple">
-                      {{getOptionProvince()}}
+                    <select class="form-control" id="province" style="width: 100%;" {{$req_prov}} name="province[]" multiple="multiple">
+                      @if($prov_chck == 'checked') {{getOptionProvinceNewsletter($data->id)}} @else {{getOptionProvince()}} @endif
                     </select>
                  </div>
              </div>
@@ -164,8 +161,8 @@
               <div class="col-md-1"></div>
                  <label class="control-label col-md-2">Category</label>
                  <div class="col-md-7">
-                    <select class="form-control" id="category" style="width: 100%;" name="category[]" multiple="multiple">
-                      {{optionCategory()}}
+                    <select class="form-control" id="category" style="width: 100%;" {{$req_cat}} name="category[]" multiple="multiple">
+                      @if($cat_chck == 'checked') {{optionCategoryNewsletter($data->id)}} @else {{optionCategory()}} @endif
                     </select>
                  </div>
              </div>
