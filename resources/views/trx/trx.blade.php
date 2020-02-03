@@ -291,7 +291,28 @@ $cr = explode(',',$p3->id_csc_prod);
 			<input type="text" name="tp" class="amount form-control" value="<?php  echo number_format($p2->tp,0,',','.'); ?>">
 		</div>
 		<div class="form-group col-sm-1">
-			<select style="color:black;" class="form-control" name="ntp" id="ntp"><option <?php if($p3->ntp == "IDR"){ echo "selected"; }?> value="IDR">IDR</option><option <?php if($p3->ntp == "THB"){ echo "selected"; }?> value="THB">THB</option><option <?php if($p3->ntp == "USD"){ echo "selected"; }?> value="USD">USD</option></select>
+			<select style="color:black;" class="form-control select2" name="ntp" id="ntp">
+				<option  <?php if($p3->ntp == "SAR"){ echo "selected"; } ?> value="SAR">Arab Saudi Riyal(SAR)</option>
+				<option  <?php if($p3->ntp == "BND"){ echo "selected"; } ?> value="BND">Brunei Dollar(BND)</option>
+				<option  <?php if($p3->ntp == "CNY"){ echo "selected"; } ?> value="CNY">China Yuan(CNY)</option>
+				<option  <?php if($p3->ntp == "IQD"){ echo "selected"; } ?> value="IQD">Dinar Irak(IQD)</option>
+				<option  <?php if($p3->ntp == "AED"){ echo "selected"; } ?> value="AED">Dirham Uni Emirat Arab(AED)</option>
+				<option  <?php if($p3->ntp == "USD"){ echo "selected"; } ?> value="USD">Dolar Amerika Serikat(USD)</option>
+				<option  <?php if($p3->ntp == "AUD"){ echo "selected"; } ?> value="AUD">Dolar Australia(AUD)</option>
+				<option  <?php if($p3->ntp == "HKD"){ echo "selected"; } ?> value="HKD">Dolar Hong Kong(HKD)</option>
+				<option  <?php if($p3->ntp == "SGD"){ echo "selected"; } ?> value="SGD">Dolar Singapura(SGD)</option>
+				<option  <?php if($p3->ntp == "TWD"){ echo "selected"; } ?> value="TWD">Dolar Taiwan Baru(TWD)</option>
+				<option  <?php if($p3->ntp == "EUR"){ echo "selected"; } ?> value="EUR">Euro(EUR)</option>
+				<option  <?php if($p3->ntp == "PHP"){ echo "selected"; } ?> value="PHP">Peso Filipina(PHP)</option>
+				<option  <?php if($p3->ntp == "GBP"){ echo "selected"; } ?> value="GBP">Pound Sterling(GBP)</option>
+				<option  <?php if($p3->ntp == "MYR"){ echo "selected"; } ?> value="MYR">Ringgit Malaysia(MYR)</option>
+				<option  <?php if($p3->ntp == "INR"){ echo "selected"; } ?> value="INR">Rupee India(INR)</option>
+				<option  <?php if($p3->ntp == "IDR"){ echo "selected"; } ?> value="IDR">Rupiah Indonesia(IDR)</option>
+				<option  <?php if($p3->ntp == "THB"){ echo "selected"; } ?> value="THB">Thai Baht(THB)</option>
+				<option  <?php if($p3->ntp == "VND"){ echo "selected"; } ?> value="VND">Vietnam Dong(VND)</option>
+				<option  <?php if($p3->ntp == "KRW"){ echo "selected"; } ?> value="KRW">Won Korea(KRW)</option>
+				<option  <?php if($p3->ntp == "JPY"){ echo "selected"; } ?> value="JPY">Yen Jepang(JPY)</option>
+			</select>
 		</div>
 	</div>
 	
