@@ -195,7 +195,30 @@ body {font-family: Arial;}
 				
 			<div class="form-row">
 		<div class="col-sm-7"><input type="text" value="" name="tp" id="tp" class="amount form-control" required></div>
-		<div class="col-sm-5"> <select class="form-control" name="ntp" id="ntp" required><option value="IDR">IDR</option><option value="USD">USD</option><option value="THB">THB</option></select></div>
+		<div class="col-sm-5">
+			<select class="form-control" name="ntp" id="ntp" required>
+				<option value="SAR">Arab Saudi Riyal(SAR)</option>
+				<option value="BND">Brunei Dollar(BND)</option>
+				<option value="CNY">China Yuan(CNY)</option>
+				<option value="IQD">Dinar Irak(IQD)</option>
+				<option value="AED">Dirham Uni Emirat Arab(AED)</option>
+				<option value="USD">Dolar Amerika Serikat(USD)</option>
+				<option value="AUD">Dolar Australia(AUD)</option>
+				<option value="HKD">Dolar Hong Kong(HKD)</option>
+				<option value="SGD">Dolar Singapura(SGD)</option>
+				<option value="TWD">Dolar Taiwan Baru(TWD)</option>
+				<option value="EUR">Euro(EUR)</option>
+				<option value="PHP">Peso Filipina(PHP)</option>
+				<option value="GBP">Pound Sterling(GBP)</option>
+				<option value="MYR">Ringgit Malaysia(MYR)</option>
+				<option value="INR">Rupee India(INR)</option>
+				<option value="IDR">Rupiah Indonesia(IDR)</option>
+				<option value="THB">Thai Baht(THB)</option>
+				<option value="VND">Vietnam Dong(VND)</option>
+				<option value="KRW">Won Korea(KRW)</option>
+				<option value="JPY">Yen Jepang(JPY)</option>
+			</select>
+		</div>
 		</div>
 		</div>
 		

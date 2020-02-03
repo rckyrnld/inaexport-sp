@@ -40,6 +40,13 @@ class ProductNonAuthController extends Controller
 
         $jsonResult = array();
         for ($i = 0; $i < count($dataProduk); $i++) {
+			if(empty($dataProduk[$i]->hot) || $dataProduk[$i]->hot == null || $dataProduk[$i]->hot ==""){ $nhot = false; }else{ $nhot = true;}
+			$nnew = false;
+			if(date('Y', strtotime($dataProduk[$i]->created_at)) == date('Y')){
+                if(date('m', strtotime($dataProduk[$i]->created_at)) == date('m')){
+                    $nnew = true;
+                }
+            }
             $jsonResult[$i]["id"] = $dataProduk[$i]->id;
             $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
@@ -51,6 +58,9 @@ class ProductNonAuthController extends Controller
             $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
             $jsonResult[$i]["type"] = $dataProduk[$i]->type;
             $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+            $jsonResult[$i]["created_at"] = $dataProduk[$i]->created_at;
+            $jsonResult[$i]["is_hot"] = $nhot;
+            $jsonResult[$i]["is_new"] = $nnew;
             $id_role = $dataProduk[$i]->id_role;
             $id_profil = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
@@ -213,12 +223,20 @@ class ProductNonAuthController extends Controller
             ->select('csc_product_single.id', 'itdp_company_users.id_profil', 'itdp_company_users.id_role', 'csc_product_single.*',
                 'csc_product_single.image_1', 'csc_product_single.product_description_en', 'csc_product_single.image_2', 'csc_product_single.image_3',
                 'csc_product_single.image_4', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd',
-                'csc_product.nama_kategori_en', 'csc_product_single.code_en', 'csc_product_single.color_en', 'csc_product_single.size_en', 'csc_product_single.raw_material_en')
+                'csc_product.nama_kategori_en', 'csc_product_single.code_en', 'csc_product_single.color_en', 'csc_product_single.size_en', 'csc_product_single.raw_material_en'
+				, 'csc_product_single.created_at', 'csc_product_single.hot')
             ->get();
 
 //        dd($dataProduk);
         $jsonResult = array();
         for ($i = 0; $i < count($dataProduk); $i++) {
+			if(empty($dataProduk[$i]->hot) || $dataProduk[$i]->hot == null || $dataProduk[$i]->hot ==""){ $nhot = false; }else{ $nhot = true;}
+			$nnew = false;
+			if(date('Y', strtotime($dataProduk[$i]->created_at)) == date('Y')){
+                if(date('m', strtotime($dataProduk[$i]->created_at)) == date('m')){
+                    $nnew = true;
+                }
+            }
             $jsonResult[$i]["id"] = $dataProduk[$i]->id;
 //            $jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $dataProduk[$i]->id_csc_product)->first()->nama_kategori_en;
 //            $jsonResult[$i]["csc_product_level1_desc"] = ($dataProduk[$i]->id_csc_product_level1) ? DB::table('csc_product')->where('id', $dataProduk[$i]->id_csc_product_level1)->first()->nama_kategori_en : null;
@@ -233,6 +251,9 @@ class ProductNonAuthController extends Controller
             $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
             $jsonResult[$i]["type"] = $dataProduk[$i]->type;
             $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+            $jsonResult[$i]["created_at"] = $dataProduk[$i]->created_at;
+			$jsonResult[$i]["is_hot"] = $nhot;
+            $jsonResult[$i]["is_new"] = $nnew;
             $jsonResult[$i]["nama_kategori_en"] = $dataProduk[$i]->nama_kategori_en;
             $id_role = $dataProduk[$i]->id_role;
             $id_profil = $dataProduk[$i]->id_profil;
@@ -520,19 +541,23 @@ class ProductNonAuthController extends Controller
         $dataProduk = DB::table('itdp_company_users')
             ->join('csc_product_single', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->join('csc_product', 'csc_product.id', '=', 'csc_product_single.id_csc_product')
-            ->where('itdp_company_users.status', '=', 1)
+            // ->where('itdp_company_users.status', '=', 1)
             ->where('csc_product_single.status', 2)
+			->orderby('csc_product_single.hot', 'asc')
 //            ->select('itdp_company_users.*','csc_product_single.*','csc_product.nama_kategori_en')
             ->select('csc_product_single.id', 'itdp_company_users.id_profil', 'itdp_company_users.id_role', 'csc_product_single.*',
                 'csc_product_single.image_1', 'csc_product_single.product_description_en', 'csc_product_single.image_2', 'csc_product_single.image_3',
                 'csc_product_single.image_4', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd',
                 'csc_product.nama_kategori_en', 'csc_product_single.code_en', 'csc_product_single.color_en', 'csc_product_single.size_en', 'csc_product_single.raw_material_en')
-            ->inRandomOrder()
+            
+			// ->inRandomOrder()
             ->limit(6)
             ->get();
 
         $jsonResult = array();
         for ($i = 0; $i < count($dataProduk); $i++) {
+			if(empty($dataProduk[$i]->hot) || $dataProduk[$i]->hot == null || $dataProduk[$i]->hot ==""){ $nhot = false; }else{ $nhot = true;}
+
             $jsonResult[$i]["id"] = $dataProduk[$i]->id;
             $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
@@ -544,6 +569,7 @@ class ProductNonAuthController extends Controller
             $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
             $jsonResult[$i]["type"] = $dataProduk[$i]->type;
             $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+            $jsonResult[$i]["is_hot"] = $nhot;
             $id_role = $dataProduk[$i]->id_role;
             $id_profil = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
@@ -896,6 +922,13 @@ class ProductNonAuthController extends Controller
 
         $jsonResult = array();
         for ($i = 0; $i < count($dataProduk); $i++) {
+		if(empty($dataProduk[$i]->hot) || $dataProduk[$i]->hot == null || $dataProduk[$i]->hot ==""){ $nhot = false; }else{ $nhot = true;}
+			$nnew = false;
+			if(date('Y', strtotime($dataProduk[$i]->created_at)) == date('Y')){
+                if(date('m', strtotime($dataProduk[$i]->created_at)) == date('m')){
+                    $nnew = true;
+                }
+            }
             $jsonResult[$i]["id"] = $dataProduk[$i]->id;
             $jsonResult[$i]["id_profil"] = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["id_role"] = $dataProduk[$i]->id_role;
@@ -907,6 +940,9 @@ class ProductNonAuthController extends Controller
             $jsonResult[$i]["id_csc_product"] = $dataProduk[$i]->id_csc_product;
             $jsonResult[$i]["type"] = $dataProduk[$i]->type;
             $jsonResult[$i]["price_usd"] = $dataProduk[$i]->price_usd;
+            $jsonResult[$i]["created_at"] = $dataProduk[$i]->created_at;
+			$jsonResult[$i]["is_hot"] = $nhot;
+            $jsonResult[$i]["is_new"] = $nnew;
             $id_role = $dataProduk[$i]->id_role;
             $id_profil = $dataProduk[$i]->id_profil;
             $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;

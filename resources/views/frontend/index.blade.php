@@ -170,7 +170,7 @@
                         </div>
                         <div class="categories_menu_toggle" style="padding: 0px 0 0px!important;">
                             <ul>
-                                @foreach($categoryutama as $key => $cu)
+                                @foreach($categoryutama2 as $key => $cu)
                                     <?php
                                         $catprod1 = getCategoryLevel(1, $cu->id, "");
                                         $nk = "nama_kategori_".$lct; 
@@ -450,6 +450,7 @@
                         <div class="row product_tab_button nav justify-content-center" role="tablist" style="background-color: inherit; width: 100%">
                             <?php
                                 $numb = 1;
+                                $warna = ['red','DarkKhaki','orange','SeaGreen','Cyan','blue']
                             ?>
                             @foreach($categoryutama2 as $cut)
                             <?php
@@ -478,9 +479,14 @@
                                         $kategorinya = $textkat;
                                     }
                                 ?>
+
+
                                 <a class="tabnya {{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
-                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 40px">
-                                    <p>{{$kategorinya}}</p>
+{{--                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 40px">--}}
+                                    <div style="border-radius: 50%; display: table-cell; background-color: {{$warna[$numb-1]}}; vertical-align: middle; width: 85px;height: 85px;">
+                                        <img src="{{asset('uploads/Product/Icon')}}/{{$cut->logo}}" alt="" style="height: 75px">
+                                    </div>
+                                        <p>{{$kategorinya}}</p>
                                 </a>
                             </div>
                             <?php $numb++; ?>
@@ -503,7 +509,7 @@
                     ?>
                     <div class="tab-pane fade show {{$clsnya}} product" id="tabke{{$cuta->id}}" role="tabpanel">
                         <?php
-                            $product = getProductByCategory($cuta->id);
+                            $product = getProductByCategory2($cuta->id);
                         ?>
                         @if(count($product) == 0)
                         <center>
@@ -521,6 +527,10 @@
                         <div class="product_carousel product_column5 owl-carousel" style="padding-top: 25px;padding-bottom: 25px;">
                                 @foreach($product as $key => $p)
                                     <?php
+                                        $dis2 = "display: none;";
+                                        if(in_array($p->id, $hot_product)){
+                                            $dis2 = "";
+                                        }
                                         $cat1 = getCategoryName($p->id_csc_product, $lct);
                                         $cat2 = getCategoryName($p->id_csc_product_level1, $lct);
                                         $cat3 = getCategoryName($p->id_csc_product_level2, $lct);
@@ -580,6 +590,17 @@
                                         }
                                     ?>
                                     <div class="single_product" style="border-radius:0px!important; height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
+                                        <div class="hot-type" style="{{$dis2}}">
+                                        <span class="hot-type-content">
+                                             @if($loc == "ch")
+                                                热
+                                            @elseif($loc == "in")
+                                                HOT
+                                            @else
+                                                HOT
+                                            @endif
+                                        </span>
+                                        </div>
                                         <?php
                                             //cut prod name
                                             $num_char = 19;
@@ -839,9 +860,27 @@
                                         <div class="col-md-5">
                                             <select  class="form-control" name="ntp" id="ntp" style="color: black; font-size: 12px;">
                                                 <option value="">@lang("login.forms.by14")</option>
-                                                <option value="IDR">IDR</option>
-                                                <option value="THB">THB</option>
-                                                <option value="USD">USD</option>
+                                                <option value="SAR">Arab Saudi Riyal(SAR)</option>
+                                                <option value="BND">Brunei Dollar(BND)</option>
+                                                <option value="CNY">China Yuan(CNY)</option>
+                                                <option value="IQD">Dinar Irak(IQD)</option>
+                                                <option value="AED">Dirham Uni Emirat Arab(AED)</option>
+                                                <option value="USD">Dolar Amerika Serikat(USD)</option>
+                                                <option value="AUD">Dolar Australia(AUD)</option>
+                                                <option value="HKD">Dolar Hong Kong(HKD)</option>
+                                                <option value="SGD">Dolar Singapura(SGD)</option>
+                                                <option value="TWD">Dolar Taiwan Baru(TWD)</option>
+                                                <option value="EUR">Euro(EUR)</option>
+                                                <option value="PHP">Peso Filipina(PHP)</option>
+                                                <option value="GBP">Pound Sterling(GBP)</option>
+                                                <option value="MYR">Ringgit Malaysia(MYR)</option>
+                                                <option value="INR">Rupee India(INR)</option>
+                                                <option value="IDR">Rupiah Indonesia(IDR)</option>
+                                                <option value="THB">Thai Baht(THB)</option>
+                                                <option value="VND">Vietnam Dong(VND)</option>
+                                                <option value="KRW">Won Korea(KRW)</option>
+                                                <option value="JPY">Yen Jepang(JPY)</option>
+
                                             </select>
                                         </div>
                                    </div>

@@ -222,14 +222,14 @@ class ManagementNoAuthController extends Controller
                 "status_baca" => '0',
             ]);
 
-        $data = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'password' => $password, 'email' => $email];
+        $data = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'company' => '' , 'password' => $password, 'email' => $email];
 
         Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
             $mail->to($data['email'], $data['username']);
             $mail->subject('Notifikasi Aktifasi Akun');
 
         });
-        $data2 = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'password' => $password, 'email' => 'safaririch12@gmail.com'];
+        $data2 = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'company' => '' , 'password' => $password, 'email' => 'safaririch12@gmail.com'];
 
         Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
             $mail->to($data2['email'], $data2['username']);
@@ -334,14 +334,14 @@ class ManagementNoAuthController extends Controller
                 "status_baca" => '0',
             ]);
 
-        $data = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'password' => $password, 'email' => $email];
+        $data = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'company' => '' , 'password' => $password, 'email' => $email];
 
         Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
             $mail->to($data['email'], $data['username']);
             $mail->subject('Notifikasi Aktifasi Akun');
 
         });
-        $data2 = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'password' => $password, 'email' => 'safaririch12@gmail.com'];
+        $data2 = ['username' => $username, 'id2' => $insert2, 'nama' => $company, 'company' => '' , 'password' => $password, 'email' => 'safaririch12@gmail.com'];
 
         Mail::send('UM.user.emailsuser', $data2, function ($mail) use ($data2) {
             $mail->to($data2['email'], $data2['username']);

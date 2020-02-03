@@ -72,6 +72,7 @@ class AdminResearchController extends Controller
                 return '<center>
                   <button onclick="broadcast(\''.$data->title_en.'||'.$data->id.'\')" id="button" class="btn btn-sm btn-warning text-white" title="Broadcast"><i class="fa fa-bullhorn text-white"></i></button>&nbsp;&nbsp;
                   <a href="'.route("admin.research-corner.edit", $data->id).'" id="button" class="btn btn-sm btn-success" title="Edit"><i class="fa fa-edit text-white"></i></a>
+                  <a onclick="return confirm(\'Are You Sure ?\')" href="'.route("admin.research-corner.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger" title="Delete">&nbsp<i class="fa fa-trash text-white"></i></a>
                   </center>';
               }
           })
@@ -295,10 +296,16 @@ class AdminResearchController extends Controller
     public function hscode(Request $request)
     {
       $hscode = DB::table('mst_hscodes')
-                        ->select('id', 'desc_eng')
+                        ->select('id', 'desc_eng','fullhs')
                         ->orderby('desc_eng', 'asc');
       if (isset($request->q)) {
-          $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');
+          $search = $request->q;
+          $hscode->where(function ($query) use ($search) {
+              $query->where('fullhs', 'like', '%' . $search . '%')
+                  ->orwhere('desc_eng','like','%'.$search.'%');
+          });
+//          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
+//          $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake desc_eng
       } else if (isset($request->code)) {
           $hscode->where('id', $request->code);
       } else {

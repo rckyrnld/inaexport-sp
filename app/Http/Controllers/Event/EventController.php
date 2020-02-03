@@ -243,7 +243,7 @@ class EventController extends Controller
                         'untuk_nama' => $profile_penerima->company,
                         'untuk_id' => $array[$user],
                         'keterangan' => 'New Event from Super Admin with Title  "'.$eventnya->event_name_en.'"',
-                        'url_terkait' => 'event/show/read',
+                        'url_terkait' => 'event/show_detail',
                         'status_baca' => 0,
                         'waktu' => date('Y-m-d H:i:s'),
                         'id_terkait' => $req->idet,

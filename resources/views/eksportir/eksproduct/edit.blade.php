@@ -72,7 +72,8 @@
                                     <div class="row" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 10px;">
                                         <div class="col-md-12"><label><b>Product Category</b></label></div><br>
                                         <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px; max-height: 450px;">
-                                        <div id="prod1" class="list-group" style="height: 430px; overflow-y: auto;">
+                                            <input type="text" id="search1" name="search1" class="form-control" onInput="searchsub(1)">
+                                            <div id="prod1" class="list-group" style="height: 430px; overflow-y: auto;">
                                             @if($data->id_csc_product != NULL)
                                                 @foreach($catprod as $cp)
                                                     <?php
@@ -82,7 +83,7 @@
                                                             $cact = "";
                                                         }
                                                     ?>
-                                                    <a href="#" class="list-group-item list-group-item-action listbag1 {{$cact}}" onclick="getSub(1,'{{$cp->id}}', '', '{{$cp->nama_kategori_en}}', event)" id="kat1_{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
+                                                    <a href="#" class="list-group-item list-group-item-action listbag1 {{$cact}}" onclick="getSub(1,'{{$cp->id}}', '', '{{$cp->nama_kategori_en}}', event)" id="kat1_{{$cp->id}}" data-value="{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
                                                 @endforeach
                                             @else
                                             Category Not Found
@@ -90,6 +91,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                                        <div id="tmpsearch2">
+                                            <input type="text" id="search2" name="search2" class="form-control" onInput="searchsub(2)">
+                                        </div>
                                         <div id="prod2" class="list-group" style="height: 430px; overflow-y: auto;">
                                             @if($data->id_csc_product_level1 != NULL)
                                                 @foreach($catprod2 as $cp1)
@@ -101,7 +105,7 @@
                                                                 $cact1 = "";
                                                             }
                                                         ?>
-                                                        <a href="#" class="list-group-item list-group-item-action listbag2 {{$cact1}}" onclick="getSub(2,'{{$cp1->level_1}}', '{{$cp1->id}}','{{$cp1->nama_kategori_en}}', event)" id="kat2_{{$cp1->id}}">{{$cp1->nama_kategori_en}}</a>
+                                                        <a href="#" class="list-group-item list-group-item-action listbag2 {{$cact1}}" onclick="getSub(2,'{{$cp1->level_1}}', '{{$cp1->id}}','{{$cp1->nama_kategori_en}}', event)" id="kat2_{{$cp1->id}}" data-value="{{$cp1->id}}">{{$cp1->nama_kategori_en}}</a>
                                                     @endif
                                                 @endforeach
                                             @else
@@ -110,6 +114,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                                        <div id="tmpsearch3">
+                                            <input type="text" id="search3" name="search3" class="form-control" onInput="searchsub(3)">
+                                         </div>
                                         <div id="prod3" class="list-group" style="height: 430px; overflow-y: auto;">
                                             @if($data->id_csc_product_level2 != NULL)
                                                 @foreach($catprod3 as $cp2)
@@ -122,7 +129,7 @@
                                                                     $cact2 = "";
                                                                 }
                                                             ?>
-                                                            <a href="#" class="list-group-item list-group-item-action listbag3 {{$cact2}}" onclick="getSub(3,'{{$cp2->level_1}}', '{{$cp2->id}}','{{$cp2->nama_kategori_en}}', event)" id="kat3_{{$cp2->id}}">{{$cp2->nama_kategori_en}}</a>
+                                                            <a href="#" class="list-group-item list-group-item-action listbag3 {{$cact2}}" onclick="getSub(3,'{{$cp2->level_1}}', '{{$cp2->id}}','{{$cp2->nama_kategori_en}}', event)" id="kat3_{{$cp2->id}}"  data-value="{{$cp2->id}}">{{$cp2->nama_kategori_en}}</a>
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -286,7 +293,10 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label for="code" class="col-md-2"><b>Image (.png)</b></label>
+                                        <div class="col-md-2">
+                                            <label for="code"><b>Image (.png, .jpg, .jpeg, .gif)</b></label>
+                                            <label style="color: red">*maksimum file size 200kb</label>
+                                        </div>
                                         <!-- <div class="col-md-2">
                                             <div id="ambil_ttd_utama" style="width: 100%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
                                                 <button type="button" id="img_utama" style="width: 100%; height: 120px;" class="img_upl">
@@ -536,7 +546,7 @@
                   return {
                     results: $.map(data, function (item) {
                       return {
-                        text: item.desc_eng,
+                        text: item.fullhs + "  -  " + item.desc_eng,
                         id: item.id
                       }
                     })
@@ -558,7 +568,7 @@
                 url: "{{route('eksproduct.getHsCode')}}",
                 data: { code: hscode }
             }).then(function (data) {
-                var option = new Option(data[0].desc_eng, data[0].id, true, true);
+                var option = new Option(data[0].fullhs+ " - " +data[0].desc_eng, data[0].id, true, true);
 
                 $('#hscode').append(option).trigger('change');
             });
@@ -594,6 +604,8 @@
                 $('#prod3').html('');
                 $('.listbag1').removeClass('active');
                 $('#kat1_'+idp).addClass('active');
+                $('#tmpsearch2').html('');
+                $('#tmpsearch3').html('');
             }else{
                 $('#select_2').text('> '+name);
                 $('#id_csc_product_level1').val(ids);
@@ -602,6 +614,7 @@
                 $('#prod3').html('');
                 $('.listbag2').removeClass('active');
                 $('#kat2_'+ids).addClass('active');
+                // $('#tmpsearch3').html('');
             }
             $.ajax({
                 url: "{{route('eksproduct.getSub')}}",
@@ -611,12 +624,60 @@
                     // console.log(response);
                     if(sub == 1){
                         $('#prod2').html(response);
+                        $('#tmpsearch2').html("<input type=\"text\" id=\"search2\" name=\"search2\" class=\"form-control\" onInput=\"searchsub(2)\">");
                     }else{
                         $('#prod3').html(response);
+                        $('#tmpsearch3').html("<input type=\"text\" id=\"search3\" name=\"search3\" class=\"form-control\" onInput=\"searchsub(3)\">");
                     }
                 }
             });
         }
+    }
+
+    function searchsub(suba){
+        if(suba == 1){
+            var tes = document.getElementById("search1");
+            var s = tes.value;
+            var value = "kosong";
+            var value2 = "kosong";
+            $('#tmpsearch2').html('');
+            $('#tmpsearch3').html('');
+            $('#prod2').html('');
+            $('#prod3').html('');
+        }else if(suba==2){
+            var items = document.getElementsByClassName("list-group-item listbag1 active");
+            var value = $(items).attr('data-value');
+            var tes = document.getElementById("search2");
+            var s = tes.value;
+            var value2 = "kosong";
+            $('#tmpsearch3').html('');
+            $('#prod3').html('');
+        }else{
+            var items = document.getElementsByClassName("list-group-item listbag1 active");
+            var value = $(items).attr('data-value');
+            var items2 = document.getElementsByClassName("list-group-item listbag2 active");
+            var value2 = $(items2).attr('data-value');
+            var tes = document.getElementById("search3");
+            var s = tes.value;
+        }
+
+        $.ajax({
+            url: "{{route('eksproduct.searchsub')}}",
+            type: 'get',
+            data: {level:suba, text:s,parent:value,parent2:value2},
+            success:function(response){
+                // console.log(response);
+                if(suba == 1){
+                    $('#prod1').html(response);
+                }
+                else if(suba == 2){
+                    $('#prod2').html(response);
+                }else{
+                    $('#prod3').html(response);
+                }
+            }
+        });
+
     }
 
     function handleFileSelect(evt){

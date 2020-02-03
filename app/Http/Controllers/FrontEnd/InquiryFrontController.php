@@ -49,11 +49,11 @@ class InquiryFrontController extends Controller
     public function store($id, Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
+        $datenow = date("Y-m-d H:i:s");
         if(Auth::guard('eksmp')->user()->id_role == 3){
             $id_user = Auth::guard('eksmp')->user()->id;
             $id_product = $request->id_product;
             $type = $request->type;
-            $datenow = date("Y-m-d H:i:s");
 
             $dtproduct = DB::table('csc_product_single')->where('id', $id_product)->first();
 

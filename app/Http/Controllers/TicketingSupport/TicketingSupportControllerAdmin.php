@@ -139,7 +139,9 @@ class TicketingSupportControllerAdmin extends Controller
             'email1' => $data2,
             'username' => "",
             'main_messages' => $req->messages,
-            'id' => $req->id
+            'id' => $req->id,
+            'exporter'=> getCompanyName($id_company),
+            'bu'=>getExBadan($id_company)
         ];
 
         /*

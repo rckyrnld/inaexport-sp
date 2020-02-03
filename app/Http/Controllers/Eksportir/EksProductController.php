@@ -231,10 +231,10 @@ class EksProductController extends Controller
     public function store(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
+        $datenow = date("Y-m-d H:i:s");
         if(Auth::guard('eksmp')->user()){
             $id_user = Auth::guard('eksmp')->user()->id;
             $id_profil = Auth::guard('eksmp')->user()->id_profil;
-            $datenow = date("Y-m-d H:i:s");
 
             $save = DB::table('csc_product_single')->insertGetId([
                 'id_csc_product' => $request->id_csc_product,
@@ -637,7 +637,7 @@ class EksProductController extends Controller
             if(count($catprod) > 0){
                 foreach ($catprod as $key => $value) {
                     $nama = "'".$value->nama_kategori_en."'";
-                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag2" onclick="getSub(2,'.$value->level_1.', '.$value->id.','.$nama.', event)" id="kat2_'.$value->id.'">'.$value->nama_kategori_en.'</a>';
+                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag2" onclick="getSub(2,'.$value->level_1.', '.$value->id.','.$nama.', event)" id="kat2_'.$value->id.'" data-value="'.$value->id.'">'.$value->nama_kategori_en.'</a>';
                 }
             }else{
                 $result .= 'Category Not Found';
@@ -648,12 +648,53 @@ class EksProductController extends Controller
             if(count($catprod) > 0){
                 foreach ($catprod as $key => $value) {
                     $nama = "'".$value->nama_kategori_en."'";
-                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag3" onclick="getSub(3,'.$value->level_1.', '.$value->id.','.$nama.', event)" id="kat3_'.$value->id.'">'.$value->nama_kategori_en.'</a>';
+                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag3" onclick="getSub(3,'.$value->level_1.', '.$value->id.','.$nama.', event)" id="kat3_'.$value->id.'" data-value="'.$value->id.'">'.$value->nama_kategori_en.'</a>';
                 }
             }else{
                 $result .= 'Category Not Found';
             }
         }
+        return $result;
+    }
+
+    public function searchsub(Request $request){
+        $level = $request->level;
+        if($level == 1){
+            $result = '';
+            $catprod = DB::table('csc_product')->where('level_1',0)->where('level_2',0)->where('nama_kategori_en',  'like', '%' . $request->text . '%')->orderBy('nama_kategori_en', 'ASC')->get();
+            if(count($catprod) > 0){
+                foreach ($catprod as $key => $value) {
+                    $nama = "'".$value->nama_kategori_en."'";
+                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag1" onclick="getSub(1,'.$value->id.','.$value->id.','.$nama.', event)" id="kat1_'.$value->id.'" data-value="'.$value->id.'">'.$value->nama_kategori_en.'</a>';
+                }
+            }else{
+                $result .= 'Category Not Found';
+            }
+        }
+        elseif($level == 2){
+            $result = '';
+            $catprod = DB::table('csc_product')->where('level_1', $request->parent)->where('level_2',0)->where('nama_kategori_en',  'like', '%' . $request->text . '%')->orderBy('nama_kategori_en', 'ASC')->get();
+            if(count($catprod) > 0){
+                foreach ($catprod as $key => $value) {
+                    $nama = "'".$value->nama_kategori_en."'";
+                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag2" onclick="getSub(2,'.$value->level_1.','.$value->id.','.$nama.', event)" id="kat2_'.$value->id.'" data-value="'.$value->id.'">'.$value->nama_kategori_en.'</a>';
+                }
+            }else{
+                $result .= 'Category Not Found';
+            }
+        }else{
+            $result = '';
+            $catprod = DB::table('csc_product')->where('level_1', $request->parent2)->where('level_2', $request->parent)->where('nama_kategori_en',  'like', '%' . $request->text . '%')->orderBy('nama_kategori_en', 'ASC')->get();
+            if(count($catprod) > 0){
+                foreach ($catprod as $key => $value) {
+                    $nama = "'".$value->nama_kategori_en."'";
+                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag3" onclick="getSub(3,'.$value->level_1.','.$value->id.','.$nama.', event)" id="kat3_'.$value->id.'" data-value="'.$value->id.'">'.$value->nama_kategori_en.'</a>';
+                }
+            }else{
+                $result .= 'Category Not Found';
+            }
+        }
+
         return $result;
     }
 
@@ -667,10 +708,16 @@ class EksProductController extends Controller
     public function getHsCode(Request $request)
     {
         $hscode = DB::table('mst_hscodes')
-                ->select('id', 'desc_eng')
+                ->select('id', 'desc_eng','fullhs')
                 ->orderby('desc_eng', 'asc');
         if (isset($request->q)) {
-            $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');
+            $search = $request->q;
+            $hscode->where(function ($query) use ($search) {
+                $query->where('fullhs', 'like', '%' . $search . '%')
+                    ->orwhere('desc_eng','like','%'.$search.'%');
+            });
+            //          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
+//            $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');
         } else if (isset($request->code)) {
             $hscode->where('id', $request->code);
         } else {

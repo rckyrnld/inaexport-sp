@@ -184,8 +184,13 @@ Route::get('/hapusperwakilan/{id}', 'VerifyuserController@hapusperwakilan');
 Route::get('/editperwakilan/{id}', 'VerifyuserController@editperwakilan');
 Route::get('/saveverify/{id}', 'VerifyuserController@saveverify');
 Route::get('/profil/{id}/{id2}', 'VerifyuserController@profil');
+Route::get('/profildoc/{id}/{id2}', 'VerifyuserController@profildoc');
+Route::get('/profil', 'VerifyuserController@profilb');
+Route::get('/profildoc', 'VerifyuserController@profildocb');
 Route::get('/profil2/{id}/{id2}', 'VerifyuserController@profil2');
 Route::post('/simpan_profil', 'VerifyuserController@simpan_profil');
+Route::post('/simpan_profilb', 'VerifyuserController@simpan_profilb');
+Route::post('/simpan_profil_docb', 'VerifyuserController@simpan_dokumenb');
 Route::post('/simpan_profil2', 'VerifyuserController@simpan_profil2');
 Route::post('/simpanperwakilan', 'VerifyuserController@simpanperwakilan');
 Route::post('/updateperwakilan', 'VerifyuserController@updateperwakilan');
@@ -672,6 +677,7 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     Route::get('/product_getdata_admin/{id}', 'EksProductController@datanya_admin')->name('datatables.eksproduct_admin');
     Route::get('/product_getdata', 'EksProductController@datanya')->name('datatables.eksproduct');
     Route::get('/getsub/', 'EksProductController@getSub')->name('eksproduct.getSub');
+    Route::get('/searchsub/', 'EksProductController@searchsub')->name('eksproduct.searchsub');
     Route::get('/getHsCode/', 'EksProductController@getHsCode')->name('eksproduct.getHsCode');
     Route::get('/tambah_product', 'EksProductController@tambah');
     Route::post('/product_save', 'EksProductController@store');
@@ -805,4 +811,13 @@ Route::namespace('Training')->group(function () {
 //start mindy
 Route::post('/captchaValidate', 'CaptchaController@captchaValidate')->name('captcha');
 Route::get('refreshcaptcha', 'CaptchaController@refreshCaptcha')->name('refreshcaptcha');
+
+//master perwakilan
+Route::resource('/master-catper', 'Master\CatperController');
+Route::get('/tambah-catper', 'Master\CatperController@create');
+Route::post('/save-catper', 'Master\CatperController@store')->name('catper.save');
+Route::get('/hapus-catper/{id}', 'Master\CatperController@hapus');
+
+Route::get('/type', 'VerifyuserController@type')->name('admin.perwakilan.type');
+
 //end mindy

@@ -203,15 +203,15 @@
                                 </div><br>
                                 <div class="row">
                                     <label for="code" class="col-md-2"><b>Category Product</b></label>
-{{--                                    <div class="col-md-3">--}}
-{{--                                        <center><span id="cadprod_en">{{getNameCategoryProduct($data->id_csc_product, 'en')}}</span></center>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-3">--}}
-{{--                                        <center><span id="cadprod_in">{{getNameCategoryProduct($data->id_csc_product, 'in')}}</span></center>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-3">--}}
-{{--                                        <center><span id="cadprod_chn">{{getNameCategoryProduct($data->id_csc_product, 'chn')}}</span></center>--}}
-{{--                                    </div>--}}
+                                    <div class="col-md-3">
+                                        <center><span id="cadprod_en">{{getNameCategoryProduct($data->id_csc_product, 'en')}}</span></center>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <center><span id="cadprod_in">{{getNameCategoryProduct($data->id_csc_product, 'in')}}</span></center>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <center><span id="cadprod_chn">{{getNameCategoryProduct($data->id_csc_product, 'chn')}}</span></center>
+                                    </div>
                                 </div><br>
                                 <div class="row">
                                     <label for="code" class="col-md-2"><b>Color</b></label>
@@ -275,7 +275,7 @@
                                             <?php
                                                 $hscodenya = NULL;
                                                 if($hsco != NULL){
-                                                    $hscodenya = $hsco->desc_eng;
+                                                    $hscodenya = $hsco->fullhs." - ". $hsco->desc_eng;
                                                 }
                                             ?>
                                             <textarea name="hscode" id="hscode" class="form-control" readonly>{{$hscodenya}}</textarea>

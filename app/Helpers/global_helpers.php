@@ -84,7 +84,7 @@ if (! function_exists('rc_hscodes')) {
     function rc_hscodes($id){
         $data = DB::table('mst_hscodes')->where('id', $id)->first();
 
-        return $data->desc_eng;
+        return $data->fullhs." - ".$data->desc_eng ;
     }
 }
 
@@ -328,11 +328,13 @@ if (! function_exists('getCategoryName')) {
         if($id != NULL){
           $col = "nama_kategori_".$loc;
           $data = DB::table('csc_product')->where('id', $id)->first();
-          if($data->$col != NULL){
-            $nama = $data->$col;
-          }else{
-            $col = "nama_kategori_en";
-            $nama = $data->$col;
+          if($data){
+            if($data->$col != NULL){
+              $nama = $data->$col;
+            }else{
+              $col = "nama_kategori_en";
+              $nama = $data->$col;
+            }
           }
         }
 
@@ -638,6 +640,26 @@ if (! function_exists('getProductByCategory')) {
             ->get();
 
       return $product;
+    }
+}
+
+if (! function_exists('getProductByCategory2')) {
+    function getProductByCategory2($category){
+        $product = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
+            ->where('csc_product_single.id_csc_product', $category)
+            ->orderByRaw('csc_product_single.hot DESC NULLS LAST')
+//            ->orderBy(DB::raw('csc_product_single.hot IS NULL, csc_product_single.hot'), 'asc')
+//            ->whereNotNull('hot')
+//            ->orderByRaw('ISNULL(csc_product_single.hot), csc_product_single.hot ASC')
+//            ->orderByRaw('csc_product_single.hot desc')
+            ->limit(6)
+            ->get();
+
+        return $product;
     }
 }
 
@@ -1125,3 +1147,74 @@ if (! function_exists('getPerwakilanCountry3')) {
 }
 
 // End of Function Search
+
+if (! function_exists('getOptionProvince')) {
+    function getOptionProvince(){
+        $return = "";
+        $data = DB::table('mst_province')->orderBy('province_en','asc')->get();
+        foreach ($data as $key => $value) {
+          $return .= '<option value="'.$value->id.'">'.$value->province_en.'</option>';
+        }
+        echo $return;
+    }
+}
+
+
+if (! function_exists('getOptionProvinceNewsletter')) {
+    function getOptionProvinceNewsletter($id){
+        $array = [];
+        $province = DB::table('newsletter_province')->where('id_newsletter',$id)->get();
+        foreach ($province as $key => $value) {
+          array_push($array, $value->id_province);
+        }
+
+        $data = DB::table('mst_province')->orderBy('province_en','asc')->get();
+        $return = "";
+        foreach ($data as $key => $value) {
+          $select = '';
+          if(in_array($value->id, $array)){ $select = 'selected'; }
+          $return .= '<option value="'.$value->id.'" '.$select.'>'.$value->province_en.'</option>';
+        }
+        echo $return;
+    }
+}
+
+
+if (! function_exists('optionCategoryNewsletter')) {
+    function optionCategoryNewsletter($id){
+        $array = [];
+        $category = DB::table('newsletter_category')->where('id_newsletter',$id)->get();
+        foreach ($category as $key => $value) {
+          array_push($array, $value->id_category);
+        }
+
+        $categori = DB::table('csc_product_single as a')->join('itdp_profil_eks as b', 'a.id_itdp_profil_eks', '=', 'b.id')->select('id_csc_product')->distinct('id_csc_product')->get();
+        $level1 = DB::table('csc_product_single as a')->join('itdp_profil_eks as b', 'a.id_itdp_profil_eks', '=', 'b.id')->select('id_csc_product_level1')->where('id_csc_product_level1', '!=', null)->distinct('id_csc_product_level1')->get();
+        $level2 = DB::table('csc_product_single as a')->join('itdp_profil_eks as b', 'a.id_itdp_profil_eks', '=', 'b.id')->select('id_csc_product_level2')->where('id_csc_product_level2', '!=', null)->distinct('id_csc_product_level2')->get();
+
+        $option = '';
+        foreach ($categori as $data) {
+          $category = DB::table('csc_product')->where('id', $data->id_csc_product)->first();
+          if($category){
+            if(in_array($category->id, $array)){ $select = 'selected'; } else { $select = ''; }
+            $option .= '<option value="'.$category->id.'" '.$select.'>'.$category->nama_kategori_en.'</option>';
+          }
+        }
+        foreach ($level1 as $data) {
+          $category = DB::table('csc_product')->where('id', $data->id_csc_product_level1)->first();
+          if($category){
+            if(in_array($category->id, $array)){ $select = 'selected'; } else { $select = ''; }
+            $option .= '<option value="'.$category->id.'" '.$select.'>'.$category->nama_kategori_en.'</option>';
+          }
+        }
+        foreach ($level2 as $data) {
+          $category = DB::table('csc_product')->where('id', $data->id_csc_product_level2)->first();
+          if($category){
+            if(in_array($category->id, $array)){ $select = 'selected'; } else { $select = ''; }
+            $option .= '<option value="'.$category->id.'" '.$select.'>'.$category->nama_kategori_en.'</option>';
+          }
+        }
+
+        echo $option;
+    }
+}

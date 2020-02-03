@@ -73,18 +73,25 @@
                                     <div class="row" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 10px;">
                                         <div class="col-md-12"><label><b>Product Category</b></label></div><br>
                                         <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px; max-height: 450px;">
+                                            <input type="text" id="search1" name="search1" class="form-control" onInput="searchsub(1)">
                                             <div id="prod1" class="list-group" style="height: 430px; overflow-y: auto;">
                                                 @foreach($catprod as $cp)
-                                                    <a href="#" class="list-group-item list-group-item-action listbag1" onclick="getSub(1,'{{$cp->id}}', '', '{{$cp->nama_kategori_en}}', event)" id="kat1_{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
+                                                    <a href="#" class="list-group-item list-group-item-action listbag1" onclick="getSub(1,'{{$cp->id}}', '', '{{$cp->nama_kategori_en}}', event)" id="kat1_{{$cp->id}}" data-value="{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
                                                 @endforeach
                                             </div>
                                         </div>
                                         <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                                            <div id="tmpsearch2">
+
+                                            </div>
                                             <div id="prod2" class="list-group" style="height: 430px; overflow-y: auto;">
                                                 
                                             </div>
                                         </div>
                                         <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                                            <div id="tmpsearch3">
+
+                                            </div>
                                             <div id="prod3" class="list-group" style="height: 430px; overflow-y: auto;">
                                                 
                                             </div>
@@ -229,7 +236,10 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label for="code" class="col-md-2"><b>Image (.png)</b></label>
+                                        <div class="col-md-2">
+                                            <label for="code"><b>Image (.png, .jpg, .jpeg, .gif)</b></label>
+                                            <label style="color: red">*maksimum file size 200kb</label>
+                                        </div>
                                         <!-- <div class="col-md-2">
                                             <div id="ambil_ttd_utama" style="width: 100%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
                                                 <button type="button" id="img_utama" style="width: 100%; height: 120px;" class="img_upl">
@@ -369,7 +379,7 @@
                   return {
                     results: $.map(data, function (item) {
                       return {
-                        text: item.desc_eng,
+                        text: item.fullhs + "  -  " + item.desc_eng,
                         id: item.id
                       }
                     })
@@ -494,6 +504,8 @@
                 $('#prod3').html('');
                 $('.listbag1').removeClass('active');
                 $('#kat1_'+idp).addClass('active');
+                $('#tmpsearch2').html('');
+                $('#tmpsearch3').html('');
             }else{
                 $('#select_2').text(' >'+name);
                 $('#id_csc_product_level1').val(ids);
@@ -502,6 +514,7 @@
                 $('#prod3').html('');
                 $('.listbag2').removeClass('active');
                 $('#kat2_'+ids).addClass('active');
+                $('#tmpsearch3').html('');
             }
             $.ajax({
                 url: "{{route('eksproduct.getSub')}}",
@@ -511,12 +524,60 @@
                     // console.log(response);
                     if(sub == 1){
                         $('#prod2').html(response);
+                        $('#tmpsearch2').html("<input type=\"text\" id=\"search2\" name=\"search2\" class=\"form-control\" onInput=\"searchsub(2)\">");
                     }else{
                         $('#prod3').html(response);
+                        $('#tmpsearch3').html("<input type=\"text\" id=\"search3\" name=\"search3\" class=\"form-control\" onInput=\"searchsub(3)\">");
                     }
                 }
             });
         }
+    }
+
+    function searchsub(suba){
+        if(suba == 1){
+            var tes = document.getElementById("search1");
+            var s = tes.value;
+            var value = "kosong";
+            var value2 = "kosong";
+            $('#tmpsearch2').html('');
+            $('#tmpsearch3').html('');
+            $('#prod2').html('');
+            $('#prod3').html('');
+        }else if(suba==2){
+            var items = document.getElementsByClassName("list-group-item listbag1 active");
+            var value = $(items).attr('data-value');
+            var tes = document.getElementById("search2");
+            var s = tes.value;
+            var value2 = "kosong";
+            $('#tmpsearch3').html('');
+            $('#prod3').html('');
+        }else{
+            var items = document.getElementsByClassName("list-group-item listbag1 active");
+            var value = $(items).attr('data-value');
+            var items2 = document.getElementsByClassName("list-group-item listbag2 active");
+            var value2 = $(items2).attr('data-value');
+            var tes = document.getElementById("search3");
+            var s = tes.value;
+        }
+
+        $.ajax({
+            url: "{{route('eksproduct.searchsub')}}",
+            type: 'get',
+            data: {level:suba, text:s,parent:value,parent2:value2},
+            success:function(response){
+                // console.log(response);
+                if(suba == 1){
+                    $('#prod1').html(response);
+                }
+                else if(suba == 2){
+                    $('#prod2').html(response);
+                }else{
+                    $('#prod3').html(response);
+                }
+            }
+        });
+
     }
 
     function handleFileSelect(evt){

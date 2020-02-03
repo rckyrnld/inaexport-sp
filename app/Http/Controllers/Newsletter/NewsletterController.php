@@ -108,6 +108,21 @@ class NewsletterController extends Controller
     public function store(Request $req, $param)
     { 
       date_default_timezone_set('Asia/Jakarta');
+      // Tujuan
+      $send_to = '';
+      if($req->send_to){
+        foreach ($req->send_to as $key => $value) {
+          if($value == 'All'){
+            $send_to = 'All';
+            break;
+          } else {
+            $send_to .= $value.',';
+          }  
+        }
+        $send_to = rtrim($send_to, ',');
+      } else {
+        $send_to = 'All';
+      }
 
       $destination= 'uploads\Newsletter\File\\';
       if($req->hasFile('file')){ 
@@ -117,25 +132,61 @@ class NewsletterController extends Controller
       } else { $nama_file = $req->lastest_file; }
 
       if($param == 'Create'){
-        $data =  DB::table('itdp_newsletter')->insert([
+        $data = $id =  DB::table('itdp_newsletter')->insertGetId([
           'about' => $req->about,
           'messages' => $req->messages,
           'file' => $nama_file,
           'status' => 0,
+          'send_to' => $send_to,
           'created_at' => date('Y-m-d H:i:s')
         ]);
       } else {
         $pecah = explode('|', $param);
         $param = $pecah[0];
+        $id = $pecah[1];
 
-        $data =  DB::table('itdp_newsletter')->where('id', $pecah[1])->update([
+        $data =  DB::table('itdp_newsletter')->where('id', $id)->update([
           'about' => $req->about,
           'messages' => $req->messages,
           'file' => $nama_file,
+          'send_to' => $send_to,
           'updated_at' => date('Y-m-d H:i:s')
         ]);
       }
 
+      // Detail Tujuan
+      if(strstr($send_to, 'Province')){
+        if($req->province){
+          DB::table('newsletter_province')->where('id_newsletter',$id)->delete();
+          foreach ($req->province as $key => $value) {
+            DB::table('newsletter_province')->insert([
+              'id_newsletter' => $id,
+              'id_province' => $value,
+              'created_at' => date('Y-m-d H:i:s')
+            ]);
+          }
+        }
+      }
+
+      if(strstr($send_to, 'Category')){
+        if($req->category){
+          DB::table('newsletter_category')->where('id_newsletter',$id)->delete();
+          foreach ($req->category as $key => $value) {
+            DB::table('newsletter_category')->insert([
+              'id_newsletter' => $id,
+              'id_category' => $value,
+              'created_at' => date('Y-m-d H:i:s')
+            ]);
+          }
+        }
+      } 
+
+      if(strstr($send_to, 'All')){
+        DB::table('newsletter_province')->where('id_newsletter',$id)->delete();
+        DB::table('newsletter_category')->where('id_newsletter',$id)->delete();
+      } 
+
+      // End
       if($data){
          Session::flash('success','Success '.$param.'d Data');
          return redirect('/newsletter/')->with('success', 'Success '.$param.'d Data!');
@@ -190,16 +241,44 @@ class NewsletterController extends Controller
 
     public function broadcast(Request $req)
     {
-      $data =  DB::table('itdp_newsletter')->where('id', $req->newsletter)->first();
+      $newsletter =  DB::table('itdp_newsletter')->where('id', $req->newsletter)->first();
       $data = [
-          'subject' => $data->about,
-          'messages' => $data->messages,
-          'file' => $data->file
+          'subject' => $newsletter->about,
+          'messages' => $newsletter->messages,
+          'file' => $newsletter->file
       ];
-      $user = DB::table('itdp_company_users')->where('newsletter', 1)->get();
+
+      $query = DB::table('itdp_company_users as a')->selectRaw('a.id,a.email')->join('itdp_profil_eks as b', 'a.id_profil','b.id')->where('a.newsletter', 1); 
+      if(strstr($newsletter->send_to, 'All')){
+        $user = $query->groupBy('a.id')->groupBy('a.email')->get();
+      }  else {
+        if(strstr($newsletter->send_to, 'Province')){
+          $arrProv = [];
+          $province = DB::table('newsletter_province')->where('id_newsletter',$req->newsletter)->get();
+          foreach ($province as $key => $prov) {
+            array_push($arrProv, $prov->id_province);
+          }
+          $query->whereIn('b.id_mst_province',$arrProv);
+        }
+        if(strstr($newsletter->send_to, 'Category')){
+          $arrCat = [];
+          $category = DB::table('newsletter_category')->where('id_newsletter',$req->newsletter)->get();
+          foreach ($category as $key => $prov) {
+            array_push($arrCat, $prov->id_category);
+          }
+          $query->join('csc_product_single as c', 'a.id','c.id_itdp_company_user');
+          $query->where(function ($query) use ($arrCat){
+            $query->whereIn('c.id_csc_product',$arrCat)->orWhereIn('c.id_csc_product_level1',$arrCat)->orWhereIn('c.id_csc_product_level2',$arrCat);
+          });
+        }
+        $query->groupBy('a.id')->groupBy('a.email');
+        $user = $query->get();
+      }
+
       foreach ($user as $key => $value) {
         $data['email'] = $value->email;
         $data['email_unsub'] = Crypt::encryptString($value->id);
+        // return view('newsletter.mail', $data);
         Mail::send('newsletter.mail', $data, function ($mail) use ($data) {
             $mail->subject($data['subject']);
             $mail->to($data['email']);
