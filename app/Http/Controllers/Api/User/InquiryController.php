@@ -958,6 +958,7 @@ class InquiryController extends Controller
             'username' => $username,
             'type' => $type,
             'bu' => "",
+            'id' => $idm,
             'sender' => getCompanyName($sender),
             'receiver' => getCompanyNameImportir($receiver),
             'subjek' => $data->subyek_en
