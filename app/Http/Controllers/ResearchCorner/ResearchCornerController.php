@@ -63,9 +63,10 @@ class ResearchCornerController extends Controller
             $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
                 ->whereIn('a.id_categori_product', $array_kategori)
                 ->orWhereIn('a.id_research_corner', $array_research)
-                ->orderby('b.publish_date', 'desc')
+//                ->orderby('b.publish_date', 'desc')
+                ->orderby('a.created_at', 'desc')
                 ->distinct('a.id_research_corner')
-                ->select('b.*')
+                ->select('b.*','a.created_at','a.id_research_corner')
                 ->get();
 
             return \Yajra\DataTables\DataTables::of($research)
