@@ -922,6 +922,9 @@ class ManagementUserController extends Controller
                     'email1' => $mailimp,
                     'username' => $request->username,
                     'main_messages' => "",
+                    'bur' => "",
+                    'receiver' => "",
+                    'bu' => "",
                     'id' => $request->id_transaksi
                 ];
                 Mail::send('UM.user.sendtrx', $data, function ($mail) use ($data) {
@@ -934,6 +937,9 @@ class ManagementUserController extends Controller
                     'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
                     'username' => $request->username,
                     'main_messages' => "",
+                    'admin' => "",
+                    'bu' => "",
+                    'company' => "",
                     'id' => $request->id_transaksi
                 ];
                 Mail::send('UM.user.sendtrx2', $data22, function ($mail) use ($data22) {
@@ -952,6 +958,9 @@ class ManagementUserController extends Controller
                     'email1' => env('MAIL_USERNAME','no-reply@inaexport.id'),
                     'username' => $request->username,
                     'main_messages' => "",
+					'admin' => "",
+                    'bu' => "",
+                    'company' => "",
                     'id' => $request->id_transaksi
                 ];
                 Mail::send('UM.user.sendtrx2', $data22, function ($mail) use ($data22) {
@@ -969,6 +978,9 @@ class ManagementUserController extends Controller
                 'email1' => $request->email,
                 'username' => $request->username,
                 'main_messages' => "",
+                'receiver' => "",
+                'bu' => "",
+                'sender' => "",
                 'id' => $request->id_transaksi
             ];
             Mail::send('UM.user.sendtrx3', $data33, function ($mail) use ($data33) {
