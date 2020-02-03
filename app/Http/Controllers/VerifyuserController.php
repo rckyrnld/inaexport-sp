@@ -933,10 +933,9 @@ class VerifyuserController extends Controller
                     'untuk_nama' => $request->company,
                     'untuk_id' => $id_user,
                     'keterangan' => 'Your account is verified by "'.auth::user()->name.'"',
-                    'url_terkait' => 'profil2/3',
+                    'url_terkait' => 'profile',
                     'status_baca' => 0,
                     'waktu' => $date,
-                    'id_terkait' => $id_user,
                     'to_role' => $id_role,
                 ]);
             }

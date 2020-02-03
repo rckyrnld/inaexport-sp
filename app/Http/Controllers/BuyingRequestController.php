@@ -674,8 +674,8 @@ class BuyingRequestController extends Controller
         if ($data3 == 3) {
             //pembuat buying requestnya importer
             $ket = getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id). " Deal Buying Request";
-            $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-            ('3','".getCompanyName(Auth::guard('eksmp')->user()->id)."','" . Auth::guard('eksmp')->user()->id . "','".getCompanyNameImportir($data1)."','" . $data1 . "','" . $ket . "','br_importir_chat','" . $it . "','" . $date . "','0')
+            $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,waktu,status_baca) values	
+            ('3','".getCompanyName(Auth::guard('eksmp')->user()->id)."','" . Auth::guard('eksmp')->user()->id . "','".getCompanyNameImportir($data1)."','" . $data1 . "','" . $ket . "','front_end/history','" . $date . "','0')
             ");
             $data = [
                 'email' => "",
