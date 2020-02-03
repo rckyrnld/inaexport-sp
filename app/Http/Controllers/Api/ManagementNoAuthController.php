@@ -384,9 +384,8 @@ class ManagementNoAuthController extends Controller
 
     public function getResearchchor()
     {
-        $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
+        $research = DB::table('csc_broadcast_research_corner as a')->rightJoin('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
             ->orderby('a.created_at', 'desc')
-            ->distinct('a.id_research_corner', 'a.created_at')
             ->select('b.*', 'a.id_research_corner', 'a.created_at')
 //            ->limit(10)
             ->get();
