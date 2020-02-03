@@ -917,7 +917,13 @@ class InquiryController extends Controller
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
             $id_profil = $user[$i]->sender;
-            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) == null ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
+			$y = DB::table('itdp_profil_eks')->where('id', $id_profil)->get();
+			if(count($y) == 0){
+				$jsonResult[$i]["company_name"] = "";
+			}else{
+				$jsonResult[$i]["company_name"] = DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+			}
+            // $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
             $jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
