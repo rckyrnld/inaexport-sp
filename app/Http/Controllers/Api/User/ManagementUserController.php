@@ -981,6 +981,7 @@ class ManagementUserController extends Controller
                 'receiver' => "",
                 'bu' => "",
                 'sender' => "",
+                'url' => "",
                 'id' => $request->id_transaksi
             ];
             Mail::send('UM.user.sendtrx3', $data33, function ($mail) use ($data33) {
