@@ -275,7 +275,7 @@
                                             <?php
                                                 $hscodenya = NULL;
                                                 if($hsco != NULL){
-                                                    $hscodenya = $hsco->desc_eng;
+                                                    $hscodenya = $hsco->fullhs." - ".$hsco->desc_eng;
                                                 }
                                             ?>
                                             <textarea name="hscode" id="hscode" class="form-control" readonly>{{$hscodenya}}</textarea>

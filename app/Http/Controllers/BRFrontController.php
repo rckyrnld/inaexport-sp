@@ -281,7 +281,7 @@ class BRFrontController extends Controller
 //				dd($data);
                 Mail::send('UM.user.emailbr2', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
-                    $mail->subject('Buying Was Created');
+                    $mail->subject('Buying Request Was Created');
                 });
 				}
 				//END EMAIL
@@ -399,7 +399,7 @@ class BRFrontController extends Controller
                 $id_profil = $cr2->id_profil;
 			}
 			
-			$ket = "Importer ".getExBadanImportir(Auth::guard('eksmp')->user()->id).getCompanyNameImportir(Auth::guard('eksmp')->user()->id)." Payment Information On Buying Request";
+			$ket = "Importer ".getExBadanImportir(Auth::guard('eksmp')->user()->id).getCompanyNameImportir(Auth::guard('eksmp')->user()->id)." Upload Payment Information On Buying Request";
 			$it = $request->idb;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	

@@ -329,7 +329,30 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
 				
 			<div class="form-row">
 		<div class="col-sm-7"><input readonly style="color:black;" type="number" value="<?php echo $ryu->tp; ?>" name="tp" id="tp" class="form-control" ></div>
-		<div class="col-sm-5"> <select disabled style="color:black;" class="form-control" name="ntp" id="ntp"><option <?php if($ryu->ntp == "IDR"){ echo "selected"; }?> value="IDR">IDR</option><option <?php if($ryu->ntp == "THB"){ echo "selected"; }?> value="THB">THB</option><option <?php if($ryu->ntp == "USD"){ echo "selected"; }?> value="USD">USD</option></select></div>
+		<div class="col-sm-5">
+            <select disabled style="color:black;" class="form-control" name="ntp" id="ntp">
+                <option  <?php if($ryu->ntp == "SAR"){ echo "selected"; } ?> value="SAR">Arab Saudi Riyal(SAR)</option>
+                <option  <?php if($ryu->ntp == "BND"){ echo "selected"; } ?> value="BND">Brunei Dollar(BND)</option>
+                <option  <?php if($ryu->ntp == "CNY"){ echo "selected"; } ?> value="CNY">China Yuan(CNY)</option>
+                <option  <?php if($ryu->ntp == "IQD"){ echo "selected"; } ?> value="IQD">Dinar Irak(IQD)</option>
+                <option  <?php if($ryu->ntp == "AED"){ echo "selected"; } ?> value="AED">Dirham Uni Emirat Arab(AED)</option>
+                <option  <?php if($ryu->ntp == "USD"){ echo "selected"; } ?> value="USD">Dolar Amerika Serikat(USD)</option>
+                <option  <?php if($ryu->ntp == "AUD"){ echo "selected"; } ?> value="AUD">Dolar Australia(AUD)</option>
+                <option  <?php if($ryu->ntp == "HKD"){ echo "selected"; } ?> value="HKD">Dolar Hong Kong(HKD)</option>
+                <option  <?php if($ryu->ntp == "SGD"){ echo "selected"; } ?> value="SGD">Dolar Singapura(SGD)</option>
+                <option  <?php if($ryu->ntp == "TWD"){ echo "selected"; } ?> value="TWD">Dolar Taiwan Baru(TWD)</option>
+                <option  <?php if($ryu->ntp == "EUR"){ echo "selected"; } ?> value="EUR">Euro(EUR)</option>
+                <option  <?php if($ryu->ntp == "PHP"){ echo "selected"; } ?> value="PHP">Peso Filipina(PHP)</option>
+                <option  <?php if($ryu->ntp == "GBP"){ echo "selected"; } ?> value="GBP">Pound Sterling(GBP)</option>
+                <option  <?php if($ryu->ntp == "MYR"){ echo "selected"; } ?> value="MYR">Ringgit Malaysia(MYR)</option>
+                <option  <?php if($ryu->ntp == "INR"){ echo "selected"; } ?> value="INR">Rupee India(INR)</option>
+                <option  <?php if($ryu->ntp == "IDR"){ echo "selected"; } ?> value="IDR">Rupiah Indonesia(IDR)</option>
+                <option  <?php if($ryu->ntp == "THB"){ echo "selected"; } ?> value="THB">Thai Baht(THB)</option>
+                <option  <?php if($ryu->ntp == "VND"){ echo "selected"; } ?> value="VND">Vietnam Dong(VND)</option>
+                <option  <?php if($ryu->ntp == "KRW"){ echo "selected"; } ?> value="KRW">Won Korea(KRW)</option>
+                <option  <?php if($ryu->ntp == "JPY"){ echo "selected"; } ?> value="JPY">Yen Jepang(JPY)</option>
+            </select>
+        </div>
 		</div>
 		</div>
 		

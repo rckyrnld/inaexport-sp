@@ -637,7 +637,7 @@ class EksProductController extends Controller
             if(count($catprod) > 0){
                 foreach ($catprod as $key => $value) {
                     $nama = "'".$value->nama_kategori_en."'";
-                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag2" onclick="getSub(2,'.$value->level_1.', '.$value->id.','.$nama.', event)" id="kat2_'.$value->id.'">'.$value->nama_kategori_en.'</a>';
+                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag2" onclick="getSub(2,'.$value->level_1.', '.$value->id.','.$nama.', event)" id="kat2_'.$value->id.'" data-value="'.$value->id.'">'.$value->nama_kategori_en.'</a>';
                 }
             }else{
                 $result .= 'Category Not Found';
@@ -648,12 +648,53 @@ class EksProductController extends Controller
             if(count($catprod) > 0){
                 foreach ($catprod as $key => $value) {
                     $nama = "'".$value->nama_kategori_en."'";
-                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag3" onclick="getSub(3,'.$value->level_1.', '.$value->id.','.$nama.', event)" id="kat3_'.$value->id.'">'.$value->nama_kategori_en.'</a>';
+                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag3" onclick="getSub(3,'.$value->level_1.', '.$value->id.','.$nama.', event)" id="kat3_'.$value->id.'" data-value="'.$value->id.'">'.$value->nama_kategori_en.'</a>';
                 }
             }else{
                 $result .= 'Category Not Found';
             }
         }
+        return $result;
+    }
+
+    public function searchsub(Request $request){
+        $level = $request->level;
+        if($level == 1){
+            $result = '';
+            $catprod = DB::table('csc_product')->where('level_1',0)->where('level_2',0)->where('nama_kategori_en',  'like', '%' . $request->text . '%')->orderBy('nama_kategori_en', 'ASC')->get();
+            if(count($catprod) > 0){
+                foreach ($catprod as $key => $value) {
+                    $nama = "'".$value->nama_kategori_en."'";
+                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag1" onclick="getSub(1,'.$value->id.','.$value->id.','.$nama.', event)" id="kat1_'.$value->id.'" data-value="'.$value->id.'">'.$value->nama_kategori_en.'</a>';
+                }
+            }else{
+                $result .= 'Category Not Found';
+            }
+        }
+        elseif($level == 2){
+            $result = '';
+            $catprod = DB::table('csc_product')->where('level_1', $request->parent)->where('level_2',0)->where('nama_kategori_en',  'like', '%' . $request->text . '%')->orderBy('nama_kategori_en', 'ASC')->get();
+            if(count($catprod) > 0){
+                foreach ($catprod as $key => $value) {
+                    $nama = "'".$value->nama_kategori_en."'";
+                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag2" onclick="getSub(2,'.$value->level_1.','.$value->id.','.$nama.', event)" id="kat2_'.$value->id.'" data-value="'.$value->id.'">'.$value->nama_kategori_en.'</a>';
+                }
+            }else{
+                $result .= 'Category Not Found';
+            }
+        }else{
+            $result = '';
+            $catprod = DB::table('csc_product')->where('level_1', $request->parent2)->where('level_2', $request->parent)->where('nama_kategori_en',  'like', '%' . $request->text . '%')->orderBy('nama_kategori_en', 'ASC')->get();
+            if(count($catprod) > 0){
+                foreach ($catprod as $key => $value) {
+                    $nama = "'".$value->nama_kategori_en."'";
+                    $result .= '<a href="#" class="list-group-item list-group-item-action listbag3" onclick="getSub(3,'.$value->level_1.','.$value->id.','.$nama.', event)" id="kat3_'.$value->id.'" data-value="'.$value->id.'">'.$value->nama_kategori_en.'</a>';
+                }
+            }else{
+                $result .= 'Category Not Found';
+            }
+        }
+
         return $result;
     }
 
