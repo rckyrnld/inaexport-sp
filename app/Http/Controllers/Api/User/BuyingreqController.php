@@ -1169,6 +1169,8 @@ class BuyingreqController extends Controller
                 'email1' => $data2,
                 'username' => $getusernameeks,
                 'main_messages' => "",
+                'receiver' => "",
+                'bu' => "",
                 'id' => $it
             ];
             Mail::send('UM.user.sendbrdeal', $data, function ($mail) use ($data) {
@@ -1334,6 +1336,8 @@ class BuyingreqController extends Controller
                 'email1' => $data2,
                 'username' => $id5,
                 'main_messages' => "",
+                'receiver' => "",
+                'bu' => "",
                 'id' => $it
             ];
             Mail::send('UM.user.sendbrchateks', $data, function ($mail) use ($data) {
