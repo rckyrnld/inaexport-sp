@@ -183,11 +183,26 @@
 									<td width="50%"><a href="" target="_BLANK"><img src="{{asset('front/assets/icon/ios.svg')}}" alt="" width="100%"></a></td>
 								</tr>
 								</table>
+								
+								<br>
+								
+								<?php 
+									$loc = app()->getLocale(); 
+									if($loc == "ch"){
+										$jo = "营业时间 : 08:00 - 16:00 WIB";
+									}else if($loc == "in"){
+										$jo = "Jam Operasional : 08:00 - 16:00 WIB";
+									}else{
+										$jo = "Operational hour : 08:00 - 16:00 WIB";
+									}
+								echo $jo;
+								?>
                                 
                                 
                                 <!--<img src="{{asset('front/assets/img/logo/asian-japan-centre.png')}}" alt="" width="100%"> -->
 								
                             </div>
+							
                         </div>
                     </div>
                 </div>
