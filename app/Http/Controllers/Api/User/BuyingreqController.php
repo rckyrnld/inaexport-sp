@@ -784,6 +784,8 @@ class BuyingreqController extends Controller
             'email1' => $data4,
             'username' => $getusernameimp,
             'main_messages' => "",
+            'bu' => "",
+            'receiver' => "",
             'id' => $id
         ];
         Mail::send('UM.user.sendbrchat', $data, function ($mail) use ($data) {
