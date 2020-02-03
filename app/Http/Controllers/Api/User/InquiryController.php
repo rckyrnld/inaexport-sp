@@ -219,7 +219,8 @@ class InquiryController extends Controller
                     'username' => $untuk->username,
                     'type' => "eksportir",
                     'company' => getCompanyName($dtproduct->id_itdp_company_user),
-                    'dari' => "Importer"
+                    'dari' => "Importer",
+                    'bu' => getExBadan($dtproduct->id_itdp_company_user),
                 ];
 
                 Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data) {
@@ -762,6 +763,8 @@ class InquiryController extends Controller
             'email' => $email,
             'username' => $username,
             'type' => 'importir',
+            'bu' => '',
+            'id' => $idm,
             'sender' => getCompanyNameImportir($sender),
             'receiver' => getCompanyName($receiver),
             'subjek' => $data->subyek_en
@@ -917,7 +920,13 @@ class InquiryController extends Controller
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
             $id_profil = $user[$i]->sender;
-            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
+			$y = DB::table('itdp_profil_eks')->where('id', $id_profil)->get();
+			if(count($y) == 0){
+				$jsonResult[$i]["company_name"] = "";
+			}else{
+				$jsonResult[$i]["company_name"] = DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+			}
+            // $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
             $jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
@@ -951,6 +960,8 @@ class InquiryController extends Controller
             'email' => $email,
             'username' => $username,
             'type' => $type,
+            'bu' => "",
+            'id' => $idm,
             'sender' => getCompanyName($sender),
             'receiver' => getCompanyNameImportir($receiver),
             'subjek' => $data->subyek_en
@@ -1053,6 +1064,7 @@ class InquiryController extends Controller
                 'type' => $inquiry->type,
                 'penerima' => getCompanyNameImportir($inquiry->id_pembuat),
                 'company' => getCompanyName($id_user),
+                'bu' => "",
                 'subjek' => $inquiry->subyek_en
             ];
 //            dd($data2);

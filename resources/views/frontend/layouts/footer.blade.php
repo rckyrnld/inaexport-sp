@@ -138,6 +138,24 @@
                                                 <td><img src="{{asset('front/assets/icon/icon_email.png')}}"></td>
                                                 <td class="footer-child" style="padding-left: 5px;">csm@kemendag.go.id</td>
                                             </tr>
+											<tr>
+                                                <td><i class="fa fa-clock-o"></i></td>
+                                                <td class="footer-child" style="padding-left: 5px;">
+												
+								
+								<?php 
+									$loc = app()->getLocale(); 
+									if($loc == "ch"){
+										$jo = "营业时间 : 08:00 - 16:00 WIB";
+									}else if($loc == "in"){
+										$jo = "Jam Operasional : 08:00 - 16:00 WIB";
+									}else{
+										$jo = "Operational hour : 08:00 - 16:00 WIB";
+									}
+								echo $jo;
+								?>
+												</td>
+                                            </tr>
                                         </table>
                                     </li>
                                 </ul>
@@ -183,20 +201,9 @@
 									<td width="50%"><a href="" target="_BLANK"><img src="{{asset('front/assets/icon/ios.svg')}}" alt="" width="100%"></a></td>
 								</tr>
 								</table>
-								
 								<br>
+								<p>@lang("footer.cc") &copy; <?php echo date("Y"); ?> </p>
 								
-								<?php 
-									$loc = app()->getLocale(); 
-									if($loc == "ch"){
-										$jo = "营业时间 : 08:00 - 16:00 WIB";
-									}else if($loc == "in"){
-										$jo = "Jam Operasional : 08:00 - 16:00 WIB";
-									}else{
-										$jo = "Operational hour : 08:00 - 16:00 WIB";
-									}
-								echo $jo;
-								?>
                                 
                                 
                                 <!--<img src="{{asset('front/assets/img/logo/asian-japan-centre.png')}}" alt="" width="100%"> -->
@@ -211,7 +218,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="copyright_area">
-                            <p>@lang("footer.cc") &copy; <?php echo date("Y"); ?> </p>
+                           <!-- <p>@lang("footer.cc") &copy; <?php echo date("Y"); ?> </p> -->
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">

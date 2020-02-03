@@ -754,8 +754,91 @@ class ManagementController extends Controller
         }
     }
 
-    public function listProducyCompany(Request $request)
+    public function listProductCompany(Request $request)
     {
-        # code...
+        $listProductCompany = DB::table('csc_product_single')
+                        ->select('csc_product_single.id', 'image_1', 'prodname_en', 'price_usd', 'csc_product_single.status')
+                        ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                        ->where('itdp_company_users.id_profil', $request->id)
+                        ->limit(10)
+                        ->offset($request->offset)
+                        ->get();
+
+        $i = 0;
+        foreach ($listProductCompany as $dataPro) {
+            if (isset($dataPro->image_1)) {
+                $listProductCompany[$i]->image_1 = url('uploads/Eksportir_Product/Image/' . $dataPro->id . '/' . $dataPro->image_1);
+            }
+
+            if($dataPro->status == 1){
+                $listProductCompany[$i]->label_status = "Publish - Not Verified";
+            }else if($dataPro->status == 2){
+                $listProductCompany[$i]->label_status = "Publish - Verified";
+            }else if($dataPro->status == 3){
+                $listProductCompany[$i]->label_status = "Publish - Verification Rejected";
+            }else if($dataPro->status == 9){
+                $listProductCompany[$i]->label_status = "Unpublish - Verified";
+            }else{
+                $listProductCompany[$i]->label_status = "Hide";
+            }
+            $i++;
+        }
+
+        if ($listProductCompany) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $listProductCompany;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+    }
+
+    public function detailCompany(Request $request)
+    {
+        $detailCompany = DB::table('itdp_company_users')
+                        ->select('itdp_company_users.id', 'foto_profil', 'company', 'province_in')
+                        ->leftJoin('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
+                        ->leftJoin('mst_province', 'mst_province.id', '=', 'itdp_profil_eks.id_mst_province')
+                        ->where('itdp_company_users.id_profil', $request->id)
+                        ->first();
+        if (isset($detailCompany->foto_profil)) {
+            $detailCompany->foto_profil = url('uploads/Profile/Eksportir/' . $detailCompany->id . '/' . $detailCompany->foto_profil);
+        }
+
+        if ($detailCompany) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $detailCompany;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
     }
 }
