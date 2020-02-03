@@ -219,7 +219,8 @@ class InquiryController extends Controller
                     'username' => $untuk->username,
                     'type' => "eksportir",
                     'company' => getCompanyName($dtproduct->id_itdp_company_user),
-                    'dari' => "Importer"
+                    'dari' => "Importer",
+                    'bu' => getExBadan($dtproduct->id_itdp_company_user),
                 ];
 
                 Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data) {
