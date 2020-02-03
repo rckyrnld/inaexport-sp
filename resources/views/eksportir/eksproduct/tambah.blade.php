@@ -219,15 +219,15 @@
                                     </div><br>
                                     <div class="row">
                                         <label for="code" class="col-md-2"><b>HS Code</b></label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-9">
                                             <select class="form-control select2" name="hscode" id="hscode" style="width: 100%;">
                                                <option value=""></option>
                                             </select>
                                         </div>
-                                        <div class="col-md-3">
-                                        </div>
-                                        <div class="col-md-3">
-                                        </div>
+{{--                                        <div class="col-md-3">--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-md-3">--}}
+{{--                                        </div>--}}
                                     </div><br>
                                     <hr>
                                     <div class="row">

@@ -780,23 +780,43 @@ class FrontController extends Controller
         return view('frontend.product.detail_products', compact('data', 'product', 'imgarr', 'smtarr', 'nmtarr', 'rates'));
     }
 
+//    public function research_corner(){
+//        // Data Broadcast FrontEnd
+//        $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
+//            ->orderby('a.created_at', 'desc')
+//            ->distinct('a.id_research_corner', 'a.created_at')
+//            ->select('b.*', 'a.id_research_corner', 'a.created_at', 'b.cover')
+//            ->paginate(9, ['b.*']);
+//            // ->get();
+//
+//        $json = json_decode($research->toJson(), true);
+//        $page = $json["current_page"];
+//        if($page > 1){
+//         $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
+//            ->distinct('a.id_research_corner', 'a.created_at')
+//            ->select('b.*', 'a.id_research_corner', 'a.created_at', 'b.cover')
+//            ->orderby('a.created_at', 'desc')
+//            ->paginate(8, ['b.*']);
+//        }
+//        // $item_page = $json["data"];
+//
+//        return view('frontend.research-corner', compact('research', 'page'));
+//    }
+
     public function research_corner(){
         // Data Broadcast FrontEnd
-        $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
-            ->orderby('a.created_at', 'desc')
-            ->distinct('a.id_research_corner', 'a.created_at')
-            ->select('b.*', 'a.id_research_corner', 'a.created_at', 'b.cover')
-            ->paginate(9, ['b.*']);
-            // ->get();
+        $research = DB::table('csc_research_corner')
+            ->orderby('id', 'desc')
+            ->select('*','cover')
+            ->paginate(9, ['*']);
 
         $json = json_decode($research->toJson(), true);
         $page = $json["current_page"];
         if($page > 1){
-         $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
-            ->distinct('a.id_research_corner', 'a.created_at')
-            ->select('b.*', 'a.id_research_corner', 'a.created_at', 'b.cover')
-            ->orderby('a.created_at', 'desc')
-            ->paginate(8, ['b.*']);
+         $research = DB::table('csc_research_corner')
+            ->select('*','cover')
+            ->orderby('id', 'desc')
+            ->paginate(8, ['*']);
         }
         // $item_page = $json["data"];
 

@@ -39,6 +39,9 @@
 									<th>
                                         <center>Status</center>
                                     </th>
+                                    <th>
+                                        <center>Created At</center>
+                                    </th>
 									<th width="18%">
                                         <center>Action</center>
                                     </th>
@@ -68,8 +71,8 @@
 									<td><center><?php echo $ruu->type_tracking; ?></center></td>
 									<td><center><?php echo $ruu->no_tracking; ?></center></td>
 									<td><center><?php if($ruu->status_transaksi == 1){ echo "<font color='green'>Already Sent</font>"; }else{ echo "<font color='red'>On Process</font>"; } ?></center></td>
-									
-									<td><center>
+                                    <td><center><?php if($ruu->status_transaksi == 1){ echo "<font >".$ruu->created_at."</font>"; }else{ echo " "; } ?></center></td>
+                                    <td><center>
 									<?php if($ruu->status_transaksi == 1){ ?>
 									<a href="{{ url('input_transaksi/'.$ruu->id_transaksi) }}" class="btn btn-info" title="View"><font color="white"><i class="fa fa-eye"></i></font></a>
 									

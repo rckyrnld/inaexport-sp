@@ -46,7 +46,8 @@ class EksProductController extends Controller
             $user = DB::table('csc_product_single')
             ->where('id_itdp_company_user', '=', $id_user)
             ->where('status', '!=', 9)
-            ->orderBy('product_description_en', 'ASC')
+//            ->orderBy('product_description_en', 'ASC')
+            ->orderBy('created_at', 'DESC')
             ->get();
 
             return \Yajra\DataTables\DataTables::of($user)
