@@ -278,6 +278,7 @@ class NewsletterController extends Controller
       foreach ($user as $key => $value) {
         $data['email'] = $value->email;
         $data['email_unsub'] = Crypt::encryptString($value->id);
+        // return view('newsletter.mail', $data);
         Mail::send('newsletter.mail', $data, function ($mail) use ($data) {
             $mail->subject($data['subject']);
             $mail->to($data['email']);
