@@ -55,6 +55,11 @@ class NewsletterController extends Controller
             }
             return $p.'</div></center>';
           })
+          ->addColumn('created_at', function ($data){
+              $p = '';
+              if($data->created_at != null ){$p = $data->created_at;}
+              return $p;
+          })
           ->addColumn('status', function ($data) {
             $p = '';
             if($data->status == 1){$p = '<center><span class="btn btn-sm btn-success" style="cursor:default;"><i class="fa fa-check"></i></span></center> ';}

@@ -62,6 +62,7 @@
                                               <th width="8%">No</th>
                                               <th width="20%">About</th>
                                               <th>Messages</th>
+                                              <th>Created At</th>
                                               <th width="8%">Status</th>
                                               <th width="10%">Action</th>
                                           </tr>
@@ -150,6 +151,7 @@
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'about', name: 'about'},
                 {data: 'messages', name: 'messages'},
+                {data: 'created_at', name: 'created_at'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]

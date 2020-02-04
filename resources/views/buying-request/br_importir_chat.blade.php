@@ -263,7 +263,7 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
 			<input readonly type="text" style="color:black;" value="<?php echo $ryu->subyek; ?>" name="cmp" id="cmp" class="form-control" >
 		</div>
 		<div class="form-group col-sm-4">
-			<select disabled style="color:black;" class="form-control" name="valid" id="valid">
+			<select disabled style="color:black;font-size: 12px;" class="form-control" name="valid" id="valid">
 			<option <?php if($ryu->valid == "1"){ echo "selected"; }?> value="7">Valid within 1 day</option>
 			<option <?php if($ryu->valid == "3"){ echo "selected"; }?> value="7">Valid within 3 day</option>
 			<option <?php if($ryu->valid == "5"){ echo "selected"; }?> value="7">Valid within 5 day</option>
@@ -320,7 +320,7 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
 		<div class="form-group col-sm-6">
 			<div class="form-row">
 		<div class="col-sm-7"><input readonly style="color:black;" type="number" value="<?php echo $ryu->eo; ?>" name="eo" id="eo" class="form-control"> </div>
-		<div class="col-sm-5"> <select disabled style="color:black;" class="form-control" name="neo" id="neo"><option <?php if($ryu->neo == "Pieces"){ echo "selected"; }?> value="Pieces">Pieces</option></select></div>
+		<div class="col-sm-5"> <select disabled style="color:black;font-size: 12px" class="form-control" name="neo" id="neo"><option <?php if($ryu->neo == "Pieces"){ echo "selected"; }?> value="Pieces">Pieces</option></select></div>
 		</div>
 			
 			
@@ -330,7 +330,7 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
 			<div class="form-row">
 		<div class="col-sm-7"><input readonly style="color:black;" type="number" value="<?php echo $ryu->tp; ?>" name="tp" id="tp" class="form-control" ></div>
 		<div class="col-sm-5">
-            <select disabled style="color:black;" class="form-control" name="ntp" id="ntp">
+            <select disabled style="color:black;font-size: 12px" class="form-control" name="ntp" id="ntp">
                 <option  <?php if($ryu->ntp == "SAR"){ echo "selected"; } ?> value="SAR">Arab Saudi Riyal(SAR)</option>
                 <option  <?php if($ryu->ntp == "BND"){ echo "selected"; } ?> value="BND">Brunei Dollar(BND)</option>
                 <option  <?php if($ryu->ntp == "CNY"){ echo "selected"; } ?> value="CNY">China Yuan(CNY)</option>

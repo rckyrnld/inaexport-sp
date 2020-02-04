@@ -296,7 +296,13 @@ class TicketingSupportFrontController extends Controller
             $mail->to($data2['email1'], $data2['username']);
             $mail->subject('User Reply Your Chat On Ticketing Support');
 			});
-		$ket = "User Reply Chat on Ticketing Request";
+			if(Auth::guard('eksmp')->user()->id_role == 3){
+			    $ket = getExBadanImportir($data4).getCompanyNameImportir($data4)." Reply Chat on Ticketing Request";
+            }
+			elseif (Auth::guard('eksmp')->user()->id_role == 2){
+                $ket = getExBadan($data4).getCompanyName($data4)." Reply Chat on Ticketing Request";
+            }
+
 				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 				('1','".$data1."','".$data4."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$req->id."','".$date."','0')
 				");
@@ -362,7 +368,12 @@ class TicketingSupportFrontController extends Controller
             $mail->to($data2['email1'], $data2['username']);
             $mail->subject('User Reply Your Chat On Ticketing Support');
             });
-        $ket = "User Reply Chat on Ticketing Request";
+            if(Auth::guard('eksmp')->user()->id_role == 3){
+                $ket = getExBadanImportir($data4).getCompanyNameImportir($data4)." Reply Chat on Ticketing Request";
+            }
+            elseif (Auth::guard('eksmp')->user()->id_role == 2){
+                $ket = getExBadan($data4).getCompanyName($data4)." Reply Chat on Ticketing Request";
+            }
                 $insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
                 ('1','".$data1."','".$data4."','Super Admin','1','".$ket."','admin/ticketing/chatview','".$req->id."','".Date('Y-m-d H:m:s')."','0')
                 ");

@@ -57,7 +57,10 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
     Route::post('listCompany', 'Api\Admin\ManagementController@listCompany');
 
     // PRODUCT BY EKS
-    Route::post('listProducyCompany', 'Api\Admin\ManagementController@listProducyCompany');
+    Route::post('listProductCompany', 'Api\Admin\ManagementController@listProductCompany');
+
+    // DETAIL EKS
+    Route::post('detailCompany', 'Api\Admin\ManagementController@detailCompany');
 });
 
 Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function () {
