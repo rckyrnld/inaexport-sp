@@ -24,9 +24,12 @@ class InquiryController extends Controller
 	
 	public function list_inquiry_admin(Request $request)
     {
+		$offset = $request->offset;
 		$user = DB::table('csc_inquiry_br')
 			->where('csc_inquiry_br.type', 'admin')
             ->orderBy('csc_inquiry_br.created_at', 'DESC')
+			->limit(10)
+            ->offset($offset)
             ->get();
 //        dd($user);
         $jsonResult = array();
