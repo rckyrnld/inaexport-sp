@@ -85,6 +85,71 @@ class InquiryController extends Controller
 		
 	}
 	
+	public function verif_inquiry_admin(Request $request)
+    {
+		$id = $request->id;
+		$data = DB::table('csc_inquiry_broadcast')->where('id', $id)->first();
+                $datenow = date('Y-m-d H:i:s');
+                $inquiry = DB::table('csc_inquiry_br')->where('id', $data->id_inquiry)->first();
+
+                if($inquiry){
+                    if($inquiry->duration != "None"){
+                        $durasi = 0;
+                        $jn = explode(' ', $inquiry->duration);
+                        if($jn[1] == "week" || $jn[1] == "weeks"){
+                            $durasi = (int)$jn[0] * 7;
+                        }else if($jn[1] == "month" || $jn[1] == "months"){
+                            $durasi = (int)$jn[0] * 30;
+                        }
+
+                        $date = strtotime("+".$durasi." days", strtotime($datenow));
+                        $duedate = date('Y-m-d H:i:s', $date);
+
+                        $inquirynya = DB::table('csc_inquiry_br')->where('id', $data->id_inquiry)->update([
+                            'status' => 2,
+                        ]);
+
+                        $inquirybroadcast = DB::table('csc_inquiry_broadcast')->where('id', $id)->update([
+                            'status' => 2,
+                            'date' => $datenow,
+                            'due_date' => $duedate,
+                        ]);
+                    }else{
+                        $inquirynya = DB::table('csc_inquiry_br')->where('id', $data->id_inquiry)->update([
+                            'status' => 2,
+                        ]);
+
+                        $inquirybroadcast = DB::table('csc_inquiry_broadcast')->where('id', $id)->update([
+                            'status' => 2,
+                            'date' => $datenow,
+                        ]);
+                    }
+				if($inquirybroadcast){
+                    $meta = [
+                    'code' => 200,
+                    'message' => 'Success',
+                    'status' => 'OK'
+					];
+					$data = '';
+					$res['meta'] = $meta;
+					return response($res);
+                }
+                else{
+                    $meta = [
+						'code' => 100,
+						'message' => 'Unauthorized',
+						'status' => 'Failed'
+					];
+					$data = "";
+					$res['meta'] = $meta;
+					return $res;
+                }
+					
+                }
+
+                
+	}
+	
 	public function list_inquiry_broadcast(Request $request)
     {
 		$id_inquiry = $request->id_inquiry;

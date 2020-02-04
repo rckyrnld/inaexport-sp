@@ -52,6 +52,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	Route::post('insert_inquiry_admin', 'Api\Admin\InquiryController@store');
 	Route::post('list_inquiry_broadcast', 'Api\Admin\InquiryController@list_inquiry_broadcast');
 	Route::post('list_inquiry_hc', 'Api\Admin\InquiryController@list_inquiry_hc');
+	Route::post('verif_inquiry_admin', 'Api\Admin\InquiryController@verif_inquiry_admin');
 
     // LIST COMPANY
     Route::post('listCompany', 'Api\Admin\ManagementController@listCompany');
