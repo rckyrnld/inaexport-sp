@@ -12,6 +12,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Mail;
 
 
 class ManagementController extends Controller
@@ -841,4 +842,116 @@ class ManagementController extends Controller
             return $res;
         }
     }
+	
+	public function activate_product(Request $request)
+    {
+		date_default_timezone_set('Asia/Jakarta');
+            $id_user = $request->id_user;
+            $id_product = $request->id_product;
+			$verifikasi = $request->verifikasi;
+			$keterangan = $request->keterangan;
+			$id_csc_product = $request->id_csc_product;
+            $id_csc_product_level1 = $request->id_csc_product_level1;
+            $id_csc_product_level2 = $request->id_csc_product_level2;
+            $datenow = date("Y-m-d H:i:s");
+
+            $data = DB::table('csc_product_single')->where('id', $id_product)->first();
+			$carieks = DB::select("select email from itdp_company_users where id='".$data->id_itdp_company_user."'");
+			foreach($carieks as $teks){
+				$maileks = $teks->email;
+			}
+            
+            // var_dump($verifikasi);
+            if($verifikasi == '1'){
+                $status = 2;
+                $ket = "This product has been added on the front page";
+                $notifnya = "has been accepted";
+				$ket = "Your product ".$data->prodname_en." got verified";
+				$ket2 = $data->prodname_en." has been accepted by Super Admin";
+
+				$insertnotif = DB::table('notif')->insert([
+                            'dari_nama' => 'Super Admin',
+                            'dari_id' => 1,
+                            'untuk_nama' => 'Eksportir',
+                            'untuk_id' => $data->id_itdp_company_user,
+                            'keterangan' => $ket2,
+                            'url_terkait' => 'eksportir/product_view',
+                            'id_terkait' => $id_product,
+                            'status_baca' => 0,
+                            'waktu' => $datenow,
+                            'to_role' => 2,
+                        ]);
+    
+	
+			$data33 = [
+            'email' => "",
+            'email1' => $maileks,
+            'username' => $data->prodname_en,
+            'main_messages' => "",
+            'id' => $id_product
+			];
+			
+			Mail::send('UM.user.sendproduct2', $data33, function ($mail) use ($data33) {
+                $mail->to($data33['email1'], $data33['username']);
+                $mail->subject("Your product got verified");
+            });
+			
+            }else{
+                
+                // var_dump($keterangan);
+                $status = 3;
+                $ket = "The product that you added cannot be displayed on the front page because ".$keterangan;
+                $notifnya = "has been declined";
+            }
+
+            // var_dump($status);
+            // var_dump($ket);
+            // die();
+            $update = DB::table('csc_product_single')->where('id', $id_product)->update([
+                'id_csc_product' => $id_csc_product,
+                'id_csc_product_level1' => $id_csc_product_level1,
+                'id_csc_product_level2' => $id_csc_product_level2,
+                'status' => $status,
+                'keterangan' => $ket,
+                'updated_at' => $datenow,
+            ]);
+
+            if($update){
+                $pengirim = DB::table('itdp_admin_users')->where('id', $id_user)->first();
+                $notif = DB::table('notif')->insert([
+                    'dari_nama' => $pengirim->name,
+                    'dari_id' => $id_user,
+                    'untuk_nama' => getCompanyName($data->id_itdp_company_user),
+                    'untuk_id' => $data->id_itdp_company_user,
+                    'keterangan' => 'Product '.$data->prodname_en.' '.$notifnya.' by Admin',
+                    'url_terkait' => 'eksportir/product_view',
+                    'status_baca' => 0,
+                    'waktu' => $datenow,
+                    'id_terkait' => $id_product,
+                    'to_role' => 2,
+                ]);
+            }
+			
+			if($update){
+				$meta = [
+                    'code' => 200,
+                    'message' => 'Success',
+                    'status' => 'OK'
+					];
+					$data = '';
+					$res['meta'] = $meta;
+					return response($res);
+			}else{
+				$meta = [
+						'code' => 100,
+						'message' => 'Unauthorized',
+						'status' => 'Failed'
+					];
+					$data = "";
+					$res['meta'] = $meta;
+					return $res;
+			}
+        
+		
+	}
 }

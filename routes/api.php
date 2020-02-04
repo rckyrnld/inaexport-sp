@@ -53,12 +53,13 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	Route::post('list_inquiry_broadcast', 'Api\Admin\InquiryController@list_inquiry_broadcast');
 	Route::post('list_inquiry_hc', 'Api\Admin\InquiryController@list_inquiry_hc');
 	Route::post('verif_inquiry_admin', 'Api\Admin\InquiryController@verif_inquiry_admin');
-
+	
     // LIST COMPANY
     Route::post('listCompany', 'Api\Admin\ManagementController@listCompany');
 
     // PRODUCT BY EKS
     Route::post('listProductCompany', 'Api\Admin\ManagementController@listProductCompany');
+    Route::post('activate_product', 'Api\Admin\ManagementController@activate_product');
 
     // DETAIL EKS
     Route::post('detailCompany', 'Api\Admin\ManagementController@detailCompany');
