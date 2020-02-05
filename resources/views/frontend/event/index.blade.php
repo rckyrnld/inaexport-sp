@@ -277,6 +277,7 @@
   </div>
 </div>
 <div style="margin-top: 0px; margin-bottom: 5%; background-color: white;"></div>
+</div>
 @include('frontend.layouts.footer')
 <script type="text/javascript">
   $(document).ready(function() {
