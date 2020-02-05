@@ -631,4 +631,35 @@ class ManagementNoAuthController extends Controller
         
         return response($research);
     }
+
+    public function getResearchc(Request $request)
+    {
+        $research = DB::table('csc_broadcast_research_corner as a')->rightJoin('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
+            ->orderby('a.created_at', 'desc')
+            ->select('b.*', 'a.id_research_corner', 'a.created_at')
+            ->limit(10)
+            ->offset($request->offset)
+            ->get();
+        if (count($research) > 0) {
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
 }

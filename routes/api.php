@@ -201,6 +201,7 @@ Route::namespace('Api')->group(function () {
 
     //RC
     Route::get('getResearchc', 'ManagementNoAuthController@getResearchchor');
+    Route::post('getResearchc', 'ManagementNoAuthController@getResearchc');
 
     //tracking
     Route::get('getDataTracking', 'ManagementNoAuthController@getDataTracking');
