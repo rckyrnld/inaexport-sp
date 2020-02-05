@@ -75,12 +75,16 @@ class EksreportController extends Controller
 	public function searchproduct(Request $request)
     {
 		$id_profil = $request->id_profil;
+		$search = $request->search;
 		$offset = $request->offset;
             $data = DB::table('csc_product_single')
             ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
             ->where('itdp_company_users.status', 1)
             ->where('itdp_company_users.id_profil', $id_profil)
+			->where('csc_product_single.prodname_en', 'like', '%' . $search . '%')
+			->orwhere('csc_product_single.prodname_in', 'like', '%' . $search . '%')
+			->orwhere('csc_product_single.prodname_chn', 'like', '%' . $search . '%')
             ->orderBy('csc_product_single.prodname_en', 'ASC')
             ->get();
 		
