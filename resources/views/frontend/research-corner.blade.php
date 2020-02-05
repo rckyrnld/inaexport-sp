@@ -144,7 +144,11 @@
               <img class="rc" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
           </div>
           <div style="height: 25%; padding-top: 5px;">
-              <span style="font-family: arial; font-weight: 500; font-size: 18px;" title="{{$title}}"><strong style="padding-right: 10px;">{{$titleName}}</strong> <span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf;">{{getDataDownload($data->id)}}&nbsp;&nbsp;<i class="fa fa-download"></i></span></span><br>
+              <span style="font-family: arial; font-weight: 500; font-size: 18px;" title="{{$title}}">
+                  <strong style="padding-right: 10px;">{{$titleName}}</strong>
+{{--                  <span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf;">{{getDataDownload($data->id)}}&nbsp;&nbsp;<i class="fa fa-download"></i></span>--}}
+              </span>
+              <br>
               <span class="detail_rc" style="font-size: 14px;">
               <i class="fa fa-calendar-check-o"></i>&nbsp;&nbsp;{{$date}}
               <br>

@@ -1,3 +1,4 @@
+
 @include('header')
 <title>E-Reporting | Tambah User</title>
 <div class="padding">
@@ -153,25 +154,25 @@
                                             <input type="text" class="form-control" name="eventplace_chn" id="eventplace_chn" autocomplete="off" @if($page!=='add') value="{{EventPlaceZ($e_detail->id_event_place, 'chn')}}" @endif readonly>
                                         </div>
                                     </div><br>
-                                    <div class="row">
-                                        <label for="code" class="col-md-3"><b>Event Place Text</b></label>
-                                        <div class="col-md-3 paddignya">
-                                            <input type="text" class="form-control" name="ept_en" id="ept_en" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_place_text_en}}" @endif required>
-                                        </div>
-                                        <div class="col-md-3 paddignya">
-                                            <input type="text" class="form-control" name="ept_in" id="ept_in" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_place_text_in}}" @endif>
-                                        </div>
-                                        <div class="col-md-3 paddignya">
-                                            <input type="text" class="form-control" name="ept_chn" id="ept_chn" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_place_text_chn}}" @endif>
-                                        </div>
-                                    </div><br>
+{{--                                    <div class="row">--}}
+{{--                                        <label for="code" class="col-md-3"><b>Event Place Text</b></label>--}}
+{{--                                        <div class="col-md-3 paddignya">--}}
+{{--                                            <input type="text" class="form-control" name="ept_en" id="ept_en" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_place_text_en}}" @endif required>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-md-3 paddignya">--}}
+{{--                                            <input type="text" class="form-control" name="ept_in" id="ept_in" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_place_text_in}}" @endif>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-md-3 paddignya">--}}
+{{--                                            <input type="text" class="form-control" name="ept_chn" id="ept_chn" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_place_text_chn}}" @endif>--}}
+{{--                                        </div>--}}
+{{--                                    </div><br>--}}
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Image</b></label>
                                         <div class="col-md-2">
                                             <div id="ambil_ttd_1" style="width: 100%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
                                                 <button type="button" id="img_1" style="width: 100%; height: 120px;" class="img_upl">
                                                     @if($page=='add')
-                                                        <img src="{{url('/')}}/image/plus/plusin.png" id="image_1_ambil" style="height: 40px; width: 40px;"/>
+                                                        <img src="{{url('/')}}/image/plus/plusin.png" id="image_1_ambil"  style="height: 40px; width: 40px;"/>
                                                     @elseif($page!=='add')
                                                         @if($e_detail->image_1 == NULL)
                                                             <img src="{{url('/')}}/image/plus/plusin.png" id="image_1_ambil" style="height: 40px; width: 40px;"/>
@@ -180,7 +181,7 @@
                                                         @endif
                                                     @endif
                                                 </button>
-                                                <input type="file" accept="image/*" id="image_1" name="image_1" style="display: none;"/>
+                                                <input type="file" accept="image/*" id="image_1" name="image_1" class="upload1" style="display: none;"/>
                                                 <br>
                                                 <center>+ Main Photo</center>
                                             </div>
@@ -198,7 +199,7 @@
                                                         @endif
                                                     @endif
                                                 </button>
-                                                <input type="file" accept="image/*" id="image_2" name="image_2" style="display: none;" />
+                                                <input type="file" accept="image/*" id="image_2" name="image_2" class="upload1" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 2</center>
                                             </div>
@@ -216,7 +217,7 @@
                                                         @endif
                                                     @endif
                                                 </button>
-                                                <input type="file" accept="image/*" id="image_3" name="image_3" style="display: none;" />
+                                                <input type="file" accept="image/*" id="image_3" name="image_3" class="upload1" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 3</center>
                                             </div>
@@ -234,7 +235,7 @@
                                                         @endif
                                                     @endif
                                                 </button>
-                                                <input type="file" accept="image/*" id="image_4" name="image_4" style="display: none;" />
+                                                <input type="file" accept="image/*" id="image_4" name="image_4" class="upload1" style="display: none;" />
                                                 <br>
                                                 <center>+ Photo 4</center>
                                             </div>
@@ -243,7 +244,7 @@
                                     <div class="row">
                                         <label for="website" class="col-md-3"><b>Website</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="website" id="website" autocomplete="off" @if($page!=='add') value="{{$e_detail->website}}" @endif required>
+                                            <input type="text" class="form-control" name="website" id="website" autocomplete="off" @if($page!=='add') value="{{$e_detail->website}}" @endif>
                                         </div>
                                         <div class="col-md-3"></div>
                                         <div class="col-md-3"></div>
@@ -265,24 +266,29 @@
                                             <input type="text" class="form-control" name="jenis_chn" id="jenis_chn" autocomplete="off" @if($page!=='add') value="{{$e_detail->jenis_chn}}" @endif>
                                         </div>
                                     </div><br>
-                                    <div class="row">
-                                        <label for="code" class="col-md-3"><b>Event Comodity</b></label>
-                                        <div class="col-md-3">
-                                            @if($page != 'show')
-                                            <select class="form-control" id="com" required name="eventcomodity">
-                                               <option></option>
-                                            </select>
-                                            @else 
-                                                <input class="form-control" type="text" readonly value="{{getEventComodity($e_detail->event_comodity)}}">
-                                            @endif
-                                        </div>
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-3"></div>
-                                    </div><br>
+{{--                                    <div class="row">--}}
+{{--                                        <label for="code" class="col-md-3"><b>Event Comodity</b></label>--}}
+{{--                                        <div class="col-md-3">--}}
+{{--                                            @if($page != 'show')--}}
+{{--                                            <select class="form-control" id="com" required name="eventcomodity">--}}
+{{--                                               <option></option>--}}
+{{--                                            </select>--}}
+{{--                                            @else --}}
+{{--                                                <input class="form-control" type="text" readonly value="{{getEventComodity($e_detail->event_comodity)}}">--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-md-3"></div>--}}
+{{--                                        <div class="col-md-3"></div>--}}
+{{--                                    </div><br>--}}
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Scope</b></label>
                                         <div class="col-md-3 paddignya">
-                                            <input type="text" class="form-control" name="es_en" id="es_en" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_scope_en}}" @endif required>
+                                            <select class="form-control" name="es_en" id="es_en" required onchange="Scope(this)">
+                                                <option value="" style="display: none;">- Choose Event Scope -</option>
+                                                <option value="Indonesia" @if($page!=='add') @if($e_detail->event_scope_en == 'Indonesia') selected @endif @endif>Indonesia</option>
+                                                <option value="Foreign" @if($page!=='add') @if($e_detail->event_scope_en == 'Foreign') selected @endif @endif>Foreign</option>
+                                            </select>
+{{--                                            <input type="text" class="form-control" name="es_en" id="es_en" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_scope_en}}" @endif required>--}}
                                         </div>
                                         <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="es_in" id="es_in" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_scope_in}}" @endif>
@@ -295,7 +301,7 @@
                                         <label for="code" class="col-md-3"><b>Category Product</b></label>
                                         <div class="col-md-3">
                                             <select class="form-control" name="id_prod_cat[]" id="id_prod_cat" style="width:100%" multiple="multiple" required>
-                                                <option></option>
+{{--                                                <option></option>--}}
                                                 @if($page!='add') {{optionCategoryZ($e_detail->id)}} @else {{optionCategory()}} @endif
                                             </select>   
                                         </div>
@@ -331,15 +337,15 @@
                                         <div class="col-md-3"></div>
                                         <div class="col-md-3"></div>
                                     </div><br>
-                                    <div class="row">
-                                        <label for="code" class="col-md-3"><b>Registration Date</b></label>
-                                        <div class="col-md-3">
-                                            <input type="text" id="daterange" class="form-control">
-                                            <input type="hidden" name="registration_date" @if($page!=='add') value="{{$e_detail->reg_date}}" @endif>
-                                        </div>
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-3"></div>
-                                    </div><br>
+{{--                                    <div class="row">--}}
+{{--                                        <label for="code" class="col-md-3"><b>Registration Date</b></label>--}}
+{{--                                        <div class="col-md-3">--}}
+{{--                                            <input type="text" id="daterange" class="form-control">--}}
+{{--                                            <input type="hidden" name="registration_date" @if($page!=='add') value="{{$e_detail->reg_date}}" @endif>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-md-3"></div>--}}
+{{--                                        <div class="col-md-3"></div>--}}
+{{--                                    </div><br>--}}
                                 </div>
                             </div>
                         </div><br>
@@ -377,7 +383,7 @@
                                     <b>Phone</b>
                                   </div>
                                   <div class="col-md-6">
-                                    <input type="text" onkeypress="this.value=removeSpaces(this.value);" autocomplete="off" class="form-control" name="cp_phone" maxlength="15" @if($page != 'add') @if($cp) value="{{$cp->phone}}" @endif @endif required>
+                                    <input type="text" onkeypress="this.value=removeSpaces(this.value);" autocomplete="off" class="form-control" name="cp_phone" maxlength="15" @if($page != 'add') @if($cp) value="{{$cp->phone}}" @endif @endif >
                                   </div>
                                 </div><br>
                               </div>
@@ -539,6 +545,20 @@
             }
         }
 
+        function Scope(obj){
+            val = $(obj).val();
+            $('#es_in').val('');
+            $('#es_chn').val('');
+
+            if (val=='Indonesia') {
+                $('#es_in').val('Indonesia');
+                $('#es_chn').val('印度尼西亚');
+            }else if(val=='Foreign'){
+                $('#es_in').val('Luar Negeri');
+                $('#es_chn').val('国外');
+            }
+        }
+
         function add_eo(){
             var eo_en = $('#eo_en').val();
             var eo_in = $('#eo_in').val();
@@ -684,6 +704,18 @@
                 fr.readAsDataURL(files[0]);
             }
         }
+
+        $('.upload1').on('change', function(evt){
+            var size = this.files[0].size;
+            if(size > 5000000){
+            // if(size > 20000){
+                $(this).val("");
+                alert('image size must less than 5MB')
+            }
+            else{
+
+            }
+        })
 
         function removeSpaces(string) {
            return string.split(' ').join('');

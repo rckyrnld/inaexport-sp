@@ -76,11 +76,11 @@
                                   <td style="padding-left: 5px;padding-right: 10px;">:</td>
                                   <td>{{EventOrganizerName($detail->id_event_organizer, 'en')}}</td>
                               </tr>
-                              <tr>
-                                  <td>Comodity</td>
-                                  <td style="padding-left: 5px;padding-right: 10px;">:</td>
-                                  <td>{{EventComodityName($detail->event_comodity, 'en')}}</td>
-                              </tr>
+{{--                              <tr>--}}
+{{--                                  <td>Comodity</td>--}}
+{{--                                  <td style="padding-left: 5px;padding-right: 10px;">:</td>--}}
+{{--                                  <td>{{EventComodityName($detail->event_comodity, 'en')}}</td>--}}
+{{--                              </tr>--}}
                               <tr>
                                   <td>Scope</td>
                                   <td style="padding-left: 5px;padding-right: 10px;">:</td>
@@ -145,11 +145,11 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
+                    <tr class="hide1">
                       <td class="icon" align="center"><img src="{{url('/')}}/front/assets/img/cp/phone.png" height="100%"></td>
                       <td class="cp-data" colspan="2"><input type="text" class="data-cp" id="cp_phone"></td>
                     </tr>
-                    <tr>
+                    <tr class="hide1">
                       <td colspan="3">
                         <div style="height: 8px;">
                           <img src="{{url('/')}}/front/assets/img/cp/line.png" width="100%" height="100%" style="vertical-align: top;">
@@ -167,18 +167,18 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
-                      <td class="icon" align="center"><img src="{{url('/')}}/front/assets/img/cp/date.png" height="100%" height="100%"></td>
-                      <td style="font-size: 24px; color: #fff;">*</td>
-                      <td class="cp-data" style="padding-left: 0px !important;"><input type="text" style="font-size: 18px !important;" class="data-cp mod" id="reg_date"></td>
-                    </tr>
-                    <tr>
-                      <td colspan="3">
-                        <div style="height: 8px;">
-                          <img src="{{url('/')}}/front/assets/img/cp/line.png" width="100%" style="vertical-align: top;">
-                        </div>
-                      </td>
-                    </tr>
+{{--                    <tr>--}}
+{{--                      <td class="icon" align="center"><img src="{{url('/')}}/front/assets/img/cp/date.png" height="100%" height="100%"></td>--}}
+{{--                      <td style="font-size: 24px; color: #fff;">*</td>--}}
+{{--                      <td class="cp-data" style="padding-left: 0px !important;"><input type="text" style="font-size: 18px !important;" class="data-cp mod" id="reg_date"></td>--}}
+{{--                    </tr>--}}
+{{--                    <tr>--}}
+{{--                      <td colspan="3">--}}
+{{--                        <div style="height: 8px;">--}}
+{{--                          <img src="{{url('/')}}/front/assets/img/cp/line.png" width="100%" style="vertical-align: top;">--}}
+{{--                        </div>--}}
+{{--                      </td>--}}
+{{--                    </tr>--}}
                     <tr>
                        <td colspan="3" style="font-size: 12px; color: #fff; font-weight: 600; padding-left: 5px;">
                           <div align="left"><i>*) Registration Date</i></div>
@@ -213,8 +213,14 @@ function showDivs(n) {
     function __join(id){
       if(id != '-'){
           var pecah = id.split('|');
+          console.log(pecah[1]);
           $('#cp_name').val(pecah[0]);
-          $('#cp_phone').val(pecah[1]);
+          if(pecah[1] == ""){
+              $('.hide1').hide();
+          }else{
+              // $('.hide').show();
+              $('#cp_phone').val(pecah[1]);
+          }
           $('#cp_email').val(pecah[2]);
           $('#reg_date').val(pecah[3]);
       } else {

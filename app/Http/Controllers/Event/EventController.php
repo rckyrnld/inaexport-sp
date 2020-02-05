@@ -208,28 +208,43 @@ class EventController extends Controller
 	public function bcevent(Request $req){
         date_default_timezone_set('Asia/Jakarta');
         $eventnya = db::table('event_detail')->where('id', $req->idet)->first();
+        $kategoriprodcat = array();
 
 		$kategori = db::select("Select * from event_detail_kategori where id_event_detail = '".$req->idet."'");
 
+		//bikin array yang isinya id category dari event terserbut
+		for($i = 0; $i < count($kategori); $i++){
+            array_push($kategoriprodcat, $kategori[$i]->id_prod_cat);
+        }
+
         $array = array();
-
-        for ($i=0; $i < count($kategori) ; $i++) {
-            $var=$kategori[$i]->id_prod_cat;
-
+        //untuk liat all category dipilih gak
+        if(in_Array("0",$kategoriprodcat)){
             $perusahaan = DB::table('csc_product_single')->where('id_itdp_company_user', '!=', null)
-                ->where(function ($query) use ($var) {
-                    $query->where('id_csc_product', $var)
-                        ->orWhere('id_csc_product_level1', $var)
-                        ->orWhere('id_csc_product_level2', $var);
-                })
                 ->select('id_itdp_company_user')->distinct('id_itdp_company_user')->get();
             foreach ($perusahaan as $key) {
                 if (!in_array($key->id_itdp_company_user, $array)){
                     array_push($array, $key->id_itdp_company_user);
                 }
             }
-        }
+        }else{
+            for ($i=0; $i < count($kategori) ; $i++) {
+                $var=$kategori[$i]->id_prod_cat;
 
+                $perusahaan = DB::table('csc_product_single')->where('id_itdp_company_user', '!=', null)
+                    ->where(function ($query) use ($var) {
+                        $query->where('id_csc_product', $var)
+                            ->orWhere('id_csc_product_level1', $var)
+                            ->orWhere('id_csc_product_level2', $var);
+                    })
+                    ->select('id_itdp_company_user')->distinct('id_itdp_company_user')->get();
+                foreach ($perusahaan as $key) {
+                    if (!in_array($key->id_itdp_company_user, $array)){
+                        array_push($array, $key->id_itdp_company_user);
+                    }
+                }
+            }
+        }
         sort($array);
         for ($user=0; $user < count($array) ; $user++) {
 //            $pengirim = DB::table('itdp_admin_users')->where('id',$id_user)->first();

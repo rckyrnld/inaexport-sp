@@ -101,9 +101,13 @@
                  <label class="control-label col-md-3">HS Code</label>
                  <div class="col-md-7">
                   @if($page == 'view')
-                    <input type="text" class="form-control" readonly value="{{rc_hscodes($data->id_mst_hscodes)}}">
+                      @if($data->id_mst_hscodes)
+                             <input type="text" class="form-control" readonly value="{{rc_hscodes($data->id_mst_hscodes)}}">
+                      @else
+                             <input type="text" class="form-control" readonly value="">
+                      @endif
                   @else
-                     <select class="form-control" id="code" required name="code" {{$view}}></select>
+                     <select class="form-control" id="code" name="code" {{$view}}></select>
                   @endif
                  </div>
              </div>
@@ -229,16 +233,41 @@
     });
     @isset($data)
     var hscode = "{{$data->id_mst_hscodes}}";
-    if (hscode != null) {
+    if (hscode != "") {
         $.ajax({
             type: 'GET',
             url: "{{route('admin.research-corner.hscode')}}",
             data: { code: hscode }
         }).then(function (data) {
-            var option = new Option( data[0].fullhs+ " - " +data[0].desc_eng, data[0].id, true, true);
+            console.log(hscode);
+                var option = new Option( data[0].fullhs+ " - " +data[0].desc_eng, data[0].id, true, true);
+
             // var option = new Option(data[0].desc_eng, data[0].id, true, true);
 
             $('#code').append(option).trigger('change');
+        });
+    }
+    else{
+        $('#code').select2({
+            allowClear: true,
+            placeholder: 'Select Code',
+            ajax: {
+                url: "{{route('admin.research-corner.hscode')}}",
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.fullhs + "  -  " + item.desc_eng,
+                                // text: item.desc_eng ,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
         });
     }
     @endisset
