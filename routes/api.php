@@ -46,12 +46,20 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	Route::post('list_br_join', 'Api\Admin\ManagementController@list_br_join');
 	Route::post('list_br_chat', 'Api\Admin\ManagementController@list_br_chat');
 	Route::post('br_admin_save', 'Api\Admin\ManagementController@br_admin_save');
-
+	
+	//Inquiry 
+	Route::post('list_inquiry_admin', 'Api\Admin\InquiryController@list_inquiry_admin');
+	Route::post('insert_inquiry_admin', 'Api\Admin\InquiryController@store');
+	Route::post('list_inquiry_broadcast', 'Api\Admin\InquiryController@list_inquiry_broadcast');
+	Route::post('list_inquiry_hc', 'Api\Admin\InquiryController@list_inquiry_hc');
+	Route::post('verif_inquiry_admin', 'Api\Admin\InquiryController@verif_inquiry_admin');
+	
     // LIST COMPANY
     Route::post('listCompany', 'Api\Admin\ManagementController@listCompany');
 
     // PRODUCT BY EKS
     Route::post('listProductCompany', 'Api\Admin\ManagementController@listProductCompany');
+    Route::post('activate_product', 'Api\Admin\ManagementController@activate_product');
 
     // DETAIL EKS
     Route::post('detailCompany', 'Api\Admin\ManagementController@detailCompany');
