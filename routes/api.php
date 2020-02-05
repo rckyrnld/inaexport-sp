@@ -65,6 +65,11 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
     Route::post('detailCompany', 'Api\Admin\ManagementController@detailCompany');
     Route::post('searchcompany', 'Api\Admin\EksreportController@searchcompany');
     Route::post('searchproduct', 'Api\Admin\EksreportController@searchproduct');
+	
+	//Management User
+	Route::post('list_eksportir', 'Api\Admin\ManagementController@list_eksportir');
+	Route::post('list_importir', 'Api\Admin\ManagementController@list_importir');
+	
 });
 
 Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function () {
