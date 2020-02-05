@@ -246,7 +246,7 @@
                 var tes = $('#duration').val('');
                 console.log(tes);
             }else{
-                var tes =  Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate()) ) /(1000 * 60 * 60 * 24));
+                var tes =  Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate()) ) /(1000 * 60 * 60 * 24)) +1;
                 var div = document.getElementById('dur1');
                 var duration = document.getElementById('duration');
                 duration.parentNode.removeChild(duration);
@@ -275,7 +275,7 @@
             alert('End Date Has to be after Start Date');
             var tes = $('#duration').val('');
         }else{
-            var tes =  Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate()) ) /(1000 * 60 * 60 * 24));
+            var tes =  Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate()) ) /(1000 * 60 * 60 * 24)) + 1;
             var div = document.getElementById('dur1');
             var duration = document.getElementById('duration');
             duration.parentNode.removeChild(duration);
