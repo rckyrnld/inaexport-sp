@@ -63,6 +63,8 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 
     // DETAIL EKS
     Route::post('detailCompany', 'Api\Admin\ManagementController@detailCompany');
+    Route::post('searchcompany', 'Api\Admin\EksreportController@searchcompany');
+    Route::post('searchproduct', 'Api\Admin\EksreportController@searchproduct');
 });
 
 Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function () {
@@ -201,6 +203,7 @@ Route::namespace('Api')->group(function () {
 
     //RC
     Route::get('getResearchc', 'ManagementNoAuthController@getResearchchor');
+    Route::post('getResearchc', 'ManagementNoAuthController@getResearchc');
 
     //tracking
     Route::get('getDataTracking', 'ManagementNoAuthController@getDataTracking');
