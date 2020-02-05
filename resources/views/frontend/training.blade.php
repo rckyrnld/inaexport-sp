@@ -225,11 +225,11 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
+                    <tr class="hide1">
                       <td class="icon" align="center"><img src="{{url('/')}}/front/assets/img/cp/phone.png" height="100%"></td>
                       <td class="cp-data"><span id="cp_phone"></span></td>
                     </tr>
-                    <tr>
+                    <tr class="hide1">
                       <td colspan="2">
                         <div style="height: 8px;">
                           <img src="{{url('/')}}/front/assets/img/cp/line.png" width="100%" height="100%" style="vertical-align: top;">
@@ -261,7 +261,13 @@
       if(id != '-'){
         var pecah = id.split('|');
         $('#cp_name').html(pecah[0]);
-        $('#cp_phone').html(pecah[1]);
+        if(pecah[1] == ""){
+          $('.hide1').hide();
+        }else{
+          // $('.hide').show();
+          $('#cp_phone').html(pecah[1]);
+        }
+        // $('#cp_phone').html(pecah[1]);
         $('#cp_email').html(pecah[2]);
       } else {
         $('#cp_name').html('No Contact');

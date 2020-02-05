@@ -26,9 +26,6 @@
 									<th>
                                         <center>Buyer</center>
                                     </th>
-									<th>
-                                        <center>Exporter</center>
-                                    </th>
 									
 									 <th>
                                         <center>Type Tracking</center>
@@ -59,13 +56,7 @@
 									echo "Importir - ".$imp->badanusaha." ".$imp->company; 
 									}
 									} ?></center></td>
-									<td><center><?php 
-									if($ruu->id_eksportir == 0 || $ruu->id_eksportir == null){
-										
-									}else{
-									$carieks = DB::select("select * from itdp_company_users where id='".$ruu->id_eksportir."'");
-									foreach($carieks as $eks){ echo $eks->username; }
-									} ?></center></td>
+
 									
 									
 									<td><center><?php echo $ruu->type_tracking; ?></center></td>

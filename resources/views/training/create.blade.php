@@ -82,7 +82,7 @@
                    <b>Start Date</b>
                  </div>
                  <div class="col-md-6">
-                   <input type="date" autocomplete="off" class="form-control dis" name="start_date" @if($page != 'create') value="{{date('Y-m-d', strtotime($data->start_date))}}" @endif required>
+                   <input type="date" autocomplete="off" class="form-control dis" id="start_date" name="start_date" @if($page != 'create') value="{{date('Y-m-d', strtotime($data->start_date))}}" @endif required>
                  </div>
                </div><br>
                <div class="row">
@@ -91,7 +91,7 @@
                    <b>End Date</b>
                  </div>
                  <div class="col-md-6">
-                    <input type="date" autocomplete="off" class="form-control dis" name="end_date" @if($page != 'create') value="{{date('Y-m-d', strtotime($data->end_date))}}" @endif required>
+                    <input type="date" autocomplete="off" class="form-control dis" id="end_date" name="end_date" @if($page != 'create') value="{{date('Y-m-d', strtotime($data->end_date))}}" @endif required>
                  </div>
                </div><br>
                <div class="row">
@@ -102,11 +102,14 @@
                  <div class="col-md-6">
                    <table width="100%">
                      <tr>
-                       <td style="padding-right: 10px; width: 60%;"><input type="number" autocomplete="off" class="form-control dis" name="duration" @if($page != 'create')  value="{{$data->duration}}" @endif required></td>
-                       <td><select class="form-control dis" name="param">
-                              <option value="Days" @if($page != 'create') @if($data->param == "Days") selected @endif @endif>Days</option>
-                              <option value="Week" @if($page != 'create') @if($data->param == "Week") selected @endif @endif>Week</option>
-                           </select>
+                       <td id="dur1" style="padding-right: 10px; width: 60%;">
+                           <input type="text" autocomplete="off" class="form-control dis" id="duration" name="duration" @if($page != 'create')  value="{{$data->duration}}" @endif onkeydown="return false;" onpaste="return false;" oninvalid="this.setCustomValidity('Please make sure your start date and end date is valid')" value="" required></td>
+                       <td>
+                           <input type="text" autocomplete="off" class="form-control dis" name="param" value="Days" readonly required>
+{{--                           <select class="form-control dis" name="param">--}}
+{{--                              <option value="Days" @if($page != 'create') @if($data->param == "Days") selected @endif @endif>Days</option>--}}
+{{--                              <option value="Week" @if($page != 'create') @if($data->param == "Week") selected @endif @endif>Week</option>--}}
+{{--                           </select>--}}
                         </td>
                      </tr>
                    </table>
@@ -191,7 +194,7 @@
                     <b>Phone</b>
                   </div>
                   <div class="col-md-6">
-                    <input type="text" onblur="this.value=removeSpaces(this.value);" autocomplete="off" class="form-control dis" name="cp_phone" maxlength="15" @if($page != 'create') @if($cp) value="{{$cp->phone}}" @endif @endif required>
+                    <input type="text" onblur="this.value=removeSpaces(this.value);" autocomplete="off" class="form-control dis" name="cp_phone" maxlength="15" @if($page != 'create') @if($cp) value="{{$cp->phone}}" @endif @endif>
                   </div>
                 </div><br>
               </div>
@@ -228,7 +231,71 @@
   </div>
 </div>
 @include('footer')
+
+
 <script type="text/javascript">
+
+    $('#start_date').change(function() {
+        var dt1 = new Date($('#start_date').val());
+        var dt2 = new Date($('#end_date').val());
+        if(dt2 == 'Invalid Date'){
+
+        }else{
+            if(dt1>dt2){
+                alert('End Date Has to be after Start Date');
+                var tes = $('#duration').val('');
+                console.log(tes);
+            }else{
+                var tes =  Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate()) ) /(1000 * 60 * 60 * 24));
+                var div = document.getElementById('dur1');
+                var duration = document.getElementById('duration');
+                duration.parentNode.removeChild(duration);
+                $('#dur1').append(
+                    $('<input>', {
+                        type: 'text',
+                        name: 'duration',
+                        id: 'duration',
+                        onkeydown : 'return false;',
+                        onpaste: 'return false;',
+                        oninvalid:'this.setCustomValidity(\'Please make sure your start date and end date is valid\')',
+                        class : 'form-control dis',
+                        autocomplete : 'off',
+                    })
+                )
+                $("#duration").attr('required', '');
+                $('#duration').val(tes);
+            }
+        }
+    });
+
+    $('#end_date').change(function() {
+        var dt1 = new Date($('#start_date').val());
+        var dt2 = new Date($('#end_date').val());
+        if(dt1>dt2){
+            alert('End Date Has to be after Start Date');
+            var tes = $('#duration').val('');
+        }else{
+            var tes =  Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate()) ) /(1000 * 60 * 60 * 24));
+            var div = document.getElementById('dur1');
+            var duration = document.getElementById('duration');
+            duration.parentNode.removeChild(duration);
+            $('#dur1').append(
+                $('<input>', {
+                    type: 'text',
+                    name: 'duration',
+                    id: 'duration',
+                    onkeydown : 'return false;',
+                    onpaste: 'return false;',
+                    oninvalid:'this.setCustomValidity(\'Please make sure your start date and end date is valid\')',
+                    class : 'form-control dis',
+                    autocomplete : 'off',
+                })
+            )
+            $("#duration").attr('required', '');
+            $('#duration').val(tes);
+        }
+    });
+
   $(document).ready(function (){
     var type = '{{$page}}';
     @if($page == 'view')

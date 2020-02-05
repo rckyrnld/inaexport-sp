@@ -482,35 +482,7 @@
                                             <a href="{{url('front_end/product/'.$pro->id)}}" title="{{$prodn}}" class="href-name" onclick="GoToProduct('{{$pro->id}}', event, this)"><b>{{$prodnama}}</b></a>
                                         </h3>
                                         <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
-                                            @if(!empty(Auth::guard('eksmp')->user()))
-                                                @if(Auth::guard('eksmp')->user()->status == 1)
-                                                Price :
-                                                    @if(is_numeric($pro->price_usd))
-                                                        <?php 
-                                                            $pricenya = "$ ".number_format($pro->price_usd,0,",",".");
-                                                            $price = $pricenya;
-                                                        ?>
-                                                    @else
-                                                        <?php 
-                                                            $price = $pro->price_usd;
-                                                            if(strlen($price) > 25){
-                                                                $cut_text = substr($price, 0, 25);
-                                                                if ($price{25 - 1} != ' ') { 
-                                                                    $new_pos = strrpos($cut_text, ' ');
-                                                                    $cut_text = substr($price, 0, $new_pos);
-                                                                }
-                                                                $pricenya = $cut_text . '...';
-                                                            }else{
-                                                                $pricenya = $price;
-                                                            }
-                                                        ?>
-                                                    @endif
-                                                <span style="color: #fd5018;" title="{{$price}}">
-                                                    {{$pricenya}}
-                                                </span>
-                                                <br>
-                                                @endif
-                                            @endif
+
 
                                             {{$order}}<span title="{{$minorder}}">{{$minordernya}}</span><br>
                                             <a href="{{url('front_end/list_perusahaan/view/'.$param)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$companame}}</a>

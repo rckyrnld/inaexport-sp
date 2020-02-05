@@ -40,6 +40,7 @@ if (! function_exists('rc_type')) {
 if (! function_exists('optionCategory')) {
     function optionCategory(){
       $option = '';
+      $option .= '<option value="0">All Category</option>';
       $categori = DB::table('csc_product_single as a')->join('itdp_profil_eks as b', 'a.id_itdp_profil_eks', '=', 'b.id')->select('id_csc_product')->distinct('id_csc_product')->get();
       $level1 = DB::table('csc_product_single as a')->join('itdp_profil_eks as b', 'a.id_itdp_profil_eks', '=', 'b.id')->select('id_csc_product_level1')->where('id_csc_product_level1', '!=', null)->distinct('id_csc_product_level1')->get();
       $level2 = DB::table('csc_product_single as a')->join('itdp_profil_eks as b', 'a.id_itdp_profil_eks', '=', 'b.id')->select('id_csc_product_level2')->where('id_csc_product_level2', '!=', null)->distinct('id_csc_product_level2')->get();
@@ -243,14 +244,14 @@ if (! function_exists('optionCategoryZ')) {
       $categori = DB::table('csc_product_single as a')->join('itdp_profil_eks as b', 'a.id_itdp_profil_eks', '=', 'b.id')->select('id_csc_product')->distinct('id_csc_product')->get();
       $level1 = DB::table('csc_product_single as a')->join('itdp_profil_eks as b', 'a.id_itdp_profil_eks', '=', 'b.id')->select('id_csc_product_level1')->where('id_csc_product_level1', '!=', null)->distinct('id_csc_product_level1')->get();
       $level2 = DB::table('csc_product_single as a')->join('itdp_profil_eks as b', 'a.id_itdp_profil_eks', '=', 'b.id')->select('id_csc_product_level2')->where('id_csc_product_level2', '!=', null)->distinct('id_csc_product_level2')->get();
-
+      if(in_Array("0",$arr)){$selec2 = "selected";}else{$selec2= "";}
+      $option .= '<option value="0" '.$selec2.'>All Category</option>';
       foreach ($categori as $data) {
         $category = DB::table('csc_product')->where('id', $data->id_csc_product)->first();
 
         if($category){
           if(in_array($category->id, $arr)){ $selec = "selected";
           }else{ $selec=""; }
-
           $option .= '<option value="'.$category->id.'" '.$selec.'>'.$category->nama_kategori_en.'</option>';
         }
       }

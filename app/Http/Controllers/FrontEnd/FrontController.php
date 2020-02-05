@@ -917,6 +917,7 @@ class FrontController extends Controller
 
     public function Event(Request $req){
         $country = DB::table('mst_country')->orderby('country', 'asc')->get();
+        $today = date('Y-m-d');
         if($req->search){
             $searchEvent = $req->search;
             $lang = app()->getLocale();
@@ -924,7 +925,9 @@ class FrontController extends Controller
             $query = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
-                ->where('a.status_en', 'Verified')->orderby('a.created_at', 'desc');
+                ->where('a.status_en', 'Verified')
+                ->where('a.end_date', '>=', $today)
+                ->orderby('a.created_at', 'desc');
             
             if($searchEvent == 1){
                 $param = $req->nama;
@@ -961,7 +964,9 @@ class FrontController extends Controller
             $e_detail = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
-                ->where('a.status_en', 'Verified')->orderby('a.created_at', 'desc')
+                ->where('a.status_en', 'Verified')
+                ->where('a.end_date', '>=', $today)
+                ->orderby('a.created_at', 'desc')
                 ->paginate(9);
 
             $json = json_decode($e_detail->toJson(), true);
@@ -970,7 +975,9 @@ class FrontController extends Controller
              $e_detail = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
-                ->where('a.status_en', 'Verified')->orderby('a.created_at', 'desc')
+                ->where('a.status_en', 'Verified')
+                 ->where('a.end_date', '>=', $today)
+                 ->orderby('a.created_at', 'desc')
                 ->paginate(8);
             }
         }
@@ -1056,15 +1063,17 @@ class FrontController extends Controller
     //Front End Training
     public function indexTraining(){
         $pageTitle = 'Training';
-		$data = DB::table('training_admin')->where('status', 1)->orderby('created_at', 'desc')->paginate(3);
-      return view('frontend.training',compact('data','pageTitle'));
+        $today = $today = date('Y-m-d');
+		$data = DB::table('training_admin')->where('status', 1)->whereDate('end_date', '>=', $today)->orderby('created_at', 'desc')->paginate(3);
+		return view('frontend.training',compact('data','pageTitle'));
     }
 
     public function indexTrainingSearch(Request $request){
 			$cari = $request->cari;
-
+            $today = date('Y-m-d');
 			$data = DB::table('training_admin')
 			->where('training_in','like',"%".$cari."%")
+            ->whereDate('end_date', '>=', $today)
 			->paginate(10);
 
 			$pageTitle = 'Training';

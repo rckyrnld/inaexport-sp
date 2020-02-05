@@ -295,7 +295,7 @@
                                     <div class="row">
                                         <div class="col-md-2">
                                             <label for="code"><b>Image (.png, .jpg, .jpeg, .gif)</b></label>
-                                            <label style="color: red">*maksimum file size 200kb</label>
+                                            <label style="color: red">*maksimum file size 5MB</label>
                                         </div>
                                         <!-- <div class="col-md-2">
                                             <div id="ambil_ttd_utama" style="width: 100%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
@@ -316,7 +316,7 @@
                                                     <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$data->id}}/{{$data->image_1}}" id="image_1_ambil" style="height: 100%; width: 100%;"/>
                                                     @endif
                                                 </button>
-                                                <input type="file" id="image_1" name="image_1" accept="image/png" style="display: none;" />
+                                                <input type="file" id="image_1" name="image_1" accept="image/png" style="display: none;" class="upload1"/>
                                                 <br>
                                                 <center>+ Photo 1</center>
                                             </div>
@@ -330,7 +330,7 @@
                                                     <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$data->id}}/{{$data->image_2}}" id="image_2_ambil" style="height: 100%; width: 100%;"/>
                                                     @endif
                                                 </button>
-                                                <input type="file" id="image_2" name="image_2" accept="image/png" style="display: none;" />
+                                                <input type="file" id="image_2" name="image_2" accept="image/png" style="display: none;" class="upload1" />
                                                 <br>
                                                 <center>+ Photo 2</center>
                                             </div>
@@ -344,7 +344,7 @@
                                                     <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$data->id}}/{{$data->image_3}}" id="image_3_ambil" style="height: 100%; width: 100%;"/>
                                                     @endif
                                                 </button>
-                                                <input type="file" id="image_3" name="image_3" accept="image/png" style="display: none;" />
+                                                <input type="file" id="image_3" name="image_3" accept="image/png" style="display: none;" class="upload1" />
                                                 <br>
                                                 <center>+ Photo 3</center>
                                             </div>
@@ -358,7 +358,7 @@
                                                     <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$data->id}}/{{$data->image_4}}" id="image_4_ambil" style="height: 100%; width: 100%;"/>
                                                     @endif
                                                 </button>
-                                                <input type="file" id="image_4" name="image_4" accept="image/png" style="display: none;" />
+                                                <input type="file" id="image_4" name="image_4" accept="image/png" style="display: none;" class="upload1" />
                                                 <br>
                                                 <center>+ Photo 4</center>
                                             </div>
@@ -562,7 +562,7 @@
                 $('#hal3').prop('disabled', 'true');
             @endif
         var hscode = "{{$data->id_mst_hscodes}}";
-        if (hscode != null) {
+        if (hscode != "") {
             $.ajax({
                 type: 'GET',
                 url: "{{route('eksproduct.getHsCode')}}",
@@ -571,6 +571,28 @@
                 var option = new Option(data[0].fullhs+ " - " +data[0].desc_eng, data[0].id, true, true);
 
                 $('#hscode').append(option).trigger('change');
+            });
+        }
+        else{
+            $('.select2').select2({
+                allowClear: true,
+                placeholder: 'Select HS Code',
+                ajax: {
+                    url: "{{route('eksproduct.getHsCode')}}",
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.fullhs + "  -  " + item.desc_eng,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
             });
         }
         @endisset
@@ -695,6 +717,18 @@
             fr.readAsDataURL(files[0]);
         }
      }
+
+    $('.upload1').on('change', function(evt){
+        var size = this.files[0].size;
+        if(size > 5000000){
+            // if(size > 20000){
+            $(this).val("");
+            alert('image size must less than 5MB');
+        }
+        else{
+
+        }
+    })
 
      function getStatus(data) {
          console.log(data);
