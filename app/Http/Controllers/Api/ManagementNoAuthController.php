@@ -635,11 +635,20 @@ class ManagementNoAuthController extends Controller
     public function getResearchc(Request $request)
     {
         $research = DB::table('csc_broadcast_research_corner as a')->rightJoin('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
-            ->orderby('a.created_at', 'desc')
+            ->orderby('b.id', 'desc')
             ->select('b.*', 'a.id_research_corner', 'a.created_at')
             ->limit(10)
             ->offset($request->offset)
             ->get();
+
+        $i = 0;
+        foreach ($research as $data) {
+            if ($data->cover != null) {
+                $research[$i]->cover = url('uploads/Research Corner/Cover/'.$data->cover);
+            }
+            $i++;
+        }
+
         if (count($research) > 0) {
             $meta = [
                 'code' => '200',
