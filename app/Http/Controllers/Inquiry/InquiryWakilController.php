@@ -215,11 +215,12 @@ class InquiryWakilController extends Controller
 
     public function store(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
+        $datenow = date("Y-m-d H:i:s");
         if(Auth::user()){
             $id_user = Auth::user()->id;
             if(Auth::user()->id_group == 4){
                 $type = "perwakilan";
-                $datenow = date("Y-m-d H:i:s");
 
                 //Jenis Perihal
                 $jpen = "";
