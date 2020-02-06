@@ -47,7 +47,7 @@
         $name = $detail->event_name_en;
     }
 
-    $comodity = EventComodityName($detail->event_comodity, $loc);
+//    $comodity = EventComodityName($detail->event_comodity, $loc);
     $eo = EventOrganizerName($detail->id_event_organizer, $loc);
     $place = EventPlaceName($detail->id_event_place, $loc);
 
@@ -182,11 +182,11 @@
                                         <td style="padding-left: 5px;padding-right: 10px;">:</td>
                                         <td>{{$eo}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>@lang("frontend.event.comodity")</td>
-                                        <td style="padding-left: 5px;padding-right: 10px;">:</td>
-                                        <td>{{$comodity}}</td>
-                                    </tr>
+{{--                                    <tr>--}}
+{{--                                        <td>@lang("frontend.event.comodity")</td>--}}
+{{--                                        <td style="padding-left: 5px;padding-right: 10px;">:</td>--}}
+{{--                                        <td>{{$comodity}}</td>--}}
+{{--                                    </tr>--}}
                                     <tr>
                                         <td>@lang("frontend.event.scope")</td>
                                         <td style="padding-left: 5px;padding-right: 10px;">:</td>
