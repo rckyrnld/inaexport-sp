@@ -43,7 +43,8 @@ class InquiryAdminController extends Controller
             $user = DB::table('csc_inquiry_br')
                 ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
                 ->where('type', 'admin')
-                ->orderBy('csc_inquiry_br.date', 'DESC')
+//                ->orderBy('csc_inquiry_br.date', 'DESC')
+                ->orderBy('csc_inquiry_br.created_at', 'DESC')
                 ->get();
 
             return \Yajra\DataTables\DataTables::of($user)
@@ -194,27 +195,95 @@ class InquiryAdminController extends Controller
     public function getPerwakilan()
     {
         if(Auth::user()){
-            $user = DB::table('itdp_admin_users')
-                ->where('id_group', 4)
-                ->orderBy('name', 'ASC')
+            $user = DB::table('csc_inquiry_br')
+                ->where('type', 'perwakilan')
+//                ->orderBy('date', 'DESC')
+                ->orderBy('created_at', 'DESC')
                 ->get();
 
             return \Yajra\DataTables\DataTables::of($user)
                 ->addIndexColumn()
                 ->addColumn('name', function ($mjl) {
                     $name = "-";
-                    if($mjl->id != NULL){
-                        $name = getPerwakilanName($mjl->id);
+                    if($mjl->id_pembuat != NULL){
+                        $name = getAdminName($mjl->id_pembuat);
                     }
-                    return '<div align="left">'.$name.'</div>';
+                    return $name;
+                })
+                ->addColumn('category', function ($mjl) {
+                    if($mjl->type == 'perwakilan'){
+                        $category = getProductCategoryInquiry($mjl->id);
+                        if($category != ''){
+                            $category = '<div style="height: 100%; width: 100%" align="left">'.$category.'</div>';
+                        } else {
+                            $category = "-";
+                        }
+                    }
+                    return '<div align="left">'.$category.'</div>';
+                })
+                ->addColumn('subject', function ($mjl) {
+                    $subyek = "-";
+                    if($mjl->subyek_en != NULL){
+                        $subyek = $mjl->subyek_en;
+                    }
+
+                    return '<div align="left">'.$subyek.'</div>';
+                })
+                ->addColumn('date', function ($mjl) {
+                    $datenya = "-";
+                    if($mjl->date != NULL){
+                        $datenya = date('d/m/Y', strtotime($mjl->date));
+                    }
+
+                    return $datenya;
+                })
+                ->addColumn('kos', function ($mjl) {
+                    $kosnya = "-";
+                    if($mjl->jenis_perihal_en != NULL){
+                        $kosnya = $mjl->jenis_perihal_en;
+                    }
+
+                    return $kosnya;
+                })
+                ->addColumn('msg', function ($mjl) {
+                    $msgnya = "-";
+                    if($mjl->messages_en != NULL){
+                        $num_char = 70;
+                        $text = $mjl->messages_en;
+                        if(strlen($text) > 70){
+                            $cut_text = substr($text, 0, $num_char);
+                            if ($text{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                                $cut_text = substr($text, 0, $new_pos);
+                            }
+                            $msgnya = $cut_text . '...';
+                        }else{
+                            $msgnya = $text;
+                        }
+                    }
+
+                    return strip_tags($msgnya);
+                })
+                ->addColumn('status', function ($mjl) {
+                    $statnya = "-";
+                    if($mjl->status != NULL){
+                        if($mjl->status == 0){
+                            $stat = 1;
+                        }else{
+                            $stat = $mjl->status;
+                        }
+                        $statnya = Lang::get('inquiry.stat'.$stat);
+                    }
+
+                    return $statnya;
                 })
                 ->addColumn('action', function ($mjl) {
                     return '
                         <center>
-                        <a href="'.url('/inquiry_admin/detail_perwakilan').'/'.$mjl->id.'" class="btn btn-sm btn-success" title="Detail"><i class="fa fa-list" aria-hidden="true"></i></a>
+                        <a href="'.url('/inquiry_admin/perwakilan_view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
                         </center>';
                 })
-                ->rawColumns(['action','name'])
+                ->rawColumns(['action', 'category','subject'])
                 ->make(true);
         }
     }
@@ -409,7 +478,8 @@ class InquiryAdminController extends Controller
 
             $user = DB::table('csc_inquiry_br')
                 ->where('type', 'importir')
-                ->orderBy('created_at', 'DESC')
+                ->orderBy('date', 'DESC')
+//                ->orderBy('created_at', 'DESC')
                 ->get();
 
             return \Yajra\DataTables\DataTables::of($user)

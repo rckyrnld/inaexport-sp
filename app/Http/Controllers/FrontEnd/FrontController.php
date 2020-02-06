@@ -918,71 +918,437 @@ class FrontController extends Controller
     public function Event(Request $req){
         $country = DB::table('mst_country')->orderby('country', 'asc')->get();
         $today = date('Y-m-d');
-        if($req->search){
-            $searchEvent = $req->search;
-            $lang = app()->getLocale();
-            if($lang == 'ch'){ $lang = 'chn';}
-            $query = DB::table('event_detail as a')
+
+        if($req->search && $req->search2 == null && $req->search3 == null ){
+            if($req->search ){
+                $searchEvent = $req->search;
+                $lang = app()->getLocale();
+                if($lang == 'ch'){ $lang = 'chn';}
+                $query = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc');
+
+                if($searchEvent == 1){
+                    $param = $req->nama;
+                    $query->where(function($query) use ($param,$lang){
+                        $query->where('a.event_name_en', 'ILIKE', "%".$param."%")
+                            ->orWhere('a.event_name_'.$lang, 'ILIKE', "%".$param."%");
+                    });
+                } else if($searchEvent == 2){
+                    $param = $req->tanggal;
+                    if($param != null){
+                        $query->where(function ($query) use ($param) {
+                            $query->where('a.start_date', '<=', $param);
+                            $query->where('a.end_date', '>=', $param);
+                        });
+                        $query->orWhere(function ($query) use ($param){
+                            $query->where('a.start_date', $param)
+                                ->orWhere('a.end_date', $param);
+                        });
+                    }
+                } else if($searchEvent == 3) {
+                    $param = $req->country;
+                    $query->where('country', $param);
+                }
+
+                if($param == null){
+                    return redirect('/front_end/event');
+                }
+                $e_detail = $query->paginate(8,['*'],'page_a');
+
+                $page = 99999999;
+            } else {
+                $searchEvent = null;
+                $param = null;
+                $e_detail = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc')
+                    ->paginate(9,['*'],'page_a');
+
+                $json = json_decode($e_detail->toJson(), true);
+                $page = $json["current_page"];
+                if($page > 1){
+                    $e_detail = DB::table('event_detail as a')
+                        ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                        ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                        ->where('a.status_en', 'Verified')
+                        ->where('a.end_date', '>=', $today)
+                        ->orderby('a.created_at', 'desc')
+                        ->paginate(8,['*'],'page_a');
+                }
+            }
+            $halaman = 'all';
+            //untuk event Indonesia
+            $searchEvent2 = null;
+            $param2 = null;
+            $e_detail2 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
                 ->where('a.status_en', 'Verified')
+                ->where('a.event_scope_en','Indonesia')
                 ->where('a.end_date', '>=', $today)
-                ->orderby('a.created_at', 'desc');
-            
-            if($searchEvent == 1){
-                $param = $req->nama;
-                $query->where(function($query) use ($param,$lang){
-                            $query->where('a.event_name_en', 'ILIKE', "%".$param."%")
-                                ->orWhere('a.event_name_'.$lang, 'ILIKE', "%".$param."%");
+                ->orderby('a.created_at', 'desc')
+                ->paginate(9,['*'],'page_b');
+
+            $json = json_decode($e_detail2->toJson(), true);
+            $page2 = $json["current_page"];
+            if($page2 > 1){
+                $e_detail2 = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.event_scope_en','Indonesia')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc')
+                    ->paginate(8,['*'],'page_b');
+            }
+
+            //untuk event foreign
+            $searchEvent3 = null;
+//            $param = null;
+            $e_detail3 = DB::table('event_detail as a')
+                ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->where('a.status_en', 'Verified')
+                ->where('a.event_scope_en','Foreign')
+                ->where('a.end_date', '>=', $today)
+                ->orderby('a.created_at', 'desc')
+                ->paginate(9,['*'],'page_c');
+
+            $json = json_decode($e_detail3->toJson(), true);
+            $page3 = $json["current_page"];
+            if($page3 > 1){
+                $e_detail3 = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.event_scope_en','Indonesia')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc')
+                    ->paginate(8,['*'],'page_c');
+            }
+
+
+        }
+        else if($req->search2 && $req->search == null && $req->search3 == null ){
+            $halaman = 'indonesia';
+            if($req->search2){
+                $searchEvent2 = $req->search2;
+                $lang = app()->getLocale();
+                if($lang == 'ch'){ $lang = 'chn';}
+                $query = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.event_scope_en','Indonesia')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc');
+
+                if($searchEvent2 == 1){
+                    $param2 = $req->nama;
+                    $query->where(function($query) use ($param2,$lang){
+                        $query->where('a.event_name_en', 'ILIKE', "%".$param2."%")
+                            ->orWhere('a.event_name_'.$lang, 'ILIKE', "%".$param2."%");
+                    });
+                } else if($searchEvent2 == 2){
+                    $param2 = $req->tanggal;
+                    if($param2 != null){
+                        $query->where(function ($query) use ($param2) {
+                            $query->where('a.start_date', '<=', $param2);
+                            $query->where('a.end_date', '>=', $param2);
                         });
-            } else if($searchEvent == 2){
-                $param = $req->tanggal;
-                if($param != null){
-                    $query->where(function ($query) use ($param) {
-                        $query->where('a.start_date', '<=', $param);
-                        $query->where('a.end_date', '>=', $param);
-                    });
-                    $query->orWhere(function ($query) use ($param){
-                        $query->where('a.start_date', $param)
-                            ->orWhere('a.end_date', $param);
-                    });
+                        $query->orWhere(function ($query) use ($param2){
+                            $query->where('a.start_date', $param2)
+                                ->orWhere('a.end_date', $param2);
+                        });
+                    }
+                } else if($searchEvent2 == 3) {
+                    $param2 = $req->country;
+                    $query->where('country', $param2);
                 }
-            } else if($searchEvent == 3) {
-                $param = $req->country;
-                $query->where('country', $param);
+
+                if($param2 == null){
+                    return redirect('/front_end/event');
+                }
+                $e_detail2 = $query->paginate(8,['*'],'page_b');
+
+                $page2 = 99999999;
+            } else {
+                $searchEvent2 = null;
+                $param = null;
+                $e_detail2 = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.event_scope_en','Indonesia')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc')
+                    ->paginate(9,['*'],'page_b');
+
+                $json = json_decode($e_detail2->toJson(), true);
+                $page2 = $json["current_page"];
+                if($page2 > 1){
+                    $e_detail2 = DB::table('event_detail as a')
+                        ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                        ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                        ->where('a.status_en', 'Verified')
+                        ->where('a.event_scope_en','Indonesia')
+                        ->where('a.end_date', '>=', $today)
+                        ->orderby('a.created_at', 'desc')
+                        ->paginate(8,['*'],'page_b');
+                }
             }
 
-            if($param == null){
-                return redirect('/front_end/event');
-            }
-            $e_detail = $query->paginate(8);
-
-            $page = 99999999;
-        } else {
+            //untuk event all
             $searchEvent = null;
-            $param = null;
+//            $param = null;
             $e_detail = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
                 ->where('a.status_en', 'Verified')
                 ->where('a.end_date', '>=', $today)
                 ->orderby('a.created_at', 'desc')
-                ->paginate(9);
+                ->paginate(9,['*'],'page_a');
 
             $json = json_decode($e_detail->toJson(), true);
             $page = $json["current_page"];
             if($page > 1){
-             $e_detail = DB::table('event_detail as a')
+                $e_detail = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc')
+                    ->paginate(8,['*'],'page_a');
+            }
+
+            //untuk event foreign
+            $searchEvent3 = null;
+//            $param = null;
+            $e_detail3 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
                 ->where('a.status_en', 'Verified')
-                 ->where('a.end_date', '>=', $today)
-                 ->orderby('a.created_at', 'desc')
-                ->paginate(8);
+                ->where('a.event_scope_en','Foreign')
+                ->where('a.end_date', '>=', $today)
+                ->orderby('a.created_at', 'desc')
+                ->paginate(9,['*'],'page_c');
+
+            $json = json_decode($e_detail3->toJson(), true);
+            $page3 = $json["current_page"];
+            if($page3 > 1){
+                $e_detail3 = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.event_scope_en','Foreign')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc')
+                    ->paginate(8,['*'],'page_c');
             }
         }
+        else if($req->search3 && $req->search == null && $req->search2 == null ){
+            $halaman = 'foreign';
+            if($req->search3){
+                $searchEvent3 = $req->search2;
+                $lang = app()->getLocale();
+                if($lang == 'ch'){ $lang = 'chn';}
+                $query = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.event_scope_en','Foreign')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc');
 
-        return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page'))], compact('page', 'searchEvent','country', 'param'));
+                if($searchEvent3 == 1){
+                    $param3 = $req->nama;
+                    $query->where(function($query) use ($param3,$lang){
+                        $query->where('a.event_name_en', 'ILIKE', "%".$param3."%")
+                            ->orWhere('a.event_name_'.$lang, 'ILIKE', "%".$param3."%");
+                    });
+                } else if($searchEvent3 == 2){
+                    $param3 = $req->tanggal;
+                    if($param3 != null){
+                        $query->where(function ($query) use ($param3) {
+                            $query->where('a.start_date', '<=', $param3);
+                            $query->where('a.end_date', '>=', $param3);
+                        });
+                        $query->orWhere(function ($query) use ($param3){
+                            $query->where('a.start_date', $param3)
+                                ->orWhere('a.end_date', $param3);
+                        });
+                    }
+                } else if($searchEvent3 == 3) {
+                    $param3 = $req->country;
+                    $query->where('country', $param3);
+                }
+
+                if($param3 == null){
+                    return redirect('/front_end/event');
+                }
+                $e_detail3 = $query->paginate(8,['*'],'page_c');
+
+                $page3 = 99999999;
+            } else {
+                $searchEvent3 = null;
+                $param3 = null;
+                $e_detail3 = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.event_scope_en','Foreign')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc')
+                    ->paginate(9,['*'],'page_c');
+
+                $json = json_decode($e_detail3->toJson(), true);
+                $page3 = $json["current_page"];
+                if($page3 > 1){
+                    $e_detail2 = DB::table('event_detail as a')
+                        ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                        ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                        ->where('a.status_en', 'Verified')
+                        ->where('a.event_scope_en','Foreign')
+                        ->where('a.end_date', '>=', $today)
+                        ->orderby('a.created_at', 'desc')
+                        ->paginate(8,['*'],'page_c');
+                }
+            }
+
+            //untuk event all
+            $searchEvent = null;
+//            $param = null;
+            $e_detail = DB::table('event_detail as a')
+                ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->where('a.status_en', 'Verified')
+                ->where('a.end_date', '>=', $today)
+                ->orderby('a.created_at', 'desc')
+                ->paginate(9,['*'],'page_a');
+
+            $json = json_decode($e_detail->toJson(), true);
+            $page = $json["current_page"];
+            if($page > 1){
+                $e_detail = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc')
+                    ->paginate(8,['*'],'page_a');
+            }
+
+            //untuk event Indonesia
+            $searchEvent2 = null;
+            $param2 = null;
+            $e_detail2 = DB::table('event_detail as a')
+                ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->where('a.status_en', 'Verified')
+                ->where('a.event_scope_en','Indonesia')
+                ->where('a.end_date', '>=', $today)
+                ->orderby('a.created_at', 'desc')
+                ->paginate(9,['*'],'page_b');
+
+            $json = json_decode($e_detail2->toJson(), true);
+            $page2 = $json["current_page"];
+            if($page2 > 1){
+                $e_detail2 = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.event_scope_en','Indonesia')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc')
+                    ->paginate(8,['*'],'page_b');
+            }
+        }
+        else{
+            $halaman = 'all';
+            //event all
+            $searchEvent = null;
+//            $param = null;
+            $e_detail = DB::table('event_detail as a')
+                ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->where('a.status_en', 'Verified')
+                ->where('a.end_date', '>=', $today)
+                ->orderby('a.created_at', 'desc')
+                ->paginate(9,['*'],'page_a');
+
+            $json = json_decode($e_detail->toJson(), true);
+            $page = $json["current_page"];
+            if($page > 1){
+                $e_detail = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc')
+                    ->paginate(8,['*'],'page_a');
+            }
+
+            //event indonesia
+            $searchEvent2 = null;
+//            $param = null;
+            $e_detail2 = DB::table('event_detail as a')
+                ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->where('a.status_en', 'Verified')
+                ->where('a.event_scope_en','Indonesia')
+                ->where('a.end_date', '>=', $today)
+                ->orderby('a.created_at', 'desc')
+                ->paginate(9,['*'],'page_b');
+
+            $json = json_decode($e_detail2->toJson(), true);
+            $page2 = $json["current_page"];
+            if($page2 > 1){
+                $e_detail2 = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.event_scope_en','Indonesia')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc')
+                    ->paginate(8,['*'],'page_b');
+            }
+
+            //event foreign
+            $searchEvent3 = null;
+//            $param = null;
+            $e_detail3 = DB::table('event_detail as a')
+                ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->where('a.status_en', 'Verified')
+                ->where('a.event_scope_en','Foreign')
+                ->where('a.end_date', '>=', $today)
+                ->orderby('a.created_at', 'desc')
+                ->paginate(9,['*'],'page_c');
+
+            $json = json_decode($e_detail3->toJson(), true);
+            $page3 = $json["current_page"];
+            if($page3 > 1){
+                $e_detail3 = DB::table('event_detail as a')
+                    ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->where('a.status_en', 'Verified')
+                    ->where('a.event_scope_en','Foreign')
+                    ->where('a.end_date', '>=', $today)
+                    ->orderby('a.created_at', 'desc')
+                    ->paginate(8,['*'],'page_c');
+            }
+
+        }
+
+
+        return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page')),'e_detail2' => $e_detail2->appends(Input::except('page')),'e_detail3' => $e_detail3->appends(Input::except('page'))], compact('page','page2', 'page3', 'searchEvent','searchEvent2' ,'searchEvent3' ,'country', 'param', 'param2','param3','halaman'));
     }
 
     public function join_event($id){
