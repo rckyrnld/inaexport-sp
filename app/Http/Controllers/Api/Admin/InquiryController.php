@@ -12,6 +12,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Mail;
 
 
 class InquiryController extends Controller
@@ -334,6 +335,119 @@ class InquiryController extends Controller
             
 
     }
+	
+	public function bc_inquiry_admin(Request $request)
+    {
+		date_default_timezone_set('Asia/Jakarta');
+            $id_user = 1;
+                $id_inquiry = $request->id_inquiry;
+                $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+                $datenow = date("Y-m-d H:i:s");
+
+                //update status
+                $upd = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
+                    'status' => 0,
+                ]);
+
+                $array = [];
+                for($i = 0; $i<count($request->categori); $i++){
+                    $var = $request->categori[$i];
+                    
+                    $input_cat = DB::table('csc_inquiry_category')->insert([
+                        'id_inquiry' => $id_inquiry,
+                        'id_cat_prod' => $var,
+                        'created_at' => date('Y-m-d H:i:s')
+                    ]);
+
+                    $perusahaan = DB::table('csc_product_single')->where('id_itdp_company_user', '!=', null)
+                          ->where(function ($query) use ($var) {
+                                  $query->where('id_csc_product', $var)
+                                        ->orWhere('id_csc_product_level1', $var)
+                                        ->orWhere('id_csc_product_level2', $var);
+                              })
+                          ->select('id_itdp_company_user')->distinct('id_itdp_company_user')->get();
+                    foreach ($perusahaan as $key) {
+                      if (!in_array($key->id_itdp_company_user, $array)){
+                        array_push($array, $key->id_itdp_company_user);
+                      }
+                    }
+                }
+
+                sort($array);
+                $users = [];
+                $usernames = [];
+                $userbadanusaha = [];
+                for ($k=0; $k <count($array) ; $k++) { 
+                    $untuk = DB::table('itdp_company_users')->where('id', $array[$k])->first();
+                    if($untuk != NULL){
+                        $company = DB::table('itdp_profil_eks')->where('id', $untuk->id_profil)->first();
+                        $save = DB::table('csc_inquiry_broadcast')->insert([
+                            'id_inquiry' => $id_inquiry,
+                            'id_itdp_company_users' => $array[$k],
+                            'status' => 1,
+                            'created_at' => $datenow,
+                        ]);
+
+                        $admin = DB::table('itdp_admin_users')->where('id', $id_user)->first();
+                        $notif = DB::table('notif')->insert([
+                            'dari_nama' => $admin->name,
+                            'dari_id' => $id_user,
+                            'untuk_nama' => getCompanyName($array[$k]),
+                            'untuk_id' => $array[$k],
+                            'keterangan' => 'New Inquiry By '.$admin->name.' with Subyek  "'.$inquiry->subyek_en.'"',
+                            'url_terkait' => 'inquiry',
+                            'status_baca' => 0,
+                            'waktu' => $datenow,
+                            'to_role' => 2,
+                        ]);
+
+                        $data = [
+                            'email' => $untuk->email,
+                            'type' => "eksportir",
+                            'company' => getCompanyName($array[$k]),
+                            'dari' => auth::user()->name,
+                            'bu' =>$company->badanusaha,
+                        ];
+
+                        Mail::send('inquiry.mail.sendToEksportir', $data, function ($mail) use ($data, $users) {
+                            $mail->subject('Inquiry Information');
+                            $mail->to($data['email']);
+                        });
+
+
+                $users_admin = [];
+                $adminnya = DB::table('itdp_admin_users')->where('id', $id_user)->first();
+                array_push($users_admin, env('MAIL_USERNAME','no-reply@inaexport.id'));
+
+                
+            }else{
+                   
+            }
+        }
+			if($upd){
+                    $meta = [
+                    'code' => 200,
+                    'message' => 'Success',
+                    'status' => 'OK'
+					];
+					$data = '';
+					$res['meta'] = $meta;
+					return response($res);
+                }
+                else{
+                    $meta = [
+						'code' => 100,
+						'message' => 'Unauthorized',
+						'status' => 'Failed'
+					];
+					$data = "";
+					$res['meta'] = $meta;
+					return $res;
+                }
+		
+	}
+		
+	
 
     
 
