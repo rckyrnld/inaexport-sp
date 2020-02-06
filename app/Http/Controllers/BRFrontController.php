@@ -474,7 +474,7 @@ class BRFrontController extends Controller
 			('".$idb."','".$request->catatan."','".$date."','".$request->idc."','".$request->ide."','".$request->idd."','".$idq."','".$file."')");
 			
 			if($request->ide == 1){
-			$ket = "Super Admin Upload Payment Information On Buying Request";
+			$ket = getAdminName(auth::user()->id). " Upload Payment Information On Buying Request";
 			$it = $request->idq;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
@@ -503,7 +503,7 @@ class BRFrontController extends Controller
                 //Tinggal Ganti Email1 dengan email kemendag
 
 			}else{
-			$ket = "Representative Upload Payment Information On Buying Request";
+			$ket = getAdminName(auth::user()->id). " Upload Payment Information On Buying Request";
 			$it = $request->idq;
 			$it2 = $request->idq."/".$request->idb;
 			$insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	

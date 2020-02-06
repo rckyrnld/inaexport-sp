@@ -81,17 +81,35 @@
                                     <div class="table-responsive">
                                         <table id="tableperwakilan" class="table  table-bordered table-striped">
                                             <thead class="text-white" style="background-color: #1089ff;">
-                                                <tr>
-                                                  <th width="5%">
+                                            <tr>
+                                                <th width="5%">
                                                     <center>No</center>
-                                                  </th>
-                                                  <th>
-                                                    <center>Name</center>
-                                                  </th>
-                                                  <th>
+                                                </th>
+                                                <th>
+                                                    <center>Representative Name</center>
+                                                </th>
+                                                <th>
+                                                    <center>Category Product</center>
+                                                </th>
+                                                <th>
+                                                    <center>Subject</center>
+                                                </th>
+                                                <th>
+                                                    <center>Date</center>
+                                                </th>
+                                                <th>
+                                                    <center>Kind Of Subject</center>
+                                                </th>
+                                                <th width="15%">
+                                                    <center>Messages</center>
+                                                </th>
+                                                <th>
+                                                    <center>Status</center>
+                                                </th>
+                                                <th>
                                                     <center>Action</center>
-                                                  </th>
-                                                </tr>
+                                                </th>
+                                            </tr>
                                             </thead>
                                         </table>
                                       </div>
@@ -226,6 +244,12 @@
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'name', name: 'name'},
+                {data: 'category', name: 'category'},
+                {data: 'subject', name: 'subject'},
+                {data: 'date', name: 'date'},
+                {data: 'kos', name: 'kos'},
+                {data: 'msg', name: 'msg'},
+                {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });

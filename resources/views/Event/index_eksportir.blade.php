@@ -17,7 +17,7 @@
                                     <th>Event Name</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
-                                    <th>Event Comodity</th>
+{{--                                    <th>Event Comodity</th>--}}
                                     <th>Action</th>
                                 </thead>
                                 <tbody>
@@ -28,7 +28,7 @@
                                         <td>{{$ed->event_name_en}}</td>
                                         <td>{{getTanggalIndo($ed->start_date)}}</td>
                                         <td>{{getTanggalIndo($ed->end_date)}}</td>
-                                        <td>{{getEventComodity($ed->event_comodity)}}</td>
+{{--                                        <td>{{getEventComodity($ed->event_comodity)}}</td>--}}
                                         <td>
                                             <a href="{{url('/')}}/event/show_detail/{{$ed->id}}" class="btn btn-primary" title="Join"><i class="fa fa-plus"></i></a>
                                         </td>

@@ -39,6 +39,7 @@ class InquiryEksController extends Controller
     {
         if(Auth::guard('eksmp')->user()){
             $id_user = Auth::guard('eksmp')->user()->id;
+//            dd($id_user);
 //            dd($jenis);
 
             if($jenis == 1){
@@ -48,7 +49,9 @@ class InquiryEksController extends Controller
                     ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
                     ->where('csc_inquiry_br.status', 1)
-                    ->orderBy('csc_inquiry_br.date', 'DESC')
+                    ->orderBy('csc_inquiry_br.', 'DESC')
+//                    ->orderBy('csc_inquiry_br.date', 'DESC')
+                    ->orderBy('csc_inquiry_br.created_at', 'DESC')
                     ->get();
 //                dd($importir);
                 foreach ($importer as $key) {
@@ -60,7 +63,8 @@ class InquiryEksController extends Controller
                     ->selectRaw('a.id, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.status')
                     ->where('b.id_itdp_company_users', '=', $id_user)
                     ->where('b.status', 1)
-                    ->orderBy('b.created_at', 'DESC')
+//                    ->orderBy('a.date', 'DESC')
+                    ->orderBy('a.created_at', 'DESC')
                     ->get();
                 foreach ($perwakilan as $key2) {
                     array_push($user, $key2);
@@ -72,7 +76,8 @@ class InquiryEksController extends Controller
                     ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
                     ->where('csc_inquiry_br.status', '!=', 1)
-                    ->orderBy('csc_inquiry_br.date', 'DESC')
+//                    ->orderBy('csc_inquiry_br.date', 'DESC')
+                    ->orderBy('csc_inquiry_br.created_at', 'DESC')
                     ->get();
                 foreach ($importer as $key) {
                     array_push($user, $key);
@@ -82,7 +87,8 @@ class InquiryEksController extends Controller
                     ->selectRaw('a.id, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.status')
                     ->where('b.id_itdp_company_users', '=', $id_user)
                     ->where('b.status', '!=', 1)
-                    ->orderBy('b.created_at', 'DESC')
+//                    ->orderBy('a.date', 'DESC')
+                    ->orderBy('a.created_at', 'DESC')
                     ->get();
                 foreach ($perwakilan as $key2) {
                     array_push($user, $key2);

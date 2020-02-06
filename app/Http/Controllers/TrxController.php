@@ -104,8 +104,8 @@ class TrxController extends Controller
                         $caripembuat = DB::select("select * from itdp_company_users where id='".$request->id_pembuat."'");
                         foreach($caripembuat as $cp){ $mailimp = $cp->email; }
                         $ket = "Transaction Created by ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id);
-                        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
-                        ('3','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getCompanyNameImportir($request->id_pembuat)."','".$request->id_pembuat."','".$ket."','detailtrx','".$request->id_transaksi."','".$date."','0')
+                        $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,waktu,status_baca) values	
+                        ('3','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getCompanyNameImportir($request->id_pembuat)."','".$request->id_pembuat."','".$ket."','trx_list','".$date."','0')
                         ");
 
                         $ket2 = "Transaction Created by ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id);
