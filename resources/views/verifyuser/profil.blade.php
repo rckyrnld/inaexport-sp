@@ -71,66 +71,110 @@ body {font-family: Arial;}
            {{ csrf_field() }}
 
 <input type="hidden" name="id_role" value="<?php echo $ida; ?>">
-<input type="hidden" name="id_user" value="<?php echo $idb; ?>">
+<input type="hidden" name="id_user" id="id_user" value="<?php echo $idb; ?>">
 <div id="London" class="tabcontent" style="display:block;">
    <div class="box-body">
    <?php 
    $ca = DB::select("select * from itdp_company_users where id='$idb' limit 1");
    foreach($ca as $rhj){
    ?>
-                            <div class="form-row">
-                                <div class="form-group col-sm-2">
-                                    <label><b>Username</b></label>
-                                   
-                                </div>
-								<div class="form-group col-sm-4">
-                                    <input type="text" value="<?php echo $rhj->username; ?>" name="username" id="username"
-                                           class="form-control" >
-                                   
-                                </div>
+	   <div class="row">
+		   <div class="col-md-6">
+			   <div class="form-row">
+				   <div class="form-group col-sm-4">
+					   <label><b>Username</b></label>
 
-                               
-                            </div>
-							 <div class="form-row">
-                                <div class="form-group col-sm-2">
-                                    <label><b>Email</b></label>
-                                   
-                                </div>
-								<div class="form-group col-sm-4">
-                                    <input type="email" value="<?php echo $rhj->email; ?>" name="email" id="email"
-                                           class="form-control" >
-                                   
-                                </div>
+				   </div>
+				   <div class="form-group col-sm-8">
+					   <input type="text" value="<?php echo $rhj->username; ?>" name="username" id="username"
+							  class="form-control" >
 
-                               
-                            </div>
-							<div class="form-row">
-                                <div class="form-group col-sm-2">
-                                    <label><b>Password</b></label>
-                                   
-                                </div>
-								<div class="form-group col-sm-4">
-                                    <input type="password" value="" name="password" id="password"
-                                           class="form-control" placeholder="##########" >
-                                   
-                                </div>
+				   </div>
 
-                               
-                            </div>
-							<div class="form-row">
-                                <div class="form-group col-sm-2">
-                                    <label><b>Re-Password</b></label>
-                                   
-                                </div>
-								<div class="form-group col-sm-4">
-                                    <input type="password" value="" name="repass" id="repass"
-                                           class="form-control" placeholder="##########">
-                                   
-                                </div>
 
-                               
-                            </div>
-   <?php } ?>
+			   </div>
+			   <div class="form-row">
+				   <div class="form-group col-sm-4">
+					   <label><b>Email</b></label>
+
+				   </div>
+				   <div class="form-group col-sm-8">
+					   <input type="email" value="<?php echo $rhj->email; ?>" name="email" id="email"
+							  class="form-control" >
+
+				   </div>
+
+
+			   </div>
+			   <div class="form-row">
+				   <div class="form-group col-sm-4">
+					   <label><b>Password</b></label>
+
+				   </div>
+				   <div class="form-group col-sm-8">
+					   <input type="password" value="" name="password" id="password"
+							  class="form-control" placeholder="##########" >
+
+				   </div>
+
+
+			   </div>
+			   <div class="form-row">
+				   <div class="form-group col-sm-4">
+					   <label><b>Re-Password</b></label>
+
+				   </div>
+				   <div class="form-group col-sm-8">
+					   <input type="password" value="" name="repass" id="repass"
+							  class="form-control" placeholder="##########">
+
+				   </div>
+
+
+			   </div>
+		   </div>
+
+   <?php }
+   		if($ida == 2){
+			$ceq = DB::select("select b.*, a.id as id_user, a.foto_profil from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='$idb' limit 1");
+		}else{
+			$ceq = DB::select("select b.*, a.id as id_user, a.foto_profil from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='$idb' limit 1");
+		}
+		foreach($ceq as $ryu){
+	?>
+	   <div class="col-md-6">
+		   <center>
+			   <div id="ambil_ttd_1" style="width: 50%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+				   <button type="button" id="qrcode" style="width: 100%;" class="img_upl">
+					   <?php
+					   //for qrcode
+					   $fileqrcode = '../public/uploads/qrcode/qrcode_2_'.$ryu->id_user.'.png';
+					   $qrcode = 'uploads/qrcode/profile2.png';
+					   if(file_exists($fileqrcode)) {
+					   $qrcode = 'uploads/qrcode/qrcode_2_'.$ryu->id_user.'.png';
+					   ?>
+					   		<br><img src="../../{{$qrcode}}" id="qrcode_ambil1" style="width: 80%;"/>
+					   <?php
+					   }else{
+					   ?>
+					   		<br><img src="../../{{$qrcode}}" id="qrcode_ambil1" style="width: 80%;"/>
+					   <?php
+					   }
+					   ?>
+				   </button>
+				   <a class="btn btn-md btn-primary" id="gen_qrcode" onclick="qrcode()" style="display: none;"></a>
+				   {{--													<input type="file" id="image_1" name="image_1" accept="image/*" style="display: none;" />--}}
+				   <br><br>
+				   <center><span style="font-size: 17px;"><b>QR Code</b></span></center>
+			   </div>
+			   <br>
+			   <span style="color: red;">* Click image to Generate the QRCode</span>
+		   </center>
+	   </div>
+	   <?php
+	   }
+	   ?>
+	   </div>
 	</div>
 </div>
 
@@ -517,6 +561,22 @@ function ceknpwp(){
 }
 </script>
 <script>
+	$("#qrcode").click(function() {
+		$("#gen_qrcode").click();
+	});
+	function qrcode() {
+		var id = $('#id_user').val();
+		console.log(id);
+
+		$.ajax({
+			type: 'GET',
+			url: "{{route('eksportir.qrcode')}}",
+			data: { code: id },
+		}).then(function (data) {
+			$("#qrcode_ambil1").attr('src','../../uploads/qrcode/qrcode_2_'+id+'.png');
+		});
+
+	}
 $(document).ready(function () {
 	$('.select2').select2();
 	$("#img_1").click(function() {

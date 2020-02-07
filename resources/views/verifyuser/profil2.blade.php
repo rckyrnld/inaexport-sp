@@ -253,7 +253,7 @@
                                                     </center>
                                                     <?php } ?>
                                                     <br>
-                                                    <input type="file" class="form-control" name="foto_profil"
+                                                    <input type="file" class="form-control upload1" name="foto_profil"
                                                            id="foto_profil">
                                                 </div>
                                             </div>
@@ -264,7 +264,7 @@
                                                 </div>
                                                 <div class="form-group col-sm-8">
                                                     <input type="file" name="filependukung"
-                                                           id="filependukung" class="form-control">
+                                                           id="filependukung" class="form-control upload1" >
                                                 </div>
                                             </div>
 											
@@ -453,6 +453,7 @@
                                     document.getElementById(cityName).style.display = "block";
                                     evt.currentTarget.className += " active";
                                 }
+
                             </script>
 
 

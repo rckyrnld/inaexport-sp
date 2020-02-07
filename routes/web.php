@@ -184,6 +184,7 @@ Route::get('/hapusperwakilan/{id}', 'VerifyuserController@hapusperwakilan');
 Route::get('/editperwakilan/{id}', 'VerifyuserController@editperwakilan');
 Route::get('/saveverify/{id}', 'VerifyuserController@saveverify');
 Route::get('/profil/{id}/{id2}', 'VerifyuserController@profil');
+Route::get('/profil_front/{id}/{id2}', 'VerifyuserController@profil_front');
 Route::get('/profildoc/{id}/{id2}', 'VerifyuserController@profildoc');
 Route::get('/profil', 'VerifyuserController@profilb');
 Route::get('/profildoc', 'VerifyuserController@profildocb');
@@ -820,4 +821,5 @@ Route::get('/hapus-catper/{id}', 'Master\CatperController@hapus');
 
 Route::get('/type', 'VerifyuserController@type')->name('admin.perwakilan.type');
 
+Route::get('/qrcode','VerifyuserController@qrcode')->name('eksportir.qrcode');
 //end mindy

@@ -90,7 +90,7 @@ if($profile->foto_profil != NULL){
                                 <img id="thumbnail" src="{{asset($img1)}}" style="width: 220px; height: 225px; ">
                                 <p style="padding: 6px; padding-top: 10px;">
                                     <span class="btn btn-primary btn-file" style="border-radius: 0px;">
-                                        Upload <input type="file" name="avatar" accept="image/*" id="avatar" />
+                                        Upload <input type="file" name="avatar" accept="image/*" id="avatar" class="upload1" />
                                     </span>
                                 </p>
                             </div>
@@ -357,4 +357,16 @@ if($profile->foto_profil != NULL){
       var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
       return regex.test(email);
     }
+
+    $('.upload1').on('change', function(evt){
+        var size = this.files[0].size;
+        if(size > 5000000){
+        //     if(size > 20000){
+            $(this).val("");
+            alert('image size must less than 5MB');
+        }
+        else{
+
+        }
+    })
 </script>

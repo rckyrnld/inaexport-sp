@@ -70,7 +70,7 @@
                             </div>
                             <div class="col-md-4">
                                 @if($mode == "add" || $mode == "edit")
-                                <input type="file" class="form-control" id="file" name="file" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,.ppt,.pptx,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,.pdf,application/pdf" required><br>
+                                <input type="file" class="form-control upload1" id="file" name="file" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,.ppt,.pptx,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,.pdf,application/pdf" required><br>
                                 @endif
                                 @if($data != NULL)
                                     @if($data->file == "")
@@ -117,6 +117,17 @@
 </div>
 
 <script type="text/javascript">
+    $('.upload1').on('change', function(evt){
+        var size = this.files[0].size;
+        if(size > 5000000){
+        //     if(size > 20000){
+            $(this).val("");
+            alert('image size must less than 5MB');
+        }
+        else{
+
+        }
+    })
     $(document).ready(function () {
         CKEDITOR.replace('messages');
 

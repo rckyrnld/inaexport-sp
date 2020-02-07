@@ -104,7 +104,7 @@
 											<div class="form-group col-sm-4">
 												<?php
 												if(empty(Auth::user()->name)){  ?>
-												<input type="file" name="npwpfile" id="npwpfile" class="form-control" >
+												<input type="file" name="npwpfile" id="npwpfile" class="form-control upload1">
 												<?php if($ryu->uploadnpwp == null){
 													echo "";
 												}else { ?>
@@ -142,7 +142,7 @@
 
 												<?php
 												if(empty(Auth::user()->name)){  ?>
-												<input type="file" name="tdpfile" id="tdpfile" class="form-control" >
+												<input type="file" name="tdpfile" id="tdpfile" class="form-control upload1">
 												<?php if($ryu->uploadtdp == null){
 													echo "";
 												}else { ?>
@@ -179,7 +179,7 @@
 
 												<?php
 												if(empty(Auth::user()->name)){  ?>
-												<input type="file" name="siupfile" id="siupfile" class="form-control" >
+												<input type="file" name="siupfile" id="siupfile" class="form-control upload1">
 												<?php if($ryu->uploadsiup == null){
 													echo "";
 												}else { ?>
@@ -247,7 +247,7 @@
 											<div class="form-group col-sm-4">
 												<?php
 												if(empty(Auth::user()->name)){  ?>
-												<input type="file" value="" name="doc" id="doc" class="form-control" >
+												<input type="file" value="" name="doc" id="doc" class="form-control upload1">
 												<?php if($ryu->doc == null){
 													echo "";
 												}else { ?>
@@ -387,5 +387,19 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$('.upload1').on('change', function(evt){
+		var size = this.files[0].size;
+		if(size > 5000000){
+		// if(size > 20000){
+			$(this).val("");
+			alert('image size must less than 5MB');
+		}
+		else{
+
+		}
+	})
+</script>
 
 @include('footer')
