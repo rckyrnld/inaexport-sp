@@ -34,12 +34,8 @@ class ManagementUserController extends Controller
         $checking = DB::table('csc_download_research_corner')->where('id_itdp_profil_eks', $id_profil)->where('id_research_corner', $id_reseach)->first();
 //        dd($checking);
         if ($checking) {
-            $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
-                ->orderby('a.created_at', 'desc')
-                ->distinct('a.id_research_corner', 'a.created_at')
-                ->select('b.*', 'a.id_research_corner', 'a.created_at')
-                ->where('a.id_research_corner', '=', $id_reseach)
-//            ->limit(10)
+            $research = DB::table('csc_research_corner')
+                ->where('id', '=', $id_reseach)
                 ->get();
             foreach ($research as $img) {
                 $coba = $img->exum;
@@ -55,12 +51,8 @@ class ManagementUserController extends Controller
             $res['data'] = $data;
             return response($res);
         } else {
-            $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
-                ->orderby('a.created_at', 'desc')
-                ->distinct('a.id_research_corner', 'a.created_at')
-                ->select('b.*', 'a.id_research_corner', 'a.created_at')
-                ->where('a.id_research_corner', '=', $id_reseach)
-//            ->limit(10)
+            $research = DB::table('csc_research_corner')
+                ->where('id', '=', $id_reseach)
                 ->get();
             foreach ($research as $img) {
                 $coba = $img->exum;
