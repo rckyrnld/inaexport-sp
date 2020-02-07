@@ -1150,7 +1150,12 @@ class BuyingreqController extends Controller
             $data1 = $aja1->id_pembuat;
             $data3 = $aja1->by_role;
         }
-        $cari2 = DB::select("select email from itdp_company_users where id='" . $data1 . "'");
+        $cr1 = DB::select("select email from itdp_company_users where id='" . $data1 . "'");
+		if(count($cr1) == 0){
+			$cari2 = DB::select("select email from itdp_admin_users where id='" . $data1 . "'");
+		}else{
+			$cari2 = DB::select("select email from itdp_company_users where id='" . $data1 . "'");
+		}
         foreach ($cari2 as $aja2) {
             $data2 = $aja2->email;
         }
