@@ -265,7 +265,7 @@ body {font-family: Arial;}
 		<label><b>Add attachment (Relevant to  a request)</b></label>
 		</div>
 		<div class="form-group col-sm-12">
-			<input type="file" value="" name="doc" id="doc" class="form-control">
+			<input type="file" value="" name="doc" id="doc" class="form-control upload1">
 		</div>
 		
 	</div>
@@ -287,6 +287,18 @@ body {font-family: Arial;}
 </form>
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script>
+	$('.upload1').on('change', function(evt){
+		var size = this.files[0].size;
+		if(size > 5000000){
+		// if(size > 20000){
+			$(this).val("");
+			alert('image size must less than 5MB');
+		}
+		else{
+
+		}
+	});
+
     function formatAmountNoDecimals( number ) {
     var rgx = /(\d+)(\d{3})/;
     while( rgx.test( number ) ) {

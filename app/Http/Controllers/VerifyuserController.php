@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Mail;
+use QrCode;
+use URL;
 
 class VerifyuserController extends Controller
 {
@@ -396,6 +398,16 @@ class VerifyuserController extends Controller
             return redirect('/login');
         }
 	}
+
+    public function profil_front($id,$id2)
+    {
+       $pageTitle = "Exporter Profile";
+       $tx = "Exporter";
+       $ida = $id;
+       $idb = $id2;
+       return view('verifyuser.profil_front', compact('pageTitle','tx','ida','idb'));
+
+    }
 
     public function profilb()
     {
@@ -884,6 +896,13 @@ class VerifyuserController extends Controller
 //
 //            }
         }
+
+        if(Auth::guard('eksmp')->user()){
+//            return redirect('profil/'.$id_role.'/'.$id_user)->with('success','Success Update Data');
+            return redirect('/home')->with('success','Success Update Data');
+        }else{
+            return redirect('/verifyuser')->with('success','Success Update Data');
+        }
     }
 	
 	public function simpan_kontak(Request $request)
@@ -1057,5 +1076,11 @@ if ($err) {
 		// var_dump($r->status);
 		*/
 	}
-    
+
+	public function qrcode(Request $request){
+//        {{url('assets')}}/libs/bootstrap/dist/css/bootstrap.min.css
+        QrCode::format('png')->margin(0)->size(100)->generate( URL::to('/profil_front/2/'.$request->code.''),'../public/uploads/qrcode/qrcode_2_'.$request->code.'.png');
+//        QrCode::format('png')->margin(0)->size(100)->generate('tokopedia.com','C:\Users\Programmer-16\Desktop\mindy\dokumen kemendag\backup sementara\event');
+
+    }
 }

@@ -122,7 +122,8 @@ class EksProductController extends Controller
             ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
             ->where('itdp_company_users.status', 1)
             ->where('itdp_company_users.id_profil', $id)
-            ->orderBy('csc_product_single.id_itdp_company_user', 'ASC')
+            ->orderBy('csc_product_single.created_at', 'DESC')
+//            ->orderBy('csc_product_single.id_itdp_company_user', 'ASC')
             ->get();
 
             return \Yajra\DataTables\DataTables::of($user)

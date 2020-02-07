@@ -167,7 +167,11 @@
 {{--                                        </div>--}}
 {{--                                    </div><br>--}}
                                     <div class="row">
-                                        <label for="code" class="col-md-3"><b>Image</b></label>
+                                        <div class="col-md-3">
+                                            <label for="code" ><b>Image</b></label><br>
+                                            <label style="color: red">*maksimum file size 5MB</label>
+                                        </div>
+
                                         <div class="col-md-2">
                                             <div id="ambil_ttd_1" style="width: 100%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
                                                 <button type="button" id="img_1" style="width: 100%; height: 120px;" class="img_upl">

@@ -54,7 +54,7 @@
                  <label class="control-label col-md-3">Cover</label>
                  <div class="col-md-7">
                     @if($page != 'view')
-                     <input type="file" class="form-control" name="cover" accept="image/*" {{$view}} @if($page == 'create') @endif/>
+                     <input type="file" class="form-control upload1" name="cover" accept="image/*" {{$view}} @if($page == 'create') @endif/>
                      <input type="hidden" name="lastest_cover" @isset($data) value="{{ $data->cover }}" @endisset>
                     @else 
                       <a href="{{ url('/').'/uploads/Research Corner/Cover/'.$data->cover}}" target="_blank" class="btn btn-outline-secondary" style="width: 30%"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Cover</a>
@@ -125,7 +125,7 @@
                  <label class="control-label col-md-3">File</label>
                  <div class="col-md-7">
                     @if($page != 'view')
-                     <input type="file" class="form-control" name="file" {{$view}} @if($page == 'create') required @endif>
+                     <input type="file" class="form-control upload1" name="file" {{$view}} @if($page == 'create') required @endif>
                      <input type="hidden" name="lastest_file" @isset($data) value="{{ $data->exum }}" @endisset>
                     @else 
                       <a href="{{ url('/').'/uploads/Research Corner/File/'.$data->exum}}" target="_blank" class="btn btn-outline-secondary" style="width: 30%"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Document</a>
@@ -175,6 +175,18 @@
 
 @include('footer')
 <script type="text/javascript">
+    $('.upload1').on('change', function(evt){
+        var size = this.files[0].size;
+        if(size > 5000000){
+        //     if(size > 20000){
+            $(this).val("");
+            alert('image size must less than 5MB');
+        }
+        else{
+
+        }
+    });
+
   $(document).ready(function () {
     var page = "{{$page}}";
     
