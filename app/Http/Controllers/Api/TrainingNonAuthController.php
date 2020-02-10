@@ -30,6 +30,7 @@ class TrainingNonAuthController extends Controller
                 , 'training_admin.location_chn', 'training_admin.status', 'training_admin.param', 'training_admin.created_at'
                 , 'contact_person.id as id_contact', 'contact_person.name', 'contact_person.email', 'contact_person.phone', 'contact_person.type', 'contact_person.id_type')
             ->where('training_admin.status', '=', '1')
+            ->where('contact_person.type', '=', 'training')
             ->get();
 //        dd($dataTraining);
         if (count($dataTraining) > 0) {
