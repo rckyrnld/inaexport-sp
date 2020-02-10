@@ -255,17 +255,81 @@ class InquiryController extends Controller
     {
 //        dd($request);
         $id_user = $request->id_user;
+
+        $perwakilan = DB::table('csc_inquiry_br as a')
+            ->join('csc_inquiry_broadcast as b', 'b.id_inquiry', '=', 'a.id')
+            ->selectRaw('a.*, b.status,b.id as id_product')
+            ->where('b.id_itdp_company_users', '=', $id_user)
+//            ->where('b.status', 1)
+//                    ->orderBy('a.date', 'DESC')
+            ->orderBy('a.created_at', 'DESC')
+            ->get();
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($perwakilan); $i++) {
+            $jsonResult[$i]["id"] = $perwakilan[$i]->id;
+            $jsonResult[$i]["id_pembuat"] = $perwakilan[$i]->id_pembuat;
+            $jsonResult[$i]["type"] = $perwakilan[$i]->type;
+            $jsonResult[$i]["id_csc_prod_cat"] = $perwakilan[$i]->id_csc_prod_cat;
+            $jsonResult[$i]["id_csc_prod_cat_level1"] = $perwakilan[$i]->id_csc_prod_cat_level1;
+            $jsonResult[$i]["id_csc_prod_cat_level2"] = $perwakilan[$i]->id_csc_prod_cat_level2;
+            $jsonResult[$i]["jenis_perihal_en"] = $perwakilan[$i]->jenis_perihal_en;
+            $jsonResult[$i]["jenis_perihal_in"] = $perwakilan[$i]->jenis_perihal_in;
+            $jsonResult[$i]["jenis_perihal_chn"] = $perwakilan[$i]->jenis_perihal_chn;
+            $jsonResult[$i]["id_mst_country"] = $perwakilan[$i]->id_mst_country;
+            $jsonResult[$i]["messages_en"] = $perwakilan[$i]->messages_en;
+            $jsonResult[$i]["messages_in"] = $perwakilan[$i]->messages_in;
+            $jsonResult[$i]["messages_chn"] = $perwakilan[$i]->messages_chn;
+            $jsonResult[$i]["subyek_en"] = $perwakilan[$i]->subyek_en;
+            $jsonResult[$i]["subyek_in"] = $perwakilan[$i]->subyek_in;
+            $jsonResult[$i]["subyek_chn"] = $perwakilan[$i]->subyek_chn;
+            $jsonResult[$i]["to"] = $perwakilan[$i]->id_pembuat;
+            $jsonResult[$i]["status"] = $perwakilan[$i]->status;
+            $jsonResult[$i]["date"] = $perwakilan[$i]->date;
+            $jsonResult[$i]["created_at"] = $perwakilan[$i]->created_at;
+            $jsonResult[$i]["updated_at"] = $perwakilan[$i]->updated_at;
+            $jsonResult[$i]["duration"] = $perwakilan[$i]->duration;
+            $jsonResult[$i]["prodname"] = $perwakilan[$i]->prodname;
+            $jsonResult[$i]["due_date"] = $perwakilan[$i]->due_date;
+            $jsonResult[$i]["id_product"] = $perwakilan[$i]->id_product;
+
+            //echo $user[$i]->id_pembuat;die();
+//            $id_profil = DB::table('itdp_admin_users')->where('id', $user[$i]->id_pembuat)->first()->id_profil;
+            $id_profil = $perwakilan[$i]->id_pembuat;
+
+            //
+//            $id_role = DB::table('itdp_admin_users')->where('id', $perwakilan[$i]->id_pembuat)->first()->id_role;
+            //	dd($id_role);
+            $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $id_profil)->first()->name ;
+
+            //            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
+//            $jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $perwakilan[$i]->id_csc_prod_cat)->first()->nama_kategori_en;
+//            $jsonResult[$i]["csc_product_level1_desc"] = ($perwakilan[$i]->id_csc_prod_cat_level1) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level1)->first()->nama_kategori_en : null;
+//            $jsonResult[$i]["csc_product_level2_desc"] = ($perwakilan[$i]->id_csc_prod_cat_level2) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level2)->first()->nama_kategori_en : null;
+        }
+
+//
+//        $user = DB::table('csc_inquiry_br')
+//            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_inquiry_br.id_pembuat')
+//            ->join('itdp_profil_imp', 'itdp_profil_imp.id', '=', 'itdp_company_users.id_profil')
+//            ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
+//            ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product, csc_product_single.id_itdp_profil_eks, csc_product_single.prodname_en')
+//            ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
+////            ->where('csc_inquiry_br.status', 1)
+//            ->orderBy('csc_inquiry_br.created_at', 'DESC')
+//            ->get();
+
         $user = DB::table('csc_inquiry_br')
-            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_inquiry_br.id_pembuat')
-            ->join('itdp_profil_imp', 'itdp_profil_imp.id', '=', 'itdp_company_users.id_profil')
             ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
             ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product, csc_product_single.id_itdp_profil_eks, csc_product_single.prodname_en')
             ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
-//            ->where('csc_inquiry_br.status', 1)
+            ->where('csc_inquiry_br.status', 1)
+            // ->orderBy('csc_inquiry_br.', 'DESC')
+//                    ->orderBy('csc_inquiry_br.date', 'DESC')
             ->orderBy('csc_inquiry_br.created_at', 'DESC')
             ->get();
-//        dd($user);
-        $jsonResult = array();
+
+//        $jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_pembuat"] = $user[$i]->id_pembuat;
@@ -293,20 +357,28 @@ class InquiryController extends Controller
             $jsonResult[$i]["due_date"] = $user[$i]->due_date;
             $jsonResult[$i]["id_product"] = $user[$i]->id_product;
 
-			//echo $user[$i]->id_pembuat;die();
+            //echo $user[$i]->id_pembuat;die();
             $id_profil = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_profil;
-            // 
+            //
             $id_role = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_role;
-			//	dd($id_role);
+            //	dd($id_role);
             $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
 
             //            $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
             $jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat)->first()->nama_kategori_en;
             $jsonResult[$i]["csc_product_level1_desc"] = ($user[$i]->id_csc_prod_cat_level1) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level1)->first()->nama_kategori_en : null;
             $jsonResult[$i]["csc_product_level2_desc"] = ($user[$i]->id_csc_prod_cat_level2) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level2)->first()->nama_kategori_en : null;
-      }
+        }
+
+
+//        return response($jsonResult);
+
+
+
+//        dd($user);
+
 //        dd($jsonResult);
-        if (count($user) > 0) {
+        if (count($user) > 0 || count($perwakilan) > 0) {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
