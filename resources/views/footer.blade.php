@@ -22,6 +22,7 @@ function closenotif(x){
 </script>
 
 <!-- ############ SWITHCHER START-->
+<!--
 <div id="setting">
   <div class="setting dark-white rounded-bottom" id="theme">
     <a href="#" data-toggle-class="active" data-target="#theme" class="dark-white toggle">
@@ -114,6 +115,7 @@ function closenotif(x){
     </div>
   </div>
 </div>
+-->
 <!-- ############ SWITHCHER END-->
 
 
