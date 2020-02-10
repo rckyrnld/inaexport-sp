@@ -145,16 +145,17 @@
 														<button type="button" id="qrcode" style="width: 100%;" class="img_upl">
 															<?php
 															//for qrcode
-															$fileqrcode = '../public/uploads/qrcode/qrcode_2_'.$ryu->id_user.'.png';
+															$fileqrcode =  public_path().'/uploads/qrcode/qrcode_2_'.$ryu->id_user.'.png';
 															$qrcode = 'uploads/qrcode/profile2.png';
 															if(file_exists($fileqrcode)) {
 															$qrcode = 'uploads/qrcode/qrcode_2_'.$ryu->id_user.'.png';
 															?>
-																<br><img src="../public/{{$qrcode}}" id="qrcode_ambil1" style="width: 80%;"/>
+																<br><img src="{{ URL::to('/') }}/{{$qrcode}}" id="qrcode_ambil1" style="width: 80%;"/>
 															<?php
 															}else{
 															?>
-																<br><img src="../public/{{$qrcode}}" id="qrcode_ambil1" style="width: 80%;"/>
+																<input type="text" value="{{$fileqrcode}}">
+																<br><img src="{{ URL::to('/') }}/{{$qrcode}}" id="qrcode_ambil1" style="width: 80%;"/>
 															<?php
 															}
 															?>

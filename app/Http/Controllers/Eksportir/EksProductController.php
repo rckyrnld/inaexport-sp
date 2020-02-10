@@ -663,7 +663,7 @@ class EksProductController extends Controller
         $level = $request->level;
         if($level == 1){
             $result = '';
-            $catprod = DB::table('csc_product')->where('level_1',0)->where('level_2',0)->where('nama_kategori_en',  'like', '%' . $request->text . '%')->orderBy('nama_kategori_en', 'ASC')->get();
+            $catprod = DB::table('csc_product')->where('level_1',0)->where('level_2',0)->where('nama_kategori_en',  'ilike', '%' . $request->text . '%')->orderBy('nama_kategori_en', 'ASC')->get();
             if(count($catprod) > 0){
                 foreach ($catprod as $key => $value) {
                     $nama = "'".$value->nama_kategori_en."'";
@@ -675,7 +675,7 @@ class EksProductController extends Controller
         }
         elseif($level == 2){
             $result = '';
-            $catprod = DB::table('csc_product')->where('level_1', $request->parent)->where('level_2',0)->where('nama_kategori_en',  'like', '%' . $request->text . '%')->orderBy('nama_kategori_en', 'ASC')->get();
+            $catprod = DB::table('csc_product')->where('level_1', $request->parent)->where('level_2',0)->where('nama_kategori_en',  'ilike', '%' . $request->text . '%')->orderBy('nama_kategori_en', 'ASC')->get();
             if(count($catprod) > 0){
                 foreach ($catprod as $key => $value) {
                     $nama = "'".$value->nama_kategori_en."'";
@@ -686,7 +686,7 @@ class EksProductController extends Controller
             }
         }else{
             $result = '';
-            $catprod = DB::table('csc_product')->where('level_1', $request->parent2)->where('level_2', $request->parent)->where('nama_kategori_en',  'like', '%' . $request->text . '%')->orderBy('nama_kategori_en', 'ASC')->get();
+            $catprod = DB::table('csc_product')->where('level_1', $request->parent2)->where('level_2', $request->parent)->where('nama_kategori_en',  'ilike', '%' . $request->text . '%')->orderBy('nama_kategori_en', 'ASC')->get();
             if(count($catprod) > 0){
                 foreach ($catprod as $key => $value) {
                     $nama = "'".$value->nama_kategori_en."'";
@@ -716,7 +716,7 @@ class EksProductController extends Controller
             $search = $request->q;
             $hscode->where(function ($query) use ($search) {
                 $query->where('fullhs', 'like', '%' . $search . '%')
-                    ->orwhere('desc_eng','like','%'.$search.'%');
+                    ->orwhere('desc_eng','ilike','%'.$search.'%');
             });
             //          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
 //            $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');

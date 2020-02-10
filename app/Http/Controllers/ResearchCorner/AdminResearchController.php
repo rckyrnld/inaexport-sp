@@ -303,7 +303,7 @@ class AdminResearchController extends Controller
                 $search = $request->q;
                 $hscode->where(function ($query) use ($search) {
                     $query->where('fullhs', 'like', '%' . $search . '%')
-                        ->orwhere('desc_eng','like','%'.$search.'%');
+                        ->orwhere('desc_eng','ilike','%'.$search.'%');
                 });
 //          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
 //          $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake desc_eng
