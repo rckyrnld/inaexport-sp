@@ -1,6 +1,17 @@
 <?php // echo bcrypt('abc');die(); ?>
 @include('header')
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5e40ad0fac2cac001a00d45a&product=inline-share-buttons" async="async"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+	.st-custom-button[data-network] {
+		/*background-color: #9EEC46;*/
+		display: inline-block;
+		padding: 5px 10px;
+		cursor: pointer;
+		font-weight: bold;
+		color: #fff;
+	}
+</style>
 <div class="padding">
 	<div class="row">
 		<div class="col-md-12">
@@ -154,8 +165,15 @@
 														<center><span style="font-size: 17px;"><b>QR Code</b></span></center>
 													</div>
 													<br>
-													<span style="color: red;">* Click image to Generate the QRCode</span>
-												</center>
+													<span style="color: red;">* Click image to Generate the QRCode</span><br>
+													<div style="border-style: solid; width: 50%">
+														<span style="color: black">Share Your Profile to Social Media</span><br>
+														<div data-network="twitter" class="st-custom-button" data-url="{{URL::to('/profil_front/2/').auth::guard('eksmp')->user()->id}}"><i class="fa fa-twitter" style="font-size:24px;color:deepskyblue"></i></div>
+														<div data-network="facebook" class="st-custom-button" data-url="{{URL::to('/profil_front/2/').auth::guard('eksmp')->user()->id}}"><i class="fa fa-facebook-f" style="font-size:24px;color:blue"></i></div>
+														<div data-network="whatsapp" class="st-custom-button" data-url="{{URL::to('/profil_front/2/').auth::guard('eksmp')->user()->id}}"><i class="fa fa-whatsapp" style="font-size:24px;color:lawngreen"></i></div>
+													</div>
+
+													</center>
 											</div>
 										<?php
 											}
@@ -388,6 +406,21 @@
 	</div>
 </div>
 
+<script>
+	(function(document) {
+		var shareButtons = document.querySelectorAll(".st-custom-button[data-network]");
+		for(var i = 0; i < shareButtons.length; i++) {
+			var shareButton = shareButtons[i];
+
+			shareButton.addEventListener("click", function(e) {
+				var elm = e.target;
+				var network = elm.dataset.network;
+
+				console.log("share click: " + network);
+			});
+		}
+	})(document);
+</script>
 <script>
 	$('.upload1').on('change', function(evt){
 		var size = this.files[0].size;
