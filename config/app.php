@@ -188,7 +188,6 @@ return [
 
         Mews\Captcha\CaptchaServiceProvider::class,
 
-        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
     ],
 
     /*
@@ -248,7 +247,7 @@ return [
 
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         // 'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
+        
 
     ],
 
