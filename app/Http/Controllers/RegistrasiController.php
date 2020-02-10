@@ -120,7 +120,7 @@ class RegistrasiController extends Controller
 
                 Mail::send('UM.user.emailsperwakilan', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);
-                    $mail->subject('Notifikasi Aktifasi Akun');
+                    $mail->subject('Account Activation Notification');
 
                 });
 		    }
@@ -137,7 +137,7 @@ class RegistrasiController extends Controller
             ];
             Mail::send('UM.user.emailsadmin', $data, function ($mail) use ($data) {
                 $mail->to($data['email1'], $data['username']);
-                $mail->subject('Notifikasi Aktifasi Akun');
+                $mail->subject('Account Activation Notification');
             });
         }
 
@@ -145,7 +145,7 @@ class RegistrasiController extends Controller
 
                 Mail::send('UM.user.emailsuser2', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
-                    $mail->subject('Notifikasi Aktifasi Akun');
+                    $mail->subject('Account Activation Notification');
 
                 });
 
