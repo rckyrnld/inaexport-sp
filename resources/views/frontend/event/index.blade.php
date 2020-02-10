@@ -75,7 +75,8 @@ if(Auth::guard('eksmp')->user()){
         font-size: 17px;
     }
     .tabmin button.active {
-        background-color: red;
+        background-color: #1a70bb;
+        color: white;
     }
 
     /*@media only screen and (max-width: 767px) {
@@ -888,10 +889,8 @@ if(Auth::guard('eksmp')->user()){
         if(halaman == 'all'){
             document.getElementById('all').style.display = "block";
         } else if(halaman == 'indonesia'){
-            console.log('indonesia');
             document.getElementById('indonesia').style.display = "block";
         }else if(halaman == 'foreign'){
-            console.log('foreign');
             document.getElementById('foreign').style.display = "block";
         }
         // console.log(location.pathname);
