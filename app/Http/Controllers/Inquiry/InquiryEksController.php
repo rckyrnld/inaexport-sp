@@ -210,7 +210,7 @@ class InquiryEksController extends Controller
                     }else if($mjl->status == 3 || $mjl->status == 4 || $mjl->status == 5){
                         return '
                             <center>
-                            <a href="'.url('/inquiry/view').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="'.Lang::get('button-name.view').'"><i class="fa fa-search" aria-hidden="true"></i> </a>
+                            <a href="'.url('/inquiry/chatting').'/'.$mjl->id.'" class="btn btn-sm btn-info" title="'.Lang::get('button-name.view').'"><i class="fa fa-search" aria-hidden="true"></i> </a>
                             </center>';
                     }else{
                         return '
@@ -783,11 +783,10 @@ class InquiryEksController extends Controller
                     'untuk_nama' => getCompanyNameImportir($inquiry->id_pembuat),
                     'untuk_id' => $inquiry->id_pembuat,
                     'keterangan' => 'Inquiry with subject '.$inquiry->subyek_en.' has been Deal by Exporter '.getExBadan($id_user).getCompanyName($id_user),
-                    'url_terkait' => 'front_end/view_inquiry',
+                    'url_terkait' => 'front_end/history',
                     'status_baca' => 0,
                     'waktu' => $datenow,
                     'to_role' => 3,
-                    'id_terkait' => $id
                 ]);
 
                 $users = DB::table('itdp_company_users')->where('id', $inquiry->id_pembuat)->first();
@@ -832,10 +831,10 @@ class InquiryEksController extends Controller
 //                    'id_terkait' => $id
 //                ]);
 
-                Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
-                    $mail->to($data2['email'], $data2['username']);
-                    $mail->subject('Inquiry Deal Information');
-                });
+//                Mail::send('inquiry.mail.sendDeal', $data2, function ($mail) use ($data2) {
+//                    $mail->to($data2['email'], $data2['username']);
+//                    $mail->subject('Inquiry Deal Information');
+//                });
 
 
             }

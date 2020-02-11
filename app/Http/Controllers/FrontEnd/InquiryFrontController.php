@@ -289,7 +289,7 @@ class InquiryFrontController extends Controller
                 'bur' => getExBadan($receiver)
             ];
 
-            Mail::send('inquiry.mail.sendChat3', $data2, function ($mail) use ($data2) {
+            Mail::send('inquiry.mail.sendChat3imp', $data2, function ($mail) use ($data2) {
                 $mail->to($data2['email'], $data2['username']);
                 $mail->subject('Inquiry Chatting Information');
             });
@@ -364,7 +364,7 @@ class InquiryFrontController extends Controller
             'bur' => getExBadan($receiver)
         ];
 
-        Mail::send('inquiry.mail.sendChat3', $data2, function ($mail) use ($data2) {
+        Mail::send('inquiry.mail.sendChat3imp', $data2, function ($mail) use ($data2) {
             $mail->to($data2['email'], $data2['username']);
             $mail->subject('Inquiry Payment Information');
         });
