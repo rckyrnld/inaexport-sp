@@ -1,5 +1,5 @@
 <?php 
-$qr = DB::select("select id,nama_kategori_en from csc_product where level_2='".$id."' order by nama_kategori_en asc");
+$qr = DB::select("select id,nama_kategori_en from csc_product where level_1='".$id."' order by nama_kategori_en asc");
 if(count($qr) == 0){
 ?>
 <input type="hidden" name="t3s" id="t3s" value="0">
