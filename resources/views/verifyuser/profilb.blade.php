@@ -300,7 +300,9 @@
 														<button type="button" id="img_1" style="width: 100%;" class="img_upl">
 															<br><img src="{{asset($img1)}}" id="image_1_ambil" style="width: 80%;"/>
 														</button>
-														<input type="file" id="image_1" name="image_1" accept="image/*" style="display: none;" class="upload1"/>
+														<input type="file" id="image_1" name="image_1" accept="image/*" style="display: none;"
+{{--															   class="upload1"--}}
+														/>
 														<br><br>
 														<center><span style="font-size: 17px;"><b>Profile Photo</b></span></center>
 													</div>

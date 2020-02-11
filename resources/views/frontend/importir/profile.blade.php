@@ -90,7 +90,9 @@ if($profile->foto_profil != NULL){
                                 <img id="thumbnail" src="{{asset($img1)}}" style="width: 220px; height: 225px; ">
                                 <p style="padding: 6px; padding-top: 10px;">
                                     <span class="btn btn-primary btn-file" style="border-radius: 0px;">
-                                        Upload <input type="file" name="avatar" accept="image/*" id="avatar" class="upload1" />
+                                        Upload <input type="file" name="avatar" accept="image/*" id="avatar"
+{{--                                                      class="upload1"--}}
+                                        />
                                     </span>
                                 </p>
                             </div>
