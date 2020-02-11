@@ -347,6 +347,8 @@ function simpanbr(){
 	formData.append('subyek',$('#subyek').val());
 	formData.append('valid',$('#valid').val());
 	formData.append('category',$('#category').val());
+	formData.append('t2s',$('#t2s').val());
+	formData.append('t3s',$('#t3s').val());
 	formData.append('spec',$('#spec').val());
 	formData.append('eo',$('#eo').val());
 	formData.append('neo',$('#neo').val());

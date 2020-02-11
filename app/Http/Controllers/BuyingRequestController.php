@@ -979,11 +979,19 @@ class BuyingRequestController extends Controller
         $ch2 = str_replace(",", ".", $ch1);
 
         $kumpulcat = "";
-        $g = count($request->category);
-        for ($a = 0; $a < $g; $a++) {
-            $kumpulcat = $kumpulcat . $request->category[$a] . ",";
+        if($request->t2s == 0 && $request->t3s == 0){
+            $kumpulcat =  $request->category[0].',';
+        }else if($request->t3s== 0){
+            $kumpulcat =  $request->category[0].','.$request->t2s.',';
+        }else{
+            $kumpulcat =  $request->category[0].','.$request->t2s.','.$request->t3s.',';
         }
-        $h = explode(",", $kumpulcat);
+
+//        $g = count($request->category);
+//        for ($a = 0; $a < $g; $a++) {
+//            $kumpulcat = $kumpulcat . $request->category[$a] . ",";
+//        }
+//        $h = explode(",", $kumpulcat);
 
         if (empty($request->file('doc'))) {
             $file = "";
@@ -995,7 +1003,7 @@ class BuyingRequestController extends Controller
         $insert = DB::select("
 			insert into csc_buying_request (subyek,valid,id_mst_country,city,id_csc_prod_cat,id_csc_prod_cat_level1,id_csc_prod_cat_level2,shipping,spec,files
 			,eo,neo,tp,ntp,by_role,id_pembuat,date,id_csc_prod) values
-			('" . $request->cmp . "','" . $request->valid . "','" . $request->country . "','" . $request->city . "','" . $h[0] . "'
+			('" . $request->cmp . "','" . $request->valid . "','" . $request->country . "','" . $request->city . "','0'
 			,'0','0','" . $request->ship . "','" . $request->spec . "','" . $file . "','" . $request->eo . "','" . $request->neo . "'
 			,'" . $ch2 . "','" . $request->ntp . "','" . Auth::user()->id_group . "','" . Auth::user()->id . "','" . $date . "','" . $kumpulcat . "')");
 

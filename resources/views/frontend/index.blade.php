@@ -791,7 +791,7 @@
                                    <div class="form-group row">
                                         <div class="col-md-12">
                                             <select style="color:black;font-size: 13px;" class="form-control" name="valid" id="valid" required>
-                                                <option value="">@lang("login.forms.by10")</option>
+                                                <option value="" style="color:lightslategray;">@lang("login.forms.by10")</option>
                                                 <option value="0">None</option>
                                                 <option value="1">Valid within 1 day</option>
                                                 <option value="3">Valid within 3 day</option>

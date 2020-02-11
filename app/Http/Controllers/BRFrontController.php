@@ -251,10 +251,12 @@ class BRFrontController extends Controller
 		$cr = explode(',',$rrr);
 		$hitung = count($cr);
 		$semuacat = "";
-		for($a = 0; $a < ($hitung - 1); $a++){
+//		for($a = 0; $a < ($hitung - 1); $a++){
 		//echo $rrr;die();
 		// echo "select * from csc_product_single where id_csc_product='".$cr[0]."' or id_csc_product_level1='".$cr[0]."' or id_csc_product_level2='".$cr[0]."'";die();
-		$namaprod = DB::select("select * from csc_product_single where id_csc_product='".$cr[$a]."' or id_csc_product_level1='".$cr[$a]."' or id_csc_product_level2='".$cr[$a]."' ");
+//		$namaprod = DB::select("select * from csc_product_single where id_csc_product='".$cr[$a]."' or id_csc_product_level1='".$cr[$a]."' or id_csc_product_level2='".$cr[$a]."' ");
+		$namaprod = DB::select("select * from csc_product_single where id_csc_product='".$cr[$hitung-2]."' or id_csc_product_level1='".$cr[$hitung-2]."' or id_csc_product_level2='".$cr[$hitung-2]."'");
+//		dd($namaprod);
 		if(count($namaprod) == 0){
 		
 		}else{
@@ -290,7 +292,7 @@ class BRFrontController extends Controller
 			}
 		}
 		}
-		}
+//		}
 //		dd('b');
 		$update = DB::select("update csc_buying_request set status='1' where id='".$id."'");
 		
@@ -322,10 +324,11 @@ class BRFrontController extends Controller
 		$cr = explode(',',$rrr);
 		$hitung = count($cr);
 		$semuacat = "";
-		for($a = 0; $a < ($hitung - 1); $a++){
+//		for($a = 0; $a < ($hitung - 1); $a++){
 		//echo $rrr;die();
 		// echo "select * from csc_product_single where id_csc_product='".$cr[0]."' or id_csc_product_level1='".$cr[0]."' or id_csc_product_level2='".$cr[0]."'";die();
-		$namaprod = DB::select("select * from csc_product_single where id_csc_product='".$cr[$a]."' or id_csc_product_level1='".$cr[$a]."' or id_csc_product_level2='".$cr[$a]."' ");
+//		$namaprod = DB::select("select * from csc_product_single where id_csc_product='".$cr[$a]."' or id_csc_product_level1='".$cr[$a]."' or id_csc_product_level2='".$cr[$a]."' ");
+		$namaprod = DB::select("select * from csc_product_single where id_csc_product='".$cr[$hitung-2]."' or id_csc_product_level1='".$cr[$hitung-2]."' or id_csc_product_level2='".$cr[$hitung-2]."' ");
 		if(count($namaprod) == 0){
 		
 		}else{
@@ -370,7 +373,7 @@ class BRFrontController extends Controller
 			}
 		}
 		}
-		}
+//		}
 		$update = DB::select("update csc_buying_request set status='1' where id='".$id."'");
         return redirect('br_list')->with('success','Success Broadcast Data');
     }
@@ -601,11 +604,19 @@ class BRFrontController extends Controller
 		date_default_timezone_set('Asia/Jakarta');
 		$ch1 = str_replace(".","",$request->tp);
 		$ch2 = str_replace(",",".",$ch1);
-		
+		/*
 		$kumpulcat = $request->category;
 		$kumpulcat2 = $request->category.",";
 		$h = explode(",",$request->category);
 		// echo $kumpulcat2;die();
+		*/
+		if($request->t2s == 0 && $request->t3s == 0){
+            $kumpulcat2 =  $request->category.',';
+        }else if($request->t3s== 0){
+            $kumpulcat2 =  $request->category.','.$request->t2s.',';
+        }else{
+            $kumpulcat2 =  $request->category.','.$request->t2s.','.$request->t3s.',';
+        }
 		if(empty($request->file('image'))){
 			$file = "";
 		}else{
@@ -616,7 +627,7 @@ class BRFrontController extends Controller
 		$insert = DB::select("
 			insert into csc_buying_request (subyek,valid,id_mst_country,city,id_csc_prod_cat,id_csc_prod_cat_level1,id_csc_prod_cat_level2,shipping,spec,files
 			,eo,neo,tp,ntp,by_role,id_pembuat,date,id_csc_prod) values
-			('".$request->subyek."','".$request->valid."','".$request->country."','".$request->city."','".$h[0]."'
+			('".$request->subyek."','".$request->valid."','".$request->country."','".$request->city."','0'
 			,'0','0','".$request->ship."','".$request->spec."','".$file."','".$request->eo."','".$request->neo."'
 			,'".$ch2."','".$request->ntp."','3','".Auth::guard('eksmp')->user()->id."','".Date('Y-m-d H:m:s')."','".$kumpulcat2."')");
 		
