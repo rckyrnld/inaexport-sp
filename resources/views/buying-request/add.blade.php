@@ -111,7 +111,7 @@ body {font-family: Arial;}
 			<?php 
 			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
 			?>
-			<select class="form-control select2" multiple name="category[]" id="category" required>
+			<select class="form-control select2" onchange="t1()" name="category[]" id="category" required>
 			<option value="">-- Select Category --</option>
 			<?php foreach($ms1 as $val1){ ?>
 			<option value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
@@ -120,8 +120,12 @@ body {font-family: Arial;}
 		</div>
 		
 	</div>
-	<input type="hidden" name="t2s" id="t2s" value="0">
-	<input type="hidden" name="t3s" id="t3s" value="0">
+	<div id="t2">
+                                <input type="hidden" name="t2s" id="t2s" value="0">
+                            </div>
+                            <div id="t3">
+                                <input type="hidden" name="t3s" id="t3s" value="0">
+                            </div>
 	<!--<div id="t2">
 	
 	</div>
@@ -287,6 +291,29 @@ body {font-family: Arial;}
 </form>
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script>
+function t1() {
+        $('#t2').html('');
+        $('#t3').html('');
+        var t1 = $('#category').val();
+        var token = $('meta[name="csrf-token"]').attr('content');
+        $.get('{{URL::to("ambilt2/")}}/' + t1, {_token: token}, function (data) {
+            $("#t2").html(data);
+            $("#t3").html('<input type="hidden" name="t3s" id="t3s" value="0">');
+            $('.select2').select2();
+
+        })
+    }
+
+    function t2() {
+        $('#t3').html('');
+        var t2 = $('#t2s').val();
+        var token = $('meta[name="csrf-token"]').attr('content');
+        $.get('{{URL::to("ambilt3/")}}/' + t2, {_token: token}, function (data) {
+            $("#t3").html(data);
+            $('.select2').select2();
+
+        })
+    }
 	$('.upload1').on('change', function(evt){
 		var size = this.files[0].size;
 		if(size > 5000000){
