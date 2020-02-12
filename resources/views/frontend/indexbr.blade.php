@@ -20,13 +20,24 @@ if ($loc == "ch") {
       margin-top: 336px;
 }
 #select2-country-results{
-	font-size:12px!important;
+	font-size:11px!important;
 }
 #select2-category-results{
-	font-size:12px!important;
+	font-size:11px!important;
 }
 .select2-container--default{
 	width:100%!important;
+}
+
+.select2-search__field{
+    font-size: 10.5px!important;
+}
+
+#select2-t2s-results {
+    font-size: 11px!important;
+}
+#select2-t3s-results {
+    font-size: 11px!important;
 }
 
 </style>
@@ -108,11 +119,11 @@ if ($loc == "ch") {
                                 <div class="col-sm-12">
                                     <label><b>@lang("login.forms.by3")</b></label>
                                 </div>
-                                <div class="form-group col-sm-12">
+                                <div class="form-group col-sm-12" style="font-size: 12px !important;">
                                     <?php
                                     $ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
                                     ?>
-                                    <select style="color:black;font-size:12px;" class="form-control select2 col-sm-11" name="category[]"
+                                    <select style="color:black;font-size: 12px !important; " class="form-control select2 col-sm-11"  name="category[]"
                                             id="category" onchange="t1()" required>
                                         <option value="">@lang("login.forms.by11")</option>
                                         <?php foreach($ms1 as $val1){ ?>
@@ -210,11 +221,11 @@ if ($loc == "ch") {
                                                 <option  <?php if($ntp == "CNY"){ echo "selected"; } ?> value="CNY">China Yuan(CNY)</option>
                                                 <option  <?php if($ntp == "IQD"){ echo "selected"; } ?> value="IQD">Dinar Irak(IQD)</option>
                                                 <option  <?php if($ntp == "AED"){ echo "selected"; } ?> value="AED">Dirham Uni Emirat Arab(AED)</option>
-                                                <option  <?php if($ntp == "USD"){ echo "selected"; } ?> value="USD">Dolar Amerika Serikat(USD)</option>
-                                                <option  <?php if($ntp == "AUD"){ echo "selected"; } ?> value="AUD">Dolar Australia(AUD)</option>
-                                                <option  <?php if($ntp == "HKD"){ echo "selected"; } ?> value="HKD">Dolar Hong Kong(HKD)</option>
-                                                <option  <?php if($ntp == "SGD"){ echo "selected"; } ?> value="SGD">Dolar Singapura(SGD)</option>
-                                                <option  <?php if($ntp == "TWD"){ echo "selected"; } ?> value="TWD">Dolar Taiwan Baru(TWD)</option>
+                                                <option  <?php if($ntp == "USD"){ echo "selected"; } ?> value="USD">Dollar Amerika Serikat(USD)</option>
+                                                <option  <?php if($ntp == "AUD"){ echo "selected"; } ?> value="AUD">Dollar Australia(AUD)</option>
+                                                <option  <?php if($ntp == "HKD"){ echo "selected"; } ?> value="HKD">Dollar Hong Kong(HKD)</option>
+                                                <option  <?php if($ntp == "SGD"){ echo "selected"; } ?> value="SGD">Dollar Singapura(SGD)</option>
+                                                <option  <?php if($ntp == "TWD"){ echo "selected"; } ?> value="TWD">Dollar Taiwan Baru(TWD)</option>
                                                 <option  <?php if($ntp == "EUR"){ echo "selected"; } ?> value="EUR">Euro(EUR)</option>
                                                 <option  <?php if($ntp == "PHP"){ echo "selected"; } ?> value="PHP">Peso Filipina(PHP)</option>
                                                 <option  <?php if($ntp == "GBP"){ echo "selected"; } ?> value="GBP">Pound Sterling(GBP)</option>
@@ -236,13 +247,13 @@ if ($loc == "ch") {
                                 <div class="col-sm-12">
                                     <label><b>@lang("login.forms.by7")</b></label>
                                 </div>
-                                <div class="form-group col-sm-6">
+                                <div class="form-group col-sm-6" style="font-size: 12px !important;">
                                     <?php
                                     $ms2 = DB::select("select id,country from mst_country order by country asc");
                                     ?>
                                     <select style="color:black;font-size:12px;height: 31px;" style="border-color: rgba(120, 130, 140, 0.5)!important;
     border-radius: 0.25rem!important;
-    color: inherit!important;" class="form-control select2" name="country" id="country" required>
+    color: inherit!important; font-size: 12px!important;" class="form-control select2" name="country" id="country" required>
                                         <option value="">-- @lang("login.forms.by12") --</option>
                                         <?php foreach($ms2 as $val2){ ?>
                                         <option value="<?php echo $val2->id; ?>" style="font-size:12px;"><?php echo $val2->country; ?></option>
