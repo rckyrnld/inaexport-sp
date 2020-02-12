@@ -83,6 +83,16 @@
         box-shadow: 0 0 15px rgba(178,221,255,1); 
     }
 
+    select:required:invalid {
+        color: gray !important;
+    }
+    option[value=""][disabled] {
+        display: none !important;
+    }
+    option {
+        color: black !important;
+    }
+
     @media only screen and (max-width: 767px) {
         .categories_menu_toggle > ul > li > a {
             /*line-height: 35px;*/
@@ -790,8 +800,8 @@
 
                                    <div class="form-group row">
                                         <div class="col-md-12">
-                                            <select style="color:black;font-size: 13px;" class="form-control" name="valid" id="valid" required>
-                                                <option value="" style="color:lightslategray;">@lang("login.forms.by10")</option>
+                                            <select style="font-size: 13px;" class="form-control" name="valid" id="valid" required>
+                                                <option value="" disabled selected>@lang("login.forms.by10")</option>
                                                 <option value="0">None</option>
                                                 <option value="1">Valid within 1 day</option>
                                                 <option value="3">Valid within 3 day</option>
@@ -814,8 +824,8 @@
                                            <input style="color:black; font-size: 13px;" type="number" min="1" name="eo" id="eo" class="form-control" placeholder="@lang('login.forms.by5')">
                                        </div>
                                        <div class="col-md-5">
-                                           <select class="form-control" name="neo" id="neo" style="color: black; font-size: 12px;">
-                                                <option value="">@lang("login.forms.by14")</option>
+                                           <select class="form-control" name="neo" id="neo" style="font-size: 12px;">
+                                                <option value="" disabled selected>@lang("login.forms.by14")</option>
                                                 <option value="Each">Each</option>
                                                 <option value="Foot">Foot</option>
                                                 <option value="Gallons">Gallons</option>
@@ -858,8 +868,8 @@
                                             <input style="color:black; font-size: 13px;" type="text" value="" name="tp" id="tp" class="form-control amount" placeholder="@lang('login.forms.by6')">
                                         </div>
                                         <div class="col-md-5">
-                                            <select  class="form-control" name="ntp" id="ntp" style="color: black; font-size: 12px;">
-                                                <option value="">@lang("login.forms.by14")</option>
+                                            <select  class="form-control" name="ntp" id="ntp" style="font-size: 12px;">
+                                                <option value="" disabled selected>@lang("login.forms.by14")</option>
                                                 <option value="SAR">Arab Saudi Riyal(SAR)</option>
                                                 <option value="BND">Brunei Dollar(BND)</option>
                                                 <option value="CNY">China Yuan(CNY)</option>
