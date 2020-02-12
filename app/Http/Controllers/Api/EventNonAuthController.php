@@ -70,6 +70,7 @@ class EventNonAuthController extends Controller
         // $data = DB::select("select * from event_detail where event_name_en like '%".$name."%' or event_name_in like '%".$name."%' or event_name_chn like '%".$name."%' order by event_name_en asc");
         $data = DB::table('event_detail')
 			->leftJoin('contact_person', 'event_detail.id', '=', 'contact_person.id_type')
+			->select('event_detail.*','contact_person.name','contact_person.email','contact_person.phone')
 			->where('event_detail.event_name_en', 'like', '%' . $name . '%')
 			->orwhere('event_detail.event_name_in', 'like', '%' . $name . '%')
 			->orwhere('event_detail.event_name_chn', 'like', '%' . $name . '%')
