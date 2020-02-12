@@ -134,16 +134,29 @@ class TicketingSupportControllerAdmin extends Controller
             $data3 = $v2->id_role;
             $data4 = $v2->id;
         }
-        $data = [
-            'email' => "",
-            'email1' => $data2,
-            'username' => "",
-            'main_messages' => $req->messages,
-            'id' => $req->id,
-            'exporter'=> getCompanyName($id_company),
-            'bu'=>getExBadan($id_company)
-        ];
+        if($data3 == 2){
+            $data = [
+                'email' => "",
+                'email1' => $data2,
+                'username' => "",
+                'main_messages' => $req->messages,
+                'id' => $req->id,
+                'exporter'=> getCompanyName($id_company),
+                'bu'=>getExBadan($id_company)
+            ];
 
+        }else if($data3 == 3){
+            $data = [
+                'email' => "",
+                'email1' => $data2,
+                'username' => "",
+                'main_messages' => $req->messages,
+                'id' => $req->id,
+                'exporter'=> getCompanyNameImportir($id_company),
+                'bu'=>getExBadanImportir($id_company)
+            ];
+
+        }
         /*
         $data2 = [
         'email' => "",

@@ -23,12 +23,20 @@
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
         <p style="color: #8bbbe8; font-size: 20px;text-align: left">Information</p>
         <hr>
-        <p style="text-align: left">Dear {{($bur== '-')? '': $bur." "}}{{$penerima}},</P>
-        <p style="text-align: left">Inquiry with subject {{$subjek}} has been Deal by Exporter {{($bu== '-')? '': $bu." "}}{{$company}}.</p>
-        <p style="text-align: left">Click <a href="{{url('/front_end/history')}}">here</a></p>
-        <br>
-        <p style="text-align: left">Thanks</p>
-        <!-- <a href="{{url('/login')}}" class="button">Next Log In</a> -->
+        <p style="text-align: left">Dear {{($bur== '-')? '': $bur." "}}{{$receiver}}, </P>
+        <p style="text-align: left">{{($bu== '-')? '': $bu." "}}{{$sender}} Respond Chat on Your Inquiry</p>
+    <!-- <ol>
+            <ul>Name : {{$username}}</ul>
+            <ul>Email : {{$email}}</ul>
+        </ol>
+        <hr>-->
+{{--        <p style="text-align: left">--}}
+{{--            {{$main_messages}}--}}
+{{--        </p>--}}
+
+{{--        <hr>--}}
+        <p style="text-align: left;">click <a href="{{url('inquiry/chatting', $id)}}">Here</a>.</p>
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
     </div>
 </div>
+

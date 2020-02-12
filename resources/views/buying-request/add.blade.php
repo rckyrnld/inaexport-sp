@@ -281,7 +281,7 @@ body {font-family: Arial;}
 
 <div class="col-sm-12">
 <div align="right">
-	<a href="{{ url('verifyimportir') }}" class="btn btn-md btn-danger">Cancel</a>
+	<a href="{{ url()->previous() }}" class="btn btn-md btn-danger">Cancel</a>
 	<button class="btn btn-md btn-primary">Submit</button>
 
 

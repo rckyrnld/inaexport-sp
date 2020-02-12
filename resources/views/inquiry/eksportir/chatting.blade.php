@@ -289,7 +289,7 @@
                         </div>
                     </div>
                     @if($inquiry->type == "importir")
-                        @if($inquiry->status != 3 && $inquiry->status != 4 && $inquiry->status != 5)
+                        @if( $inquiry->status != 4 && $inquiry->status != 5)
                             <div class="row">
                                 <div class="col-md-12">
                                     <input type="text" class="form-control" name="messages" value="" id="messages" autocomplete="off">

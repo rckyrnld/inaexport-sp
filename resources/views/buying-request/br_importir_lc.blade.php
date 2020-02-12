@@ -54,7 +54,7 @@
 	   ?>
 	   <h5><center><?php echo $pageTitle; ?></center></h5>
 	   <br><br>
-	   <a href="{{ url('br_importir') }}" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</a><br><br>
+	   <a href="{{ url()->previous() }}" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</a><br><br>
 		<table id="example1" border="0" class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: #1089ff;">
 									<th width="5%">No</th>

@@ -91,14 +91,43 @@ body {font-family: Arial;}
 		<label><b>Category</b></label>
 		</div>
 		<div class="form-group col-sm-12">
-			<?php 
+			<?php // echo $ryu->id_csc_prod;
 			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
 			?>
-			<select disabled style="color:black;" class="form-control" name="category" id="category" onchange="t1()">
-			<option value="">-- Select Category --</option>
-			<?php foreach($ms1 as $val1){ ?>
-			<option <?php if($ryu->id_csc_prod_cat == $val1->id){ echo "selected"; }?>  value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
-			<?php } ?>
+			<select style="color:black;width:100%;" class="form-control select2" multiple name="category" id="category" disabled>
+				<option value="">-- Select Category --</option>
+				<?php foreach($ms1 as $val1){ ?>
+				<option <?php
+						$oc = explode(",",$ryu->id_csc_prod);
+						if(empty($oc[0])){
+							$a1 = "";
+						}else{
+							$a1 = $oc[0];
+						}
+						if(empty($oc[1])){
+							$a2 = "";
+						}else{
+							$a2 = $oc[1];
+						}
+						if(empty($oc[2])){
+							$a3 = "";
+						}else{
+							$a3 = $oc[2];
+						}
+						if(empty($oc[3])){
+							$a4 = "";
+						}else{
+							$a4 = $oc[3];
+						}
+						if(empty($oc[4])){
+							$a5 = "";
+						}else{
+							$a5 = $oc[4];
+						}
+
+						if($a1 == $val1->id || $a2 == $val1->id || $a3 == $val1->id || $a4 == $val1->id || $a5 == $val1->id){ echo "selected"; }
+						?>  value="<?php echo $val1->id; ?>"><?php echo $val1->nama_kategori_en; ?></option>
+				<?php } ?>
 			</select>
 		</div>
 		
