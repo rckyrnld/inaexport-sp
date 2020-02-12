@@ -381,7 +381,8 @@
           var msg = $('textarea#messages2').val();
           var status = $('#statusmsg2').val();
 
-          if(status == 3 || status == 4 || status == 5){
+          // if(status == 3 || status == 4 || status == 5){
+          if( status == 4 || status == 5){
             alert("{{$alertmsg}}");
             $('textarea#messages2').val("");
           }else{
