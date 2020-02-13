@@ -123,23 +123,23 @@
                                     <li>
                                         <table border="0">
                                             <tr>
-                                                <td width="10%"><img src="{{asset('front/assets/icon/icon_lokasi_2.png')}}"></td>
+                                                <td width="7%"><img src="{{asset('front/assets/icon/icon_lokasi_3.png')}}"></td>
                                                 <td class="footer-child" style="padding-left: 5px;">Jl. M.I. Ridwan Rais No.5, RT.7/RW.1, Gambir, Kecamatan Gambir, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10110, Indonesia</td>
                                             </tr>
                                             <tr>
-                                                <td><img src="{{asset('front/assets/icon/icon_phone_2.png')}}"></td>
+                                                <td><img src="{{asset('front/assets/icon/icon_phone_3.png')}}"></td>
                                                 <td class="footer-child" style="padding-left: 5px;">+62 21 385 8171</td>
                                             </tr>
                                             <tr>
-                                                <td><img src="{{asset('front/assets/icon/icon_idk_2.png')}}"></td>
+                                                <td><img src="{{asset('front/assets/icon/icon_idk_3.png')}}"></td>
                                                 <td class="footer-child" style="padding-left: 5px;">+62 21 385 8171</td>
                                             </tr>
                                             <tr>
-                                                <td><img src="{{asset('front/assets/icon/icon_email_2.png')}}"></td>
+                                                <td><img src="{{asset('front/assets/icon/icon_email_3.png')}}"></td>
                                                 <td class="footer-child" style="padding-left: 5px;">csm@kemendag.go.id</td>
                                             </tr>
 											<tr>
-                                                <td><img src="{{asset('front/assets/icon/icon_clock_2.png')}}"></td>
+                                                <td><img src="{{asset('front/assets/icon/icon_clock_3.png')}}"></td>
                                                 <td class="footer-child" style="padding-left: 5px;">
 												
 								
