@@ -306,11 +306,11 @@ $cr = explode(',',$p3->id_csc_prod);
 				<option  <?php if($p3->ntp == "CNY"){ echo "selected"; } ?> value="CNY">China Yuan(CNY)</option>
 				<option  <?php if($p3->ntp == "IQD"){ echo "selected"; } ?> value="IQD">Dinar Irak(IQD)</option>
 				<option  <?php if($p3->ntp == "AED"){ echo "selected"; } ?> value="AED">Dirham Uni Emirat Arab(AED)</option>
-				<option  <?php if($p3->ntp == "USD"){ echo "selected"; } ?> value="USD">Dolar Amerika Serikat(USD)</option>
-				<option  <?php if($p3->ntp == "AUD"){ echo "selected"; } ?> value="AUD">Dolar Australia(AUD)</option>
-				<option  <?php if($p3->ntp == "HKD"){ echo "selected"; } ?> value="HKD">Dolar Hong Kong(HKD)</option>
-				<option  <?php if($p3->ntp == "SGD"){ echo "selected"; } ?> value="SGD">Dolar Singapura(SGD)</option>
-				<option  <?php if($p3->ntp == "TWD"){ echo "selected"; } ?> value="TWD">Dolar Taiwan Baru(TWD)</option>
+				<option  <?php if($p3->ntp == "USD"){ echo "selected"; } ?> value="USD">Dollar Amerika Serikat(USD)</option>
+				<option  <?php if($p3->ntp == "AUD"){ echo "selected"; } ?> value="AUD">Dollar Australia(AUD)</option>
+				<option  <?php if($p3->ntp == "HKD"){ echo "selected"; } ?> value="HKD">Dollar Hong Kong(HKD)</option>
+				<option  <?php if($p3->ntp == "SGD"){ echo "selected"; } ?> value="SGD">Dollar Singapura(SGD)</option>
+				<option  <?php if($p3->ntp == "TWD"){ echo "selected"; } ?> value="TWD">Dollar Taiwan Baru(TWD)</option>
 				<option  <?php if($p3->ntp == "EUR"){ echo "selected"; } ?> value="EUR">Euro(EUR)</option>
 				<option  <?php if($p3->ntp == "PHP"){ echo "selected"; } ?> value="PHP">Peso Filipina(PHP)</option>
 				<option  <?php if($p3->ntp == "GBP"){ echo "selected"; } ?> value="GBP">Pound Sterling(GBP)</option>

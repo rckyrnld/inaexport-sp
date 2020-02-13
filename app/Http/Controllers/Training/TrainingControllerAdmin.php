@@ -157,7 +157,7 @@ class TrainingControllerAdmin extends Controller
               return '
               <center>
               <div class="btn-group">
-                <a onclick="return confirm(\'Are you sure to publish this training information ?\')" href="' . route('training.publish.admin', $data->id) . '" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Publish"><i class="fa fa-file text-white"></i></a>&nbsp;&nbsp;
+                <a onclick="return confirm(\'Are you sure to publish this training information ?\')" href="' . route('training.publish.admin', $data->id) . '" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Publish"><i class="fa fa-bullhorn text-white"></i></a>&nbsp;&nbsp;
                 <a href="' . route('training.edit.admin', $data->id) . '" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fa fa-edit text-white" ></i></a>&nbsp;&nbsp;
               </div>
               </center>

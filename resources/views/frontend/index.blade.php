@@ -875,11 +875,11 @@
                                                 <option value="CNY">China Yuan(CNY)</option>
                                                 <option value="IQD">Dinar Irak(IQD)</option>
                                                 <option value="AED">Dirham Uni Emirat Arab(AED)</option>
-                                                <option value="USD">Dolar Amerika Serikat(USD)</option>
-                                                <option value="AUD">Dolar Australia(AUD)</option>
-                                                <option value="HKD">Dolar Hong Kong(HKD)</option>
-                                                <option value="SGD">Dolar Singapura(SGD)</option>
-                                                <option value="TWD">Dolar Taiwan Baru(TWD)</option>
+                                                <option value="USD">Dollar Amerika Serikat(USD)</option>
+                                                <option value="AUD">Dollar Australia(AUD)</option>
+                                                <option value="HKD">Dollar Hong Kong(HKD)</option>
+                                                <option value="SGD">Dollar Singapura(SGD)</option>
+                                                <option value="TWD">Dollar Taiwan Baru(TWD)</option>
                                                 <option value="EUR">Euro(EUR)</option>
                                                 <option value="PHP">Peso Filipina(PHP)</option>
                                                 <option value="GBP">Pound Sterling(GBP)</option>
