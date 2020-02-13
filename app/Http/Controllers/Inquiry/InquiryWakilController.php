@@ -441,7 +441,7 @@ class InquiryWakilController extends Controller
                             'dari_id' => $id_user,
                             'untuk_nama' => getCompanyName($array[$k]),
                             'untuk_id' => $array[$k],
-                            'keterangan' => 'New Inquiry By '.getPerwakilanName($id_user).' with Subyek  "'.$inquiry->subyek_en.'"',
+                            'keterangan' => 'New Inquiry By '.getPerwakilanName($id_user).' with Subject  "'.$inquiry->subyek_en.'"',
                             'url_terkait' => 'inquiry',
                             'status_baca' => 0,
                             'waktu' => $datenow,

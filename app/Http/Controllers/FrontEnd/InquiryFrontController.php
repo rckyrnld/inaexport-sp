@@ -121,7 +121,7 @@ class InquiryFrontController extends Controller
                     'dari_id' => $id_user,
                     'untuk_nama' => getCompanyName($dtproduct->id_itdp_company_user),
                     'untuk_id' => $dtproduct->id_itdp_company_user,
-                    'keterangan' => 'New Inquiry By '.getExBadanImportir($id_user).getCompanyNameImportir($id_user).' with Subyek  "'.$request->subject.'"',
+                    'keterangan' => 'New Inquiry By '.getExBadanImportir($id_user).getCompanyNameImportir($id_user).' with Subject  "'.$request->subject.'"',
                     'url_terkait' => 'inquiry',
                     'status_baca' => 0,
                     'waktu' => $datenow,

@@ -303,7 +303,7 @@
                             </div><br>
                         @endif
                     @elseif($inquiry->type == "perwakilan" || $inquiry->type == "admin")
-                        @if($broadcast->status != 3 && $broadcast->status != 4 && $broadcast->status != 5)
+                        @if($broadcast->status != 4 && $broadcast->status != 5)
                             <div class="row">
                                 <div class="col-md-12">
                                     <input type="text" class="form-control" name="messages" value="" id="messages" autocomplete="off">

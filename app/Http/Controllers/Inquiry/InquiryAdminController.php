@@ -873,7 +873,7 @@ class InquiryAdminController extends Controller
                             'dari_id' => $id_user,
                             'untuk_nama' => getCompanyName($array[$k]),
                             'untuk_id' => $array[$k],
-                            'keterangan' => 'New Inquiry By '.$admin->name.' with Subyek  "'.$inquiry->subyek_en.'"',
+                            'keterangan' => 'New Inquiry By '.$admin->name.' with Subject  "'.$inquiry->subyek_en.'"',
                             'url_terkait' => 'inquiry',
                             'status_baca' => 0,
                             'waktu' => $datenow,
