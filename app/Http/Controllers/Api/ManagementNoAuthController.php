@@ -671,4 +671,33 @@ class ManagementNoAuthController extends Controller
             return response($res);
         }
     }
+	
+	public function getallcategory()
+    {
+        $research = DB::table('csc_product')
+            ->orderby('nama_kategori_en', 'asc')
+//            ->limit(10)
+            ->get();
+        if (count($research) > 0) {
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
 }

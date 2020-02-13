@@ -227,6 +227,9 @@ Route::namespace('Api')->group(function () {
 
     // Get Product By Categories
     Route::post('productByCategories', 'ProductNonAuthController@productByCategories');
+	
+	// Get All Category
+    Route::get('getallcategory', 'ManagementNoAuthController@getallcategory');
 
 });
 // });
