@@ -70,7 +70,7 @@ class TicketingSupportControllerAdmin extends Controller
                     return '
               <center>
               <div class="btn-group">
-                <a href="' . route('ticket_support.vchat.admin', $data->id) . '" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Chat">&nbsp;<i class="fa fa-envelope text-white"></i></a>&nbsp;&nbsp;
+                <a href="' . route('ticket_support.vchat.admin', $data->id) . '" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Chat">&nbsp;<i class="fa fa-comment text-white"></i></a>&nbsp;&nbsp;
 								<a href="' . route('ticket_support.view.admin', $data->id) . '" class="btn btn-sm btn-primary" data-toggle="tooltip" title="View">&nbsp;<i class="fa fa-eye text-white"></i></a>&nbsp;&nbsp;
                 <!-- <a href="' . route('master.city.edit', $data->id) . '" class="btn btn-sm btn-success">&nbsp;<i class="fa fa-edit text-white"></i>&nbsp;Edit&nbsp;</a>&nbsp;&nbsp; !>
               </div>
