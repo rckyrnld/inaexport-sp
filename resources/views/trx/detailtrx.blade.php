@@ -68,10 +68,17 @@ foreach($q2 as $p2){
 		<label><b>Category Product</b></label>
 		</div>
 		<div class="form-group col-md-6">
-			<?php 
-			$ms1 = DB::select("select id,nama_kategori_en from csc_product where id='".$p2->id_csc_prod_cat."'");
+			<?php
+				$prodcat = "";
+				if($p2->id_csc_prod != null){
+					$prodcat = explode(',',  $p2->id_csc_prod);
+					$hitung = count($prodcat);
+					$ms1 = DB::select("select id,nama_kategori_en from csc_product where id='".$prodcat[$hitung-2]."'");
+				}
 			foreach($ms1 as $kc1){ $rto =  $kc1->nama_kategori_en; }
 			?>
+
+
 		<input type="text" class="form-control" value="<?php echo $rto; ?>" readonly>
 			</div>
 		
