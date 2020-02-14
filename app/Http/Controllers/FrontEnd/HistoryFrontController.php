@@ -324,7 +324,7 @@ class HistoryFrontController extends Controller
 
 				if($buy->status == 0 || $buy->status == null){
 					return '<center>
-					<a title="Broadcast" onclick="xy('.$buy->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i></font></a>
+					<a title="Broadcast" onclick="xy('.$buy->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-bullhorn"></i></font></a>
 					<a title="Detail" href="'.url('br_importir_detail/'.$buy->id).'" class="btn btn-info"><i class="fa fa-pencil"></i></a>
 					</center>';
 				
