@@ -13,6 +13,11 @@
     }
 ?>
 
+<style>
+	.form-control{
+		font-size: 13px !important;
+	}
+</style>
     <!--product area start-->
     <section class="product_area mb-50">
         <div class="container">
@@ -68,10 +73,17 @@ foreach($q2 as $p2){
 		<label><b>Category Product</b></label>
 		</div>
 		<div class="form-group col-md-6">
-			<?php 
-			$ms1 = DB::select("select id,nama_kategori_en from csc_product where id='".$p2->id_csc_prod_cat."'");
+			<?php
+				$prodcat = "";
+				if($p2->id_csc_prod != null){
+					$prodcat = explode(',',  $p2->id_csc_prod);
+					$hitung = count($prodcat);
+					$ms1 = DB::select("select id,nama_kategori_en from csc_product where id='".$prodcat[$hitung-2]."'");
+				}
 			foreach($ms1 as $kc1){ $rto =  $kc1->nama_kategori_en; }
 			?>
+
+
 		<input type="text" class="form-control" value="<?php echo $rto; ?>" readonly>
 			</div>
 		
@@ -197,7 +209,7 @@ foreach($q2 as $p2){
 			<b>File</b>
 		</div>
 		<div class="form-group col-sm-6">
-			<a class="btn btn-warning" download href="{{asset('uploads/buy_request/'.$p2->files)}}"><i class="fa fa-download"></i> Download File</a>
+			<a class="btn btn-warning" style="font-size: 13px;" download href="{{asset('uploads/buy_request/'.$p2->files)}}"><i class="fa fa-download"></i> Download File</a>
 		</div>
 	</div>
 	

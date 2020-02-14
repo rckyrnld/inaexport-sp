@@ -12,6 +12,21 @@
         $lct = "en";
     }
 ?>
+<style>
+	.form-control{
+		font-size:13px !important;
+	}
+	.select2-container--default .select2-selection--single {
+		height:calc(2.25rem + 2px);
+		font-size:13px !important;
+		line-height: 1.5;
+		padding: .375rem .75rem;
+		border-color: lightgrey;
+	}
+	.select2{
+		border-color: lightgrey;
+	}
+</style>
 
     <!--product area start-->
     <section class="product_area mb-50">
@@ -55,7 +70,7 @@
 			<input type="text" style="color:black;" value="<?php echo $ryu->subyek; ?>" name="subyek" id="subyek" class="form-control" >
 		</div>
 		<div class="form-group col-sm-4">
-			<select style="color:black;" class="form-control" name="valid" id="valid">
+			<select style="color:black;font-size:13px;" class="form-control" name="valid" id="valid">
 			<option <?php if($ryu->valid == "7"){ echo "selected"; }?> value="7">Valid within 7 day</option>
 			</select>
 		</div>
@@ -64,7 +79,7 @@
 		<div class="col-sm-12">
 		<label><b>Category</b></label>
 		</div>
-		<div class="form-group col-sm-11">
+		<div class="form-group col-sm-12">
 			<?php // echo $ryu->id_csc_prod;
 			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
 			?>
@@ -149,11 +164,11 @@
 				<option  <?php if($ryu->ntp == "CNY"){ echo "selected"; } ?> value="CNY">China Yuan(CNY)</option>
 				<option  <?php if($ryu->ntp == "IQD"){ echo "selected"; } ?> value="IQD">Dinar Irak(IQD)</option>
 				<option  <?php if($ryu->ntp == "AED"){ echo "selected"; } ?> value="AED">Dirham Uni Emirat Arab(AED)</option>
-				<option  <?php if($ryu->ntp == "USD"){ echo "selected"; } ?> value="USD">Dolar Amerika Serikat(USD)</option>
-				<option  <?php if($ryu->ntp == "AUD"){ echo "selected"; } ?> value="AUD">Dolar Australia(AUD)</option>
-				<option  <?php if($ryu->ntp == "HKD"){ echo "selected"; } ?> value="HKD">Dolar Hong Kong(HKD)</option>
-				<option  <?php if($ryu->ntp == "SGD"){ echo "selected"; } ?> value="SGD">Dolar Singapura(SGD)</option>
-				<option  <?php if($ryu->ntp == "TWD"){ echo "selected"; } ?> value="TWD">Dolar Taiwan Baru(TWD)</option>
+				<option  <?php if($ryu->ntp == "USD"){ echo "selected"; } ?> value="USD">Dollar Amerika Serikat(USD)</option>
+				<option  <?php if($ryu->ntp == "AUD"){ echo "selected"; } ?> value="AUD">Dollar Australia(AUD)</option>
+				<option  <?php if($ryu->ntp == "HKD"){ echo "selected"; } ?> value="HKD">Dollar Hong Kong(HKD)</option>
+				<option  <?php if($ryu->ntp == "SGD"){ echo "selected"; } ?> value="SGD">Dollar Singapura(SGD)</option>
+				<option  <?php if($ryu->ntp == "TWD"){ echo "selected"; } ?> value="TWD">Dollar Taiwan Baru(TWD)</option>
 				<option  <?php if($ryu->ntp == "EUR"){ echo "selected"; } ?> value="EUR">Euro(EUR)</option>
 				<option  <?php if($ryu->ntp == "PHP"){ echo "selected"; } ?> value="PHP">Peso Filipina(PHP)</option>
 				<option  <?php if($ryu->ntp == "GBP"){ echo "selected"; } ?> value="GBP">Pound Sterling(GBP)</option>
@@ -185,16 +200,14 @@
 			<?php 
 			$ms2 = DB::select("select id,country from mst_country order by country asc");
 			?>
-			<select style="color:black;" style="border-color: rgba(120, 130, 140, 0.5)!important;
-    border-radius: 0.25rem!important;
-    color: inherit!important;" class="form-control select2" name="country" id="country">
+			<select style="color: black;" class="form-control select2" name="country" id="country">
 			<option value="">-- Select Country --</option>
 			<?php foreach($ms2 as $val2){ ?>
-			<option <?php if($ryu->id_mst_country == $val2->id){ echo "selected"; }?> value="<?php echo $val2->id; ?>"><?php echo $val2->country; ?></option>
+			<option class="form-control" <?php if($ryu->id_mst_country == $val2->id){ echo "selected"; }?> value="<?php echo $val2->id; ?>"><?php echo $val2->country; ?></option>
 			<?php } ?>
 			</select>
 		</div>
-		<div class="form-group col-sm-6">
+		<div class="form-group col-sm-8">
 			<input style="color:black;" type="text" value="<?php echo $ryu->city; ?>" name="city" id="city" class="form-control" placeholder="City/State">
 		</div>
 	</div>
