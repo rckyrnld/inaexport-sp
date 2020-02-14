@@ -203,7 +203,7 @@
                           </div>
                         </div>
                     </div>
-                    @if($data->status != 3 && $data->status != 4)
+                    @if($data->status != 4)
                     <div class="row">
                       <div class="col-md-12">
                         <div class="input-group mb-3">

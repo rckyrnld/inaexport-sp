@@ -7,7 +7,7 @@
     /*CSS MODAL*/
     .modal-lg{ width: 700px; }
     .modal-header { background-color: #84afd4; color: white; font-size: 20px; text-align: center;}
-    .modal-body{ height: 300px; }
+    .modal-body{ height: 250px; }
     .modal-content { border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; overflow: hidden;}
     .modal-footer { background-color: #84afd4; color: white; font-size: 20px; text-align: center;}
 </style>
