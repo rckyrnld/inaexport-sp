@@ -120,7 +120,8 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
 
     //inquiry
     //imp
-    Route::post('getInquiry', 'Api\User\InquiryController@getListinquiry');
+    Route::post('getinquirynew', 'Api\User\InquiryController@getinquirynew');
+	Route::post('getInquiry', 'Api\User\InquiryController@getListinquiry');
     Route::post('searchInquiry', 'Api\User\InquiryController@searchListinquiry');
     Route::post('simpanInquiryImportir', 'Api\User\InquiryController@store');
     Route::post('verifikasi_inquiryImportir', 'Api\User\InquiryController@verifikasi_inquiry');
