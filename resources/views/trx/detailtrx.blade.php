@@ -13,6 +13,11 @@
     }
 ?>
 
+<style>
+	.form-control{
+		font-size: 13px !important;
+	}
+</style>
     <!--product area start-->
     <section class="product_area mb-50">
         <div class="container">
@@ -204,7 +209,7 @@ foreach($q2 as $p2){
 			<b>File</b>
 		</div>
 		<div class="form-group col-sm-6">
-			<a class="btn btn-warning" download href="{{asset('uploads/buy_request/'.$p2->files)}}"><i class="fa fa-download"></i> Download File</a>
+			<a class="btn btn-warning" style="font-size: 13px;" download href="{{asset('uploads/buy_request/'.$p2->files)}}"><i class="fa fa-download"></i> Download File</a>
 		</div>
 	</div>
 	
