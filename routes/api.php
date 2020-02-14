@@ -132,6 +132,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
 
     //eks
     Route::post('getInquiryeks', 'Api\User\InquiryController@getDataeks');
+    Route::post('getInquiryeks_kedua', 'Api\User\InquiryController@getDataeks_kedua');
     Route::post('joinedEks', 'Api\User\InquiryController@joined');
     Route::post('acceptjoinedEks', 'Api\User\InquiryController@accept_chat');
     Route::post('chatEksportir', 'Api\User\InquiryController@masukchattingEks');

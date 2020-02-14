@@ -553,6 +553,89 @@ class InquiryController extends Controller
         }
 		*/
     }
+	
+	public function getDataeks_kedua(Request $request)
+    {
+		//        dd($request);
+        $id_user = $request->id_user;
+		$user = [];
+                $importer = DB::table('csc_inquiry_br')
+                    ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
+                    ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
+                    ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
+                    // ->where('csc_inquiry_br.status', 1)
+                    // ->orderBy('csc_inquiry_br.', 'DESC')
+//                    ->orderBy('csc_inquiry_br.date', 'DESC')
+                    ->orderBy('csc_inquiry_br.created_at', 'DESC')
+                    ->get();
+//                dd($importir);
+                foreach ($importer as $key) {
+                    array_push($user, $key);
+                }
+//                dd($user);
+                $perwakilan = DB::table('csc_inquiry_br as a')
+                    ->join('csc_inquiry_broadcast as b', 'b.id_inquiry', '=', 'a.id')
+                    ->selectRaw('a.id, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.status')
+                    ->where('b.id_itdp_company_users', '=', $id_user)
+                    // ->where('b.status', 1)
+//                    ->orderBy('a.date', 'DESC')
+                    ->orderBy('a.created_at', 'DESC')
+                    ->get();
+                foreach ($perwakilan as $key2) {
+                    array_push($user, $key2);
+                }
+        
+		
+        $jsonResult = array();
+        for ($i = 0; $i < count($user); $i++) {
+            $jsonResult[$i]["id"] = $user[$i]->id;
+			$jsonResult[$i]["id_pembuat"] = $user[$i]->id_itdp_profil_eks;
+            $jsonResult[$i]["type"] = $user[$i]->type;
+            $jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
+            $jsonResult[$i]["id_csc_prod_cat_level1"] = $user[$i]->id_csc_prod_cat_level1;
+            $jsonResult[$i]["id_csc_prod_cat_level2"] = $user[$i]->id_csc_prod_cat_level2;
+            $jsonResult[$i]["jenis_perihal_en"] = $user[$i]->jenis_perihal_en;
+            $jsonResult[$i]["jenis_perihal_in"] = $user[$i]->jenis_perihal_in;
+            $jsonResult[$i]["jenis_perihal_chn"] = $user[$i]->jenis_perihal_chn;
+            $jsonResult[$i]["id_mst_country"] = $user[$i]->id_mst_country;
+            $jsonResult[$i]["messages_en"] = $user[$i]->messages_en;
+            $jsonResult[$i]["messages_in"] = $user[$i]->messages_in;
+            $jsonResult[$i]["messages_chn"] = $user[$i]->messages_chn;
+            $jsonResult[$i]["subyek_en"] = $user[$i]->subyek_en;
+            $jsonResult[$i]["subyek_in"] = $user[$i]->subyek_in;
+            $jsonResult[$i]["subyek_chn"] = $user[$i]->subyek_chn;
+            $jsonResult[$i]["to"] = $user[$i]->id_itdp_company_user;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["date"] = $user[$i]->date;
+            $jsonResult[$i]["created_at"] = $user[$i]->created_at;
+            $jsonResult[$i]["updated_at"] = $user[$i]->updated_at;
+            $jsonResult[$i]["duration"] = $user[$i]->duration;
+            $jsonResult[$i]["prodname"] = $user[$i]->prodname_en;
+            }
+		// echo count($user);die();
+        if (count($user) > 0) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $jsonResult;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = '0';
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+
+    }
 
     public function joined(Request $request)
     {
