@@ -248,6 +248,18 @@ class ProductController extends Controller
             //     });
             // }
             if ($insertRecord) {
+				$notif = DB::table('notif')->insert([
+                    'dari_nama' => getCompanyName($id_user),
+                    'dari_id' => $id_user,
+                    'untuk_nama' => "Admin",
+                    'untuk_id' => 1,
+                    'keterangan' => 'New Product Published By '.getCompanyName($id_user).' with Title  "'.$request->prodname_en.'"',
+                    'url_terkait' => 'eksportir/verifikasi_product',
+                    'status_baca' => 0,
+                    'waktu' => $datenow,
+                    'id_terkait' => $insertRecord,
+                    'to_role' => 1,
+                ]);
                 $meta = [
                     'code' => '200',
                     'message' => 'Success',

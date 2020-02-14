@@ -330,7 +330,7 @@ class InquiryController extends Controller
 		->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
                     ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product, csc_product_single.id_itdp_profil_eks,csc_product_single.id_itdp_company_user, csc_product_single.prodname_en')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
-                    ->where('csc_inquiry_br.status', '!=', 1)
+                    // ->where('csc_inquiry_br.status', '!=', 1)
 //                    ->orderBy('csc_inquiry_br.date', 'DESC')
                     ->orderBy('csc_inquiry_br.created_at', 'DESC')
                     ->get();
