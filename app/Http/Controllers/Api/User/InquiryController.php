@@ -563,7 +563,7 @@ class InquiryController extends Controller
 		//$user = [];
                 $user = DB::table('csc_inquiry_br')
                     ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
-                    ->selectRaw('csc_inquiry_br.*,csc_inquiry_br.status as stabr , csc_product_single.*, csc_product_single.id as id_product')
+                    ->selectRaw('csc_inquiry_br.*,csc_inquiry_br.id as idb ,csc_inquiry_br.status as stabr , csc_product_single.*, csc_product_single.id as id_product')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
                    // ->where('csc_inquiry_br.status', 1)
                     // ->orderBy('csc_inquiry_br.', 'DESC')
@@ -602,7 +602,7 @@ class InquiryController extends Controller
 				*/
         $jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
-            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id"] = $user[$i]->idb;
 			// $jsonResult[$i]["id_pembuat"] = $user[$i]->id_itdp_profil_eks;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
@@ -618,7 +618,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["subyek_en"] = $user[$i]->subyek_en;
             $jsonResult[$i]["subyek_in"] = $user[$i]->subyek_in;
             $jsonResult[$i]["subyek_chn"] = $user[$i]->subyek_chn;
-            // $jsonResult[$i]["to"] = $user[$i]->id_itdp_company_user;
+            $jsonResult[$i]["to"] = $user[$i]->to;
             $jsonResult[$i]["status"] = $user[$i]->stabr;
             $jsonResult[$i]["date"] = $user[$i]->date;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
