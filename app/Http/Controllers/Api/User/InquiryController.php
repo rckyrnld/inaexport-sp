@@ -737,9 +737,9 @@ class InquiryController extends Controller
             $jsonResult[$i]["id"] = $user[$i]->id;
 			// $jsonResult[$i]["id_pembuat"] = $user[$i]->id_itdp_profil_eks;
             $jsonResult[$i]["type"] = $user[$i]->type;
-            $jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
-            $jsonResult[$i]["id_csc_prod_cat_level1"] = $user[$i]->id_csc_prod_cat_level1;
-            $jsonResult[$i]["id_csc_prod_cat_level2"] = $user[$i]->id_csc_prod_cat_level2;
+            $jsonResult[$i]["id_csc_prod_cat"] = 0;
+            $jsonResult[$i]["id_csc_prod_cat_level1"] = 0;
+            $jsonResult[$i]["id_csc_prod_cat_level2"] = 0;
             $jsonResult[$i]["jenis_perihal_en"] = $user[$i]->jenis_perihal_en;
             $jsonResult[$i]["jenis_perihal_in"] = $user[$i]->jenis_perihal_in;
             $jsonResult[$i]["jenis_perihal_chn"] = $user[$i]->jenis_perihal_chn;
