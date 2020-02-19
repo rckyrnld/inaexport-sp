@@ -545,7 +545,7 @@ class ManagementNoAuthController extends Controller
     {
         $level = $request->level;
         if ($level == 1) {
-            $catprod = DB::table('csc_product')->where('level_1', $request->idparent)->get();
+            $catprod = DB::table('csc_product')->where('level_1', $request->idparent)->orderBy('nama_kategori_en', 'ASC')->get();
             if (count($catprod) > 0) {
                 $meta = [
                     'code' => '200',
@@ -568,7 +568,7 @@ class ManagementNoAuthController extends Controller
                 return response($res);
             }
         } else {
-            $catprod = DB::table('csc_product')->where('level_2', $request->idparent)->where('level_1', $request->idsub)->get();
+            $catprod = DB::table('csc_product')->where('level_2', $request->idparent)->where('level_1', $request->idsub)->orderBy('nama_kategori_en', 'ASC')->get();
             if (count($catprod) > 0) {
                 $meta = [
                     'code' => '200',
