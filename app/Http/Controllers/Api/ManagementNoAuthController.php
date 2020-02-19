@@ -620,6 +620,60 @@ class ManagementNoAuthController extends Controller
             return response($res);
         }
     }
+	
+	public function getHscode_paging(Request $request)
+    {
+		$page = $request->page;
+		$limit = $request->limit;
+        $research = DB::table('mst_hscodes')
+            ->select('id','desc_ind','desc_eng')
+			->paginate($limit);
+            //->get(); 
+			
+		$research2 = DB::table('mst_hscodes')
+            ->select('id','desc_ind','desc_eng')
+			->get();
+			
+        if (count($research) > 0) {
+            /*$meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);*/
+			$countall = count($research2);
+			$bagi = $countall / $request->limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			$data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $research
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
 
     public function getHscodeFilter(Request $req)
     {

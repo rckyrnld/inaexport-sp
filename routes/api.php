@@ -224,6 +224,7 @@ Route::namespace('Api')->group(function () {
 
     //hscode
     Route::get('getHscode', 'ManagementNoAuthController@getHscode');
+    Route::get('getHscode_paging', 'ManagementNoAuthController@getHscode_paging');
     Route::get('getHscodeFilter', 'ManagementNoAuthController@getHscodeFilter');
 
     // Populer Categories
