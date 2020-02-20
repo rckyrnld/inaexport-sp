@@ -693,8 +693,8 @@ class InquiryController extends Controller
         $id_user = $request->id_user;
         $page = $request->page;
 		$limit = $request->limit;
-		//$user = [];
-                $user = DB::table('csc_inquiry_br')
+		$user = [];
+                $importer = DB::table('csc_inquiry_br')
                     ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
                     ->selectRaw('csc_inquiry_br.*,csc_inquiry_br.id as idb ,csc_inquiry_br.status as stabr , csc_product_single.*, csc_product_single.id as id_product')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
@@ -715,16 +715,24 @@ class InquiryController extends Controller
 					// dd($user);
 					// echo count($importer);die();
                 
-               /* foreach ($importer as $key) {
+                foreach ($importer as $key) {
                     array_push($user, $key);
-                } */
+                } 
 //                dd($user);
-				/*
+				
                 $perwakilan = DB::table('csc_inquiry_br as a')
                     ->join('csc_inquiry_broadcast as b', 'b.id_inquiry', '=', 'a.id')
-                    ->selectRaw('a.*,a.id, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.*, b.status')
+                    ->selectRaw('a.*,a.id as idb,a.status as stabr, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.*, b.status')
                     ->where('b.id_itdp_company_users', '=', $id_user)
-                    ->where('b.status', 1)
+               //     ->where('b.status', 1)
+//                    ->orderBy('a.date', 'DESC')
+                    ->orderBy('a.created_at', 'DESC')
+                    ->paginate($limit);
+				$user3 = DB::table('csc_inquiry_br as a')
+                    ->join('csc_inquiry_broadcast as b', 'b.id_inquiry', '=', 'a.id')
+                    ->selectRaw('a.*,a.id as idb,a.status as stabr, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.*, b.status')
+                    ->where('b.id_itdp_company_users', '=', $id_user)
+               //     ->where('b.status', 1)
 //                    ->orderBy('a.date', 'DESC')
                     ->orderBy('a.created_at', 'DESC')
                     ->get();
@@ -732,7 +740,7 @@ class InquiryController extends Controller
                     array_push($user, $key2);
                 }
         
-				*/
+				
         $jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
             $jsonResult[$i]["id"] = $user[$i]->idb;
@@ -789,7 +797,7 @@ class InquiryController extends Controller
             $res['data'] = $data;
             return response($res);
 			*/
-			$countall = count($user2);
+			$countall = count($user2) + count($user3);
 			$bagi = $countall / $request->limit;
             $meta = [
                 'code' => 200,
