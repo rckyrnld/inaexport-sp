@@ -746,6 +746,13 @@ class InquiryController extends Controller
             $jsonResult[$i]["id"] = $user[$i]->idb;
 			// $jsonResult[$i]["id_pembuat"] = $user[$i]->id_itdp_profil_eks;
             $jsonResult[$i]["type"] = $user[$i]->type;
+			if($user[$i]->type == "admin"){
+				$jsonResult[$i]["id_type"] = 1;
+			}else if($user[$i]->type == "perwakilan"){
+				$jsonResult[$i]["id_type"] = 4;
+			}else{
+				$jsonResult[$i]["id_type"] = 3;
+			}
             $jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
             $jsonResult[$i]["id_csc_prod_cat_level1"] = $user[$i]->id_csc_prod_cat_level1;
             $jsonResult[$i]["id_csc_prod_cat_level2"] = $user[$i]->id_csc_prod_cat_level2;
@@ -785,6 +792,7 @@ class InquiryController extends Controller
 			
 			}
 		}
+		
 		// echo count($user);die();
         if (count($user) > 0) {
             /*$meta = [
@@ -798,7 +806,7 @@ class InquiryController extends Controller
             return response($res);
 			*/
 			$countall = count($user2) + count($user3);
-			$bagi = $countall / $request->limit;
+			$bagi = $countall / ($request->limit * 2);
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
