@@ -1009,10 +1009,17 @@ class InquiryController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         $id_inquiry = $request->id_inquiry;
         $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+		if($data->type == "importir"){
         $users = DB::table('itdp_company_users')->where('id', $data->id_pembuat)->first();
         $email = $users->email;
         $username = $users->username;
         $id_user = $users->id;
+		}else{
+			 $users = DB::table('itdp_admin_users')->where('id', $data->id_pembuat)->first();
+        $email = $users->email;
+        $username = $users->name;
+        $id_user = $users->id;
+		}
         $datenow = date('Y-m-d H:i:s');
 
         if ($data->type == "admin") {
@@ -1024,7 +1031,7 @@ class InquiryController extends Controller
         }
 		
 		if($rolenya == 1 || $rolenya == 4){
-			$inquiry = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->update([
+			$inquiry = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id_inquiry)->where('id_itdp_company_users', $data->to)->update([
                     'status' => 0,
                 ]);
 
