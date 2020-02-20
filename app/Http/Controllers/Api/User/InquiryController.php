@@ -730,7 +730,7 @@ class InquiryController extends Controller
                     ->paginate($limit);
 				$user3 = DB::table('csc_inquiry_br as a')
                     ->join('csc_inquiry_broadcast as b', 'b.id_inquiry', '=', 'a.id')
-                    ->selectRaw('a.*,a.id as idb,a.status as stabr, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.*, b.status')
+                    ->selectRaw('a.*,a.id as idb,b.status as stabr, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.*, b.status')
                     ->where('b.id_itdp_company_users', '=', $id_user)
                //     ->where('b.status', 1)
 //                    ->orderBy('a.date', 'DESC')
@@ -1022,6 +1022,17 @@ class InquiryController extends Controller
         } else if ($data->type == "importir") {
             $rolenya = 3;
         }
+		
+		if($rolenya == 1 || $rolenya == 4){
+			$inquiry = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $id_user)->update([
+                    'status' => 0,
+                ]);
+
+		}else{
+			$inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
+            'status' => 0,
+			]);
+		}
 
         $notif = DB::table('notif')->insert([
             'dari_nama' => getCompanyName($id_user),
@@ -1034,6 +1045,7 @@ class InquiryController extends Controller
             'waktu' => $datenow,
             'to_role' => $rolenya,
         ]);
+		
         //Tinggal Ganti Email1 dengan email kemendag
         $data = [
             'email' => $email,
@@ -1048,10 +1060,9 @@ class InquiryController extends Controller
             $mail->subject('Inquiry Information');
         });
 
-        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
-            'status' => 0,
-        ]);
-
+        
+		
+		
         if (count($inquiry) > 0) {
             $meta = [
                 'code' => 200,
@@ -1664,6 +1675,13 @@ class InquiryController extends Controller
             } else if ($inquiry->type == "importir") {
                 $role = 3;
             }
+			if($role == 1 || $role == 4){
+				$updatebrm = DB::table('csc_inquiry_broadcast')->where('id_inquiry', $id_inquiry)->where('id_itdp_company_users', $id_user)->update([
+                    'status' => $stat,
+                ]);
+			}else{
+				
+			}
             $insert = DB::table('csc_transaksi')->insert([
 //                "id_transaksi" => $idnew,
                 "id_pembuat" => $inquiry->id_pembuat,
