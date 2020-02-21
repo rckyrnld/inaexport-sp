@@ -766,13 +766,14 @@ class InquiryController extends Controller
             $jsonResult[$i]["subyek_en"] = $user[$i]->subyek_en;
             $jsonResult[$i]["subyek_in"] = $user[$i]->subyek_in;
             $jsonResult[$i]["subyek_chn"] = $user[$i]->subyek_chn;
-            $jsonResult[$i]["to"] = $user[$i]->to;
+            
             $jsonResult[$i]["status"] = $user[$i]->stabr;
             $jsonResult[$i]["date"] = $user[$i]->date;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
             $jsonResult[$i]["updated_at"] = $user[$i]->updated_at;
             $jsonResult[$i]["duration"] = $user[$i]->duration;
 			if($user[$i]->type == "importir"){
+				$jsonResult[$i]["to"] = $user[$i]->to;
 				$jsonResult[$i]["prodname"] = $user[$i]->prodname_en;
 				$id_profil = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_profil;
 				$id_role = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_role;
@@ -782,6 +783,7 @@ class InquiryController extends Controller
 				$jsonResult[$i]["csc_product_level2_desc"] = ($user[$i]->id_csc_prod_cat_level2) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level2)->first()->nama_kategori_en : null;
 			
             }else{
+				$jsonResult[$i]["to"] = $user[$i]->id_pembuat;
 				$jsonResult[$i]["prodname"] = "";
 				/*$id_profil = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_profil;
 				$id_role = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_role; */
