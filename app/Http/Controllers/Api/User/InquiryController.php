@@ -1685,7 +1685,7 @@ class InquiryController extends Controller
             ];
             $data = '';
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            // $res['data'] = $data;
             return response($res);
         } else {
             $meta = [
@@ -1695,7 +1695,7 @@ class InquiryController extends Controller
             ];
             $data = '';
             $res['meta'] = $meta;
-            $res['data'] = $data;
+            // $res['data'] = $data;
             return response($res);
 
         }
