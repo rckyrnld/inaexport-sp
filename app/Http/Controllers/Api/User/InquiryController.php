@@ -1763,7 +1763,7 @@ class InquiryController extends Controller
             $data = '';
             $res['meta'] = $meta;
             $res['data'] = $jsonResult;
-            return response($res);
+            return response($jsonResult);
         } else {
             $meta = [
                 'code' => 204,
