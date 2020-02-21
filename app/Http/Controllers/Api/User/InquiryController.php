@@ -1612,6 +1612,7 @@ class InquiryController extends Controller
         }
         $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
         //Notif sistem
+		/*
         $notif = DB::table('notif')->insert([
             'dari_nama' => getCompanyName($sender),
             'dari_id' => $sender,
@@ -1644,7 +1645,7 @@ class InquiryController extends Controller
             $mail->to($data['email'], $data['username']);
             $mail->subject('Inquiry Chatting Information');
         });
-
+		*/
         if (count($save) > 0) {
             $meta = [
                 'code' => 200,
