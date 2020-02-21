@@ -1559,7 +1559,8 @@ class InquiryController extends Controller
         $sender = $request->id_user;
         $receiver = $request->id_penerima;
         $msg = $request->messages;
-        $type = $request->typenya;
+		$data = DB::table('csc_inquiry_br')->where('id', $id)->first();
+        $type = $data->type;
 		
 		/*
         date_default_timezone_set('Asia/Jakarta');
@@ -1570,7 +1571,7 @@ class InquiryController extends Controller
         $msg = $request->messages;
         $type = $request->typenya;
 		*/
-        $data = DB::table('csc_inquiry_br')->where('id', $id)->first();
+        
 
         if($type == "importir"){
             $save = DB::table('csc_chatting_inquiry')->insert([
