@@ -596,15 +596,24 @@ class ManagementNoAuthController extends Controller
     public function getHscode()
     {
         $research = DB::table('mst_hscodes')
-            ->select('id','desc_ind','desc_eng')
+            //->select('id','desc_ind','desc_eng')
             ->get();
+		
+		for ($i = 0; $i < count($research); $i++) {
+           
+            $jsonResult[$i]["id"] = $research[$i]->id;
+            $jsonResult[$i]["desc_eng"] = $research[$i]->fullhs." - ".$research[$i]->desc_eng;
+            $jsonResult[$i]["desc_ind"] = $research[$i]->fullhs." - ".$research[$i]->desc_ind;
+			
+		
+		}
         if (count($research) > 0) {
             $meta = [
                 'code' => '200',
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = $research;
+            $data = $jsonResult;
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
