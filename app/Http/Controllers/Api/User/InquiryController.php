@@ -1041,7 +1041,8 @@ class InquiryController extends Controller
             'status' => 0,
 			]);
 		}
-
+		
+		if($rolenya == 3){
         $notif = DB::table('notif')->insert([
             'dari_nama' => getCompanyName($id_user),
             'dari_id' => $id_user,
@@ -1053,6 +1054,19 @@ class InquiryController extends Controller
             'waktu' => $datenow,
             'to_role' => $rolenya,
         ]);
+		}else{
+			$notif = DB::table('notif')->insert([
+            'dari_nama' => getCompanyName($id_user),
+            'dari_id' => $id_user,
+            'untuk_nama' => "Super Admin",
+            'untuk_id' => $data->id_pembuat,
+            'keterangan' => 'Exporter ' . getCompanyName($id_user) . ' has joined Inquiry ' . $data->subyek_en,
+            'url_terkait' => 'inquiry_admin/view/'.$id_inquiry,
+            'status_baca' => 0,
+            'waktu' => $datenow,
+            'to_role' => $rolenya,
+        ]);
+		}
 		
         //Tinggal Ganti Email1 dengan email kemendag
         $data = [
