@@ -1576,7 +1576,7 @@ class InquiryController extends Controller
         
 
         if($type == "importir"){
-            $save = DB::table('csc_chatting_inquiry')->insert([
+            $save = DB::table('csc_chatting_inquiry')->insertGetId([
                 'id_inquiry' => $id,
                 'sender' => $sender,
                 'receive' => $receiver,
@@ -1586,6 +1586,43 @@ class InquiryController extends Controller
                 'created_at' => $datenow,
             ]);
 
+			$user = DB::table('csc_chatting_inquiry')
+            ->where('id', '=', $save)
+            ->get();
+			$jsonResult = array();
+        for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
+            $jsonResult[$i]["sender"] = $user[$i]->sender;
+            $id_profil = $user[$i]->sender;
+			$y = DB::table('itdp_profil_eks')->where('id', $id_profil)->get();
+			if(count($y) == 0){
+				$jsonResult[$i]["company_name"] = "";
+			}else{
+				$jsonResult[$i]["company_name"] = DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+			}
+            // $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
+            $jsonResult[$i]["receive"] = $user[$i]->receive;
+            $jsonResult[$i]["type"] = $user[$i]->type;
+            $jsonResult[$i]["messages"] = $user[$i]->messages;
+            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/' . $user[$i]->file) : "";
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["created_at"] = $user[$i]->created_at;
+            $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
+            $jsonResult[$i]["ext"] = $extension;
+
+        }
             //Notif sistem
             $notif = DB::table('notif')->insert([
                 'dari_nama' => getCompanyName($sender),
@@ -1622,7 +1659,7 @@ class InquiryController extends Controller
             });
         }else if($type == "perwakilan" || $type == "admin"){
             $cek = Db::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $sender)->first();
-            $save = DB::table('csc_chatting_inquiry')->insert([
+            $save = DB::table('csc_chatting_inquiry')->insertGetId([
                 'id_inquiry' => $id,
                 'id_broadcast_inquiry' => $cek->id,
                 'sender' => $sender,
@@ -1632,6 +1669,44 @@ class InquiryController extends Controller
                 'status' => 0,
                 'created_at' => $datenow,
             ]);
+			
+			$user = DB::table('csc_chatting_inquiry')
+            ->where('id', '=', $save)
+            ->get();
+			$jsonResult = array();
+        for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
+            $jsonResult[$i]["sender"] = $user[$i]->sender;
+            $id_profil = $user[$i]->sender;
+			$y = DB::table('itdp_profil_eks')->where('id', $id_profil)->get();
+			if(count($y) == 0){
+				$jsonResult[$i]["company_name"] = "";
+			}else{
+				$jsonResult[$i]["company_name"] = DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+			}
+            // $jsonResult[$i]["company_name"] = (DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company) ? DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company : "";
+            $jsonResult[$i]["receive"] = $user[$i]->receive;
+            $jsonResult[$i]["type"] = $user[$i]->type;
+            $jsonResult[$i]["messages"] = $user[$i]->messages;
+            $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/' . $user[$i]->file) : "";
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["created_at"] = $user[$i]->created_at;
+            $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
+            $jsonResult[$i]["ext"] = $extension;
+
+        }
 
             $untuk_nama = "";
             if($type == "admin"){
@@ -1687,7 +1762,7 @@ class InquiryController extends Controller
             ];
             $data = '';
             $res['meta'] = $meta;
-            // $res['data'] = $data;
+            $res['data'] = $jsonResult;
             return response($res);
         } else {
             $meta = [
@@ -1697,7 +1772,7 @@ class InquiryController extends Controller
             ];
             $data = '';
             $res['meta'] = $meta;
-            // $res['data'] = $data;
+            $res['data'] = $data;
             return response($res);
 
         }
