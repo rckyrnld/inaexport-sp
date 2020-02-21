@@ -1480,7 +1480,7 @@ class InquiryController extends Controller
         $id_user = $request->id_user;//sender
         $id_inquiry = $request->id_inquiry;
         $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
-
+		$type = $inquiry->type;
         $broadcast = NULL;
         $user = DB::table('csc_chatting_inquiry')
             ->where('id_inquiry', $id_inquiry)
@@ -1503,10 +1503,23 @@ class InquiryController extends Controller
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["sender"] = $user[$i]->sender;
             $id_user = $user[$i]->sender;
+			if($type == "importir"){
             $id_profil = DB::table('itdp_company_users')->where('id', $id_user)->first()->id_profil;
             $id_role = DB::table('itdp_company_users')->where('id', $id_user)->first()->id_role;
             $jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
-            $jsonResult[$i]["receive"] = $user[$i]->receive;
+            }else{
+			$carinama = DB::table('itdp_admin_users')->where('id', $user[$i]->sender)->get();
+			if(count($carinama) == 0){
+				$mc = "";
+			}else{
+			foreach($carinama as $ty){
+				$mc = $ty->name;
+			}
+			}
+			$jsonResult[$i]["company_name"] = $mc;
+            	
+			}
+			$jsonResult[$i]["receive"] = $user[$i]->receive;
             $jsonResult[$i]["type"] = $user[$i]->type;
             $jsonResult[$i]["messages"] = $user[$i]->messages;
             $jsonResult[$i]["file"] = $path = ($user[$i]->file) ? url('/uploads/ChatFileInquiry/' . $user[$i]->id . '/' . $user[$i]->file) : "";
