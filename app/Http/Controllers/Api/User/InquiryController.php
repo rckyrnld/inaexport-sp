@@ -691,8 +691,8 @@ class InquiryController extends Controller
     {
 		//dd($request->id_user);
         $id_user = $request->id_user;
-        $page = $request->page;
-		$limit = $request->limit;
+        // $page = $request->page;
+		// $limit = $request->limit;
 		$user = [];
                 $importer = DB::table('csc_inquiry_br')
                     ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
@@ -702,7 +702,8 @@ class InquiryController extends Controller
                     // ->orderBy('csc_inquiry_br.', 'DESC')
 //                    ->orderBy('csc_inquiry_br.date', 'DESC')
                     ->orderBy('csc_inquiry_br.created_at', 'DESC')
-					->paginate($limit);
+					// ->paginate($limit);
+					->get();
 			$user2 = DB::table('csc_inquiry_br')
                     ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
                     ->selectRaw('csc_inquiry_br.*,csc_inquiry_br.status as stabr , csc_product_single.*, csc_product_single.id as id_product')
@@ -727,7 +728,8 @@ class InquiryController extends Controller
                //     ->where('b.status', 1)
 //                    ->orderBy('a.date', 'DESC')
                     ->orderBy('a.created_at', 'DESC')
-                    ->paginate($limit);
+                    // ->paginate($limit);
+					->get();
 				$user3 = DB::table('csc_inquiry_br as a')
                     ->join('csc_inquiry_broadcast as b', 'b.id_inquiry', '=', 'a.id')
                     ->selectRaw('a.*,a.id as idb,b.status as stabr, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.*, b.status')
@@ -880,7 +882,7 @@ class InquiryController extends Controller
             return response($res);
 			*/
 			$countall = count($user2) + count($user3);
-			$bagi = $countall / ($request->limit * 2);
+			// $bagi = $countall / ($request->limit * 2);
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
@@ -890,7 +892,7 @@ class InquiryController extends Controller
 			$data = [
                 'page' => $request->page,
                 'total_results' => $countall,
-                'total_pages' => ceil($bagi),
+                'total_pages' => 0,
                 'results' => $jsonResult
             ];
 
