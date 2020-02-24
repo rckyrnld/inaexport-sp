@@ -748,14 +748,38 @@ class InquiryController extends Controller
             $jsonResult[$i]["type"] = $user[$i]->type;
 			if($user[$i]->type == "admin"){
 				$jsonResult[$i]["id_type"] = 1;
+				$carid = DB::table('csc_inquiry_category')->where('id_inquiry', '=', $user[$i]->idb)->get();
+				foreach($carid as $c1){ $id_cad_prod = $c1->id_cad_prod; }
+				$ambilcat = DB::table('csc_product')->where('id', '=', $id_cad_prod)->get();
+				foreach($ambilcat as $c2){
+					$ip1 = $c2->level_2;
+					$ip2 = $c2->level_1;
+					$ip3 = $c2->id;
+				}
+				$jsonResult[$i]["id_csc_prod_cat"] = $ip1;
+				$jsonResult[$i]["id_csc_prod_cat_level1"] = $ip2;
+				$jsonResult[$i]["id_csc_prod_cat_level2"] = $ip3;
+				
 			}else if($user[$i]->type == "perwakilan"){
 				$jsonResult[$i]["id_type"] = 4;
+				$carid = DB::table('csc_inquiry_category')->where('id_inquiry', '=', $user[$i]->idb)->get();
+				foreach($carid as $c1){ $id_cad_prod = $c1->id_cad_prod; }
+				$ambilcat = DB::table('csc_product')->where('id', '=', $id_cad_prod)->get();
+				foreach($ambilcat as $c2){
+					$ip1 = $c2->level_2;
+					$ip2 = $c2->level_1;
+					$ip3 = $c2->id;
+				}
+				$jsonResult[$i]["id_csc_prod_cat"] = $ip1;
+				$jsonResult[$i]["id_csc_prod_cat_level1"] = $ip2;
+				$jsonResult[$i]["id_csc_prod_cat_level2"] = $ip3;
 			}else{
 				$jsonResult[$i]["id_type"] = 3;
+				$jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
+				$jsonResult[$i]["id_csc_prod_cat_level1"] = $user[$i]->id_csc_prod_cat_level1;
+				$jsonResult[$i]["id_csc_prod_cat_level2"] = $user[$i]->id_csc_prod_cat_level2;
 			}
-            $jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
-            $jsonResult[$i]["id_csc_prod_cat_level1"] = $user[$i]->id_csc_prod_cat_level1;
-            $jsonResult[$i]["id_csc_prod_cat_level2"] = $user[$i]->id_csc_prod_cat_level2;
+           
             $jsonResult[$i]["jenis_perihal_en"] = $user[$i]->jenis_perihal_en;
             $jsonResult[$i]["jenis_perihal_in"] = $user[$i]->jenis_perihal_in;
             $jsonResult[$i]["jenis_perihal_chn"] = $user[$i]->jenis_perihal_chn;
