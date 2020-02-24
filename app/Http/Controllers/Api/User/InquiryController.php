@@ -1712,6 +1712,7 @@ class InquiryController extends Controller
 
         }
             //Notif sistem
+			/*
             $notif = DB::table('notif')->insert([
                 'dari_nama' => getCompanyName($sender),
                 'dari_id' => $sender,
@@ -1745,6 +1746,7 @@ class InquiryController extends Controller
                 $mail->to($data['email'], $data['username']);
                 $mail->subject('Inquiry Chatting Information');
             });
+			*/
         }else if($type == "perwakilan" || $type == "admin"){
             $cek = Db::table('csc_inquiry_broadcast')->where('id_inquiry', $id)->where('id_itdp_company_users', $sender)->first();
             $save = DB::table('csc_chatting_inquiry')->insertGetId([
