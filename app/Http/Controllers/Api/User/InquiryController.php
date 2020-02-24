@@ -96,15 +96,16 @@ class InquiryController extends Controller
     {
 		//dd($request->id_user);
         $id_user = $request->id_user;
-        $page = $request->page;
-		$limit = $request->limit;
+        //$page = $request->page;
+		//$limit = $request->limit;
 		//$user = [];
                 $user = DB::table('csc_inquiry_br')
             ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
             ->selectRaw('csc_inquiry_br.*,csc_inquiry_br.id as idb,csc_inquiry_br.status as stabr, csc_product_single.id as id_product, csc_product_single.id_itdp_profil_eks,csc_product_single.id_itdp_company_user, csc_product_single.prodname_en')
             ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
             ->orderBy('csc_inquiry_br.created_at', 'DESC')
-					->paginate($limit);
+			//->paginate($limit);
+			->get();
 			$user2 = DB::table('csc_inquiry_br')
             ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
             ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product, csc_product_single.id_itdp_profil_eks,csc_product_single.id_itdp_company_user, csc_product_single.prodname_en')
@@ -189,7 +190,7 @@ class InquiryController extends Controller
             return response($res);
 			*/
 			$countall = count($user2);
-			$bagi = $countall / $request->limit;
+			// $bagi = $countall / $request->limit;
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
@@ -199,7 +200,7 @@ class InquiryController extends Controller
 			$data = [
                 'page' => $request->page,
                 'total_results' => $countall,
-                'total_pages' => ceil($bagi),
+                'total_pages' => 0,
                 'results' => $jsonResult
             ];
 
