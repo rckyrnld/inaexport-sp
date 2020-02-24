@@ -697,12 +697,12 @@ class InquiryController extends Controller
 		$user = [];
                 $importer = DB::table('csc_inquiry_br')
                     ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
-                    ->selectRaw('csc_inquiry_br.*,csc_inquiry_br.id as idb ,csc_inquiry_br.status as stabr , csc_product_single.*, csc_product_single.id as id_product')
+                    ->selectRaw('csc_inquiry_br.*,csc_inquiry_br.created_at as ca,csc_inquiry_br.id as idb ,csc_inquiry_br.status as stabr , csc_product_single.*, csc_product_single.id as id_product')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
                    // ->where('csc_inquiry_br.status', 1)
                     // ->orderBy('csc_inquiry_br.', 'DESC')
 //                    ->orderBy('csc_inquiry_br.date', 'DESC')
-                    ->orderBy('csc_inquiry_br.created_at', 'DESC')
+                    ->orderBy('ca', 'DESC')
 					// ->paginate($limit);
 					->get();
 			$user2 = DB::table('csc_inquiry_br')
@@ -724,7 +724,7 @@ class InquiryController extends Controller
 				
                 $perwakilan = DB::table('csc_inquiry_br as a')
                     ->join('csc_inquiry_broadcast as b', 'b.id_inquiry', '=', 'a.id')
-                    ->selectRaw('a.*,a.id as idb,b.status as stabr, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.*, b.status')
+                    ->selectRaw('a.*,a.created_at as ca,a.id as idb,b.status as stabr, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.*, b.status')
                     ->where('b.id_itdp_company_users', '=', $id_user)
                //     ->where('b.status', 1)
 //                    ->orderBy('a.date', 'DESC')
@@ -847,7 +847,7 @@ class InquiryController extends Controller
             
             $jsonResult[$i]["status"] = $user[$i]->stabr;
             $jsonResult[$i]["date"] = $user[$i]->date;
-            $jsonResult[$i]["created_at"] = $user[$i]->created_at;
+            $jsonResult[$i]["created_at"] = $user[$i]->ca;
             $jsonResult[$i]["updated_at"] = $user[$i]->updated_at;
             $jsonResult[$i]["duration"] = $user[$i]->duration;
 			if($user[$i]->type == "importir"){
