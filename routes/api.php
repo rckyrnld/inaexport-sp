@@ -68,8 +68,8 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
     Route::post('searchproduct', 'Api\Admin\EksreportController@searchproduct');
 	
 	//Management User
-	Route::post('list_eksportir', 'Api\Admin\ManagementController@list_eksportir');
-	Route::post('list_importir', 'Api\Admin\ManagementController@list_importir');
+	Route::get('list_eksportir', 'Api\Admin\ManagementController@list_eksportir');
+	Route::get('list_importir', 'Api\Admin\ManagementController@list_importir');
 	
 });
 
@@ -122,6 +122,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     //imp
     Route::post('getinquirynew', 'Api\User\InquiryController@getinquirynew');
 	Route::post('getInquiry', 'Api\User\InquiryController@getListinquiry');
+	Route::get('getInquiry_kedua', 'Api\User\InquiryController@getListinquiry_kedua');
     Route::post('searchInquiry', 'Api\User\InquiryController@searchListinquiry');
     Route::post('simpanInquiryImportir', 'Api\User\InquiryController@store');
     Route::post('verifikasi_inquiryImportir', 'Api\User\InquiryController@verifikasi_inquiry');
@@ -132,7 +133,8 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
 
     //eks
     Route::post('getInquiryeks', 'Api\User\InquiryController@getDataeks');
-    Route::post('getInquiryeks_kedua', 'Api\User\InquiryController@getDataeks_kedua');
+    Route::get('getInquiryeks_kedua', 'Api\User\InquiryController@getDataeks_kedua');
+    Route::get('getInquiryeks_admin', 'Api\User\InquiryController@getDataeks_admin');
     Route::post('joinedEks', 'Api\User\InquiryController@joined');
     Route::post('acceptjoinedEks', 'Api\User\InquiryController@accept_chat');
     Route::post('chatEksportir', 'Api\User\InquiryController@masukchattingEks');
@@ -222,6 +224,7 @@ Route::namespace('Api')->group(function () {
 
     //hscode
     Route::get('getHscode', 'ManagementNoAuthController@getHscode');
+    Route::get('getHscode_paging', 'ManagementNoAuthController@getHscode_paging');
     Route::get('getHscodeFilter', 'ManagementNoAuthController@getHscodeFilter');
 
     // Populer Categories

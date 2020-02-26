@@ -545,7 +545,7 @@ class ManagementNoAuthController extends Controller
     {
         $level = $request->level;
         if ($level == 1) {
-            $catprod = DB::table('csc_product')->where('level_1', $request->idparent)->get();
+            $catprod = DB::table('csc_product')->where('level_1', $request->idparent)->orderBy('nama_kategori_en', 'ASC')->get();
             if (count($catprod) > 0) {
                 $meta = [
                     'code' => '200',
@@ -568,7 +568,7 @@ class ManagementNoAuthController extends Controller
                 return response($res);
             }
         } else {
-            $catprod = DB::table('csc_product')->where('level_2', $request->idparent)->where('level_1', $request->idsub)->get();
+            $catprod = DB::table('csc_product')->where('level_2', $request->idparent)->where('level_1', $request->idsub)->orderBy('nama_kategori_en', 'ASC')->get();
             if (count($catprod) > 0) {
                 $meta = [
                     'code' => '200',
@@ -596,15 +596,78 @@ class ManagementNoAuthController extends Controller
     public function getHscode()
     {
         $research = DB::table('mst_hscodes')
-            ->select('id','desc_ind','desc_eng')
+            //->select('id','desc_ind','desc_eng')
             ->get();
+		
+		for ($i = 0; $i < count($research); $i++) {
+           
+            $jsonResult[$i]["id"] = $research[$i]->id;
+            $jsonResult[$i]["desc_eng"] = $research[$i]->fullhs." - ".$research[$i]->desc_eng;
+            $jsonResult[$i]["desc_ind"] = $research[$i]->fullhs." - ".$research[$i]->desc_ind;
+			
+		
+		}
         if (count($research) > 0) {
             $meta = [
                 'code' => '200',
                 'message' => 'Success',
                 'status' => 'OK'
             ];
+            $data = $jsonResult;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
             $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
+	
+	public function getHscode_paging(Request $request)
+    {
+		$page = $request->page;
+		$limit = $request->limit;
+        $research = DB::table('mst_hscodes')
+            ->select('id','desc_ind','desc_eng')
+			->paginate($limit);
+            //->get(); 
+			
+		$research2 = DB::table('mst_hscodes')
+            ->select('id','desc_ind','desc_eng')
+			->get();
+			
+        if (count($research) > 0) {
+            /*$meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $research;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);*/
+			$countall = count($research2);
+			$bagi = $countall / $request->limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			$data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $research
+            ];
+
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);

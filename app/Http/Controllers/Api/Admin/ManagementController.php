@@ -957,16 +957,18 @@ class ManagementController extends Controller
 	
 	public function list_eksportir(Request $request)
     {
-		$offset = $request->offset;
+		$page = $request->page;
+		$limit = $request->limit;
 		$data = DB::table('itdp_company_users')
 		->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
 		->select('itdp_company_users.id','itdp_company_users.id_profil','itdp_company_users.foto_profil','itdp_profil_eks.badanusaha','itdp_profil_eks.company','itdp_company_users.email'
 		,'itdp_profil_eks.addres','itdp_profil_eks.city','itdp_profil_eks.postcode','itdp_profil_eks.phone','itdp_profil_eks.fax')
 		->where('id_role', 2)
 		->orderBy('itdp_company_users.created_at', 'desc')
-        ->limit(10)
-        ->offset($offset)
-        ->get();
+		->paginate($limit);
+        //->limit(10)
+        //->offset($offset)
+        //->get();
 		
 		$data2 = DB::table('itdp_company_users')
 		->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
@@ -992,7 +994,7 @@ class ManagementController extends Controller
 		
 		if ($data) {
 			$countall = count($data2);
-			$bagi = $countall / 10;
+			$bagi = $countall / $request->limit;
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
@@ -1000,7 +1002,7 @@ class ManagementController extends Controller
             ];
 			
 			$data = [
-                'page' => $offset,
+                'page' => $request->page,
                 'total_results' => $countall,
                 'total_pages' => ceil($bagi),
                 'results' => $jsonResult
@@ -1025,16 +1027,18 @@ class ManagementController extends Controller
 	
 	public function list_importir(Request $request)
     {
-		$offset = $request->offset;
+		$page = $request->page;
+		$limit = $request->limit;
 		$data = DB::table('itdp_company_users')
 		->join('itdp_profil_imp', 'itdp_profil_imp.id', '=', 'itdp_company_users.id_profil')
 		->select('itdp_company_users.id','itdp_company_users.id_profil','itdp_company_users.foto_profil','itdp_profil_imp.badanusaha','itdp_profil_imp.company','itdp_company_users.email'
 		,'itdp_profil_imp.addres','itdp_profil_imp.city','itdp_profil_imp.postcode','itdp_profil_imp.phone','itdp_profil_imp.fax')
 		->where('id_role', 3)
 		->orderBy('itdp_company_users.created_at', 'desc')
-        ->limit(10)
-        ->offset($offset)
-        ->get();
+		->paginate($limit);
+        //->limit(10)
+        //->offset($offset)
+        //->get();
 		
 		$data2 = DB::table('itdp_company_users')
 		->join('itdp_profil_imp', 'itdp_profil_imp.id', '=', 'itdp_company_users.id_profil')
@@ -1060,7 +1064,7 @@ class ManagementController extends Controller
 		
 		if ($data) {
 			$countall = count($data2);
-			$bagi = $countall / 10;
+			$bagi = $countall / $request->limit;
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
@@ -1068,7 +1072,7 @@ class ManagementController extends Controller
             ];
 			
 			$data = [
-                'page' => $offset,
+                'page' => $request->page,
                 'total_results' => $countall,
                 'total_pages' => ceil($bagi),
                 'results' => $jsonResult

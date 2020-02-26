@@ -417,7 +417,11 @@ class BuyingreqController extends Controller
                 } else {
                     $jsonResult[$i]["company_name"] = '-';
                 }
-            } else {
+            }else if ($id_role == 4) {
+                $jsonResult[$i]["company_name"] = DB::table('itdp_admin_users')->where('id', $data[$i]->id_pembuat)->first();
+					$jsonResult[$i]["company_name"] = $jsonResult[$i]["company_name"]->name;
+               
+            }else {
                 $companyUser = DB::table('itdp_company_users')->where('id', $data[$i]->id_pembuat)->first();
                 if ($companyUser != null) {
                     $id_profile = DB::table('itdp_company_users')->where('id', $data[$i]->id_pembuat)->first()->id_profil;
