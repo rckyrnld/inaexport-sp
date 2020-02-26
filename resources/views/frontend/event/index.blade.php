@@ -167,7 +167,7 @@ if(Auth::guard('eksmp')->user()){
                                 <a href="{{url('/front_end/join_event/')}}/{{$ed->id}}" class="a-modif">
                                     @if($page == 1 && $searchEvent == null)
                                         @if($key == 0 || $key == 5 )
-                                            <div class="form-group row utama" style="height: 100%">
+                                            <div class="form-group row utama" style="height: 100%;margin-bottom: unset">
                                                 @endif
                                                 @endif
 
@@ -185,7 +185,7 @@ if(Auth::guard('eksmp')->user()){
                                                                                 @endif
                                                                                 @else
                                                                                     <div class="col-lg-3 col-md-3 col-12 second a-modif small">
-                                                                                        <div class="kontennya" style="width: 100%;padding: 12px; background-color: #f8f8f8; margin-bottom: 12px; border-radius: 10px">
+                                                                                        <div class="kontennya" style="width: 100%;padding: 12px; background-color: #f8f8f8; margin-bottom:unset; border-radius: 10px">
                                                                                             <?php $size = 162; $num_char = 25;?>
                                                                                             @endif
 

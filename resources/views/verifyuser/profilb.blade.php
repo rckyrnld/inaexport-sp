@@ -154,7 +154,7 @@
 															<?php
 															}else{
 															?>
-																<input type="text" value="{{$fileqrcode}}">
+{{--																<input type="text" value="{{$fileqrcode}}">--}}
 																<br><img src="{{ URL::to('/') }}/{{$qrcode}}" id="qrcode_ambil1" style="width: 80%;"/>
 															<?php
 															}

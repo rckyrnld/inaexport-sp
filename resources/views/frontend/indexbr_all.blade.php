@@ -39,7 +39,7 @@
 		if(Auth::guard('eksmp')->user()->id_role == 2){
 			
 ?>
-<table id="tablebureq3" border="0" class="table table-bordered table-striped">
+<table id="tablebureq3" border="0" class="table table-responsive table-bordered table-striped" style="width: 100%">
                                 <thead class="text-white" style="background-color: #1089ff;">
 								<th><center>No</center></th>
 								<th><center>Subject</center></th>

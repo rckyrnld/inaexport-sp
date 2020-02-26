@@ -58,6 +58,7 @@ html, body {
 
 body {
   line-height: 24px;
+  /*height: auto;*/
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -1011,7 +1012,14 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 @media only screen and (max-width: 767px) {
   .middel_right {
     justify-content: center;
+    align-items:center;
     flex-direction: column;
+  }
+  .settocenter{
+    text-align:center !important;
+  }
+  .tab-content{
+    align-items:center;
   }
 }
 
@@ -1028,14 +1036,15 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .search-container {
-    display: none;
-    width: 380px;
+    /*display: none;*/
+    width: 100%;
   }
 }
 @media only screen and (max-width: 767px) {
   .search-container {
     /*display: none;*/
     width: 280px;
+    padding-right: unset;
   }
 }
 
@@ -1045,6 +1054,11 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   background: #fff;
   border-radius: 14px;
 }
+
+.dataTables_wrapper{
+  width: fit-content!Important;
+}
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .search_box {
     width: 260px;
@@ -1059,7 +1073,21 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 @media only screen and (max-width: 767px) {
   .search_box {
     width: 340px;
-    margin-left: -20px;
+    /*margin-left: -20px;*/
+  }
+  .kontennya {
+	margin-bottom:25px !important;
+  }
+  .unsetmarginbottom{
+	margin-bottom:unset!Important;
+  }
+	.pagination{
+	 flex-wrap: wrap!important;
+      max-width: 90%;
+      justify-content:center !important;
+	}
+  .dataTables_wrapper{
+    width: 100%!important;
   }
 }
 .search_box input::-webkit-input-placeholder {
@@ -1123,6 +1151,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     border-top-right-radius: 14px;
     border-bottom-right-radius: 14px;
   }
+  .search-box{
+    width:100%;
+  }
 }
 
 .middel_right_info {
@@ -1145,10 +1176,11 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     font-size: 14px;
   }
 }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 600px) {
   .middel_right_info {
-    margin-left: 75px;
+    /*margin-left: 75px;*/
     font-size: 13px;
+    display: block;
   }
 }
 
@@ -2297,6 +2329,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .header_b_three {
     display: none;
+  }
+  .settocenter{
+    text-align:center !important;
   }
 }
 @media only screen and (max-width: 767px) {
@@ -4928,6 +4963,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 @media only screen and (max-width: 767px) {
   .footer_bottom {
     padding: 15px 0 20px;
+    display: block;
   }
 }
 
@@ -5670,12 +5706,16 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 .shop_banner {
   margin-bottom: 44px;
 }
-
-@media only screen and (min-width: 768px) and (max-width: 991px) {
+@media only screen and (min-width:800px) and (max-width: 991px) {
   .shop_reverse .row {
     flex-direction: column-reverse;
   }
 }
+/*@media only screen and (min-width: 768px) and (max-width: 991px) {*/
+/*  .shop_reverse .row {*/
+/*    flex-direction: column-reverse;*/
+/*  }*/
+/*}*/
 @media only screen and (max-width: 767px) {
   .shop_reverse .row {
     flex-direction: column-reverse;
@@ -10133,7 +10173,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 .counters_text {
   color: #fff;
   font-size: 16px;
-  padding-left: 20px;
+  /*padding-left: 20px;*/
 }
 
 .goog-te-gadget-simple  {
@@ -10183,6 +10223,32 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .call_to_action {
-  padding-top: 70px; 
+  padding-top: 70px;
   padding-bottom: 70px;
+}
+/*untuk ipad*/
+/*@media only screen*/
+/*and (min-device-width : 768px)*/
+/*and (max-device-width : 1024px)*/
+/*{*/
+/*  .middel_right{*/
+/*    width: 70px;*/
+/*  }*/
+/*  .middel_right_info{*/
+/*    width: 70px;*/
+/*    display: block;*/
+/*  }*/
+/*  .container{*/
+/*    width: 100%;*/
+/*  }*/
+/*}*/
+
+@media only screen and (min-width: 1024px) and (orientation: portrait) {
+  .div-image{
+    height:60% !important;
+  }
+  .div-info-event{
+    position:absolute;
+    bottom: 23px;
+  }
 }

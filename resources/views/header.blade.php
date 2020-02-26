@@ -106,7 +106,7 @@
 
 
 </head>
-<body>
+<body style="background-color: #fff !important;">
 <?php date_default_timezone_set('Asia/Jakarta'); ?>
 
 <div class="app" id="app">
@@ -125,17 +125,18 @@
 	        @if( Auth::guard('eksmp')->check())
 	           <a href="{{url('/')}}" class="navbar-brand">
 	               {{--                <img height="25px" src="http://localhost:88/kemendag/public/front/assets/img/logo/logo.png" alt=".">--}}
-	               <img height="25px" src="{{url('assets')}}/assets/images/icon product-22.png" alt="." >
+	               <img height="25px" src="{{url('assets')}}/assets/images/logonew.png" alt="." >
 	               {{--                <span class="hidden-folded d-inline"><font size="3px">Ministry Of Trade </font></span>--}}
 	           </a>
             @else
-               <img height="25px" src="{{url('assets')}}/assets/images/icon product-22.png" alt="." >
+               <img height="25px" src="{{url('assets')}}/assets/images/logonew.png" alt="." >
             @endif
         @else
             <!-- brand -->
             <a href="{{url('/')}}" class="navbar-brand">
 {{--                <img height="25px" src="http://localhost:88/kemendag/public/front/assets/img/logo/logo.png" alt=".">--}}
-                <img height="25px" src="{{url('assets')}}/assets/images/icon product-22.png" alt="." >
+{{--                <img height="25px" src="{{url('assets')}}/assets/images/icon product-22.png" alt="." >--}}
+                <img height="25px" src="{{url('assets')}}/assets/images/logonew.png" alt="." >
 {{--                <span class="hidden-folded d-inline"><font size="3px">Ministry Of Trade </font></span>--}}
             </a>
        @endif
@@ -198,7 +199,7 @@
      <!-- ############ Aside END-->
 
     <!-- ############ Content START-->
-    <div id="content" class="app-content box-shadow-0" role="main">
+    <div id="content" class="app-content box-shadow-0" role="main" style="width: 100%;">
 
 
 

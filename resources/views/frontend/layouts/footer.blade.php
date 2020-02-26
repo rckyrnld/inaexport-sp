@@ -51,14 +51,14 @@
         <div class="container">
             <div class="row counters">
 
-                <div class="col-lg-4 col-6 text-center">
-                    <ul class="list-group list-group-horizontal-sm justify-content-center">
+                <div class="col-lg-4 col-sm-12 col-12">
+                    <ul class="list-group list-group-horizontal-sm">
                         <li>
-                            <img src="{{asset('front/assets/img/exporters.png')}}" alt="" style="width: 20%;">
-                            <span class="counters_number">{{getCountData('itdp_company_users')}}</span>
+                            <img src="{{asset('front/assets/img/exporters.png')}}" alt="" style="width: 20%;margin-left: 20%;">
+                            <span class="counters_number" style="margin-right: 20%;float:right">{{getCountData('itdp_company_users')}}</span>
                         </li>
-                         <li style="padding-left: 20%;">
-                            <p class="counters_text" style="font-size: 18px;">
+                         <li>
+                            <p class="counters_text"  style="font-size: 18px; text-align: center">
 							
                                 @if($loc == 'ch')
                                 出口商
@@ -70,16 +70,17 @@
                             </p>
                         </li>
                     </ul>
+                    <br>
                 </div>
 
-                <div class="col-lg-4 col-6 text-center">
-                    <ul class="list-group list-group-horizontal-sm justify-content-center">
+                <div class="col-lg-4 col-sm-12 col-12 ">
+                    <ul class="list-group list-group-horizontal-sm">
                         <li>
-                            <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 20%;">
-                            <span class="counters_number">{{getCountData('event_detail')}}</span>
+                            <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 20%;margin-left: 20%;">
+                            <span class="counters_number" style="margin-right: 20%;float:right">{{getCountData('event_detail')}}</span>
                         </li>
-                        <li style="padding-left: 20%;">
-                            <p class="counters_text" style="font-size: 18px;">
+                        <li >
+                            <p class="counters_text" style="font-size: 18px;text-align: center;">
                                 @if($loc == 'ch')
                                 事件
                                 @elseif($loc == 'in')
@@ -90,18 +91,20 @@
                             </p>
                         </li>
                     </ul>
+                    <br>
                 </div>
 
-                <div class="col-lg-4 col-6 text-center">
-                    <ul class="list-group list-group-horizontal-sm justify-content-center">
+                <div class="col-lg-4 col-sm-12 col-12">
+                    <ul class="list-group list-group-horizontal-sm ">
                         <li>
-                            <img src="{{asset('front/assets/img/products.png')}}" alt="" style="width: 20%;">
-                            <span class="counters_number">{{getCountData('csc_product_single')}}</span>
+                            <img src="{{asset('front/assets/img/products.png')}}" alt="" style="width: 20%; margin-left: 20%;">
+                            <span class="counters_number" style="margin-right:20%;float: right">{{getCountData('csc_product_single')}}</span>
                         </li>
-                        <li style="padding-left: 20%;">
-                            <p class="counters_text" style="font-size: 18px;">@lang('frontend.home.product')</p>
+                        <li>
+                            <p class="counters_text" style="font-size: 18px;text-align: center">@lang('frontend.home.product')</p>
                         </li>
                     </ul>
+                    <br>
                 </div>
     
             </div>
@@ -197,8 +200,8 @@
 								<br><br>
 								<table width="100%">
 								<tr>
-									<td width="50%"><a href="https://play.google.com/store/apps/details?id=com.maxxima.kemendagmobile" target="_BLANK"><img src="{{asset('front/assets/icon/android.svg')}}" alt="" width="100%"></a></td>
-									<td width="50%"><a href="" target="_BLANK"><img src="{{asset('front/assets/icon/ios.svg')}}" alt="" width="100%"></a></td>
+									<td width="50%" align="right"><a href="https://play.google.com/store/apps/details?id=com.maxxima.kemendagmobile" target="_BLANK"><img src="{{asset('front/assets/icon/android.svg')}}" alt="" width="100%"></a></td>
+									<td width="50%" align="left"><a href="" target="_BLANK"><img src="{{asset('front/assets/icon/ios.svg')}}" alt="" width="100%"></a></td>
 								</tr>
 								</table>
 								<br>
