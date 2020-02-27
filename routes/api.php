@@ -69,7 +69,10 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	
 	//Management User
 	Route::get('list_eksportir', 'Api\Admin\ManagementController@list_eksportir');
+	Route::get('unapprove_eksportir', 'Api\Admin\ManagementController@unapprove_eksportir');
 	Route::get('list_importir', 'Api\Admin\ManagementController@list_importir');
+	Route::get('unapprove_importir', 'Api\Admin\ManagementController@unapprove_importir');
+	Route::post('saveapprove', 'Api\Admin\ManagementController@saveapprove');
 	
 });
 
