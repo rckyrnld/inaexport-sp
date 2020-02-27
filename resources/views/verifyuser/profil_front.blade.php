@@ -108,13 +108,13 @@ input{
 
 
 
-						<input type="text" class="form-control" id="badan_usaha" value="{{$ryu->badanusaha}}">
+						<input type="text" class="form-control" id="badan_usaha" value="{{$ryu->badanusaha}}" readonly>
 					</div>
 					{{--		</select>--}}
 
 
 					<div class="form-group col-sm-6">
-						<input type="text" value="<?php echo $ryu->company; ?>" name="company" id="company" class="form-control" >
+						<input type="text" value="<?php echo $ryu->company; ?>" name="company" id="company" class="form-control" readonly>
 					</div>
 				</div>
 				<div class="form-row">
@@ -122,7 +122,7 @@ input{
 						<label><b>Address</b></label>
 					</div>
 					<div class="form-group col-sm-8">
-						<textarea name="addres" id="addres" class="form-control" ><?php echo $ryu->addres; ?></textarea>
+						<textarea name="addres" id="addres" class="form-control" readonly><?php echo $ryu->addres; ?></textarea>
 					</div>
 				</div>
 				<div class="form-row">
@@ -130,7 +130,7 @@ input{
 						<label><b>City</b></label>
 					</div>
 					<div class="form-group col-sm-8">
-						<textarea name="city" id="city" class="form-control" ><?php echo $ryu->city; ?></textarea>
+						<textarea name="city" id="city" class="form-control" readonly><?php echo $ryu->city; ?></textarea>
 
 					</div>
 				</div>
@@ -140,7 +140,7 @@ input{
 						<label><b>Province</b></label>
 					</div>
 					<div class="form-group col-sm-8">
-						<select name="province" id="province" class="form-control select2" style="width: 100%">
+						<select name="province" id="province" class="form-control select2" disabled style="width: 100%">
 							<?php
 							$qc = DB::select("select id,province_en from mst_province order by province_en asc");
 							foreach($qc as $cq){
@@ -156,7 +156,7 @@ input{
 						<label><b>Zip Code</b></label>
 					</div>
 					<div class="form-group col-sm-8">
-						<input type="text" value="<?php echo $ryu->postcode; ?>" name="postcode" id="postcode" class="form-control" >
+						<input type="text" value="<?php echo $ryu->postcode; ?>" name="postcode" id="postcode" class="form-control" readonly>
 					</div>
 				</div>
 				<div class="form-row">
@@ -164,7 +164,7 @@ input{
 						<label><b>Fax</b></label>
 					</div>
 					<div class="form-group col-sm-8">
-						<input type="text" value="<?php echo $ryu->fax; ?>" name="fax" id="fax" class="form-control" >
+						<input type="text" value="<?php echo $ryu->fax; ?>" name="fax" id="fax" class="form-control" readonly>
 					</div>
 				</div>
 				<div class="form-row">
@@ -172,7 +172,7 @@ input{
 						<label><b>Website</b></label>
 					</div>
 					<div class="form-group col-sm-8">
-						<input type="text" value="<?php echo $ryu->website; ?>" name="website" id="website" class="form-control" >
+						<input type="text" value="<?php echo $ryu->website; ?>" name="website" id="website" class="form-control" readonly>
 					</div>
 				</div>
 				<div class="form-row">
@@ -180,17 +180,17 @@ input{
 						<label><b>Phone</b></label>
 					</div>
 					<div class="form-group col-sm-8">
-						<input type="text" value="<?php echo $ryu->phone; ?>" name="phone" id="phone" class="form-control" >
+						<input type="text" value="<?php echo $ryu->phone; ?>" name="phone" id="phone" class="form-control" readonly>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-5">
 				<center>
 					<div id="ambil_ttd_1" style="width: 50%;height: auto; border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
-						<button type="button" id="img_1" style="width: 100%;" class="img_upl">
+{{--						<button type="button" id="img_1" style="width: 100%;" class="img_upl">--}}
 							<br><img src="{{asset($img1)}}" id="image_1_ambil" style="width: 80%;"/>
-						</button>
-						<input type="file" id="image_1" name="image_1" accept="image/*" style="display: none;" />
+{{--						</button>--}}
+{{--						<input type="file" id="image_1" name="image_1" accept="image/*" style="display: none;" />--}}
 						<br><br>
 						<center><span style="font-size: 17px;"><b>Profile Photo</b></span></center>
 					</div>

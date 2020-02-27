@@ -86,7 +86,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-12 col-md-12">
                            <div style="padding-top:20px;padding-bottom:20px;">
-                               <center> <a href="{{ url('') }}"><img src="{{asset('')}}assets/assets/images/icon product-22.png" width="150px" ></a></center>
+                               <center> <a href="{{ url('') }}"><img src="{{asset('')}}assets/assets/images/logonew.png" width="150px" ></a></center>
                             </div>
                         </div>
                         <!-- <div class="col-lg-6 col-md-6">

@@ -75,7 +75,7 @@
               </li>
               <li><center>
 			  <?php if(count($querynotifa) == 0){ echo "<b>Tidak Ada Notifikasi Tersedia Untuk Anda !</b><br><br>"; }else{ ?>
-			  
+
 			  <div class="col-md-12">
 																<div class="row">
 																<div class="col-md-6">
@@ -89,7 +89,7 @@
 			  <?php } ?></center></li>
             </ul>
           </li>
-				
+
                 <li class="dropdown d-flex align-items-center">
                   <a href="#" data-toggle="dropdown" class="d-flex align-items-center">
                     <span class="avatar w-32">
@@ -97,24 +97,24 @@
                     </span>
                     <span class="dropdown-toggle  mx-2 d-none l-h-1x d-lg-block">
                       <span>
-					  <?php if(empty(Auth::user()->name)){ 
+					  <?php if(empty(Auth::user()->name)){
 					  if(Auth::guard('eksmp')->user()->id_role == 2){
-						$rg = DB::select("select b.company from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='".Auth::guard('eksmp')->user()->id."' ");  
+						$rg = DB::select("select b.company from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='".Auth::guard('eksmp')->user()->id."' ");
 						foreach($rg as $gr){
 							echo $gr->company;
 						}
 					  }else{
-						$rg = DB::select("select b.company from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".Auth::guard('eksmp')->user()->id."' ");  
+						$rg = DB::select("select b.company from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".Auth::guard('eksmp')->user()->id."' ");
 						foreach($rg as $gr){
 							echo $gr->company;
 						}
-						  
+
 					  }
 					  // echo Auth::guard('eksmp')->user()->username;
 					  }else{ ?>
 					  <b>{{ Auth::user()->name }}</b>
 					  <?php } ?>
-					  
+
 					  </span>
                     </span>
                   </a>
@@ -129,20 +129,34 @@
                 </li>
                 <!-- Navarbar toggle btn -->
                 <li class="d-lg-none d-flex align-items-center">
-                  <a href="#" class="mx-2" data-toggle="collapse" data-target="#navbarToggler">
+                  <a href="#" class="mx-2" data-toggle="dropdown" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 512 512"><path d="M64 144h384v32H64zM64 240h384v32H64zM64 336h384v32H64z"/></svg>
                   </a>
+                    <div class="dropdown-menu dropdown-menu-right w pt-0 mt-0 animate fadeIn">
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <b >Log Out </b>
+                        </a>
+                    </div>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </li>
               </ul>
               <!-- Navbar collapse -->
-                <div class="collapse navbar-collapse no-grow order-lg-1" id="navbarToggler">
+{{--                <div class="collapse navbar-collapse no-grow order-lg-1" id="navbarToggler">--}}
+{{--                    <div class="dropdown-menu dropdown-menu-right w pt-0 mt-2 animate fadeIn">--}}
+{{--    besok di cek--}}
+{{--                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">--}}
+{{--                            <b >Log Out </b>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
               <!-- <form class="input-group m-2 my-lg-0">
                   <span class="input-group-btn">
                     <button type="button" class="btn no-border no-bg no-shadow"><i class="fa fa-search"></i></button>
                   </span>
                   <input type="text" class="form-control no-border no-bg no-shadow" placeholder="Search projects...">
               </form> -->
-              </div>
+{{--              </div>--}}
             
             </div>
         </div>

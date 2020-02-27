@@ -6,8 +6,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>@lang("frontend.title")</title>
-    <meta name="description" content="">
+{{--    <title>@lang("frontend.title")</title>--}}
+{{--    <meta name="description" content="">--}}
+    <meta name="title" content="InaExport">
+    <meta name="description" content="InaExport as a media product digital promotion superior export products from Indonesian business people, so they can more easily reach out to foreign buyers.">
+    <meta name="keywords" content="inaexport, exporter, importer, buying request, inquiry, kemendag, trade, promotion, products, business, indonesia">
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('front/assets/img/logo/kemendag.png')}}">
@@ -28,6 +32,11 @@
     <link rel="stylesheet" href="{{url('assets')}}/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" type="text/css" />
     <?php $font1 = url('/')."/front/assets/fonts/MYRIADPRO-REGULAR.woff";?>
     <style type="text/css">
+        html, body{
+            min-height: 100% !important;
+            height: 100% !important;
+        }
+
         .a-custom:hover{
             text-decoration: none;
         }
@@ -193,7 +202,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                 <div class="top_inner">
                     <div class="row align-items-center">
                         <div class="col-lg-12 col-md-12 col-12" align="right">
-                            <div class="top_right text-right">
+                            <div class="top_right settocenter">
                                 <ul style="padding-top: 5px; margin-bottom: 5px;">
                                     @if(Auth::guard('eksmp')->user())
                                         <li class="top_links"><a href="#"><i class="ion-android-person"></i>
@@ -364,17 +373,18 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
         <div class="header_middle">
             <div class="container" style="max-width: 98% !important;">
                 <div class="row align-items-center">
-                    <div class="col-lg-2 col-md-6 col-12">
+                    <div class="col-lg-2 col-md-3 col-12">
                         <div class="logo">
-                            <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>
+{{--                            <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>--}}
+                            <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logonew.png')}}" alt="" width="111"></a>
                         </div>
                     </div>
 {{--					<div class="col-lg-1 col-md-1 col-12">--}}
 {{--                       &nbsp;--}}
 {{--                    </div>--}}
-                    <div class="col-lg-10 col-md-6 col-12">
-                        <div class="middel_right d-flex justify-content-between" >
-                            <div class="search-container" style="margin-bottom: 10px; ">
+                    <div class="col-lg-10 col-md-9 col-12">
+                        <div class="middel_right d-flex justify-content-between row" >
+                            <div class="search-container col-md-12 col-lg-5" style="margin-bottom: 10px;">
                                 <!-- Nav pills -->
                                 <ul class="nav nav-pills" role="tablist" id="tab-me" style="font-size: 14px;">
                                     <li class="nav-item">
@@ -392,7 +402,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                 <div class="tab-content">
                                     <div id="products" class="container tab-pane active">
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_product')}}" id="formsprod">
-                                            <div class="search_box" style="width: 479px!important;">
+                                            <div class="search_box" style="width: 100%;">
                                                 <?php
                                                     if(isset($search)){
                                                         $cariprod = $search;
@@ -430,7 +440,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                     </div>
                                     <div id="eksportir" class="container tab-pane">
                                         <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_perusahaan')}}" id="formseksportir">
-                                            <div class="search_box" style="width: 479px!important;">
+                                            <div class="search_box" style="width: 100%">
                                                 <?php
                                                     if(isset($search_eks)){
                                                         $carieks = $search_eks;
@@ -484,7 +494,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    
+
                                                 </td>
                                             </tr>
                                         </table>
@@ -505,7 +515,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                         </tr>
                                         <tr>
                                             <td>
-                                               
+
                                             </td>
                                         </tr>
                                     </table>
@@ -517,28 +527,28 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                         <tr>
                                             <td rowspan="2" style="width: 50px">
                                                 @if(Auth::guard('eksmp')->user())
-                                                
+
                                                     @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                                        
+
                                                 <?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
-                                                
+
                                                 <img src="{{asset('front/assets/icon/profile2a.png')}}" alt="" class="img-profil-header">
                                                 <?php }else{ ?>
-                                                
+
                                                 <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
                                                 <?php } ?>
                                                     @elseif(Auth::guard('eksmp')->user()->id_role == 2)
-                                                    
+
                                                  <?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
 
 												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
 												<?php }else{ ?>
-												
+
                                                 <img src="{{asset('uploads/Profile/Eksportir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
 												<?php } ?>
 
                                                     @endif
-                                            @else   
+                                            @else
                                                 <img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
                                             @endif
                                             </td>
@@ -560,7 +570,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                                     if(strlen($user) > 12){
                                                       $cut_text = substr($user, 0, 12);
                                                       if ($user{12 - 1} != ' ') {
-                                                          $new_pos = strrpos($cut_text, ' '); 
+                                                          $new_pos = strrpos($cut_text, ' ');
                                                           $cut_text = substr($user, 0, $new_pos);
                                                       }
                                                       $userName = $cut_text;
@@ -576,7 +586,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                                     }else if(Auth::guard('eksmp')->user()->id_role == 2){
                                                         echo "Exporter";
                                                     }
-													
+
 												?>
                                                 </span>
                                                 @endif

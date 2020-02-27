@@ -335,7 +335,7 @@
                                             <select class="form-control" name="status" id="status" required>
                                                 <option value="" style="display: none;">-Choose Status-</option>
                                                 <option value="Verified" @if($page!=='add') @if($e_detail->status_en == 'Verified') selected @endif @endif>Verified</option>
-                                                <option value="Tentatif" @if($page!=='add') @if($e_detail->status_en == 'Tentatif') selected @endif @endif>Tentatif</option>
+                                                <option value="Tentatif" @if($page!=='add') @if($e_detail->status_en == 'Tentatif') selected @endif @endif>Tentative</option>
                                             </select>
                                         </div>
                                         <div class="col-md-3"></div>
