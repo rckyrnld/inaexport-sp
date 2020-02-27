@@ -98,10 +98,10 @@ class EksreportController extends Controller
             $jsonResult[$i]["raw_material_en"] = $data[$i]->raw_material_en;
             $jsonResult[$i]["capacity"] = $data[$i]->capacity;
             $jsonResult[$i]["price_usd"] = $data[$i]->price_usd;
-			$jsonResult[$i]["image_1"] = $path = ($data[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $id_profil . '/' . $data[$i]->image_1) : url('image/nia3.png');            
-			$jsonResult[$i]["image_2"] = $path = ($data[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $id_profil . '/' . $data[$i]->image_2) : url('image/nia3.png');            
-			$jsonResult[$i]["image_3"] = $path = ($data[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $id_profil . '/' . $data[$i]->image_3) : url('image/nia3.png');            
-			$jsonResult[$i]["image_4"] = $path = ($data[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $id_profil . '/' . $data[$i]->image_4) : url('image/nia3.png');            
+			$jsonResult[$i]["image_1"] = $path = ($data[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $id_profil . '/' . $data[$i]->image_1) : url('image/nia-01.jpg');            
+			$jsonResult[$i]["image_2"] = $path = ($data[$i]->image_2) ? url('uploads/Eksportir_Product/Image/' . $id_profil . '/' . $data[$i]->image_2) : url('image/nia-01.jpg');            
+			$jsonResult[$i]["image_3"] = $path = ($data[$i]->image_3) ? url('uploads/Eksportir_Product/Image/' . $id_profil . '/' . $data[$i]->image_3) : url('image/nia-01.jpg');            
+			$jsonResult[$i]["image_4"] = $path = ($data[$i]->image_4) ? url('uploads/Eksportir_Product/Image/' . $id_profil . '/' . $data[$i]->image_4) : url('image/nia-01.jpg');            
             $jsonResult[$i]["keterangan"] = $data[$i]->keterangan;
             $jsonResult[$i]["product_description_en"] = $data[$i]->product_description_en;
             if($data[$i]->status == 1){
