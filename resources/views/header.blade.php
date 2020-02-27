@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>{{$pageTitle}}</title>
-  <meta name="description" content="Responsive, Bootstrap, BS4" />
+{{--  <title>{{$pageTitle}}</title>--}}
+{{--  <meta name="description" content="Responsive, Bootstrap, BS4" />--}}
+    <meta name="title" content="InaExport">
+    <meta name="description" content="InaExport as a media product digital promotion superior export products from Indonesian business people, so they can more easily reach out to foreign buyers.">
+    <meta name="keywords" content="inaexport, exporter, importer, buying request, inquiry, kemendag, trade, promotion, products, business, indonesia">
+    <meta name="robots" content="index, follow">
+{{--    <meta name="viewport" content="width=device-width, initial-scale=1">--}}
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
