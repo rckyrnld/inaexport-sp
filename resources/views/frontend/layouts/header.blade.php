@@ -380,7 +380,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
 {{--                    </div>--}}
                     <div class="col-lg-10 col-md-9 col-12">
                         <div class="middel_right d-flex justify-content-between row" >
-                            <div class="search-container col-md-12 col-lg-6" style="margin-bottom: 10px;">
+                            <div class="search-container col-md-12 col-lg-5" style="margin-bottom: 10px;">
                                 <!-- Nav pills -->
                                 <ul class="nav nav-pills" role="tablist" id="tab-me" style="font-size: 14px;">
                                     <li class="nav-item">
