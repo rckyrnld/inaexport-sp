@@ -1203,16 +1203,22 @@ class InquiryController extends Controller
                 } else if ($jn[1] == "month" || $jn[1] == "months") {
                     $durasi = (int)$jn[0] * 30;
                 }
-            }
+				
+				$date = strtotime("+" . $durasi . " days", strtotime($datenow));
+				$duedate = date('Y-m-d H:i:s', $date);
+
+				$inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
+					'status' => 2,
+					'due_date' => $duedate,
+				]);
+            }else{
+				$inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
+					'status' => 2,
+				]);
+			}
         }
 
-        $date = strtotime("+" . $durasi . " days", strtotime($datenow));
-        $duedate = date('Y-m-d H:i:s', $date);
-
-        $inquiry = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->update([
-            'status' => 2,
-            'due_date' => $duedate,
-        ]);
+        
 
         if (count($inquiry) > 0) {
             $meta = [
