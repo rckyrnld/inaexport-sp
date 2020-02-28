@@ -1516,6 +1516,7 @@ class InquiryController extends Controller
         $email = $users->email;
         $username = $users->username;
         //Tinggal Ganti Email1 dengan email kemendag
+		/*
         $data2 = [
             'email' => $email,
             'username' => $username,
@@ -1531,7 +1532,7 @@ class InquiryController extends Controller
             $mail->to($data2['email'], $data2['username']);
             $mail->subject('Inquiry Chatting Information');
         });
-
+		*/
         if (count($save) > 0) {
             $meta = [
                 'code' => 200,
