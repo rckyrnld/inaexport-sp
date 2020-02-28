@@ -34,8 +34,8 @@ class ProductNonAuthController extends Controller
                 'csc_product_single.image_4', 'csc_product_single.id_csc_product', 'itdp_company_users.type', 'csc_product_single.price_usd',
                 'csc_product.nama_kategori_en', 'csc_product_single.code_en', 'csc_product_single.color_en', 'csc_product_single.size_en', 'csc_product_single.raw_material_en')
             ->orderBy('csc_product_single.id', 'desc')
-           // ->limit(10)
-           // ->offset($offset)
+            ->limit(10)
+            ->offset($offset)
             ->get();
 
         $jsonResult = array();
