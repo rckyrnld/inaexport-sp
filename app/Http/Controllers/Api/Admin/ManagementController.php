@@ -988,7 +988,7 @@ class ManagementController extends Controller
             $jsonResult[$i]["postcode"] = $data[$i]->postcode;
             $jsonResult[$i]["phone"] = $data[$i]->phone;
             $jsonResult[$i]["fax"] = $data[$i]->fax;
-            $jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Eksportir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01.jpg');            
+            $jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Eksportir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01-01.jpg');            
 			
         }
 		
@@ -1058,7 +1058,7 @@ class ManagementController extends Controller
             $jsonResult[$i]["postcode"] = $data[$i]->postcode;
             $jsonResult[$i]["phone"] = $data[$i]->phone;
             $jsonResult[$i]["fax"] = $data[$i]->fax;
-            $jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Importir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01.jpg');            
+            $jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Importir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01-01.jpg');            
 			
         }
 		
@@ -1130,7 +1130,7 @@ class ManagementController extends Controller
             $jsonResult[$i]["postcode"] = $data[$i]->postcode;
             $jsonResult[$i]["phone"] = $data[$i]->phone;
             $jsonResult[$i]["fax"] = $data[$i]->fax;
-            $jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Eksportir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01.jpg');            
+            $jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Eksportir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01-01.jpg');            
 			
         }
 		
@@ -1202,7 +1202,7 @@ class ManagementController extends Controller
             $jsonResult[$i]["postcode"] = $data[$i]->postcode;
             $jsonResult[$i]["phone"] = $data[$i]->phone;
             $jsonResult[$i]["fax"] = $data[$i]->fax;
-            $jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Importir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01.jpg');            
+            $jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Importir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01-01.jpg');            
 			
         }
 		
