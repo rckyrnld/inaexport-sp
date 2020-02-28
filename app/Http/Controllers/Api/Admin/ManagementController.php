@@ -1270,4 +1270,156 @@ class ManagementController extends Controller
         }
 
     }
+	
+	public function search_eksportir(Request $request)
+    {
+		$page = $request->page;
+		$limit = $request->limit;
+		$search = $request->search;
+		$data = DB::table('itdp_company_users')
+		->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
+		->select('itdp_company_users.id','itdp_company_users.id_profil','itdp_company_users.foto_profil','itdp_profil_eks.badanusaha','itdp_profil_eks.company','itdp_company_users.email'
+		,'itdp_profil_eks.addres','itdp_profil_eks.city','itdp_profil_eks.postcode','itdp_profil_eks.phone','itdp_profil_eks.fax')
+		->where('id_role', 2)
+		->where('itdp_company_users.username', 'like', '%' . $search . '%')
+		->where('itdp_company_users.email', 'like', '%' . $search . '%')
+		->orwhere('itdp_profil_eks.company', 'like', '%' . $search . '%')
+		->orwhere('itdp_profil_eks.addres', 'like', '%' . $search . '%')
+		->orwhere('itdp_profil_eks.city', 'like', '%' . $search . '%')
+		->orderBy('itdp_company_users.created_at', 'desc')
+		->paginate($limit);
+        //->limit(10)
+        //->offset($offset)
+        //->get();
+		
+		$data2 = DB::table('itdp_company_users')
+		->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
+		->where('id_role', 2)
+		->orderBy('itdp_company_users.created_at', 'desc')
+        ->get();
+		
+		$jsonResult = array();
+        for ($i = 0; $i < count($data); $i++) {
+            $jsonResult[$i]["id"] = $data[$i]->id;
+            $jsonResult[$i]["id_profil"] = $data[$i]->id_profil;
+            $jsonResult[$i]["badanusaha"] = $data[$i]->badanusaha;
+            $jsonResult[$i]["company"] = $data[$i]->company;
+            $jsonResult[$i]["email"] = $data[$i]->email;
+            $jsonResult[$i]["addres"] = $data[$i]->addres;
+            $jsonResult[$i]["city"] = $data[$i]->city;
+            $jsonResult[$i]["postcode"] = $data[$i]->postcode;
+            $jsonResult[$i]["phone"] = $data[$i]->phone;
+            $jsonResult[$i]["fax"] = $data[$i]->fax;
+            $jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Eksportir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01-01.jpg');            
+			
+        }
+		
+		if ($data) {
+			$countall = count($data2);
+			$bagi = $countall / $request->limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			$data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $jsonResult
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+		
+    }
+	
+	public function search_importir(Request $request)
+    {
+		$page = $request->page;
+		$limit = $request->limit;
+		$search = $request->search;
+		$data = DB::table('itdp_company_users')
+		->join('itdp_profil_imp', 'itdp_profil_imp.id', '=', 'itdp_company_users.id_profil')
+		->select('itdp_company_users.id','itdp_company_users.id_profil','itdp_company_users.foto_profil','itdp_profil_imp.badanusaha','itdp_profil_imp.company','itdp_company_users.email'
+		,'itdp_profil_imp.addres','itdp_profil_imp.city','itdp_profil_imp.postcode','itdp_profil_imp.phone','itdp_profil_imp.fax')
+		->where('id_role', 3)
+		->where('itdp_company_users.username', 'like', '%' . $search . '%')
+		->where('itdp_company_users.email', 'like', '%' . $search . '%')
+		->orwhere('itdp_profil_imp.company', 'like', '%' . $search . '%')
+		->orwhere('itdp_profil_imp.addres', 'like', '%' . $search . '%')
+		->orwhere('itdp_profil_imp.city', 'like', '%' . $search . '%')
+		->orderBy('itdp_company_users.created_at', 'desc')
+		->paginate($limit);
+        //->limit(10)
+        //->offset($offset)
+        //->get();
+		
+		$data2 = DB::table('itdp_company_users')
+		->join('itdp_profil_imp', 'itdp_profil_imp.id', '=', 'itdp_company_users.id_profil')
+		->where('id_role', 3)
+		->orderBy('itdp_company_users.created_at', 'desc')
+        ->get();
+		
+		$jsonResult = array();
+        for ($i = 0; $i < count($data); $i++) {
+            $jsonResult[$i]["id"] = $data[$i]->id;
+            $jsonResult[$i]["id_profil"] = $data[$i]->id_profil;
+            $jsonResult[$i]["badanusaha"] = $data[$i]->badanusaha;
+            $jsonResult[$i]["company"] = $data[$i]->company;
+            $jsonResult[$i]["email"] = $data[$i]->email;
+            $jsonResult[$i]["addres"] = $data[$i]->addres;
+            $jsonResult[$i]["city"] = $data[$i]->city;
+            $jsonResult[$i]["postcode"] = $data[$i]->postcode;
+            $jsonResult[$i]["phone"] = $data[$i]->phone;
+            $jsonResult[$i]["fax"] = $data[$i]->fax;
+            $jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Importir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01-01.jpg');            
+			
+        }
+		
+		if ($data) {
+			$countall = count($data2);
+			$bagi = $countall / $request->limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			$data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $jsonResult
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+		
+    }
 }
