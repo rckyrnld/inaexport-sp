@@ -1499,6 +1499,7 @@ class InquiryController extends Controller
 
         }
         $data = DB::table('csc_inquiry_br')->where('id', $id_inquiry)->first();
+		/*
         $notif = DB::table('notif')->insert([
             'dari_nama' => (getCompanyNameImportir($sender) == "-") ? getCompanyName($sender) : getCompanyNameImportir($sender),
             'dari_id' => $sender,
@@ -1516,7 +1517,7 @@ class InquiryController extends Controller
         $email = $users->email;
         $username = $users->username;
         //Tinggal Ganti Email1 dengan email kemendag
-		/*
+		
         $data2 = [
             'email' => $email,
             'username' => $username,
