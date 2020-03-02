@@ -451,31 +451,61 @@ class ManagementController extends Controller
 
         $jsonResult = array();
         for ($i = 0; $i < count($buy); $i++) {
-            
+            if(!empty($buy[$i]->id_mst_country)){ $daz1 = $buy[$i]->id_mst_country; }else{ $daz1 = "0"; }
+            if(!empty($buy[$i]->id_csc_prod_cat)){ $daz2 = $buy[$i]->id_csc_prod_cat; }else{ $daz2 = "0"; }
+            if(!empty($buy[$i]->id_csc_prod_cat_level1)){ $daz3 = $buy[$i]->id_csc_prod_cat_level1; }else{ $daz3 = "0"; }
+            if(!empty($buy[$i]->id_csc_prod_cat_level2)){ $daz4 = $buy[$i]->id_csc_prod_cat_level2; }else{ $daz4 = "0"; }
+            if(!empty($buy[$i]->jenis_perihal_en)){ $daz5 = $buy[$i]->jenis_perihal_en; }else{ $daz5 = ""; }
+            if(!empty($buy[$i]->subyek)){ $daz6 = $buy[$i]->subyek; }else{ $daz6 = ""; }
+            if(!empty($buy[$i]->message)){ $daz7 = $buy[$i]->message; }else{ $daz7 = ""; }
+            if(!empty($buy[$i]->files)){ $daz8 = $buy[$i]->files; }else{ $daz8 = ""; }
+            if(!empty($buy[$i]->message_answer)){ $daz9 = $buy[$i]->message_answer; }else{ $daz9 = ""; }
+            if(!empty($buy[$i]->file_answer)){ $daz10 = $buy[$i]->file_answer; }else{ $daz10 = ""; }
+            if(!empty($buy[$i]->st_approve)){ $daz11 = $buy[$i]->st_approve; }else{ $daz11 = 0; }
+            if(!empty($buy[$i]->city)){ $daz12 = $buy[$i]->city; }else{ $daz12 = ""; }
+            if(!empty($buy[$i]->shipping)){ $daz13 = $buy[$i]->shipping; }else{ $daz13 = ""; }
+            if(!empty($buy[$i]->spec)){ $daz14 = $buy[$i]->spec; }else{ $daz14 = ""; }
+            if(!empty($buy[$i]->eo)){ $daz15 = $buy[$i]->eo; }else{ $daz15 = 0; }
+            if(!empty($buy[$i]->neo)){ $daz16 = $buy[$i]->neo; }else{ $daz16 = ""; }
+			if(!empty($buy[$i]->tp)){ $daz17 = $buy[$i]->tp; }else{ $daz17 = 0; }
+            if(!empty($buy[$i]->ntp)){ $daz18 = $buy[$i]->ntp; }else{ $daz18 = ""; }
+            if(!empty($buy[$i]->jenis_perihal_in)){ $daz19 = $buy[$i]->jenis_perihal_in; }else{ $daz19 = ""; }
+            if(!empty($buy[$i]->jenis_perihal_chn)){ $daz20 = $buy[$i]->jenis_perihal_chn; }else{ $daz20 = ""; }
+            if(!empty($buy[$i]->message_perihal_en)){ $daz21 = $buy[$i]->message_perihal_en; }else{ $daz21 = ""; }
+            if(!empty($buy[$i]->message_perihal_in)){ $daz22 = $buy[$i]->message_perihal_in; }else{ $daz22 = ""; }
+            if(!empty($buy[$i]->message_perihal_chn)){ $daz23 = $buy[$i]->message_perihal_chn; }else{ $daz23 = ""; }
+            if(!empty($buy[$i]->subyek_en)){ $daz24 = $buy[$i]->subyek_en; }else{ $daz24 = ""; }
+            if(!empty($buy[$i]->subyek_in)){ $daz25 = $buy[$i]->subyek_in; }else{ $daz25 = ""; }
+            if(!empty($buy[$i]->subyek_chn)){ $daz26 = $buy[$i]->subyek_chn; }else{ $daz26 = ""; }
+            if(!empty($buy[$i]->deal)){ $daz27 = $buy[$i]->deal; }else{ $daz27 = 0; }
+            if(!empty($buy[$i]->id_csc_prod)){ $daz28 = $buy[$i]->id_csc_prod; }else{ $daz28 = ""; }
+            if(!empty($buy[$i]->type_tracking)){ $daz29 = $buy[$i]->type_tracking; }else{ $daz29 = ""; }
+            if(!empty($buy[$i]->no_track)){ $daz30 = $buy[$i]->no_track; }else{ $daz30 = ""; }
+            if(!empty($buy[$i]->status_trx)){ $daz31 = $buy[$i]->status_trx; }else{ $daz31 = ""; }
             $jsonResult[$i]["id"] = $buy[$i]->id;
-            $jsonResult[$i]["id_mst_country"] = $buy[$i]->id_mst_country;
-            $jsonResult[$i]["id_csc_prod_cat"] = $buy[$i]->id_csc_prod_cat;
-            $jsonResult[$i]["id_csc_prod_cat_level1"] = $buy[$i]->id_csc_prod_cat_level1;
-            $jsonResult[$i]["id_csc_prod_cat_level2"] = $buy[$i]->id_csc_prod_cat_level2;
-            $jsonResult[$i]["jenis_perihal_en"] = $buy[$i]->jenis_perihal_en;
-            $jsonResult[$i]["subyek"] = $buy[$i]->subyek;
-            $jsonResult[$i]["message"] = $buy[$i]->message;
-            $jsonResult[$i]["files"] = $buy[$i]->files;
-            $jsonResult[$i]["message_answer"] = $buy[$i]->message_answer;
-            $jsonResult[$i]["file_answer"] = $buy[$i]->file_answer;
+            $jsonResult[$i]["id_mst_country"] = $daz1;
+            $jsonResult[$i]["id_csc_prod_cat"] = $daz2;
+            $jsonResult[$i]["id_csc_prod_cat_level1"] = $daz3;
+            $jsonResult[$i]["id_csc_prod_cat_level2"] = $daz4;
+            $jsonResult[$i]["jenis_perihal_en"] = $daz5;
+            $jsonResult[$i]["subyek"] = $daz6;
+            $jsonResult[$i]["message"] = $daz7;
+            $jsonResult[$i]["files"] = $daz8;
+            $jsonResult[$i]["message_answer"] = $daz9;
+            $jsonResult[$i]["file_answer"] = $daz10;
             $jsonResult[$i]["date"] = $buy[$i]->date;
-            $jsonResult[$i]["st_approve"] = $buy[$i]->st_approve;
+            $jsonResult[$i]["st_approve"] = $daz11;
             $jsonResult[$i]["date_approve"] = $buy[$i]->date_approve;
             $jsonResult[$i]["date_answer"] = $buy[$i]->date_answer;
             $jsonResult[$i]["by_role"] = $buy[$i]->by_role;
             $jsonResult[$i]["id_pembuat"] = $buy[$i]->id_pembuat;
-            $jsonResult[$i]["city"] = $buy[$i]->city;
-            $jsonResult[$i]["shipping"] = $buy[$i]->shipping;
-            $jsonResult[$i]["spec"] = $buy[$i]->spec;
-            $jsonResult[$i]["eo"] = $buy[$i]->eo;
-            $jsonResult[$i]["neo"] = $buy[$i]->neo;
-            $jsonResult[$i]["tp"] = $buy[$i]->tp;
-            $jsonResult[$i]["ntp"] = $buy[$i]->ntp;
+            $jsonResult[$i]["city"] = $daz12;
+            $jsonResult[$i]["shipping"] = $daz13;
+            $jsonResult[$i]["spec"] = $daz14;
+            $jsonResult[$i]["eo"] = $daz15;
+            $jsonResult[$i]["neo"] = $daz16;
+            $jsonResult[$i]["tp"] = $daz17;
+            $jsonResult[$i]["ntp"] = $daz18;
             $jsonResult[$i]["valid"] = $buy[$i]->valid;
             if ($buy[$i]->valid == 0) {
                 $jsonResult[$i]["valid_desc"] = 'No Limit';
@@ -488,19 +518,19 @@ class ManagementController extends Controller
             } else if ($buy[$i]->status == 4) {
                 $jsonResult[$i]["status_desc"] = "Deal";
             }
-            $jsonResult[$i]["jenis_perihal_in"] = $buy[$i]->jenis_perihal_in;
-            $jsonResult[$i]["jenis_perihal_chn"] = $buy[$i]->jenis_perihal_chn;
-            $jsonResult[$i]["message_perihal_en"] = $buy[$i]->message_perihal_en;
-            $jsonResult[$i]["message_perihal_in"] = $buy[$i]->message_perihal_in;
-            $jsonResult[$i]["message_perihal_chn"] = $buy[$i]->message_perihal_chn;
-            $jsonResult[$i]["subyek_en"] = $buy[$i]->subyek_en;
-            $jsonResult[$i]["subyek_in"] = $buy[$i]->subyek_in;
-            $jsonResult[$i]["subyek_chn"] = $buy[$i]->subyek_chn;
-            $jsonResult[$i]["deal"] = $buy[$i]->deal;
-            $jsonResult[$i]["id_csc_prod"] = $buy[$i]->id_csc_prod;
-            $jsonResult[$i]["type_tracking"] = $buy[$i]->type_tracking;
-            $jsonResult[$i]["no_track"] = $buy[$i]->no_track;
-            $jsonResult[$i]["status_trx"] = $buy[$i]->status_trx;
+            $jsonResult[$i]["jenis_perihal_in"] = $daz19;
+            $jsonResult[$i]["jenis_perihal_chn"] = $daz20;
+            $jsonResult[$i]["message_perihal_en"] = $daz21;
+            $jsonResult[$i]["message_perihal_in"] = $daz22;
+            $jsonResult[$i]["message_perihal_chn"] = $daz23;
+            $jsonResult[$i]["subyek_en"] = $daz24;
+            $jsonResult[$i]["subyek_in"] = $daz25;
+            $jsonResult[$i]["subyek_chn"] = $daz26;
+            $jsonResult[$i]["deal"] = $daz27;
+            $jsonResult[$i]["id_csc_prod"] = $daz28;
+            $jsonResult[$i]["type_tracking"] = $daz29;
+            $jsonResult[$i]["no_track"] = $daz30;
+            $jsonResult[$i]["status_trx"] = $daz31;
             $id_csc = explode(",", $buy[$i]->id_csc_prod);
 		}
 
