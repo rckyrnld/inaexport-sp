@@ -201,7 +201,7 @@
 								<table width="100%">
 								<tr>
 									<td width="50%" align="right"><a href="https://play.google.com/store/apps/details?id=com.maxxima.kemendagmobile" target="_BLANK"><img src="{{asset('front/assets/icon/android.svg')}}" alt="" width="100%"></a></td>
-									<td width="50%" align="left"><a href="" target="_BLANK"><img src="{{asset('front/assets/icon/ios.svg')}}" alt="" width="100%"></a></td>
+									<td width="50%" align="left"><a href="https://apps.apple.com/us/app/inaexport/id1497480318" target="_BLANK"><img src="{{asset('front/assets/icon/ios.svg')}}" alt="" width="100%"></a></td>
 								</tr>
 								</table>
 								<br>
