@@ -439,13 +439,19 @@ class ManagementController extends Controller
 	public function list_br_admin(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request order by id desc ");
-		//echo count($buy);die();
+		$page = $request->page;
+		$limit = $request->limit;
+        $buy = DB::table('csc_buying_request')
+                    ->orderBy('csc_buying_request.id', 'DESC')
+					->paginate($limit);
+		$buy2 = DB::table('csc_buying_request')
+                    ->orderBy('csc_buying_request.id', 'DESC')
+					->get();
+		
 
         $jsonResult = array();
         for ($i = 0; $i < count($buy); $i++) {
             
-            $jsonResult[$i]["row"] = $buy[$i]->row;
             $jsonResult[$i]["id"] = $buy[$i]->id;
             $jsonResult[$i]["id_mst_country"] = $buy[$i]->id_mst_country;
             $jsonResult[$i]["id_csc_prod_cat"] = $buy[$i]->id_csc_prod_cat;
@@ -500,13 +506,32 @@ class ManagementController extends Controller
 
 
         if ($buy) {
-
+			/*
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
             $data = $jsonResult;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+			*/
+			$countall = count($buy2);
+			$bagi = $countall / $request->limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			$data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $jsonResult
+            ];
+
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -528,8 +553,25 @@ class ManagementController extends Controller
 	public function list_br_join(Request $request)
     {
 		date_default_timezone_set('Asia/Jakarta');
-        $buy = DB::select("select a.*,a.id as idjoin,b.*,c.* from csc_buying_request_join a, itdp_company_users b, itdp_profil_eks c 
-		where a.id_eks = b.id and b.id_profil = c.id and a.id_br='".$request->id_br."' ");
+		$id_br = $request->id_br;
+        $page = $request->page;
+		$limit = $request->limit;
+        /*$buy = DB::select("select a.*,a.id as idjoin,b.*,c.* from csc_buying_request_join a, itdp_company_users b, itdp_profil_eks c 
+		where a.id_eks = b.id and b.id_profil = c.id and a.id_br='".$request->id_br."' "); */
+		$buy = DB::table('csc_buying_request_join as a')
+                    ->join('itdp_company_users as b', 'b.id', '=', 'a.id_eks')
+                    ->join('itdp_profil_eks as c', 'c.id', '=', 'b.id_profil')
+                    ->selectRaw('a.*, a.id as idjoin, b.*, c.*')
+                    ->where('a.id_br', '=', $id_br)
+                    //->orderBy('a.created_at', 'DESC')
+					->paginate($limit);
+		$buy2 = DB::table('csc_buying_request_join as a')
+                    ->join('itdp_company_users as b', 'b.id', '=', 'a.id_eks')
+                    ->join('itdp_profil_eks as c', 'c.id', '=', 'b.id_profil')
+                    ->selectRaw('a.*, a.id as idjoin, b.*, c.*')
+                    ->where('a.id_br', '=', $id_br)
+                    //->orderBy('a.created_at', 'DESC')
+					->get();
 		//echo count($buy);die();
 
         $jsonResult = array();
@@ -558,12 +600,31 @@ class ManagementController extends Controller
 
         if ($buy) {
 
-            $meta = [
+           /* $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
             $data = $jsonResult;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+			*/
+			$countall = count($buy2);
+			$bagi = $countall / $request->limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			$data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $jsonResult
+            ];
+
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
