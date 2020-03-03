@@ -478,7 +478,7 @@ class ManagementController extends Controller
             if(!empty($buy[$i]->subyek_in)){ $daz25 = $buy[$i]->subyek_in; }else{ $daz25 = ""; }
             if(!empty($buy[$i]->subyek_chn)){ $daz26 = $buy[$i]->subyek_chn; }else{ $daz26 = ""; }
             if(!empty($buy[$i]->deal)){ $daz27 = $buy[$i]->deal; }else{ $daz27 = 0; }
-            if(!empty($buy[$i]->id_csc_prod)){ $daz28 = $buy[$i]->id_csc_prod; }else{ $daz28 = ""; }
+            // if(!empty($buy[$i]->id_csc_prod)){ $daz28 = $buy[$i]->id_csc_prod; }else{ $daz28 = ""; }
             if(!empty($buy[$i]->type_tracking)){ $daz29 = $buy[$i]->type_tracking; }else{ $daz29 = ""; }
             if(!empty($buy[$i]->no_track)){ $daz30 = $buy[$i]->no_track; }else{ $daz30 = ""; }
             if(!empty($buy[$i]->status_trx)){ $daz31 = $buy[$i]->status_trx; }else{ $daz31 = ""; }
@@ -499,6 +499,16 @@ class ManagementController extends Controller
             $jsonResult[$i]["date_approve"] = $buy[$i]->date_approve;
             $jsonResult[$i]["date_answer"] = $buy[$i]->date_answer;
             $jsonResult[$i]["by_role"] = $buy[$i]->by_role;
+			if($buy[$i]->by_role == 1){
+				$jsonResult[$i]["role_desc"] = "Admin";
+			}else if($buy[$i]->by_role == 4){
+				$jsonResult[$i]["role_desc"] = "Representative";
+			}else if($buy[$i]->by_role == 3){
+				$jsonResult[$i]["role_desc"] = "Importer";
+			}else{
+				$jsonResult[$i]["role_desc"] = "";
+			}
+			
             $jsonResult[$i]["id_pembuat"] = $buy[$i]->id_pembuat;
             $jsonResult[$i]["city"] = $daz12;
             $jsonResult[$i]["shipping"] = $daz13;
@@ -528,7 +538,30 @@ class ManagementController extends Controller
             $jsonResult[$i]["subyek_in"] = $daz25;
             $jsonResult[$i]["subyek_chn"] = $daz26;
             $jsonResult[$i]["deal"] = $daz27;
-            $jsonResult[$i]["id_csc_prod"] = $daz28;
+            // $jsonResult[$i]["id_csc_prod"] = $daz28;
+			$icp = explode(",",$buy[$i]->id_csc_prod);
+			$ci = count($icp);
+			if($ci == 0){ $ca = 0; 
+			$jsonResult[$i]["csc_prod_desc"] = "";
+			}else{ $ca = $ci - 1; 
+			$idesc = "";
+			for ($i = 0; $i < $ca; $i++){
+				$ambil = DB::select("select nama_kategori_en FROM csc_product WHERE id='".$icp[$i]."'");
+				if(count($ambil) == 0){
+					$nam = "";
+				}else{
+					foreach($ambil as $am){
+						$nam = $am->nama_kategori_en;
+					}
+				}
+				if($i == 0){
+				$idesc = $idesc."".$nam;
+				}else{
+				$idesc = $idesc."-".$nam;
+				}
+			}
+			$jsonResult[$i]["csc_prod_desc"] = $idesc;
+			}
             $jsonResult[$i]["type_tracking"] = $daz29;
             $jsonResult[$i]["no_track"] = $daz30;
             $jsonResult[$i]["status_trx"] = $daz31;
