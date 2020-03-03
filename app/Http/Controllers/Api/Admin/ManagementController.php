@@ -482,6 +482,7 @@ class ManagementController extends Controller
             if(!empty($buy[$i]->type_tracking)){ $daz29 = $buy[$i]->type_tracking; }else{ $daz29 = ""; }
             if(!empty($buy[$i]->no_track)){ $daz30 = $buy[$i]->no_track; }else{ $daz30 = ""; }
             if(!empty($buy[$i]->status_trx)){ $daz31 = $buy[$i]->status_trx; }else{ $daz31 = ""; }
+            if(!empty($buy[$i]->status)){ $daz32 = $buy[$i]->status; }else{ $daz32 = 0; }
             $jsonResult[$i]["id"] = $buy[$i]->id;
             $jsonResult[$i]["id_mst_country"] = $daz1;
             $jsonResult[$i]["id_csc_prod_cat"] = $daz2;
@@ -512,7 +513,7 @@ class ManagementController extends Controller
             } else {
                 $jsonResult[$i]["valid_desc"] = 'Valid ' . $buy[$i]->valid . " days";
             }
-            $jsonResult[$i]["status"] = $buy[$i]->status;
+            $jsonResult[$i]["status"] = $daz32;
             if ($buy[$i]->status == null || $buy[$i]->status == 0 || empty($buy[$i]->status) || $buy[$i]->status == 1) {
                 $jsonResult[$i]["status_desc"] = "Negosiation";
             } else if ($buy[$i]->status == 4) {
