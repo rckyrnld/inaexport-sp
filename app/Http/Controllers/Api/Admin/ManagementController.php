@@ -1231,7 +1231,7 @@ class ManagementController extends Controller
 		->where('itdp_company_users.id_role', 2)
 		->where('itdp_company_users.status', 0)
 		->orwhereNull('itdp_company_users.status')
-		->orderBy('itdp_company_users.created_at', 'desc')
+		->orderBy('itdp_company_users.id', 'desc')
 		->paginate($limit);
         //->limit(10)
         //->offset($offset)
@@ -1303,7 +1303,7 @@ class ManagementController extends Controller
 		->where('id_role', 3)
 		->where('itdp_company_users.status', 0)
 		->orwhereNull('itdp_company_users.status')
-		->orderBy('itdp_company_users.created_at', 'desc')
+		->orderBy('itdp_company_users.id', 'desc')
 		->paginate($limit);
         //->limit(10)
         //->offset($offset)
