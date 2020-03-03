@@ -1230,7 +1230,7 @@ class ManagementController extends Controller
 		,'itdp_profil_eks.addres','itdp_profil_eks.city','itdp_profil_eks.postcode','itdp_profil_eks.phone','itdp_profil_eks.fax')
 		->where('itdp_company_users.id_role', 2)
 		->where('itdp_company_users.status', 0)
-		->orwhere('itdp_company_users.status', null)
+		->orwhere('itdp_company_users.status', "")
 		->orwhereNull('itdp_company_users.status')
 		->orderBy('itdp_company_users.id', 'desc')
 		->paginate($limit);
