@@ -539,11 +539,14 @@ class ManagementController extends Controller
             $jsonResult[$i]["subyek_chn"] = $daz26;
             $jsonResult[$i]["deal"] = $daz27;
             // $jsonResult[$i]["id_csc_prod"] = $daz28;
+			/*
 			$icp = explode(",",$buy[$i]->id_csc_prod);
+			
 			$ci = count($icp);
 			if($ci == 0){ $ca = 0; 
 			$jsonResult[$i]["csc_prod_desc"] = "";
-			}else{ $ca = $ci - 1; 
+			}else{ 
+			$ca = $ci - 1; 
 			$idesc = "";
 			for ($i = 0; $i < $ca; $i++){
 				$ambil = DB::select("select nama_kategori_en FROM csc_product WHERE id='".$icp[$i]."'");
@@ -562,10 +565,24 @@ class ManagementController extends Controller
 			}
 			$jsonResult[$i]["csc_prod_desc"] = $idesc;
 			}
+			*/
+			
             $jsonResult[$i]["type_tracking"] = $daz29;
             $jsonResult[$i]["no_track"] = $daz30;
             $jsonResult[$i]["status_trx"] = $daz31;
             $id_csc = explode(",", $buy[$i]->id_csc_prod);
+			$list_k = array();
+
+            for ($a = 0; $a < count($id_csc); $a++) {
+                if (!empty($id_csc[$a]) || $id_csc[$a] != null) {
+                    //$getNama = DB::table('csc_product')->where('id', $id_csc[$a])->select("nama_kategori_en")->first();
+                    $list_k[] = $id_csc[$a];
+                }
+            }
+
+            $getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
+            $jsonResult[$i]["csc_prod_desc"] = $getName;
+
 		}
 
 
