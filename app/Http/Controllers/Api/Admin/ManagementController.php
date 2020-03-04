@@ -1765,4 +1765,114 @@ class ManagementController extends Controller
         }
 		
     }
+	
+	public function bc_admin(Request $request)
+    {
+		$id = $request->id_br;
+		date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
+		/*
+		$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
+							('".$id."','40001','".Date('Y-m-d H:m:s')."')");
+		$update = DB::select("update csc_buying_request set status='1' where id='".$id."'");
+        return redirect('br_list');
+		*/
+		$cariprod = DB::select("select * from csc_buying_request where id='".$id."'");
+		foreach($cariprod as $prodcari) { $rrr = $prodcari->id_csc_prod; $zzz = $prodcari->id_pembuat; }
+		$namacom = DB::select("select * from itdp_admin_users where id='".$zzz."'");
+		foreach($namacom as $comnama){ $namapembuat = $comnama->name; }
+		$cr = explode(',',$rrr);
+		$hitung = count($cr);
+		$semuacat = "";
+		
+		for($a = 0; $a < ($hitung - 1); $a++){
+		//echo $rrr;die();
+		// echo "select * from csc_product_single where id_csc_product='".$cr[0]."' or id_csc_product_level1='".$cr[0]."' or id_csc_product_level2='".$cr[0]."'";die();
+//		$namaprod = DB::select("select * from csc_product_single where id_csc_product='".$cr[$a]."' or id_csc_product_level1='".$cr[$a]."' or id_csc_product_level2='".$cr[$a]."' ");
+		
+		$namaprod = DB::select("select * from csc_product_single where id_csc_product='".$cr[$hitung-2]."' or id_csc_product_level1='".$cr[$hitung-2]."' or id_csc_product_level2='".$cr[$hitung-2]."' ");
+		
+		if(count($namaprod) == 0){
+		
+		}else{
+		
+		foreach($namaprod as $prod){
+		    $napro = $prod->id_itdp_company_user;
+			
+//            dd($napro);
+            $cekada=DB::select("select * from csc_buying_request_join where id_br='".$id."' and id_eks='".$napro."'");
+//			$cekada=DB::select("select * from csc_buying_request_join where id_br='".$id."' and id_eks='".$napro."'");
+			if(count($cekada) == 0){
+				
+				$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
+							('".$id."','".(int)$napro."','".Date('Y-m-d H:m:s')."')");
+				
+				//NOTIF
+				
+				$id_terkait = "";
+				$ket = "Buying Request created by ".$namapembuat;
+				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+					('2','".$namapembuat."','".$zzz."','Eksportir','".$napro."','".$ket."','br_list','".$id_terkait."','".$date."','0')
+				");
+				
+				//END NOTIF
+				//EMAIL
+				
+				$caridataeks = DB::select("select * from itdp_company_users where id='".$napro."'");
+				if(count($caridataeks) != 0){
+				foreach($caridataeks as $vm){ $vc1 = $vm->email; }
+                $datacomeks = DB::select("select * from itdp_profil_eks where id = '".$vm->id_profil."'");
+				$data = [
+				    'username' => $namapembuat,
+                    'id2' => '0', 'nama' => $namapembuat,
+                    'password' => '',
+                    'email' => $vc1,
+                    'company' => $datacomeks[0]->company,
+                    'bu' => $datacomeks[0]->badanusaha,
+                ];
+                Mail::send('UM.user.emailbr', $data, function ($mail) use ($data) {
+                    $mail->to($data['email'], $data['company']);
+                    $mail->subject('Buying Was Created');
+                });
+				}
+				
+				//END EMAIL
+				if($insert){
+                    $meta = [
+                    'code' => 200,
+                    'message' => 'Success',
+                    'status' => 'OK'
+					];
+					$data = '';
+					$res['meta'] = $meta;
+					return response($res);
+                }
+                else{
+                    $meta = [
+						'code' => 100,
+						'message' => 'Unauthorized',
+						'status' => 'Failed'
+					];
+					$data = "";
+					$res['meta'] = $meta;
+					return $res;
+                }
+			}else{
+				$meta = [
+						'code' => 100,
+						'message' => 'Unauthorized',
+						'status' => 'Failed'
+					];
+					$data = "";
+					$res['meta'] = $meta;
+					return $res;
+				
+			}
+		}
+		
+		}
+		}
+		
+		
+	}
 }
