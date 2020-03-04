@@ -996,7 +996,7 @@ class ManagementController extends Controller
             'neo' => $request->neo,
             'tp' => $request->tp,
             'ntp' => $request->ntp,
-            'by_role' => '3',
+            'by_role' => '1',
             'id_pembuat' => $request->id_user,
             'date' => date('Y-m-d H:i:s'),
             'id_csc_prod' => $kumpulcat,
