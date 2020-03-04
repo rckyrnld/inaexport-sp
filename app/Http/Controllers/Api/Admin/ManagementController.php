@@ -631,6 +631,204 @@ class ManagementController extends Controller
     
 	}
 	
+	public function list_br_view(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+		$id_br = $request->id_br;
+		$page = 1;
+		$limit = 1;
+        $buy = DB::table('csc_buying_request')
+                    ->orderBy('csc_buying_request.id', 'DESC')
+					->where('id', $id_br)
+					->paginate($limit);
+		$buy2 = DB::table('csc_buying_request')
+                    ->orderBy('csc_buying_request.id', 'DESC')
+					->where('id', $id_br)
+					->get();
+		
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($buy); $i++) {
+            if(!empty($buy[$i]->id_mst_country)){ $daz1 = $buy[$i]->id_mst_country; }else{ $daz1 = "0"; }
+            if(!empty($buy[$i]->id_csc_prod_cat)){ $daz2 = $buy[$i]->id_csc_prod_cat; }else{ $daz2 = "0"; }
+            if(!empty($buy[$i]->id_csc_prod_cat_level1)){ $daz3 = $buy[$i]->id_csc_prod_cat_level1; }else{ $daz3 = "0"; }
+            if(!empty($buy[$i]->id_csc_prod_cat_level2)){ $daz4 = $buy[$i]->id_csc_prod_cat_level2; }else{ $daz4 = "0"; }
+            if(!empty($buy[$i]->jenis_perihal_en)){ $daz5 = $buy[$i]->jenis_perihal_en; }else{ $daz5 = ""; }
+            if(!empty($buy[$i]->subyek)){ $daz6 = $buy[$i]->subyek; }else{ $daz6 = ""; }
+            if(!empty($buy[$i]->message)){ $daz7 = $buy[$i]->message; }else{ $daz7 = ""; }
+            if(!empty($buy[$i]->files)){ $daz8 = $buy[$i]->files; }else{ $daz8 = ""; }
+            if(!empty($buy[$i]->message_answer)){ $daz9 = $buy[$i]->message_answer; }else{ $daz9 = ""; }
+            if(!empty($buy[$i]->file_answer)){ $daz10 = $buy[$i]->file_answer; }else{ $daz10 = ""; }
+            if(!empty($buy[$i]->st_approve)){ $daz11 = $buy[$i]->st_approve; }else{ $daz11 = 0; }
+            if(!empty($buy[$i]->city)){ $daz12 = $buy[$i]->city; }else{ $daz12 = ""; }
+            if(!empty($buy[$i]->shipping)){ $daz13 = $buy[$i]->shipping; }else{ $daz13 = ""; }
+            if(!empty($buy[$i]->spec)){ $daz14 = $buy[$i]->spec; }else{ $daz14 = ""; }
+            if(!empty($buy[$i]->eo)){ $daz15 = $buy[$i]->eo; }else{ $daz15 = 0; }
+            if(!empty($buy[$i]->neo)){ $daz16 = $buy[$i]->neo; }else{ $daz16 = ""; }
+			if(!empty($buy[$i]->tp)){ $daz17 = $buy[$i]->tp; }else{ $daz17 = 0; }
+            if(!empty($buy[$i]->ntp)){ $daz18 = $buy[$i]->ntp; }else{ $daz18 = ""; }
+            if(!empty($buy[$i]->jenis_perihal_in)){ $daz19 = $buy[$i]->jenis_perihal_in; }else{ $daz19 = ""; }
+            if(!empty($buy[$i]->jenis_perihal_chn)){ $daz20 = $buy[$i]->jenis_perihal_chn; }else{ $daz20 = ""; }
+            if(!empty($buy[$i]->message_perihal_en)){ $daz21 = $buy[$i]->message_perihal_en; }else{ $daz21 = ""; }
+            if(!empty($buy[$i]->message_perihal_in)){ $daz22 = $buy[$i]->message_perihal_in; }else{ $daz22 = ""; }
+            if(!empty($buy[$i]->message_perihal_chn)){ $daz23 = $buy[$i]->message_perihal_chn; }else{ $daz23 = ""; }
+            if(!empty($buy[$i]->subyek_en)){ $daz24 = $buy[$i]->subyek_en; }else{ $daz24 = ""; }
+            if(!empty($buy[$i]->subyek_in)){ $daz25 = $buy[$i]->subyek_in; }else{ $daz25 = ""; }
+            if(!empty($buy[$i]->subyek_chn)){ $daz26 = $buy[$i]->subyek_chn; }else{ $daz26 = ""; }
+            if(!empty($buy[$i]->deal)){ $daz27 = $buy[$i]->deal; }else{ $daz27 = 0; }
+            // if(!empty($buy[$i]->id_csc_prod)){ $daz28 = $buy[$i]->id_csc_prod; }else{ $daz28 = ""; }
+            if(!empty($buy[$i]->type_tracking)){ $daz29 = $buy[$i]->type_tracking; }else{ $daz29 = ""; }
+            if(!empty($buy[$i]->no_track)){ $daz30 = $buy[$i]->no_track; }else{ $daz30 = ""; }
+            if(!empty($buy[$i]->status_trx)){ $daz31 = $buy[$i]->status_trx; }else{ $daz31 = ""; }
+            if(!empty($buy[$i]->status)){ $daz32 = $buy[$i]->status; }else{ $daz32 = 0; }
+            $jsonResult[$i]["id"] = $buy[$i]->id;
+            $jsonResult[$i]["id_mst_country"] = $daz1;
+            $jsonResult[$i]["id_csc_prod_cat"] = $daz2;
+            $jsonResult[$i]["id_csc_prod_cat_level1"] = $daz3;
+            $jsonResult[$i]["id_csc_prod_cat_level2"] = $daz4;
+            $jsonResult[$i]["jenis_perihal_en"] = $daz5;
+            $jsonResult[$i]["subyek"] = $daz6;
+            $jsonResult[$i]["message"] = $daz7;
+            $jsonResult[$i]["files"] = $daz8;
+            $jsonResult[$i]["message_answer"] = $daz9;
+            $jsonResult[$i]["file_answer"] = $daz10;
+            $jsonResult[$i]["date"] = $buy[$i]->date;
+            $jsonResult[$i]["st_approve"] = $daz11;
+            $jsonResult[$i]["date_approve"] = $buy[$i]->date_approve;
+            $jsonResult[$i]["date_answer"] = $buy[$i]->date_answer;
+            $jsonResult[$i]["by_role"] = $buy[$i]->by_role;
+			if($buy[$i]->by_role == 1){
+				$jsonResult[$i]["role_desc"] = "Admin";
+			}else if($buy[$i]->by_role == 4){
+				$jsonResult[$i]["role_desc"] = "Representative";
+			}else if($buy[$i]->by_role == 3){
+				$jsonResult[$i]["role_desc"] = "Importer";
+			}else{
+				$jsonResult[$i]["role_desc"] = "";
+			}
+			
+            $jsonResult[$i]["id_pembuat"] = $buy[$i]->id_pembuat;
+            $jsonResult[$i]["city"] = $daz12;
+            $jsonResult[$i]["shipping"] = $daz13;
+            $jsonResult[$i]["spec"] = $daz14;
+            $jsonResult[$i]["eo"] = $daz15;
+            $jsonResult[$i]["neo"] = $daz16;
+            $jsonResult[$i]["tp"] = $daz17;
+            $jsonResult[$i]["ntp"] = $daz18;
+            $jsonResult[$i]["valid"] = $buy[$i]->valid;
+            if ($buy[$i]->valid == 0) {
+                $jsonResult[$i]["valid_desc"] = 'No Limit';
+            } else {
+                $jsonResult[$i]["valid_desc"] = 'Valid ' . $buy[$i]->valid . " days";
+            }
+            $jsonResult[$i]["status"] = $daz32;
+            if ($buy[$i]->status == null || $buy[$i]->status == 0 || empty($buy[$i]->status) || $buy[$i]->status == 1) {
+                $jsonResult[$i]["status_desc"] = "Negosiation";
+            } else if ($buy[$i]->status == 4) {
+                $jsonResult[$i]["status_desc"] = "Deal";
+            }
+            $jsonResult[$i]["jenis_perihal_in"] = $daz19;
+            $jsonResult[$i]["jenis_perihal_chn"] = $daz20;
+            $jsonResult[$i]["message_perihal_en"] = $daz21;
+            $jsonResult[$i]["message_perihal_in"] = $daz22;
+            $jsonResult[$i]["message_perihal_chn"] = $daz23;
+            $jsonResult[$i]["subyek_en"] = $daz24;
+            $jsonResult[$i]["subyek_in"] = $daz25;
+            $jsonResult[$i]["subyek_chn"] = $daz26;
+            $jsonResult[$i]["deal"] = $daz27;
+            // $jsonResult[$i]["id_csc_prod"] = $daz28;
+			/*
+			$icp = explode(",",$buy[$i]->id_csc_prod);
+			
+			$ci = count($icp);
+			if($ci == 0){ $ca = 0; 
+			$jsonResult[$i]["csc_prod_desc"] = "";
+			}else{ 
+			$ca = $ci - 1; 
+			$idesc = "";
+			for ($i = 0; $i < $ca; $i++){
+				$ambil = DB::select("select nama_kategori_en FROM csc_product WHERE id='".$icp[$i]."'");
+				if(count($ambil) == 0){
+					$nam = "";
+				}else{
+					foreach($ambil as $am){
+						$nam = $am->nama_kategori_en;
+					}
+				}
+				if($i == 0){
+				$idesc = $idesc."".$nam;
+				}else{
+				$idesc = $idesc."-".$nam;
+				}
+			}
+			$jsonResult[$i]["csc_prod_desc"] = $idesc;
+			}
+			*/
+			
+            $jsonResult[$i]["type_tracking"] = $daz29;
+            $jsonResult[$i]["no_track"] = $daz30;
+            $jsonResult[$i]["status_trx"] = $daz31;
+            $id_csc = explode(",", $buy[$i]->id_csc_prod);
+			$list_k = array();
+
+            for ($a = 0; $a < count($id_csc); $a++) {
+                if (!empty($id_csc[$a]) || $id_csc[$a] != null) {
+                    //$getNama = DB::table('csc_product')->where('id', $id_csc[$a])->select("nama_kategori_en")->first();
+                    $list_k[] = $id_csc[$a];
+                }
+            }
+
+            $getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
+            $jsonResult[$i]["csc_prod_desc"] = $getName;
+
+		}
+
+
+        if ($buy) {
+			/*
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $jsonResult;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+			*/
+			$countall = count($buy2);
+			$bagi = $countall / $limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			$data = [
+                'page' => $page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $jsonResult
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+
+    
+	}
+	
 	public function list_br_join(Request $request)
     {
 		date_default_timezone_set('Asia/Jakarta');

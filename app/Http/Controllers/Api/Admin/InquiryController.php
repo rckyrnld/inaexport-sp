@@ -25,13 +25,19 @@ class InquiryController extends Controller
 	
 	public function list_inquiry_admin(Request $request)
     {
-		$offset = $request->offset;
+		$page = $request->page;
+		$limit = $request->limit;
 		$user = DB::table('csc_inquiry_br')
 			->where('csc_inquiry_br.type', 'admin')
             ->orderBy('csc_inquiry_br.created_at', 'DESC')
-			->limit(10)
-            ->offset($offset)
-            ->get();
+			->paginate($limit);
+			//->limit(10)
+            //->offset($offset)
+            //->get();
+		$user2 = DB::table('csc_inquiry_br')
+			->where('csc_inquiry_br.type', 'admin')
+            ->orderBy('csc_inquiry_br.created_at', 'DESC')
+			->get();
 //        dd($user);
         $jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
@@ -62,12 +68,32 @@ class InquiryController extends Controller
 			}
 //        dd($jsonResult);
         if (count($user) > 0) {
+			/*
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
             $data = $jsonResult;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+			*/
+			$countall = count($user2);
+			$bagi = $countall / $request->limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			$data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $jsonResult
+            ];
+
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);

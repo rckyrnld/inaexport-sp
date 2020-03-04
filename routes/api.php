@@ -43,12 +43,13 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	
 	//Buying Request
 	Route::get('list_br_admin', 'Api\Admin\ManagementController@list_br_admin');
+	Route::get('list_br_view_admin', 'Api\Admin\ManagementController@list_br_view');
 	Route::get('list_br_detail_admin', 'Api\Admin\ManagementController@list_br_join');
 	Route::post('list_br_chat', 'Api\Admin\ManagementController@list_br_chat');
 	Route::post('br_admin_save', 'Api\Admin\ManagementController@br_admin_save');
 	
 	//Inquiry 
-	Route::post('list_inquiry_admin', 'Api\Admin\InquiryController@list_inquiry_admin');
+	Route::get('list_inquiry_admin', 'Api\Admin\InquiryController@list_inquiry_admin');
 	Route::post('insert_inquiry_admin', 'Api\Admin\InquiryController@store');
 	Route::post('bc_inquiry_admin', 'Api\Admin\InquiryController@bc_inquiry_admin');
 	Route::post('list_inquiry_broadcast', 'Api\Admin\InquiryController@list_inquiry_broadcast');
