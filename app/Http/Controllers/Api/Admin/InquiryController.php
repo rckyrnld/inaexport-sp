@@ -25,6 +25,8 @@ class InquiryController extends Controller
 	
 	public function list_inquiry_admin(Request $request)
     {
+		$page = $request->page;
+		$limit = $request->limit;
 		/*
 		$page = $request->page;
 		$limit = $request->limit;

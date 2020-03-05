@@ -804,12 +804,7 @@ class ManagementController extends Controller
                 'status' => 'OK'
             ];
 			
-			$data = [
-                'page' => $page,
-                'total_results' => $countall,
-                'total_pages' => ceil($bagi),
-                'results' => $jsonResult
-            ];
+			$data = $jsonResult;
 
             $res['meta'] = $meta;
             $res['data'] = $data;
