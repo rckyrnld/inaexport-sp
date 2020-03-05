@@ -699,12 +699,43 @@ class ManagementController extends Controller
             $jsonResult[$i]["by_role"] = $buy[$i]->by_role;
 			if($buy[$i]->by_role == 1){
 				$jsonResult[$i]["role_desc"] = "Admin";
+				$rty = DB::select("select name from itdp_admin_users where id='".$buy[$i]->id_pembuat."'");
+				if(count($rty) == 0){
+					$jsonResult[$i]["pembuat_desc"] = "";
+				}else{
+					foreach($rty as $keys){
+						$kn = $keys->name;
+					}
+					$jsonResult[$i]["pembuat_desc"] = $kn;
+				}
+				
 			}else if($buy[$i]->by_role == 4){
 				$jsonResult[$i]["role_desc"] = "Representative";
+				$rty = DB::select("select name from itdp_admin_users where id='".$buy[$i]->id_pembuat."'");
+				if(count($rty) == 0){
+					$jsonResult[$i]["pembuat_desc"] = "";
+				}else{
+					foreach($rty as $keys){
+						$kn = $keys->name;
+					}
+					$jsonResult[$i]["pembuat_desc"] = $kn;
+				}
+				
 			}else if($buy[$i]->by_role == 3){
 				$jsonResult[$i]["role_desc"] = "Importer";
+				$rty = DB::select("select b.* from itdp_company_users a, itdp_profil_imp b  where a.id_profil=b.id and a.id='".$buy[$i]->id_pembuat."'");
+				if(count($rty) == 0){
+					$jsonResult[$i]["pembuat_desc"] = "";
+				}else{
+					foreach($rty as $keys){
+						$kn = $keys->badanusaha." ".$keys->company;
+					}
+					$jsonResult[$i]["pembuat_desc"] = $kn;
+				}
+				
 			}else{
 				$jsonResult[$i]["role_desc"] = "";
+				$jsonResult[$i]["pembuat_desc"] = "";
 			}
 			
             $jsonResult[$i]["id_pembuat"] = $buy[$i]->id_pembuat;
