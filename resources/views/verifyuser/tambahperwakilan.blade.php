@@ -73,7 +73,7 @@
 				</div>
 				<div class="col-md-12">
           	 		<div class="form-group row">
-				      {!!Form::label('password_confirm','Official',['class' => 'col-sm-2 col-form-label '])!!}
+				      {!!Form::label('password_confirm','Alamat Kantor',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
 						<input type="text" class="form-control" name="pejabat" required>
 					</div>
@@ -87,6 +87,7 @@
 					</div>
 					</div>
 				</div>
+				<?php /*
 				<div class="col-md-12">
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Username',['class' => 'col-sm-2 col-form-label '])!!}
@@ -95,10 +96,12 @@
 					</div>
 					</div>
 				</div>
+				*/ ?>
 				<div class="col-md-12">
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Password',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
+						<input type="hidden" class="form-control" name="username" required>
 						<input type="password" class="form-control" name="password" required>
 					</div>
 					</div>

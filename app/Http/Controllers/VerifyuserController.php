@@ -220,9 +220,9 @@ class VerifyuserController extends Controller
     {
       $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from itdp_admin_users where id_group='4' order by id desc");
       return DataTables::of($pesan)
-            ->addColumn('f1', function ($pesan) {
+           /* ->addColumn('f1', function ($pesan) {
 				 return '<div align="left">'.$pesan->name.'</div>';
-            })
+            }) */
 			->addColumn('f2', function ($pesan) {
 				 return $pesan->email;
             })
