@@ -60,16 +60,21 @@
 				<?php } else { ?>
 				<div class="col-md-12">
           	 		<div class="form-group row">
-				      {!!Form::label('password_confirm','Group Country',['class' => 'col-sm-2 col-form-label '])!!}
+				      {!!Form::label('password_confirm','Country',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
 						<select class="form-control" name="country" required>
 						<!-- <option>DJPEN</option> -->
 						<option value="">-- Choose Country --</option>
-						<?php $mst = DB::select("select * from mst_group_country order by group_country asc"); 
+						<?php $mst = DB::select("select id,mst_country_group_id,country from mst_country order by country asc"); 
 						foreach($mst as $cu){
 						?>
+						<option <?php if($qt->country==$cu->id){ echo "selected"; } ?> value="<?php echo $cu->id; ?>"><?php echo $cu->country; ?></option>
+						 <?php } ?>
+						<?php /* $mst = DB::select("select * from mst_group_country order by group_country asc"); 
+						foreach($mst as $cu){
+						
 						<option <?php if($qt->id_country==$cu->id){ echo "selected"; } ?> value="<?php echo $cu->id; ?>"><?php echo $cu->group_country; ?></option>
-						<?php } ?>
+						 } */ ?>
 						
 						</select>
 					</div>
@@ -95,9 +100,10 @@
 				</div>
 				<div class="col-md-12">
           	 		<div class="form-group row">
-				      {!!Form::label('password_confirm','Official',['class' => 'col-sm-2 col-form-label '])!!}
+				      {!!Form::label('password_confirm','Nama Kantor',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" name="pejabat" value="<?php echo $qt->nama; ?>" required>
+						<input type="text" class="form-control" name="username" value="<?php echo $qt->username; ?>">
+						<input type="hidden" class="form-control" name="pejabat" value="<?php echo $qt->nama; ?>" required>
 					</div>
 					</div>
 				</div>
@@ -106,17 +112,20 @@
 				      {!!Form::label('password_confirm','Website',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
 						<input type="text" class="form-control" name="web" value="<?php echo $qt->website; ?>" required>
+						
 					</div>
 					</div>
 				</div>
+				<!--
 				<div class="col-md-12">
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Username',['class' => 'col-sm-2 col-form-label '])!!}
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" name="username" value="<?php echo $qt->username; ?>" required>
+						
 					</div>
 					</div>
 				</div>
+				-->
 				<div class="col-md-12">
           	 		<div class="form-group row">
 				      {!!Form::label('password_confirm','Password',['class' => 'col-sm-2 col-form-label '])!!}
