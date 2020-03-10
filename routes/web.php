@@ -153,6 +153,8 @@ Route::post('/simpan_rpenjual', 'RegistrasiController@simpan_rpenjual');
 Route::get('/verifypenjual/{id}', 'RegistrasiController@verifypenjual');
 
 Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');
+Route::post('check_status','LoginEIController@checkstatus')->name('login.check_status');
+Route::post('change_status','LoginEIController@changestatus')->name('login.change_status');
 Route::get('/admin', 'RegistrasiController@loginadmin');
 Route::get('/pilihregister', 'RegistrasiController@pilihregister');
 Route::get('/cekmail/{id}', 'RegistrasiController@cekmail');

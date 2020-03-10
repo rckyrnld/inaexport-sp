@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Alert;
 
 class LoginEIController extends Controller
 {
@@ -32,7 +33,30 @@ class LoginEIController extends Controller
 			foreach($caridata as $dc){
 				$data1 = $dc->id_role;
 				$data2 = $dc->id;
+				$data3 = $dc->status;
 			}
+//			dd($data3);
+//			if($data3 == "0"){
+//			    dd('tes');
+//                return '<script type="text/javascript">alert("hello!");</script>';
+//                return redirect()->back()->with('alert','hello');
+//                Alert::info('Info Message', 'Optional Title');
+
+//                dd('masuk 0');
+//                return redirect()->back()->with('alert', 'Updated!');
+//                return redirect()->route('/login')->with('jsAlert', 'testing');
+//                return view('frontend.');
+
+//                echo "<script>";
+//                echo "alert('hello');";
+//                echo "</script>";
+//                dd('masuk if');
+//                return redirect()->back()->with('alert', 'Updated!');
+//
+//            }else{
+//			    dd('masuk else');
+//            }
+
 			date_default_timezone_set('Asia/Jakarta');
 			 $ipaddress = '';
 			 if (getenv('HTTP_CLIENT_IP')){
@@ -50,16 +74,55 @@ class LoginEIController extends Controller
 			 }else{
 				 $ipaddress = 'UNKNOWN';
 			 }
+
+
+			 $tes = DB::table('log_user')->where('id_user',$data2)->get();
+
+			 if(count($tes) < 1){
+                 $insertlogin = DB::select("insert into log_user (email,waktu,date,ip_address,id_role,id_user) values 
+                ('".$request->email2."','".Date('H:m:s')."','".Date('Y-m-d')."','".$ipaddress."','".$data1."','".$data2."')
+                ");
+
+                 if($data1 == 2){
+                     return redirect()->intended('/profil')->with('warning', 'Please Fill Out Company Profile');
+                 }
+                 else if($data1 == 3){
+                     return redirect()->intended('/profile')->with('warning', 'Please Fill Out Company Profile');
+                 }
+             }else{
+                 $insertlogin = DB::select("insert into log_user (email,waktu,date,ip_address,id_role,id_user) values 
+                ('".$request->email2."','".Date('H:m:s')."','".Date('Y-m-d')."','".$ipaddress."','".$data1."','".$data2."')
+                ");
+                 return redirect()->intended('/');
+             }
+
  
-			$insertlogin = DB::select("
-			insert into log_user (email,waktu,date,ip_address,id_role,id_user) values 
-			('".$request->email2."','".Date('H:m:s')."','".Date('Y-m-d')."','".$ipaddress."','".$data1."','".$data2."')
-			");
-            return redirect()->intended('/');
+
         }
-		
-        return back()->withErrors(['email' => 'Email or password are wrong.']);
+		else{
+            return back()->withErrors(['email' => 'Email or password are wrong.']);
+        }
+
     }
-	
+
+    public function checkstatus(Request $request){
+        $getstatus = DB::table('itdp_company_users')->where('email', $request->email2)->get();
+
+        if(count($getstatus) < 1){
+            $baliknya = "notfound";
+        }else{
+            if($getstatus[0]->status == 0){
+                $baliknya = "status0";
+            }
+            else{
+                $baliknya = "statusoke";
+            }
+        }
+        echo json_encode($baliknya);
+    }
+
+    public function changestatus(Request $request){
+        DB::table('itdp_company_users')->where('email', $request->email)->update(['status'=>1]);
+    }
 	
 }

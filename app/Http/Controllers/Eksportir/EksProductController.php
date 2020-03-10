@@ -93,9 +93,9 @@ class EksProductController extends Controller
                 })
                 ->addColumn('action', function ($mjl) {
                     $edit = '<a href="' . route('eksproduct.edit', $mjl->id) . '" class="btn btn-sm btn-success" title="Edit"><i class="fa fa-edit text-white"></i></a>';
-                    if($mjl->status == 2){
-                        $edit = '<button class="btn btn-sm btn-success" title="Edit" disabled><i class="fa fa-edit text-white"></i></button>';
-                    }
+//                    if($mjl->status == 2){
+//                        $edit = '<button class="btn btn-sm btn-success" title="Edit" disabled><i class="fa fa-edit text-white"></i></button>';
+//                    }
                     return '
                     <center>
                     <a href="' . route('eksproduct.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">

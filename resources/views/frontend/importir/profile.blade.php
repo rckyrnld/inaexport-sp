@@ -83,6 +83,13 @@ if($profile->foto_profil != NULL){
                     <div class="tab-pane fade show active" id="info" role="tabpanel">
                     <form id="profile" action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
+                        <br>
+                        @if ($message = Session::get('warning'))
+                            <div class="alert alert-warning alert-block" style="text-align: center; color: white;">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @endif
                         <div class="row" style="padding-top: 15px">
                             <div class="col-lg-3 col-md-3">
                                 <span class="logo">Logo</span>
