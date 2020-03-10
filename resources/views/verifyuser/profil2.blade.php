@@ -68,6 +68,12 @@
                                 <div class="form-row">
                                     <div class="col-md-7">
                                         <div class="box-body">
+{{--                                            @if ($message = Session::get('success'))--}}
+{{--                                                <div class="alert alert-success alert-block" style="text-align: center">--}}
+{{--                                                    <button type="button" class="close" data-dismiss="alert">×</button>--}}
+{{--                                                    <strong>{{ $message }}</strong>--}}
+{{--                                                </div>--}}
+{{--                                            @endif--}}
                                             <b>Account Information Buyer</b><br><br>
                                             <?php
                                             $ca = DB::select("select * from itdp_company_users where id='$idb' limit 1");

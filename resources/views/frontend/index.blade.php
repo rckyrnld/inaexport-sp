@@ -208,22 +208,22 @@
                                     @if(count($catprod1) == 0)
                                         <li><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}}</a></li>
                                     @else
-                                        <li class="menu_item_children categorie_list"><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}} <i class="fa fa-angle-right"></i></a>
-                                            <ul class="categories_mega_menu" style="width: 130%; margin: 0px; padding: 15px  0px 0px 15px ">
+                                        <li class="menu_item_children categorie_list"><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" ><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}} <i class="fa fa-angle-right"></i></a>
+                                            <ul class="categories_mega_menu" style="width: 160%; margin: 0px; padding: 15px  0px 0px 15px ">
                                                 @foreach($catprod1 as $key => $c1)
                                                   @if($key < 19)
                                                     <?php
                                                         $catprod2 = getCategoryLevel(2, $cu->id, $c1->id);
-                                                        $nk = "nama_kategori_".$lct; 
+                                                        $nk = "nama_kategori_".$lct;
                                                         if($c1->$nk == NULL){
                                                             $nk = "nama_kategori_en";
                                                         }
                                                     ?>
-                                                    <li class="menu_item_children next" style="margin-bottom: 0px; width: 50%;"><a href="{{url('/front_end/list_product/category/'.$c1->id)}}" style="text-transform: capitalize !important; font-weight: lighter;font-size: 10px;line-height: 1.5;">{{$c1->$nk}}</a></li>
+                                                    <li class="menu_item_children next" style="margin-bottom: 0px; width: 50%;"><a href="{{url('/front_end/list_product/category/'.$c1->id)}}" style="text-transform: capitalize !important; font-weight: lighter;font-size: 13.5px;line-height: 1.5; padding-right: 10px!important;">{{$c1->$nk}}</a></li>
                                                   @endif
                                                 @endforeach
                                                 @if(count($catprod1) > 19)
-                                                <li class="menu_item_children"><a href="{{url('/front_end/list_product')}}" style="text-transform: capitalize !important;font-weight: lighter;font-size: 10px;line-height: 0.5;"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;@lang('frontend.home.morecategory')</a></li>
+                                                <li class="menu_item_children"><a href="{{url('/front_end/list_product')}}" style="text-transform: capitalize !important;font-weight: lighter;font-size: 13.5px!important;line-height: 0.5;padding-top: 5px;"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;@lang('frontend.home.morecategory')</a></li>
                                                 @endif
                                             </ul>
                                         </li>
@@ -286,11 +286,51 @@
         </div>
     </section>
     <!--menu & category end-->
-	
-	
+{{--    <br>--}}
+    <!--regis start-->
+    <section class="product_area mb-50" style="background-color: #ddeffd; padding: 6%; margin-bottom: 0px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            @if($loc == "in")
+                                <span style="font-size: 20px;">
+                                    Buat akun Anda dan mulailah <br>berbisnis <span style="color: #007bff;">skala internasional</span>
+                                </span><br>
+                            @elseif($loc == "ch")
+                                <span style="font-size: 20px;">
+                                    创建您的帐户并开始从事业务<span style="color: #007bff;">国际规模</span>
+                                </span><br>
+                            @else
+                                <span style="font-size: 20px;">
+                                    Create your account and start doing<br> business on <span style="color: #007bff;">an international scale</span>
+                                </span><br>
+                            @endif
+                            <span style="font-size: 12px; color: #007bff;">+ {{getCountData('itdp_company_users')}}</span>
+                            @if($loc == "in")
+                                <span style="font-size: 12px; color: silver;">pengusaha telah bergabung</span>
+                            @elseif($loc == "ch")
+                                <span style="font-size: 12px; color: silver;">位企业家加入</span>
+                            @else
+                                <span style="font-size: 12px; color: silver;">entrepreneurs have joined</span>
+                            @endif
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                            <center>
+                                <a href="{{url('/pilihregister')}}" class="btn btn-primary" style="width: 200px; font-size: 18px; border-radius: 30px;">@if($loc == 'ch') 寄存器 @elseif($loc == "in") Daftar @else Register @endif</a>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--regis end-->
 
-   
-	<br>
+
 	<div class="breadcrumbs_area">
         <div class="container" style="
     background-color: white;
@@ -913,49 +953,6 @@
                                    </div>
 							</form>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--regis end-->
-
-    <!--regis start-->
-    <section class="product_area mb-50" style="background-color: #ddeffd; padding: 6%; margin-bottom: 0px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-5">
-                            @if($loc == "in")
-                                <span style="font-size: 20px;">
-                                    Buat akun Anda dan mulailah <br>berbisnis <span style="color: #007bff;">skala internasional</span>
-                                </span><br>
-                            @elseif($loc == "ch")
-                                <span style="font-size: 20px;">
-                                    创建您的帐户并开始从事业务<span style="color: #007bff;">国际规模</span>
-                                </span><br>
-                            @else
-                                <span style="font-size: 20px;">
-                                    Create your account and start doing<br> business on <span style="color: #007bff;">an international scale</span>
-                                </span><br>
-                            @endif
-                            <span style="font-size: 12px; color: #007bff;">+ {{getCountData('itdp_company_users')}}</span>
-                            @if($loc == "in")
-                                <span style="font-size: 12px; color: silver;">pengusaha telah bergabung</span>
-                            @elseif($loc == "ch")
-                                <span style="font-size: 12px; color: silver;">位企业家加入</span>
-                            @else
-                                <span style="font-size: 12px; color: silver;">entrepreneurs have joined</span>
-                            @endif
-                        </div>
-                        <div class="col-md-2"></div>
-                        <div class="col-md-4">
-                            <center>
-                                <a href="{{url('/pilihregister')}}" class="btn btn-primary" style="width: 200px; font-size: 18px; border-radius: 30px;">@if($loc == 'ch') 寄存器 @elseif($loc == "in") Daftar @else Register @endif</a>
-                            </center>
                         </div>
                     </div>
                 </div>

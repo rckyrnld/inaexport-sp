@@ -556,11 +556,12 @@
             }
         });
         @isset($data)
-            @if($data->status == 2)
-                $('input').prop('disabled', 'true');
-                $('select').prop('disabled', 'true');
-                $('#hal3').prop('disabled', 'true');
-            @endif
+                //untuk disable semua inputan select dll.
+{{--            @if($data->status == 2)--}}
+{{--                $('input').prop('disabled', 'true');--}}
+{{--                $('select').prop('disabled', 'true');--}}
+{{--                $('#hal3').prop('disabled', 'true');--}}
+{{--            @endif--}}
         var hscode = "{{$data->id_mst_hscodes}}";
         if (hscode != "") {
             $.ajax({

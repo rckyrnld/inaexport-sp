@@ -9,7 +9,7 @@
             	<table width="100%" height="100%" border="0" cellpadding="5px" style="text-align: center;">
             		<tr>
             			<td rowspan="2" width="50%" height="100%" style="margin:0; padding:0;">
-            				<img src="{{asset('front/assets/img/about/about.png')}}" alt="" style="margin:0; padding:0;display:block;" height="100%"/>
+            				<img src="{{asset('front/assets/img/about/about.png')}}" alt="alt" style="margin:0; padding:0;display:block;" height="100%"/>
             			</td>
             			<td width="25%">
             				<img src="{{asset('front/assets/img/about/about 3.png')}}" alt="" style="width: 100%;">

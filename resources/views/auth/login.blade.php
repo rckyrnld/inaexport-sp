@@ -53,12 +53,12 @@
 	  <!-- <h5>LOGIN</h5> -->
 	  <div class="wrap-login100" style="padding-left : 30px; padding-right : 30px; font-size:15px;">
 	  
-	   <form class="form-horizontal" method="POST" action="{{ route('loginei.login') }}">
+	   <form class="form-horizontal" id="formlogin" method="POST" action="{{ route('loginei.login') }}">
            {{ csrf_field() }}
            <center><h4>@lang("login.lbl3")</h4><br></center>
              <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}" align="left">
 			 <label>@lang("login.forms.email")</label>
-               <input type="email" placeholder="Email" class="form-control" name="email2" style="color: #000000" value="{{ old('email') }}" required autofocus>
+               <input type="email" placeholder="Email" class="form-control" name="email2" id="email2" style="color: #000000" value="{{ old('email') }}" required autofocus>
 
                 @if ($errors->has('email'))
                     <span class="help-block">
@@ -69,7 +69,7 @@
 			 
             <div class="form-group" align="left">
 			<label>@lang("login.forms.password")</label>
-              <input type="password" class="form-control" name="password2" placeholder="password" required style="color: #000000">
+              <input type="password" class="form-control" name="password2" placeholder="password" id="password2" required style="color: #000000">
 
                   @if ($errors->has('password'))
                       <span class="help-block">
@@ -87,7 +87,8 @@
 				
 			</div>
 			<div class="form-group">
-            <button style="width: 100%;" type="submit" class="btn btn-primary">@lang("login.btn")</button>
+{{--            <button style="width: 100%;" type="submit" class="btn btn-primary">@lang("login.btn")</button>--}}
+            <button style="width: 100%;" type="button" class="btn btn-primary" onclick="check()">@lang("login.btn")</button>
 			<br><br>
 			@lang("login.forms.r1") <a href="{{url('pilihregister')}}">@lang("login.forms.r2")</a>
 			</div>
@@ -107,6 +108,48 @@
 
 @include('footerlog')
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
+<script>
+    function check() {
+        email2 = $('#email2').val();
+        // password2 = $('password2').val();
+
+        $.post("{{ route('login.check_status') }}",
+            {
+                '_token': '{{csrf_token()}}',
+                'email2': email2,
+                // 'password2': password2,
+            }, function (response) {
+                var res = JSON.parse(response);
+                // console.log(res);
+                if(res == 'status0'){
+                    var r = confirm("Aktivasi Akun Anda?");
+                    // var status = 0;
+                    // $('#status').val(0);
+                    if (r == true) {
+                        $.post("{{ route('login.change_status') }}",
+                            {
+                                '_token': '{{csrf_token()}}',
+                                'email' : email2,
+                            }, function (response) {
+
+                        });
+                        document.getElementById("formlogin").submit();
+                    }
+                }
+                // else if(res == 'statusoke'){
+                //     // $('#status').val(1);
+                //     console.log('testing');
+                //     document.getElementById("formlogin").submit();
+                // }
+                else{
+                    console.log('masuk else');
+                    document.getElementById("formlogin").submit();
+                }
+            });
+
+    }
+</script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
     $('#example').DataTable();
@@ -174,6 +217,14 @@ function openCity(evt, cityName) {
   evt.currentTarget.className += " active";
 }
 </script>
+    <script>
+    {{--var msg = '{{Session::get('alert')}}';--}}
+    {{--var exist = '{{Session::has('alert')}}';--}}
+    {{--if(exist){--}}
+    {{--    alert(msg);--}}
+    {{--}--}}
+
+    </script>
 <script type="text/javascript">
     // $(document).ready(function () {
         
