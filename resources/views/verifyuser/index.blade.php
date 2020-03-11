@@ -52,7 +52,10 @@
 									<th>
                                         <center>Verify By Admin</center>
                                     </th>
-                                    <th width="15%">
+                                    <th width="10%">
+                                        <center>Verify Date</center>
+                                    </th>
+                                    <th width="10%">
                                         <center>Action</center>
                                     </th>
                                 </tr>
@@ -99,6 +102,9 @@ function ConfirmDelete()
 				{
 					data: 'f7', name: 'f7', orderable: false, searchable: false
 				},
+                {
+                    data: 'f8', name: 'f8', orderable: false, searchable: false
+                },
                 {
                     data: 'action', name: 'action', orderable: false, searchable: false
                 }]

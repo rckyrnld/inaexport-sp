@@ -316,7 +316,8 @@
                                                     <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$data->id}}/{{$data->image_1}}" id="image_1_ambil" style="height: 100%; width: 100%;"/>
                                                     @endif
                                                 </button>
-                                                <input type="file" id="image_1" name="image_1" accept="image/png" style="display: none;" class="upload1"/>
+                                                {{--accept="image/png"--}}
+                                                <input type="file" id="image_1" name="image_1"  style="display: none;" class="upload1"/>
                                                 <br>
                                                 <center>+ Photo 1</center>
                                             </div>
@@ -330,7 +331,7 @@
                                                     <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$data->id}}/{{$data->image_2}}" id="image_2_ambil" style="height: 100%; width: 100%;"/>
                                                     @endif
                                                 </button>
-                                                <input type="file" id="image_2" name="image_2" accept="image/png" style="display: none;" class="upload1" />
+                                                <input type="file" id="image_2" name="image_2" style="display: none;" class="upload1" />
                                                 <br>
                                                 <center>+ Photo 2</center>
                                             </div>
@@ -344,7 +345,7 @@
                                                     <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$data->id}}/{{$data->image_3}}" id="image_3_ambil" style="height: 100%; width: 100%;"/>
                                                     @endif
                                                 </button>
-                                                <input type="file" id="image_3" name="image_3" accept="image/png" style="display: none;" class="upload1" />
+                                                <input type="file" id="image_3" name="image_3" style="display: none;" class="upload1" />
                                                 <br>
                                                 <center>+ Photo 3</center>
                                             </div>
@@ -358,7 +359,7 @@
                                                     <img src="{{url('/')}}/uploads/Eksportir_Product/Image/{{$data->id}}/{{$data->image_4}}" id="image_4_ambil" style="height: 100%; width: 100%;"/>
                                                     @endif
                                                 </button>
-                                                <input type="file" id="image_4" name="image_4" accept="image/png" style="display: none;" class="upload1" />
+                                                <input type="file" id="image_4" name="image_4" style="display: none;" class="upload1" />
                                                 <br>
                                                 <center>+ Photo 4</center>
                                             </div>

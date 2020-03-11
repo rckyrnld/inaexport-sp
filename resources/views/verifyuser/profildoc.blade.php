@@ -268,10 +268,12 @@
 												<label><b>Status Exporter</b></label>
 											</div>
 											<div class="form-group col-sm-4">
+											<span class="labelverif">
 												<?php if(empty(Auth::user()->name)){
 												if($rhj->status==1){ echo "Verified"; }else if($rhj->status==2){ echo "Not Verified"; }else{ echo "-"; }
 												?>
-												<input type="hidden" name="staim" value="<?php echo $rhj->status; ?>">
+											</span>
+												<input type="hidden" name="staim" id="staim" value="<?php echo $rhj->status; ?>">
 												<?php
 												}else{ ?>
 												<select class="form-control" name="staim">
@@ -319,12 +321,15 @@
 											console.log(json.status);
 											if(json.status == "VALID"){
 												$('.vld').html("<font color='green'>Valid</font>");
+												$('.labelverif').html("Verified");
 												alert("NPWP terdaftar dengan nama "+ json.nama);
-
+												$('#staim').val(1);
 											}else{
 												alert("NPWP Tidak Benar, Silahkan Hubungin Kantor Pajak Terdekat");
 												$('.vld').html("<font color='red'>Not Valid</font>");
 												$("#npwp").val('');
+												$('#staim').val(0);
+												$('.labelverif').html("-");
 											}
 											//console.log(data.status);
 											// alert(jumlahkarakter);

@@ -76,28 +76,35 @@ class LoginEIController extends Controller
 			 }
 
 
-			 $tes = DB::table('log_user')->where('id_user',$data2)->get();
+//			 $tes = DB::table('log_user')->where('id_user',$data2)->get();
+//
+//            if(count($tes) < 1){
+//                $insertlogin = DB::select("insert into log_user (email,waktu,date,ip_address,id_role,id_user) values
+//                ('".$request->email2."','".Date('H:m:s')."','".Date('Y-m-d')."','".$ipaddress."','".$data1."','".$data2."')
+//                ");
+//
+//                if($data1 == 2){
+//                    return redirect()->intended('/profil')->with('warning', 'Please Fill Out Company Profile');
+//                }
+//                else if($data1 == 3){
+//                    return redirect()->intended('/profile')->with('warning', 'Please Fill Out Company Profile');
+//                }
+//            }else{
+//                $insertlogin = DB::select("insert into log_user (email,waktu,date,ip_address,id_role,id_user) values
+//                ('".$request->email2."','".Date('H:m:s')."','".Date('Y-m-d')."','".$ipaddress."','".$data1."','".$data2."')
+//                ");
+//                return redirect()->intended('/');
+//            }
 
-			 if(count($tes) < 1){
-                 $insertlogin = DB::select("insert into log_user (email,waktu,date,ip_address,id_role,id_user) values 
-                ('".$request->email2."','".Date('H:m:s')."','".Date('Y-m-d')."','".$ipaddress."','".$data1."','".$data2."')
-                ");
+                $insertlogin = DB::select("insert into log_user (email,waktu,date,ip_address,id_role,id_user) values 
+                    ('".$request->email2."','".Date('H:m:s')."','".Date('Y-m-d')."','".$ipaddress."','".$data1."','".$data2."')
+                    ");
 
-                 if($data1 == 2){
-                     return redirect()->intended('/profil')->with('warning', 'Please Fill Out Company Profile');
-                 }
-                 else if($data1 == 3){
-                     return redirect()->intended('/profile')->with('warning', 'Please Fill Out Company Profile');
-                 }
-             }else{
-                 $insertlogin = DB::select("insert into log_user (email,waktu,date,ip_address,id_role,id_user) values 
-                ('".$request->email2."','".Date('H:m:s')."','".Date('Y-m-d')."','".$ipaddress."','".$data1."','".$data2."')
-                ");
-                 return redirect()->intended('/');
-             }
-
- 
-
+                if($data1 == 2){
+                    return redirect()->intended('/profil')->with('warning', 'Please Fill Out Company Profile');
+                }else {
+                    return redirect()->intended('/');
+                }
         }
 		else{
             return back()->withErrors(['email' => 'Email or password are wrong.']);
@@ -121,8 +128,17 @@ class LoginEIController extends Controller
         echo json_encode($baliknya);
     }
 
+//    public function changestatus(Request $request){
+//        DB::table('itdp_company_users')->where('email', $request->email)->update(['status'=>1]);
+//    }
+
     public function changestatus(Request $request){
-        DB::table('itdp_company_users')->where('email', $request->email)->update(['status'=>1]);
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
+//        $data = ;
+//        DB::table('itdp_company_users')->where('email', $request->email)->update(['status'=>1,'verified_at'=>$date]);
+        DB::table('itdp_company_users')->where('email', $request->email)->update(['status'=>1,'verified_at' => $date]);
+//        DB::table('itdp_company_users')->where('email', $request->email)->update(['verified_at'=>$date]);
     }
-	
+
 }

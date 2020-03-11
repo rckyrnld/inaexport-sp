@@ -826,4 +826,7 @@ Route::get('/hapus-catper/{id}', 'Master\CatperController@hapus');
 Route::get('/type', 'VerifyuserController@type')->name('admin.perwakilan.type');
 
 Route::get('/qrcode','VerifyuserController@qrcode')->name('eksportir.qrcode');
+//Rekap Anggota
+Route::get('/rekap-anggota', 'RekapAnggotaController@index');
+Route::get('/rekapanggota.getanggota', 'RekapAnggotaController@getData')->name('rekapang.getData');
 //end mindy

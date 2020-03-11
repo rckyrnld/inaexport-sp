@@ -325,7 +325,7 @@ body {font-family: Arial;}
 	</div>
 	<div class="form-row">
 		<div class="form-group col-sm-3">
-			<label><b><font color="red">(*)</font> Upload NPWP</b></label>
+			<label><b><font color="red">(*)</font> Dokumen NPWP</b></label>
 		</div>
 		<div class="form-group col-sm-4">
 		 <?php 
@@ -362,7 +362,7 @@ body {font-family: Arial;}
 	</div>
 	<div class="form-row">
 		<div class="form-group col-sm-3">
-			<label><b> Upload Tanda Daftar Perusahaan</b></label>
+			<label><b> Dokumen Tanda Daftar Perusahaan</b></label>
 		</div>
 		<div class="form-group col-sm-4">
 			
@@ -399,7 +399,7 @@ body {font-family: Arial;}
 	</div>
 	<div class="form-row">
 		<div class="form-group col-sm-3">
-			<label><b> Upload Surat Izin Usaha Perdagangan</b></label>
+			<label><b> Dokumen Surat Izin Usaha Perdagangan</b></label>
 		</div>
 		<div class="form-group col-sm-4">
 			
@@ -466,8 +466,9 @@ body {font-family: Arial;}
 	<div class="form-row">
 		<div class="form-group col-sm-3">
 			<label><b>
-			<?php 
-			  if(empty(Auth::user()->name)){ echo "Document"; }else{ echo "File Upload from Exporter"; } ?>
+			<?php
+						echo "Dokumen"
+//			  if(empty(Auth::user()->name)){ echo "Document"; }else{ echo "File Upload from Exporter"; } ?>
 			</b></label>
 		</div>
 		<div class="form-group col-sm-4">
