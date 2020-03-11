@@ -578,7 +578,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                                       $userName = $user;
                                                     }
                                                     ?>
-                                                <span style="color: black; font-weight: 600; font-size: 12px;" title="{{$user}}">
+                                                <span style="color:#ff8d00; font-weight: 600; font-size: 12px; font-family: Myriad-pro; padding-left: 1px;" title="{{$user}}">
 												<?php
                                                 // $userName
 												if(Auth::guard('eksmp')->user()->id_role == 3){

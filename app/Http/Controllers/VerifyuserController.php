@@ -40,7 +40,7 @@ class VerifyuserController extends Controller
 	 public function getimportir()
     {
 		if(Auth::user()->id_group == 1) {
-      $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
+      $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
       }else if(Auth::user()->id_group == 4){
 		$a = Auth::user()->id;
 		if(Auth::user()->id_admin_dn == 0){
@@ -49,11 +49,11 @@ class VerifyuserController extends Controller
 		$quer = DB::select("select * from  itdp_admin_ln where id='".$b."'");
 		foreach($quer as $t1){ $ic = $t1->id_country; }
 		// echo $ic;die();
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b, mst_country c, mst_group_country d where d.id = c.mst_country_group_id and d.id='".$ic."' and b.id_mst_country = c.id and  a.id_profil = b.id and id_role='3' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b, mst_country c, mst_group_country d where d.id = c.mst_country_group_id and d.id='".$ic."' and b.id_mst_country = c.id and  a.id_profil = b.id and id_role='3' order by a.id desc ");
       
 		}else{
 		//dalam
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.* from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
       
 		
 		}
@@ -96,6 +96,7 @@ class VerifyuserController extends Controller
 				 return "<center><font color='red'>No</font></center>";
 				 }
             })
+
 			->addColumn('f7', function ($pesan) {
 				if($pesan->status_a == 1){ 
 				return "<center><font color='green'>Verified</font></center>";
@@ -106,6 +107,13 @@ class VerifyuserController extends Controller
 				}
 				 
             })
+
+            ->addColumn('f8', function ($pesan) {
+                  $time = strtotime($pesan->verified_at);
+                  $newformat = date('d-m-Y',$time);
+                  return $newformat;
+              })
+
             ->addColumn('action', function ($pesan) {
            
                 if($pesan->status_a == 1 || $pesan->status_a == 2){ 
@@ -127,13 +135,13 @@ class VerifyuserController extends Controller
 	public function geteksportir()
     {
 	if(Auth::user()->id_group == 1) {
-      $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
+      $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
 	}else if(Auth::user()->id_group == 4){
 		$a = Auth::user()->id;
 		if(Auth::user()->id_admin_dn == 0){
 		// luar
 		$b = Auth::user()->id_admin_ln;
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '9999999' and a.id_profil = b.id and id_role='2' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '9999999' and a.id_profil = b.id and id_role='2' order by a.id desc ");
 	
 		}else{
 		//dalam
@@ -141,7 +149,7 @@ class VerifyuserController extends Controller
 		$quer = DB::select("select * from  itdp_admin_dn where id='".$b."'");
 		foreach($quer as $t1){ $ic = $t1->id_country; }
 		// echo $ic;die();
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '".$ic."' and a.id_profil = b.id and id_role='2' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '".$ic."' and a.id_profil = b.id and id_role='2' order by a.id desc ");
 	
 		
 		}
@@ -194,6 +202,11 @@ class VerifyuserController extends Controller
 				}
 				 
             })
+            ->addColumn('f8', function ($pesan) {
+                $time = strtotime($pesan->verified_at);
+                $newformat = date('d-m-Y',$time);
+                return $newformat;
+         })
             ->addColumn('action', function ($pesan) {
            
                 if($pesan->status_a == 1 || $pesan->status_a == 2){ 
@@ -711,12 +724,15 @@ class VerifyuserController extends Controller
 
         if($request->staim == 1){
             if(auth::user()) {
+                $date = date('Y-m-d H:i:s');
+                $updatetab1b = DB::select("update itdp_company_users set verified_by='".auth::user()->id."',verified_at='".$date."'   where id='".$id_user."' ");
+
                 $data3 = ['username' => $request->username, 'id2' => 0, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email, 'by' => auth::user()->name];
                 Mail::send('UM.user.emailverif1', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);
                     $mail->subject('Your Account Was Verifed');
                 });
-                $date = date('Y-m-d H:i:s');
+
                 $notif = DB::table('notif')->insert([
                     'dari_nama' =>auth::user()->name,
                     'dari_id' => auth::id(),
@@ -888,6 +904,8 @@ class VerifyuserController extends Controller
                     $updatetab2 = DB::select("update itdp_profil_eks set npwp='".$request->npwp."', tdp='".$request->tanda_daftar."', siup='".$request->siup."' 
 				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$staim."' 
 				where id='".$id_user_b."'");
+                    $updatecompus = DB::select("update itdp_company_users set status='".$staim."', verified_by ='".Auth::guard('eksmp')->user()->id."', verified_at = '".$date."' where id='".$id_user."'") ;
+
                 }
             }
 
@@ -938,6 +956,8 @@ class VerifyuserController extends Controller
 			
 		}
 		if($request->staim == 1){
+            $updatetab1b = DB::select("update itdp_company_users set verified_by='".auth::user()->id."',verified_at='".$date."'   where id='".$request->id_user."' ");
+
 		    if(auth::user()){
                 $data3 = ['username' => $request->username, 'id2' => 0, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email, 'by' => auth::user()->name];
 

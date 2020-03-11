@@ -133,7 +133,8 @@ class InquiryEksController extends Controller
                         $statnya = Lang::get('inquiry.stat'.$stat);
                     }
 
-                    return $mjl->status;
+//                    return $mjl->status;
+                    return $statnya;
                 })
                 ->addColumn('duration', function ($mjl) {
                     $durationnya = "-";

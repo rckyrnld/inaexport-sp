@@ -25,6 +25,9 @@
 .table-bordered td, .table-bordered th {
     border: transparent;
 }
+h4 h6 h3{
+
+}
 
   </style>
   
@@ -45,8 +48,8 @@
 			
     <div class="py-1 text-center w-100">
 	
-	<h3><b>@lang("login.title2")</b></h3>
-	<h6>@lang("login.title4")</h6><br>
+	<h3 style=" font-family: 'Lato', sans-serif !important;"><b>@lang("login.title2")</b></h3>
+	<h6 style=" font-family: 'Lato', sans-serif !important;">@lang("login.title4")</h6><br>
 			
 		        <div class="mx-auto col-sm-4" style="background: white; border-radius: 0px;box-shadow: 4px 4px 10px 6px #888888; border: 4px; border-radius: 10px;">
 	  <br>
@@ -55,21 +58,21 @@
 	  
 	   <form class="form-horizontal" id="formlogin" method="POST" action="{{ route('loginei.login') }}">
            {{ csrf_field() }}
-           <center><h4>@lang("login.lbl3")</h4><br></center>
+           <center><h4 style=" font-family: 'Lato', sans-serif !important;">@lang("login.lbl3")</h4><br></center>
              <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}" align="left">
-			 <label>@lang("login.forms.email")</label>
-               <input type="email" placeholder="Email" class="form-control" name="email2" id="email2" style="color: #000000" value="{{ old('email') }}" required autofocus>
+			 <label style=" font-family: 'Lato', sans-serif !important;">@lang("login.forms.email")</label>
+               <input type="email" placeholder="Email" class="form-control" name="email2" id="email2" style="color: #000000;font-family: 'Lato', sans-serif !important;" value="{{ old('email') }}" required autofocus>
 
                 @if ($errors->has('email'))
                     <span class="help-block">
-                        <strong>{{ $errors->first('email') }}</strong>
+                        <strong style="font-family: 'Lato', sans-serif !important;">{{ $errors->first('email') }}</strong>
                     </span>
                 @endif
             </div>
 			 
             <div class="form-group" align="left">
-			<label>@lang("login.forms.password")</label>
-              <input type="password" class="form-control" name="password2" placeholder="password" id="password2" required style="color: #000000">
+			<label style=" font-family: 'Lato', sans-serif !important;">@lang("login.forms.password")</label>
+              <input type="password" class="form-control" name="password2" placeholder="Password" id="password2" required style="color: #000000;font-family: 'Lato', sans-serif !important;">
 
                   @if ($errors->has('password'))
                       <span class="help-block">
@@ -88,9 +91,9 @@
 			</div>
 			<div class="form-group">
 {{--            <button style="width: 100%;" type="submit" class="btn btn-primary">@lang("login.btn")</button>--}}
-            <button style="width: 100%;" type="button" class="btn btn-primary" onclick="check()">@lang("login.btn")</button>
+            <button style="width: 100%;   font-family: 'Lato', sans-serif !important;" type="button" class="btn btn-primary" onclick="check()">@lang("login.btn")</button>
 			<br><br>
-			@lang("login.forms.r1") <a href="{{url('pilihregister')}}">@lang("login.forms.r2")</a>
+			<label style=" font-family: 'Lato', sans-serif !important;">@lang("login.forms.r1")</label> <a href="{{url('pilihregister')}}"><label  style=" font-family: 'Lato', sans-serif !important;">@lang("login.forms.r2")</label></a>
 			</div>
 			<br>
           </form>
