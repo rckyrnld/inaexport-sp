@@ -172,6 +172,8 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
     //notif
     Route::post('getNotif', 'Api\User\ManagementUserController@getNotif');
     Route::post('updateNotif', 'Api\User\ManagementUserController@updateNotif');
+    Route::post('read_all_notif', 'Api\User\ManagementUserController@read_all_notif');
+    Route::post('read_one_notif', 'Api\User\ManagementUserController@read_one_notif');
 });
 Route::namespace('Api')->group(function () {
     /*Contact Us*/

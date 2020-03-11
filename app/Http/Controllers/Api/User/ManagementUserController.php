@@ -1070,4 +1070,60 @@ class ManagementUserController extends Controller
             return response($res);
         }
     }
+	
+	public function read_all_notif(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $id_user = $request->id_user;
+		$update = DB::select("update notif set status_baca='1' where untuk_id='" .$id_user. "' and to_role !='1' or to_role !='4'");
+        
+				if($update){
+                    $meta = [
+                    'code' => 200,
+                    'message' => 'Success',
+                    'status' => 'OK'
+					];
+					$data = '';
+					$res['meta'] = $meta;
+					return response($res);
+                }
+                else{
+                    $meta = [
+						'code' => 100,
+						'message' => 'Unauthorized',
+						'status' => 'Failed'
+					];
+					$data = "";
+					$res['meta'] = $meta;
+					return $res;
+                }
+	}
+	
+	public function read_one_notif(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $id_notif = $request->id_notif;
+		$update = DB::select("update notif set status_baca='1' where id_notif='" .$id_notif. "'");
+        
+				if($update){
+                    $meta = [
+                    'code' => 200,
+                    'message' => 'Success',
+                    'status' => 'OK'
+					];
+					$data = '';
+					$res['meta'] = $meta;
+					return response($res);
+                }
+                else{
+                    $meta = [
+						'code' => 100,
+						'message' => 'Unauthorized',
+						'status' => 'Failed'
+					];
+					$data = "";
+					$res['meta'] = $meta;
+					return $res;
+                }
+	}
 }

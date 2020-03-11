@@ -47,10 +47,11 @@ class VerifyuserController extends Controller
 		// luar
 		$b = Auth::user()->id_admin_ln;
 		$quer = DB::select("select * from  itdp_admin_ln where id='".$b."'");
-		foreach($quer as $t1){ $ic = $t1->id_country; }
+		foreach($quer as $t1){ $ic = $t1->country; }
 		// echo $ic;die();
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b, mst_country c, mst_group_country d where d.id = c.mst_country_group_id and d.id='".$ic."' and b.id_mst_country = c.id and  a.id_profil = b.id and id_role='3' order by a.id desc ");
-      
+
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b, mst_country c where  c.id='".$ic."' and b.id_mst_country = c.id and  a.id_profil = b.id and id_role='3' order by a.id desc ");
+
 		}else{
 		//dalam
 		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
@@ -138,11 +139,13 @@ class VerifyuserController extends Controller
       $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
 	}else if(Auth::user()->id_group == 4){
 		$a = Auth::user()->id;
+		
 		if(Auth::user()->id_admin_dn == 0){
 		// luar
 		$b = Auth::user()->id_admin_ln;
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '9999999' and a.id_profil = b.id and id_role='2' order by a.id desc ");
-	
+
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
+
 		}else{
 		//dalam
 		$b = Auth::user()->id_admin_dn;
@@ -208,6 +211,11 @@ class VerifyuserController extends Controller
                 return $newformat;
          })
             ->addColumn('action', function ($pesan) {
+				
+				if(Auth::user()->id_group == 4){
+				return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>';
+					
+				}else{
            
                 if($pesan->status_a == 1 || $pesan->status_a == 2){ 
 				return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>
@@ -221,7 +229,7 @@ class VerifyuserController extends Controller
 				';
 				}
                
-                
+                }
            
                 
             })
@@ -233,7 +241,7 @@ class VerifyuserController extends Controller
     {
       $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from itdp_admin_users where id_group='4' order by id desc");
       return DataTables::of($pesan)
-            ->addColumn('f1', function ($pesan) {
+           ->addColumn('f1', function ($pesan) {
 				 return '<div align="left">'.$pesan->name.'</div>';
             })
 			->addColumn('f2', function ($pesan) {
@@ -532,10 +540,18 @@ class VerifyuserController extends Controller
 			,'".Date('Y-m-d H:m:s')."','".$id1."','".$request->type."','".$request->web."')
 			");
 		}else{
+			$carigroup = DB::select("select mst_country_group_id from mst_country where id='".$request->country."'");
+			if(count($carigroup) == 0){
+				$ic = 0;
+			}else{
+				foreach($carigroup as $cg){
+					$ic = $cg->mst_country_group_id;
+				}
+			}
 			$insert1 = DB::select("
-			insert into itdp_admin_ln (nama,id_country,email,web,telp,kepala,username,password,status) values
-			('".$request->pejabat."','".$request->country."','".$request->email."','".$request->web."','".$request->phone."'
-			,'".$request->username."','".$request->username."','".bcrypt($request->password)."','".$request->status."')
+			insert into itdp_admin_ln (nama,id_country,email,web,telp,kepala,username,password,status,country) values
+			('".$request->pejabat."','".$ic."','".$request->email."','".$request->web."','".$request->phone."'
+			,'".$request->username."','".$request->username."','".bcrypt($request->password)."','".$request->status."','".$request->country."')
 			");
 			$ambilmaxid = DB::select("select max(id) as maxid from itdp_admin_ln");
 			foreach($ambilmaxid as $rt){
@@ -582,9 +598,18 @@ class VerifyuserController extends Controller
 		}else{
 			// echo "b";die();
 			if(empty($request->password) || $request->password == null){
+				
+			$carigroup = DB::select("select mst_country_group_id from mst_country where id='".$request->country."'");
+			if(count($carigroup) == 0){
+				$ic = 0;
+			}else{
+				foreach($carigroup as $cg){
+					$ic = $cg->mst_country_group_id;
+				}
+			}
 			$update1 = DB::select("
-			update itdp_admin_ln set nama='".$request->pejabat."', id_country ='".$request->country."', email ='".$request->email."', web='".$request->web."'
-			, telp='".$request->phone."', kepala='".$request->username."', username='".$request->username."', status='".$request->status."'
+			update itdp_admin_ln set nama='".$request->pejabat."', id_country ='".$ic."', email ='".$request->email."', web='".$request->web."'
+			, telp='".$request->phone."', kepala='".$request->username."', username='".$request->username."', status='".$request->status."', country='".$request->country."'
 			where id='".$request->idb."'
 			");
 			

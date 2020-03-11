@@ -31,8 +31,8 @@
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Username</center>
-                                    </th>
+                                        <center>Nama Kantor</center>
+                                    </th> 
 									<th>
                                         <center>Scope</center>
                                     </th>
@@ -91,7 +91,7 @@
             ajax: "{{ url('getpw') }}",
             columns: [
                 {data: 'row', name: 'row'},
-                {data: 'f1', name: 'f1'},
+                 {data: 'f1', name: 'f1'}, 
 				{
 					data: 'f6', name: 'f6', orderable: false, searchable: false
 				},
