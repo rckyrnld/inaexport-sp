@@ -298,7 +298,7 @@ foreach($q2 as $p2){
                     </div> -->
                 </div>
 			<br>
-                <div class="panel-body" style="overflow-y: scroll;">
+                <div id="fg1" class="panel-body" style="overflow-y: scroll;">
                     <ul class="chat" id="rchat">
 					<?php 
 					$qwr = DB::select("select * from csc_buying_request_chat where id_br='".$id_br."' and id_join='".$id."'");
@@ -422,12 +422,16 @@ function kirimchat(){
 	
 }
 $(document).ready(function(){
+	var con = document.getElementById("fg1");
+	con.scrollTop = con.scrollHeight;
 	setInterval(function() {
         a = $('#id_br').val();
 		b = <?php echo $id; ?>;
 		var token = $('meta[name="csrf-token"]').attr('content');
 		$.get('{{URL::to("refreshchat3/")}}/'+a+'/'+b,{_token:token},function(data){
 			$('#rchat').html(data)
+			var con = document.getElementById("fg1");
+			con.scrollTop = con.scrollHeight;
 			 });
 	}, 2000);
     

@@ -179,7 +179,7 @@
                     <br>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="box"
+                            <div class="box" id="fg1"
                                  style="max-height: 400px; overflow-y: scroll;overflow-x: hidden; padding: 0px 5px 0px 5px;">
                                 <br>
                                 <div class="row">
@@ -367,6 +367,8 @@
 @include('footer')
 <script>
     $(document).ready(function () {
+	var con = document.getElementById("fg1");
+	con.scrollTop = con.scrollHeight;
         //Click Image
         // $("#uploading").click(function () {
         //     $("input[id='upload_file']").click();
