@@ -9,7 +9,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 class RekapAnggotaController extends Controller
 {
     public function index(){
-        $pageTitle = 'Rekap Anggota';
+        $pageTitle = 'Member Recapitulation';
         return view('management.rekap-anggota.index', compact('pageTitle'));
     }
 

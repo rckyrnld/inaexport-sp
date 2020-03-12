@@ -9,7 +9,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 class RekaprcController extends Controller
 {
     public function index(){
-        $pageTitle = 'Member Recapitulation';
+        $pageTitle = 'Research Corner Recapitulation';
         return view('management.rekap-rc.index', compact('pageTitle'));
     }
 
