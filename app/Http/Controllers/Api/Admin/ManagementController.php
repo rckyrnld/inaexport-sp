@@ -1901,4 +1901,34 @@ class ManagementController extends Controller
 		
 		
 	}
+	
+	public function bc_verif(Request $request)
+    {
+		$id = $request->id_join;
+		date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
+		$update = DB::select("update csc_buying_request_join set status_join='1' where id='" . $id . "' ");
+				if($update){
+                    $meta = [
+                    'code' => 200,
+                    'message' => 'Success',
+                    'status' => 'OK'
+					];
+					$data = '';
+					$res['meta'] = $meta;
+					return response($res);
+                }
+                else{
+                    $meta = [
+						'code' => 100,
+						'message' => 'Unauthorized',
+						'status' => 'Failed'
+					];
+					$data = "";
+					$res['meta'] = $meta;
+					return $res;
+                }
+		
+		
+	}
 }
