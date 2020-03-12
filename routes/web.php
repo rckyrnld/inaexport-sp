@@ -676,8 +676,10 @@ Route::namespace('Eksportir')->prefix('eksportir')->group(function () {
     //Meidi
     //Product
     Route::get('/product_admin/{id}', 'EksProductController@index_admin')->name('eksproduct.index_admin');
+    Route::get('/product_unverif', 'EksProductController@product_unverif')->name('eksproduct.product_unverif');
     Route::get('/product', 'EksProductController@index')->name('eksproduct.index');
     Route::get('/product_getdata_admin/{id}', 'EksProductController@datanya_admin')->name('datatables.eksproduct_admin');
+    Route::get('/product_getdata_admin_un/{id}', 'EksProductController@datanya_admin_un')->name('datatables.eksproduct_admin_un');
     Route::get('/product_getdata', 'EksProductController@datanya')->name('datatables.eksproduct');
     Route::get('/getsub/', 'EksProductController@getSub')->name('eksproduct.getSub');
     Route::get('/searchsub/', 'EksProductController@searchsub')->name('eksproduct.searchsub');

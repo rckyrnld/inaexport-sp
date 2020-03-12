@@ -39,11 +39,13 @@ class DashboardController extends Controller
             if (Auth::user()->id_admin_ln == 0) {
                 $ambil = DB::table('itdp_admin_dn')->where('id', Auth::user()->id_admin_dn)->first();
                 $type = 'dn';
+				$ct = $ambil->id_country;
             } else {
                 $ambil = DB::table('itdp_admin_ln')->where('id', Auth::user()->id_admin_ln)->first();
                 $type = 'ln';
+				$ct = $ambil->country;
             }
-            $country = $ambil->id_country;
+            $country = $ct;
 
             $member = $this->getMemberPerwakilan($country, $type);
             $inquiry = $this->getInquiryPerwakilan($id_user);
@@ -700,8 +702,15 @@ class DashboardController extends Controller
             $nama = 'Buyer';
             $db = DB::table('mst_country')->where('id',$country)->first();
             if($db){
+				/*
                 $db = DB::table('mst_country')->where('mst_country_group_id',$db->mst_country_group_id)->get();
                 $country = [];
+                foreach ($db as $key => $value) {
+                    array_push($country, $value->id);
+                }
+				*/
+				$db = DB::table('mst_country')->where('id',$country)->get();
+				$country = [];
                 foreach ($db as $key => $value) {
                     array_push($country, $value->id);
                 }

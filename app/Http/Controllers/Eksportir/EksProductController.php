@@ -38,6 +38,17 @@ class EksProductController extends Controller
             return redirect('/home');
         }
     }
+	
+	public function product_unverif()
+    {
+        $pageTitle = "Product Unverification";
+        if(Auth::user()){
+            $id_profil = 0;
+            return view('eksportir.eksproduct.index_admin_un', compact('pageTitle', 'id_profil'));
+        }else{
+            return redirect('/home');
+        }
+    }
 
     public function datanya()
     {
@@ -122,6 +133,109 @@ class EksProductController extends Controller
             ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
             ->where('itdp_company_users.status', 1)
             ->where('itdp_company_users.id_profil', $id)
+            ->orderBy('csc_product_single.created_at', 'DESC')
+//            ->orderBy('csc_product_single.id_itdp_company_user', 'ASC')
+            ->get();
+
+            return \Yajra\DataTables\DataTables::of($user)
+            ->addIndexColumn()
+            ->addColumn('prodname_en', function ($mjl) {
+                
+                return '<div align="left">'.$mjl->prodname_en.'</div>';
+            })
+			->addColumn('information', function ($mjl) {
+                $ket = "-";
+                if($mjl->status == 2 || $mjl->status == 3){
+                    if($mjl->keterangan != NULL){
+                        $ket = $mjl->keterangan;
+                    }
+                }
+
+                return $ket;
+            })
+            ->addColumn('product_description', function ($mjl) {
+                if($mjl->product_description_en != NULL){
+                    $num_char = 70;
+                    $text = $mjl->product_description_en;
+                    if(strlen($text) > 70){
+                        $cut_text = substr($text, 0, $num_char);
+                        if ($text{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
+                            $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
+                            $cut_text = substr($text, 0, $new_pos);
+                        }
+                        return $cut_text . '...';
+                    }else{
+                        return $text;
+                    }
+                }else{
+                    return "";
+                }
+            })
+            ->addColumn('company_name', function ($mjl) {
+                $name = "";
+                if($mjl->id_itdp_company_user != NULL){
+                    $companynya = DB::table('itdp_company_users')
+                        ->where('id', $mjl->id_itdp_company_user)
+                        ->first();
+                    if($companynya){
+                        $profiles = DB::table('itdp_profil_eks')->where('id', $companynya->id_profil)->first();
+                        if($profiles){
+                            $name = $profiles->company;
+                        }
+                    }
+                }
+                return $name;
+            })
+            ->addColumn('status', function ($mjl) {
+                if($mjl->status == 1){
+                    return "Publish - Not Verified";
+                }else if($mjl->status == 2){
+                    return "Publish - Verified";
+                }else if($mjl->status == 3){
+                    return "Publish - Verification Rejected";
+                }else if($mjl->status == 9){
+                        return "Unpublish - Verified";
+                }else{
+                    return "Hide";
+                }
+            })
+            ->addColumn('action', function ($mjl) {
+                if($mjl->status == 1){
+                    return '
+                    <center>
+                    <a href="' . route('eksproduct.verifikasi', $mjl->id) . '" class="btn btn-sm btn-success" title="Verification">
+                        <i class="fa fa-check text-white"></i>
+                    </a>
+                    <a href="' . route('eksproduct.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                        <i class="fa fa-eye text-white"></i>
+                    </a>
+                    </center>
+                    ';
+                }else{
+                    return '
+                    <center>
+                    <a href="' . route('eksproduct.view', $mjl->id) . '" class="btn btn-sm btn-info" title="View">
+                        <i class="fa fa-eye text-white"></i>
+                    </a>
+                    </center>
+                    ';
+                }
+
+            })
+            ->rawColumns(['action', 'product_description','prodname_en'])
+            ->make(true);
+        }
+    }
+
+	public function datanya_admin_un($id)
+    {
+        if(Auth::user()){
+           //  $id_user = Auth::user()->id;
+            $user = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('csc_product_single.status', 1)
+            // ->where('itdp_company_users.id_profil', $id)
             ->orderBy('csc_product_single.created_at', 'DESC')
 //            ->orderBy('csc_product_single.id_itdp_company_user', 'ASC')
             ->get();

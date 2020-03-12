@@ -48,6 +48,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	Route::post('list_br_chat', 'Api\Admin\ManagementController@list_br_chat');
 	Route::post('br_admin_save', 'Api\Admin\ManagementController@br_admin_save');
 	Route::post('bc_admin', 'Api\Admin\ManagementController@bc_admin');
+	Route::post('bc_verif', 'Api\Admin\ManagementController@bc_verif');
 	
 	//Inquiry 
 	Route::get('list_inquiry_admin', 'Api\Admin\InquiryController@list_inquiry_admin');
