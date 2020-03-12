@@ -717,12 +717,16 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
     } 
 ); */
 $(document).ready(function(){
+	var con = document.getElementById("fg1");
+	con.scrollTop = con.scrollHeight;
     setInterval(function() {
         x = <?php echo $id; ?>;
 		y = <?php echo $idb; ?>;
 		var token = $('meta[name="csrf-token"]').attr('content');
 		$.get('{{URL::to("refreshchat/")}}/'+x+'/'+y,{_token:token},function(data){
 			$('#rchat').html(data)
+			var con = document.getElementById("fg1");
+			con.scrollTop = con.scrollHeight;
 			 });
 	}, 2000);
 	/*
@@ -890,8 +894,8 @@ function openCity(evt, cityName) {
 						</div>
                       </div>
                     </div>
-                    <div class="chat-body">
-                      <div class="row" id="rchat">
+                    <div class="chat-body" id="fg1">
+                      <div class="row" id="rchat" >
                         <?php
                           $datenya = NULL;
                         ?>

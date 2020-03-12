@@ -143,7 +143,7 @@
 						</div>
                       </div>
                     </div>
-                    <div class="chat-body">
+                    <div class="chat-body" id="fg1">
                       <div class="row">
                         <?php
                           $datenya = NULL;
@@ -352,6 +352,8 @@
 @include('frontend.layouts.footer')
 <script type="text/javascript">
     $(document).ready(function(){
+		var con = document.getElementById("fg1");
+	con.scrollTop = con.scrollHeight;
         //Click Image
         $("#uploading2").click(function() {
             // $("input[id='upload_file2']").click();
