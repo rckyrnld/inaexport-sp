@@ -88,12 +88,6 @@
 										$ca = DB::select("select * from itdp_company_users where id='$idb' limit 1");
 										foreach($ca as $rhj){
 										?>
-											@if ($message = Session::get('warning'))
-												<div class="alert alert-warning alert-block" style="text-align: center;color: white;">
-													<button type="button" class="close" data-dismiss="alert">×</button>
-													<strong>{{ $message }}</strong>
-												</div>
-											@endif
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-row">
