@@ -53,6 +53,7 @@ class ResearchCornerController extends Controller
                 }
             }
 
+            //untuk ambil data yang udah dia download
             $tambahan = DB::table('csc_download_research_corner')->where('id_itdp_profil_eks', $id_profil)->get();
             foreach ($tambahan as $key) {
                 if (!in_array($key->id_research_corner, $array_research)) {
@@ -60,6 +61,7 @@ class ResearchCornerController extends Controller
                 }
             }
 
+            //untuk ambil data yang udah dia terima lewat broadcast
             $research = DB::table('csc_broadcast_research_corner as a')->join('csc_research_corner as b', 'a.id_research_corner', '=', 'b.id')
                 ->whereIn('a.id_categori_product', $array_kategori)
                 ->orWhereIn('a.id_research_corner', $array_research)
@@ -68,6 +70,37 @@ class ResearchCornerController extends Controller
                 ->distinct('a.id_research_corner')
                 ->select('b.*','a.created_at','a.id_research_corner')
                 ->get();
+
+            $array_res = array();
+            $array_exist = array();
+            $array_end = array();
+            //untuk masukin data $research ke array_res
+            foreach ($research as $rese){
+                array_push($array_res, $rese->id);
+            }
+
+            //untuk ngepush data $research yang udah ada di $array_res ke array_research
+            foreach ($array_res as $next){
+                if (!in_array($next, $array_research)) {
+                    array_push($array_research, $next);
+                }
+            }
+
+            //untuk ngecek yang ada ditable csc_research_corner apa aja. mencegah nampilin research corner yang udah dihapus
+            $exist = DB::table('csc_research_corner')->where('exum','!=',null)->where('id','!=',null)->get();
+            foreach ($exist as $exi){
+                array_push($array_exist,$exi->id);
+            }
+
+            //diseleksi disini, supaya research corner yang udah dihapus, gak ada di array lagi
+            foreach ($array_research as $key) {
+                if (!in_array($key, $array_exist)) {
+
+                }else{
+                    array_push($array_end, $key);
+                }
+            }
+//            dd($array_end);
 
 //            $research = DB::table('csc_research_corner')
 //                ->whereIn('a.id_categori_product', $array_kategori)
@@ -78,39 +111,66 @@ class ResearchCornerController extends Controller
 //                ->select('b.*','a.created_at','a.id_research_corner')
 //                ->get();
 
-            return \Yajra\DataTables\DataTables::of($research)
+            return \Yajra\DataTables\DataTables::of($array_end)
                 ->addIndexColumn()
 				->addColumn('title_en', function ($value) {
-            
-					  return '<div align="left">'.$value->title_en.'</div>';
+
+				    $title = DB::table('csc_research_corner')->where('id',$value)->select('title_en')->first();
+				    if($title == null){
+
+                    }else{
+//				        dd($title);
+                        return '<div align="left">'.$title->title_en.'</div>';
+                    }
+
 					
 				  })
                 ->addColumn('country', function ($value) {
-                    $data = DB::table('mst_country')->where('id', $value->id_mst_country)->first();
-                    return $data->country;
+                    $title = DB::table('csc_research_corner')->where('id',$value)->select('id_mst_country')->first();
+                    if($title == null){
+
+                    }else{
+                        $data = DB::table('mst_country')->where('id', $title->id_mst_country)->first();
+                        return $data->country;
+                    }
                 })
                 ->addColumn('type', function ($value) {
-                    $data = DB::table('csc_research_type')->where('id', $value->id_csc_research_type)->first();
-                    return $data->nama_en;
+                    $title = DB::table('csc_research_corner')->where('id',$value)->select('id_csc_research_type')->first();
+                    if($title == null){
+
+                    }else {
+                        $data = DB::table('csc_research_type')->where('id', $title->id_csc_research_type)->first();
+                        return $data->nama_en;
+                    }
                 })
-                ->addColumn('date', function ($data) {
-                    return getTanggalIndo(date('Y-m-d', strtotime($data->publish_date))) . ' ( ' . date('H:i', strtotime($data->publish_date)) . ' )';
+                ->addColumn('date', function ($value) {
+                    $title = DB::table('csc_research_corner')->where('id',$value)->select('publish_date')->first();
+                    if($title == null){
+
+                    }else {
+                        return getTanggalIndo(date('Y-m-d', strtotime($title->publish_date))) . ' ( ' . date('H:i', strtotime($title->publish_date)) . ' )';
+                    }
                 })
-                ->addColumn('action', function ($data) {
+                ->addColumn('action', function ($value) {
+                    $title = DB::table('csc_research_corner')->where('id',$value)->select('id','exum')->first();
+                    if($title == null){
+
+                    }else {
                     $id_profil = Auth::guard('eksmp')->user()->id_profil;
                     $download = DB::table('csc_download_research_corner')
-                        ->where('id_research_corner', $data->id)
+                        ->where('id_research_corner', $value)
                         ->where('id_itdp_profil_eks', $id_profil)
                         ->first();
                     if ($download) {
                         return '<center>
-                      <a href="' . route("research-corner.view", $data->id) . '" style="" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye"></i></a>
+                      <a href="' . route("research-corner.view", $title->id) . '" style="" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye"></i></a>
                       </center>';
                     } else {
                         return '<center>
-                      <a href="' . url('/') . '/uploads/Research Corner/File/' . $data->exum . '" style="" onclick="cek_download(' . $data->id . ', event, this)" class="btn btn-sm btn-warning text-white" title="Download"><i class="fa fa-download"></i></a>&nbsp;&nbsp;
-                      <a href="' . route("research-corner.view", $data->id) . '" style="" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye"></i></a>
+                      <a href="' . url('/') . '/uploads/Research Corner/File/' . $title->exum . '" style="" onclick="cek_download(' . $title->id . ', event, this)" class="btn btn-sm btn-warning text-white" title="Download"><i class="fa fa-download"></i></a>&nbsp;&nbsp;
+                      <a href="' . route("research-corner.view", $title->id) . '" style="" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye"></i></a>
                       </center>';
+                    }
                     }
                 })
                 ->rawColumns(['action','title_en'])

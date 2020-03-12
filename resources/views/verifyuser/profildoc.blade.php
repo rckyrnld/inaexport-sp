@@ -99,7 +99,7 @@
 										</div>
 										<div class="form-row">
 											<div class="form-group col-sm-3">
-												<label><b><font color="red">(*)</font> Upload NPWP</b></label>
+												<label><b><font color="red">(*)</font> Dokumen NPWP</b></label>
 											</div>
 											<div class="form-group col-sm-4">
 												<?php
@@ -136,7 +136,7 @@
 										</div>
 										<div class="form-row">
 											<div class="form-group col-sm-3">
-												<label><b> Upload Tanda Daftar Perusahaan</b></label>
+												<label><b> Dokumen Tanda Daftar Perusahaan</b></label>
 											</div>
 											<div class="form-group col-sm-4">
 
@@ -173,7 +173,7 @@
 										</div>
 										<div class="form-row">
 											<div class="form-group col-sm-3">
-												<label><b> Upload Surat Izin Usaha Perdagangan</b></label>
+												<label><b> Dokumen Surat Izin Usaha Perdagangan</b></label>
 											</div>
 											<div class="form-group col-sm-4">
 

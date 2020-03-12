@@ -826,7 +826,20 @@ Route::get('/hapus-catper/{id}', 'Master\CatperController@hapus');
 Route::get('/type', 'VerifyuserController@type')->name('admin.perwakilan.type');
 
 Route::get('/qrcode','VerifyuserController@qrcode')->name('eksportir.qrcode');
+
 //Rekap Anggota
 Route::get('/rekap-anggota', 'RekapAnggotaController@index');
 Route::get('/rekapanggota.getanggota', 'RekapAnggotaController@getData')->name('rekapang.getData');
+//print csv
+Route::get('/cetakra','RekapAnggotaController@cetakcsv')->name('cetakra.printcsv');
+
+//Rekap Research Corner
+Route::get('/rekap-rc', 'RekaprcController@index');
+Route::get('/rekaprc.getdata1', 'RekaprcController@getData1')->name('rekaprc1.getData');
+Route::get('/rekaprc.getdata2', 'RekaprcController@getData2')->name('rekaprc2.getData');
+//print csv
+Route::get('/cetakrc1','RekaprcController@cetakcsv1')->name('cetakrc1.printcsv');
+Route::get('/cetakrc2','RekaprcController@cetakcsv2')->name('cetakrc2.printcsv');
+
+
 //end mindy

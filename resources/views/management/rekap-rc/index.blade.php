@@ -15,7 +15,7 @@
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-header bg-light">
-                    <h5><i></i> Member Recapitulation</h5>
+                    <h5><i></i> Research Corner Recapitulation</h5>
                 </div>
 
                 <div class="box-body bg-light">
@@ -31,54 +31,48 @@
                             <strong>{{ $message }}</strong>
                         </div>
                     @endif
-{{--                        <br>--}}
-{{--                        <div class="row">--}}
-{{--                            <div class="col-md-11"></div>--}}
-
-{{--                        </div>--}}
-{{--                        <br>--}}
-{{--                	<a id="tambah" href="{{route('management.category-product.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>--}}
-                    <div class="container" style="border: 1px solid black; padding-top: 1rem">
-                        <div class="form-group row">
-                            <br>
-                            <div class="col-md-3" >
-                                <select id="tipe" class="form-control select2" required>
-                                    <option value="0"> -- Choose user type --</option>
-                                    <option value="2">Indonesian Exporter</option>
-                                    <option value="3">Buyer</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3" >
-                                <input type="text" class="form-control" id="tanggal_awal" placeholder="Register Date From" style="background-color: white;" readonly required>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" class="form-control" id="tanggal_akhir" placeholder="Register Date Until" style="background-color: white;" readonly required>
-                            </div>
-                            <div class="col-md-1">
-                                <button id="click" onclick="clicksend()" class="btn btn-info"> Send </button>
-                            </div>
-                            <div class="col-md-1" id="divcetakra" style="display: none">
-                                <button class="btn btn-primary" id="cetakra">Print XLX</button>
-                            </div>
-                        </div>
-
-                    </div>
-
-{{--                        <button class="btn" type="button" data-toggle="modal" data-target="#modal-show">   <i class="fa fa-hashtag"></i>  Setting Show   </button>--}}
                     <div class="col-md-14"><br>
+                        <h3 style="text-align: center">Based on Research Corner Title</h3>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-11"></div>
+                            <div class="col-md-1"><button class="btn btn-primary" id="cetakrc">Print XLX</button></div>
+                        </div>
+                        <br>
 		          	 <div class="table-responsive">
-					    <table id="table" class="table table-bordered table-striped" style="display: none" data-plugin="dataTable">
+					    <table id="tablerc" class="table table-bordered table-striped" style="/*display: none*/" data-plugin="dataTable">
 					      <thead class="text-white" style="background-color: #1089ff;">
 					          <tr>
 					              <th>No</th>
-					              <th>Company Name</th>
-					              <th>Register Date</th>
-					              <th>Verification Date</th>
+					              <th>Research Corner</th>
+					              <th>Download</th>
 					          </tr>
 					      </thead>
 					    </table>
 					  </div>
       	  			</div>
+
+                        <br><br>
+                    <div class="col-md-14"><br>
+                        <h3 style="text-align: center">Based on Company</h3>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-11"></div>
+                            <div class="col-md-1"><button class="btn btn-primary" id="cetakcomp">Print XLX</button></div>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table id="tablecomp" class="table table-bordered table-striped" style="/*display: none*/" data-plugin="dataTable">
+                                <thead class="text-white" style="background-color: #1089ff;">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Company Name</th>
+                                    <th>Download</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,10 +102,112 @@
         });
     });
 	$(document).ready(function () {
-        $('#cetakra').on('click', function (e) {
-            console.log('ke klik');
-            window.location.href = "{{route('cetakra.printcsv')}}?tipe=" + $('#tipe').val() + "&start=" + $('#tanggal_awal').val() + "&end=" + $('#tanggal_akhir').val();
+
+        var table = $('#tablerc').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "retrieve": true,
+            "ajax": {
+                "url": '{!! route('rekaprc1.getData') !!}',
+                "dataType": "json",
+                "type": "GET",
+                "data": function (data) {
+                    data._token = '{{csrf_token()}}';
+                    // data.tipe = $('#tipe').val();
+                    // data.tanggalawal = $('#tanggal_awal').val();
+                    // data.tanggalakhir = $('#tanggal_akhir').val();
+                }
+                {{--{_token: '{{csrf_token()}}', _id:$('#tahun').val(),_status : $('#status').val()}--}}
+            },
+            "columns": [
+                {data: 'no'},
+                {data: 'rc'},
+                {data: 'download'},
+            ],
+            language: {
+                processing: "Sedang memproses...",
+                lengthMenu: "Tampilkan _MENU_ entri",
+                zeroRecords: "Tidak ditemukan data yang sesuai",
+                emptyTable: "Tidak ada data yang tersedia pada tabel ini",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                infoEmpty: "Menampilkan 0 sampai 0 dari 0 entri",
+                infoFiltered: "(disaring dari _MAX_ entri keseluruhan)",
+                infoPostFix: "",
+                search: "Cari:",
+                url: "",
+                infoThousands: ".",
+                loadingRecords: "Sedang memproses...",
+                paginate: {
+                    first: "<<",
+                    last: ">>",
+                    next: "Selanjutnya",
+                    previous: "Sebelum"
+                },
+                aria: {
+                    sortAscending: ": Aktifkan untuk mengurutkan kolom naik",
+                    sortDescending: ": Aktifkan untuk mengurutkan kolom menurun"
+                }
+            }
         });
+
+        var table2 = $('#tablecomp').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "retrieve": true,
+            "ajax": {
+                "url": '{!! route('rekaprc2.getData') !!}',
+                "dataType": "json",
+                "type": "GET",
+                "data": function (data) {
+                    data._token = '{{csrf_token()}}';
+                }
+                {{--{_token: '{{csrf_token()}}', _id:$('#tahun').val(),_status : $('#status').val()}--}}
+            },
+            "columns": [
+                {data: 'no'},
+                {data: 'company'},
+                {data: 'download'},
+            ],
+            language: {
+                processing: "Sedang memproses...",
+                lengthMenu: "Tampilkan _MENU_ entri",
+                zeroRecords: "Tidak ditemukan data yang sesuai",
+                emptyTable: "Tidak ada data yang tersedia pada tabel ini",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                infoEmpty: "Menampilkan 0 sampai 0 dari 0 entri",
+                infoFiltered: "(disaring dari _MAX_ entri keseluruhan)",
+                infoPostFix: "",
+                search: "Cari:",
+                url: "",
+                infoThousands: ".",
+                loadingRecords: "Sedang memproses...",
+                paginate: {
+                    first: "<<",
+                    last: ">>",
+                    next: "Selanjutnya",
+                    previous: "Sebelum"
+                },
+                aria: {
+                    sortAscending: ": Aktifkan untuk mengurutkan kolom naik",
+                    sortDescending: ": Aktifkan untuk mengurutkan kolom menurun"
+                }
+            }
+        });
+
+        $('#cetakrc').on('click', function (e) {
+            console.log('ke klik');
+            window.location.href = "{{route('cetakrc1.printcsv')}}";
+        });
+
+        $('#cetakcomp').on('click', function (e) {
+            console.log('ke klik');
+            window.location.href = "{{route('cetakrc2.printcsv')}}";
+        });
+
+        {{--$('#btnrc').on('click', function (e) {--}}
+        {{--    console.log('ke klik');--}}
+        {{--    window.location.href = "{{route('cetakrc1.printcsv')}}";--}}
+        {{--});--}}
 
         $('#cat1').select2({
           placeholder: 'Select Category'
@@ -152,7 +248,6 @@
 
         if(tipe != 0 && tanggal_awal != null && tanggal_akhir != null){
            document.getElementById('table').removeAttribute("style");
-           document.getElementById('divcetakra').removeAttribute("style");
             $("#table").dataTable().fnDestroy()
             var table = $('#table').DataTable({
                 "processing": true,
