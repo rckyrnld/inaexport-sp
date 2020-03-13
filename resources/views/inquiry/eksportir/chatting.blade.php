@@ -292,11 +292,20 @@
                         @if( $inquiry->status != 4 && $inquiry->status != 5)
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="text" class="form-control" name="messages" value="" id="messages" autocomplete="off">
-                                    <input type="hidden" name="type" id="type" value="{{$inquiry->type}}">
-                                    <input type="hidden" name="id_inquiry" id="id_inquiry" value="{{$inquiry->id}}">
-                                    <input type="hidden" name="sender" id="sender" value="{{$id_user}}">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="messages" value="" id="messages" autocomplete="off">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalFile" style="border-color: rgba(120, 130, 140, 0.5);">
+                                                <img src="{{asset('image/paperclip.png')}}" width="20px">
+                                            </button>
+                                        </div>
+    {{--                                    <i class="fa fa-paperclip" id="uploading" style="font-size:24px; display:inline-flex;"></i>--}}
+
+                                        <input type="hidden" name="type" id="type" value="{{$inquiry->type}}">
+                                        <input type="hidden" name="id_inquiry" id="id_inquiry" value="{{$inquiry->id}}">
+                                        <input type="hidden" name="sender" id="sender" value="{{$id_user}}">
                                         <input type="hidden" name="receiver" id="receiver" value="{{$inquiry->id_pembuat}}">
+                                    </div>
                                 </div>
                                 <div class="col-md-2 pull-right">
                                 </div>
@@ -306,11 +315,18 @@
                         @if($broadcast->status != 4 && $broadcast->status != 5)
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="text" class="form-control" name="messages" value="" id="messages" autocomplete="off">
-                                    <input type="hidden" name="type" id="type" value="{{$inquiry->type}}">
-                                    <input type="hidden" name="id_inquiry" id="id_inquiry" value="{{$inquiry->id}}">
-                                    <input type="hidden" name="sender" id="sender" value="{{$id_user}}">
-                                    <input type="hidden" name="receiver" id="receiver" value="{{$inquiry->id_pembuat}}">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="messages" value="" id="messages" autocomplete="off">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalFile" style="border-color: rgba(120, 130, 140, 0.5);">
+                                                <img src="{{asset('image/paperclip.png')}}" width="20px">
+                                            </button>
+                                        </div>
+                                        <input type="hidden" name="type" id="type" value="{{$inquiry->type}}">
+                                        <input type="hidden" name="id_inquiry" id="id_inquiry" value="{{$inquiry->id}}">
+                                        <input type="hidden" name="sender" id="sender" value="{{$id_user}}">
+                                        <input type="hidden" name="receiver" id="receiver" value="{{$inquiry->id_pembuat}}">
+                                    </div>
                                 </div>
                                 <div class="col-md-2 pull-right">
                                 </div>
@@ -363,6 +379,45 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalFile" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Upload File</h6>
+                <button type="button" class="closedmodal" data-dismiss="modal">&times;</button>
+            </div>
+            <form action="{{route('eksportir.inquiry.fileChat')}}" method="post" enctype="multipart/form-data" id="uploadform2">
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-sm-3">
+                            <label><b>File Upload</b></label>
+                        </div>
+                        <div class="form-group col-sm-7">
+                            <input type="hidden" name="sender" id="sender" value="{{$id_user}}">
+                            <input type="hidden" name="id_inquiry" id="id_inquiry" value="{{$inquiry->id}}">
+                            <input type="hidden" name="type" id="type" value="{{$inquiry->type}}">
+                            <input type="hidden" name="receiver" id="receiver" value="{{$inquiry->id_pembuat}}">
+                            <input type="hidden" name="statusmsg" id="statusmsg" value="{{$inquiry->status}}">
+                            <input type="file" id="upload_file" name="upload_file">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-3">
+                            <label><b>Note</b></label>
+                        </div>
+                        <div class="form-group col-sm-7">
+                            <textarea class="form-control" name="msgfile2" id="msgfile2"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"><font color="white">Upload</font></button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @include('footer')
 <script>
@@ -374,14 +429,19 @@
         //     $("input[id='upload_file']").click();
         // });
 
-        //Upload File
-        // $("#upload_file").on('change', function () {
-        //     if (this.value != "") {
-        //         $('#uploadform').submit();
-        //     } else {
-        //         alert('The file cannot be uploaded');
-        //     }
-        // });
+        $("#uploading").click(function() {
+            // $("input[id='upload_file2']").click();
+            $('#modalFile').modal('show');
+        });
+
+        // Upload File
+        $("#upload_file").on('change', function () {
+            if (this.value != "") {
+                $('#uploadform').submit();
+            } else {
+                alert('The file cannot be uploaded');
+            }
+        });
 
         //Send Message
         $('#messages').keypress(function (event) {

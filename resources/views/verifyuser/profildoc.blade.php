@@ -85,20 +85,41 @@
 										?>
 										<?php foreach($ceq as $ryu){ ?>
 										<input type="hidden" name="idu" value="<?php echo $ryu->id; ?>">
-										<div class="form-row">
-											<div class="form-group col-sm-3">
+
+											@if ($message = Session::get('warning'))
+												<div class="alert alert-warning alert-block" style="text-align: center;color: white;">
+													<button type="button" class="close" data-dismiss="alert">×</button>
+													<strong>{{ $message }}</strong>
+												</div>
+											@endif
+
+{{--										<div class="form-row">--}}
+{{--											<div class="form-group col-sm-4">--}}
+{{--											</div>--}}
+{{--											<div class="form-group col-sm-4">--}}
+{{--												--}}
+{{--											</div>--}}
+
+{{--										</div>--}}
+											<div class="form-row">
+											<div class="form-group col-sm-4">
 												<label><b><font color="red">(*)</font> NPWP</b></label>
 											</div>
 											<div class="form-group col-sm-4">
-												<input type="text" value="<?php echo $ryu->npwp; ?>" name="npwp" id="npwp" onkeyup="ceknpwp()" class="form-control" >
+												<input type="text" placeholder="Number Only(without dot)" value="<?php echo $ryu->npwp; ?>" name="npwp" id="npwp" onkeyup="ceknpwp()" class="form-control" >
+												<label><font color="red">number only(without dot)</font></label>
 											</div>
 
-											<div class="form-group col-sm-4 vld">
-												<font color="red">Not Valid</font><!-- <input type="text" readonly value="" placeholder="Name of NPWP" name="nanpwp" id="nanpwp" class="form-control" > -->
+											<div class="form-group col-sm-3 vld">
+												@if($ryu->npwp != 'null')
+													<font color="green">Valid</font>
+												@else
+													<font color="red">Not Valid</font><!-- <input type="text" readonly value="" placeholder="Name of NPWP" name="nanpwp" id="nanpwp" class="form-control" > -->
+												@endif
 											</div>
 										</div>
 										<div class="form-row">
-											<div class="form-group col-sm-3">
+											<div class="form-group col-sm-4">
 												<label><b><font color="red">(*)</font> Dokumen NPWP</b></label>
 											</div>
 											<div class="form-group col-sm-4">
@@ -125,8 +146,8 @@
 
 										</div>
 										<div class="form-row">
-											<div class="form-group col-sm-3">
-												<label><b>Tanda Daftar Perusahaan</b></label>
+											<div class="form-group col-sm-4">
+												<label><b>Tanda Daftar Perusahaan / Nomor Induk Berusaha</b></label>
 											</div>
 											<div class="form-group col-sm-4">
 												<input type="text" value="<?php echo $ryu->tdp; ?>" name="tanda_daftar" id="tanda_daftar" class="form-control" >
@@ -135,7 +156,7 @@
 
 										</div>
 										<div class="form-row">
-											<div class="form-group col-sm-3">
+											<div class="form-group col-sm-4">
 												<label><b> Dokumen Tanda Daftar Perusahaan</b></label>
 											</div>
 											<div class="form-group col-sm-4">
@@ -161,7 +182,7 @@
 
 										</div>
 										<div class="form-row">
-											<div class="form-group col-sm-3">
+											<div class="form-group col-sm-4">
 												<label><b>Surat Izin Usaha Perdagangan</b></label>
 											</div>
 											<div class="form-group col-sm-4">
@@ -172,7 +193,7 @@
 
 										</div>
 										<div class="form-row">
-											<div class="form-group col-sm-3">
+											<div class="form-group col-sm-4">
 												<label><b> Dokumen Surat Izin Usaha Perdagangan</b></label>
 											</div>
 											<div class="form-group col-sm-4">
@@ -198,7 +219,7 @@
 
 										</div>
 										<div class="form-row">
-											<div class="form-group col-sm-3">
+											<div class="form-group col-sm-4">
 												<label><b>Surat Izin Tanda Usaha</b></label>
 											</div>
 											<div class="form-group col-sm-4">
@@ -208,27 +229,50 @@
 
 										</div>
 										<div class="form-row">
-											<div class="form-group col-sm-3">
+											<div class="form-group col-sm-4">
 												<label><b>Scoope of Business</b></label>
 											</div>
 											<div class="form-group col-sm-4">
-												<input type="text" value="<?php echo $ryu->id_eks_business_size; ?>" name="scoope" id="scoope" class="form-control" >
+												<select name="scoope" id="scoope" class="form-control" onchange="Scoope(this)">
+													<option>-</option>
+												<?php
+													$sob = DB::select("select * from eks_business_size");
+													foreach($sob as $val){
+												?>
+													<option <?php if($ryu->id_eks_business_size == $val->id){ echo "selected"; } ?> value="<?php echo $val->id; ?>"><?php echo $val->nmsize; ?></option>
+													<?php } ?>
+												</select>
+
+											</div>
+											<div class="form-group col-sm-4">
+													<input type="text" id="scoope_in" class="form-control" readonly value="{{$ryu->id_eks_business_size == null ? "" : SOB($ryu->id_eks_business_size)}}">
 											</div>
 
 
 										</div>
 										<div class="form-row">
-											<div class="form-group col-sm-3">
+											<div class="form-group col-sm-4">
 												<label><b>Type of Business</b></label>
 											</div>
 											<div class="form-group col-sm-4">
-												<input type="text" value="<?php echo $ryu->id_business_role_id; ?>" name="tob" id="tob" class="form-control" >
+												<select name="tob" id="tob" class="form-control" onchange="TOB(this)">
+													<option>-</option>
+													<?php
+													$tob = DB::select("select * from eks_business_role");
+													foreach($tob as $val){
+													?>
+													<option <?php if($ryu->id_business_role_id == $val->id){ echo "selected"; } ?> value="<?php echo $val->id; ?>"><?php echo $val->nmtype; ?></option>
+													<?php } ?>
+												</select>
+											</div>
+											<div class="form-group col-sm-4">
+												<input type="text" id="tob_in" class="form-control" readonly value="{{$ryu->id_business_role_id == null ? "" : TOB($ryu->id_business_role_id)}}">
 											</div>
 
 
 										</div>
 										<div class="form-row">
-											<div class="form-group col-sm-3">
+											<div class="form-group col-sm-4">
 												<label><b>Employee</b></label>
 											</div>
 											<div class="form-group col-sm-4">
@@ -238,7 +282,7 @@
 
 										</div>
 										<div class="form-row">
-											<div class="form-group col-sm-3">
+											<div class="form-group col-sm-4">
 												<label><b>
 														<?php
 														if(empty(Auth::user()->name)){ echo "Document"; }else{ echo "File Upload from Exporter"; } ?>
@@ -264,7 +308,7 @@
 
 										</div>
 										<div class="form-row">
-											<div class="form-group col-sm-3">
+											<div class="form-group col-sm-4">
 												<label><b>Status Exporter</b></label>
 											</div>
 											<div class="form-group col-sm-4">
@@ -394,6 +438,7 @@
 </div>
 
 <script>
+
 	$('.upload1').on('change', function(evt){
 		var size = this.files[0].size;
 		if(size > 5000000){
@@ -405,6 +450,26 @@
 
 		}
 	})
+
+	function Scoope(obj){
+		csrf_token = '{{ csrf_token() }}';
+		val = $(obj).val();
+		$('#scoope_in').val('');
+			$.post("{{ route('getscoope') }}", {'_token':csrf_token, 'id':val}, function(response){
+				res = JSON.parse(response);
+				$('#scoope_in').val(res.nmsize_ind);
+			});
+	}
+
+	function TOB(obj){
+		csrf_token = '{{ csrf_token() }}';
+		val = $(obj).val();
+		$('#tob_in').val('');
+		$.post("{{ route('gettob') }}", {'_token':csrf_token, 'id':val}, function(response){
+			res = JSON.parse(response);
+			$('#tob_in').val(res.nmtype_ind);
+		});
+	}
 </script>
 
 @include('footer')

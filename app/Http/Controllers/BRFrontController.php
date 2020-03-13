@@ -113,8 +113,13 @@ class BRFrontController extends Controller
 	
 	public function br_importir_chat($id,$idb)
     {
-        $pageTitle = "Chat Buying Request Importer";
-        return view('buying-request.br_importir_chat',compact('pageTitle','id','idb'));
+        if(!empty(auth::guard('eksmp')->user)){
+            $pageTitle = "Chat Buying Request Importer";
+            return view('buying-request.br_importir_chat',compact('pageTitle','id','idb'));
+        }else{
+            return redirect('login');
+        }
+
     }
 	
 	public function br_importir_lc($id)
@@ -450,6 +455,100 @@ class BRFrontController extends Controller
 			('".$idq."','".$request->catatan."','".$date."','".$request->idc."','".$request->ide."','".$request->idd."','".$idb."','".$file."')");
 			
 			return redirect('br_importir_chat/'.$idq.'/'.$idb);
+	}
+
+	public function uploadpop3(Request $request)
+    {
+			date_default_timezone_set('Asia/Jakarta');
+            $date = date('Y-m-d H:i:s');
+
+			$cari = DB::select("select * from csc_buying_request where id='".$request->idb."'");
+			foreach($cari as $cr1){
+			    $pembuatrole = $cr1->by_role;
+                $data1 = $cr1->id_pembuat;
+			}
+
+			if($pembuatrole == 3){
+			    //pas pembuatnya importer
+                $cari2 = DB::select("select * from itdp_company_users where id='".$data1."'");
+                foreach($cari2 as $cr2){
+                    $data2 = $cr2->email;
+                    $id_profil = $cr2->id_profil;
+                }
+                $ket = "Exporter ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id)." Respond on Chat Buying Request";
+                $it = $request->idb;
+                $it2 = $request->idb."/".$request->idq;
+                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+			('3','".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".getCompanyNameImportir($data1)."','".$data1."','".$ket."','br_importir_chat','".$it2."','".$date."','0')
+			");
+
+                $data2b = [
+                    'email' => $data2,
+                    'type' => "",
+                    'sender' => getCompanyName(Auth::guard('eksmp')->user()->id),
+                    'receiver' => getCompanyNameImportir($data1),
+                    'bur' => getExBadanImportir($data1),
+                    'bu' => getExBadan(Auth::guard('eksmp')->user()->id),
+                    'ida' => $request->idb,
+                    'id' => $request->idq,
+                ];
+
+
+                Mail::send('UM.user.sendbrchateks4', $data2b, function ($mail) use ($data2b) {
+                    $mail->to($data2b['email']);
+                    $mail->subject('Buying Request Chatting Information');
+                });
+
+
+            }else if($pembuatrole == 1 ||$pembuatrole == 4){
+			    $cari2 = DB::select("Select * from itdp_admin_users where id='".$data1."'");
+                foreach($cari2 as $cr2){
+                    $data2 = $cr2->email;
+                    $data3 = $cr2->id_group;
+                    $data4 = $cr2->name;
+                }
+
+                if($data3 == 1){
+                    $role = 1;
+                }else if($data3 == 4){
+                    $role = 4;
+                }
+
+                $ket = "Exporter ".getExBadan(Auth::guard('eksmp')->user()->id).getCompanyName(Auth::guard('eksmp')->user()->id)." Respond on Chat Buying Request";
+                $it = $request->idb;
+                $it2 = $request->idb."/".$request->idq;
+                $insertnotif = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values	
+                    ($role,'".getCompanyName(Auth::guard('eksmp')->user()->id)."','".Auth::guard('eksmp')->user()->id."','".$data4."','".$data1."','".$ket."','br_pw_chat','".$request->idq."','".$date."','0')
+                    ");
+
+                $data2b = [
+                    'email' => $data2,
+                    'type' => "",
+                    'username' => getCompanyName(Auth::guard('eksmp')->user()->id),
+                    'receiver' => $data4,
+                    'bu' => getExBadan(Auth::guard('eksmp')->user()->id),
+                    'id' => $request->idq,
+                ];
+
+
+                Mail::send('UM.user.sendbrchateks', $data2b, function ($mail) use ($data2b) {
+                    $mail->to($data2b['email']);
+                    $mail->subject('Buying Request Chatting Information');
+                });
+            }
+
+            $user= Auth::guard('eksmp')->user()->id;
+			$idq = $request->idq;
+			$idb = $request->idb;
+			$idc = $request->idc;
+			$file = $request->file('filez')->getClientOriginalName();
+			$destinationPath = public_path() . "/uploads/pop";
+			$request->file('filez')->move($destinationPath, $file);
+			$insert = DB::select("
+			insert into csc_buying_request_chat (id_br,pesan,tanggal,id_pengirim,id_role,username_pengirim,id_join,files) values
+			('".$idb."','".$request->catatan."','".$date."',$user,2,'".$request->ide."','".$idq."','".$file."')");
+
+			return redirect('br_chat/'.$idq);
 	}
 	
 	public function uploadpop2(Request $request)

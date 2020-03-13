@@ -1128,4 +1128,17 @@ if ($err) {
 //        QrCode::format('png')->margin(0)->size(100)->generate('tokopedia.com','C:\Users\Programmer-16\Desktop\mindy\dokumen kemendag\backup sementara\event');
 
     }
+
+    public function getscoope(Request $request){
+        $scoope = DB::table('eks_business_size')->where('id', $request->id)->select('nmsize_ind')->first();
+
+        echo json_encode($scoope);
+
+    }
+
+    public function gettob (Request $request){
+        $tob = DB::table('eks_business_role')->where('id', $request->id)->select('nmtype_ind')->first();
+
+        echo json_encode($tob);
+    }
 }
