@@ -1931,4 +1931,89 @@ class ManagementController extends Controller
 		
 		
 	}
+	
+	public function simpanchatadmin(Request $request)
+    {
+//        dd($request);
+        $a = $request->pesan;
+        $id2 = $request->id_br;
+        $id3 = $request->id_role;
+        $id4 = $request->id_user;
+        $id5 = $request->username;
+        $id6 = $request->idb;
+        date_default_timezone_set('Asia/Jakarta');
+        $datenow = date('Y-m-d H:i:s');
+//        $getusername = DB::table('itdp_company_users')
+//            ->where('id', '=', $id5)
+//            ->first()->username;
+
+        $insert = DB::table('csc_buying_request_chat')->insertGetId([
+                'id_br' => $id2,
+                'pesan' => $a,
+                'tanggal' => $datenow,
+                'id_pengirim' => $id4,
+                'id_role' => $id3,
+                'username_pengirim' => $id5,
+                'id_join' => $id6,
+            ]
+        );
+        $user = DB::table('csc_buying_request_chat')
+            ->where('id_br', '=', $id2)
+            ->where('id_join', '=', $id6)
+            ->where('id', '=', $insert)
+            ->get();
+
+        for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->files, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_br"] = $user[$i]->id_br;
+            $jsonResult[$i]["pesan"] = $user[$i]->pesan;
+            $jsonResult[$i]["tanggapan"] = $user[$i]->tanggapan;
+            $jsonResult[$i]["tanggal"] = $user[$i]->tanggal;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
+            $jsonResult[$i]["id_role"] = $user[$i]->id_role;
+            $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop/' . $user[$i]->files) : "";
+            $jsonResult[$i]["id_join"] = $user[$i]->id_join;
+            $jsonResult[$i]["ext"] = $extension;
+
+        }
+        $cari = DB::select("select * from csc_buying_request where id='" . $id2 . "'");
+        foreach ($cari as $aja) {
+            $data1 = $aja->id_pembuat;
+        }
+        $cari2 = DB::select("select * from itdp_company_users where id='" . $data1 . "'");
+        foreach ($cari2 as $aja2) {
+            $data2 = $aja2->email;
+        }
+
+       
+        if ($user) {
+
+            return $jsonResult;
+        } else {
+            $meta = [
+                'code' => 404,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+        }
+
+    }
 }
