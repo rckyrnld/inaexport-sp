@@ -138,6 +138,7 @@ Route::post('/br_importir_update', 'BRFrontController@br_importir_update');
 Route::post('/br_importir_next', 'BRFrontController@br_importir_next');
 Route::post('/uploadpop', 'BRFrontController@uploadpop');
 Route::post('/uploadpop2', 'BRFrontController@uploadpop2');
+Route::post('/uploadpop3', 'BRFrontController@uploadpop3');
 Route::get('/ambilbroad/{id}', 'BRFrontController@ambilbroad');
 Route::get('/ambilbroad2/{id}', 'BRFrontController@ambilbroad2');
 /* Route::get('/registrasi_pembeli/{locale}', function ($locale) {
@@ -841,5 +842,7 @@ Route::get('/rekaprc.getdata2', 'RekaprcController@getData2')->name('rekaprc2.ge
 Route::get('/cetakrc1','RekaprcController@cetakcsv1')->name('cetakrc1.printcsv');
 Route::get('/cetakrc2','RekaprcController@cetakcsv2')->name('cetakrc2.printcsv');
 
+Route::post('/getscoope', 'VerifyuserController@getscoope')->name('getscoope');
+Route::post('/gettob', 'VerifyuserController@gettob')->name('gettob');
 
 //end mindy

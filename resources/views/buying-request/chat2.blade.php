@@ -355,9 +355,9 @@ foreach($q2 as $p2){
                         <input id="inputan" type="text" class="form-control input-sm" placeholder="Type your message here..." />
                         <span class="input-group-btn">
 						<a  class="btn btn-info" data-toggle="modal" data-target="#myModal2">
-                              <font color="white">  <i class="fa fa-paperclip"></i></a>
+                              <font color="white">  <i class="fa fa-paperclip"></i></font></a>
                             <a onclick="kirimchat()" class="btn btn-warning" id="btn-chat">
-                                <i class="fa fa-paper-plane"></i> Send</a></font>
+                               <font color="white"> <i class="fa fa-paper-plane"></i> Send</a></font>
                         </span>
                     </div>
 					

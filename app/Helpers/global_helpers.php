@@ -1222,3 +1222,32 @@ if (! function_exists('optionCategoryNewsletter')) {
         echo $option;
     }
 }
+
+
+if (! function_exists('SOB')) {
+    function SOB($id){
+        $datanya = "-";
+        $data = DB::table('eks_business_size')->where('id', $id)->get();
+        if(count($data) > 0){
+            $datanya = $data[0]->nmsize_ind;
+            return $datanya;
+        }
+        else{
+            return $datanya;
+        }
+    }
+}
+
+if (! function_exists('TOB')) {
+    function TOB($id){
+        $datanya = "-";
+        $data = DB::table('eks_business_role')->where('id', $id)->get();
+        if(count($data) > 0){
+            $datanya = $data[0]->nmtype_ind;
+            return $datanya;
+        }
+        else{
+            return $datanya;
+        }
+    }
+}

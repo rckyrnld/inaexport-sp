@@ -233,7 +233,7 @@
 												<label><b>Scoope of Business</b></label>
 											</div>
 											<div class="form-group col-sm-4">
-												<select name="scoope" id="scoope" class="form-control">
+												<select name="scoope" id="scoope" class="form-control" onchange="Scoope(this)">
 													<option>-</option>
 												<?php
 													$sob = DB::select("select * from eks_business_size");
@@ -244,6 +244,9 @@
 												</select>
 
 											</div>
+											<div class="form-group col-sm-4">
+													<input type="text" id="scoope_in" class="form-control" readonly value="{{$ryu->id_eks_business_size == null ? "" : SOB($ryu->id_eks_business_size)}}">
+											</div>
 
 
 										</div>
@@ -252,7 +255,7 @@
 												<label><b>Type of Business</b></label>
 											</div>
 											<div class="form-group col-sm-4">
-												<select name="tob" id="tob" class="form-control">
+												<select name="tob" id="tob" class="form-control" onchange="TOB(this)">
 													<option>-</option>
 													<?php
 													$tob = DB::select("select * from eks_business_role");
@@ -261,7 +264,9 @@
 													<option <?php if($ryu->id_business_role_id == $val->id){ echo "selected"; } ?> value="<?php echo $val->id; ?>"><?php echo $val->nmtype; ?></option>
 													<?php } ?>
 												</select>
-												<!--<input type="text" value="<?php echo $ryu->id_business_role_id; ?>" name="tob" id="tob" class="form-control" >--!>
+											</div>
+											<div class="form-group col-sm-4">
+												<input type="text" id="tob_in" class="form-control" readonly value="{{$ryu->id_business_role_id == null ? "" : TOB($ryu->id_business_role_id)}}">
 											</div>
 
 
@@ -433,6 +438,7 @@
 </div>
 
 <script>
+
 	$('.upload1').on('change', function(evt){
 		var size = this.files[0].size;
 		if(size > 5000000){
@@ -444,6 +450,26 @@
 
 		}
 	})
+
+	function Scoope(obj){
+		csrf_token = '{{ csrf_token() }}';
+		val = $(obj).val();
+		$('#scoope_in').val('');
+			$.post("{{ route('getscoope') }}", {'_token':csrf_token, 'id':val}, function(response){
+				res = JSON.parse(response);
+				$('#scoope_in').val(res.nmsize_ind);
+			});
+	}
+
+	function TOB(obj){
+		csrf_token = '{{ csrf_token() }}';
+		val = $(obj).val();
+		$('#tob_in').val('');
+		$.post("{{ route('gettob') }}", {'_token':csrf_token, 'id':val}, function(response){
+			res = JSON.parse(response);
+			$('#tob_in').val(res.nmtype_ind);
+		});
+	}
 </script>
 
 @include('footer')
