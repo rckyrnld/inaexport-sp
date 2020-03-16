@@ -867,7 +867,7 @@ class ManagementController extends Controller
 		$buy = DB::table('csc_buying_request_join as a')
                     ->join('itdp_company_users as b', 'b.id', '=', 'a.id_eks')
                     ->join('itdp_profil_eks as c', 'c.id', '=', 'b.id_profil')
-                    ->selectRaw('a.*, a.id as idjoin, b.*, c.*')
+                    ->selectRaw('a.*, a.id as idjoin, b.*, b.id as idx, c.*')
                     ->where('a.id_br', '=', $id_br)
                     //->orderBy('a.created_at', 'DESC')
 					->paginate($limit);
@@ -885,6 +885,7 @@ class ManagementController extends Controller
             
             $jsonResult[$i]["id"] = $buy[$i]->idjoin;
             $jsonResult[$i]["id_br"] = $buy[$i]->id_br;
+			$jsonResult[$i]["foto_profil"] = $path = ($buy[$i]->foto_profil) ? url('uploads/Profile/Eksportir/' . $buy[$i]->idx . '/' . $buy[$i]->foto_profil) : url('image/nia-01-01.jpg');            
             $jsonResult[$i]["date"] = $buy[$i]->date;
             $jsonResult[$i]["expired_at"] = $buy[$i]->expired_at;
             if ($buy[$i]->status_join == 1) {
