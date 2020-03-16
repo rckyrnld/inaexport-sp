@@ -900,6 +900,34 @@ class ManagementController extends Controller
             $jsonResult[$i]["username"] = $buy[$i]->username;
             $jsonResult[$i]["id_profil"] = $buy[$i]->id_profil;
             $jsonResult[$i]["company"] = $buy[$i]->company;
+			$qy1 = DB::select("select pesan,files from csc_buying_request_chat where id_join='".$buy[$i]->idjoin."' order by tanggal desc limit 1");
+			if(count($qy1) == 0){
+				$lc = ".......";
+				$ext = "text";
+			}else{
+				foreach($qy1 as $y1){
+					if($y1->files == null || empty($y1->files) ){
+					$lc = $y1->pesan;
+					$ext = "text";
+					}else{
+					$lc = $y1->files;
+					$ext = pathinfo($y1->files, PATHINFO_EXTENSION);
+					$gbr = ['png', 'jpg', 'jpeg'];
+					$file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+					if (in_array($ext, $gbr)) {
+						$ext = "image";
+					} else if (in_array($ext, $file)) {
+						$ext = "file";
+					} else {
+						$ext = "not identified";
+					}
+					}
+				}
+				
+			}
+            $jsonResult[$i]["last_chat"] = $lc;
+            $jsonResult[$i]["ext"] = $ext;
             
 		}
 
