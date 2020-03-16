@@ -950,7 +950,7 @@ class ManagementController extends Controller
 	public function list_br_chat(Request $request)
     {
 		date_default_timezone_set('Asia/Jakarta');
-        $buy = DB::select("select * from csc_buying_request_chat where id_join='".$request->id_join."' order by tanggal desc");
+        $buy = DB::select("select * from csc_buying_request_chat where id_join=".$request->id_join." order by tanggal desc");
 		//echo count($buy);die();
 
         $jsonResult = array();
