@@ -1937,7 +1937,7 @@ class ManagementController extends Controller
 //        dd($request);
         $a = $request->pesan;
         $id2 = $request->id_br;
-        $id3 = $request->id_role;
+        // $id3 = $request->id_role;
         $id4 = $request->id_user;
         $id5 = $request->username;
         $id6 = $request->idb;
@@ -1952,7 +1952,7 @@ class ManagementController extends Controller
                 'pesan' => $a,
                 'tanggal' => $datenow,
                 'id_pengirim' => $id4,
-                'id_role' => $id3,
+                'id_role' => 1,
                 'username_pengirim' => $id5,
                 'id_join' => $id6,
             ]
@@ -2015,5 +2015,49 @@ class ManagementController extends Controller
             return $res;
         }
 
+    }
+	
+	public function count_br_chat_admin(Request $request)
+    {
+        $id = $request->id;
+        $q1 = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
+        foreach ($q1 as $p) {
+            $id_br = $p->id_br;
+        }
+//        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id_br . "' and id_join='" . $id . "'");
+        $user = DB::table('csc_buying_request_chat')
+            ->where('id_br', '=', $id_br)
+            ->where('id_join', '=', $id)
+            ->orderBy('id', 'desc')
+            ->count();
+
+
+//        dd($jsonResult);
+
+        if ($user) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = [
+                'count' => $user
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+
+        }
     }
 }
