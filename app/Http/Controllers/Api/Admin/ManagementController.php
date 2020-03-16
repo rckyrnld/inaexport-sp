@@ -950,45 +950,53 @@ class ManagementController extends Controller
 	public function list_br_chat(Request $request)
     {
 		date_default_timezone_set('Asia/Jakarta');
-        $buy = DB::select("select * from csc_buying_request_chat where id_join=".$request->id_join." order by tanggal desc");
+        $user = DB::select("select * from csc_buying_request_chat where id_join=".$request->id_join." order by tanggal desc");
 		//echo count($buy);die();
 
         $jsonResult = array();
-        for ($i = 0; $i < count($buy); $i++) {
+        for ($i = 0; $i < count($user); $i++) {
             
-            $jsonResult[$i]["id"] = $buy[$i]->id;
-            $jsonResult[$i]["id_br"] = $buy[$i]->id_br;
-            $jsonResult[$i]["id_join"] = $buy[$i]->id_join;
-            $jsonResult[$i]["date"] = $buy[$i]->tanggal;
-            $jsonResult[$i]["id_pengirim"] = $buy[$i]->id_pengirim;
-            $jsonResult[$i]["id_role"] = $buy[$i]->id_role;
-            $jsonResult[$i]["username_pengirim"] = $buy[$i]->username_pengirim;
-            $jsonResult[$i]["pesan"] = $buy[$i]->pesan;
+           $ext = pathinfo($user[$i]->files, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_br"] = $user[$i]->id_br;
+            $jsonResult[$i]["pesan"] = $user[$i]->pesan;
+            $jsonResult[$i]["tanggapan"] = $user[$i]->tanggapan;
+            $jsonResult[$i]["tanggal"] = $user[$i]->tanggal;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
+            $jsonResult[$i]["id_role"] = $user[$i]->id_role;
+            $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop/' . $user[$i]->files) : "";
+            $jsonResult[$i]["id_join"] = $user[$i]->id_join;
+            $jsonResult[$i]["ext"] = $extension;
             
 		}
 
 
-        if ($buy) {
-
+        if ($jsonResult) {
+            return response($jsonResult);
+        } else {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = $jsonResult;
+
             $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 100,
-                'message' => 'Unauthorized',
-                'status' => 'Failed'
-            ];
-            $data = "";
-            $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = '';
             return $res;
+
         }
 	}
 	
