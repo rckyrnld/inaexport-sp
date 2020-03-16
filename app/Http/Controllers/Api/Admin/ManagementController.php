@@ -917,11 +917,11 @@ class ManagementController extends Controller
 					$file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
 
 					if (in_array($ext, $gbr)) {
-						$ext = "image";
+						$ext = "Image";
 					} else if (in_array($ext, $file)) {
-						$ext = "file";
+						$ext = "File";
 					} else {
-						$ext = "not identified";
+						$ext = "Not Identified";
 					}
 					}
 				}
