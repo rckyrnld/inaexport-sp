@@ -113,8 +113,8 @@ class InquiryController extends Controller
                     // ->orderBy('csc_inquiry_br.', 'DESC')
 //                    ->orderBy('csc_inquiry_br.date', 'DESC')
                     ->orderBy('ca', 'DESC')
-					// ->paginate($limit);
-					->get();
+					->paginate($limit);
+					//->get();
 			$user2 = DB::table('csc_inquiry_br')
                     ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
                     ->selectRaw('csc_inquiry_br.*,csc_inquiry_br.status as stabr , csc_product_single.*, csc_product_single.id as id_product')
@@ -139,8 +139,8 @@ class InquiryController extends Controller
                //     ->where('b.status', 1)
 //                    ->orderBy('a.date', 'DESC')
                     ->orderBy('a.created_at', 'DESC')
-                    // ->paginate($limit);
-					->get();
+                    ->paginate($limit);
+					//->get();
 				$user3 = DB::table('csc_inquiry_br as a')
                     ->join('csc_inquiry_broadcast as b', 'b.id_inquiry', '=', 'a.id')
                     ->selectRaw('a.*,a.id as idb,b.status as stabr, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.*, b.status')
@@ -281,7 +281,7 @@ class InquiryController extends Controller
 		}
 		
 		// echo count($user);die();
-        if (count($user) > 0) {
+        if ($importer || $perwakilan) {
             /*$meta = [
                 'code' => 200,
                 'message' => 'Success',
