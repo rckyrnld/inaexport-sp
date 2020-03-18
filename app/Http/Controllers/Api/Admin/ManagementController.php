@@ -1846,6 +1846,7 @@ class ManagementController extends Controller
         return redirect('br_list');
 		*/
 		$cariprod = DB::select("select * from csc_buying_request where id='".$id."'");
+		$update = DB::select("update csc_buying_request set status='1' where id='".$id."'");
 		foreach($cariprod as $prodcari) { $rrr = $prodcari->id_csc_prod; $zzz = $prodcari->id_pembuat; }
 		$namacom = DB::select("select * from itdp_admin_users where id='".$zzz."'");
 		foreach($namacom as $comnama){ $namapembuat = $comnama->name; }
@@ -1861,6 +1862,14 @@ class ManagementController extends Controller
 		$namaprod = DB::select("select * from csc_product_single where id_csc_product='".$cr[$hitung-2]."' or id_csc_product_level1='".$cr[$hitung-2]."' or id_csc_product_level2='".$cr[$hitung-2]."' ");
 		
 		if(count($namaprod) == 0){
+			$meta = [
+						'code' => 100,
+						'message' => 'Unauthorized',
+						'status' => 'Failed'
+					];
+					//$data = "";
+					$res['meta'] = $meta;
+					return $res;
 		
 		}else{
 		
