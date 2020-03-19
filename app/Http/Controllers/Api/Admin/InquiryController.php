@@ -180,9 +180,23 @@ class InquiryController extends Controller
 				$jsonResult[$i]["id_csc_prod_cat"] = 0;
 				$jsonResult[$i]["id_csc_prod_cat_level1"] = 0;
 				$jsonResult[$i]["id_csc_prod_cat_level2"] = 0;
-				$jsonResult[$i]["csc_product_desc"] = "";
+				$wkwk = $user[$i]->id_csc_prod_cat.",".$user[$i]->id_csc_prod_cat_level1.",".$user[$i]->id_csc_prod_cat_level2.",";
+				$id_csc = explode(",", $wkwk);
+				$list_k = array();
+				
+				for ($a = 0; $a < count($id_csc); $a++) {
+					if (!empty($id_csc[$a]) || $id_csc[$a] != null) {
+						//$getNama = DB::table('csc_product')->where('id', $id_csc[$a])->select("nama_kategori_en")->first();
+						$list_k[] = $id_csc[$a];
+					}
+				}
+
+				$getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
+				$jsonResult[$i]["csc_product_desc"] = $getName;
+				/*$jsonResult[$i]["csc_product_desc"] = "";
 				$jsonResult[$i]["csc_product_level1_desc"] = "";
 				$jsonResult[$i]["csc_product_level2_desc"] = "";
+				*/
 				/*
 				$ifp1 = DB::table('csc_product')->where('id', '=', $ip1)->get();
 				$ifp2 = DB::table('csc_product')->where('id', '=', $ip2)->get();
@@ -212,9 +226,23 @@ class InquiryController extends Controller
 				$jsonResult[$i]["id_csc_prod_cat"] = 0;
 				$jsonResult[$i]["id_csc_prod_cat_level1"] = 0;
 				$jsonResult[$i]["id_csc_prod_cat_level2"] = 0;
-				$jsonResult[$i]["csc_product_desc"] = "";
+				$wkwk = $user[$i]->id_csc_prod_cat.",".$user[$i]->id_csc_prod_cat_level1.",".$user[$i]->id_csc_prod_cat_level2.",";
+				$id_csc = explode(",", $wkwk);
+				$list_k = array();
+
+				for ($a = 0; $a < count($id_csc); $a++) {
+					if (!empty($id_csc[$a]) || $id_csc[$a] != null) {
+						//$getNama = DB::table('csc_product')->where('id', $id_csc[$a])->select("nama_kategori_en")->first();
+						$list_k[] = $id_csc[$a];
+					}
+				}
+
+				$getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
+				$jsonResult[$i]["csc_product_desc"] = $getName;
+				/* $jsonResult[$i]["csc_product_desc"] = "";
 				$jsonResult[$i]["csc_product_level1_desc"] = "";
 				$jsonResult[$i]["csc_product_level2_desc"] = "";
+				*/
 				/*
 				$carid = DB::table('csc_inquiry_category')->where('id_inquiry', '=', $user[$i]->idb)->get();
 				
@@ -256,10 +284,24 @@ class InquiryController extends Controller
 				$jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
 				$jsonResult[$i]["id_csc_prod_cat_level1"] = $user[$i]->id_csc_prod_cat_level1;
 				$jsonResult[$i]["id_csc_prod_cat_level2"] = $user[$i]->id_csc_prod_cat_level2;
+				$wkwk = $user[$i]->id_csc_prod_cat.",".$user[$i]->id_csc_prod_cat_level1.",".$user[$i]->id_csc_prod_cat_level2.",";
+				$id_csc = explode(",", $wkwk);
+				$list_k = array();
+
+				for ($a = 0; $a < count($id_csc); $a++) {
+					if (!empty($id_csc[$a]) || $id_csc[$a] != null) {
+						//$getNama = DB::table('csc_product')->where('id', $id_csc[$a])->select("nama_kategori_en")->first();
+						$list_k[] = $id_csc[$a];
+					}
+				}
+
+				$getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
+				$jsonResult[$i]["csc_product_desc"] = $getName;
+				/*
 				$jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat)->first()->nama_kategori_en;
 				$jsonResult[$i]["csc_product_level1_desc"] = ($user[$i]->id_csc_prod_cat_level1) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level1)->first()->nama_kategori_en : null;
 				$jsonResult[$i]["csc_product_level2_desc"] = ($user[$i]->id_csc_prod_cat_level2) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level2)->first()->nama_kategori_en : null;
-				
+				*/
 				/*
 				$jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
 				$jsonResult[$i]["id_csc_prod_cat_level1"] = $user[$i]->id_csc_prod_cat_level1;
