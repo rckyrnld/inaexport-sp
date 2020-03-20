@@ -161,22 +161,9 @@ class InquiryController extends Controller
         $jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
             $jsonResult[$i]["id"] = $user[$i]->id;
-			// $jsonResult[$i]["id_pembuat"] = $user[$i]->id_itdp_profil_eks;
-            $jsonResult[$i]["type"] = $user[$i]->type;
+			$jsonResult[$i]["type"] = $user[$i]->type;
 			if($user[$i]->type == "admin"){
 				$jsonResult[$i]["id_type"] = 1;
-				/*$carid = DB::table('csc_inquiry_category')->where('id_inquiry', '=', $user[$i]->idb)->get();
-				
-				foreach($carid as $c1){ $id_cad_prod = $c1->id_cat_prod; }
-				$ambilcat = DB::table('csc_product')->where('id', '=', $id_cad_prod)->get();
-				foreach($ambilcat as $c2){
-					$ip1 = $c2->level_2;
-					$ip2 = $c2->level_1;
-					$ip3 = $c2->id;
-				}
-				$jsonResult[$i]["id_csc_prod_cat"] = $ip1;
-				$jsonResult[$i]["id_csc_prod_cat_level1"] = $ip2;
-				$jsonResult[$i]["id_csc_prod_cat_level2"] = $ip3; */
 				$jsonResult[$i]["id_csc_prod_cat"] = 0;
 				$jsonResult[$i]["id_csc_prod_cat_level1"] = 0;
 				$jsonResult[$i]["id_csc_prod_cat_level2"] = 0;
@@ -193,33 +180,7 @@ class InquiryController extends Controller
 
 				$getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
 				$jsonResult[$i]["csc_product_desc"] = $getName;
-				/*$jsonResult[$i]["csc_product_desc"] = "";
-				$jsonResult[$i]["csc_product_level1_desc"] = "";
-				$jsonResult[$i]["csc_product_level2_desc"] = "";
-				*/
-				/*
-				$ifp1 = DB::table('csc_product')->where('id', '=', $ip1)->get();
-				$ifp2 = DB::table('csc_product')->where('id', '=', $ip2)->get();
-				$ifp3 = DB::table('csc_product')->where('id', '=', $ip3)->get();
-				if(count($ifp1) == 0){
-					$jsonResult[$i]["csc_product_desc"] = "";
-				}else{
-					foreach($ifp1 as $r1){ $icad1 = $r1->nama_kategori_en; }
-					$jsonResult[$i]["csc_product_desc"] = $icad1;
-				}
-				if(count($ifp2) == 0){
-					$jsonResult[$i]["csc_product_level1_desc"] = "";
-				}else{
-					foreach($ifp2 as $r2){ $icad2 = $r2->nama_kategori_en; }
-					$jsonResult[$i]["csc_product_level1_desc"] = $icad2;
-				}
-				if(count($ifp3) == 0){
-					$jsonResult[$i]["csc_product_level2_desc"] = "";
-				}else{
-					foreach($ifp3 as $r3){ $icad3 = $r3->nama_kategori_en; }
-					$jsonResult[$i]["csc_product_level2_desc"] = $icad3;
-				}
-				*/
+				
 				
 			}else if($user[$i]->type == "perwakilan"){
 				$jsonResult[$i]["id_type"] = 4;
@@ -239,46 +200,6 @@ class InquiryController extends Controller
 
 				$getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
 				$jsonResult[$i]["csc_product_desc"] = $getName;
-				/* $jsonResult[$i]["csc_product_desc"] = "";
-				$jsonResult[$i]["csc_product_level1_desc"] = "";
-				$jsonResult[$i]["csc_product_level2_desc"] = "";
-				*/
-				/*
-				$carid = DB::table('csc_inquiry_category')->where('id_inquiry', '=', $user[$i]->idb)->get();
-				
-				foreach($carid as $c1){ $id_cad_prod = $c1->id_cat_prod; }
-				$ambilcat = DB::table('csc_product')->where('id', '=', $id_cad_prod)->get();
-				foreach($ambilcat as $c2){
-					$ip1 = $c2->level_2;
-					$ip2 = $c2->level_1;
-					$ip3 = $c2->id;
-				}
-				$jsonResult[$i]["id_csc_prod_cat"] = $ip1;
-				$jsonResult[$i]["id_csc_prod_cat_level1"] = $ip2;
-				$jsonResult[$i]["id_csc_prod_cat_level2"] = $ip3;
-				$ifp1 = DB::table('csc_product')->where('id', '=', $ip1)->get();
-				$ifp2 = DB::table('csc_product')->where('id', '=', $ip2)->get();
-				$ifp3 = DB::table('csc_product')->where('id', '=', $ip3)->get();
-				if(count($ifp1) == 0){
-					$jsonResult[$i]["csc_product_desc"] = "";
-				}else{
-					foreach($ifp1 as $r1){ $icad1 = $r1->nama_kategori_en; }
-					$jsonResult[$i]["csc_product_desc"] = $icad1;
-				}
-				if(count($ifp2) == 0){
-					$jsonResult[$i]["csc_product_level1_desc"] = "";
-				}else{
-					foreach($ifp2 as $r2){ $icad2 = $r2->nama_kategori_en; }
-					$jsonResult[$i]["csc_product_level1_desc"] = $icad2;
-				}
-				if(count($ifp3) == 0){
-					$jsonResult[$i]["csc_product_level2_desc"] = "";
-				}else{
-					foreach($ifp3 as $r3){ $icad3 = $r3->nama_kategori_en; }
-					$jsonResult[$i]["csc_product_level2_desc"] = $icad3;
-				}
-				*/
-				
 			}else{
 				$jsonResult[$i]["id_type"] = 3;
 				$jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
@@ -297,20 +218,15 @@ class InquiryController extends Controller
 
 				$getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
 				$jsonResult[$i]["csc_product_desc"] = $getName;
-				/*
-				$jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat)->first()->nama_kategori_en;
-				$jsonResult[$i]["csc_product_level1_desc"] = ($user[$i]->id_csc_prod_cat_level1) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level1)->first()->nama_kategori_en : null;
-				$jsonResult[$i]["csc_product_level2_desc"] = ($user[$i]->id_csc_prod_cat_level2) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level2)->first()->nama_kategori_en : null;
-				*/
-				/*
-				$jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
-				$jsonResult[$i]["id_csc_prod_cat_level1"] = $user[$i]->id_csc_prod_cat_level1;
-				$jsonResult[$i]["id_csc_prod_cat_level2"] = $user[$i]->id_csc_prod_cat_level2;
-				$jsonResult[$i]["csc_product_desc"] = DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat)->first()->nama_kategori_en;
-				$jsonResult[$i]["csc_product_level1_desc"] = ($user[$i]->id_csc_prod_cat_level1) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level1)->first()->nama_kategori_en : null;
-				$jsonResult[$i]["csc_product_level2_desc"] = ($user[$i]->id_csc_prod_cat_level2) ? DB::table('csc_product')->where('id', $user[$i]->id_csc_prod_cat_level2)->first()->nama_kategori_en : null;
-				*/
+				$jsonResult[$i]["status"] = $user[$i]->status;
+				
 			}
+			
+			if($user[$i]->status == 0){ $ct = "New Inquiry"; }else if($user[$i]->status == 1){ $ct = "New Inquiry"; }else if($user[$i]->status == 2){ $ct = "Transaction"; } 
+			else if($user[$i]->status == 3){ $ct = "Deal"; } else if($user[$i]->status == 4){ $ct = "Cancel"; } else if($user[$i]->status == 5){ $ct = "Duration Timeout"; } 
+			else { $ct = "-"; } 
+			$jsonResult[$i]["status"] = $user[$i]->status;
+			$jsonResult[$i]["status_desc"] = $ct;
            
             $jsonResult[$i]["jenis_perihal_en"] = $user[$i]->jenis_perihal_en;
             $jsonResult[$i]["jenis_perihal_in"] = $user[$i]->jenis_perihal_in;
@@ -323,7 +239,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["subyek_in"] = $user[$i]->subyek_in;
             $jsonResult[$i]["subyek_chn"] = $user[$i]->subyek_chn;
             
-            $jsonResult[$i]["status"] = $user[$i]->status;
+            
             $jsonResult[$i]["date"] = $user[$i]->date;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
 			if(empty($user[$i]->updated_at) || $user[$i]->updated_at == null){ 
