@@ -114,45 +114,55 @@ h4 h6 h3{
 <script>
     function check() {
         email2 = $('#email2').val();
-        // password2 = $('password2').val();
+        password2 = $('#password2').val();
+        if(!isEmptyM(email2) && !isEmptyM(password2)){
+            $.post("{{ route('login.check_status') }}",
+                {
+                    '_token': '{{csrf_token()}}',
+                    'email2': email2,
+                    // 'password2': password2,
+                }, function (response) {
+                    var res = JSON.parse(response);
+                    // console.log(res);
+                    if(res == 'status0'){
+                        var r = confirm("Aktivasi Akun Anda?");
+                        // var status = 0;
+                        // $('#status').val(0);
+                        if (r == true) {
+                            $.post("{{ route('login.change_status') }}",
+                                {
+                                    '_token': '{{csrf_token()}}',
+                                    'email' : email2,
+                                }, function (response) {
 
-        $.post("{{ route('login.check_status') }}",
-            {
-                '_token': '{{csrf_token()}}',
-                'email2': email2,
-                // 'password2': password2,
-            }, function (response) {
-                var res = JSON.parse(response);
-                // console.log(res);
-                if(res == 'status0'){
-                    var r = confirm("Aktivasi Akun Anda?");
-                    // var status = 0;
-                    // $('#status').val(0);
-                    if (r == true) {
-                        $.post("{{ route('login.change_status') }}",
-                            {
-                                '_token': '{{csrf_token()}}',
-                                'email' : email2,
-                            }, function (response) {
-
-                        });
+                                });
+                            document.getElementById("formlogin").submit();
+                        }
+                    }
+                    // else if(res == 'statusoke'){
+                    //     // $('#status').val(1);
+                    //     console.log('testing');
+                    //     document.getElementById("formlogin").submit();
+                    // }
+                    else{
+                        console.log('masuk else');
                         document.getElementById("formlogin").submit();
                     }
-                }
-                // else if(res == 'statusoke'){
-                //     // $('#status').val(1);
-                //     console.log('testing');
-                //     document.getElementById("formlogin").submit();
-                // }
-                else{
-                    console.log('masuk else');
-                    document.getElementById("formlogin").submit();
-                }
-            });
+                });
+        }else{
+            alert('please fill the email and password field first');
+        }
 
     }
-</script>
 
+    function isEmptyM(obj) {
+        for(var key in obj) {
+            if(obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
+</script>
 <script type="text/javascript">
 	$(document).ready(function() {
     $('#example').DataTable();
@@ -220,7 +230,7 @@ function openCity(evt, cityName) {
   evt.currentTarget.className += " active";
 }
 </script>
-    <script>
+<script>
     {{--var msg = '{{Session::get('alert')}}';--}}
     {{--var exist = '{{Session::has('alert')}}';--}}
     {{--if(exist){--}}
