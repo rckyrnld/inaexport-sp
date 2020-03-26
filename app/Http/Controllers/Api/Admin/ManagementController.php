@@ -1215,6 +1215,83 @@ class ManagementController extends Controller
             return $res;
         }
     }
+	
+	public function listProduct(Request $request)
+    {
+		$page = $request->page;
+		$limit = $request->limit;
+        $listProductCompany = DB::table('csc_product_single')
+                        ->select('csc_product_single.id', 'image_1', 'prodname_en', 'price_usd', 'csc_product_single.status')
+                        ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                        ->paginate($limit);
+						
+		 $listProductCompany2 = DB::table('csc_product_single')
+                        ->select('csc_product_single.id', 'image_1', 'prodname_en', 'price_usd', 'csc_product_single.status')
+                        ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                        ->get();
+
+        $i = 0;
+        foreach ($listProductCompany as $dataPro) {
+            if (isset($dataPro->image_1)) {
+                $listProductCompany[$i]->image_1 = url('uploads/Eksportir_Product/Image/' . $dataPro->id . '/' . $dataPro->image_1);
+            }
+
+            if($dataPro->status == 1){
+                $listProductCompany[$i]->label_status = "Publish - Not Verified";
+            }else if($dataPro->status == 2){
+                $listProductCompany[$i]->label_status = "Publish - Verified";
+            }else if($dataPro->status == 3){
+                $listProductCompany[$i]->label_status = "Publish - Verification Rejected";
+            }else if($dataPro->status == 9){
+                $listProductCompany[$i]->label_status = "Unpublish - Verified";
+            }else{
+                $listProductCompany[$i]->label_status = "Hide";
+            }
+            $i++;
+        }
+
+        if ($listProductCompany) {
+			/*
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $listProductCompany;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+			*/
+			$countall = count($listProductCompany2);
+			$bagi = $countall / $request->limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			$data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $listProductCompany
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+    }
 
     public function detailCompany(Request $request)
     {

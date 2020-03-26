@@ -13,6 +13,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Mail;
+use Lang;
 
 
 class InquiryController extends Controller
@@ -221,12 +222,24 @@ class InquiryController extends Controller
 				$jsonResult[$i]["status"] = $user[$i]->status;
 				
 			}
-			
+			/*
 			if($user[$i]->status == 0){ $ct = "New Inquiry"; }else if($user[$i]->status == 1){ $ct = "New Inquiry"; }else if($user[$i]->status == 2){ $ct = "Transaction"; } 
 			else if($user[$i]->status == 3){ $ct = "Deal"; } else if($user[$i]->status == 4){ $ct = "Cancel"; } else if($user[$i]->status == 5){ $ct = "Duration Timeout"; } 
 			else { $ct = "-"; } 
+			*/
+			$statnya = "-";
+                    if($user[$i]->status != NULL){
+                        if($user[$i]->status == 0){
+                            $stat = 1;
+                        }else{
+                            $stat = $user[$i]->status;
+                        }
+                        $statnya = Lang::get('inquiry.stat'.$stat);
+                    }
+
+             
 			$jsonResult[$i]["status"] = $user[$i]->status;
-			$jsonResult[$i]["status_desc"] = $ct;
+			$jsonResult[$i]["status_desc"] = $statnya;
            
             $jsonResult[$i]["jenis_perihal_en"] = $user[$i]->jenis_perihal_en;
             $jsonResult[$i]["jenis_perihal_in"] = $user[$i]->jenis_perihal_in;
@@ -381,8 +394,17 @@ class InquiryController extends Controller
 	
 	public function list_inquiry_broadcast(Request $request)
     {
+		$page = $request->page;
+		$limit = $request->limit;
 		$id_inquiry = $request->id_inquiry;
 		$user = DB::table('csc_inquiry_broadcast')
+			->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_inquiry_broadcast.id_itdp_company_users')
+			->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
+			->where('csc_inquiry_broadcast.id_inquiry', $id_inquiry)
+            ->orderBy('csc_inquiry_broadcast.created_at', 'DESC')
+			->paginate($limit);
+        //    ->get();
+		$user2 = DB::table('csc_inquiry_broadcast')
 			->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_inquiry_broadcast.id_itdp_company_users')
 			->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
 			->where('csc_inquiry_broadcast.id_inquiry', $id_inquiry)
@@ -406,12 +428,32 @@ class InquiryController extends Controller
 			}
 //        dd($jsonResult);
         if (count($user) > 0) {
+			/*
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
             $data = $jsonResult;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+			*/
+			$countall = count($user2);
+			$bagi = $countall / $request->limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			$data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $jsonResult
+            ];
+
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
