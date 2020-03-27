@@ -50,12 +50,14 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	Route::post('bc_admin', 'Api\Admin\ManagementController@bc_admin');
 	Route::post('bc_verif', 'Api\Admin\ManagementController@bc_verif');
 	Route::post('simpanchatadmin', 'Api\Admin\ManagementController@simpanchatadmin');
+	Route::post('count_br_chat_admin', 'Api\Admin\ManagementController@count_br_chat_admin');
+	Route::post('uploadpop_admin', 'Api\Admin\ManagementController@uploadpop_admin');
 	
 	//Inquiry 
 	Route::get('list_inquiry_admin', 'Api\Admin\InquiryController@list_inquiry_admin');
 	Route::post('insert_inquiry_admin', 'Api\Admin\InquiryController@store');
 	Route::post('bc_inquiry_admin', 'Api\Admin\InquiryController@bc_inquiry_admin');
-	Route::post('list_inquiry_broadcast', 'Api\Admin\InquiryController@list_inquiry_broadcast');
+	Route::get('list_inquiry_broadcast', 'Api\Admin\InquiryController@list_inquiry_broadcast');
 	Route::post('list_inquiry_hc', 'Api\Admin\InquiryController@list_inquiry_hc');
 	Route::post('verif_inquiry_admin', 'Api\Admin\InquiryController@verif_inquiry_admin');
 	
@@ -63,6 +65,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
     Route::post('listCompany', 'Api\Admin\ManagementController@listCompany');
 
     // PRODUCT BY EKS
+    Route::get('listProduct', 'Api\Admin\ManagementController@listProduct');
     Route::post('listProductCompany', 'Api\Admin\ManagementController@listProductCompany');
     Route::post('activate_product', 'Api\Admin\ManagementController@activate_product');
 

@@ -12,6 +12,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Mail;
 
 
@@ -866,7 +867,7 @@ class ManagementController extends Controller
 		$buy = DB::table('csc_buying_request_join as a')
                     ->join('itdp_company_users as b', 'b.id', '=', 'a.id_eks')
                     ->join('itdp_profil_eks as c', 'c.id', '=', 'b.id_profil')
-                    ->selectRaw('a.*, a.id as idjoin, b.*, c.*')
+                    ->selectRaw('a.*, a.id as idjoin, b.*, b.id as idx, c.*')
                     ->where('a.id_br', '=', $id_br)
                     //->orderBy('a.created_at', 'DESC')
 					->paginate($limit);
@@ -884,6 +885,7 @@ class ManagementController extends Controller
             
             $jsonResult[$i]["id"] = $buy[$i]->idjoin;
             $jsonResult[$i]["id_br"] = $buy[$i]->id_br;
+			$jsonResult[$i]["foto_profil"] = $path = ($buy[$i]->foto_profil) ? url('uploads/Profile/Eksportir/' . $buy[$i]->idx . '/' . $buy[$i]->foto_profil) : url('image/nia-01-01.jpg');            
             $jsonResult[$i]["date"] = $buy[$i]->date;
             $jsonResult[$i]["expired_at"] = $buy[$i]->expired_at;
             if ($buy[$i]->status_join == 1) {
@@ -899,6 +901,38 @@ class ManagementController extends Controller
             $jsonResult[$i]["username"] = $buy[$i]->username;
             $jsonResult[$i]["id_profil"] = $buy[$i]->id_profil;
             $jsonResult[$i]["company"] = $buy[$i]->company;
+			$qy1 = DB::select("select pesan,files,tanggal from csc_buying_request_chat where id_join='".$buy[$i]->idjoin."' order by tanggal desc limit 1");
+			if(count($qy1) == 0){
+				$lc = ".......";
+				$ext = "text";
+				$tc = "";
+			}else{
+				foreach($qy1 as $y1){
+					if($y1->files == null || empty($y1->files) ){
+					$lc = $y1->pesan;
+					$ext = "text";
+					$tc = $y1->tanggal;
+					}else{
+					$lc = $y1->files;
+					$tc = $y1->tanggal;
+					$ext = pathinfo($y1->files, PATHINFO_EXTENSION);
+					$gbr = ['png', 'jpg', 'jpeg'];
+					$file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+					if (in_array($ext, $gbr)) {
+						$ext = "Image";
+					} else if (in_array($ext, $file)) {
+						$ext = "File";
+					} else {
+						$ext = "Not Identified";
+					}
+					}
+				}
+				
+			}
+            $jsonResult[$i]["last_chat"] = $lc;
+            $jsonResult[$i]["ext"] = $ext;
+            $jsonResult[$i]["tanggal_chat"] = $tc;
             
 		}
 
@@ -949,45 +983,53 @@ class ManagementController extends Controller
 	public function list_br_chat(Request $request)
     {
 		date_default_timezone_set('Asia/Jakarta');
-        $buy = DB::select("select * from csc_buying_request_chat where id_join='".$request->id_join."' order by tanggal desc");
+        $user = DB::select("select * from csc_buying_request_chat where id_join=".$request->id_join." order by tanggal desc");
 		//echo count($buy);die();
 
         $jsonResult = array();
-        for ($i = 0; $i < count($buy); $i++) {
+        for ($i = 0; $i < count($user); $i++) {
             
-            $jsonResult[$i]["id"] = $buy[$i]->id;
-            $jsonResult[$i]["id_br"] = $buy[$i]->id_br;
-            $jsonResult[$i]["id_join"] = $buy[$i]->id_join;
-            $jsonResult[$i]["date"] = $buy[$i]->tanggal;
-            $jsonResult[$i]["id_pengirim"] = $buy[$i]->id_pengirim;
-            $jsonResult[$i]["id_role"] = $buy[$i]->id_role;
-            $jsonResult[$i]["username_pengirim"] = $buy[$i]->username_pengirim;
-            $jsonResult[$i]["pesan"] = $buy[$i]->pesan;
+           $ext = pathinfo($user[$i]->files, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_br"] = $user[$i]->id_br;
+            $jsonResult[$i]["pesan"] = $user[$i]->pesan;
+            $jsonResult[$i]["tanggapan"] = $user[$i]->tanggapan;
+            $jsonResult[$i]["tanggal"] = $user[$i]->tanggal;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
+            $jsonResult[$i]["id_role"] = $user[$i]->id_role;
+            $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop/' . $user[$i]->files) : "";
+            $jsonResult[$i]["id_join"] = $user[$i]->id_join;
+            $jsonResult[$i]["ext"] = $extension;
             
 		}
 
 
-        if ($buy) {
-
+        if ($jsonResult) {
+            return response($jsonResult);
+        } else {
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
             ];
-            $data = $jsonResult;
+
             $res['meta'] = $meta;
-            $res['data'] = $data;
-            return response($res);
-        } else {
-            $meta = [
-                'code' => 100,
-                'message' => 'Unauthorized',
-                'status' => 'Failed'
-            ];
-            $data = "";
-            $res['meta'] = $meta;
-            $res['data'] = $data;
+            $res['data'] = '';
             return $res;
+
         }
 	}
 	
@@ -1158,6 +1200,83 @@ class ManagementController extends Controller
                 'status' => 'OK'
             ];
             $data = $listProductCompany;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+    }
+	
+	public function listProduct(Request $request)
+    {
+		$page = $request->page;
+		$limit = $request->limit;
+        $listProductCompany = DB::table('csc_product_single')
+                        ->select('csc_product_single.id', 'image_1', 'prodname_en', 'price_usd', 'csc_product_single.status')
+                        ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                        ->paginate($limit);
+						
+		 $listProductCompany2 = DB::table('csc_product_single')
+                        ->select('csc_product_single.id', 'image_1', 'prodname_en', 'price_usd', 'csc_product_single.status')
+                        ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                        ->get();
+
+        $i = 0;
+        foreach ($listProductCompany as $dataPro) {
+            if (isset($dataPro->image_1)) {
+                $listProductCompany[$i]->image_1 = url('uploads/Eksportir_Product/Image/' . $dataPro->id . '/' . $dataPro->image_1);
+            }
+
+            if($dataPro->status == 1){
+                $listProductCompany[$i]->label_status = "Publish - Not Verified";
+            }else if($dataPro->status == 2){
+                $listProductCompany[$i]->label_status = "Publish - Verified";
+            }else if($dataPro->status == 3){
+                $listProductCompany[$i]->label_status = "Publish - Verification Rejected";
+            }else if($dataPro->status == 9){
+                $listProductCompany[$i]->label_status = "Unpublish - Verified";
+            }else{
+                $listProductCompany[$i]->label_status = "Hide";
+            }
+            $i++;
+        }
+
+        if ($listProductCompany) {
+			/*
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $listProductCompany;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+			*/
+			$countall = count($listProductCompany2);
+			$bagi = $countall / $request->limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			$data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $listProductCompany
+            ];
+
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
@@ -1804,6 +1923,7 @@ class ManagementController extends Controller
         return redirect('br_list');
 		*/
 		$cariprod = DB::select("select * from csc_buying_request where id='".$id."'");
+		$update = DB::select("update csc_buying_request set status='1' where id='".$id."'");
 		foreach($cariprod as $prodcari) { $rrr = $prodcari->id_csc_prod; $zzz = $prodcari->id_pembuat; }
 		$namacom = DB::select("select * from itdp_admin_users where id='".$zzz."'");
 		foreach($namacom as $comnama){ $namapembuat = $comnama->name; }
@@ -1819,6 +1939,14 @@ class ManagementController extends Controller
 		$namaprod = DB::select("select * from csc_product_single where id_csc_product='".$cr[$hitung-2]."' or id_csc_product_level1='".$cr[$hitung-2]."' or id_csc_product_level2='".$cr[$hitung-2]."' ");
 		
 		if(count($namaprod) == 0){
+			$meta = [
+						'code' => 100,
+						'message' => 'Unauthorized',
+						'status' => 'Failed'
+					];
+					//$data = "";
+					$res['meta'] = $meta;
+					return $res;
 		
 		}else{
 		
@@ -1937,7 +2065,7 @@ class ManagementController extends Controller
 //        dd($request);
         $a = $request->pesan;
         $id2 = $request->id_br;
-        $id3 = $request->id_role;
+        // $id3 = $request->id_role;
         $id4 = $request->id_user;
         $id5 = $request->username;
         $id6 = $request->idb;
@@ -1952,7 +2080,7 @@ class ManagementController extends Controller
                 'pesan' => $a,
                 'tanggal' => $datenow,
                 'id_pengirim' => $id4,
-                'id_role' => $id3,
+                'id_role' => 1,
                 'username_pengirim' => $id5,
                 'id_join' => $id6,
             ]
@@ -2015,5 +2143,163 @@ class ManagementController extends Controller
             return $res;
         }
 
+    }
+	
+	public function count_br_chat_admin(Request $request)
+    {
+        $id = $request->id;
+        $q1 = DB::select("select * from csc_buying_request_join where id='" . $id . "'");
+        foreach ($q1 as $p) {
+            $id_br = $p->id_br;
+        }
+//        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id_br . "' and id_join='" . $id . "'");
+        $user = DB::table('csc_buying_request_chat')
+            ->where('id_br', '=', $id_br)
+            ->where('id_join', '=', $id)
+            ->orderBy('id', 'desc')
+            ->count();
+
+
+//        dd($jsonResult);
+
+        if ($user) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = [
+                'count' => $user
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+
+        }
+    }
+	
+	public function uploadpop_admin(Request $request)
+    {
+        $a = $request->pesan;
+        $id2 = $request->id_br;
+        $id3 = 1;
+        $id4 = $request->id_user;
+        $id5 = $request->username;
+        $id6 = $request->idb;
+        $file = $request->file('filez')->getClientOriginalName();
+        $destinationPath = public_path() . "/uploads/pop";
+        $request->file('filez')->move($destinationPath, $file);
+        date_default_timezone_set('Asia/Jakarta');
+
+
+        $insert = DB::table('csc_buying_request_chat')->insertGetId([
+                'id_br' => $id2,
+                'pesan' => $a,
+                'tanggal' => date('Y-m-d H:i:s'),
+                'id_pengirim' => $id4,
+                'id_role' => $id3,
+                'username_pengirim' => $id5,
+                'id_join' => $id6,
+                'files' => $file,
+            ]
+        );
+        $user = DB::table('csc_buying_request_chat')
+            ->where('id_br', '=', $id2)
+            ->where('id_join', '=', $id6)
+            ->where('id', '=', $insert)
+            ->get();
+
+        for ($i = 0; $i < count($user); $i++) {
+            $ext = pathinfo($user[$i]->files, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+
+            $jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_br"] = $user[$i]->id_br;
+            $jsonResult[$i]["pesan"] = $user[$i]->pesan;
+            $jsonResult[$i]["tanggapan"] = $user[$i]->tanggapan;
+            $jsonResult[$i]["tanggal"] = $user[$i]->tanggal;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+            $jsonResult[$i]["id_pengirim"] = $user[$i]->id_pengirim;
+            $jsonResult[$i]["id_role"] = $user[$i]->id_role;
+            $jsonResult[$i]["username_pengirim"] = $user[$i]->username_pengirim;
+            $jsonResult[$i]["files"] = $path = ($user[$i]->files) ? url('/uploads/pop/' . $user[$i]->files) : "";
+            $jsonResult[$i]["id_join"] = $user[$i]->id_join;
+            $jsonResult[$i]["ext"] = $extension;
+
+        }
+////        $users = DB::table('csc_buying_request_chat')
+////            ->where('id_br', '=', $id2)
+////            ->where('id_join', '=', $id6)
+////            ->where('id', '=', $insert)
+////            ->first();
+////
+////
+//////        dd($users);
+////        $ext = pathinfo($users->files, PATHINFO_EXTENSION);
+////        $gbr = ['png', 'jpg', 'jpeg'];
+////        $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+////
+////        if (in_array($ext, $gbr)) {
+////            $extension = "gambar";
+////        } else if (in_array($ext, $file)) {
+////            $extension = "file";
+////        } else {
+////            $extension = "not identified";
+////        }
+////
+////        $list_k = array();
+////        $list_k["id"] = $users->id;
+////        $list_k["id_br"] = $users->id_br;
+////        $list_k["pesan"] = $users->pesan;
+////        $list_k["tanggapan"] = $users->tanggapan;
+////        $list_k["tanggal"] = $users->tanggal;
+////        $list_k["status"] = $users->status;
+////        $list_k["id_pengirim"] = $users->id_pengirim;
+////        $list_k["id_role"] = $users->id_role;
+////        $list_k["username_pengirim"] = $users->username_pengirim;
+////        $list_k["files"] = $path =  url('/uploads/pop' . $users->files);
+////        $list_k["id_join"] = $users->id_join;
+////        $list_k["ext"] = $extension;
+//
+////        dd($list_k);
+////        $users->file_desc = $path = ($users->files) ? url('/uploads/pop' . $users->files) : url('image/nia3.png');
+        
+
+        
+        if ($jsonResult) {
+
+            return $jsonResult;
+        } else {
+            $meta = [
+                'code' => 404,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+
+        }
     }
 }
