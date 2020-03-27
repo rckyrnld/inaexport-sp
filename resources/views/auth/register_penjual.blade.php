@@ -6,31 +6,32 @@
 }
     .form-control{
         font-size: 13px;
+        border-radius: 0px;
+    }
+    #content-bodys {
+        font-family: 'Lato', sans-serif !important;
     }
 </style>
   <div id="content-bodys" class="product_area" style="color: black" >
   <div class="py-1 w-100">
-	<center>
+	<div class="text-center pt-4 pb-4">
 	<h3><b>@lang("login.title3")</b></h3>
-	<h6>@lang("login.title5") <a href="{{url('login')}}"><font color="red"> @lang("login.btn")</font></a></h6><br></center>
-	<br>
-      <div class="mx-auto col-sm-6" style="background: white; border-radius: 0px; box-shadow: 4px 4px 10px 7px #888888; border: 4px; border-radius: 10px;">
+	<h6>@lang("login.title5") <a href="{{url('login')}}">@lang("login.btn")</a></h6>
+    </div>
+      <div class="mx-auto col-lg-6" style="background: white; border-radius: 0px;">
 	  <br>
 	  <!-- <h5>LOGIN</h5> -->
-	   <h5><center><b>@lang("register2.title")</b></center></h5>
-	  <div class="wrap-login100" style="padding-left : 70px;padding-right : 70px; font-size:14px;">
+	  <!--<h5><center><b>@lang("register2.title")</b></center></h5>-->
+	  <div class="wrap-login100" style="padding-left : 40px; padding-right : 40px; font-size:14px;">
 	  <form class="form-horizontal" method="POST" action="{{ url('simpan_rpenjual') }}">
 	   {{ csrf_field() }}
-	   
-	   <br><br>
-	   
-	   <p><h6>Enter Your Account Information</h6></p><hr>
+	   <p><h6>Account Information</h6></p><hr>
 	   
 	   <div class="form-row">
                             <div class="form-group col-sm-4" align="left">
                                 <label><font color="red">*</font> @lang("login.forms.prov")</label>
 							</div>
-							<div class="form-group col-sm-5" align="left">
+							<div class="form-group col-sm-8" align="left">
                                 <select class="form-control" name="prov" id="prov">
 									<option value="">- Choose Province -</option>
 									<?php
@@ -49,7 +50,7 @@
                             <div class="form-group col-sm-4" align="left">
                                 <label><font color="red">*</font> @lang("login.forms.city")</label>
 							</div>
-							<div class="form-group col-sm-5" align="left">
+							<div class="form-group col-sm-8" align="left">
                                 <input type="text" name="city" id="city" class="form-control" style=" color: black; ">
                             </div>
 							
@@ -71,7 +72,7 @@
                                <label><font color="red">*</font> @lang("register2.forms.email")</label> &nbsp;&nbsp;&nbsp;<span id="cekmail"></span>
                                 
 							</div>
-							<div class="form-group col-sm-5" align="left">
+							<div class="form-group col-sm-8" align="left">
                                 <input type="text" onkeyup="cekmail()" name="email" id="email" class="form-control" style=" color: black; " required>
                             </div>
 							
@@ -82,7 +83,7 @@
                                <label><font color="red">*</font> @lang("register2.forms.password")</label>
                                 
 							</div>
-							<div class="form-group col-sm-5" align="left">
+							<div class="form-group col-sm-8" align="left">
                                 <input type="password" name="password" id="password" class="form-control" style=" color: black; " required>
                                 </div>
 							
@@ -92,7 +93,7 @@
                             <div class="form-group col-sm-4" align="left">
                                <label><font color="red">*</font> @lang("register.forms.re-password")</label>
                                </div>
-							<div class="form-group col-sm-5" align="left">
+							<div class="form-group col-sm-8" align="left">
                                <input type="password" name="kpassword" id="kpassword" class="form-control" style=" color: black; ">  
 							 </div>
 							
@@ -101,7 +102,7 @@
 		
 
 		<br>
-	   <p><h6>Enter Your Business Information</h6></p><hr>
+	   <p><h6>Business Information</h6></p><hr>
 		
 		
 		<div class="form-row">
@@ -110,7 +111,7 @@
                                 
                                 
 							</div>
-							<div class="form-group col-sm-6" align="left">
+							<div class="form-group col-sm-8" align="left">
                                 <input type="text" name="company" id="company" class="form-control" style=" color: black; " required>
                             </div>
 							
@@ -123,7 +124,7 @@
                                 
                             </div>
 							
-                            <div class="form-group col-sm-6" align="left">
+                            <div class="form-group col-sm-8" align="left">
                                   <input type="text" data-role="tagsinput" class="form-control" value="">
 							
 							</div>
@@ -134,7 +135,7 @@
                                 <label><font color="red">*</font> @lang("register2.forms.username")</label>
                                 
 							</div>
-							<div class="form-group col-sm-6" align="left">
+							<div class="form-group col-sm-8" align="left">
                                 <input type="text" name="username" id="username" class="form-control" style=" color: black; " required>
                             </div>
 							
@@ -146,7 +147,7 @@
                                 
                                 
 							</div>
-							<div class="form-group col-sm-6" align="left">
+							<div class="form-group col-sm-8" align="left">
                                 <input type="text" name="phone" id="phone" class="form-control" style=" color: black; " >
                             </div>
 							
@@ -156,7 +157,7 @@
                             <div class="form-group col-sm-4" align="left">
                                 <label>@lang("register2.forms.fax")</label>
 							</div>
-							<div class="form-group col-sm-6" align="left">
+							<div class="form-group col-sm-8" align="left">
                                 <input type="text" name="fax" id="fax" class="form-control" style=" color: black; ">
                             </div>
 							
@@ -167,7 +168,7 @@
                                 <label>@lang("register2.forms.website")</label>
                                 
 							</div>
-							<div class="form-group col-sm-6" align="left">
+							<div class="form-group col-sm-8" align="left">
                                 <input type="text" name="website" id="website" class="form-control" style=" color: black; ">
                             </div>
 							
@@ -178,7 +179,7 @@
                                 <label>@lang("register.forms.postcode")</label>
                                 
 							</div>
-							<div class="form-group col-sm-6" align="left">
+							<div class="form-group col-sm-8" align="left">
                                 <input type="text" name="postcode" id="postcode" class="form-control" style=" color: black; ">
                             </div>
 							
@@ -189,7 +190,7 @@
                                 <label>@lang("register.forms.address")</label>
                                 
 							</div>
-							<div class="form-group col-sm-6" align="left">
+							<div class="form-group col-sm-8" align="left">
                                 <textarea name="alamat" id="alamat" class="form-control" style=" color: black; "></textarea>
                             </div>
 							
@@ -218,48 +219,34 @@
                           <span>{!!captcha_img()!!}</span>
                       </div>
                       <div class="form-group col-sm-1" align="left">
-                          <button type="button" class="btn btn-success" id="refresh"><i class="fa fa-refresh"></i></button>
+                          <button type="button" class="btn btn-success" style="height: 34px; border-radius: 0px;" id="refresh"><i class="fa fa-refresh"></i></button>
                       </div>
-                      <div class="form-group col-sm-2" align="left">
-                          <input type="text" class="form-control" name="captchainput" id="captchainput">
+                      <div class="form-group col-sm-4" align="left">
+                          <input type="text" class="form-control" style="height: 34px;" name="captchainput" id="captchainput">
                       </div>
                   </div>
 
 				<div class="form-row" align="left">
                            
                             <div class="form-group col-sm-12"><br>
-                            <input type="checkbox" name="ckk" id="ckk"> I agree to the Term & Condition and have read and understood the Privacy Policy.<br><br>
-                            <input type="checkbox" name="ckk2" id="ckk2"> Sign up for news letter.
-							<br><br>
-							<center>
+                            <!--<input type="checkbox" name="ckk" id="ckk"> I agree to the Term & Condition and have read and understood the Privacy Policy.<br>-->
+                            <div class="form-check pb-4">
+                              <input type="checkbox" class="form-check-input" name="ckk2" id="ckk2">  <label class="form-check-label" for="ckk2">Sign up for newsletter.</label>
+							</div>
+                            <!--<center>-->
 							
-							<br>
+							<p>By creating an account, you agree to the Term & Condition and have read and understood the Privacy Policy. </p>
 							<a  class="btn btn-danger" onclick="simpanpenjual()"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></a>
                                <!-- <button style="width: 100%;" class="btn btn-success" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></button> -->
-                            <br><br>
-							</center>
+                            <br><br><br>
+							<!--</center>-->
 							</div>
                         </div>
-						
-		
-                                
-					
-		
 		</form>
-		
-
       </div>
-	  
-		
       </div>
-    </div><br><br>
-	<center>
-	@lang("login.title6") <br> @lang("login.title7")
-	
-	<br><br>
-	@lang("login.title8") <br> <a href="{{url('front_end/ticketing_support')}}">@lang("login.title9")</a>
-	</center>
-					<br><br><br>
+    </div>
+	<!--<p class="text-center pt-4">@lang("login.title8")</p>-->
 					
   </div>
   <div class="modal fade" id="myModal" role="dialog">
@@ -361,7 +348,7 @@
              },
              success: function (data) {
                  if(data.jawab == 'gagal'){
-                     alert("Your captcha failed");
+                     alert("Incorrect captcha code");
                      $('#captchainput').val('');
                  }
                  else{
@@ -461,7 +448,7 @@ function simpanpenjual2(){
 		$("#myModal").modal("show");
 	}
 	}else{
-		alert("Your Password Not Same !");
+		alert("Incorrect password");
 		$('#password').val('');
 		$('#kpassword').val('');
         refresh();

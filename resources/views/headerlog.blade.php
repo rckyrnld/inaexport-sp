@@ -43,7 +43,6 @@
 	}
 	.product_area{
 		background-color: #ddeffd!important;
-		padding-top: 50px!important;
 		color : #000000d1!important;
 		font-family: "Times New Roman", Times, serif!important;
 	}
@@ -89,7 +88,7 @@
         <!--header top start-->
         <div class="header_top">
             <div class="container">
-                <div class="top_inner">
+                <div>
                     <div class="row align-items-center">
                         <div class="col-lg-12 col-md-12">
                            <div style="padding-top:20px;padding-bottom:20px;">

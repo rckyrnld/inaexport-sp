@@ -1,28 +1,32 @@
 @include('headerlog')
-  
-  <div id="content-bodyz" class="product_area">
-  <div class="py-1 text-center w-100">
-	
-	<h3><b>@lang("login.title3")</b></h3>
-	<!--<h6>@lang("login.title2")</h6> -->
-	<br><br><br>
-      
-	 
-	  <center>
-	  <table border="0" width="75%">
-	  <tr>
-	  
-		  <td width="45%" align="right"><center><a href="{{url('registrasi_penjual')}}"><img style="height:170px!Important; border-radius:30px!important" src="{{url('assets')}}/assets/images/cr_eks2.png" alt="." ><br><br> <p style="font-size:100%;">@lang("login.a3") <font color="red">@lang("login.a4")</font></p></a></center></td>
-	  <td width="10%" valign="center"><center><div valign="center" style="text-align:center;width: 70px; height: 70px;background: #9ec0d7;border-radius: 100%;"><b><br>- OR -</b></div></center></td>
-		  <td width="45%" align="left"><center><a href="{{url('registrasi_pembeli')}}"><img style="height:170px!Important;border-radius:30px!important" src="{{url('assets')}}/assets/images/cr_imp2.png" alt="." ><br><br> <p style="font-size:100%;">@lang("login.a3") <font color="red">@lang("login.a5")</font></p></a></center></td>
-	 
-	  </tr>
-	  </table>
-	  </center>
-	 
-	  <br>
-		
-      </div>
+  <style>
+	 #content-bodys {
+        font-family: 'Lato', sans-serif !important;
+    }
+  </style>
+  <div id="content-bodys" class="product_area">
+    <div class="py-1 text-center w-100 pt-5">
+	  <p style="font-size: 30px; font-weight: bold;">@lang("login.title3")</p>
+	  <!--<h6>@lang("login.title2")</h6> -->
+	  <div class="container pt-4">
+		<div class="row">
+			<div class="col-lg-6 pb-4">
+				<div class="row justify-content-end">
+					<div class="col-lg-8">
+					<a href="{{url('registrasi_penjual')}}" style="text-decoration: none;"><img src="{{url('assets')}}/assets/images/cr_eks2.png" alt="." ><p style="font-size:22px; background-color: #fff; color: red;">@lang("login.a4")</p></a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="row justify-content-start">
+					<div class="col-lg-8">
+					<a href="{{url('registrasi_pembeli')}}" style="text-decoration: none;"><img src="{{url('assets')}}/assets/images/cr_imp2.png" alt="." ><p style="font-size:22px; background-color: #fff; color: red;">@lang("login.a5")</p></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	  </div>
     </div>
   </div>
+
 @include('footerlog')

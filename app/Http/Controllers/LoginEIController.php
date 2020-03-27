@@ -101,7 +101,7 @@ class LoginEIController extends Controller
                     ");
 
                 if($data1 == 2){
-                    return redirect()->intended('/profildoc')->with('warning', 'Please Fill Out Company Profile');
+                    return redirect()->intended('/profildoc')->with('warning', 'Harap update dan upload dokumen legal perusahaan');
                 }else {
                     return redirect()->intended('/');
                 }

@@ -62,7 +62,7 @@
               <span class="nav-icon">
                 <i class="fa fa-book"></i>
               </span>
-              <span class="nav-text"><b>User Guide</b></span>
+              <span class="nav-text"><b>Panduan Pengguna</b></span>
             </a>
           </li>
 
@@ -72,7 +72,7 @@
               <span class="nav-icon">
                 <i class="fa fa-book"></i>
               </span>
-              <span class="nav-text"><b>User Guide</b></span>
+              <span class="nav-text"><b>Panduan Pengguna</b></span>
             </a>
           </li>
 

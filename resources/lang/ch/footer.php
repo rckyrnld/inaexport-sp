@@ -31,6 +31,6 @@ return [
         "training" => "训练",
         "research" => "研究成果",
         "inquiry" => "在线查询",
-        "trade-expo" => "贸易博览会",
+        "trade-expo" => "Trade Expo Indonesia",
     ]
 ];

@@ -28,37 +28,34 @@
 h4 h6 h3{
 
 }
+.form-control {
+    border-radius: 0px;
+}
+.product_area {
+    font-family: 'Lato', sans-serif !important;
+}
 
   </style>
   
     <!--product area start-->
     <section class="product_area" style="background-color:#ddeffd">
         <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <!--<div class="section_title">
-                        <br>
-                    </div> -->
-
-                </div>
-            </div>
-
+    
             <div class="tab-content" id="tabing-product">
 			<!--<center><br><img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center> -->
 			
-    <div class="py-1 text-center w-100">
+             <div class="py-1 text-center w-100 pt-5">
 	
-	<h3 style=" font-family: 'Lato', sans-serif !important;"><b>@lang("login.title2")</b></h3>
-	<h6 style=" font-family: 'Lato', sans-serif !important;">@lang("login.title4")</h6><br>
+	        <!--<h3 style=" font-family: 'Lato', sans-serif !important;"><b>@lang("login.title2")</b></h3>
+	        <h6 style=" font-family: 'Lato', sans-serif !important;">@lang("login.title4")</h6><br>-->
 			
-		        <div class="mx-auto col-sm-4" style="background: white; border-radius: 0px;box-shadow: 4px 4px 10px 6px #888888; border: 4px; border-radius: 10px;">
-	  <br>
+		        <div class="mx-auto col-lg-4" style="background: white; border-radius: 0px;">
 	  <!-- <h5>LOGIN</h5> -->
-	  <div class="wrap-login100" style="padding-left : 30px; padding-right : 30px; font-size:15px;">
+	  <div class="wrap-login100 pt-4" style="padding-left : 30px; padding-right : 30px; font-size:15px;">
 	  
 	   <form class="form-horizontal" id="formlogin" method="POST" action="{{ route('loginei.login') }}">
            {{ csrf_field() }}
-           <center><h4 style=" font-family: 'Lato', sans-serif !important;">@lang("login.lbl3")</h4><br></center>
+           <p class="text-left" style=" font-family: 'Lato', sans-serif !important; font-size: 24px;">@lang("login.lbl3")</p>
              <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}" align="left">
 			 <label style=" font-family: 'Lato', sans-serif !important;">@lang("login.forms.email")</label>
                <input type="email" placeholder="Email" class="form-control" name="email2" id="email2" style="color: #000000;font-family: 'Lato', sans-serif !important;" value="{{ old('email') }}" required autofocus>
@@ -84,28 +81,24 @@ h4 h6 h3{
 			<table width="100%">
 				<tr>
 				<td width="50%"></td>
-				<td width="50%" align="right"><a href="{{url('forget_a')}}"><font color="blue"><b>@lang("login.forms.fp")</b></font></a></td>
+				<td width="50%" align="right"><a href="{{url('forget_a')}}" style="font-size: 14px; font-family: 'Lato', sans-serif !important;">@lang("login.forms.fp")</a></td>
 				</tr>
 			</table>
 				
 			</div>
-			<div class="form-group">
+			<div class="form-group pb-4">
 {{--            <button style="width: 100%;" type="submit" class="btn btn-primary">@lang("login.btn")</button>--}}
             <button style="width: 100%;   font-family: 'Lato', sans-serif !important;" type="button" class="btn btn-primary" onclick="check()">@lang("login.btn")</button>
-			<br><br>
-			<label style=" font-family: 'Lato', sans-serif !important;">@lang("login.forms.r1")</label> <a href="{{url('pilihregister')}}"><label  style=" font-family: 'Lato', sans-serif !important;">@lang("login.forms.r2")</label></a>
+            <hr>
+			<label style="font-size: 14px; font-family: 'Lato', sans-serif !important;">@lang("login.forms.r1")</label> <a href="{{url('pilihregister')}}" style="font-size: 14px; font-family: 'Lato', sans-serif !important;">@lang("login.forms.r2")</a>
 			</div>
-			<br>
           </form>
-        
 
       </div>
-	  
 		
       </div>
             </div>
         </div>
-	<br><br>
     </section>
     <!--product area end-->
 
