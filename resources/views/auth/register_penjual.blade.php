@@ -215,14 +215,14 @@
                       <div class="form-group col-sm-4" align="left">
                           <label><font color="red">*</font> Verification Code</label>
                       </div>
-                      <div class="form-group col-sm-3 captcha" align="left" id="captcha">
+                      <div class="form-group col-sm-4 captcha" align="left" id="captcha">
                           <span>{!!captcha_img()!!}</span>
                       </div>
                       <div class="form-group col-sm-1" align="left">
-                          <button type="button" class="btn btn-success" style="height: 34px; border-radius: 0px;" id="refresh"><i class="fa fa-refresh"></i></button>
+                          <button type="button" class="btn btn-success" style="height: 70px; border-radius: 0px;" id="refresh"><i class="fa fa-refresh"></i></button>
                       </div>
-                      <div class="form-group col-sm-4" align="left">
-                          <input type="text" class="form-control" style="height: 34px;" name="captchainput" id="captchainput">
+                      <div class="form-group col-sm-3"  align="left">
+                          <input type="text"  class="form-control" style="height: 70px;" name="captchainput" id="captchainput">
                       </div>
                   </div>
 
@@ -410,7 +410,7 @@ function simpanpenjual2(){
 
 
 	if(password == kpassword){
-	if(company == "" || username == "" || email == "" || phone == "" || password == "" || city == "" || prov == "" || chp == "" ||ckksend == "0"){
+	if(company == "" || username == "" || email == "" || phone == "" || password == "" || city == "" || prov == "" || chp == ""){
 		alert("Please complete the field !")
         refresh();
 		$('#captchainput').val('');

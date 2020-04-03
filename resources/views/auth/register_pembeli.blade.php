@@ -398,7 +398,7 @@
 
         var token = $('meta[name="csrf-token"]').attr('content');
         if (password == kpassword) {
-            if (company == "" || username == "" || email == "" || phone == "" || password == "" || country == "" || city == "" || alamat == "" || chp == ""|| ckksend == "0") {
+            if (company == "" || username == "" || email == "" || phone == "" || password == "" || country == "" || city == "" || alamat == "" || chp == "") {
                 alert("Please complete the field !")
                 refresh();
                 $('#captchainput').val('');
