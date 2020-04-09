@@ -31,6 +31,6 @@ return [
         "training" => "Pelatihan",
         "research" => "Pusat Riset",
         "inquiry" => "Permintaan Hubungan Dagang",
-        "trade-expo" => "Pameran Dagang",
+        "trade-expo" => "Trade Expo Indonesia",
     ]
 ];

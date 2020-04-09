@@ -1,4 +1,10 @@
 @include('headerlog')
+
+<style>
+.form-control {
+    border-radius: 0px;
+}
+</style>
   
       <section class="product_area" style="background-color:#c5e1f8">
         <div class="container">

@@ -54,6 +54,21 @@
                 <div class="col-lg-4 col-sm-12 col-12">
                     <ul class="list-group list-group-horizontal-sm">
                         <li>
+                            <img src="{{asset('front/assets/img/exporters.png')}}" alt="" style="width: 20%;margin-left: 20%; float:left">
+                            <span class="counters_number" style="margin-right: 20%; text-align:left">{{getCountData('itdp_company_users')}}</span><br>
+                            <span class="counters_text" style="margin-left: 20px; font-size: 18px; text-align: left;">
+                            @if($loc == 'ch')
+                            出口商
+                            @elseif($loc == 'in')
+                            Eksportir
+                            @else
+                            Indonesian Exporters
+                            @endif
+                            </span>
+                        </li>
+                    </ul>
+                   <!-- <ul class="list-group list-group-horizontal-sm">
+                        <li>
                             <img src="{{asset('front/assets/img/exporters.png')}}" alt="" style="width: 20%;margin-left: 20%;">
                             <span class="counters_number" style="margin-right: 20%;float:right">{{getCountData('itdp_company_users')}}</span>
                         </li>
@@ -69,12 +84,48 @@
                                 @endif 
                             </p>
                         </li>
-                    </ul>
+                    </ul>-->
                     <br>
+                </div>
+
+                <div class="col-lg-4 col-sm-12 col-12">
+                    <ul class="list-group list-group-horizontal-sm ">
+                        <li>
+                            <img src="{{asset('front/assets/img/products.png')}}" alt="" style="width: 20%; margin-left: 20%; float: left;">
+                            <span class="counters_number" style="margin-right:20%; text-align: left">{{getCountData('csc_product_single')}}</span><br>
+                            <span class="counters_text" style="margin-left:20px; font-size: 18px;text-align: left">
+                            @lang('frontend.home.product')
+                            </span>
+                        </li>
+                    </ul>
+                    <!--<ul class="list-group list-group-horizontal-sm ">
+                        <li>
+                            <img src="{{asset('front/assets/img/products.png')}}" alt="" style="width: 20%; margin-left: 20%;">
+                            <span class="counters_number" style="margin-right:20%;float: right">{{getCountData('csc_product_single')}}</span>
+                        </li>
+                        <li>
+                            <p class="counters_text" style="font-size: 18px;text-align: center">@lang('frontend.home.product')</p>
+                        </li>
+                    </ul>-->
                 </div>
 
                 <div class="col-lg-4 col-sm-12 col-12 ">
                     <ul class="list-group list-group-horizontal-sm">
+                        <li>
+                            <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 20%;margin-left: 20%; float:left">
+                            <span class="counters_number" style="margin-right: 20%;text-align:left">{{getCountData('event_detail')}}</span><br>
+                            <span class="counters_text" style="margin-left: 20px; font-size: 18px; text-align: left;">
+                            @if($loc == 'ch')
+                            事件
+                            @elseif($loc == 'in')
+                            Acara
+                            @else
+                            Events
+                            @endif
+                            </span>
+                        </li>
+                    </ul>   
+                    <!--<ul class="list-group list-group-horizontal-sm">
                         <li>
                             <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 20%;margin-left: 20%;">
                             <span class="counters_number" style="margin-right: 20%;float:right">{{getCountData('event_detail')}}</span>
@@ -90,20 +141,7 @@
                                 @endif
                             </p>
                         </li>
-                    </ul>
-                    <br>
-                </div>
-
-                <div class="col-lg-4 col-sm-12 col-12">
-                    <ul class="list-group list-group-horizontal-sm ">
-                        <li>
-                            <img src="{{asset('front/assets/img/products.png')}}" alt="" style="width: 20%; margin-left: 20%;">
-                            <span class="counters_number" style="margin-right:20%;float: right">{{getCountData('csc_product_single')}}</span>
-                        </li>
-                        <li>
-                            <p class="counters_text" style="font-size: 18px;text-align: center">@lang('frontend.home.product')</p>
-                        </li>
-                    </ul>
+                    </ul>-->
                     <br>
                 </div>
     
@@ -139,7 +177,7 @@
                                             </tr>
                                             <tr>
                                                 <td><img src="{{asset('front/assets/icon/icon_email_3.png')}}"></td>
-                                                <td class="footer-child" style="padding-left: 5px;">csm@kemendag.go.id</td>
+                                                <td class="footer-child" style="padding-left: 5px;">mail@inaexport.id</td>
                                             </tr>
 											<tr>
                                                 <td><img src="{{asset('front/assets/icon/icon_clock_3.png')}}"></td>
@@ -172,8 +210,8 @@
                                 <ul>
                                     <li><a href="{{url('/about/')}}" class="third-child">@lang("footer.tentangkami")</a></li>
                                     <li><a href="{{url('/contact-us/')}}" class="third-child">@lang("footer.hubungikami")</a></li>
-                                    <li><a href="#" class="third-child">DGNED CSC</a></li>
-                                    <li><a href="#" class="third-child">@lang("footer.foot.trade-expo")</a></li>
+                                    <li><a href="#" class="third-child">InaExport</a></li>
+                                    <li><a href="http://tradexpoindonesia.com" class="third-child">@lang("footer.foot.trade-expo")</a></li>
                                     @if(Auth::guard('eksmp')->user()) {{userGuide($loc,  Auth::guard('eksmp')->user()->id_role)}} @endif
                                 </ul>
                             </div>

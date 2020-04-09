@@ -87,7 +87,7 @@
 										<input type="hidden" name="idu" value="<?php echo $ryu->id; ?>">
 
 											@if ($message = Session::get('warning'))
-												<div class="alert alert-warning alert-block" style="text-align: center;color: white;">
+												<div class="alert alert-info text-center">
 													<button type="button" class="close" data-dismiss="alert">×</button>
 													<strong>{{ $message }}</strong>
 												</div>
@@ -106,15 +106,15 @@
 												<label><b><font color="red">(*)</font> NPWP</b></label>
 											</div>
 											<div class="form-group col-sm-4">
-												<input type="text" placeholder="Number Only(without dot)" value="<?php echo $ryu->npwp; ?>" name="npwp" id="npwp" onkeyup="ceknpwp()" class="form-control" >
-												<label><font color="red">number only(without dot)</font></label>
+												<input type="text" placeholder="Number Only(without dot)" value="<?php echo $ryu->npwp; ?>" name="npwp" id="npwp" onkeyup="ceknpwp()" class="form-control" aria-describedby="npwphelp">
+												<small id="npwphelp">Diinput hanya karakter angka</small>
 											</div>
 
 											<div class="form-group col-sm-3 vld">
 												@if($ryu->npwp != 'null')
 													<font color="green">Valid</font>
 												@else
-													<font color="red">Not Valid</font><!-- <input type="text" readonly value="" placeholder="Name of NPWP" name="nanpwp" id="nanpwp" class="form-control" > -->
+													<font color="red">Tidak Valid</font><!-- <input type="text" readonly value="" placeholder="Name of NPWP" name="nanpwp" id="nanpwp" class="form-control" > -->
 												@endif
 											</div>
 										</div>
