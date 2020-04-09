@@ -476,11 +476,18 @@ class InquiryController extends Controller
     {
 		$id_inquiry = $request->id_inquiry;
 		$id_broad = $request->id_broad;
+	if(empty($id_broad) || $id_broad == null || $id_broad == ""){
+		$user = DB::table('csc_chatting_inquiry')
+			->where('csc_chatting_inquiry.id_inquiry', $id_inquiry)
+            ->orderBy('csc_chatting_inquiry.created_at', 'DESC')
+            ->get();
+	}else{
 		$user = DB::table('csc_chatting_inquiry')
 			->where('csc_chatting_inquiry.id_inquiry', $id_inquiry)
 			->where('csc_chatting_inquiry.id_broadcast_inquiry', $id_broad)
             ->orderBy('csc_chatting_inquiry.created_at', 'DESC')
             ->get();
+	}
 //        dd($user);
         $jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
@@ -715,6 +722,165 @@ class InquiryController extends Controller
 					return $res;
                 }
 		
+	}
+	
+	public function inquiry_detail_admin(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+		
+		$id_inquiry = $request->id_inquiry;
+        $user = DB::table('csc_inquiry_br')
+                    ->where('id', $id_inquiry)
+					->get();
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($user); $i++) {
+            $jsonResult[$i]["id"] = $user[$i]->id;
+			$jsonResult[$i]["type"] = $user[$i]->type;
+			if($user[$i]->type == "admin"){
+				$jsonResult[$i]["id_type"] = 1;
+				$jsonResult[$i]["id_csc_prod_cat"] = 0;
+				$jsonResult[$i]["id_csc_prod_cat_level1"] = 0;
+				$jsonResult[$i]["id_csc_prod_cat_level2"] = 0;
+				$wkwk = $user[$i]->id_csc_prod_cat.",".$user[$i]->id_csc_prod_cat_level1.",".$user[$i]->id_csc_prod_cat_level2.",";
+				$id_csc = explode(",", $wkwk);
+				$list_k = array();
+				
+				for ($a = 0; $a < count($id_csc); $a++) {
+					if (!empty($id_csc[$a]) || $id_csc[$a] != null) {
+						//$getNama = DB::table('csc_product')->where('id', $id_csc[$a])->select("nama_kategori_en")->first();
+						$list_k[] = $id_csc[$a];
+					}
+				}
+
+				$getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
+				$jsonResult[$i]["csc_product_desc"] = $getName;
+				
+				
+			}else if($user[$i]->type == "perwakilan"){
+				$jsonResult[$i]["id_type"] = 4;
+				$jsonResult[$i]["id_csc_prod_cat"] = 0;
+				$jsonResult[$i]["id_csc_prod_cat_level1"] = 0;
+				$jsonResult[$i]["id_csc_prod_cat_level2"] = 0;
+				$wkwk = $user[$i]->id_csc_prod_cat.",".$user[$i]->id_csc_prod_cat_level1.",".$user[$i]->id_csc_prod_cat_level2.",";
+				$id_csc = explode(",", $wkwk);
+				$list_k = array();
+
+				for ($a = 0; $a < count($id_csc); $a++) {
+					if (!empty($id_csc[$a]) || $id_csc[$a] != null) {
+						//$getNama = DB::table('csc_product')->where('id', $id_csc[$a])->select("nama_kategori_en")->first();
+						$list_k[] = $id_csc[$a];
+					}
+				}
+
+				$getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
+				$jsonResult[$i]["csc_product_desc"] = $getName;
+			}else{
+				$jsonResult[$i]["id_type"] = 3;
+				$jsonResult[$i]["id_csc_prod_cat"] = $user[$i]->id_csc_prod_cat;
+				$jsonResult[$i]["id_csc_prod_cat_level1"] = $user[$i]->id_csc_prod_cat_level1;
+				$jsonResult[$i]["id_csc_prod_cat_level2"] = $user[$i]->id_csc_prod_cat_level2;
+				$wkwk = $user[$i]->id_csc_prod_cat.",".$user[$i]->id_csc_prod_cat_level1.",".$user[$i]->id_csc_prod_cat_level2.",";
+				$id_csc = explode(",", $wkwk);
+				$list_k = array();
+
+				for ($a = 0; $a < count($id_csc); $a++) {
+					if (!empty($id_csc[$a]) || $id_csc[$a] != null) {
+						//$getNama = DB::table('csc_product')->where('id', $id_csc[$a])->select("nama_kategori_en")->first();
+						$list_k[] = $id_csc[$a];
+					}
+				}
+
+				$getName = DB::table('csc_product')->whereIn('id', $list_k)->select("nama_kategori_en")->get();
+				$jsonResult[$i]["csc_product_desc"] = $getName;
+				$jsonResult[$i]["status"] = $user[$i]->status;
+				
+			}
+			/*
+			if($user[$i]->status == 0){ $ct = "New Inquiry"; }else if($user[$i]->status == 1){ $ct = "New Inquiry"; }else if($user[$i]->status == 2){ $ct = "Transaction"; } 
+			else if($user[$i]->status == 3){ $ct = "Deal"; } else if($user[$i]->status == 4){ $ct = "Cancel"; } else if($user[$i]->status == 5){ $ct = "Duration Timeout"; } 
+			else { $ct = "-"; } 
+			*/
+			$statnya = "-";
+                    if($user[$i]->status != NULL){
+                        if($user[$i]->status == 0){
+                            $stat = 1;
+                        }else{
+                            $stat = $user[$i]->status;
+                        }
+                        $statnya = Lang::get('inquiry.stat'.$stat);
+                    }
+
+             
+			$jsonResult[$i]["status"] = $user[$i]->status;
+			$jsonResult[$i]["status_desc"] = $statnya;
+           
+            $jsonResult[$i]["jenis_perihal_en"] = $user[$i]->jenis_perihal_en;
+            $jsonResult[$i]["jenis_perihal_in"] = $user[$i]->jenis_perihal_in;
+            $jsonResult[$i]["jenis_perihal_chn"] = $user[$i]->jenis_perihal_chn;
+            $jsonResult[$i]["id_mst_country"] = $user[$i]->id_mst_country;
+            $jsonResult[$i]["messages_en"] = $user[$i]->messages_en;
+            $jsonResult[$i]["messages_in"] = $user[$i]->messages_in;
+            $jsonResult[$i]["messages_chn"] = $user[$i]->messages_chn;
+            $jsonResult[$i]["subyek_en"] = $user[$i]->subyek_en;
+            $jsonResult[$i]["subyek_in"] = $user[$i]->subyek_in;
+            $jsonResult[$i]["subyek_chn"] = $user[$i]->subyek_chn;
+            
+            
+            $jsonResult[$i]["date"] = $user[$i]->date;
+            $jsonResult[$i]["created_at"] = $user[$i]->created_at;
+			if(empty($user[$i]->updated_at) || $user[$i]->updated_at == null){ 
+			$jsonResult[$i]["updated_at"] =  ""; 
+			}else{ 
+			$jsonResult[$i]["updated_at"] =  $user[$i]->updated_at; 
+			}
+            
+            $jsonResult[$i]["duration"] = $user[$i]->duration;
+			if($user[$i]->type == "importir"){
+				$jsonResult[$i]["to"] = $user[$i]->to;
+				$jsonResult[$i]["prodname"] = $user[$i]->prodname;
+				$id_profil = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_profil;
+				$id_role = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_role;
+				$jsonResult[$i]["company_name"] = ($id_role == 3) ? DB::table('itdp_profil_imp')->where('id', $id_profil)->first()->company : DB::table('itdp_profil_eks')->where('id', $id_profil)->first()->company;
+				
+            }else{
+				$jsonResult[$i]["to"] = $user[$i]->id_pembuat;
+				$jsonResult[$i]["prodname"] = $user[$i]->prodname;
+				/*$id_profil = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_profil;
+				$id_role = DB::table('itdp_company_users')->where('id', $user[$i]->id_pembuat)->first()->id_role; */
+				$jsonResult[$i]["company_name"] = "";
+				/*$jsonResult[$i]["csc_product_desc"] = "";
+				$jsonResult[$i]["csc_product_level1_desc"] = "";
+				$jsonResult[$i]["csc_product_level2_desc"] = "";*/
+			
+			}
+		}
+
+
+        if ($user) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $jsonResult;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+			
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+
+    
 	}
 		
 	

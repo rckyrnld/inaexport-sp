@@ -58,6 +58,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	Route::post('insert_inquiry_admin', 'Api\Admin\InquiryController@store');
 	Route::post('bc_inquiry_admin', 'Api\Admin\InquiryController@bc_inquiry_admin');
 	Route::get('list_inquiry_broadcast', 'Api\Admin\InquiryController@list_inquiry_broadcast');
+	Route::get('inquiry_detail_admin', 'Api\Admin\InquiryController@inquiry_detail_admin');
 	Route::post('list_inquiry_hc', 'Api\Admin\InquiryController@list_inquiry_hc');
 	Route::post('verif_inquiry_admin', 'Api\Admin\InquiryController@verif_inquiry_admin');
 	
