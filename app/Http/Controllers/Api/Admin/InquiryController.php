@@ -422,7 +422,39 @@ class InquiryController extends Controller
             $jsonResult[$i]["updated_at"] = $user[$i]->updated_at;
             $jsonResult[$i]["date"] = $user[$i]->date;
             $jsonResult[$i]["due_date"] = $user[$i]->due_date;
-            
+			$jsonResult[$i]["foto_profil"] = $path = ($user[$i]->foto_profil) ? url('uploads/Profile/Eksportir/' . $user[$i]->id . '/' . $user[$i]->foto_profil) : url('image/nia-01-01.jpg');            
+            $qy1 = DB::select("select messages,file,created_at from csc_chatting_inquiry where id_inquiry='".$user[$i]->id_inquiry."' and sender ='".$user[$i]->id_itdp_company_users."' or receive ='".$user[$i]->id_itdp_company_users."' order by created_at desc limit 1");
+			if(count($qy1) == 0){
+				$lc = ".......";
+				$ext = "text";
+				$tc = "";
+			}else{
+				foreach($qy1 as $y1){
+					if($y1->file == null || empty($y1->file) ){
+					$lc = $y1->messages;
+					$ext = "text";
+					$tc = $y1->created_at;
+					}else{
+					$lc = $y1->files;
+					$tc = $y1->created_at;
+					$ext = pathinfo($y1->files, PATHINFO_EXTENSION);
+					$gbr = ['png', 'jpg', 'jpeg'];
+					$file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+					if (in_array($ext, $gbr)) {
+						$ext = "Image";
+					} else if (in_array($ext, $file)) {
+						$ext = "File";
+					} else {
+						$ext = "Not Identified";
+					}
+					}
+				}
+				
+			}
+            $jsonResult[$i]["last_chat"] = $lc;
+            $jsonResult[$i]["ext"] = $ext;
+            $jsonResult[$i]["tanggal_chat"] = $tc;
             
 
 			}
