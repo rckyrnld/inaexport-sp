@@ -1222,17 +1222,21 @@ class ManagementController extends Controller
 		$page = $request->page;
 		$limit = $request->limit;
         $user = DB::table('csc_product_single')
-                        ->select('csc_product_single.id', 'image_1', 'prodname_en', 'price_usd', 'csc_product_single.status')
+                        ->select('csc_product_single.id', 'csc_product_single.id_itdp_company_user', 'image_1', 'prodname_en', 'price_usd', 'csc_product_single.status','itdp_company_users.username')
                         ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-                        ->paginate($limit);
+                        ->where('csc_product_single.status', 1)
+						->paginate($limit);
 						
 		 $user2 = DB::table('csc_product_single')
                         ->select('csc_product_single.id', 'image_1', 'prodname_en', 'price_usd', 'csc_product_single.status')
                         ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-                        ->get();
+                        ->where('csc_product_single.status', 1)
+						->get();
 		$jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
 			$jsonResult[$i]["id"] = $user[$i]->id;
+			$jsonResult[$i]["id_user"] = $user[$i]->id_itdp_company_user;
+			$jsonResult[$i]["nama_user"] = $user[$i]->username;
             $jsonResult[$i]["prodname_en"] = $user[$i]->prodname_en;
             $jsonResult[$i]["price_usd"] = $user[$i]->price_usd;
             if($user[$i]->status == 1){
@@ -1246,7 +1250,7 @@ class ManagementController extends Controller
             }else{
                 $yk = "Hide";
             }
-            $jsonResult[$i]["price_usd"] = $yk;
+            $jsonResult[$i]["status_desc"] = $yk;
 			$jsonResult[$i]["image_1"] = $path = ($user[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $user[$i]->id . '/' . $user[$i]->image_1) : url('image/nia-01-01.jpg'); 
             
 			}
