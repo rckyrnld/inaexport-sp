@@ -492,12 +492,19 @@ class InquiryController extends Controller
             $res['data'] = $data;
             return response($res);
         } else {
+			$countall = count($user2);
+			$bagi = $countall / $request->limit;
             $meta = [
                 'code' => 204,
                 'message' => 'Data Not Found',
                 'status' => 'No Content'
             ];
-            $data = '';
+            $data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $jsonResult
+            ];
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
