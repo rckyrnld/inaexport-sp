@@ -501,7 +501,7 @@ class InquiryController extends Controller
             ];
             $data = [
                 'page' => $request->page,
-                'total_results' => $countall,
+                'total_results' => 0,
                 'total_pages' => ceil($bagi),
                 'results' => $jsonResult
             ];
