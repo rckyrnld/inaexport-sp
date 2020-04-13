@@ -532,13 +532,38 @@ class InquiryController extends Controller
 //        dd($user);
         $jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
-            $jsonResult[$i]["id"] = $user[$i]->id;
+			$ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+			$jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
-			$jsonResult[$i]["sender"] = $user[$i]->sender;
-            $jsonResult[$i]["receive"] = $user[$i]->receive;
-            $jsonResult[$i]["messages"] = $user[$i]->messages;
+            $jsonResult[$i]["pesan"] = $user[$i]->messages;
+            $jsonResult[$i]["tanggapan"] = $user[$i]->messages;
+            $jsonResult[$i]["tanggal"] = $user[$i]->created_at;
             $jsonResult[$i]["status"] = $user[$i]->status;
+			$jsonResult[$i]["id_pengirim"] = $user[$i]->sender;
+			$quek = DB::select("select * from itdp_company_users where id='".$user[$i]->sender."'");
+            if(count($quek) == 0){
+			$jsonResult[$i]["id_role"] = 1;
+            $jsonResult[$i]["username_pengirim"] = "admin";	
+			}else{
+			foreach($quek as $wk){
+			$jsonResult[$i]["id_role"] = $wk->id_role;
+            $jsonResult[$i]["username_pengirim"] = $wk->username;
+			}
+			}
+			
+            $jsonResult[$i]["files"] = $path = ($user[$i]->file) ? url('/Inquiry/'.$id_inquiry.'/'. $user[$i]->file) : "";
+            $jsonResult[$i]["ext"] = $extension;
             
             
 
