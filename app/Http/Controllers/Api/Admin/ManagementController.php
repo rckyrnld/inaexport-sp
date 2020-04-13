@@ -1221,17 +1221,37 @@ class ManagementController extends Controller
     {
 		$page = $request->page;
 		$limit = $request->limit;
-        $listProductCompany = DB::table('csc_product_single')
+        $user = DB::table('csc_product_single')
                         ->select('csc_product_single.id', 'image_1', 'prodname_en', 'price_usd', 'csc_product_single.status')
                         ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
                         ->paginate($limit);
 						
-		 $listProductCompany2 = DB::table('csc_product_single')
+		 $user2 = DB::table('csc_product_single')
                         ->select('csc_product_single.id', 'image_1', 'prodname_en', 'price_usd', 'csc_product_single.status')
                         ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
                         ->get();
+		$jsonResult = array();
+        for ($i = 0; $i < count($user); $i++) {
+			$jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["prodname_en"] = $user[$i]->prodname_en;
+            $jsonResult[$i]["price_usd"] = $user[$i]->price_usd;
+            if($user[$i]->status == 1){
+                $yk = "Publish - Not Verified";
+            }else if($user[$i]->status == 2){
+                $yk = "Publish - Verified";
+            }else if($user[$i]->status == 3){
+                $yk = "Publish - Verification Rejected";
+            }else if($user[$i]->status == 9){
+                $yk = "Unpublish - Verified";
+            }else{
+                $yk = "Hide";
+            }
+            $jsonResult[$i]["price_usd"] = $yk;
+			$jsonResult[$i]["image_1"] = $path = ($user[$i]->image_1) ? url('uploads/Eksportir_Product/Image/' . $user[$i]->id . '/' . $user[$i]->image_1) : url('image/nia-01-01.jpg'); 
+            
+			}
 
-        $i = 0;
+        /* $i = 0;
         foreach ($listProductCompany as $dataPro) {
             if (isset($dataPro->image_1)) {
                 $listProductCompany[$i]->image_1 = url('uploads/Eksportir_Product/Image/' . $dataPro->id . '/' . $dataPro->image_1);
@@ -1250,8 +1270,8 @@ class ManagementController extends Controller
             }
             $i++;
         }
-
-        if ($listProductCompany) {
+		*/
+        if ($user) {
 			/*
             $meta = [
                 'code' => 200,
@@ -1263,7 +1283,7 @@ class ManagementController extends Controller
             $res['data'] = $data;
             return response($res);
 			*/
-			$countall = count($listProductCompany2);
+			$countall = count($user2);
 			$bagi = $countall / $request->limit;
             $meta = [
                 'code' => 200,
@@ -1275,7 +1295,7 @@ class ManagementController extends Controller
                 'page' => $request->page,
                 'total_results' => $countall,
                 'total_pages' => ceil($bagi),
-                'results' => $listProductCompany
+                'results' => $jsonResult
             ];
 
             $res['meta'] = $meta;
