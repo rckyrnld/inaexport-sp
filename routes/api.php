@@ -63,6 +63,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	Route::post('verif_inquiry_admin', 'Api\Admin\InquiryController@verif_inquiry_admin');
 	Route::post('count_inq_chat_admin', 'Api\Admin\InquiryController@count_inq_chat_admin');
 	Route::post('simpanchat_inquiry_admin', 'Api\Admin\InquiryController@simpanchat_inquiry_admin');
+	Route::post('uploadpop_inquiry', 'Api\Admin\InquiryController@uploadpop_inquiry');
 	
     // LIST COMPANY
     Route::post('listCompany', 'Api\Admin\ManagementController@listCompany');

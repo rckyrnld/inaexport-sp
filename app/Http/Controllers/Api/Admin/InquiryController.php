@@ -400,7 +400,7 @@ class InquiryController extends Controller
 		$user = DB::table('csc_inquiry_broadcast')
 			->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_inquiry_broadcast.id_itdp_company_users')
 			->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
-			->select('itdp_company_users.*','itdp_profil_eks.*','csc_inquiry_broadcast.*','csc_inquiry_broadcast.id as id_broad')
+			->select('itdp_company_users.*','itdp_company_users.id as idc','itdp_profil_eks.*','csc_inquiry_broadcast.*','csc_inquiry_broadcast.id as id_broad')
 			->where('csc_inquiry_broadcast.id_inquiry', $id_inquiry)
             ->orderBy('csc_inquiry_broadcast.created_at', 'DESC')
 			->paginate($limit);
@@ -417,7 +417,7 @@ class InquiryController extends Controller
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
             $jsonResult[$i]["id_broad"] = $user[$i]->id_broad;
-            $jsonResult[$i]["id_itdp_company_users"] = $user[$i]->id_itdp_company_users;
+            $jsonResult[$i]["id_itdp_company_users"] = $user[$i]->idc;
 			$jsonResult[$i]["company"] = $user[$i]->badanusaha." ".$user[$i]->company;
             $jsonResult[$i]["status"] = $user[$i]->status;
             $jsonResult[$i]["created_at"] = $user[$i]->created_at;
@@ -1093,6 +1093,105 @@ class InquiryController extends Controller
             return $res;
         }
 
+    }
+	
+	public function uploadpop_inquiry(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+		$id_inquiry = $request->id_inquiry;
+        $sender = $request->sender;
+        $receive = $request->receive;
+		$messages = $request->messages;
+        $id_broadcast_inquiry = $request->id_broad;
+        date_default_timezone_set('Asia/Jakarta');
+        $datenow = date('Y-m-d H:i:s');
+		
+        $file = $request->file('filez')->getClientOriginalName();
+        $destinationPath = public_path() . "/uploads/Inquiry/".$id_inquiry;
+        $request->file('filez')->move($destinationPath, $file);
+       
+
+
+        $insert = DB::table('csc_chatting_inquiry')->insertGetId([
+                'id_inquiry' => $id_inquiry,
+                'sender' => $sender,
+                'receive' => $receive,
+                'messages' => $messages,
+                'status' => 0,
+                'created_at' => $datenow,
+                'file' => $file,
+                'id_broadcast_inquiry' => $id_broadcast_inquiry,
+            ]
+        );
+		
+        if(empty($id_broadcast_inquiry) || $id_broadcast_inquiry == null || $id_broadcast_inquiry == "" || $id_broadcast_inquiry == 0){
+			$user = DB::table('csc_chatting_inquiry')
+            ->where('id_inquiry', '=', $id_inquiry)
+            ->orderBy('id', 'desc')
+            ->get();
+		}else{
+			$user = DB::table('csc_chatting_inquiry')
+            ->where('id_inquiry', '=', $id_inquiry)
+            ->where('id_broadcast_inquiry', '=', $id_broadcast_inquiry)
+            ->orderBy('id', 'desc')
+            ->get();
+		}
+
+        $jsonResult = array();
+        for ($i = 0; $i < count($user); $i++) {
+			$ext = pathinfo($user[$i]->file, PATHINFO_EXTENSION);
+            $gbr = ['png', 'jpg', 'jpeg'];
+            $file = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+            if (in_array($ext, $gbr)) {
+                $extension = "gambar";
+            } else if (in_array($ext, $file)) {
+                $extension = "file";
+            } else {
+                $extension = "not identified";
+            }
+			$jsonResult[$i]["id"] = $user[$i]->id;
+            $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
+            $jsonResult[$i]["id_broadcast_inquiry"] = $user[$i]->id_broadcast_inquiry;
+            $jsonResult[$i]["pesan"] = $user[$i]->messages;
+            $jsonResult[$i]["tanggapan"] = $user[$i]->messages;
+            $jsonResult[$i]["tanggal"] = $user[$i]->created_at;
+            $jsonResult[$i]["status"] = $user[$i]->status;
+			$jsonResult[$i]["id_pengirim"] = $user[$i]->sender;
+			$quek = DB::select("select * from itdp_company_users where id='".$user[$i]->sender."'");
+            if(count($quek) == 0){
+			$jsonResult[$i]["id_role"] = 1;
+            $jsonResult[$i]["username_pengirim"] = "admin";	
+			}else{
+			foreach($quek as $wk){
+			$jsonResult[$i]["id_role"] = $wk->id_role;
+            $jsonResult[$i]["username_pengirim"] = $wk->username;
+			}
+			}
+			
+            $jsonResult[$i]["files"] = $path = ($user[$i]->file) ? url('/Inquiry/'.$id_inquiry.'/'. $user[$i]->file) : "";
+            $jsonResult[$i]["ext"] = $extension;
+            
+            
+
+			}
+        
+
+       
+        if ($user) {
+
+            return $jsonResult;
+        } else {
+            $meta = [
+                'code' => 404,
+                'message' => 'Data Not Found',
+                'status' => 'Failed'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+        }
     }
 	
 
