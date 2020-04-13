@@ -948,6 +948,56 @@ class InquiryController extends Controller
 
     
 	}
+	
+	public function count_inq_chat_admin(Request $request)
+    {
+        $id_inquiry = $request->id_inquiry;
+        $id_broad = $request->id_broad;
+        
+//        $qwr = DB::select("select * from csc_buying_request_chat where id_br='" . $id_br . "' and id_join='" . $id . "'");
+		if(empty($id_broad) || $id_broad == null || $id_broad == "" || $id_broad == 0){
+			$user = DB::table('csc_chatting_inquiry')
+            ->where('id_inquiry', '=', $id_inquiry)
+            ->orderBy('id', 'desc')
+            ->count();
+		}else{
+			$user = DB::table('csc_chatting_inquiry')
+            ->where('id_inquiry', '=', $id_inquiry)
+            ->where('id_broadcast_inquiry', '=', $id_broad)
+            ->orderBy('id', 'desc')
+            ->count();
+		}
+        
+
+
+//        dd($jsonResult);
+
+        if ($user) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = [
+                'count' => $user
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return $res;
+
+        }
+    }
 		
 	
 
