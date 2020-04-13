@@ -400,6 +400,7 @@ class InquiryController extends Controller
 		$user = DB::table('csc_inquiry_broadcast')
 			->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_inquiry_broadcast.id_itdp_company_users')
 			->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
+			->select('itdp_company_users.*','itdp_profil_eks.*','csc_inquiry_broadcast.*','csc_inquiry_broadcast.id as id_broad')
 			->where('csc_inquiry_broadcast.id_inquiry', $id_inquiry)
             ->orderBy('csc_inquiry_broadcast.created_at', 'DESC')
 			->paginate($limit);
@@ -415,6 +416,7 @@ class InquiryController extends Controller
         for ($i = 0; $i < count($user); $i++) {
             $jsonResult[$i]["id"] = $user[$i]->id;
             $jsonResult[$i]["id_inquiry"] = $user[$i]->id_inquiry;
+            $jsonResult[$i]["id_broad"] = $user[$i]->id_broad;
             $jsonResult[$i]["id_itdp_company_users"] = $user[$i]->id_itdp_company_users;
 			$jsonResult[$i]["company"] = $user[$i]->badanusaha." ".$user[$i]->company;
             $jsonResult[$i]["status"] = $user[$i]->status;
