@@ -897,6 +897,7 @@ class ManagementController extends Controller
             } else {
                 $jsonResult[$i]["status_j"] = '-';
             }
+            $jsonResult[$i]["status_join"] = $buy[$i]->status_join;
             $jsonResult[$i]["email"] = $buy[$i]->email;
             $jsonResult[$i]["username"] = $buy[$i]->username;
             $jsonResult[$i]["id_profil"] = $buy[$i]->id_profil;
