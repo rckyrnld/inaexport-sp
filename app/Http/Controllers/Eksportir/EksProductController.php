@@ -332,7 +332,6 @@ class EksProductController extends Controller
 
     public function tambah()
     {
-//        dd($id_user);
         if(Auth::guard('eksmp')->user()){
             $url = '/eksportir/product_save';
             $pageTitle = 'Add Product';

@@ -118,10 +118,17 @@ class LoginEIController extends Controller
         if(count($getstatus) < 1){
             $baliknya = "notfound";
         }else{
-            if($getstatus[0]->status == 0){
-                $baliknya = "status0";
+//            if($getstatus[0]->verified_at == null){
+//                $baliknya = "status0";
+//            }else{
+//                $baliknya = "statusoke";
+//            }
+            if($getstatus[0]->status == 2){
+                $baliknya = "status2";
             }
-            else{
+            else if($getstatus[0]->status == 0){
+                $baliknya = "status0";
+            }else{
                 $baliknya = "statusoke";
             }
         }

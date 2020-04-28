@@ -116,8 +116,8 @@ h4 h6 h3{
                     // 'password2': password2,
                 }, function (response) {
                     var res = JSON.parse(response);
-                    // console.log(res);
-                    if(res == 'status0'){
+                    //console.log(res);
+                    if(res == 'status2'){
                         var r = confirm("Aktivasi Akun Anda?");
                         // var status = 0;
                         // $('#status').val(0);
@@ -131,6 +131,8 @@ h4 h6 h3{
                                 });
                             document.getElementById("formlogin").submit();
                         }
+                    }else if( res == 'status0'){
+                        alert('wait for admin to verified your account first')
                     }
                     // else if(res == 'statusoke'){
                     //     // $('#status').val(1);
@@ -138,7 +140,6 @@ h4 h6 h3{
                     //     document.getElementById("formlogin").submit();
                     // }
                     else{
-                        console.log('masuk else');
                         document.getElementById("formlogin").submit();
                     }
                 });
