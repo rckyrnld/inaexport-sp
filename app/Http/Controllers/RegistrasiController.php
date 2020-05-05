@@ -172,16 +172,21 @@ class RegistrasiController extends Controller
 //        dd($qr);
         $insert1 = DB::select("
 			insert into itdp_profil_eks (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_province) values
-			('".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
+			('".$request->company."','".$request->alamat."','".$request->postcode."','".'+62'.$request->phone."','".'+62'.$request->fax."'
 			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1','".$request->city."','".$request->prov."')
 		");
 		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_eks");
 		foreach($ambilmaxid as $rt){
 			$id1 = $rt->maxid;
 		}
+		// sama username
+//		$insert2 = DB::select("
+//			insert into itdp_company_users (id_profil,type,username,password,email,status,id_role,created_at,newsletter) values
+//			('".$id1."','Luar Negeri','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','2','".date('Y-m-d H:m:s')."',$request->ckk2send)
+//		");
 		$insert2 = DB::select("
-			insert into itdp_company_users (id_profil,type,username,password,email,status,id_role,created_at,newsletter) values
-			('".$id1."','Luar Negeri','".$request->username."','".bcrypt($request->password)."','".$request->email."','0','2','".date('Y-m-d H:m:s')."',$request->ckk2send)
+			insert into itdp_company_users (id_profil,type,password,email,status,id_role,created_at,newsletter) values
+			('".$id1."','Luar Negeri','".bcrypt($request->password)."','".$request->email."','0','2','".date('Y-m-d H:m:s')."',$request->ckk2send)
 		");
 		$ambilmaxid2 = DB::select("select max(id) as maxid2 from itdp_company_users");
 		foreach($ambilmaxid2 as $rt2){
