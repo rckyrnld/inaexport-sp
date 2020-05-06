@@ -153,7 +153,7 @@
                         <div class="form-group col-sm-8" align="left">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <input type="text" value="+62" class="form-control" disabled style="padding: .105rem .50rem; " >
+                                    <input type="text" value="+62" class="form-control" disabled style="padding: .105rem .20rem; " >
                                 </div>
                                 <div class="col-md-10"><input type="text" name="phone" id="phone" class="form-control " style=" color: black;"></div>
                             </div>
@@ -171,7 +171,7 @@
                         <div class="form-group col-sm-8" align="left">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <input type="text" class="form-control" value="+62" disabled  style="padding: .105rem .50rem; " >
+                                    <input type="text" class="form-control" value="+62" disabled  style="padding: .105rem .20rem; " >
                                 </div>
                                 <div class="col-md-10">
                                     <input type="text" name="fax" id="fax" class="form-control" style=" color: black;">

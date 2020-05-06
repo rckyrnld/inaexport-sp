@@ -637,7 +637,6 @@ class VerifyuserController extends Controller
 	}
 	public function simpan_profil(Request $request)
     {
-
         date_default_timezone_set('Asia/Jakarta');
 		$id_role = $request->id_role;
 		$id_user = $request->id_user;
@@ -840,6 +839,7 @@ class VerifyuserController extends Controller
     }
 
 	public function simpan_dokumenb(Request $request){
+        // untuk simpan dari data perusahaan dokumen di exportir
         date_default_timezone_set('Asia/Jakarta');
         $id_role = $request->id_role;
         $id_user = $request->id_user;
@@ -913,23 +913,32 @@ class VerifyuserController extends Controller
                 });
             }
 
-            if($request->staim == null){
-                $staim = 0;
-            }else{
-                $staim =1;
-            }
+            //untuk aktifin otomatis kalo udah masukin NPWP. Tapi karna gak cek NPWP, Jadinya belum di aktifin dulu
+            //if($request->staim == null){
+            //    $staim = 0;
+            //}else{
+            //    $staim =1;
+            //}
 
             //UPDATE TAB 3
             if($id_role == 2){
                 if($request->npwp == "null"){
+//                    ini kalo di
+//                    $updatetab2 = DB::select("update itdp_profil_eks set tdp='".$request->tanda_daftar."', siup='".$request->siup."'
+//				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$staim."'
+//				where id='".$id_user_b."'");
                     $updatetab2 = DB::select("update itdp_profil_eks set tdp='".$request->tanda_daftar."', siup='".$request->siup."' 
-				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$staim."' 
+				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."'
 				where id='".$id_user_b."'");
                 }else{
+//                    $updatetab2 = DB::select("update itdp_profil_eks set npwp='".$request->npwp."', tdp='".$request->tanda_daftar."', siup='".$request->siup."'
+//				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$staim."'
+//				where id='".$id_user_b."'");
                     $updatetab2 = DB::select("update itdp_profil_eks set npwp='".$request->npwp."', tdp='".$request->tanda_daftar."', siup='".$request->siup."' 
-				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$staim."' 
+				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."' 
 				where id='".$id_user_b."'");
-                    $updatecompus = DB::select("update itdp_company_users set status='".$staim."', verified_by ='".Auth::guard('eksmp')->user()->id."', verified_at = '".$date."' where id='".$id_user."'") ;
+//                    $updatecompus = DB::select("update itdp_company_users set status='".$staim."', verified_by ='".Auth::guard('eksmp')->user()->id."', verified_at = '".$date."' where id='".$id_user."'") ;
+                    $updatecompus = DB::select("update itdp_company_users set verified_by ='".Auth::guard('eksmp')->user()->id."', verified_at = '".$date."' where id='".$id_user."'") ;
 
                 }
             }

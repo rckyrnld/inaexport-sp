@@ -315,13 +315,14 @@ body {font-family: Arial;}
 			<label><b><font color="red">(*)</font> NPWP</b></label>
 		</div>
 		<div class="form-group col-sm-4">
-			<input type="text" value="<?php echo $ryu->npwp; ?>" name="npwp" id="npwp" onkeyup="ceknpwp()" class="form-control" >
-			
+			<input type="text" value="<?php echo $ryu->npwp; ?>" name="npwp" id="npwp" class="form-control" >
 		</div>
-		
-		<div class="form-group col-sm-4 vld">
+		<div class="form-group col-sm-1 vld">
 			<font color="red">Not Valid</font><!-- <input type="text" readonly value="" placeholder="Name of NPWP" name="nanpwp" id="nanpwp" class="form-control" > -->
 		</div>
+		<div class="form-group col-sm-1"><a onclick="ceknpwp()" class="btn btn-sm btn-primary text-white">Check NPWP</a></div>
+
+
 	</div>
 	<div class="form-row">
 		<div class="form-group col-sm-3">
@@ -618,8 +619,6 @@ function handleFileSelect(evt){
     }
  }
 </script>
-  
-
                             
                         </div>
                     </div>

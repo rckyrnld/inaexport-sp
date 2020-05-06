@@ -8,10 +8,16 @@
 {{--            <ul>Username : {{$username}}</ul>--}}
 {{--        </ol>--}}
 {{--        <p style="text-align: left;">click <a href="{{url('login/')}}">here</a> for check and login.</p>--}}
-        <p style="text-align: left">Dear {{$company}},</p>
-        <p style="text-align: left">this account has been activated by {{$by}}, so you can use Indonesian Trade Digital Promotion.</p>
+        <p style="text-align: left">Yth {{$company}}</p>
+        <p style="text-align: left">Dengan email ini kami sampaikan bahwa Akun {{$company}} telah terverifikasi dan dapat digunakan. Langkah selanjutnya Anda dapat mengisi data produk-produk yang ingin ditampilkan dengan melakukan login terlebih dahulu pada link berikut http://inaexport.id/login.</p>
+        <p style="text-align: left">Terima kasih atas kepercayaannya menggunakan layanan kami.</p>
+        <p style="text-align: left">Hormat kami,</p>
+        <p style="text-align: left">InaExport Web Admin<p></p>
 
-        <p style="text-align: left">Thanks</p>
+{{--                <p c>Dear {{$company}},</p>--}}
+{{--        <p style="text-align: left">this account has been activated by {{$by}}, so you can use Indonesian Trade Digital Promotion.</p>--}}
+
+{{--        <p style="text-align: left">Thanks</p>--}}
         <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
     </div>
 </div>

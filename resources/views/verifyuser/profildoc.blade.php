@@ -65,7 +65,7 @@
 							<div class="tab">
 								<?php if($ida == 2){ ?><button class="tablinks" onclick="openCity(event, 'Tokyo')"><font size="3px">Document</font></button> <?php } ?>
 							</div>
-							<form class="form-horizontal" method="POST" action="{{ url('simpan_profil_docb') }}" enctype="multipart/form-data">
+							<form class="form-horizontal" method="POST" action="{{ url('simpan_profil_docb') }}" id="formdokumen" enctype="multipart/form-data">
 								{{ csrf_field() }}
 
 								<input type="hidden" name="id_role" value="<?php echo $ida; ?>">
@@ -106,17 +106,18 @@
 												<label><b><font color="red">(*)</font> NPWP</b></label>
 											</div>
 											<div class="form-group col-sm-4">
-												<input type="text" placeholder="Number Only(without dot)" value="<?php echo $ryu->npwp; ?>" name="npwp" id="npwp" onkeyup="ceknpwp()" class="form-control" aria-describedby="npwphelp">
+												{{--onkeyup="ceknpwp()"--}}
+												<input type="text" placeholder="Number Only(without dot)" value="<?php echo $ryu->npwp; ?>" name="npwp" id="npwp" class="form-control" aria-describedby="npwphelp"  required>
 												<small id="npwphelp">Diinput hanya karakter angka</small>
 											</div>
 
-											<div class="form-group col-sm-3 vld">
-												@if($ryu->npwp != 'null')
-													<font color="green">Valid</font>
-												@else
-													<font color="red">Tidak Valid</font><!-- <input type="text" readonly value="" placeholder="Name of NPWP" name="nanpwp" id="nanpwp" class="form-control" > -->
-												@endif
-											</div>
+{{--											<div class="form-group col-sm-3 vld">--}}
+{{--												@if($ryu->npwp != 'null')--}}
+{{--													<font color="green">Valid</font>--}}
+{{--												@else--}}
+{{--													<font color="red">Tidak Valid</font><!-- <input type="text" readonly value="" placeholder="Name of NPWP" name="nanpwp" id="nanpwp" class="form-control" > -->--}}
+{{--												@endif--}}
+{{--											</div>--}}
 										</div>
 										<div class="form-row">
 											<div class="form-group col-sm-4">
@@ -125,19 +126,19 @@
 											<div class="form-group col-sm-4">
 												<?php
 												if(empty(Auth::user()->name)){  ?>
-												<input type="file" name="npwpfile" id="npwpfile" class="form-control upload1">
+												<input type="file" name="npwpfile" id="npwpfile" class="form-control  upload1">
 												<?php if($ryu->uploadnpwp == null){
 													echo "";
 												}else { ?>
-												<span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->uploadnpwp)}}"></a>
-				 <?php echo $ryu->uploadnpwp; ?></span>
+													<span>File Sebelumnya : <a href="{{ asset('eksportir/'.$ryu->uploadnpwp)}}"></a>
+													<?php echo $ryu->uploadnpwp; ?></span>
 												<?php } ?>
 												<?php } else{ ?>
 												<span><?php if(empty($ryu->uploadnpwp) || $ryu->uploadnpwp == null){ echo "<font color='red'>No File</font>"; }else{ ?>
 
-			  <a href="{{ asset('eksportir/'.$ryu->uploadnpwp)}}"><?php echo $ryu->uploadnpwp; ?></a>
-			  <?php } ?>
-			  </span>
+												  <a href="{{ asset('eksportir/'.$ryu->uploadnpwp)}}"><?php echo $ryu->uploadnpwp; ?></a>
+												  <?php } ?>
+												  </span>
 												<?php } ?>
 
 
@@ -348,7 +349,7 @@
 									<?php if(empty(Auth::user()->name)){ }else{ ?>
 									<a href="{{ url('verifyuser') }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Back</a>
 									<?php } ?>
-									<button class="btn btn-md btn-primary"><i class="fa fa-save"></i> Save</button>
+									<a class="btn btn-md btn-primary text-white" onclick="check()"><i class="fa fa-save"></i> Save</a>
 								</div>
 							</form>
 							<script>
@@ -422,6 +423,32 @@
 										}
 										fr.readAsDataURL(files[0]);
 									}
+								}
+
+								function check(){
+									var npwp = $('#npwp').val();
+									var npwpfile = $('#npwpfile').val();
+									if (!isEmptyM(npwp)  && !isEmptyM(npwpfile)) {
+										//kalo gak ada inputan yang kosong, masuk sini
+										$("#formdokumen"). submit();
+									}else if( ('{{$ryu->npwp}}' != '') && ('{{$ryu->uploadnpwp}}' != '')){
+										// if(!isEmptyM(npwp)  || !isEmptyM(npwpfile)  || !isEmptyM(pernyataan) || !isEmptyM(bill) || !isEmptyM(packing) || !isEmptyM(kontrak)) {
+
+											$("#formdokumen"). submit();
+										// }
+									}
+									else {
+										//ada yang kosong
+										alert('pastikan mengisi npwp dan upload npwp')
+									}
+								}
+
+								function isEmptyM(obj) {
+									for(var key in obj) {
+										if(obj.hasOwnProperty(key))
+											return false;
+									}
+									return true;
 								}
 							</script>
 
