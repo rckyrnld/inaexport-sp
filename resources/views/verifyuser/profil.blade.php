@@ -80,19 +80,16 @@ body {font-family: Arial;}
    ?>
 	   <div class="row">
 		   <div class="col-md-6">
-			   <div class="form-row">
-				   <div class="form-group col-sm-4">
-					   <label><b>Username</b></label>
+{{--			   <div class="form-row">--}}
+{{--				   <div class="form-group col-sm-4">--}}
+{{--					   <label><b>Username</b></label>--}}
 
-				   </div>
-				   <div class="form-group col-sm-8">
-					   <input type="text" value="<?php echo $rhj->username; ?>" name="username" id="username"
-							  class="form-control" >
-
-				   </div>
-
-
-			   </div>
+{{--				   </div>--}}
+{{--				   <div class="form-group col-sm-8">--}}
+{{--					   <input type="text" value="" name="username" id="username" class="form-control" >--}}
+{{--							 --}}
+{{--				   </div>--}}
+{{--			   </div>--}}
 			   <div class="form-row">
 				   <div class="form-group col-sm-4">
 					   <label><b>Email</b></label>
