@@ -27,21 +27,29 @@ class TrxController extends Controller
             if(!empty(Auth::guard('eksmp')->user()->id)){
                 if(Auth::guard('eksmp')->user()->id_role == 2){
                     $pageTitle = "Selling Transaction";
-                    $data = DB::select("select * from csc_transaksi where  id_eksportir='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc ");
+                    //$data = DB::select("select * from csc_transaksi where  id_eksportir='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc ");
+                    $data = DB::select("select * from csc_transaksi where  id_eksportir='".Auth::guard('eksmp')->user()->id."' order by created_at desc ");
                     return view('trx.index_eks', compact('pageTitle','data'));
                 }else if(Auth::guard('eksmp')->user()->id_role == 3){
                     $pageTitle = "Selling Transaction Admin";
-                    $data = DB::select("select * from csc_transaksi where  id_pembuat='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc");
+                    //$data = DB::select("select * from csc_transaksi where  id_pembuat='".Auth::guard('eksmp')->user()->id."' order by id_transaksi desc");
+                    $data = DB::table('csc_transaksi')
+                        ->select('*',DB::raw("case when created_at - now() < INTERVAL '0' then -(created_at - now())else created_at - now() end as abs_beda_tanggal"))
+                        ->where('id_pembuat', Auth::guard('eksmp')->user()->id )
+                        ->orderby('abs_beda_tanggal')
+                        ->get();
                     return view('trx.index_imp', compact('pageTitle','data'));
                 }
             }else{
                 if(Auth::user()->id_group == 4){
                     $pageTitle = "Selling Transaction Representative";
-                    $data = DB::select("select * from csc_transaksi  where id_pembuat='".Auth::user()->id."' and by_role='4' order by id_transaksi desc ");
+                    //$data = DB::select("select * from csc_transaksi  where id_pembuat='".Auth::user()->id."' and by_role='4' order by id_transaksi desc ");
+                    $data = DB::select("select * from csc_transaksi  where id_pembuat='".Auth::user()->id."' and by_role='4' order by created_at desc ");
                     return view('trx.index_pw', compact('pageTitle','data'));
                 }else{
                     $pageTitle = "Selling Transaction Admin";
-                    $data = DB::select("select * from csc_transaksi  order by id_transaksi desc ");
+                    //$data = DB::select("select * from csc_transaksi  order by id_transaksi desc ");
+                    $data = DB::select("select * from csc_transaksi  order by created_at desc ");
                     return view('trx.index_adm', compact('pageTitle','data'));
                 }
             }
@@ -54,13 +62,17 @@ class TrxController extends Controller
     {
         $pageTitle = "";
         if($id == 0 && $id2 == 0){
-            $data = DB::select("select * from csc_transaksi order by id_transaksi desc");
+            //$data = DB::select("select * from csc_transaksi order by id_transaksi desc");
+            $data = DB::select("select * from csc_transaksi order by created_at desc");
         }else if ($id == 0 && $id2 != 0){
-            $data = DB::select("select * from csc_transaksi where origin='".$id2."' order by id_transaksi desc");
+            //$data = DB::select("select * from csc_transaksi where origin='".$id2."' order by id_transaksi desc");
+            $data = DB::select("select * from csc_transaksi where origin='".$id2."' order by created_at desc");
         }else if ($id != 0 && $id2 == 0){
-            $data = DB::select("select * from csc_transaksi where by_role='".$id."' order by id_transaksi desc");
+            //$data = DB::select("select * from csc_transaksi where by_role='".$id."' order by id_transaksi desc");
+            $data = DB::select("select * from csc_transaksi where by_role='".$id."' order by created_at desc");
         }else if($id != 0 && $id2 != 0){
-            $data = DB::select("select * from csc_transaksi where by_role='".$id."' and origin='".$id2."' order by id_transaksi desc");
+            //$data = DB::select("select * from csc_transaksi where by_role='".$id."' and origin='".$id2."' order by id_transaksi desc");
+            $data = DB::select("select * from csc_transaksi where by_role='".$id."' and origin='".$id2."' order by created_at desc");
         }
         return view('trx.caritab', compact('id','id2','data','pageTitle'));
     }
@@ -69,13 +81,17 @@ class TrxController extends Controller
     {
         $pageTitle = "";
         if($id == 0 && $id2 == 0){
-            $data = DB::select("select * from csc_transaksi order by id_transaksi desc");
+            //$data = DB::select("select * from csc_transaksi order by id_transaksi desc");
+            $data = DB::select("select * from csc_transaksi order by created_at desc");
         }else if ($id == 0 && $id2 != 0){
-            $data = DB::select("select * from csc_transaksi where origin='".$id2."' order by id_transaksi desc");
+            //$data = DB::select("select * from csc_transaksi where origin='".$id2."' order by id_transaksi desc");
+            $data = DB::select("select * from csc_transaksi where origin='".$id2."' order by created_at desc");
         }else if ($id != 0 && $id2 == 0){
-            $data = DB::select("select * from csc_transaksi where by_role='".$id."' order by id_transaksi desc");
+            //$data = DB::select("select * from csc_transaksi where by_role='".$id."' order by id_transaksi desc");
+            $data = DB::select("select * from csc_transaksi where by_role='".$id."' order by created_at desc");
         }else if($id != 0 && $id2 != 0){
-            $data = DB::select("select * from csc_transaksi where by_role='".$id."' and origin='".$id2."' order by id_transaksi desc");
+            //$data = DB::select("select * from csc_transaksi where by_role='".$id."' and origin='".$id2."' order by id_transaksi desc");
+            $data = DB::select("select * from csc_transaksi where by_role='".$id."' and origin='".$id2."' order by created_at desc");
         }
         return view('trx.cetaktrx2', compact('id','id2','data','pageTitle'));
     }

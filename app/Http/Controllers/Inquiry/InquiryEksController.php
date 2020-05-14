@@ -64,7 +64,7 @@ class InquiryEksController extends Controller
                     ->where('b.id_itdp_company_users', '=', $id_user)
                     ->where('b.status', 1)
 //                    ->orderBy('a.date', 'DESC')
-                    ->orderBy('a.created_at', 'DESC')
+                    ->orderBy('b.created_at', 'DESC')
                     ->get();
                 foreach ($perwakilan as $key2) {
                     array_push($user, $key2);
@@ -88,7 +88,7 @@ class InquiryEksController extends Controller
                     ->where('b.id_itdp_company_users', '=', $id_user)
                     ->where('b.status', '!=', 1)
 //                    ->orderBy('a.date', 'DESC')
-                    ->orderBy('a.created_at', 'DESC')
+                    ->orderBy('b.created_at', 'DESC')
                     ->get();
                 foreach ($perwakilan as $key2) {
                     array_push($user, $key2);

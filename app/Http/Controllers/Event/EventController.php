@@ -27,12 +27,15 @@ class EventController extends Controller
                             $query->where('b.url_terkait', 'event/show_detail');
                         })
                         ->orwhere('c.id_itdp_profil_eks', $id_user)
-                        ->orderby('a.id','desc')
+                        //->orderby('a.id','desc')
+                        //->orderby('a.start_date','desc')
+                        ->select('*', DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
+                        ->orderby('abs_beda_tanggal')
                         ->get();
-//            dd($e_detail);
 			return view('Event.index_eksportir', compact('pageTitle','e_detail', 'id_user'));
 		}else{
-			$e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);
+			//$e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);
+			$e_detail = DB::table('event_detail')->orderby('start_date', 'desc')->paginate(6);
 			return view('Event.index', compact('pageTitle','e_detail'))->with('success');
 		}
 	}

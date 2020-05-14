@@ -27,6 +27,7 @@
               <table id="table" class="table  table-bordered table-striped" data-plugin="dataTable">
                 <thead class="text-white" style="background-color: #1089ff;">
                   <tr>
+                    <th>No</th>
                     <th>Training</th>
                     <th>Date</th>
                     <th>Duration</th>
@@ -96,19 +97,20 @@
 @include('footer')
 <script type="text/javascript">
 	$(function () {
-        $('#table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('training.getData')}}",
-            columns: [
-							{data: 'training_en', name: 'training_en'},
-							{data: 'start_date', name: 'start_date'},
-              {data: 'duration', name: 'duration'},
-              {data: 'topic_en', name: 'topic_en'},
-							{data: 'location_en', name: 'location_en'},
-              {data: 'action', name: 'action', orderable: false, searchable: false},
-            ]
-        });
+      $('#table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('training.getData')}}",
+        columns: [
+          {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+          {data: 'training_en', name: 'training_en'},
+          {data: 'start_date', name: 'start_date'},
+          {data: 'duration', name: 'duration'},
+          {data: 'topic_en', name: 'topic_en'},
+          {data: 'location_en', name: 'location_en'},
+          {data: 'action', name: 'action', orderable: false, searchable: false},
+        ]
+      });
     });
 
   function contact_person(id, id_training){

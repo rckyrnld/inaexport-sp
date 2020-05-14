@@ -77,9 +77,10 @@ class TrainingControllerEksportir extends Controller
 	}
 
     public function getData(){
-		$tick = DB::table('training_admin as ts')->orderby('id', 'DESC')->get();
+		$tick = DB::table('training_admin as ts')->orderby('start_date', 'DESC')->get();
 
       return \Yajra\DataTables\DataTables::of($tick)
+          ->addIndexColumn()
           ->addColumn('start_date', function($data){
 				$date = date("Y/m/d", strtotime($data->start_date));
 				$date2 = date("Y/m/d", strtotime($data->end_date));

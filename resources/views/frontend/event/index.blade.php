@@ -312,6 +312,10 @@ if(Auth::guard('eksmp')->user()){
 <br>
 </div>
 </div>
+{{--Ditambah 2 Div Jangan Dihapus Karena Kalo Dihapus Divnya, maka tab lain gak akan bisa diliat start--}}
+</div>
+</div>
+{{--Ditambah 2 Div Jangan Dihapus Karena Kalo Dihapus Divnya, maka tab lain gak akan bisa diliat end--}}
 {{--  tab all end  --}}
 {{--  tab indonesia start  --}}
 <div class="tabcontent" id="indonesia">

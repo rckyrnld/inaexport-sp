@@ -806,7 +806,8 @@ class FrontController extends Controller
     public function research_corner(){
         // Data Broadcast FrontEnd
         $research = DB::table('csc_research_corner')
-            ->orderby('id', 'desc')
+//            ->orderby('id', 'desc')
+            ->orderby('publish_date', 'desc')
             ->select('*','cover')
             ->paginate(9, ['*']);
 
@@ -815,7 +816,8 @@ class FrontController extends Controller
         if($page > 1){
          $research = DB::table('csc_research_corner')
             ->select('*','cover')
-            ->orderby('id', 'desc')
+//             ->orderby('id', 'desc')
+             ->orderby('publish_date', 'desc')
             ->paginate(8, ['*']);
         }
         // $item_page = $json["data"];
@@ -926,10 +928,11 @@ class FrontController extends Controller
                 if($lang == 'ch'){ $lang = 'chn';}
                 $query = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc');
+                    //->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal');
 
                 if($searchEvent == 1){
                     $param = $req->nama;
@@ -965,10 +968,11 @@ class FrontController extends Controller
                 $param = null;
                 $e_detail = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc')
+                    //->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(9,['*'],'page_a');
 
                 $json = json_decode($e_detail->toJson(), true);
@@ -976,10 +980,11 @@ class FrontController extends Controller
                 if($page > 1){
                     $e_detail = DB::table('event_detail as a')
                         ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                        ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                        ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                         ->where('a.status_en', 'Verified')
                         ->where('a.end_date', '>=', $today)
-                        ->orderby('a.created_at', 'desc')
+                        //->orderby('a.created_at', 'desc')
+                        ->orderby('abs_beda_tanggal')
                         ->paginate(8,['*'],'page_a');
                 }
             }
@@ -989,11 +994,12 @@ class FrontController extends Controller
             $param2 = null;
             $e_detail2 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->where('a.status_en', 'Verified')
                 ->where('a.event_scope_en','Indonesia')
                 ->where('a.end_date', '>=', $today)
-                ->orderby('a.created_at', 'desc')
+                //->orderby('a.created_at', 'desc')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(9,['*'],'page_b');
 
             $json = json_decode($e_detail2->toJson(), true);
@@ -1001,11 +1007,12 @@ class FrontController extends Controller
             if($page2 > 1){
                 $e_detail2 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Indonesia')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc')
+                    //->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(8,['*'],'page_b');
             }
 
@@ -1014,11 +1021,12 @@ class FrontController extends Controller
 //            $param = null;
             $e_detail3 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->where('a.status_en', 'Verified')
                 ->where('a.event_scope_en','Foreign')
                 ->where('a.end_date', '>=', $today)
-                ->orderby('a.created_at', 'desc')
+//                ->orderby('a.created_at', 'desc')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(9,['*'],'page_c');
 
             $json = json_decode($e_detail3->toJson(), true);
@@ -1026,11 +1034,12 @@ class FrontController extends Controller
             if($page3 > 1){
                 $e_detail3 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Indonesia')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc')
+//                    ->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(8,['*'],'page_c');
             }
 
@@ -1044,11 +1053,12 @@ class FrontController extends Controller
                 if($lang == 'ch'){ $lang = 'chn';}
                 $query = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.event_scope_en','Indonesia')
                     ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc');
+                    //->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal');
 
                 if($searchEvent2 == 1){
                     $param2 = $req->nama;
@@ -1084,11 +1094,12 @@ class FrontController extends Controller
                 $param = null;
                 $e_detail2 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Indonesia')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal')
+                    //->orderby('a.created_at', 'desc')
                     ->paginate(9,['*'],'page_b');
 
                 $json = json_decode($e_detail2->toJson(), true);
@@ -1096,11 +1107,12 @@ class FrontController extends Controller
                 if($page2 > 1){
                     $e_detail2 = DB::table('event_detail as a')
                         ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                        ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                        ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                         ->where('a.status_en', 'Verified')
                         ->where('a.event_scope_en','Indonesia')
                         ->where('a.end_date', '>=', $today)
-                        ->orderby('a.created_at', 'desc')
+                        //->orderby('a.created_at', 'desc')
+                        ->orderby('abs_beda_tanggal')
                         ->paginate(8,['*'],'page_b');
                 }
             }
@@ -1110,10 +1122,11 @@ class FrontController extends Controller
 //            $param = null;
             $e_detail = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn', DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->where('a.status_en', 'Verified')
                 ->where('a.end_date', '>=', $today)
-                ->orderby('a.created_at', 'desc')
+                //->orderby('a.created_at', 'desc')
+                ->orderby('abs_beda_tanggal', 'desc')
                 ->paginate(9,['*'],'page_a');
 
             $json = json_decode($e_detail->toJson(), true);
@@ -1121,10 +1134,11 @@ class FrontController extends Controller
             if($page > 1){
                 $e_detail = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc')
+                    //->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(8,['*'],'page_a');
             }
 
@@ -1133,11 +1147,12 @@ class FrontController extends Controller
 //            $param = null;
             $e_detail3 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->where('a.status_en', 'Verified')
                 ->where('a.event_scope_en','Foreign')
                 ->where('a.end_date', '>=', $today)
-                ->orderby('a.created_at', 'desc')
+                //->orderby('a.created_at', 'desc')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(9,['*'],'page_c');
 
             $json = json_decode($e_detail3->toJson(), true);
@@ -1145,11 +1160,12 @@ class FrontController extends Controller
             if($page3 > 1){
                 $e_detail3 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Foreign')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc')
+                    //->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(8,['*'],'page_c');
             }
         }
@@ -1161,11 +1177,12 @@ class FrontController extends Controller
                 if($lang == 'ch'){ $lang = 'chn';}
                 $query = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.event_scope_en','Foreign')
                     ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc');
+                    //->orderby('a.created_at', 'desc');
+                    ->orderby('abs_beda_tanggal');
 
                 if($searchEvent3 == 1){
                     $param3 = $req->nama;
@@ -1201,11 +1218,12 @@ class FrontController extends Controller
                 $param3 = null;
                 $e_detail3 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Foreign')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc')
+                    //->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(9,['*'],'page_c');
 
                 $json = json_decode($e_detail3->toJson(), true);
@@ -1213,11 +1231,12 @@ class FrontController extends Controller
                 if($page3 > 1){
                     $e_detail2 = DB::table('event_detail as a')
                         ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                        ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                        ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                         ->where('a.status_en', 'Verified')
                         ->where('a.event_scope_en','Foreign')
                         ->where('a.end_date', '>=', $today)
-                        ->orderby('a.created_at', 'desc')
+                        //->orderby('a.created_at', 'desc')
+                        ->orderby('abs_beda_tanggal')
                         ->paginate(8,['*'],'page_c');
                 }
             }
@@ -1227,10 +1246,11 @@ class FrontController extends Controller
 //            $param = null;
             $e_detail = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->where('a.status_en', 'Verified')
                 ->where('a.end_date', '>=', $today)
-                ->orderby('a.created_at', 'desc')
+                //->orderby('a.created_at', 'desc')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(9,['*'],'page_a');
 
             $json = json_decode($e_detail->toJson(), true);
@@ -1238,10 +1258,11 @@ class FrontController extends Controller
             if($page > 1){
                 $e_detail = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc')
+                    //->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(8,['*'],'page_a');
             }
 
@@ -1250,11 +1271,12 @@ class FrontController extends Controller
             $param2 = null;
             $e_detail2 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->where('a.status_en', 'Verified')
                 ->where('a.event_scope_en','Indonesia')
                 ->where('a.end_date', '>=', $today)
-                ->orderby('a.created_at', 'desc')
+                //->orderby('a.created_at', 'desc')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(9,['*'],'page_b');
 
             $json = json_decode($e_detail2->toJson(), true);
@@ -1262,11 +1284,12 @@ class FrontController extends Controller
             if($page2 > 1){
                 $e_detail2 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Indonesia')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc')
+                    //->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(8,['*'],'page_b');
             }
         }
@@ -1277,10 +1300,11 @@ class FrontController extends Controller
 //            $param = null;
             $e_detail = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->where('a.status_en', 'Verified')
                 ->where('a.end_date', '>=', $today)
-                ->orderby('a.created_at', 'desc')
+                //->orderby('a.created_at', 'desc')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(9,['*'],'page_a');
 
             $json = json_decode($e_detail->toJson(), true);
@@ -1288,10 +1312,11 @@ class FrontController extends Controller
             if($page > 1){
                 $e_detail = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc')
+                    //->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(8,['*'],'page_a');
             }
 
@@ -1300,11 +1325,12 @@ class FrontController extends Controller
 //            $param = null;
             $e_detail2 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->where('a.status_en', 'Verified')
                 ->where('a.event_scope_en','Indonesia')
                 ->where('a.end_date', '>=', $today)
-                ->orderby('a.created_at', 'desc')
+                //->orderby('a.created_at', 'desc')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(9,['*'],'page_b');
 
             $json = json_decode($e_detail2->toJson(), true);
@@ -1312,11 +1338,12 @@ class FrontController extends Controller
             if($page2 > 1){
                 $e_detail2 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Indonesia')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal')
+                    //->orderby('a.created_at', 'desc')
                     ->paginate(8,['*'],'page_b');
             }
 
@@ -1325,11 +1352,12 @@ class FrontController extends Controller
 //            $param = null;
             $e_detail3 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->where('a.status_en', 'Verified')
                 ->where('a.event_scope_en','Foreign')
                 ->where('a.end_date', '>=', $today)
-                ->orderby('a.created_at', 'desc')
+                //->orderby('a.created_at', 'desc')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(9,['*'],'page_c');
 
             $json = json_decode($e_detail3->toJson(), true);
@@ -1337,17 +1365,19 @@ class FrontController extends Controller
             if($page3 > 1){
                 $e_detail3 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
-                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn')
+                    ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Foreign')
                     ->where('a.end_date', '>=', $today)
-                    ->orderby('a.created_at', 'desc')
+                    ->orderby('abs_beda_tanggal')
+                    //->orderby('a.created_at', 'desc')
                     ->paginate(8,['*'],'page_c');
             }
 
         }
 
 
+        //return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page')),'e_detail2' => $e_detail2->appends(Input::except('page')),'e_detail3' => $e_detail3->appends(Input::except('page'))], compact('page','page2', 'page3', 'searchEvent','searchEvent2' ,'searchEvent3' ,'country', 'param', 'param2','param3','halaman'));
         return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page')),'e_detail2' => $e_detail2->appends(Input::except('page')),'e_detail3' => $e_detail3->appends(Input::except('page'))], compact('page','page2', 'page3', 'searchEvent','searchEvent2' ,'searchEvent3' ,'country', 'param', 'param2','param3','halaman'));
     }
 
@@ -1429,8 +1459,19 @@ class FrontController extends Controller
     //Front End Training
     public function indexTraining(){
         $pageTitle = 'Training';
-        $today = $today = date('Y-m-d');
-		$data = DB::table('training_admin')->where('status', 1)->whereDate('end_date', '>=', $today)->orderby('created_at', 'desc')->paginate(3);
+        $today = date('Y-m-d');
+//        $todaydate = date('Y-m-d');
+//        dd(Current_Time());
+//		$data = DB::table('training_admin')->where('status', 1)->whereDate('end_date', '>=', $today)->orderby(DB::raw('ABS(DATEDIFF(created_at,'.$todaydate.'))'))->paginate(3);
+//		$data = DB::table('training_admin')->where('status', 1)->whereDate('end_date', '>=', $today)->orderby('start_date ','asc')->paginate(3);
+//		$data = DB::table('training_admin')->select(DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))->where('status', 1)->whereDate('end_date', '>=', $today)->orderby(DB::raw('start_date - now()'))->paginate(3);
+		$data = DB::table('training_admin')
+            ->select('*',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
+            ->where('status', 1)
+            ->whereDate('end_date', '>=', $today)
+            ->orderby('abs_beda_tanggal')
+            ->paginate(3);
+
 		return view('frontend.training',compact('data','pageTitle'));
     }
 

@@ -47,9 +47,11 @@ class HistoryFrontController extends Controller
         $id_user = Auth::guard('eksmp')->user()->id;
         $user = DB::table('csc_inquiry_br')
             ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
-            ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product, csc_product_single.prodname_en, csc_product_single.prodname_in, csc_product_single.prodname_chn, csc_product_single.id_itdp_company_user, csc_product_single.image_1')
+            //->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product, csc_product_single.prodname_en, csc_product_single.prodname_in, csc_product_single.prodname_chn, csc_product_single.id_itdp_company_user, csc_product_single.image_1')
+            ->select('csc_inquiry_br.*', 'csc_product_single.id as id_product', 'csc_product_single.prodname_en', 'csc_product_single.prodname_in', 'csc_product_single.prodname_chn', 'csc_product_single.id_itdp_company_user','csc_product_single.image_1', DB::raw("case when csc_inquiry_br.created_at - now() < INTERVAL '0' then -(csc_inquiry_br.created_at - now())else csc_inquiry_br.created_at - now() end as abs_beda_tanggal"))
             ->where('csc_inquiry_br.id_pembuat', '=', $id_user)
-            ->orderBy('csc_inquiry_br.created_at', 'DESC')
+            //->orderBy('csc_inquiry_br.created_at', 'DESC')
+            ->orderby('abs_beda_tanggal')
             ->get();
 
         return \Yajra\DataTables\DataTables::of($user)

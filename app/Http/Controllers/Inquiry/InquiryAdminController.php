@@ -478,8 +478,8 @@ class InquiryAdminController extends Controller
 
             $user = DB::table('csc_inquiry_br')
                 ->where('type', 'importir')
-                ->orderBy('date', 'DESC')
-//                ->orderBy('created_at', 'DESC')
+                //->orderBy('date', 'DESC')
+                ->orderBy('created_at', 'DESC')
                 ->get();
 
             return \Yajra\DataTables\DataTables::of($user)
