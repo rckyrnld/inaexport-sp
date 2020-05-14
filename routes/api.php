@@ -96,6 +96,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
 	Route::post('count_inq_chat', 'Api\User\ManagementUserController@count_inq_chat');
 	Route::post('count_notif_bb', 'Api\User\ManagementUserController@count_notif_bb');
 	Route::post('count_notif_all', 'Api\User\ManagementUserController@count_notif_all');
+	Route::post('aktifasiulang', 'Api\User\ManagementUserController@aktifasiulang');
 
 //End Greed
 
@@ -186,6 +187,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
 });
 Route::namespace('Api')->group(function () {
     /*Contact Us*/
+    
     Route::post('contactUs', 'ManagementNoAuthController@contactUs');
     /*Contact Us*/
 	/* Slide Content */

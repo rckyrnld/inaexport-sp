@@ -77,6 +77,9 @@ class LoginController extends Controller
             'message' => 'Success',
             'status' => 'OK'
         ];
+        if(empty($company[0]->agree) || $company[0]->agree == null){
+			$datas[0]->agree = 0;
+		}else{$datas[0]->agree = 1; }
         $datas[0]->type = $company[0]->type;
         $datas[0]->access_token = $token;
         $datas[0]->id_user = $company[0]->id;

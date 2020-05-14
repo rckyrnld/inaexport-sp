@@ -1126,4 +1126,33 @@ class ManagementUserController extends Controller
 					return $res;
                 }
 	}
+	
+	public function aktifasiulang(Request $request)
+    {	
+		
+		$id_user = $request->id_user;
+        $update = DB::select("update itdp_company_users set status='1' where id='" . $id_user . "'");
+        if ($update) {
+			$meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = '';
+            $res['meta'] = $meta;
+            //$res['data'] = $data;
+            return response($res);
+        } else {
+			$meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            //$res['data'] = $data;
+            return $res;
+        }
+		
+	}
 }
