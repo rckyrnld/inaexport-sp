@@ -293,6 +293,7 @@ if(Auth::guard('eksmp')->user()){
         </div></div>
     @endif
     @endif
+    {{--Bisa Jadi Disini Nambah Tutup DIV nya--}}
     @endif
     @endforeach
 
