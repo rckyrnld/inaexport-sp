@@ -162,7 +162,11 @@ class ManagementNoAuthController extends Controller
     {
         $company = $request->company;
         $email = $request->email;
+		if(empty($request->username) || $request->username == null){
+		$username = "";
+		}else{
         $username = $request->username;
+		}
         $phone = $request->phone;
         $fax = $request->fax;
         $website = $request->website;
