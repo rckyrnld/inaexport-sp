@@ -2363,12 +2363,12 @@ class ManagementController extends Controller
             $jsonResult[$i]["phone"] = $data[$i]->phone;
             $jsonResult[$i]["fax"] = $data[$i]->fax;
             $jsonResult[$i]["employe"] = "";	
-			$jsonResult[$i]["npwp"] = "";	
-			$jsonResult[$i]["uploadnpwp"] = "No File";	
-			$jsonResult[$i]["tdp"] = "";	
-			$jsonResult[$i]["uploadtdp"] = "No File";	
-			$jsonResult[$i]["siup"] = "";	
-			$jsonResult[$i]["uploadsiup"] = "No File";	
+			$jsonResult[$i]["npwp"] = "-";	
+			$jsonResult[$i]["uploadnpwp"] = "";	
+			$jsonResult[$i]["tdp"] = "-";	
+			$jsonResult[$i]["uploadtdp"] = "";	
+			$jsonResult[$i]["siup"] = "-";	
+			$jsonResult[$i]["uploadsiup"] = "";	
 			
 			
             
@@ -2405,32 +2405,32 @@ class ManagementController extends Controller
 			$jsonResult[$i]["employe"] = $data[$i]->employe;
 			}
 			if($data[$i]->npwp == null | empty($data[$i]->npwp)){
-			$jsonResult[$i]["npwp"] = "";	
+			$jsonResult[$i]["npwp"] = "-";	
 			}else{
 			$jsonResult[$i]["npwp"] = $data[$i]->npwp;
 			}
 			if($data[$i]->uploadnpwp == null | empty($data[$i]->uploadnpwp)){
-			$jsonResult[$i]["uploadnpwp"] = "No File";	
+			$jsonResult[$i]["uploadnpwp"] = "";	
 			}else{
 			$jsonResult[$i]["uploadnpwp"] = url('eksportir/' . $data[$i]->uploadnpwp);
 			}
 			if($data[$i]->tdp == null | empty($data[$i]->tdp)){
-			$jsonResult[$i]["tdp"] = "";	
+			$jsonResult[$i]["tdp"] = "-";	
 			}else{
 			$jsonResult[$i]["tdp"] = $data[$i]->tdp;
 			}
 			if($data[$i]->uploadtdp == null | empty($data[$i]->uploadtdp)){
-			$jsonResult[$i]["uploadtdp"] = "No File";	
+			$jsonResult[$i]["uploadtdp"] = "";	
 			}else{
 			$jsonResult[$i]["uploadtdp"] = url('eksportir/' . $data[$i]->uploadtdp);
 			}
 			if($data[$i]->siup == null | empty($data[$i]->siup)){
-			$jsonResult[$i]["siup"] = "";	
+			$jsonResult[$i]["siup"] = "-";	
 			}else{
 			$jsonResult[$i]["siup"] = $data[$i]->siup;
 			}
 			if($data[$i]->uploadsiup == null | empty($data[$i]->uploadsiup)){
-			$jsonResult[$i]["uploadsiup"] = "No File";	
+			$jsonResult[$i]["uploadsiup"] = "";	
 			}else{
 			$jsonResult[$i]["uploadsiup"] = url('eksportir/' . $data[$i]->uploadsiup);
 			}
