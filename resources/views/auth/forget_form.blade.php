@@ -12,7 +12,7 @@
 	  <!-- <h5>LOGIN</h5> -->
 	  <div class="wrap-login100" style="padding-left : 30px; padding-right : 30px; font-size:12px;">
 	  
-	   <form class="form-horizontal" method="POST" action="{{ url('updatepass1/'.$id) }}">
+	   <form class="form-horizontal" method="POST" action="{{ url('updatepass1/'.$ri) }}">
            {{ csrf_field() }}
            <h4>@lang("login.lbl4")</h4><br>
              <div class="form-group">
