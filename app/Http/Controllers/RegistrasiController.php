@@ -371,7 +371,7 @@ class RegistrasiController extends Controller
 				$d2 = $ie->username;
 				$d3 = $ie->email;
 			}
-			$data = ['username' => $d2, 'id2' => $d1, 'nama' => $d2, 'email' => $d3];
+			$data = ['username' => $d2, 'id2' => base64_encode($d1), 'nama' => $d2, 'email' => $d3];
 
                 Mail::send('UM.user.emailforget', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
@@ -387,7 +387,7 @@ class RegistrasiController extends Controller
 				$d2 = $ie->name;
 				$d3 = $ie->email;
 			}
-			$data = ['username' => $d2, 'id2' => $d1, 'nama' => $d2, 'email' => $d3];
+			$data = ['username' => $d2, 'id2' => base64_encode($d1), 'nama' => $d2, 'email' => $d3];
 
                 Mail::send('UM.user.emailforget2', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
