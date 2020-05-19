@@ -57,15 +57,14 @@ class RegistrasiController extends Controller
 	}
 	public function gantipass1($id)
     {
-		$ri = base64_encode(base64_decode($id));
-		echo base64_decode($id);die();
+		$ri = base64_decode($id);
         $pageTitle = "Forget Password";
         return view('auth.forget_form',compact('pageTitle','ri','id'));
     } 
 	
 	public function gantipass2($id)
     {
-		$ri = base64_encode(base64_decode($id));
+		$ri = base64_decode($id);
         $pageTitle = "Forget Password";
         return view('auth.forget_form2',compact('pageTitle','ri','id'));
     } 
@@ -404,7 +403,7 @@ class RegistrasiController extends Controller
 	
 	public function updatepass1(Request $request,$id)
     {
-		// echo $id;die();
+		echo $id;die();
 		$update = DB::select("update itdp_company_users set password='".bcrypt($request->password)."' where id='".$request->ida."'");
 		return redirect('login');
 	}

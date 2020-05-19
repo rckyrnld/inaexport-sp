@@ -14,7 +14,7 @@
 	  
 	   <form class="form-horizontal" method="POST" action="{{ url('updatepass1/'.$ri) }}">
            {{ csrf_field() }}
-           <h4>@lang("login.lbl4") <?php echo $ri; ?></h4><br>
+           <h4>@lang("login.lbl4")</h4><br>
              <div class="form-group">
 		<input type="hidden" name="ida" value="<?php echo $ri; ?>">
                <input id="password" type="password" placeholder="password" class="form-control" name="password" style="color: #000000" value="" required="" autofocus="">
