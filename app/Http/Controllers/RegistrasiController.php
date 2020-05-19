@@ -59,14 +59,14 @@ class RegistrasiController extends Controller
     {
 		$ri = base64_encode(base64_decode($id));
         $pageTitle = "Forget Password";
-        return view('auth.forget_form',compact('pageTitle','ri'));
+        return view('auth.forget_form',compact('pageTitle','ri','id'));
     } 
 	
 	public function gantipass2($id)
     {
 		$ri = base64_encode(base64_decode($id));
         $pageTitle = "Forget Password";
-        return view('auth.forget_form2',compact('pageTitle','ri'));
+        return view('auth.forget_form2',compact('pageTitle','ri','id'));
     } 
 	
 	public function set($lang) {
