@@ -157,10 +157,10 @@
                                 </div>
                                 <div class="col-md-10"><input type="text" name="phone" id="phone" class="form-control " style=" color: black;"></div>
                             </div>
-                            <div class="row">
+                           <!-- <div class="row">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-10"><span><label style="font-size: 12px;">Contoh : 87780733154</label></span></div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -177,10 +177,10 @@
                                     <input type="text" name="fax" id="fax" class="form-control" style=" color: black;">
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-10"><span><label style="font-size: 12px;">Contoh : 8342</label></span></div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="form-row">
