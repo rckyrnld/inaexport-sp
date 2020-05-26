@@ -87,6 +87,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_admin,1|4']], function (
 	Route::get('search_importir', 'Api\Admin\ManagementController@search_importir');
 	Route::post('saveapprove', 'Api\Admin\ManagementController@saveapprove');
 	Route::get('detail_dokumen', 'Api\Admin\ManagementController@detail_dokumen');
+	Route::post('cek_npwp', 'Api\Admin\ManagementController@ceknpwp');
 	
 });
 

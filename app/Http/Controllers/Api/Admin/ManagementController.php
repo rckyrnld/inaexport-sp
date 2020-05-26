@@ -1758,7 +1758,56 @@ class ManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
 		$id = $request->id;
 		$status = $request->status;
-        $update = DB::select("update itdp_company_users set status='".$status."' where id='" . $id . "'");
+		$id_role = $request->id_role;
+		$id_profil = $request->id_profil;
+		$email = $request->email;
+        $update = DB::select("update itdp_company_users set email='".$email."', status='".$status."' where id='" . $id . "'");
+		
+		if($id_role == '2'){
+			
+			$badanusaha = $request->badanusaha;
+			$company = $request->company;
+			$addres = $request->addres;
+			$city = $request->city;
+			$postcode = $request->postcode;
+			$phone = $request->phone;
+			$fax = $request->fax;
+			$website = $request->website;
+			$employe = $request->employe;
+			$npwp = $request->npwp;
+			$tdp = $request->tdp;
+			$siup = $request->siup;
+			$situ = $request->situ;
+			$id_eks_business_size = $request->scoope;
+			$id_business_role_id = $request->tob;
+			
+			$eksupdate = DB::select("update itdp_profil_eks set email='".$email."', status='".$status."', badanusaha = '".$badanusaha."', company = '".$company."',
+			addres = '".$addres."', city = '".$city."', postcode = '".$postcode."', phone = '".$phone."', fax = '".$fax."', website = '".$website."',
+			employe = '".$employe."', npwp = '".$npwp."', tdp = '".$tdp."', siup = '".$siup."', situ = '".$situ."', 
+			id_eks_business_size = '".$id_eks_business_size."', id_business_role_id = '".$id_business_role_id."'
+			where id='" . $id_profil . "'");
+		}else {
+			//$email = $request->email;
+			$badanusaha = $request->badanusaha;
+			$company = $request->company;
+			$addres = $request->addres;
+			$city = $request->city;
+			$postcode = $request->postcode;
+			$phone = $request->phone;
+			$fax = $request->fax;
+			$website = $request->website;
+			$employe = "";
+			$npwp = "";
+			$tdp = "";
+			$siup = "";
+			$situ = "";
+			$id_eks_business_size = "";
+			$id_business_role_id = "";
+			$impupdate = DB::select("update itdp_profil_imp set email='".$email."', status='".$status."', badanusaha = '".$badanusaha."', company = '".$company."',
+			addres = '".$addres."', city = '".$city."', postcode = '".$postcode."', phone = '".$phone."', fax = '".$fax."', website = '".$website."'
+			where id='" . $id_profil . "'");
+		}
+		
         if ($update) {
 
             $meta = [
@@ -2348,6 +2397,7 @@ class ManagementController extends Controller
 		$jsonResult = array();
         for ($i = 0; $i < count($data); $i++) {
             $jsonResult[$i]["id_profil"] = $data[$i]->id_profil;
+			 $jsonResult[$i]["email"] = $data[$i]->email;
 			if($data[$i]->badanusaha == null | empty($data[$i]->badanusaha)){
 			$jsonResult[$i]["badanusaha"] = "";	
 			}else{
@@ -2356,12 +2406,13 @@ class ManagementController extends Controller
             $jsonResult[$i]["company"] = $data[$i]->company;
             $jsonResult[$i]["id_role"] = "3";
             $jsonResult[$i]["role_desc"] = "Buyer/importir";
-            $jsonResult[$i]["email"] = $data[$i]->email;
+           
             $jsonResult[$i]["addres"] = $data[$i]->addres;
             $jsonResult[$i]["city"] = $data[$i]->city;
             $jsonResult[$i]["postcode"] = $data[$i]->postcode;
             $jsonResult[$i]["phone"] = $data[$i]->phone;
             $jsonResult[$i]["fax"] = $data[$i]->fax;
+            $jsonResult[$i]["website"] = $data[$i]->website;
             $jsonResult[$i]["employe"] = "";	
 			$jsonResult[$i]["npwp"] = "-";	
 			$jsonResult[$i]["uploadnpwp"] = "";	
@@ -2369,6 +2420,10 @@ class ManagementController extends Controller
 			$jsonResult[$i]["uploadtdp"] = "";	
 			$jsonResult[$i]["siup"] = "-";	
 			$jsonResult[$i]["uploadsiup"] = "";	
+			$jsonResult[$i]["situ"] = "";
+			$jsonResult[$i]["scoope"] = "";
+			$jsonResult[$i]["tob"] = "";
+			$jsonResult[$i]["status"] = $data[$i]->status;
 			
 			
             
@@ -2385,6 +2440,7 @@ class ManagementController extends Controller
 		$jsonResult = array();
         for ($i = 0; $i < count($data); $i++) {
             $jsonResult[$i]["id_profil"] = $data[$i]->id_profil;
+			$jsonResult[$i]["email"] = $data[$i]->email;
 			if($data[$i]->badanusaha == null | empty($data[$i]->badanusaha)){
 			$jsonResult[$i]["badanusaha"] = "";	
 			}else{
@@ -2393,12 +2449,12 @@ class ManagementController extends Controller
             $jsonResult[$i]["company"] = $data[$i]->company;
             $jsonResult[$i]["id_role"] = "2";
             $jsonResult[$i]["role_desc"] = "Seller/Eksportir";
-            $jsonResult[$i]["email"] = $data[$i]->email;
             $jsonResult[$i]["addres"] = $data[$i]->addres;
             $jsonResult[$i]["city"] = $data[$i]->city;
             $jsonResult[$i]["postcode"] = $data[$i]->postcode;
             $jsonResult[$i]["phone"] = $data[$i]->phone;
             $jsonResult[$i]["fax"] = $data[$i]->fax;
+            $jsonResult[$i]["website"] = $data[$i]->website;
             if($data[$i]->employe == null | empty($data[$i]->employe)){
 			$jsonResult[$i]["employe"] = "";	
 			}else{
@@ -2434,6 +2490,10 @@ class ManagementController extends Controller
 			}else{
 			$jsonResult[$i]["uploadsiup"] = url('eksportir/' . $data[$i]->uploadsiup);
 			}
+			$jsonResult[$i]["situ"] = $data[$i]->situ;
+			$jsonResult[$i]["scoope"] = $data[$i]->id_eks_business_size;
+			$jsonResult[$i]["tob"] = $data[$i]->id_business_role_id;
+			$jsonResult[$i]["status"] = $data[$i]->status;
             
             //$jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Importir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01-01.jpg');            
 			
@@ -2475,4 +2535,58 @@ class ManagementController extends Controller
         }
 		
     }
+	
+	public function ceknpwp(Request $request)
+	{
+		$npwpz =	str_replace(".","",$request->npwp);
+		$npwpx =	str_replace("-","",$npwpz);
+		$curl = curl_init();
+        // dd($npwpx);die();
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "http://perizinan.kemendag.go.id/index.php/website_api/kswp/153/".$npwpx,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		  CURLOPT_HTTPHEADER => array(
+		    "cache-control: no-cache",
+		    "content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+		    "postman-token: f3e1235e-d688-a840-efd7-c7eb19691494",
+		    "x-api-key: kpzgMbTYlv2VmXSeOf03KxirsyBIGt48LcRPd7nN"
+		  ),
+		));
+
+	    $server_output = curl_exec ($curl);
+
+		curl_close ($curl);
+
+        $r = json_decode($server_output);
+        // dd($r);
+		// echo json_encode(array('status'=> $r->status,'nama'=> $r->nama));
+        if ($r != null) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $r;
+            return response($res);
+
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
+	}
 }
