@@ -2413,6 +2413,8 @@ class ManagementController extends Controller
             $jsonResult[$i]["phone"] = $data[$i]->phone;
             $jsonResult[$i]["fax"] = $data[$i]->fax;
             $jsonResult[$i]["website"] = $data[$i]->website;
+            $jsonResult[$i]["province"] = $data[$i]->id_mst_country;
+            $jsonResult[$i]["dokumen"] = "";
             $jsonResult[$i]["employe"] = "";	
 			$jsonResult[$i]["npwp"] = "-";	
 			$jsonResult[$i]["uploadnpwp"] = "";	
@@ -2455,6 +2457,12 @@ class ManagementController extends Controller
             $jsonResult[$i]["phone"] = $data[$i]->phone;
             $jsonResult[$i]["fax"] = $data[$i]->fax;
             $jsonResult[$i]["website"] = $data[$i]->website;
+			$jsonResult[$i]["province"] = $data[$i]->id_mst_province;
+            if($data[$i]->doc == null | empty($data[$i]->doc)){
+			$jsonResult[$i]["dokumen"] = "";	
+			}else{
+			$jsonResult[$i]["dokumen"] = url('eksportir/' . $data[$i]->doc);
+			}
             if($data[$i]->employe == null | empty($data[$i]->employe)){
 			$jsonResult[$i]["employe"] = "";	
 			}else{
