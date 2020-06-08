@@ -13,7 +13,7 @@
            {{ csrf_field() }}
            <p style="font-size: 16px; text-align: left;">@lang("login.lbl10")</p>
            
-		<center><a href="http://inaexport.id" style="width: 100%; color: #ffffff;" type="submit" class="btn btn-primary">@lang("login.btn5")</a></center>
+		<center><a href="http://www.inaexport.id" style="width: 100%; color: #ffffff;" type="submit" class="btn btn-primary">@lang("login.btn5")</a></center>
 		</div>
 			<br>
           </form>
