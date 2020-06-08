@@ -18,6 +18,7 @@ return [
     "btn2" => "Continue",
     "btn3" => "Change Password",
     "btn4" => "Submit The Request",
+    "btn5" => "Done",
     "lbl1" => "Exporter Registration",
     "lbl2" => "Importer Registration",
     "lbl3" => "Sign-In",
@@ -27,6 +28,7 @@ return [
     "lbl7" => "One request multiple quotes Verified suppliers matching Quotes comparison",
     "lbl8" => "and sample request",
     "lbl9" => "Enter the email address associated with your InaExport account.",
+    "lbl10" => "We've send you an email to help you reset your password. Remember to check your spam inbox if you can't find it.",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",

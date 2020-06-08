@@ -12,7 +12,8 @@ return [
     "btn" => "登入",
     "btn2" => "继续",
     "btn3" => "修改密码",
-	"btn4" => "提交请求",
+    "btn4" => "提交请求",
+    "btn5" => "做完了",
 	"a1" => "管理员",
     "a2" => "出口商/进口商",
 	"a3" => "选择为",
@@ -27,6 +28,7 @@ return [
     "lbl7" => "一个请求多个报价经过验证的供应商匹配报价比较",
     "lbl8" => "和样品要求",
     "lbl9" => "输入与您的InaExport帐户关联的电子邮件地址",
+    "lbl10" => "我们已向您发送电子邮件以帮助您重置密码。如果找不到，请记住检查垃圾邮件收件箱",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",

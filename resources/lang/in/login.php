@@ -17,7 +17,8 @@ return [
     "btn" => "Masuk",
     "btn2" => "Lanjut",
     "btn3" => "Ubah Password",
-	"btn4" => "Kirim Permintaan",
+    "btn4" => "Kirim Permintaan",
+    "btn5" => "Selesai",
 	"lbl1" => "Pendaftaran Eksportir",
     "lbl2" => "Pendaftaran Importir",
     "lbl3" => "Masuk",
@@ -27,6 +28,7 @@ return [
     "lbl7" => "Satu permintaan beberapa kutipan. Pemasok terverifikasi cocok dengan perbandingan Kutipan",
     "lbl8" => "dan permintaan sampel",
     "lbl9" => "Isi dengan email yang terdaftar pada akun InaExport Anda.",
+    "lbl10" => "Link reset password telah dikirim ke email Anda. Harap untuk memeriksa folder spam jika Anda tidak dapat menemukannya.",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Company",
