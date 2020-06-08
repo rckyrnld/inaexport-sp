@@ -11,9 +11,9 @@
 	  
 	   <form class="form-horizontal" method="POST" action="{{ url('resetpass') }}">
            {{ csrf_field() }}
-           <p style="font-size: 20px; text-align: left;">@lang("login.lbl10")</p>
+           <p style="font-size: 16px; text-align: left;">@lang("login.lbl10")</p>
            
-		<center><a style="width: 100%;" type="submit" class="btn btn-primary">@lang("login.btn5")</a></center>
+		<center><a style="width: 100%; color: #ffffff;" type="submit" class="btn btn-primary">@lang("login.btn5")</a></center>
 		</div>
 			<br>
           </form>
