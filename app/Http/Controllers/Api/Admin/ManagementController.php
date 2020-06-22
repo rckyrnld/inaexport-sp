@@ -1242,24 +1242,26 @@ class ManagementController extends Controller
 			$jsonResult[$i]["nama_user"] = $user[$i]->username;
             $jsonResult[$i]["prodname_en"] = $user[$i]->prodname_en;
             $jsonResult[$i]["price_usd"] = $user[$i]->price_usd;
-            $jsonResult[$i]["id_csc_product"] = $user[$i]->id_csc_product;
+            $jsonResult[$i]["id_csc_product1"] = $user[$i]->id_csc_product;
+			$jsonResult[$i]["id_csc_product2"] = $user[$i]->id_csc_product_level1;
+			$jsonResult[$i]["id_csc_product3"] = $user[$i]->id_csc_product_level2;
 			$carieks = DB::select("select nama_kategori_en from csc_product where id='".$user[$i]->id_csc_product."'");
 			foreach($carieks as $teks){
 				$jk1 = $teks->nama_kategori_en;
 			}
-			$jsonResult[$i]["prod1_desc"] = $jk1;
-            $jsonResult[$i]["id_csc_product_level1"] = $user[$i]->id_csc_product_level1;
+			$jsonResult[$i]["prod_desc1"] = $jk1;
+            
 			$carieks2 = DB::select("select nama_kategori_en from csc_product where id='".$user[$i]->id_csc_product_level1."'");
 			foreach($carieks2 as $teks2){
 				$jk2 = $teks2->nama_kategori_en;
 			}
-			$jsonResult[$i]["prod2_desc"] = $jk2;
-            $jsonResult[$i]["id_csc_product_level2"] = $user[$i]->id_csc_product_level2;
+			$jsonResult[$i]["prod_desc2"] = $jk2;
+            
 			$carieks3 = DB::select("select nama_kategori_en from csc_product where id='".$user[$i]->id_csc_product_level2."'");
 			foreach($carieks3 as $teks3){
 				$jk3 = $teks3->nama_kategori_en;
 			}
-			$jsonResult[$i]["prod3_desc"] = $jk3;
+			$jsonResult[$i]["prod_desc3"] = $jk3;
             if($user[$i]->status == 1){
                 $yk = "Publish - Not Verified";
             }else if($user[$i]->status == 2){
