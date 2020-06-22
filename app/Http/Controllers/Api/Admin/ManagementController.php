@@ -1222,7 +1222,7 @@ class ManagementController extends Controller
 		$page = $request->page;
 		$limit = $request->limit;
         $user = DB::table('csc_product_single')
-                        ->select('csc_product_single.id', 'csc_product_single.id_itdp_company_user', 'image_1', 'prodname_en', 'price_usd', 'csc_product_single.status','itdp_company_users.username')
+                        ->select('id_csc_product','id_csc_product_level1','id_csc_product_level2','csc_product_single.id', 'csc_product_single.id_itdp_company_user', 'image_1', 'prodname_en', 'price_usd', 'csc_product_single.status','itdp_company_users.username')
                         ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
                         ->where('csc_product_single.status', 1)
 						->paginate($limit);
@@ -1232,6 +1232,9 @@ class ManagementController extends Controller
                         ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
                         ->where('csc_product_single.status', 1)
 						->get();
+		$jk1 = "";
+		$jk2 = "";
+		$jk3 = "";
 		$jsonResult = array();
         for ($i = 0; $i < count($user); $i++) {
 			$jsonResult[$i]["id"] = $user[$i]->id;
@@ -1239,6 +1242,24 @@ class ManagementController extends Controller
 			$jsonResult[$i]["nama_user"] = $user[$i]->username;
             $jsonResult[$i]["prodname_en"] = $user[$i]->prodname_en;
             $jsonResult[$i]["price_usd"] = $user[$i]->price_usd;
+            $jsonResult[$i]["id_csc_product"] = $user[$i]->id_csc_product;
+			$carieks = DB::select("select nama_kategori_en from csc_product where id='".$user[$i]->id_csc_product."'");
+			foreach($carieks as $teks){
+				$jk1 = $teks->nama_kategori_en;
+			}
+			$jsonResult[$i]["prod1_desc"] = $jk1;
+            $jsonResult[$i]["id_csc_product_level1"] = $user[$i]->id_csc_product_level1;
+			$carieks2 = DB::select("select nama_kategori_en from csc_product where id='".$user[$i]->id_csc_product_level1."'");
+			foreach($carieks2 as $teks2){
+				$jk2 = $teks2->nama_kategori_en;
+			}
+			$jsonResult[$i]["prod2_desc"] = $jk2;
+            $jsonResult[$i]["id_csc_product_level2"] = $user[$i]->id_csc_product_level2;
+			$carieks3 = DB::select("select nama_kategori_en from csc_product where id='".$user[$i]->id_csc_product_level2."'");
+			foreach($carieks3 as $teks3){
+				$jk3 = $teks3->nama_kategori_en;
+			}
+			$jsonResult[$i]["prod3_desc"] = $jk3;
             if($user[$i]->status == 1){
                 $yk = "Publish - Not Verified";
             }else if($user[$i]->status == 2){
@@ -2388,53 +2409,11 @@ class ManagementController extends Controller
 		}
 		//2 eksportir & 3 importir
 		if($rolenya == 3){ 
-		$data = DB::table('itdp_company_users')
-		->join('itdp_profil_imp', 'itdp_profil_imp.id', '=', 'itdp_company_users.id_profil')
-		->where('itdp_company_users.id', $id_user)
-		->get();
 		
-		
-		$jsonResult = array();
-        for ($i = 0; $i < count($data); $i++) {
-            $jsonResult[$i]["id_profil"] = $data[$i]->id_profil;
-			 $jsonResult[$i]["email"] = $data[$i]->email;
-			if($data[$i]->badanusaha == null | empty($data[$i]->badanusaha)){
-			$jsonResult[$i]["badanusaha"] = "";	
-			}else{
-			$jsonResult[$i]["badanusaha"] = $data[$i]->badanusaha;
-			}
-            $jsonResult[$i]["company"] = $data[$i]->company;
-            $jsonResult[$i]["id_role"] = "3";
-            $jsonResult[$i]["role_desc"] = "Buyer/importir";
-           
-            $jsonResult[$i]["addres"] = $data[$i]->addres;
-            $jsonResult[$i]["city"] = $data[$i]->city;
-            $jsonResult[$i]["postcode"] = $data[$i]->postcode;
-            $jsonResult[$i]["phone"] = $data[$i]->phone;
-            $jsonResult[$i]["fax"] = $data[$i]->fax;
-            $jsonResult[$i]["website"] = $data[$i]->website;
-            $jsonResult[$i]["province"] = $data[$i]->id_mst_country;
-            $jsonResult[$i]["dokumen"] = "";
-            $jsonResult[$i]["employe"] = "";	
-			$jsonResult[$i]["npwp"] = "-";	
-			$jsonResult[$i]["uploadnpwp"] = "";	
-			$jsonResult[$i]["tdp"] = "-";	
-			$jsonResult[$i]["uploadtdp"] = "";	
-			$jsonResult[$i]["siup"] = "-";	
-			$jsonResult[$i]["uploadsiup"] = "";	
-			$jsonResult[$i]["situ"] = "";
-			$jsonResult[$i]["scoope"] = "";
-			$jsonResult[$i]["tob"] = "";
-			$jsonResult[$i]["status"] = $data[$i]->status;
-			
-			
-            
-            //$jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Importir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01-01.jpg');            
-			
-        }
 		}else{
 		$data = DB::table('itdp_company_users')
 		->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
+		->leftjoin('mst_province', 'mst_province.id', '=', 'itdp_profil_eks.id_mst_province')
 		->where('itdp_company_users.id', $id_user)
 		->get();
 		
@@ -2458,6 +2437,7 @@ class ManagementController extends Controller
             $jsonResult[$i]["fax"] = $data[$i]->fax;
             $jsonResult[$i]["website"] = $data[$i]->website;
 			$jsonResult[$i]["province"] = $data[$i]->id_mst_province;
+			$jsonResult[$i]["province_desc"] = $data[$i]->province_in;
             if($data[$i]->doc == null | empty($data[$i]->doc)){
 			$jsonResult[$i]["dokumen"] = "";	
 			}else{
@@ -2502,10 +2482,121 @@ class ManagementController extends Controller
 			$jsonResult[$i]["scoope"] = $data[$i]->id_eks_business_size;
 			$jsonResult[$i]["tob"] = $data[$i]->id_business_role_id;
 			$jsonResult[$i]["status"] = $data[$i]->status;
+			if($data[$i]->status == 1){
+			$jsonResult[$i]["status_desc"] = "Verified";	
+			}else if($data[$i]->status == 2){
+			$jsonResult[$i]["status_desc"] = "Not Verified";	
+			}else{
+			$jsonResult[$i]["status_desc"] = "-";
+			}
             
             //$jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Importir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01-01.jpg');            
 			
         }
+		
+		}
+		
+		if ($data) {
+			// $countall = count($data2);
+			// $bagi = $countall / $request->limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			/*
+			$data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $jsonResult
+            ];
+			*/
+			
+            $res['meta'] = $meta;
+            $res['data'] = $jsonResult;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+		
+    }
+	
+	public function detail_dokumen_importir(Request $request)
+    {
+		$id_user = $request->id_user;
+		$cek = DB::table('itdp_company_users')
+		->where('id', $id_user)
+		->get();
+		foreach($cek as $jyp){
+			$rolenya = $jyp->id_role;
+		}
+		//2 eksportir & 3 importir
+		if($rolenya == 3){ 
+		$data = DB::table('itdp_company_users')
+		->join('itdp_profil_imp', 'itdp_profil_imp.id', '=', 'itdp_company_users.id_profil')
+		->leftjoin('mst_country', 'mst_country.id', '=', 'itdp_profil_imp.id_mst_country')
+		->where('itdp_company_users.id', $id_user)
+		->get();
+		
+		
+		$jsonResult = array();
+        for ($i = 0; $i < count($data); $i++) {
+            $jsonResult[$i]["id_profil"] = $data[$i]->id_profil;
+			 $jsonResult[$i]["email"] = $data[$i]->email;
+			if($data[$i]->badanusaha == null | empty($data[$i]->badanusaha)){
+			$jsonResult[$i]["badanusaha"] = "";	
+			}else{
+			$jsonResult[$i]["badanusaha"] = $data[$i]->badanusaha;
+			}
+            $jsonResult[$i]["company"] = $data[$i]->company;
+            $jsonResult[$i]["id_role"] = "3";
+            $jsonResult[$i]["role_desc"] = "Buyer/importir";
+           
+            $jsonResult[$i]["addres"] = $data[$i]->addres;
+            $jsonResult[$i]["city"] = $data[$i]->city;
+            $jsonResult[$i]["postcode"] = $data[$i]->postcode;
+            $jsonResult[$i]["phone"] = $data[$i]->phone;
+            $jsonResult[$i]["fax"] = $data[$i]->fax;
+            $jsonResult[$i]["website"] = $data[$i]->website;
+            $jsonResult[$i]["country"] = $data[$i]->id_mst_country;
+            $jsonResult[$i]["country_desc"] = $data[$i]->country;
+            $jsonResult[$i]["dokumen"] = "";
+            $jsonResult[$i]["employe"] = "";	
+			$jsonResult[$i]["npwp"] = "-";	
+			$jsonResult[$i]["uploadnpwp"] = "";	
+			$jsonResult[$i]["tdp"] = "-";	
+			$jsonResult[$i]["uploadtdp"] = "";	
+			$jsonResult[$i]["siup"] = "-";	
+			$jsonResult[$i]["uploadsiup"] = "";	
+			$jsonResult[$i]["situ"] = "";
+			$jsonResult[$i]["scoope"] = "";
+			$jsonResult[$i]["tob"] = "";
+			$jsonResult[$i]["status"] = $data[$i]->status;
+			if($data[$i]->status == 1){
+			$jsonResult[$i]["status_desc"] = "Verified";	
+			}else if($data[$i]->status == 2){
+			$jsonResult[$i]["status_desc"] = "Not Verified";	
+			}else{
+			$jsonResult[$i]["status_desc"] = "-";
+			}
+			
+			
+            
+            //$jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Importir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01-01.jpg');            
+			
+        }
+		}else{
+		
 		
 		}
 		
