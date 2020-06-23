@@ -1389,20 +1389,22 @@ class ManagementController extends Controller
             $id_csc_product_level2 = $request->id_csc_product_level2;
             $datenow = date("Y-m-d H:i:s");
 
+			
             $data = DB::table('csc_product_single')->where('id', $id_product)->first();
+			
 			$carieks = DB::select("select email from itdp_company_users where id='".$data->id_itdp_company_user."'");
 			foreach($carieks as $teks){
 				$maileks = $teks->email;
 			}
             
-            // var_dump($verifikasi);
+            //var_dump($verifikasi);
             if($verifikasi == '1'){
                 $status = 2;
                 $ket = "This product has been added on the front page";
                 $notifnya = "has been accepted";
 				$ket = "Your product ".$data->prodname_en." got verified";
 				$ket2 = $data->prodname_en." has been accepted by Super Admin";
-
+			
 				$insertnotif = DB::table('notif')->insert([
                             'dari_nama' => 'Super Admin',
                             'dari_id' => 1,
@@ -1415,8 +1417,8 @@ class ManagementController extends Controller
                             'waktu' => $datenow,
                             'to_role' => 2,
                         ]);
-    
-	
+			
+			
 			$data33 = [
             'email' => "",
             'email1' => $maileks,
@@ -1441,6 +1443,7 @@ class ManagementController extends Controller
             // var_dump($status);
             // var_dump($ket);
             // die();
+			
             $update = DB::table('csc_product_single')->where('id', $id_product)->update([
                 'id_csc_product' => $id_csc_product,
                 'id_csc_product_level1' => $id_csc_product_level1,
@@ -1449,12 +1452,15 @@ class ManagementController extends Controller
                 'keterangan' => $ket,
                 'updated_at' => $datenow,
             ]);
-
+			
             if($update){
                 $pengirim = DB::table('itdp_admin_users')->where('id', $id_user)->first();
+				// echo 'wkwkab';die();
+				/*
                 $notif = DB::table('notif')->insert([
                     'dari_nama' => $pengirim->name,
                     'dari_id' => $id_user,
+                    // 'untuk_nama' => getCompanyName($data->id_itdp_company_user),
                     'untuk_nama' => getCompanyName($data->id_itdp_company_user),
                     'untuk_id' => $data->id_itdp_company_user,
                     'keterangan' => 'Product '.$data->prodname_en.' '.$notifnya.' by Admin',
@@ -1464,6 +1470,8 @@ class ManagementController extends Controller
                     'id_terkait' => $id_product,
                     'to_role' => 2,
                 ]);
+				*/
+				
             }
 			
 			if($update){
