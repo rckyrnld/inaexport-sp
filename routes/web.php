@@ -746,6 +746,7 @@ Route::namespace('Inquiry')->group(function () {
     Route::post('/inquiry_perwakilan/fileChat', 'InquiryWakilController@fileChat')->name('perwakilan.inquiry.fileChat');
     Route::get('/inquiry_perwakilan/view_detail/{id}', 'InquiryWakilController@view_detail')->name('perwakilan.inquiry.view_detail');
     Route::get('/inquiry_perwakilan/delete_detail/{id}', 'InquiryWakilController@delete_detail')->name('perwakilan.inquiry.delete_detail');
+	Route::get('/refreshchatinq2/{id}', 'InquiryWakilController@refreshchatinq2');
 
     //Admin
     Route::get('/inquiry_admin', 'InquiryAdminController@index')->name('admin.inquiry.index');
@@ -764,6 +765,7 @@ Route::namespace('Inquiry')->group(function () {
     Route::post('/inquiry_admin/fileChat', 'InquiryAdminController@fileChat')->name('admin.inquiry.fileChat');
     Route::get('/inquiry_admin/view_detail/{id}', 'InquiryAdminController@view_detail')->name('admin.inquiry.view_detail');
     Route::get('/inquiry_admin/delete_detail/{id}', 'InquiryAdminController@delete_detail')->name('admin.inquiry.delete_detail');
+	Route::get('/refreshchatinq/{id}', 'InquiryAdminController@refreshchatinq');
     //Tab Perwakilan
     Route::get('/inquiry_admin/getPerwakilan', 'InquiryAdminController@getPerwakilan')->name('admin.inquiry.getPerwakilan');
     Route::get('/inquiry_admin/detail_perwakilan/{id}', 'InquiryAdminController@detail_perwakilan')->name('admin.inquiry.detail_perwakilan');

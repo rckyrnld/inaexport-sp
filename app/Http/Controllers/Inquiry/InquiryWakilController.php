@@ -734,11 +734,26 @@ class InquiryWakilController extends Controller
                     'status' => 1,
                 ]);
             
-            return view('inquiry.perwakilan.chatting', compact('pageTitle','inquiry', 'messages', 'id_user','data'));
+            return view('inquiry.perwakilan.chatting', compact('pageTitle','inquiry', 'messages', 'id_user','data','id'));
         }else{
             return redirect('/home');
         }
     }
+	
+	public function refreshchatinq2($id)
+    {
+			$id_user = Auth::user()->id;
+            $data = DB::table('csc_inquiry_broadcast')->where('id', $id)->first();
+            $inquiry = DB::table('csc_inquiry_br')->where('id', $data->id_inquiry)->first();
+            $messages = DB::table('csc_chatting_inquiry')
+                ->where('id_inquiry', $data->id_inquiry)
+                ->where('type', 'perwakilan')
+                ->where('id_broadcast_inquiry', $id)
+                ->orderBy('created_at', 'asc')
+                ->get();
+		return view('buying-request.refresh5',compact('id','messages','id_user'));
+	}
+	
 
     public function sendChat(Request $request)
     {
