@@ -114,12 +114,12 @@ class BRFrontController extends Controller
 	
 	public function br_importir_chat($id,$idb)
     {
-        if(!empty(auth::guard('eksmp')->user)){
+        //if(!empty(auth::guard('eksmp')->user)){
             $pageTitle = "Chat Buying Request Importer";
             return view('buying-request.br_importir_chat',compact('pageTitle','id','idb'));
-        }else{
-            return redirect('login');
-        }
+        //}else{
+        //    return redirect('login');
+        // }
 
     }
 	

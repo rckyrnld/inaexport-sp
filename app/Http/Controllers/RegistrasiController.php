@@ -42,8 +42,14 @@ class RegistrasiController extends Controller
 	
 	public function forget_a()
     {
-        $pageTitle = "Forget Password";
+        $pageTitle = "Forgot Password";
         return view('auth.forget',compact('pageTitle'));
+	} 
+	
+	public function resetpass_send()
+    {
+        $pageTitle = "Password Reset Link Successfully Sent";
+        return view('auth.resetpass',compact('pageTitle'));
     } 
 	
 	public function cekmail($id)
@@ -398,7 +404,7 @@ class RegistrasiController extends Controller
                 });
 			}
 		}
-		return redirect('');
+		return redirect('resetpass_send');
 	}
 	
 	public function updatepass1(Request $request,$id)

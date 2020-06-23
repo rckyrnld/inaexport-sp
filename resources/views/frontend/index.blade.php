@@ -310,7 +310,7 @@
                             @endif
                             <span style="font-size: 18px; color: #007bff;">{{getCountData('itdp_company_users')}}+ </span>
                             @if($loc == "in")
-                                <span style="font-size: 182px; color: #666;">pengusaha telah bergabung</span>
+                                <span style="font-size: 18px; color: #666;">pengusaha telah bergabung</span>
                             @elseif($loc == "ch")
                                 <span style="font-size: 18px; color: #666;">位企业家加入</span>
                             @else

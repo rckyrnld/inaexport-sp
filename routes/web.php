@@ -23,6 +23,7 @@ Route::get('switch/{locale}', function ($locale) {
 });
 Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
 Route::get('/forget_a', 'RegistrasiController@forget_a');
+Route::get('/resetpass_send', 'RegistrasiController@resetpass_send');
 Route::get('/gantipass1/{id}', 'RegistrasiController@gantipass1');
 Route::get('/gantipass2/{id}', 'RegistrasiController@gantipass2');
 Route::post('/updatepass1/{id}', 'RegistrasiController@updatepass1');

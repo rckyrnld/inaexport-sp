@@ -1,10 +1,7 @@
 @include('headerlog')
   
   <div id="content-body" style="background-color: #c5e1f8 ; color: black" >
-  <center><br><img <img style="height:70px!Important;" src="{{url('assets')}}/assets/images/logo.jpg" alt="." ></center>
-    <div class="py-1 text-center w-100">
-	
-	<h3><b>@lang("login.title2")</b></h3>
+  <div class="py-1 text-center w-100">
 	
 	<br>
       <div class="mx-auto" style="width:400px;background: white; border-radius: 0px;">
@@ -14,11 +11,12 @@
 	  
 	   <form class="form-horizontal" method="POST" action="{{ url('resetpass') }}">
            {{ csrf_field() }}
-           <h4>@lang("login.lbl4")</h4><br>
+           <p style="font-size: 20px; text-align: left;">@lang("login.lbl4")</p>
+           <p style="font-size: 14px; text-align: left;">@lang("login.lbl9")</p>
              <div class="form-group">
             <select class="form-control" id="id_role" name="id_role" style="color:black;" >
 				<option value="1">Exporter/Importer</option>
-				<option value="2">Perwakilan</option>
+				<option value="2">Atdag / ITPC</option>
 			</select>
         </div>
 		
