@@ -85,8 +85,11 @@ body {font-family: Arial;}
 		   </div>
 	   @endif
 	<div class="form-row">
-		<div class="col-sm-12">
+		<div class="col-sm-8">
 		<label><b>What are you looking for</b></label>
+		</div>
+		<div class="col-sm-4">
+		<label><b>Duration</b></label>
 		</div>
 		<div class="form-group col-sm-8">
 			<input type="text" value="" name="cmp" id="cmp" class="form-control" required>
@@ -235,8 +238,11 @@ body {font-family: Arial;}
 <div class="box-body">
 <br><br>
 <div class="form-row">
-		<div class="col-sm-12">
+		<div class="col-sm-6">
 		<label><b>Location of delivery</b></label>
+		</div>
+		<div class="col-sm-6">
+		<label><b>City</b></label>
 		</div>
 		<div class="form-group col-sm-6">
 			<?php 
@@ -291,6 +297,7 @@ body {font-family: Arial;}
 </form>
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script>
+
 function t1() {
         $('#t2').html('');
         $('#t3').html('');
@@ -313,7 +320,9 @@ function t1() {
             $('.select2').select2();
 
         })
-    }
+	}
+	
+
 	$('.upload1').on('change', function(evt){
 		var size = this.files[0].size;
 		if(size > 5000000){
@@ -371,28 +380,7 @@ $(function() {
 
 </script>
 <script>
-function t1(){
-	$('#t2').html('');
-	$('#t3').html('');
-	var t1 = $('#category').val();
-	var token = $('meta[name="csrf-token"]').attr('content');
-		$.get('{{URL::to("ambilt2/")}}/'+t1,{_token:token},function(data){
-			$("#t2").html(data);
-			$("#t3").html('<input type="hidden" name="t3s" id="t3s" value="0">');
-			 $('.select2').select2();
-			
-		 })
-}
-function t2(){
-	$('#t3').html('');
-	var t2 = $('#t2s').val();
-	var token = $('meta[name="csrf-token"]').attr('content');
-		$.get('{{URL::to("ambilt3/")}}/'+t2,{_token:token},function(data){
-			$("#t3").html(data);
-			 $('.select2').select2();
-			
-		 })
-}
+
 function nv(){
 	var a = $('#staim').val();
 	if(a == 2){
