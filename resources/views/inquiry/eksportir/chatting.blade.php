@@ -1,29 +1,114 @@
 @include('header')
 <style>
-    .mycustom {
-        border: solid 1px grey;
-        position: relative;
-    }
+body {font-family: Arial;}
 
-    .mycustom input[type=text] {
-        border: none;
-        width: 100%;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        padding-right: 123px;
-    }
+.select2-container--default .select2-selection--single {
+    background-color: #fff!important;
+    border: 1px solid rgba(120, 130, 140, 0.5)!important;
+    border-radius: 4px!important;
+}
 
-    .mycustom .input-group-prepend {
-        position: absolute;
-        right: 4px;
-        top: 4px;
-        bottom: 4px;
-        z-index: 9;
-    }
 
-    .atag:hover {
-        text-decoration: underline;
-    }
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 8px 10px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+</style>
+<style>
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chat li
+{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 10px;
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+.panel-body
+{
+   
+    height: 280px;
+}
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+
+
 </style>
 <div class="padding">
     <div class="row">
@@ -177,160 +262,164 @@
                         </div>
                     </div>
                     <br>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="box" id="fg1"
-                                 style="max-height: 400px; overflow-y: scroll;overflow-x: hidden; padding: 0px 5px 0px 5px;">
-                                <br>
-                                <div class="row">
-                                    <?php
-                                    $datenya = NULL;
-                                    ?>
-                                    @foreach($messages as $msg)
-                                        @if($msg->sender == $id_user)
-                                            <div class="col-md-1"></div>
-                                            <div class="col-md-10">
-                                                @if($datenya == NULL)
-                                                    <?php
-                                                    $datenya = date('d-m-Y', strtotime($msg->created_at));
-                                                    ?>
-                                                    <center>
-                                                        <i>
-                                                            {{$datenya}}
-                                                        </i>
-                                                    </center><br>
-                                                @else
-                                                    @if($datenya != date('d-m-Y', strtotime($msg->created_at)))
-                                                        <?php
-                                                        $datenya = date('d-m-Y', strtotime($msg->created_at));
-                                                        ?>
-                                                        <center>
-                                                            <i>
-                                                                {{$datenya}}
-                                                            </i>
-                                                        </center><br>
-                                                    @endif
-                                                @endif
-                                                <div class="row pull-right">
-                                                    <div class="col-md-10">
-                                                        <label class="label"
-                                                               style="background: #FFD54F; border-radius:10px; width:300px; padding: 10px;">
-                                                            <b>You</b> :<br>
-                                                            @if($msg->file == NULL)
-                                                                {{$msg->messages}}<br>
-                                                            @else
-                                                                <a href="{{ url('/').'/uploads/ChatFileInquiry/'.$msg->id }}/{{ $msg->file }}"
-                                                                   target="_blank" class="atag"
-                                                                   style="color: red;">{{$msg->file}}</a><br><br>
-                                                                {{$msg->messages}}<br>
-                                                            @endif
-                                                            <span style="color: #555; float: right;">{{date('H:i',strtotime($msg->created_at))}}</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div><br>
-                                            <div class="col-md-1"></div>
-                                        @else
-                                            <div class="col-md-1"></div>
-                                            <div class="col-md-10">
-                                                @if($datenya == NULL)
-                                                    <?php
-                                                    $datenya = date('d-m-Y', strtotime($msg->created_at));
-                                                    ?>
-                                                    <center>
-                                                        <i>
-                                                            {{$datenya}}
-                                                        </i>
-                                                    </center><br>
-                                                @else
-                                                    @if($datenya != date('d-m-Y', strtotime($msg->created_at)))
-                                                        <?php
-                                                        $datenya = date('d-m-Y', strtotime($msg->created_at));
-                                                        ?>
-                                                        <center>
-                                                            <i>
-                                                                {{$datenya}}
-                                                            </i>
-                                                        </center><br>
-                                                    @endif
-                                                @endif
-                                                <div class="row">
-                                                    <div class="col-md-10">
-                                                        <label class="label"
-                                                               style="background: #eee; border-radius:10px; width:300px; padding: 10px;">
-                                                            <b>
-                                                                @if($inquiry->type == "importir")
+					 <div class="row">
+					
+<div class="col-sm-12">
+<div align="center"><br>
+<center>
+<div class="">
+    <div class="row"><div class="col-sm-12">
+        <div class="col-md-12" style="background-color: #1a7688;color:white;">
+		<div class="row">
+		<div class="col-sm-1">
+		</div>
+		<div class="col-sm-10">
+		<br><h6><b>Chat</b></h6><br>
+		</div>
+		<div class="col-sm-1">
+		<br>
+		<a class="btn btn-info" onclick="rfr()">Refresh</a>
+		</div>
+		</div>
+		</div>
+        <div class="col-md-12" style="background-color: #def1f1;">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-comment"></span>
+                   <!-- <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu slidedown">
+                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-refresh">
+                            </span>Refresh</a></li>
+                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-ok-sign">
+                            </span>Available</a></li>
+                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-remove">
+                            </span>Busy</a></li>
+                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-time"></span>
+                                Away</a></li>
+                            <li class="divider"></li>
+                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-off"></span>
+                                Sign Out</a></li>
+                        </ul>
+                    </div> -->
+                </div>
+			<br>
+                <div id="fg1" class="panel-body" style="overflow-y: scroll;">
+                    <ul class="chat" id="rchat">
+					<?php 
+					foreach($messages as $msg){
+					?>
+					
+					<?php if($msg->sender == $id_user){?>
+						<li class="right clearfix"><span class="chat-img pull-right">
+                            <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                        </span>
+                            <div class="chat-body clearfix pull-right">
+                                <div class="header">
+                                    <strong class=" text-muted"><span class="pull-right primary-font"></span><b>You</b></strong>
+									<small class="glyphicon glyphicon-time"> (<?php
+                                        $datenya = date('d-m-Y', strtotime($msg->created_at));
+                                     echo $datenya; ?>)</small>
+                                </div>
+                                  <p>
+                                    {{$msg->messages}}
+									
+                                </p>
+								<p>
+								<?php if(empty($msg->file)){}else{?>
+									<br><a target="_BLANK" href="{{ url('/').'/uploads/ChatFileInquiry/'.$msg->id }}/{{ $msg->file }}"><font color="green"><?php echo $msg->file; ?></font></a>
+									<?php } ?>
+								</p>
+                            </div>
+                        </li>
+					<?php }else{ ?>
+						<li class="left clearfix"><span class="chat-img pull-left">
+                            <img src="http://placehold.it/50/55C1E7/fff&text=H" alt="User Avatar" class="img-circle" />
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+									<strong class=" text-muted"><span class="pull-right primary-font"></span><b>@if($inquiry->type == "importir")
                                                                     {{getCompanyNameImportir($msg->sender)}}
                                                                 @elseif($inquiry->type == "perwakilan")
                                                                     {{getPerwakilanName($msg->sender)}}
                                                                 @elseif($inquiry->type == "admin")
                                                                     {{getAdminName($msg->sender)}}
-                                                                @endif
-                                                            </b> :<br>
-                                                            @if($msg->file == NULL)
-                                                                {{$msg->messages}}<br>
-                                                            @else
-                                                                <a href="{{ url('/').'/uploads/ChatFileInquiry/'.$msg->id }}/{{ $msg->file }}"
-                                                                   target="_blank" class="atag"
-                                                                   style="color: red;">{{$msg->file}}</a><br><br>
-                                                                {{$msg->messages}}<br>
-                                                            @endif
-                                                            <span style="color: #555; float: right;">{{date('H:i',strtotime($msg->created_at))}}</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div><br>
-                                            <div class="col-md-1"></div>
-                                        @endif
-                                    @endforeach
+                                                                @endif</b></strong>
+									<small class="glyphicon glyphicon-time"> (<?php
+                                        $datenya = date('d-m-Y', strtotime($msg->created_at));
+                                     echo $datenya; ?>)</small>
                                 </div>
-                                <br>
+                                  <p>
+                                    {{$msg->messages}}
+									
+                                </p>
+								<p>
+								<?php if(empty($msg->file)){}else{?>
+									<br><a target="_BLANK" href="{{ url('/').'/uploads/ChatFileInquiry/'.$msg->id }}/{{ $msg->file }}"><font color="green"><?php echo $msg->file; ?></font></a>
+									<?php } ?>
+								</p>
                             </div>
-                        </div>
+                        </li>
+					<?php } ?>
+                        
+                        
+					<?php }  ?>
+                        
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="inputan" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                        <span class="input-group-btn">
+						<!--<a  class="btn btn-info" data-toggle="modal" data-target="#myModal2">
+                              <font color="white">  <i class="fa fa-paperclip"></i></font></a> -->
+							  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalInvoice" style="border-color: rgba(120, 130, 140, 0.5);">
+                                    <img src="{{asset('image/paperclip.png')}}" width="20px">
+                                </button>
+                            <a onclick="kirimchat()" class="btn btn-warning" id="btn-chat">
+                               <font color="white"> <i class="fa fa-paper-plane"></i> Send</a></font>
+                        </span>
                     </div>
-                    @if($inquiry->type == "importir")
-                        @if( $inquiry->status != 4 && $inquiry->status != 5)
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="messages" value="" id="messages" autocomplete="off">
-                                        <div class="input-group-append">
-                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalFile" style="border-color: rgba(120, 130, 140, 0.5);">
-                                                <img src="{{asset('image/paperclip.png')}}" width="20px">
-                                            </button>
-                                        </div>
-    {{--                                    <i class="fa fa-paperclip" id="uploading" style="font-size:24px; display:inline-flex;"></i>--}}
+					
+                </div>
+				<br>
+            </div>
+        </div>
+    </div>
+</div>
+</center>
+<!-- <div align="right"><br><br>
+<a href="{{url('br_pw_lc/12')}}" class="btn btn-danger"><font color="white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-left "></i> Back&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></a>
+</div> -->
+<!--
+<a href="{{ url('br_save_join/') }}" class="btn btn-md btn-primary"><i class="fa fa-comment"></i> Chat</a>
+<a href="{{ url('br_list') }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Decline</a>
+-->
 
-                                        <input type="hidden" name="type" id="type" value="{{$inquiry->type}}">
+</div>
+</div>
+</div>
+					
+					</div>
+                   @if($inquiry->type == "importir")
+                        @if( $inquiry->status != 4 && $inquiry->status != 5)
+							<input type="hidden" name="type" id="type" value="{{$inquiry->type}}">
                                         <input type="hidden" name="id_inquiry" id="id_inquiry" value="{{$inquiry->id}}">
                                         <input type="hidden" name="sender" id="sender" value="{{$id_user}}">
                                         <input type="hidden" name="receiver" id="receiver" value="{{$inquiry->id_pembuat}}">
-                                    </div>
-                                </div>
-                                <div class="col-md-2 pull-right">
-                                </div>
-                            </div><br>
+							
+                       
                         @endif
                     @elseif($inquiry->type == "perwakilan" || $inquiry->type == "admin")
                         @if($broadcast->status != 4 && $broadcast->status != 5)
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="messages" value="" id="messages" autocomplete="off">
-                                        <div class="input-group-append">
-                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalFile" style="border-color: rgba(120, 130, 140, 0.5);">
-                                                <img src="{{asset('image/paperclip.png')}}" width="20px">
-                                            </button>
-                                        </div>
-                                        <input type="hidden" name="type" id="type" value="{{$inquiry->type}}">
+							
+						 <input type="hidden" name="type" id="type" value="{{$inquiry->type}}">
                                         <input type="hidden" name="id_inquiry" id="id_inquiry" value="{{$inquiry->id}}">
                                         <input type="hidden" name="sender" id="sender" value="{{$id_user}}">
                                         <input type="hidden" name="receiver" id="receiver" value="{{$inquiry->id_pembuat}}">
-                                    </div>
-                                </div>
-                                <div class="col-md-2 pull-right">
-                                </div>
-                            </div><br>
+                           
                         @endif
                     @endif
                     <br>
@@ -421,6 +510,47 @@
 
 @include('footer')
 <script>
+$(document).ready(function () {
+		var con = document.getElementById("fg1");
+	con.scrollTop = con.scrollHeight;
+        $('.select2').select2();
+	setInterval(function() {
+	a = <?php echo $id; ?>;
+	var token = $('meta[name="csrf-token"]').attr('content');
+	$.get('{{URL::to("refreshchatinq3/")}}/'+a,{_token:token},function(data){
+		$('#rchat').html(data)
+		var con = document.getElementById("fg1");
+	con.scrollTop = con.scrollHeight;
+		 });
+	}, 2000);
+});
+
+function kirimchat(){
+	
+			 var sender = $('#sender').val();
+                var receiver = $('#receiver').val();
+                var id_inquiry = $('#id_inquiry').val();
+                var type = $('#type').val();
+                var msg = $('#inputan').val();
+
+
+                $.ajax({
+                    url: "{{route('eksportir.inquiry.sendChat')}}",
+                    type: 'get',
+                    data: {from: sender, to: receiver, idinquiry: id_inquiry, messages: msg, file: "", typenya: type},
+                    success: function (response) {
+                        // console.log(response);
+                        if (response == 1) {
+                            location.reload();
+                        } else {
+                            alert("This message is not delivered!");
+                            location.reload();
+                        }
+                    }
+                });
+				$('#rchat').append('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix pull-right"><div class="header"><strong class=" text-muted"><span class="pull-right primary-font"></span><b>You</b></strong><small class="glyphicon glyphicon-time"> (<?php echo date('Y-m-d H:m:s'); ?>)</small></div><p>'+ msg +'</p></div></li>');
+	$('#inputan').val('');
+		}
     $(document).ready(function () {
 	var con = document.getElementById("fg1");
 	con.scrollTop = con.scrollHeight;

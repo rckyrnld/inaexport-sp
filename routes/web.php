@@ -733,6 +733,7 @@ Route::namespace('Inquiry')->group(function () {
     Route::get('/inquiry/sendChat', 'InquiryEksController@sendChat')->name('eksportir.inquiry.sendChat');
     Route::post('/inquiry/fileChat', 'InquiryEksController@fileChat')->name('eksportir.inquiry.fileChat');
     Route::get('/inquiry/dealing/{id}/{status}', 'InquiryEksController@dealing')->name('eksportir.inquiry.dealing');
+	Route::get('/refreshchatinq3/{id}', 'InquiryEksController@refreshchatinq3');
 
     //Perwakilan
     Route::get('/inquiry_perwakilan', 'InquiryWakilController@index')->name('perwakilan.inquiry.index');
