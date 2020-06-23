@@ -15,5 +15,6 @@ return [
         "address" => "地址",
 		
     ],
-    "submit" => "清单"
+    "submit" => "清单",
+    "submitbuyer" => "创建帐号",
 ];
