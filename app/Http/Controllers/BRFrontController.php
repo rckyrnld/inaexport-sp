@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 use Mail;
 
 class BRFrontController extends Controller
@@ -334,6 +335,7 @@ class BRFrontController extends Controller
 		// echo "select * from csc_product_single where id_csc_product='".$cr[0]."' or id_csc_product_level1='".$cr[0]."' or id_csc_product_level2='".$cr[0]."'";die();
 //		$namaprod = DB::select("select * from csc_product_single where id_csc_product='".$cr[$a]."' or id_csc_product_level1='".$cr[$a]."' or id_csc_product_level2='".$cr[$a]."' ");
 		$namaprod = DB::select("select * from csc_product_single where id_csc_product='".$cr[$hitung-2]."' or id_csc_product_level1='".$cr[$hitung-2]."' or id_csc_product_level2='".$cr[$hitung-2]."' ");
+		
 		if(count($namaprod) == 0){
 		
 		}else{
@@ -697,6 +699,41 @@ class BRFrontController extends Controller
 		echo "<a href='".url('br_importir_bc/'.$id_br)."' class='btn btn-warning'><font color='white'>Broadcast</font></a>";
 	
 	}	
+
+	public function getdatapiliheksportir( Request $request)
+    {
+		$cr = explode(',',$request->id_laporan);
+		$hitung = count($cr);
+		$category = $cr[$hitung-2];
+		$no = 1;
+		$getproduct = DB::select("select * from csc_product_single where id_csc_product='".$cr[$hitung-2]."' or id_csc_product_level1='".$cr[$hitung-2]."' or id_csc_product_level2='".$cr[$hitung-2]."' ");
+		$pesan = DB::table('csc_product_single')
+				->join('itdp_company_users','itdp_company_users.id','csc_product_single.id_itdp_company_user')
+				->join('itdp_profil_eks','itdp_company_users.id_profil','itdp_profil_eks.id')
+						->where(function ($query) use ($category) {
+							$query->where('csc_product_single.id_csc_product',$category)	
+								->orwhere('csc_product_single.id_csc_product_level1',$category)	
+								->orwhere('csc_product_single.id_csc_product_level2',$category);
+						})
+						->select('itdp_profil_eks.id','itdp_profil_eks.company')
+						->groupby('itdp_profil_eks.id','itdp_profil_eks.company')
+						->get();
+						
+		return DataTables::of($pesan)
+            // ->addColumn('f1', function ($pesan) {
+            //     return '<div align="left">' . $pesan->id . '</div>';
+            // })
+            ->addColumn('f2', function ($pesan) {
+                    return$pesan->company;
+            })
+            ->addColumn('f3', function ($pesan) {
+                return "<input type='checkbox' name='eksportir' value={{$pesan->id}}>";
+            })
+            // ->rawColumns([ 'f1','f2','f3'])
+            ->rawColumns([ 'f2','f3'])
+            ->make(true);
+    }
+
 	public function br_importir_save(Request $request)
     {
 //        dd($request);

@@ -122,7 +122,7 @@
                 <div class="col-lg-12 col-md-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index.html">@lang("frontend.proddetail.home")</a></li>
+                            <li><a href="{{url('/')}}">@lang("frontend.proddetail.home")</a></li>
                             <li>Events</li>
                         </ul>
                     </div>
@@ -137,11 +137,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6">
-                    <div class="product-details-tab">
+                    <div class="product-details-tab" style="width: 400px;">
 
-                        <div id="img-1" class="zoomWrapper single-zoom" align="center" style="border: 10px solid #edeff2;">
+                        <div id="img-1" class="" align="center" style="border: 10px solid #edeff2;">
                             <a href="#">
-                                <img id="zoom1" src="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}" alt="big-1" style="width: 100%; height: 400px;">
+                                <img id="" src="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}" alt="big-1" style="width: 400px; height: 400px;">
                             </a>
                         </div>
                         @if(count($arrimg) > 1)
@@ -200,7 +200,12 @@
                                     <tr>
                                         <td>@lang("frontend.event.website")</td>
                                         <td style="padding-left: 5px;padding-right: 10px;">:</td>
-                                        <td>{{$detail->website}}</td>
+                                        <td><a href="{{$detail->website}}">{{$detail->website}}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status</td>
+                                        <td style="padding-left: 5px;padding-right: 10px;">:</td>
+                                        <td>{{$detail->status_en}}</td>
                                     </tr>
                                 </table>
                             </div>

@@ -118,7 +118,7 @@
                                             <input type="text" class="form-control" name="eventorgnzr_chn" id="eventorgnzr_chn" autocomplete="off" @if($page!=='add') value="{{EvenOrgZ($e_detail->id_event_organizer, 'chn')}}" @endif readonly>
                                         </div>
                                     </div><br>
-                                    <div class="row">
+                                    {{--<div class="row">
                                         <label for="code" class="col-md-3"><b>Event Organizer Text</b></label>
                                         <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="eot_en" id="eot_en" autocomplete="off" @if($page!=='add') value="{{$e_detail->event_organizer_text_en}}" @endif required>
@@ -129,7 +129,7 @@
                                         <div class="col-md-3 paddignya">
                                             <input type="text" class="form-control" name="eot_chn" id="eot_chn" autocomplete="off" @if($page!=='add') value="{{$e_detail->even_organizer_text_chn}}" @endif>
                                         </div>
-                                    </div><br>
+                                    </div><br>--}}
                                     <div class="row">
                                         <label for="code" class="col-md-3"><b>Event Place</b></label>
                                         <div class="col-md-3 paddignya">
@@ -169,7 +169,8 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label for="code" ><b>Image</b></label><br>
-                                            <label style="color: red">*maksimum file size 5MB</label>
+                                            <label style="color: red">*maksimum file size 5MB</label><br>
+                                            <label style="color: red">*upload square image</label>
                                         </div>
 
                                         <div class="col-md-2">

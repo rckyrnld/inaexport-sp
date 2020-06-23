@@ -918,7 +918,11 @@ class FrontController extends Controller
     }
 
     public function Event(Request $req){
-        $country = DB::table('mst_country')->orderby('country', 'asc')->get();
+        $country = DB::table('mst_country')
+            ->join('event_detail','event_detail.country','mst_country.id')
+            ->orderby('event_detail.country', 'asc')
+            ->get();
+
         $today = date('Y-m-d');
 
         if($req->search && $req->search2 == null && $req->search3 == null ){
@@ -929,8 +933,8 @@ class FrontController extends Controller
                 $query = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.status_en', 'Verified')
-                    ->where('a.end_date', '>=', $today)
+                    // ->where('a.status_en', 'Verified')
+                    ->where('a.end_date', '>=', "'".$today."'")
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal');
 
@@ -941,16 +945,50 @@ class FrontController extends Controller
                             ->orWhere('a.event_name_'.$lang, 'ILIKE', "%".$param."%");
                     });
                 } else if($searchEvent == 2){
-                    $param = $req->tanggal;
+                    $param = $req->tanggal; 
+                    // dd($seplit[1].'-'.$seplit[0]);
                     if($param != null){
                         $query->where(function ($query) use ($param) {
-                            $query->where('a.start_date', '<=', $param);
-                            $query->where('a.end_date', '>=', $param);
+                            $query->where(DB::raw("date_part('YEAR', Cast(a.start_date as TIMESTAMP))"),  date('Y', strtotime($param)))
+                                ->where(DB::raw("date_part('MONTH', Cast(a.start_date as TIMESTAMP))"), date('m', strtotime($param)));
                         });
                         $query->orWhere(function ($query) use ($param){
-                            $query->where('a.start_date', $param)
-                                ->orWhere('a.end_date', $param);
+                            $query->where(DB::raw("date_part('YEAR', Cast(a.end_date as TIMESTAMP))"), date('Y', strtotime($param)))
+                                ->where(DB::raw("date_part('MONTH', Cast(a.end_date as TIMESTAMP))"), date('m', strtotime($param)));
                         });
+                        // $query->where(function ($query) use ($param) {
+                        //     $query->where(DB::raw('YEAR(a.start_date)'), '=', date('Y', strtotime($param)))
+                        //         ->where(DB::raw('MONTH(a.start_date)'), '=', date('m', strtotime($param)));
+                        // });
+                        // $query->orWhere(function ($query) use ($param){
+                        //     $query->where(DB::raw('YEAR(a.end_date)'), '=', date('Y', strtotime($param)))
+                        //         ->where(DB::raw('MONTH(a.end_date)'), '=', date('m', strtotime($param)));
+                        // });
+                        // $query->where(function ($query) use ($param) {
+                        //     $query->where(DB::raw('YEAR(a.start_date)'), '=', date('Y', strtotime($param)))
+                        //         ->where(DB::raw('MONTH(a.start_date)'), '=', date('m', strtotime($param)));
+                        // });
+                        // $query->orWhere(function ($query) use ($param){
+                        //     $query->where(DB::raw('YEAR(a.end_date)'), '=', date('Y', strtotime($param)))
+                        //         ->where(DB::raw('MONTH(a.end_date)'), '=', date('m', strtotime($param)));
+                        // });
+                        
+                        // $query->where(function ($query) use ($param) {
+                        //     $query->where('TO_TIMESTAMP(a.start_date, "MM/DD/YYYY HH24:MI:SS")', '==', "'".date('Y', strtotime($param))."'" )
+                        //             ->where('TO_TIMESTAMP(a.start_date, "MM/DD/YYYY HH24:MI:SS")', '==',  "'".date('m', strtotime($param))."'" );
+                        // });
+                        // $query->orWhere(function ($query) use ($param){
+                        //     $query->whereyear('TO_TIMESTAMP(a.end_date, "MM/DD/YYYY HH24:MI:SS")', '==', "'".date('Y', strtotime($param))."'" )
+                        //     ->wheremonth('TO_TIMESTAMP(a.end_date, "MM/DD/YYYY HH24:MI:SS")', '==',  "'".date('m', strtotime($param))."'" );
+                        // });
+                        // $query->where(function ($query) use ($param) {
+                        //     $query->where('a.start_date', '<=', $param);
+                        //     $query->where('a.end_date', '>=', $param);
+                        // });
+                        // $query->orWhere(function ($query) use ($param){
+                        //     $query->where('a.start_date', $param)
+                        //         ->orWhere('a.end_date', $param);
+                        // });
                     }
                 } else if($searchEvent == 3) {
                     $param = $req->country;
@@ -960,8 +998,8 @@ class FrontController extends Controller
                 if($param == null){
                     return redirect('/front_end/event');
                 }
-                $e_detail = $query->paginate(8,['*'],'page_a');
-
+                $e_detail = $query->paginate(12,['*'],'page_a');
+                
                 $page = 99999999;
             } else {
                 $searchEvent = null;
@@ -969,11 +1007,11 @@ class FrontController extends Controller
                 $e_detail = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.status_en', 'Verified')
+                    // ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal')
-                    ->paginate(9,['*'],'page_a');
+                    ->paginate(12,['*'],'page_a');
 
                 $json = json_decode($e_detail->toJson(), true);
                 $page = $json["current_page"];
@@ -981,11 +1019,11 @@ class FrontController extends Controller
                     $e_detail = DB::table('event_detail as a')
                         ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                         ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                        ->where('a.status_en', 'Verified')
+                        // ->where('a.status_en', 'Verified')
                         ->where('a.end_date', '>=', $today)
                         //->orderby('a.created_at', 'desc')
                         ->orderby('abs_beda_tanggal')
-                        ->paginate(8,['*'],'page_a');
+                        ->paginate(12,['*'],'page_a');
                 }
             }
             $halaman = 'all';
@@ -995,12 +1033,12 @@ class FrontController extends Controller
             $e_detail2 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                ->where('a.status_en', 'Verified')
+                // ->where('a.status_en', 'Verified')
                 ->where('a.event_scope_en','Indonesia')
                 ->where('a.end_date', '>=', $today)
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal')
-                ->paginate(9,['*'],'page_b');
+                ->paginate(12,['*'],'page_b');
 
             $json = json_decode($e_detail2->toJson(), true);
             $page2 = $json["current_page"];
@@ -1008,12 +1046,12 @@ class FrontController extends Controller
                 $e_detail2 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.status_en', 'Verified')
+                    // ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Indonesia')
                     ->where('a.end_date', '>=', $today)
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal')
-                    ->paginate(8,['*'],'page_b');
+                    ->paginate(12,['*'],'page_b');
             }
 
             //untuk event foreign
@@ -1022,7 +1060,7 @@ class FrontController extends Controller
             $e_detail3 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                ->where('a.status_en', 'Verified')
+                // ->where('a.status_en', 'Verified')
                 ->where('a.event_scope_en','Foreign')
                 ->where('a.end_date', '>=', $today)
 //                ->orderby('a.created_at', 'desc')
@@ -1035,12 +1073,12 @@ class FrontController extends Controller
                 $e_detail3 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.status_en', 'Verified')
+                    // ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Indonesia')
                     ->where('a.end_date', '>=', $today)
 //                    ->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal')
-                    ->paginate(8,['*'],'page_c');
+                    ->paginate(12,['*'],'page_c');
             }
 
 
@@ -1054,15 +1092,16 @@ class FrontController extends Controller
                 $query = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.event_scope_en','Indonesia')
-                    ->where('a.status_en', 'Verified')
+                    // ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
                     //->orderby('a.created_at', 'desc')
-                    ->orderby('abs_beda_tanggal');
+                    ->orderby('abs_beda_tanggal')
+                    ->where('a.event_scope_en','Indonesia');
 
                 if($searchEvent2 == 1){
                     $param2 = $req->nama;
                     $query->where(function($query) use ($param2,$lang){
+                        $query->where('a.event_scope_en','Indonesia');
                         $query->where('a.event_name_en', 'ILIKE', "%".$param2."%")
                             ->orWhere('a.event_name_'.$lang, 'ILIKE', "%".$param2."%");
                     });
@@ -1070,23 +1109,34 @@ class FrontController extends Controller
                     $param2 = $req->tanggal;
                     if($param2 != null){
                         $query->where(function ($query) use ($param2) {
-                            $query->where('a.start_date', '<=', $param2);
-                            $query->where('a.end_date', '>=', $param2);
+                            $query->where(DB::raw("date_part('YEAR', Cast(a.start_date as TIMESTAMP))"),  date('Y', strtotime($param2)))
+                                ->where(DB::raw("date_part('MONTH', Cast(a.start_date as TIMESTAMP))"), date('m', strtotime($param2)))
+                                ->where('a.event_scope_en','Indonesia');
                         });
                         $query->orWhere(function ($query) use ($param2){
-                            $query->where('a.start_date', $param2)
-                                ->orWhere('a.end_date', $param2);
+                            $query->where(DB::raw("date_part('YEAR', Cast(a.end_date as TIMESTAMP))"), date('Y', strtotime($param2)))
+                                ->where(DB::raw("date_part('MONTH', Cast(a.end_date as TIMESTAMP))"), date('m', strtotime($param2)))
+                                ->where('a.event_scope_en','Indonesia');
                         });
+                        // $query->where(function ($query) use ($param2) {
+                        //     $query->where('a.start_date', '<=', $param2);
+                        //     $query->where('a.end_date', '>=', $param2);
+                        // });
+                        // $query->orWhere(function ($query) use ($param2){
+                        //     $query->where('a.start_date', $param2)
+                        //         ->orWhere('a.end_date', $param2);
+                        // });
                     }
                 } else if($searchEvent2 == 3) {
                     $param2 = $req->country;
-                    $query->where('country', $param2);
+                    $query->where('country', $param2)
+                        ->where('a.event_scope_en','Indonesia');
                 }
 
                 if($param2 == null){
                     return redirect('/front_end/event');
                 }
-                $e_detail2 = $query->paginate(8,['*'],'page_b');
+                $e_detail2 = $query->paginate(12,['*'],'page_b');
 
                 $page2 = 99999999;
             } else {
@@ -1095,12 +1145,12 @@ class FrontController extends Controller
                 $e_detail2 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.status_en', 'Verified')
-                    ->where('a.event_scope_en','Indonesia')
+                    // ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
                     ->orderby('abs_beda_tanggal')
+                    ->where('a.event_scope_en','Indonesia')
                     //->orderby('a.created_at', 'desc')
-                    ->paginate(9,['*'],'page_b');
+                    ->paginate(12,['*'],'page_b');
 
                 $json = json_decode($e_detail2->toJson(), true);
                 $page2 = $json["current_page"];
@@ -1108,12 +1158,12 @@ class FrontController extends Controller
                     $e_detail2 = DB::table('event_detail as a')
                         ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                         ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                        ->where('a.status_en', 'Verified')
-                        ->where('a.event_scope_en','Indonesia')
+                        // ->where('a.status_en', 'Verified')
                         ->where('a.end_date', '>=', $today)
+                        ->where('a.event_scope_en','Indonesia')
                         //->orderby('a.created_at', 'desc')
                         ->orderby('abs_beda_tanggal')
-                        ->paginate(8,['*'],'page_b');
+                        ->paginate(12,['*'],'page_b');
                 }
             }
 
@@ -1135,11 +1185,11 @@ class FrontController extends Controller
                 $e_detail = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.status_en', 'Verified')
+                    // ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal')
-                    ->paginate(8,['*'],'page_a');
+                    ->paginate(12,['*'],'page_a');
             }
 
             //untuk event foreign
@@ -1148,12 +1198,12 @@ class FrontController extends Controller
             $e_detail3 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                ->where('a.status_en', 'Verified')
+                // ->where('a.status_en', 'Verified')
                 ->where('a.event_scope_en','Foreign')
                 ->where('a.end_date', '>=', $today)
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal')
-                ->paginate(9,['*'],'page_c');
+                ->paginate(12,['*'],'page_c');
 
             $json = json_decode($e_detail3->toJson(), true);
             $page3 = $json["current_page"];
@@ -1161,18 +1211,18 @@ class FrontController extends Controller
                 $e_detail3 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.status_en', 'Verified')
+                    // ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Foreign')
                     ->where('a.end_date', '>=', $today)
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal')
-                    ->paginate(8,['*'],'page_c');
+                    ->paginate(12,['*'],'page_c');
             }
         }
         else if($req->search3 && $req->search == null && $req->search2 == null ){
             $halaman = 'foreign';
             if($req->search3){
-                $searchEvent3 = $req->search2;
+                $searchEvent3 = $req->search3;
                 $lang = app()->getLocale();
                 if($lang == 'ch'){ $lang = 'chn';}
                 $query = DB::table('event_detail as a')
@@ -1187,30 +1237,43 @@ class FrontController extends Controller
                 if($searchEvent3 == 1){
                     $param3 = $req->nama;
                     $query->where(function($query) use ($param3,$lang){
+                        $query->where('a.event_scope_en','Foreign');
                         $query->where('a.event_name_en', 'ILIKE', "%".$param3."%")
                             ->orWhere('a.event_name_'.$lang, 'ILIKE', "%".$param3."%");
                     });
                 } else if($searchEvent3 == 2){
                     $param3 = $req->tanggal;
                     if($param3 != null){
+                        
                         $query->where(function ($query) use ($param3) {
-                            $query->where('a.start_date', '<=', $param3);
-                            $query->where('a.end_date', '>=', $param3);
+                            $query->where(DB::raw("date_part('YEAR', Cast(a.start_date as TIMESTAMP))"),  date('Y', strtotime($param3)))
+                                ->where(DB::raw("date_part('MONTH', Cast(a.start_date as TIMESTAMP))"), date('m', strtotime($param3)))
+                                ->where('a.event_scope_en','Foreign');
                         });
                         $query->orWhere(function ($query) use ($param3){
-                            $query->where('a.start_date', $param3)
-                                ->orWhere('a.end_date', $param3);
+                            $query->where(DB::raw("date_part('YEAR', Cast(a.end_date as TIMESTAMP))"), date('Y', strtotime($param3)))
+                                ->where(DB::raw("date_part('MONTH', Cast(a.end_date as TIMESTAMP))"), date('m', strtotime($param3)))
+                                ->where('a.event_scope_en','Foreign');
                         });
+                        // $query->where(function ($query) use ($param3) {
+                        //     $query->where('a.start_date', '<=', $param3);
+                        //     $query->where('a.end_date', '>=', $param3);
+                        // });
+                        // $query->orWhere(function ($query) use ($param3){
+                        //     $query->where('a.start_date', $param3)
+                        //         ->orWhere('a.end_date', $param3);
+                        // });
                     }
                 } else if($searchEvent3 == 3) {
                     $param3 = $req->country;
-                    $query->where('country', $param3);
+                    $query->where('country', $param3)
+                        ->where('a.event_scope_en','Foreign');
                 }
 
                 if($param3 == null){
                     return redirect('/front_end/event');
                 }
-                $e_detail3 = $query->paginate(8,['*'],'page_c');
+                $e_detail3 = $query->paginate(12,['*'],'page_c');
 
                 $page3 = 99999999;
             } else {
@@ -1224,7 +1287,7 @@ class FrontController extends Controller
                     ->where('a.end_date', '>=', $today)
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal')
-                    ->paginate(9,['*'],'page_c');
+                    ->paginate(12,['*'],'page_c');
 
                 $json = json_decode($e_detail3->toJson(), true);
                 $page3 = $json["current_page"];
@@ -1237,7 +1300,7 @@ class FrontController extends Controller
                         ->where('a.end_date', '>=', $today)
                         //->orderby('a.created_at', 'desc')
                         ->orderby('abs_beda_tanggal')
-                        ->paginate(8,['*'],'page_c');
+                        ->paginate(12,['*'],'page_c');
                 }
             }
 
@@ -1247,11 +1310,11 @@ class FrontController extends Controller
             $e_detail = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                ->where('a.status_en', 'Verified')
+                // ->where('a.status_en', 'Verified')
                 ->where('a.end_date', '>=', $today)
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal')
-                ->paginate(9,['*'],'page_a');
+                ->paginate(12,['*'],'page_a');
 
             $json = json_decode($e_detail->toJson(), true);
             $page = $json["current_page"];
@@ -1259,11 +1322,11 @@ class FrontController extends Controller
                 $e_detail = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.status_en', 'Verified')
+                    // ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal')
-                    ->paginate(8,['*'],'page_a');
+                    ->paginate(12,['*'],'page_a');
             }
 
             //untuk event Indonesia
@@ -1272,12 +1335,12 @@ class FrontController extends Controller
             $e_detail2 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                ->where('a.status_en', 'Verified')
+                // ->where('a.status_en', 'Verified')
                 ->where('a.event_scope_en','Indonesia')
                 ->where('a.end_date', '>=', $today)
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal')
-                ->paginate(9,['*'],'page_b');
+                ->paginate(12,['*'],'page_b');
 
             $json = json_decode($e_detail2->toJson(), true);
             $page2 = $json["current_page"];
@@ -1285,12 +1348,12 @@ class FrontController extends Controller
                 $e_detail2 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.status_en', 'Verified')
+                    // ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Indonesia')
                     ->where('a.end_date', '>=', $today)
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal')
-                    ->paginate(8,['*'],'page_b');
+                    ->paginate(12,['*'],'page_b');
             }
         }
         else{
@@ -1301,11 +1364,12 @@ class FrontController extends Controller
             $e_detail = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                ->where('a.status_en', 'Verified')
+                // ->where('a.status_en', 'Verified')
                 ->where('a.end_date', '>=', $today)
+
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal')
-                ->paginate(9,['*'],'page_a');
+                ->paginate(12,['*'],'page_a');
 
             $json = json_decode($e_detail->toJson(), true);
             $page = $json["current_page"];
@@ -1313,11 +1377,11 @@ class FrontController extends Controller
                 $e_detail = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.status_en', 'Verified')
+                    // ->where('a.status_en', 'Verified')
                     ->where('a.end_date', '>=', $today)
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal')
-                    ->paginate(8,['*'],'page_a');
+                    ->paginate(12,['*'],'page_a');
             }
 
             //event indonesia
@@ -1326,12 +1390,12 @@ class FrontController extends Controller
             $e_detail2 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                ->where('a.status_en', 'Verified')
+                // ->where('a.status_en', 'Verified')
                 ->where('a.event_scope_en','Indonesia')
                 ->where('a.end_date', '>=', $today)
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal')
-                ->paginate(9,['*'],'page_b');
+                ->paginate(12,['*'],'page_b');
 
             $json = json_decode($e_detail2->toJson(), true);
             $page2 = $json["current_page"];
@@ -1339,12 +1403,12 @@ class FrontController extends Controller
                 $e_detail2 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.status_en', 'Verified')
+                    // ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Indonesia')
                     ->where('a.end_date', '>=', $today)
                     ->orderby('abs_beda_tanggal')
                     //->orderby('a.created_at', 'desc')
-                    ->paginate(8,['*'],'page_b');
+                    ->paginate(12,['*'],'page_b');
             }
 
             //event foreign
@@ -1353,12 +1417,12 @@ class FrontController extends Controller
             $e_detail3 = DB::table('event_detail as a')
                 ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                 ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                ->where('a.status_en', 'Verified')
+                // ->where('a.status_en', 'Verified')
                 ->where('a.event_scope_en','Foreign')
                 ->where('a.end_date', '>=', $today)
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal')
-                ->paginate(9,['*'],'page_c');
+                ->paginate(12,['*'],'page_c');
 
             $json = json_decode($e_detail3->toJson(), true);
             $page3 = $json["current_page"];
@@ -1366,16 +1430,15 @@ class FrontController extends Controller
                 $e_detail3 = DB::table('event_detail as a')
                     ->join('event_place as b', 'a.id_event_place', '=', 'b.id')
                     ->select('a.*', 'b.name_en', 'b.name_in', 'b.name_chn',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
-                    ->where('a.status_en', 'Verified')
+                    // ->where('a.status_en', 'Verified')
                     ->where('a.event_scope_en','Foreign')
                     ->where('a.end_date', '>=', $today)
                     ->orderby('abs_beda_tanggal')
                     //->orderby('a.created_at', 'desc')
-                    ->paginate(8,['*'],'page_c');
+                    ->paginate(12,['*'],'page_c');
             }
 
         }
-
 
         //return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page')),'e_detail2' => $e_detail2->appends(Input::except('page')),'e_detail3' => $e_detail3->appends(Input::except('page'))], compact('page','page2', 'page3', 'searchEvent','searchEvent2' ,'searchEvent3' ,'country', 'param', 'param2','param3','halaman'));
         return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page')),'e_detail2' => $e_detail2->appends(Input::except('page')),'e_detail3' => $e_detail3->appends(Input::except('page'))], compact('page','page2', 'page3', 'searchEvent','searchEvent2' ,'searchEvent3' ,'country', 'param', 'param2','param3','halaman'));
@@ -1504,5 +1567,79 @@ class FrontController extends Controller
             $return = 'ok';
         }
         return json_encode($return);
+    }
+
+    public function getcountryall(Request $request){
+        $countryall = DB::table('mst_country')
+            ->join('event_detail','event_detail.country','mst_country.id')
+            ->select('mst_country.country','event_detail.country as id')
+            ->groupby('mst_country.country', 'event_detail.country')
+            ->orderby('event_detail.country', 'asc');
+
+        if (isset($request->q)) {
+            $search = $request->q;
+            $countryall->where(function ($query) use ($search) {
+                $query->where('mst_country.country', 'ilike', '%' . $search . '%');
+            });
+            //          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
+//            $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');
+        } else if (isset($request->code)) {
+            $countryall->where('mst_country.id', $request->code);
+        } else {
+            $countryall->limit(10);
+        }
+
+        return response()->json($countryall->get());
+    
+    }
+
+    public function getcountryindonesia(Request $request){
+        $countryall = DB::table('mst_country')
+            ->join('event_detail','event_detail.country','mst_country.id')
+            ->select('mst_country.country','event_detail.country as id')
+            ->groupby('mst_country.country', 'event_detail.country')
+            ->orderby('event_detail.country', 'asc')
+            ->where('event_scope_en','Indonesia');
+
+        if (isset($request->q)) {
+            $search = $request->q;
+            $countryall->where(function ($query) use ($search) {
+                $query->where('mst_country.country', 'ilike', '%' . $search . '%');
+            });
+            //          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
+//            $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');
+        } else if (isset($request->code)) {
+            $countryall->where('mst_country.id', $request->code);
+        } else {
+            $countryall->limit(10);
+        }
+
+        return response()->json($countryall->get());
+    
+    }
+
+    public function getcountryforeign(Request $request){
+        $countryall = DB::table('mst_country')
+            ->join('event_detail','event_detail.country','mst_country.id')
+            ->select('mst_country.country','event_detail.country as id')
+            ->groupby('mst_country.country', 'event_detail.country')
+            ->orderby('event_detail.country', 'asc')
+            ->where('event_scope_en','Foreign');
+
+        if (isset($request->q)) {
+            $search = $request->q;
+            $countryall->where(function ($query) use ($search) {
+                $query->where('mst_country.country', 'ilike', '%' . $search . '%');
+            });
+            //          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
+//            $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');
+        } else if (isset($request->code)) {
+            $countryall->where('mst_country.id', $request->code);
+        } else {
+            $countryall->limit(10);
+        }
+
+        return response()->json($countryall->get());
+    
     }
 }
