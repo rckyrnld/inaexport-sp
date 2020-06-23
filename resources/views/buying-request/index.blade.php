@@ -86,9 +86,33 @@
 function xy(a){
 	var token = $('meta[name="csrf-token"]').attr('content');
 		$.get('{{URL::to("ambilbroad2/")}}/'+a,{_token:token},function(data){
-			$("#isibroadcast").html(data);
+            $("#isibroadcast").html(data);
+            calldata();
 			
-		 })
+         })
+        
+         
+}
+function calldata(){
+    var id = $('#id_laporan').val();
+    $("#tabelpiliheksportir").dataTable().fnDestroy();
+    var table = $('#tabelpiliheksportir').DataTable({
+        processing: true,
+        serverSide: true,
+        ordering: false,
+        paging :true,
+        searching: false,
+        "ajax": {
+                "url": '{!! url('getdatapiliheksportir') !!}',
+                "dataType": "json",
+                "type": "GET",
+                "data": {_token: '{{csrf_token()}}',id_laporan: id}
+        },
+            columns: [
+                {data: 'f2', name: 'f2', orderable: false, searchable: false},
+                {data: 'f3', name: 'f3', orderable: false, searchable: false},
+                ]
+        });
 }
 </script>
 <script type="text/javascript">
@@ -97,7 +121,7 @@ function xy(a){
         $('#users-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ url('getcsc') }}",
+            ajax: "{{ url('getcscperwakilan') }}",
             columns: [
                 {data: 'row', name: 'row'},
                 {data: 'f1', name: 'f1'},
@@ -113,6 +137,17 @@ function xy(a){
                 }]
         });
     });
+
+    function ConfirmDelete()
+    {
+      var x = confirm("Are you sure you want to delete?");
+      if (x)
+          return true;
+      else
+        return false;
+    }
+
+
 </script>
 
 

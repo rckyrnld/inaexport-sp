@@ -1,5 +1,10 @@
 @include('header')
-
+<style type="text/css">
+    th {text-align: center;}
+    td {color: black;}
+    #tambah { background-color: #1a9cf9; color: white; white-space: pre;}
+    #tambah:hover {background-color: #148de4}
+</style>
 <div class="padding">
     <div class="row">
         <div class="col-md-12">
@@ -21,6 +26,9 @@
                             {{--                                <button type="button" class="close" data-dismiss="alert">×</button>--}}
                             <strong>{{ $message }}</strong>
                         </div>
+                    @endif
+                    @if(Auth::user()->id_admin_dn != 0)
+                    <a id="tambah" href="{{route('addexpor')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
                     @endif
                     <div class="col-md-14">
                         <br>

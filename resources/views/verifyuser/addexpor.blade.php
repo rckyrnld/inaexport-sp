@@ -1,55 +1,30 @@
-@include('headerlog')
+@include('header')
 <link href="{{asset('')}}/js/tagsinput.css" rel="stylesheet" type="text/css">
 <style>
     .badge {
         font-size: 95% !important;
     }
-    .form-control{
+
+    .form-control {
         font-size: 13px;
         border-radius: 0px;
     }
+
     #content-bodys {
         font-family: 'Lato', sans-serif !important;
     }
 </style>
 <div id="content-bodys" class="product_area" style="color: black">
     <div class="py-1 w-100">
-
-    <div class="text-center pt-4 pb-4">
-	<h3><b>@lang("login.title3")</b></h3>
-	<h6>@lang("login.title5") <a href="{{url('login')}}">@lang("login.btn")</a></h6>
-    </div>
-        <div class="mx-auto col-lg-6"
-             style="background: white; border-radius: 0px;">
+        <div class="mx-auto col-lg-6" style="background: white; border-radius: 0px;">
             <br>
             <!-- <h5>LOGIN</h5> -->
-            <!--<h5>
-                <center><b>@lang("register.title")</b></center>
-            </h5>-->
+        <!--<h5><center><b>@lang("register2.title")</b></center></h5>-->
             <div class="wrap-login100" style="padding-left : 40px; padding-right : 40px; font-size:14px;">
-                <form class="form-horizontal" method="POST" action="{{ url('simpan_rpembeli') }}">
+                <form class="form-horizontal" method="POST" action="{{ url('simpan_rpenjual') }}">
                     {{ csrf_field() }}
                     <p><h6>Account Information</h6></p>
                     <hr>
-
-                    <div class="form-row">
-
-                        <div class="form-group col-sm-4" align="left">
-                            <label><font color="red">*</font> @lang("login.forms.ct")</label>
-                        </div>
-                        <div class="form-group col-sm-8" align="left">
-                            <select class="form-control" name="country" id="country">
-                                <option value="">- Choose Country -</option>
-                                <?php
-                                $qc = DB::select("select id,country from mst_country order by country asc");
-                                foreach($qc as $cq){
-                                ?>
-                                <option value="<?php echo $cq->id; ?>"><?php echo $cq->country; ?></option>
-
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
                     <div class="form-row">
                         <div class="form-group col-sm-4" align="left">
                             <label><font color="red">*</font> @lang("login.forms.city")</label>
@@ -66,51 +41,45 @@
                                             <label>&nbsp; Account Type</label>
                                         </div>
                                         <div class="form-group col-sm-5" align="left">
-                                            <input type="radio" name="Supplier" disabled> Supplier &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <input type="radio" name="Buyer" checked> Buyer
+                                            <input type="radio" name="Supplier" checked> Supplier &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="radio" name="Buyer" disabled> Buyer
 
                                         </div>
                                     </div> -->
-
                     <div class="form-row">
-
                         <div class="form-group col-sm-4" align="left">
-                            <label><font color="red">*</font> @lang("register.forms.email")
-                            </label>&nbsp;&nbsp;&nbsp;<span id="cekmail"></span>
+                            <label><font color="red">*</font> @lang("register2.forms.email")</label>
+                            &nbsp;&nbsp;&nbsp;<span id="cekmail"></span>
+
                         </div>
                         <div class="form-group col-sm-8" align="left">
-                            <input type="text" name="email" id="email" class="form-control" style=" color: black; "
-                                   required onkeyup="cekmail()">
-
+                            <input type="text" onkeyup="cekmail()" name="email" id="email" class="form-control"
+                                   style=" color: black; " required>
                         </div>
+
+
                     </div>
-
                     <div class="form-row">
-
                         <div class="form-group col-sm-4" align="left">
-                            <label><font color="red">*</font> @lang("register.forms.password")</label>
+                            <label><font color="red">*</font> @lang("register2.forms.password")</label>
 
                         </div>
-
                         <div class="form-group col-sm-8" align="left">
                             <input type="password" name="password" id="password" class="form-control"
                                    style=" color: black; " required>
-
                         </div>
+
+
                     </div>
-
                     <div class="form-row">
-
                         <div class="form-group col-sm-4" align="left">
                             <label><font color="red">*</font> @lang("register.forms.re-password")</label>
-
                         </div>
-
                         <div class="form-group col-sm-8" align="left">
                             <input type="password" name="kpassword" id="kpassword" class="form-control"
                                    style=" color: black; ">
-
                         </div>
+
 
                     </div>
 
@@ -119,18 +88,18 @@
                     <p><h6>Business Information</h6></p>
                     <hr>
 
-                    <div class="form-row">
 
+                    <div class="form-row">
                         <div class="form-group col-sm-4" align="left">
-                            <label><font color="red">*</font> @lang("register.forms.company") </label>
+                            <label><font color="red">*</font> @lang("register2.forms.company")</label>
+
 
                         </div>
-
                         <div class="form-group col-sm-8" align="left">
                             <input type="text" name="company" id="company" class="form-control" style=" color: black; "
                                    required>
-
                         </div>
+
 
                     </div>
                     <div class="form-row">
@@ -142,61 +111,65 @@
 
                         <div class="form-group col-sm-8" align="left">
                             <input type="text" data-role="tagsinput" class="form-control" value="">
-
-                        </div>
-
-                    </div>
-                    {{--<div class="form-row">
-
-                        <div class="form-group col-sm-4" align="left">
-                            <label><font color="red">*</font>@lang("register.forms.username")</label>
-
-                        </div>
-
-                        <div class="form-group col-sm-8" align="left">
-                            <input type="text" name="username" id="username" class="form-control"
-                                   style=" color: black; " required>
-                        </div>
-
-                    </div>--}}
-
-
-                    <div class="form-row">
-
-
-                        <div class="form-group col-sm-4" align="left">
-                            <label><font color="red">*</font> @lang("register.forms.phone")</label>
-                        </div>
-                        <div class="form-group col-sm-8" align="left">
-                            <input type="text" name="phone" id="phone" class="form-control" style=" color: black; ">
                         </div>
                     </div>
+{{--                    <div class="form-row">--}}
+{{--                        <div class="form-group col-sm-4" align="left">--}}
+{{--                            <label><font color="red">*</font> @lang("register2.forms.username")</label>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-sm-8" align="left">--}}
+{{--                            <input type="text" name="username" id="username" class="form-control"--}}
+{{--                                   style=" color: black; " required>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <div class="form-row">
-
-
                         <div class="form-group col-sm-4" align="left">
-                            <label>&nbsp;@lang("register.forms.fax")</label>
+                            <label><font color="red">*</font> @lang("register2.forms.phone")</label>
                         </div>
                         <div class="form-group col-sm-8" align="left">
-                            <input type="text" name="fax" id="fax" class="form-control" style=" color: black; ">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <input type="text" value="+62" class="form-control" disabled style="padding: .105rem .20rem; " >
+                                </div>
+                                <div class="col-md-10"><input type="text" name="phone" id="phone" class="form-control " style=" color: black;"></div>
+                            </div>
+                           <!-- <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-10"><span><label style="font-size: 12px;">Contoh : 87780733154</label></span></div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-4" align="left">
+                            <label>@lang("register2.forms.fax")</label>
+                        </div>
+                        <div class="form-group col-sm-8" align="left">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" value="+62" disabled  style="padding: .105rem .20rem; " >
+                                </div>
+                                <div class="col-md-10">
+                                    <input type="text" name="fax" id="fax" class="form-control" style=" color: black;">
+                                </div>
+                            </div>
+                            <!-- <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-10"><span><label style="font-size: 12px;">Contoh : 8342</label></span></div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="form-row">
-
-
                         <div class="form-group col-sm-4" align="left">
-                            <label>&nbsp;@lang("register.forms.website")</label>
+                            <label>@lang("register2.forms.website")</label>
                         </div>
                         <div class="form-group col-sm-8" align="left">
                             <input type="text" name="website" id="website" class="form-control" style=" color: black; ">
                         </div>
                     </div>
-
                     <div class="form-row">
-
-
                         <div class="form-group col-sm-4" align="left">
-                            <label>&nbsp;@lang("register.forms.postcode")</label>
+                            <label>@lang("register.forms.postcode")</label>
                         </div>
                         <div class="form-group col-sm-8" align="left">
                             <input type="text" name="postcode" id="postcode" class="form-control"
@@ -205,24 +178,13 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-sm-4" align="left">
-                            <label><font color="red">*</font> @lang("register.forms.address")</label>
+                            <label>@lang("register.forms.address")</label>
+
                         </div>
                         <div class="form-group col-sm-8" align="left">
                             <textarea name="alamat" id="alamat" class="form-control" style=" color: black; "></textarea>
                         </div>
                     </div>
-{{--                    <div class="form-row">--}}
-{{--                        <div class="form-group col-sm-4" align="left">--}}
-{{--                            <label><font color="red">*</font> Verification Code</label>--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group col-sm-2" align="left">--}}
-{{--                            <img style="height:20px!Important;" src="{{url('assets')}}/assets/images/captcha.jfif"--}}
-{{--                                 alt=".">--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group col-sm-4" align="left">--}}
-{{--                            <input type="text" class="form-control" name="chp" id="chp">--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
                     <div class="form-row">
                         <div class="form-group col-sm-4" align="left">
                             <label><font color="red">*</font> Verification Code</label>
@@ -238,75 +200,50 @@
                         </div>
                     </div>
 
-
-
-
-
                     <div class="form-row" align="left">
 
                         <div class="form-group col-sm-12"><br>
-                            <!--<input type="checkbox" name="ckk" id="ckk"> I agree to the Term & Condition and have read
-                            and understood the Privacy Policy.<br>
-                            <div class="form-check pb-4">
-                                <input type="checkbox"  class="form-check-input" name="ckk2" id="ckk2"> 
-                                <label class="form-check-label" for="ckk2">Sign up for newsletter.</label>
-                            </div>-->
+                            <!--<input type="checkbox" name="ckk" id="ckk"> I agree to the Term & Condition and have read and understood the Privacy Policy.<br>-->
+                            <!-- <div class="form-check pb-4">
+                                <input type="checkbox" class="form-check-input" name="ckk2" id="ckk2"> <label
+                                        class="form-check-label" for="ckk2">Sign up for newsletter.</label>
+                            </div> -->
                             <!--<center>-->
-                            <p>By creating an account, you agree to the Term & Condition and have read and understood the Privacy Policy. </p>
-                                <a onclick="simpanpembeli()" class="btn btn-danger"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")
-                                        &nbsp;&nbsp;&nbsp;</font></a>
-                            <!-- <button style="width: 100%;" class="btn btn-success" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></button> -->
-                            <!--</center>-->
+
+                            <p>By creating an account, you agree to the Term & Condition and have read and understood
+                                the Privacy Policy. </p>
+                            <a class="btn btn-danger" onclick="simpanpenjual()"><font
+                                        color="white">&nbsp;&nbsp;&nbsp;@lang("register.submitbuyer")
+                                    &nbsp;&nbsp;&nbsp;</font></a>
+                        <!-- <button style="width: 100%;" class="btn btn-success" style="border-color: #4CAF50;"><font color="white">&nbsp;&nbsp;&nbsp;@lang("register.submit")&nbsp;&nbsp;&nbsp;</font></button> -->
                             <br><br><br>
+                            <!--</center>-->
                         </div>
                     </div>
-
                 </form>
-
-
-            </div>
-
-
-        </div>
-    </div>
-    <!--<p class="text-center pt-4">@lang("login.title8")</p>-->
-</div>
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#2e899e; color:white;"><h6>Attention</h6>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">&times;</button>
-            </div>
-
-            <div class="modal-body">
-                <h5>
-                    <center><br>
-                        <img style="height:80px!important;" src="{{url('assets')}}/assets/images/mail.png"
-                             alt="."><br><br>
-                        @lang("register.modal")
-                    </center>
-                </h5>
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
-                <a href="{{url('login')}}" type="button" class="btn btn-danger">Close</a>
             </div>
         </div>
     </div>
 </div>
-
 <script src="{{asset('')}}/js/tagsinput.js"></script>
 <script>
 
-    $('#refresh').click(function(){
-        refresh()
+    $('#refresh').click(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'refreshcaptcha',
+            success: function (data) {
+                console.log(data);
+                $(".captcha span").html(data);
+            }
+        });
     });
 
-    function refresh(){
+    function refresh() {
         $.ajax({
-            type:'GET',
-            url:'refreshcaptcha',
-            success:function(data){
+            type: 'GET',
+            url: 'refreshcaptcha',
+            success: function (data) {
                 console.log(data);
                 $(".captcha span").html(data);
             }
@@ -322,20 +259,16 @@
 
             } else {
                 $('#cekmail').html("<font color='red'>( Has Been Used ! )</font>");
-                $('#email').val("");
                 alert("Sorry The Mail Has Been Used");
+                $('#email').val("");
             }
 
 
         })
-        //alert(m);
-        //$('#cekmail').html("<font color='red'>( Has Been Used ! )</font>");
     }
 
-
-    function simpanpembeli(){
+    function simpanpenjual() {
         var company = $('#company').val();
-        var username = $('#username').val();
         var email = $('#email').val();
         var phone = $('#phone').val();
         var fax = $('#fax').val();
@@ -352,28 +285,26 @@
             type: "POST",
             url: '{{url('/captchaValidate')}}',
             data: {
-                captcha : captcha,
+                captcha: captcha,
                 _token: '{{csrf_token()}}'
             },
             success: function (data) {
-                // console.log(data);
-                if(data.jawab == 'gagal'){
+                if (data.jawab == 'gagal') {
                     alert("Incorrect captcha code");
                     $('#captchainput').val('');
-                }
-                else{
-                    simpanpembeli2();
+                } else {
+                    simpanpenjual2();
                 }
             },
             error: function (data, textStatus, errorThrown) {
                 console.log(data);
+
             },
         });
     }
 
-    function simpanpembeli2() {
+    function simpanpenjual2() {
         var company = $('#company').val();
-        var username = $('#username').val();
         var email = $('#email').val();
         var phone = $('#phone').val();
         var fax = $('#fax').val();
@@ -381,31 +312,30 @@
         var password = $('#password').val();
         var kpassword = $('#kpassword').val();
         var city = $('#city').val();
-        var country = $('#country').val();
         var postcode = $('#postcode').val();
-        var alamat = $('#alamat').val();
+        var alamat = $('textarea#alamat').val();
         var chp = $('#chp').val();
-        if($("#ckk2").prop('checked') == true){
+        var token = $('meta[name="csrf-token"]').attr('content');
+        if ($("#ckk2").prop('checked') == true) {
             var ckk2send = 1;
-        }else{
+        } else {
             var ckk2send = 0;
         }
-        if($("#ckk").prop('checked') == true){
+        if ($("#ckk").prop('checked') == true) {
             var ckksend = 1;
-        }else{
+        } else {
             var ckksend = 0;
         }
 
-        var token = $('meta[name="csrf-token"]').attr('content');
         if (password == kpassword) {
-            if (company == "" || email == "" || phone == "" || password == "" || country == "" || city == "" || alamat == "" || chp == "") {
+            if (company == "" || email == "" || phone == "" || password == "" || city == "" || chp == "") {
                 alert("Please complete the field !")
                 refresh();
                 $('#captchainput').val('');
             } else {
                 $.ajax({
                     type: "POST",
-                    url: '{{url('/simpan_rpembeli')}}',
+                    url: '{{url('/saveexpor')}}',
                     data: {
                         company: company,
                         email: email,
@@ -414,22 +344,20 @@
                         fax: fax,
                         password: password,
                         city: city,
-                        country: country,
                         postcode: postcode,
                         alamat: alamat,
                         _token: '{{csrf_token()}}',
-                        ckk2send : ckk2send
+                        ckk2send: ckk2send
                     },
                     success: function (data) {
                         console.log(data);
                     },
                     error: function (data, textStatus, errorThrown) {
                         console.log(data);
-
                     },
                 });
+
                 $('#company').val('');
-                // $('#username').val('');
                 $('#website').val('');
                 $('#email').val('');
                 $('#phone').val('');
@@ -437,12 +365,10 @@
                 $('#password').val('');
                 $('#kpassword').val('');
                 $('#city').val('');
-                $('#country').val('');
                 $('#postcode').val('');
                 $('#alamat').val('');
-                $('#chp').val('');
-                // $('#captchainput').val('');
-                $("#myModal").modal("show");
+                $('#captchainput').val('');
+                window.location.href = "{{url('verifyuser')}}";
             }
         } else {
             alert("Incorrect password");
@@ -450,7 +376,6 @@
             $('#kpassword').val('');
             refresh();
             $('#captchainput').val('');
-
         }
     }
 </script>

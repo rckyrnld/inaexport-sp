@@ -100,7 +100,7 @@
                  </div>
              </div>
 
-             <div class="form-group row">
+             {{--<div class="form-group row">
               <div class="col-md-1"></div>
                  <label class="control-label col-md-3">Type</label>
                  <div class="col-md-7">
@@ -111,7 +111,7 @@
                        <option value="Prespective Products" @isset($data) @if($data->type == 'Prespective Products') selected @endif @endisset>Prespective Products</option>
                      </select>
                  </div>
-             </div>
+             </div>--}}
 
              <div class="form-group row" id="icon" @isset($data) @if($data->level_1 != '0') style="display:none;" @endif @endisset>
               <div class="col-md-1"></div>

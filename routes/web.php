@@ -175,6 +175,10 @@ Route::get('/verifyuser', 'VerifyuserController@index');
 Route::get('/listactv/{id}', 'VerifyuserController@listactv');
 Route::get('/geteksportir', 'VerifyuserController@geteksportir');
 Route::get('/verifyimportir', 'VerifyuserController@index2');
+Route::get('/addbuyer', 'VerifyuserController@addbuyer')->name('addbuyer');
+Route::post('/savebuyer', 'VerifyuserController@savebuyer')->name('savebuyer');
+Route::get('/addexpor', 'VerifyuserController@addexpor')->name('addexpor');
+Route::post('/saveexpor', 'VerifyuserController@saveexpor')->name('saveexpor');
 Route::get('/hapuseksportir/{id}', 'VerifyuserController@hapuseksportir');
 Route::get('/reseteksportir/{id}', 'VerifyuserController@reseteksportir');
 Route::get('/hapusimportir/{id}', 'VerifyuserController@hapusimportir');
@@ -247,6 +251,7 @@ Route::get('/permission_delete/{id}', 'UM\PermissionsController@destroy');
 
 //buy request 
 Route::resource('/br_list', 'BuyingRequestController');
+Route::get('/getcscperwakilan', 'BuyingRequestController@getcscperwakilan');
 Route::get('/getcsc0', 'BuyingRequestController@getcsc0');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
 Route::get('/getcsc3', 'BuyingRequestController@getcsc3');
@@ -848,4 +853,10 @@ Route::get('/cetakrc2','RekaprcController@cetakcsv2')->name('cetakrc2.printcsv')
 Route::post('/getscoope', 'VerifyuserController@getscoope')->name('getscoope');
 Route::post('/gettob', 'VerifyuserController@gettob')->name('gettob');
 
+Route::get('/getcountryall', 'FrontEnd\FrontController@getcountryall')->name('countryevent.getcountryall');
+Route::get('/getcountryindonesia', 'FrontEnd\FrontController@getcountryindonesia')->name('countryevent.getcountryindonesia');
+Route::get('/getcountryforeign', 'FrontEnd\FrontController@getcountryforeign')->name('countryevent.getcountryforeign');
+
+Route::get('buyingrequest/delete/{id}', 'BuyingRequestController@delete')->name('buyingrequest.delete');
+Route::get('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
 //end mindy

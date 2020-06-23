@@ -97,8 +97,11 @@ body {font-family: Arial;}
 		
 	</div>
 	<div class="form-row">
-		<div class="col-sm-12">
+		<div class="col-sm-8">
 		<label><b>What are you looking for</b></label>
+		</div>
+		<div class="col-sm-4">
+		<label><b>Duration</b></label>
 		</div>
 		<div class="form-group col-sm-8">
 			<input readonly type="text" style="color:black;" value="<?php echo $ryu->subyek; ?>" name="cmp" id="cmp" class="form-control" >
@@ -197,8 +200,11 @@ body {font-family: Arial;}
 <div class="box-body">
 <br><br>
 <div class="form-row">
-		<div class="col-sm-12">
+		<div class="col-sm-6">
 		<label><b>Location of delivery</b></label>
+		</div>
+		<div class="col-sm-6">
+		<label><b>City</b></label>
 		</div>
 		<div class="form-group col-sm-6">
 			<?php 

@@ -50,11 +50,11 @@ class VerifyuserController extends Controller
 		foreach($quer as $t1){ $ic = $t1->country; }
 		// echo $ic;die();
 
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b, mst_country c where  c.id='".$ic."' and b.id_mst_country = c.id and  a.id_profil = b.id and id_role='3' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b, mst_country c where  c.id='".$ic."' and b.id_mst_country = c.id and  a.id_profil = b.id and id_role='3' and a.status = '1' order by a.id desc ");
 
 		}else{
 		//dalam
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' and a.status = '1' order by a.id desc ");
       
 		
 		}
@@ -110,9 +110,13 @@ class VerifyuserController extends Controller
             })
 
             ->addColumn('f8', function ($pesan) {
-                  $time = strtotime($pesan->verified_at);
-                  $newformat = date('d-m-Y',$time);
-                  return $newformat;
+            	if (isset($pesan->verified_at)) {
+					$time = strtotime($pesan->verified_at);
+					$newformat = date('d-m-Y',$time);
+					return $newformat;
+            	} else {
+            		return '-';
+            	}
               })
 
             ->addColumn('action', function ($pesan) {
@@ -144,7 +148,7 @@ class VerifyuserController extends Controller
 		// luar
 		$b = Auth::user()->id_admin_ln;
 
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' and a.status = '1'  order by a.id desc ");
 
 		}else{
 		//dalam
@@ -152,7 +156,7 @@ class VerifyuserController extends Controller
 		$quer = DB::select("select * from  itdp_admin_dn where id='".$b."'");
 		foreach($quer as $t1){ $ic = $t1->id_country; }
 		// echo $ic;die();
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '".$ic."' and a.id_profil = b.id and id_role='2' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '".$ic."' and a.id_profil = b.id and id_role='2' and a.status = '1' order by a.id desc ");
 	
 		
 		}
@@ -206,9 +210,13 @@ class VerifyuserController extends Controller
 				 
             })
             ->addColumn('f8', function ($pesan) {
-                $time = strtotime($pesan->verified_at);
-                $newformat = date('d-m-Y',$time);
-                return $newformat;
+            	if (isset($pesan->verified_at)) {
+            		$time = strtotime($pesan->verified_at);
+	                $newformat = date('d-m-Y',$time);
+	                return $newformat;
+            	} else {
+	                return '-';
+            	}
          })
             ->addColumn('action', function ($pesan) {
 				
@@ -1149,5 +1157,98 @@ if ($err) {
         $tob = DB::table('eks_business_role')->where('id', $request->id)->select('nmtype_ind')->first();
 
         echo json_encode($tob);
+    }
+
+    public function addbuyer()
+    {
+    	$pageTitle = "Add Buyer";
+        return view('verifyuser.addbuyer',compact('pageTitle'));
+    }
+
+    public function savebuyer(Request $request)
+    {
+    	date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
+        $country = DB::table('itdp_admin_ln')->where('id', Auth::user()->id_admin_ln)->first()->country;
+        $buyer = [
+					'company' => $request->company,
+					'addres' => $request->alamat,
+					'postcode' => $request->postcode,
+					'phone' => $request->phone,
+					'fax' => $request->fax,
+					'email' => $request->email,
+					'website' => $request->website,
+					'created' => $date,
+					'status' => 1,
+					'city' => $request->city,
+					'id_mst_country' => $country,
+				];
+        $profil_imp = DB::table('itdp_profil_imp')
+        				->insert($buyer);
+		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_imp");
+		foreach($ambilmaxid as $rt){
+			$id1 = $rt->maxid;
+		}
+		$insert2 = DB::select("
+			insert into itdp_company_users (id_profil,password,email,status,id_role,type,created_at,newsletter) values
+			('".$id1."','".bcrypt($request->password)."','".$request->email."','0','3','Dalam Negeri','".$date."',$request->ckk2send)
+		");
+
+		$ambilmaxid2 = DB::select("select max(id) as maxid2 from itdp_company_users");
+		foreach($ambilmaxid2 as $rt2){
+			$id2 = $rt2->maxid2;
+		}
+		// notif 
+		$id_terkait = "3/".$id2;
+		$ket = "New user Buyer with name ".$request->company;
+		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil2','".$id_terkait."','".$date."','0')
+		");
+
+		$buyer['password'] = $request->password;
+        Mail::send('UM.user.buyer', $buyer, function ($mail) use ($buyer) {
+            $mail->to($buyer['email']);
+            $mail->subject('New Account From A representative');
+
+        });
+    }
+
+    public function addexpor()
+    {
+    	$pageTitle = "Add Exporter";
+        return view('verifyuser.addexpor',compact('pageTitle'));
+    }
+
+    public function saveexpor(Request $request)
+    {
+    	date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d H:i:s');
+        $province = DB::table('itdp_admin_dn')->where('id', Auth::user()->id_admin_dn)->first()->id_country;
+        $insert1 = DB::select("
+			insert into itdp_profil_eks (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_province) values
+			('".$request->company."','".$request->alamat."','".$request->postcode."','".'+62'.$request->phone."','".'+62'.$request->fax."'
+			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1','".$request->city."','".$province."')
+		");
+		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_eks");
+		foreach($ambilmaxid as $rt){
+			$id1 = $rt->maxid;
+		}
+		$insert2 = DB::select("
+			insert into itdp_company_users (id_profil,type,password,email,status,id_role,created_at,newsletter) values
+			('".$id1."','Luar Negeri','".bcrypt($request->password)."','".$request->email."','0','2','".date('Y-m-d H:m:s')."',$request->ckk2send)
+		");
+		$ambilmaxid2 = DB::select("select max(id) as maxid2 from itdp_company_users");
+		foreach($ambilmaxid2 as $rt2){
+			$id2 = $rt2->maxid2;
+		}
+
+        $expor['company'] = $request->company;
+        $expor['email'] = $request->email;
+        $expor['password'] = $request->password;
+        Mail::send('UM.user.expor', $expor, function ($mail) use ($expor) {
+            $mail->to($expor['email']);
+            $mail->subject('New Account From A representative');
+
+        });
     }
 }

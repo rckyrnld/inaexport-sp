@@ -16,5 +16,6 @@ return [
 		
     ],
     "submit" => "Buat Akun",
+    "submitbuyer" => "Buat Akun",
     "modal" => "Periksa Email Anda untuk aktifasi!<br<br>Akun anda sudah bisa digunakan untuk login. <br><br>Untuk melakukan inqury dan buying request, akun anda perlu di aktivasi oleh perwakilan terlebih dahulu.",
 ];

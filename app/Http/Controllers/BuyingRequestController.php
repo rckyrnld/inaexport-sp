@@ -74,9 +74,87 @@ class BuyingRequestController extends Controller
         }
     }
 
+    public function getcscperwakilan()
+    {
+        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where id_pembuat='".Auth::user()->id."' and  by_role='4' and deleted_at ISNULL order by id desc ");
+        return DataTables::of($pesan)
+            ->addColumn('f1', function ($pesan) {
+                return '<div align="left">' . $pesan->subyek . '</div>';
+            })
+            ->addColumn('f2', function ($pesan) {
+                if ($pesan->valid == 0) {
+                    return "No Limit";
+                } else {
+                    return "Valid until " . $pesan->valid . " days";
+                }
+            })
+            ->addColumn('f6', function ($pesan) {
+                if ($pesan->by_role == 4) {
+                    return "Perwakilan";
+                } else if ($pesan->by_role == 3) {
+                    $usre = DB::select("select b.company from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='" . $pesan->id_pembuat . "'");
+                    foreach ($usre as $imp) {
+                        $impz = $imp->company;
+                    }
+                    return "Importir - " . $impz;
+                }
+            })
+            ->addColumn('f3', function ($pesan) {
+                return $pesan->date;
+            })
+            ->addColumn('f4', function ($pesan) {
+                $cr = explode(',', $pesan->id_csc_prod);
+                $hitung = count($cr);
+                $semuacat = "";
+                for ($a = 0; $a < ($hitung - 1); $a++) {
+                    $namaprod = DB::select("select * from csc_product where id='" . $cr[$a] . "' ");
+                    foreach ($namaprod as $prod) {
+                        $napro = $prod->nama_kategori_en;
+                    }
+                    $semuacat = $semuacat . "- " . $napro . "<br>";
+                }
+                return $semuacat;
+            })
+            ->addColumn('f7', function ($pesan) {
+                if ($pesan->status == 1) {
+                    return "Negosiation";
+                } else if ($pesan->status == 4) {
+                    return "Deal";
+                } else {
+                    return "-";
+                }
+
+            })
+            ->addColumn('action', function ($pesan) {
+//				if($pesan->status == 1){
+//					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-primary"><i class="fa fa-comment"></i> List Chat</a>';
+//				}else if($pesan->status == 4){
+//					return '<a href="'.url('br_pw_lc/'.$pesan->id).'" class="btn btn-sm btn-success"><i class="fa fa-list"></i> List Chat</a>';
+//				}else{
+//					return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy('.$pesan->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-wifi"></i> Broadcast</i></a>
+//					<a href="'.url('br_pw_dt/'.$pesan->id).'" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Detail</a>';
+//				}
+
+                if ($pesan->status == 1) {
+                    return '<a href="' . url('br_pw_lc/' . $pesan->id) . '" class="btn btn-sm btn-primary" data-toggle="tooltip" title="List Chat"><i class="fa fa-comment"></i></a>';
+                } else if ($pesan->status == 4) {
+                    return '<a href="' . url('br_pw_lc/' . $pesan->id) . '" class="btn btn-sm btn-success" data-toggle="tooltip" title="List Chat"><i class="fa fa-list"></i></a>';
+                } else {
+                    return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy(' . $pesan->id . ')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-bullhorn"></i></i></a>
+                    <a href="' . url('br_pw_dt/' . $pesan->id) . '" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>
+                    <a onclick="return confirm(\'Are You Sure ?\')"  href="'.url('/').'/buyingrequest/delete/'.$pesan->id.'" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a>';
+                }
+                // href="'.url('/').'/buyingrequest/delete/'.$pesan->id.'}}'."
+
+
+            })
+            ->rawColumns(['action', 'f6', 'f7', 'f3', 'f4', 'f1'])
+            ->make(true);
+    }
+
     public function getcsc()
     {
-        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where id_pembuat='".Auth::user()->id."' and by_role='4' order by id desc ");
+        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='4' and deleted_at ISNULL order by id desc ");
         return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
                 return '<div align="left">' . $pesan->subyek . '</div>';
@@ -143,6 +221,7 @@ class BuyingRequestController extends Controller
                     return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy(' . $pesan->id . ')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-bullhorn"></i></i></a>
 					<a href="' . url('br_pw_dt/' . $pesan->id) . '" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>';
                 }
+                // href="'.url('/').'/buyingrequest/delete/'.$pesan->id.'}}'."
 
 
             })
@@ -1016,5 +1095,14 @@ class BuyingRequestController extends Controller
         return redirect('trx_list');
     }
 
-
+    public function delete(Request $request){
+        date_default_timezone_set('Asia/Jakarta');
+        $today = date("Y-m-d h:i:s");
+        DB::table('csc_buying_request')->where('id', $request->id)->update(['deleted_at'=>$today]);
+        // $msg = ["status"=>"success"];
+        // echo json_encode($msg);
+        
+        return redirect('br_list')->with('error','Success Delete Data');
+        
+    }
 }
