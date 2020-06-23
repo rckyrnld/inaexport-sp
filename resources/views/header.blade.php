@@ -68,7 +68,9 @@
   <script src="{{url('assets')}}/libs/popper.js/dist/umd/popper.min.js"></script>
   <script src="{{url('assets')}}/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- core -->
+<?php if(Request::segment(2) != "chatting" && Request::segment(1) != "br_pw_chat" && Request::segment(1) != "br_chat" ){ ?>
   <script src="{{url('assets')}}/libs/pace-progress/pace.min.js"></script>
+<?php } ?>
   <script src="{{url('assets')}}/libs/pjax/pjax.js"></script>
 
    <script src="{{url('assets')}}/libs/datatables/media/js/jquery.dataTables.min.js"></script>
