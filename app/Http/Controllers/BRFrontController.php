@@ -134,6 +134,25 @@ class BRFrontController extends Controller
 		return view('buying-request.refresh',compact('id','id2'));
 	}
 	
+	public function refreshchatnj($id)
+    {
+		$id_user = Auth::guard('eksmp')->user()->id;
+            $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->first();
+            $data = DB::table('csc_product_single')->where('id', $inquiry->to)->first();
+            $messages = DB::table('csc_chatting_inquiry')
+                ->where('id_inquiry', $id)
+                ->where('type', 'importir')
+                ->orderBy('created_at', 'asc')
+                ->get();
+            
+            //Read Chat
+            $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('type', 'importir')->where('receive', $id_user)->update([
+                'status' => 1,
+            ]);
+            
+            return view('buying-request.refresh7',compact('id','inquiry', 'data', 'messages', 'id_user'));
+	}
+	
 	public function refreshchat2($id,$id2)
     {
 		return view('buying-request.refresh2',compact('id','id2'));

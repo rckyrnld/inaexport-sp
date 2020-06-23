@@ -144,7 +144,7 @@
                       </div>
                     </div>
                     <div class="chat-body" id="fg1">
-                      <div class="row">
+                      <div class="row" id="rchat">
                         <?php
                           $datenya = NULL;
                         ?>
@@ -282,7 +282,7 @@
                           <textarea id="messages2" name="messages2" rows="2" class="chat-message"></textarea>
                         </div>
                         <div class="col-md-1" style="padding-left: 0px;">
-                          <img src="{{asset('front/assets/icon/send-message.png')}}" alt="" width="70%" id="sendmessage" />
+                          <a onclick="kirimpesan()"><img src="{{asset('front/assets/icon/send-message.png')}}" alt="" width="70%" id="sendmessagessss" /></a>
                         </div>
                       </div>
                     </div>
@@ -351,38 +351,31 @@
 
 @include('frontend.layouts.footer')
 <script type="text/javascript">
-    $(document).ready(function(){
+$(document).ready(function () {
 		var con = document.getElementById("fg1");
 	con.scrollTop = con.scrollHeight;
-        //Click Image
-        $("#uploading2").click(function() {
-            // $("input[id='upload_file2']").click();
-            $('#modalInvoice').modal('show');
-        });
-
-        //Upload File
-        // $("#upload_file2").on('change', function() {
-        //     if(this.value != ""){
-        //       var status = $('#statusmsg2').val();
-        //       if(status == 3 || status == 4 || status == 5){
-        //         alert("{{$alertimage}}");
-        //       }else{
-        //         $('#uploadform2').submit();
-        //       }
-        //     }else{
-        //         alert('The file cannot be uploaded');
-        //     }
-        // });
-
-        //Send Message
-        $('#sendmessage').on('click', function(event){
-          var sender = $('#sender2').val();
+        $('.select2').select2();
+	setInterval(function() {
+	
+	var token = $('meta[name="csrf-token"]').attr('content');
+	 x = $('#id_inquiry2').val();
+			$.get('{{URL::to("refreshchatnj/")}}/'+x,{_token:token},function(data){
+				$('#rchat').html(data);
+		var con = document.getElementById("fg1");
+	con.scrollTop = con.scrollHeight;
+		 });
+	}, 2000);
+});
+function kirimpesan(){
+	var sender = $('#sender2').val();
           var receiver = $('#receiver2').val();
           var id_inquiry = $('#id_inquiry2').val();
+		  //alert(id_inquiry)
           var type = $('#type2').val();
           var msg = $('textarea#messages2').val();
           var status = $('#statusmsg2').val();
-
+		  var token = $('meta[name="csrf-token"]').attr('content');
+		
           // if(status == 3 || status == 4 || status == 5){
           if( status == 4 || status == 5){
             alert("{{$alertmsg}}");
@@ -394,14 +387,20 @@
                 data: {from:sender, to:receiver, idinquiry:id_inquiry, messages: msg, file: "", typenya: type},
                 success:function(response){
                     if(response == 1){
-                        location.reload();
+                       // location.reload();
                     }else{
-                        alert("This message is not delivered!");
-                        location.reload();
+                        // alert("This message is not delivered!");
+                       // location.reload();
                     }
                 }
             });
           }
-        });
-    });
+				  x = id_inquiry;
+			$.get('{{URL::to("refreshchatnj/")}}/'+x,{_token:token},function(data){
+				$('#rchat').html(data);
+				$('#messages2').val('');
+				 });
+	
+}
+   
 </script>
