@@ -360,6 +360,22 @@ Route::namespace('Master')->group(function () {
 		    Route::get('/export/', 'MasterPortController@export')->name('export');
     	});
     });
+
+    // MASTER BANNER FROM KHOLIL
+    Route::prefix('master-banner')->group(function () {
+        Route::name('master.banner.')->group(function () {
+            Route::get('/', 'MasterBannerController@index')->name('index');
+            Route::post('/getData/', 'MasterBannerController@getData')->name('getData');
+            Route::get('/create/', 'MasterBannerController@create')->name('create');
+            Route::post('/store/{param}', 'MasterBannerController@store')->name('store');
+            Route::post('/getCompany/', 'MasterBannerController@getCompany')->name('getCompany');
+            Route::get('/check-kode/', 'MasterBannerController@check')->name('kode');
+            Route::get('/edit/{id}', 'MasterBannerController@edit')->name('edit');
+            Route::get('/view/{id}', 'MasterBannerController@view')->name('view');
+            Route::get('/destroy/{id}', 'MasterBannerController@destroy')->name('destroy');
+            Route::get('/export/', 'MasterBannerController@export')->name('export');
+        });
+    });
 // Angga End
 });
 
