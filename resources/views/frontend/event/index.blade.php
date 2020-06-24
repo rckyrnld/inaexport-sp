@@ -292,7 +292,7 @@ if(Auth::guard('eksmp')->user()){
                                                                                                                     ?>
 
                 <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
+                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: 200px;width: 200px;">
                 </div>
                 <div style="height: 25%; padding-top: 5px;">
                    <span class="css-title" title="{{$title}}">{{$titleName}}<span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf; margin-left: 10px;">{{getDataInterest($ed->id)}}&nbsp;&nbsp;<i class="fa fa-eye"></i></span></span><br>
@@ -492,7 +492,7 @@ if(Auth::guard('eksmp')->user()){
                                                                                                                     ?>
 
                 <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
+                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: 200px;width: 200px;">
                 </div>
                 <div style="height: 25%; padding-top: 5px;">
                    <span class="css-title" title="{{$title}}">{{$titleName}}<span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf; margin-left: 10px;">{{getDataInterest($ed2->id)}}&nbsp;&nbsp;<i class="fa fa-eye"></i></span></span><br>
@@ -694,7 +694,7 @@ if(Auth::guard('eksmp')->user()){
                                                                                                                     ?>
 
                 <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
+                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: 200px;width: 200px;">
                 </div>
                 <div style="height: 25%; padding-top: 5px;">
                    <span class="css-title" title="{{$title}}">{{$titleName}}<span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf; margin-left: 10px;">{{getDataInterest($ed3->id)}}&nbsp;&nbsp;<i class="fa fa-eye"></i></span></span><br>
