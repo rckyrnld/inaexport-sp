@@ -796,6 +796,9 @@ if(Auth::guard('eksmp')->user()){
             $('#buttonindonesia').click();
         }else if(tabnya == "foreign"){
             $('#buttonforeign').click();
+        }else{
+            // ditambahin disini;
+            $("#buttonall").click();
         }
 
         $('#search_country').select2({
@@ -1043,7 +1046,6 @@ if(Auth::guard('eksmp')->user()){
             // Remove the hash (i.e. `#`)
             tab_id = tab_id.substring(1);
             //
-            console.log(tab_id);
             
             if ( tab_id ) {
                 if(tab_id == 'page_a'){

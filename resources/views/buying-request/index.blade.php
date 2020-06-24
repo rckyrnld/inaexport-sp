@@ -114,6 +114,48 @@ function calldata(){
                 ]
         });
 }
+
+function broadcast(){
+    var id = $('#id_buyingrequest').val();
+    var dataeksportir = [];
+    $.each($("input[name='eksportir']:checked"), function(){
+        console.log($(this).val());
+        dataeksportir.push($(this).val());
+    });
+    if (!isEmptyM(dataeksportir)) {
+        var form_data = new FormData();
+        form_data.append('id',id);
+        form_data.append('dataeksportir',dataeksportir);
+        $.ajaxSetup({
+                    headers:
+                        {
+                            'X-CSRF-Token': '{{csrf_token()}}'
+                        }
+        });
+        $.ajax({
+            method: "POST",
+            url: "{{ route('broadcastbuyingrequest.pw') }}",
+            data: form_data,
+            contentType: false,       // The content type used when sending data to the server.
+            cache: false,             // To unable request pages to be cached
+            processData: false,
+        })
+        .done(function(e){
+            // window.location = '{{ url('permohonansimsaurmat/savemessage') }}';
+        });
+    }else{
+        alert('make sure to checked at least one exporter');
+    }
+    // var checkedValue = $('.eksportirterpilih:checked').val();
+    function isEmptyM(obj) {
+            for(var key in obj) {
+                if(obj.hasOwnProperty(key))
+                    return false;
+            }
+            return true;
+        }
+    
+}
 </script>
 <script type="text/javascript">
     $(function () {
