@@ -23,7 +23,7 @@
 			<thead>
 				<tr>
 					<th style="width: 70%;">Nama Perusahaan</th>
-					<th style="width: 30%;"> <input type='checkbox' class='checkall' name='checkall' value=''> Pilih Semua</th>
+					<th style="width: 30%;"> <input type='checkbox' class='checkall' name='checkall' id='checkall' value=''> All </th>
 				</tr>
 			</thead>
 			<tbody>
@@ -40,4 +40,22 @@
           <button type="button" class="btn btn-danger" data-dismiss="modal"><font color="white">Close</font></button>
           {{--<a style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" href="{{ url('br_pw_bc/'.$id) }}" class="btn btn-warning"><font color="white">Broadcast</font></a>--}}
 		  <a style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="broadcast()" class="btn btn-warning"><font color="white">Broadcast</font></a>
-        </div>
+		</div>
+		<script type="text/javascript">
+			var table = $('#tabelpiliheksportir').DataTable();
+			
+			$('#checkall').on('change',  function() {
+				var cells = table.cells("input[name='eksportir']:checked").nodes();
+				console.log(cells);
+				$("input[name='eksportir']").prop('checked', true);
+				// $(cells).prop('checked', true);
+			});
+        // $('#checkall').change(function() {
+        //     if(this.checked) {
+		// 		$("input[name='eksportir']").prop('checked', true);
+        //     }else{
+		// 		$("input[name='eksportir']").prop('checked', false);
+		// 	}     
+        // });
+    // })
+		</script>

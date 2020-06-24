@@ -27,12 +27,12 @@
 
 <div align="center" style="width: 100%">
     <div align="center" style="width: 580px;">
-        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail3.png" alt="." >
         <p style="text-align: left">Dear {{$username}},</p>
         <p style="text-align: left">There is new {{$type}} register to inaexport.id.</p>
         <p style="text-align: left">Click <a href="{{url('/admin')}}">here</a></p>
 {{--        <p style="text-align: left">Click <a href="{{url('profil', 2)}}">here</a> to check the new user</p>--}}
-        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail3.png" alt="." >
     </div>
 </div>
 

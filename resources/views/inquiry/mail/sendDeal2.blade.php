@@ -20,7 +20,7 @@
 </style>
 <div align="center" style="width: 100%">
     <div align="center" style="width: 580px;">
-        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail3.png" alt="." >
         <p style="color: #8bbbe8; font-size: 20px;text-align: left">Information</p>
         <hr>
         <p style="text-align: left">Dear {{($bur== '-')? '': $bur." "}}{{$penerima}},</P>
@@ -29,6 +29,6 @@
         <br>
         <p style="text-align: left">Thanks</p>
         <!-- <a href="{{url('/login')}}" class="button">Next Log In</a> -->
-        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail3.png" alt="." >
     </div>
 </div>

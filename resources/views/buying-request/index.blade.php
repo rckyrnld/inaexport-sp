@@ -154,19 +154,23 @@ function broadcast(){
             }
             return true;
         }
+
+    // function checkallnya(){
+    //     console.log('ke triger');
+    //         if ($(this).is(':checked')) {
+                
+    //             $("input[name='eksportir']").prop('checked', true);
+    //         } else {
+    //             $("input[name='eksportir']").prop('checked', false);
+    //         }
+    // }
     
 }
 </script>
+
 <script type="text/javascript">
     $(function () {
-        $('.checkall').click(function() {
-            console.log('ke triger');
-            if ($(this).is(':checked')) {
-                $("input[name='eksportir']").attr('checked', true);
-            } else {
-                $("input[name='eksportir']").attr('checked', false);
-            }
-        });
+        
         $(".alert").slideDown(300).delay(1000).slideUp(300);
         $('#users-table').DataTable({
             processing: true,
