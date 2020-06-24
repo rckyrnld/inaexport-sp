@@ -170,7 +170,7 @@
                                         <div class="col-md-3">
                                             <label for="code" ><b>Image</b></label><br>
                                             <label style="color: red">*maksimum file size 5MB</label><br>
-                                            <label style="color: red">*upload square image</label>
+                                            <label style="color: red">*upload image with width 400px and height 400px</label>
                                         </div>
 
                                         <div class="col-md-2">

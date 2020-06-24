@@ -5,6 +5,7 @@
 								foreach($pesan as $ryu){
 								?>
 								<input type="hidden" id="id_laporan" value="{{$ryu->id_csc_prod}}">
+								<input type="hidden" id="id_buyingrequest" value="{{$id}}">
 <div class="form-row">
 		<div class="col-sm-3">
 		<label><b>What are you looking for</b></label>
@@ -22,7 +23,7 @@
 			<thead>
 				<tr>
 					<th style="width: 70%;">Nama Perusahaan</th>
-					<th style="width: 30%;"> Pilih Semua</th>
+					<th style="width: 30%;"> <input type='checkbox' class='checkall' name='checkall' value=''> Pilih Semua</th>
 				</tr>
 			</thead>
 			<tbody>

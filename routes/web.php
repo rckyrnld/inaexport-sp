@@ -128,6 +128,7 @@ Route::get('/br_importir_lc/{id}', 'BRFrontController@br_importir_lc');
 Route::get('/br_importir_chat/{id}/{id2}', 'BRFrontController@br_importir_chat');
 Route::get('/br_importir_bc/{id}', 'BRFrontController@br_importir_bc');
 Route::get('/br_pw_bc/{id}', 'BRFrontController@br_pw_bc');
+Route::post('/broadcastbuyingrequest/pw', 'BRFrontController@br_pw_bc_choose_eks')->name('broadcastbuyingrequest.pw');
 Route::get('/br_pw_bcs/{id}', 'BRFrontController@br_pw_bcs');
 Route::get('/br_konfirm/{id}/{id2}', 'BRFrontController@br_konfirm');
 Route::get('/br_konfirm2/{id}/{id2}', 'BRFrontController@br_konfirm2');
@@ -358,6 +359,22 @@ Route::namespace('Master')->group(function () {
 		    Route::get('/destroy/{id}', 'MasterPortController@destroy')->name('destroy');
 		    Route::get('/export/', 'MasterPortController@export')->name('export');
     	});
+    });
+
+    // MASTER BANNER FROM KHOLIL
+    Route::prefix('master-banner')->group(function () {
+        Route::name('master.banner.')->group(function () {
+            Route::get('/', 'MasterBannerController@index')->name('index');
+            Route::post('/getData/', 'MasterBannerController@getData')->name('getData');
+            Route::get('/create/', 'MasterBannerController@create')->name('create');
+            Route::post('/store/{param}', 'MasterBannerController@store')->name('store');
+            Route::post('/getCompany/', 'MasterBannerController@getCompany')->name('getCompany');
+            Route::get('/check-kode/', 'MasterBannerController@check')->name('kode');
+            Route::get('/edit/{id}', 'MasterBannerController@edit')->name('edit');
+            Route::get('/view/{id}', 'MasterBannerController@view')->name('view');
+            Route::get('/destroy/{id}', 'MasterBannerController@destroy')->name('destroy');
+            Route::get('/export/', 'MasterBannerController@export')->name('export');
+        });
     });
 // Angga End
 });
@@ -858,6 +875,11 @@ Route::post('/gettob', 'VerifyuserController@gettob')->name('gettob');
 Route::get('/getcountryall', 'FrontEnd\FrontController@getcountryall')->name('countryevent.getcountryall');
 Route::get('/getcountryindonesia', 'FrontEnd\FrontController@getcountryindonesia')->name('countryevent.getcountryindonesia');
 Route::get('/getcountryforeign', 'FrontEnd\FrontController@getcountryforeign')->name('countryevent.getcountryforeign');
+
+Route::get('/getcategoryallevent', 'FrontEnd\FrontController@getcategoryallevent')->name('categoryevent.getcategoryallevent');
+Route::get('/getcategoryindonesiaevent', 'FrontEnd\FrontController@getcategoryindonesiaevent')->name('categoryevent.getcategoryindonesiaevent');
+Route::get('/getcategoryforeignevent', 'FrontEnd\FrontController@getcategoryforeignevent')->name('categoryevent.getcategoryforeignevent');
+
 
 Route::get('buyingrequest/delete/{id}', 'BuyingRequestController@delete')->name('buyingrequest.delete');
 Route::get('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');

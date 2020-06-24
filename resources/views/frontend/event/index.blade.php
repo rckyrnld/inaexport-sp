@@ -81,14 +81,18 @@ if(Auth::guard('eksmp')->user()){
 
     .select2-selection__rendered {
         line-height: 32px !important;
+        float: left !important;
     }
     .select2-container .select2-selection--single {
-        height: 38px !important;
+        height: 37px !important;
         border-top : 2px solid #1a70bb;
         border-bottom : 2px solid #1a70bb;
     }
+    .select2-container {
+        float: left !important;
+    }
     .select2-selection__arrow {
-        height: 35px !important;
+        height: 34px !important;
     }
 
     /*@media only screen and (max-width: 767px) {
@@ -123,21 +127,21 @@ if(Auth::guard('eksmp')->user()){
     <div class="container ">
         <ul class="nav nav-tabs" id="tab1">
             <li class="nav-item tabmin" >
-                <button class="tablinks" onclick="openTab(event, 'all')">@lang("frontend.jdl_event1")</button>
+                <button class="tablinks" id="buttonall" onclick="openTab(event, 'all')">@lang("frontend.jdl_event1")</button>
                 {{--                <a class="nav-link show active" data-toggle="tab" id="all" href="#all">All</a>--}}
             </li>
             <li class="nav-item tabmin">
-                <button class="tablinks" onclick="openTab(event, 'indonesia')">@lang("frontend.jdl_event2")</button>
+                <button class="tablinks" id="buttonindonesia" onclick="openTab(event, 'indonesia')">@lang("frontend.jdl_event2")</button>
                 {{--                <a class="nav-link show" data-toggle="tab" id="indonesia" href="#indonesia">Indonesia</a>--}}
             </li>
             <li class="nav-item tabmin">
-                <button class="tablinks" onclick="openTab(event, 'foreign')">@lang("frontend.jdl_event3")</button>
+                <button class="tablinks" id="buttonforeign" onclick="openTab(event, 'foreign')">@lang("frontend.jdl_event3")</button>
                 {{--                <a class="nav-link show" data-toggle="tab" id="foreign" href="#foreign">Foreign</a>--}}
             </li>
         </ul>
     </div>
     {{--  tab all start  --}}
-    <div class="tabcontent" id="all" style="display: block" >
+    <div class="tabcontent" id="all" style="display:none;">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-6" style="padding-right: 0px;"><br>
@@ -152,6 +156,7 @@ if(Auth::guard('eksmp')->user()){
                                     <option value="1" @if($searchEvent == 1) selected @endif>Name</option>
                                     <option value="2" @if($searchEvent == 2) selected @endif>Date</option>
                                     <option value="3" @if($searchEvent == 3) selected @endif>Country</option>
+                                    <option value="4" @if($searchEvent == 4) selected @endif>Product</option>
                                 </select>
                             </div>
                             <input type="text" id="search_name" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent == 1) value="{{$param}}" @endif>
@@ -161,14 +166,17 @@ if(Auth::guard('eksmp')->user()){
                             <select class="form-control select2 search " name="country" id="search_country" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
                                 <option value=""></option>
                             </select>
+                            <select class="form-control select2 search " name="product" id="search_product" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
+                                <option value=""></option>
+                            </select>
                             @if(isset($param))
                             @if($param != null)
-                                <a href="{{ url('/front_end/event') }}" class="btn btn-sm btn-default" style=" border-top: 2px solid #1a70bb; border-right: 2px solid #1a70bb;border-bottom: 2px solid #1a70bb;border-left: 2px solid #1a70bb;">X</a>
+                                <a href="{{ url('/front_end/event') }}"  class="btn btn-sm btn-default" style=" border-top: 2px solid #1a70bb; border-right: 2px solid #1a70bb;border-bottom: 2px solid #1a70bb;border-left: 2px solid #1a70bb;" title="Reset All Filter"><span class="fa fa-close"></span></a>
                                 @endif
                             @endif                        
                             <!-- </div> -->
                             <div class="input-group-prepend">
-                                <button type="submit"  class="input-group-text submit" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px; background-color: #1a70bb; border-color: transparent; color: white;">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
+                                <button type="submit"  class="input-group-text submit" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px; background-color: #1a70bb; border-color: transparent; color: white;" title="Search">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
                             </div>
                         </div>
                     </form>
@@ -284,7 +292,7 @@ if(Auth::guard('eksmp')->user()){
                                                                                                                     ?>
 
                 <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
+                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: 200px;width: 200px;">
                 </div>
                 <div style="height: 25%; padding-top: 5px;">
                    <span class="css-title" title="{{$title}}">{{$titleName}}<span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf; margin-left: 10px;">{{getDataInterest($ed->id)}}&nbsp;&nbsp;<i class="fa fa-eye"></i></span></span><br>
@@ -335,7 +343,7 @@ if(Auth::guard('eksmp')->user()){
 {{--Ditambah 2 Div Jangan Dihapus Karena Kalo Dihapus Divnya, maka tab lain gak akan bisa diliat end--}}
 {{--  tab all end  --}}
 {{--  tab indonesia start  --}}
-<div class="tabcontent" id="indonesia" style="display: block" >
+<div class="tabcontent" id="indonesia" style="display:none;">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-6" style="padding-right: 0px;"><br>
@@ -350,6 +358,7 @@ if(Auth::guard('eksmp')->user()){
                                     <option value="1" @if($searchEvent2 == 1) selected @endif>Name</option>
                                     <option value="2" @if($searchEvent2 == 2) selected @endif>Date</option>
                                     <option value="3" @if($searchEvent2 == 3) selected @endif>Country</option>
+                                    <option value="4" @if($searchEvent2 == 4) selected @endif>Product</option>                                                                                                                    
                                 </select>
                             </div>
                             <input type="text" id="search_name2" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent2 == 1) value="{{$param2}}" @endif>
@@ -358,13 +367,16 @@ if(Auth::guard('eksmp')->user()){
                             <select class="form-control select2 search " name="country" id="search_country2" style="width:70%;height:40px; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;">
                                 <option value=""></option>
                             </select>
+                            <select class="form-control select2 search " name="product" id="search_product2" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
+                                <option value=""></option>
+                            </select>
                             @if(isset($param2))
                                 @if($param2 != null)
-                                    <a href="{{ url('/front_end/event') }}" class="btn btn-sm btn-default" style=" border-top: 2px solid #1a70bb; border-right: 2px solid #1a70bb;border-bottom: 2px solid #1a70bb;border-left:2px solid #1a70bb;">X</a>
+                                    <a href="{{ url('/front_end/event') }}" class="btn btn-sm btn-default" style=" border-top: 2px solid #1a70bb; border-right: 2px solid #1a70bb;border-bottom: 2px solid #1a70bb;border-left:2px solid #1a70bb;" title="Reset All Filter"><span class="fa fa-close"></span></a>
                                 @endif
                             @endif   
                             <div class="input-group-prepend">
-                                <button type="submit" id="submit2" class="input-group-text submit" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px; background-color: #1a70bb; border-color: transparent; color: white;">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
+                                <button type="submit" id="submit2" class="input-group-text submit" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px; background-color: #1a70bb; border-color: transparent; color: white;"  title="Search">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
                             </div>
                         </div>
                     </form>
@@ -480,7 +492,7 @@ if(Auth::guard('eksmp')->user()){
                                                                                                                     ?>
 
                 <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
+                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: 200px;width: 200px;">
                 </div>
                 <div style="height: 25%; padding-top: 5px;">
                    <span class="css-title" title="{{$title}}">{{$titleName}}<span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf; margin-left: 10px;">{{getDataInterest($ed2->id)}}&nbsp;&nbsp;<i class="fa fa-eye"></i></span></span><br>
@@ -533,7 +545,7 @@ if(Auth::guard('eksmp')->user()){
 
 
 {{--  tab foreign start  --}}
-<div class="tabcontent" id="foreign" >
+<div class="tabcontent" id="foreign" style="display:none;">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-6" style="padding-right: 0px;"><br>
@@ -548,6 +560,7 @@ if(Auth::guard('eksmp')->user()){
                                     <option value="1" @if($searchEvent3 == 1) selected @endif>Name</option>
                                     <option value="2" @if($searchEvent3 == 2) selected @endif>Date</option>
                                     <option value="3" @if($searchEvent3 == 3) selected @endif>Country</option>
+                                    <option value="4" @if($searchEvent3 == 4) selected @endif>Product</option>                                                                                                                    
                                 </select>
                             </div>
                             <input type="text" id="search_name3" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent3 == 1) value="{{$param3}}" @endif>
@@ -556,13 +569,16 @@ if(Auth::guard('eksmp')->user()){
                             <select class="form-control select2 search " name="country" id="search_country3" style="width:70%;height:40px; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;">
                                 <option value=""></option>
                             </select>
+                            <select class="form-control select2 search " name="product" id="search_product3" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
+                                <option value=""></option>
+                            </select>
                             @if(isset($param3))
                             @if($param3 != null)
-                            <a href="{{ url('/front_end/event') }}" class="btn btn-sm btn-default" style=" border-top: 2px solid #1a70bb; border-right: 2px solid #1a70bb;border-bottom: 2px solid #1a70bb;border-left: 2px solid #1a70bb;">X</a>
+                            <a href="{{ url('/front_end/event') }}" class="btn btn-sm btn-default" style=" border-top: 2px solid #1a70bb; border-right: 2px solid #1a70bb;border-bottom: 2px solid #1a70bb;border-left: 2px solid #1a70bb;" title="Reset All Filter"><span class="fa fa-close"></span></a>
                                 @endif
                             @endif  
                             <div class="input-group-prepend">
-                                <button type="submit" id="submit3" class="input-group-text submit" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px; background-color: #1a70bb; border-color: transparent; color: white;">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
+                                <button type="submit" id="submit3" class="input-group-text submit" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px; background-color: #1a70bb; border-color: transparent; color: white;" title="Search">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
                             </div>
                         </div>
                     </form>
@@ -678,7 +694,7 @@ if(Auth::guard('eksmp')->user()){
                                                                                                                     ?>
 
                 <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
+                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: 200px;width: 200px;">
                 </div>
                 <div style="height: 25%; padding-top: 5px;">
                    <span class="css-title" title="{{$title}}">{{$titleName}}<span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf; margin-left: 10px;">{{getDataInterest($ed3->id)}}&nbsp;&nbsp;<i class="fa fa-eye"></i></span></span><br>
@@ -736,8 +752,6 @@ if(Auth::guard('eksmp')->user()){
 <script type="text/javascript">
 
 
-
-
     // document.onload
     // $('#paginate1').click(function(){
     //
@@ -749,19 +763,51 @@ if(Auth::guard('eksmp')->user()){
     //     alert('paginate3');
     // });
 
+    function openTab(evt, Tabname) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        $('#'+Tabname).show();
+        $('#button'+Tabname).addClass('active');
+        var halaman = Tabname;
+        if(Tabname == 'all'){
+            localStorage.setItem("tabevent", "all");
+            document.getElementById('all').style.display = "block";
+        } else if(Tabname == 'indonesia'){
+            localStorage.setItem("tabevent", "indonesia");
+            document.getElementById('indonesia').style.display = "block";
+        }else if(Tabname == 'foreign'){
+            localStorage.setItem("tabevent", "foreign");
+            document.getElementById('foreign').style.display = "block";
+        }
+    }
 
-    $(document).ready(function() {    
-        // var searchcountrystyle = $("#search_country").select2();
-        // searchcountrystyle.data('select2').$selection.css('height', '34px');
-        // var searchcountrystyle2 = $("#search_country2").select2();
-        // searchcountrystyle2.data('select2').$selection.css('height', '34px');
-        // var searchcountrystyle3 = $("#search_country3").select2();
-        // searchcountrystyle3.data('select2').$selection.css('height', '34px');
-        // $('#search_country').select2();
+    
+
+
+    $(document).ready(function() { 
+
+        var tabnya = localStorage.getItem("tabevent");
+        if(tabnya == "all"){
+            $("#buttonall").click();
+        }else if(tabnya == "indonesia"){
+            $('#buttonindonesia').click();
+        }else if(tabnya == "foreign"){
+            $('#buttonforeign').click();
+        }else{
+            // ditambahin disini;
+            $("#buttonall").click();
+        }
+
         $('#search_country').select2({
                 allowClear: true,
-                placeholder: 'Search Country',
-                ajax: {
+                placeholder: 'Search Country',                ajax: {
                     url: "{{route('countryevent.getcountryall')}}",
                     dataType: 'json',
                     delay: 250,
@@ -779,8 +825,103 @@ if(Auth::guard('eksmp')->user()){
                     cache: true
                 }
         });
+
+        $('#search_product').select2({
+                allowClear: true,
+                placeholder: 'Search Category Product',
+                ajax: {
+                    url: "{{route('categoryevent.getcategoryallevent')}}",
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                console.log(item.id);
+                                return {
+                                    text: item.nama_kategori_en,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+        });
+
+        $('#search_product2').select2({
+                allowClear: true,
+                placeholder: 'Search Category Product',
+                ajax: {
+                    url: "{{route('categoryevent.getcategoryindonesiaevent')}}",
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                console.log(item.id);
+                                return {
+                                    text: item.nama_kategori_en,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+        });
         
+        $('#search_product3').select2({
+                allowClear: true,
+                placeholder: 'Search Category Product',
+                ajax: {
+                    url: "{{route('categoryevent.getcategoryforeignevent')}}",
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                console.log(item.id);
+                                return {
+                                    text: item.nama_kategori_en,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+        });
         
+        var searchEvent = "{{isset($searchEvent) ? $searchEvent : ''}}";
+        if(searchEvent == 3){
+            console.log(searchEvent);
+            var param = "{{isset($param) ? $param : '' }}";
+            if (param != "") {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{route('countryevent.getcountryall')}}",
+                    data: { code: param }
+                }).then(function (data) {
+                    var option = new Option(data[0].country, data[0].id, true, true);
+
+                    $('#search_country').append(option).trigger('change');
+                });
+            }
+        }else if(searchEvent == 4){
+            var param = "{{isset($param) ? $param : '' }}";
+            if (param != "") {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{route('categoryevent.getcategoryallevent')}}",
+                    data: { code: param }
+                }).then(function (data) {
+                    var option = new Option(data[0].nama_kategori_en, data[0].id, true, true);
+
+                    $('#search_product').append(option).trigger('change');
+                });
+            }
+        }
+
         var searchEvent = "{{isset($searchEvent) ? $searchEvent : ''}}";
         if(searchEvent == 3){
             console.log(searchEvent);
@@ -835,6 +976,19 @@ if(Auth::guard('eksmp')->user()){
                     $('#search_country2').append(option).trigger('change');
                 });
             }
+        }else if(searchEvent2 == 4){
+            var param2 = "{{isset($param2) ? $param2 : '' }}";
+            if (param2 != "") {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{route('categoryevent.getcategoryindonesiaevent')}}",
+                    data: { code: param2 }
+                }).then(function (data) {
+                    var option = new Option(data[0].nama_kategori_en, data[0].id, true, true);
+
+                    $('#search_product2').append(option).trigger('change');
+                });
+            }
         }
 
         $('#search_country3').select2({
@@ -873,6 +1027,19 @@ if(Auth::guard('eksmp')->user()){
                     $('#search_country3').append(option).trigger('change');
                 });
             }
+        }else if(searchEvent3 == 4){
+            var param3 = "{{isset($param3) ? $param3 : '' }}";
+            if (param3 != "") {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{route('categoryevent.getcategoryforeignevent')}}",
+                    data: { code: param3 }
+                }).then(function (data) {
+                    var option = new Option(data[0].nama_kategori_en, data[0].id, true, true);
+
+                    $('#search_product3').append(option).trigger('change');
+                });
+            }
         }
         
 
@@ -882,7 +1049,6 @@ if(Auth::guard('eksmp')->user()){
             // Remove the hash (i.e. `#`)
             tab_id = tab_id.substring(1);
             //
-            console.log(tab_id);
             
             if ( tab_id ) {
                 if(tab_id == 'page_a'){
@@ -899,11 +1065,11 @@ if(Auth::guard('eksmp')->user()){
                     document.getElementById('foreign').style.display = "block";
                 }
             }
-            else {
-                document.getElementById('all').style.display = "block";
-                document.getElementById('indonesia').style.display = "none";
-                document.getElementById('foreign').style.display = "none";
-            }
+            // else {
+            //     document.getElementById('all').style.display = "block";
+            //     document.getElementById('indonesia').style.display = "none";
+            //     document.getElementById('foreign').style.display = "none";
+            // }
         } );
 
 
@@ -913,18 +1079,27 @@ if(Auth::guard('eksmp')->user()){
 
         var search = "{{$searchEvent}}";
         if(search == 2){
+            console.log('a');
             $('#search_name').hide();
             $('#search_country').hide();
             $('#search_country').next('.select2-container').hide();
-
+            $('#search_product').next('.select2-container').hide();
         } else if(search == 3){
             $('#search_name').hide();
             $('#search_date').hide();
             $('#search_country').next('.select2-container').show();
-        } else {
+            $('#search_product').next('.select2-container').hide();
+        } else if (search == 4) {
+            $('#search_name').hide();
             $('#search_date').hide();
             $('#search_country').hide();
             $('#search_country').next('.select2-container').hide();
+            $('#search_product').next('.select2-container').show();
+        }else{
+            $('#search_date').hide();
+            $('#search_country').hide();
+            $('#search_country').next('.select2-container').hide();
+            $('#search_product').next('.select2-container').hide();
         }
 
         var search2 = "{{$searchEvent2}}";
@@ -932,15 +1107,23 @@ if(Auth::guard('eksmp')->user()){
             $('#search_name2').hide();
             $('#search_country2').hide();
             $('#search_country2').next('.select2-container').hide();
+            $('#search_product2').next('.select2-container').hide();
         } else if(search2 == 3){
             $('#search_name2').hide();
             $('#search_date2').hide();
             $('#search_country2').next('.select2-container').show();
-            
-        } else {
+            $('#search_product2').next('.select2-container').hide();            
+        } else if(search2 == 4){
+            $('#search_name2').hide();
             $('#search_date2').hide();
             $('#search_country2').hide();
             $('#search_country2').next('.select2-container').hide();
+            $('#search_product2').next('.select2-container').show(); 
+        }else{
+            $('#search_date2').hide();
+            $('#search_country2').hide();
+            $('#search_country2').next('.select2-container').hide();
+            $('#search_product2').next('.select2-container').hide();
         }
 
         var search3 = "{{$searchEvent3}}";
@@ -948,15 +1131,21 @@ if(Auth::guard('eksmp')->user()){
             $('#search_name3').hide();
             $('#search_country3').hide();
             $('#search_country3').next('.select2-container').hide();
+            $('#search_product3').next('.select2-container').hide();
         } else if(search3 == 3){
             $('#search_name3').hide();
             $('#search_date3').hide();
-            $('#search_country3').next('.select2-container').show();
-            
+            $('#search_country3').next('.select2-container').show(); 
+            $('#search_product3').next('.select2-container').hide();  
+        }else if(search3 == 3){
+            $('#search_name3').hide();
+            $('#search_date3').hide();
+            $('#search_country3').next('.select2-container').hide();
+            $('#search_product3').next('.select2-container').show();
         } else {
             $('#search_date3').hide();
-            $('#search_country3').hide();
             $('#search_country3').next('.select2-container').hide();
+            $('#search_product3').next('.select2-container').hide();
         }
 
         $('#search').on('change', function(){
@@ -965,26 +1154,42 @@ if(Auth::guard('eksmp')->user()){
                 $('#search_name').show();
                 $('#search_date').hide();
                 $('#search_country').hide();
+                $('#search_product').hide();
 
                 $('#search_date').val('');
                 $('#search_country').val('');
                 $('#search_country').next('.select2-container').hide();
+                $('#search_product').next('.select2-container').hide();
             } else if(pilihan == 2){
                 $('#search_name').hide();
                 $('#search_date').show();
                 $('#search_country').hide();
+                $('#search_product').hide();
 
                 $('#search_name').val('');
                 $('#search_country').val('');
                 $('#search_country').next('.select2-container').hide();
-            } else {
+                $('#search_product').next('.select2-container').hide();
+            } else if(pilihan == 3) {
                 $('#search_name').hide();
                 $('#search_date').hide();
                 $('#search_country').show();
+                $('#search_product').hide();
 
                 $('#search_name').val('');
                 $('#search_date').val('');
                 $('#search_country').next('.select2-container').show();
+                $('#search_product').next('.select2-container').hide();
+            }else{
+                $('#search_name').hide();
+                $('#search_date').hide();
+                $('#search_country').hide();
+                $('#search_product').show();
+
+                $('#search_name').val('');
+                $('#search_date').val('');
+                $('#search_country').next('.select2-container').hide();
+                $('#search_product').next('.select2-container').show();
             }
         });
 
@@ -994,26 +1199,42 @@ if(Auth::guard('eksmp')->user()){
                 $('#search_name2').show();
                 $('#search_date2').hide();
                 $('#search_country2').hide();
+                $('#search_product2').hide();
 
                 $('#search_date2').val('');
                 $('#search_country2').val('');
                 $('#search_country2').next('.select2-container').hide();
+                $('#search_product2').next('.select2-container').hide();
             } else if(pilihan == 2){
                 $('#search_name2').hide();
                 $('#search_date2').show();
                 $('#search_country2').hide();
+                $('#search_product2').hide();
 
                 $('#search_name2').val('');
                 $('#search_country2').val('');
                 $('#search_country2').next('.select2-container').hide();
-            } else {
+                $('#search_product2').next('.select2-container').hide();
+            } else if(pilihan == 3){
                 $('#search_name2').hide();
                 $('#search_date2').hide();
                 $('#search_country2').show();
+                $('#search_product2').hide();
 
                 $('#search_name2').val('');
                 $('#search_date2').val('');
                 $('#search_country2').next('.select2-container').show();
+                $('#search_product2').next('.select2-container').hide();
+            }else {
+                $('#search_name2').hide();
+                $('#search_date2').hide();
+                $('#search_country2').hide();
+                $('#search_product2').show();
+
+                $('#search_name2').val('');
+                $('#search_date2').val('');
+                $('#search_country2').next('.select2-container').hide();
+                $('#search_product2').next('.select2-container').show();
             }
         });
 
@@ -1023,26 +1244,42 @@ if(Auth::guard('eksmp')->user()){
                 $('#search_name3').show();
                 $('#search_date3').hide();
                 $('#search_country3').hide();
+                $('#search_product3').hide();
 
                 $('#search_date3').val('');
                 $('#search_country3').val('');
                 $('#search_country3').next('.select2-container').hide();
+                $('#search_product3').next('.select2-container').hide();
             } else if(pilihan == 2){
                 $('#search_name3').hide();
                 $('#search_date3').show();
                 $('#search_country3').hide();
+                $('#search_product3').hide();
 
                 $('#search_name3').val('');
                 $('#search_country3').val('');
                 $('#search_country3').next('.select2-container').hide();
-            } else {
+                $('#search_product3').next('.select2-container').hide();
+            } else if(pilihan == 3){
                 $('#search_name3').hide();
                 $('#search_date3').hide();
                 $('#search_country3').show();
+                $('#search_product3').hide();
 
                 $('#search_name3').val('');
                 $('#search_date3').val('');
                 $('#search_country3').next('.select2-container').show();
+                $('#search_product3').next('.select2-container').hide();
+            }else{
+                $('#search_name3').hide();
+                $('#search_date3').hide();
+                $('#search_country3').hide();
+                $('#search_product3').show();
+
+                $('#search_name3').val('');
+                $('#search_date3').val('');
+                $('#search_country3').next('.select2-container').hide();
+                $('#search_product3').next('.select2-container').show();
             }
         });
     })
@@ -1055,39 +1292,7 @@ if(Auth::guard('eksmp')->user()){
     //     $('#submit').click();
     // }
 
-    function openTab(evt, Tabname) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-
-
-        }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(Tabname).style.display = "block";
-        evt.currentTarget.className += " active";
-        // console.log(location.pathname);
-        // function reloadPageWithHash() {
-        //     var initialPage = location.pathname;
-        // }
-        // var button = Tabname;
-        // console.log(button);
-        var halaman = Tabname;
-        if(halaman == 'all'){
-            document.getElementById('all').style.display = "block";
-        } else if(halaman == 'indonesia'){
-            document.getElementById('indonesia').style.display = "block";
-        }else if(halaman == 'foreign'){
-            document.getElementById('foreign').style.display = "block";
-        }
-        // console.log(location.pathname);
-        // location.hash
-        // location.replace('http://localhost:88/kemendag/public/front_end/event?page=1');
-        // console.log(halaman);
-    }
+    
 
     $(window).bind('hashchange', function() {
        alert('tes');
