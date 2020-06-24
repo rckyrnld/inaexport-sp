@@ -1002,9 +1002,10 @@ class FrontController extends Controller
                 if($param == null){
                     return redirect('/front_end/event');
                 }
-                $e_detail =  DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail =  DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1', DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                             ->mergeBindings($query) // you need to get underlying Query Builder
-                            ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                            ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                            ->orderby('abs_beda_tanggal')
                             ->paginate(12,['*'],'page_a');
                 // $e_detail = $query->paginate(12,['*'],'page_a');
                 
@@ -1022,9 +1023,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-                $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_a');
 
                 $json = json_decode($e_detail->toJson(), true);
@@ -1040,9 +1042,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-                $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_a');
                 }
             }
@@ -1060,9 +1063,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-                $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query2) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_b');
 
             $json = json_decode($e_detail2->toJson(), true);
@@ -1078,9 +1082,10 @@ class FrontController extends Controller
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal');
 
-                $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query2) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_b');
             }
 
@@ -1097,9 +1102,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-            $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+            $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->mergeBindings($query) // you need to get underlying Query Builder
-                ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(12,['*'],'page_c');
 
             $json = json_decode($e_detail3->toJson(), true);
@@ -1115,9 +1121,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-                $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_c');
             }
 
@@ -1180,9 +1187,10 @@ class FrontController extends Controller
                 if($param2 == null){
                     return redirect('/front_end/event');
                 }
-                $e_detail2 =  DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail2 =  DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                             ->mergeBindings($query) // you need to get underlying Query Builder
-                            ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                            ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                            ->orderby('abs_beda_tanggal')
                             ->paginate(12,['*'],'page_b');
 
                 $page2 = 99999999;
@@ -1199,9 +1207,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-                $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query2) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_b');
 
                 $json = json_decode($e_detail2->toJson(), true);
@@ -1217,9 +1226,10 @@ class FrontController extends Controller
                         //->orderby('a.created_at', 'desc')
                         ->orderby('abs_beda_tanggal');
 
-                    $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                         ->mergeBindings($query2) // you need to get underlying Query Builder
-                        ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                        ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                        ->orderby('abs_beda_tanggal')
                         ->paginate(12,['*'],'page_b');
                     }
             }
@@ -1237,9 +1247,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-            $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+            $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->mergeBindings($query) // you need to get underlying Query Builder
-                ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(12,['*'],'page_a');
 
             $json = json_decode($e_detail->toJson(), true);
@@ -1255,9 +1266,10 @@ class FrontController extends Controller
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal');
 
-                $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_a');
             }
 
@@ -1274,9 +1286,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-                $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_c');
 
             $json = json_decode($e_detail3->toJson(), true);
@@ -1292,9 +1305,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-                $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_c');
             }
         }
@@ -1361,9 +1375,10 @@ class FrontController extends Controller
                 // $e_detail3 = $query->paginate(12,['*'],'page_c');
                 
                 // echo $query->toSql(); die();
-                $e_detail3 =  DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail3 =  DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                             ->mergeBindings($query) // you need to get underlying Query Builder
-                            ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                            ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                            ->orderby('abs_beda_tanggal')
                             ->paginate(12,['*'],'page_c');
                 // echo $e_detail3->toSql();die();
                 $page3 = 99999999;
@@ -1380,9 +1395,10 @@ class FrontController extends Controller
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal');
 
-                $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_c');
 
 
@@ -1399,9 +1415,10 @@ class FrontController extends Controller
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal');
 
-                    $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                         ->mergeBindings($query) // you need to get underlying Query Builder
-                        ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                        ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                        ->orderby('abs_beda_tanggal')
                         ->paginate(12,['*'],'page_c');
                 }
             }
@@ -1418,9 +1435,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-            $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+            $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->mergeBindings($query) // you need to get underlying Query Builder
-                ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(12,['*'],'page_a');
 
             $json = json_decode($e_detail->toJson(), true);
@@ -1435,9 +1453,10 @@ class FrontController extends Controller
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal');
 
-                $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_a');
 
             }
@@ -1455,9 +1474,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-                $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query2) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_b');
 
             $json = json_decode($e_detail2->toJson(), true);
@@ -1473,9 +1493,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-                $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query2) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_b');
             }
         }
@@ -1493,9 +1514,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-            $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+            $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->mergeBindings($query) // you need to get underlying Query Builder
-                ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(12,['*'],'page_a');
 
 
@@ -1511,9 +1533,10 @@ class FrontController extends Controller
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal');
 
-                $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_a');
 
             }
@@ -1533,7 +1556,8 @@ class FrontController extends Controller
 
             $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
                 ->mergeBindings($query2) // you need to get underlying Query Builder
-                ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(12,['*'],'page_b');
 
             $json = json_decode($e_detail2->toJson(), true);
@@ -1549,9 +1573,10 @@ class FrontController extends Controller
                     //->orderby('a.created_at', 'desc')
                     ->orderby('abs_beda_tanggal');
 
-                $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail2 = DB::table( DB::raw("({$query2->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query2) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_b');
             }
 
@@ -1568,9 +1593,10 @@ class FrontController extends Controller
             //->orderby('a.created_at', 'desc')
             ->orderby('abs_beda_tanggal');
 
-            $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+            $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                 ->mergeBindings($query) // you need to get underlying Query Builder
-                ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                ->orderby('abs_beda_tanggal')
                 ->paginate(12,['*'],'page_c');
 
             $json = json_decode($e_detail3->toJson(), true);
@@ -1586,9 +1612,10 @@ class FrontController extends Controller
                 //->orderby('a.created_at', 'desc')
                 ->orderby('abs_beda_tanggal');
 
-                $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                $e_detail3 = DB::table( DB::raw("({$query->toSql()}) as sub") )->select('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1',DB::raw("case when start_date - now() < INTERVAL '0' then -(start_date - now())else start_date - now() end as abs_beda_tanggal"))
                     ->mergeBindings($query) // you need to get underlying Query Builder
-                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1')
+                    ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
+                    ->orderby('abs_beda_tanggal')
                     ->paginate(12,['*'],'page_c');
             }
 
