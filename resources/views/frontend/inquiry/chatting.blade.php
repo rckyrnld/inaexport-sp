@@ -269,7 +269,7 @@
                     <div class="chat-footer">
                       <div class="row">
                         <div class="col-md-1">
-                            <img src="{{asset('front/assets/icon/plus-circle.png')}}" alt="" width="100%" id="uploading2" />
+                            <a class="" data-toggle="modal" data-target="#modalInvoice"><img src="{{asset('front/assets/icon/plus-circle.png')}}" alt="" width="100%" id="uploading2" /></a>
                             <!-- <input type="file" id="upload_file2" name="upload_file2" style="display: none;" /> -->
                             <!-- <input type="hidden" name="sender2" id="sender2" value="{{$id_user}}">
                             <input type="hidden" name="id_inquiry2" id="id_inquiry2" value="{{$inquiry->id}}">
