@@ -134,6 +134,25 @@ class BRFrontController extends Controller
 		return view('buying-request.refresh',compact('id','id2'));
 	}
 	
+	public function refreshchatnj($id)
+    {
+		$id_user = Auth::guard('eksmp')->user()->id;
+            $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->first();
+            $data = DB::table('csc_product_single')->where('id', $inquiry->to)->first();
+            $messages = DB::table('csc_chatting_inquiry')
+                ->where('id_inquiry', $id)
+                ->where('type', 'importir')
+                ->orderBy('created_at', 'asc')
+                ->get();
+            
+            //Read Chat
+            $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('type', 'importir')->where('receive', $id_user)->update([
+                'status' => 1,
+            ]);
+            
+            return view('buying-request.refresh7',compact('id','inquiry', 'data', 'messages', 'id_user'));
+	}
+	
 	public function refreshchat2($id,$id2)
     {
 		return view('buying-request.refresh2',compact('id','id2'));
@@ -384,6 +403,50 @@ class BRFrontController extends Controller
 		$update = DB::select("update csc_buying_request set status='1' where id='".$id."'");
         return redirect('br_list')->with('success','Success Broadcast Data');
     }
+	
+	public function br_pw_bc_choose_eks(Request $request){
+		// dd($request->id);
+		$dataeksportir = $request->dataeksportir;
+		// dd($request->dataeksportir);
+		$explodeksportir = explode(',',$dataeksportir);
+		
+		foreach($explodeksportir as $eksportir){
+			$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
+					('".$request->id."','".(int)$eksportir."','".Date('Y-m-d H:m:s')."')");
+				
+				//NOTIF
+				$id_terkait = "";
+				$ket = "Buying Request created by ".$namapembuat;
+				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+					('2','".$namapembuat."','".$zzz."','Eksportir','".$napro."','".$ket."','br_list','".$id_terkait."','".$date."','0')
+				");
+				//END NOTIF
+				//EMAIL
+			$caridataeks = DB::select("select * from itdp_company_users where id='".(int)$eksportir."'");
+			if(count($caridataeks) != 0){
+				foreach($caridataeks as $vm){
+					 $vc1 = $vm->email;
+				}
+				
+				
+				$datacomeks = DB::select("select * from itdp_profil_eks where id = '".$vm->id_profil."'");
+					$data = [
+						'username' => $namapembuat,
+						'id2' => '0', 'nama' => $namapembuat,
+						'password' => '',
+						'email' => $vc1,
+						'company' => $datacomeks[0]->company,
+						'bu' => $datacomeks[0]->badanusaha,
+					];
+				Mail::send('UM.user.emailbr', $data, function ($mail) use ($data) {
+					$mail->to($data['email'], $data['company']);
+					$mail->subject('Buying Was Created');
+				});
+			}
+			//END EMAIL
+		}
+		
+	}
 	
 	public function ambilbroad($id)
     {
@@ -727,7 +790,7 @@ class BRFrontController extends Controller
                     return$pesan->company;
             })
             ->addColumn('f3', function ($pesan) {
-                return "<input type='checkbox' name='eksportir' value={{$pesan->id}}>";
+                return "<input type='checkbox' class='eksportirterpilih' name='eksportir' value=$pesan->id>";
             })
             // ->rawColumns([ 'f1','f2','f3'])
             ->rawColumns([ 'f2','f3'])

@@ -30,7 +30,12 @@
                                                 <th width="5%">
                                                     <center>No</center>
                                                 </th>
-                                                
+                                                <th>
+                                                    <center>Created By</center>
+                                                </th>
+                                                <th>
+                                                    <center>Creater Status</center>
+                                                </th>
                                                 <th>
                                                     <center>Subject</center>
                                                 </th>
@@ -66,6 +71,12 @@
                                               <th>
                                                 <center>Category Product</center>
                                               </th>
+                                              <th>
+                                                    <center>Created By</center>
+                                                </th>
+                                                <th>
+                                                    <center>Creater Status</center>
+                                                </th>
                                               <th>
                                                 <center>Subject</center>
                                               </th>
@@ -110,7 +121,8 @@
             ajax: "{{ route('eksportir.inquiry.getData', 1) }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-               
+               {data: 'created_by', name: 'created_by'},
+               {data: 'creater_status', name: 'creater_status'},
                 {data: 'subject', name: 'subject'},
                 {data: 'date', name: 'date'},
 				 {data: 'duration', name: 'duration'},
@@ -127,6 +139,8 @@
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'category', name: 'category'},
+               {data: 'created_by', name: 'created_by'},
+               {data: 'creater_status', name: 'creater_status'},
                 {data: 'subject', name: 'subject'},
                 {data: 'date', name: 'date'},
               /*  {data: 'kos', name: 'kos'}, */

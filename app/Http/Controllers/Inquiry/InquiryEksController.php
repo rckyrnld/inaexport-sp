@@ -46,7 +46,9 @@ class InquiryEksController extends Controller
                 $user = [];
                 $importer = DB::table('csc_inquiry_br')
                     ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
-                    ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
+                    ->join('itdp_company_users','itdp_company_users.id','csc_inquiry_br.id_pembuat')
+                    ->join('itdp_profil_imp','itdp_company_users.id_profil','itdp_profil_imp.id')
+                    ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product,itdp_profil_imp.status as creater_status,itdp_profil_imp.company as created_by')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
                     ->where('csc_inquiry_br.status', 1)
                     // ->orderBy('csc_inquiry_br.', 'DESC')
@@ -57,10 +59,13 @@ class InquiryEksController extends Controller
                 foreach ($importer as $key) {
                     array_push($user, $key);
                 }
+                $tipe_user = 'admin';
+                $tipe_user2 = 'perwakilan';
 //                dd($user);
                 $perwakilan = DB::table('csc_inquiry_br as a')
                     ->join('csc_inquiry_broadcast as b', 'b.id_inquiry', '=', 'a.id')
-                    ->selectRaw('a.id, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.status')
+                    ->join('itdp_admin_users as c','a.id_pembuat','c.id')
+                    ->selectRaw("a.id, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.status,(CASE WHEN a.type = 'admin' THEN 'Admin' ELSE 'Perwakilan' END) AS created_by, (CASE WHEN a.type = 'admin' THEN 2 ELSE 2 END) AS creater_status")
                     ->where('b.id_itdp_company_users', '=', $id_user)
                     ->where('b.status', 1)
 //                    ->orderBy('a.date', 'DESC')
@@ -73,7 +78,10 @@ class InquiryEksController extends Controller
                 $user = [];
                 $importer = DB::table('csc_inquiry_br')
                     ->join('csc_product_single', 'csc_product_single.id', '=', 'csc_inquiry_br.to')
-                    ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product')
+                    ->join('itdp_company_users','itdp_company_users.id','csc_inquiry_br.id_pembuat')
+                    ->join('itdp_profil_imp','itdp_company_users.id_profil','itdp_profil_imp.id')
+                    ->selectRaw('csc_inquiry_br.*, csc_product_single.id as id_product,itdp_profil_imp.status as creater_status,itdp_profil_imp.company as created_by')
+                    // ->select('csc_inquiry_br.*', 'csc_product_single.id as id_product','itdp_profil_imp.*')
                     ->where('csc_product_single.id_itdp_company_user', '=', $id_user)
                     ->where('csc_inquiry_br.status', '!=', 1)
 //                    ->orderBy('csc_inquiry_br.date', 'DESC')
@@ -82,9 +90,12 @@ class InquiryEksController extends Controller
                 foreach ($importer as $key) {
                     array_push($user, $key);
                 }
+                $tipe_user = 'admin';
+                $tipe_user2 = 'perwakilan';
                 $perwakilan = DB::table('csc_inquiry_br as a')
                     ->join('csc_inquiry_broadcast as b', 'b.id_inquiry', '=', 'a.id')
-                    ->selectRaw('a.id, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.status')
+                    ->join('itdp_admin_users as c','a.id_pembuat','c.id')
+                    ->selectRaw("a.id, a.id_pembuat, a.type,a.id_csc_prod_cat, a.id_csc_prod_cat_level1, a.id_csc_prod_cat_level2, a.jenis_perihal_en, a.messages_en, a.subyek_en, a.duration, a.date, b.status,(CASE WHEN a.type = 'admin' THEN 'Admin' ELSE 'Perwakilan' END) AS created_by, (CASE WHEN a.type = 'admin' THEN 2 ELSE 2 END) AS creater_status")
                     ->where('b.id_itdp_company_users', '=', $id_user)
                     ->where('b.status', '!=', 1)
 //                    ->orderBy('a.date', 'DESC')
@@ -95,7 +106,7 @@ class InquiryEksController extends Controller
                 }
             }
 
-//            dd($user);
+        //    dd($user);
             return \Yajra\DataTables\DataTables::of($user)
                 ->addIndexColumn()
                 ->addColumn('category', function ($mjl) {
@@ -196,6 +207,30 @@ class InquiryEksController extends Controller
                     }
 
                     return $orginnya;
+                })
+                ->addColumn('created_by', function ($mjl) {
+                    $created_by = "-";
+                    if($mjl->created_by != NULL){
+                        $created_by = $mjl->created_by;
+                    }
+
+                    return $created_by;
+                })
+                ->addColumn('creater_status', function ($mjl) {
+                    // $creater_status = "Not Verified";
+                    // if($mjl->creater_status != NULL){
+                        if($mjl->creater_status == 1){
+                            $creater_status = 'Verified';
+                        }else if($mjl->creater_status == 0){
+                            $creater_status = 'Not Verified';
+                        }else if($mjl->creater_status == 2){
+                            $creater_status = '-';
+                        }
+                        // ".$tipe_user."
+                        
+                    // }
+
+                    return $creater_status;
                 })
                 ->addColumn('action', function ($mjl) use($id_user) {
                     if($mjl->status == 0 || $mjl->status == 2){
@@ -386,11 +421,49 @@ class InquiryEksController extends Controller
                 ]);
             }
             
-            return view('inquiry.eksportir.chatting', compact('pageTitle','inquiry', 'product', 'messages', 'id_user', 'cekfile', 'broadcast'));
+            return view('inquiry.eksportir.chatting', compact('pageTitle','inquiry', 'product', 'messages', 'id_user', 'cekfile', 'broadcast','id'));
         }else{
             return redirect('/home');
         }
     }
+	
+	public function refreshchatinq3($id)
+    {
+			$id_user = Auth::guard('eksmp')->user()->id;
+            $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->first();
+            $product = DB::table('csc_product_single')->where('id', $inquiry->to)->where('id_itdp_company_user', $id_user)->first();
+            if($inquiry->type == "importir"){
+                $broadcast = NULL;
+                $messages = DB::table('csc_chatting_inquiry')
+                    ->where('id_inquiry', $id)
+                    ->where('type', $inquiry->type)
+                    ->orderBy('created_at', 'asc')
+                    ->get();
+
+                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNotNull('file')->count();
+
+                //Read Chat
+                $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('type', $inquiry->type)->where('receive', $id_user)->update([
+                    'status' => 1,
+                ]);
+            }else if($inquiry->type == "perwakilan" || $inquiry->type == "admin"){
+                $broadcast = DB::table('csc_inquiry_broadcast')->where('id_itdp_company_users', $id_user)->where('id_inquiry', $id)->first();
+                $messages = DB::table('csc_chatting_inquiry')
+                    ->where('id_inquiry', $id)
+                    ->where('id_broadcast_inquiry', $broadcast->id)
+                    ->where('type', $inquiry->type)
+                    ->orderBy('created_at', 'asc')
+                    ->get();    
+
+                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNotNull('file')->count();
+
+                //Read Chat
+                $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('type', $inquiry->type)->where('receive', $id_user)->update([
+                    'status' => 1,
+                ]);
+            }
+		return view('buying-request.refresh6',compact('id','messages','id_user','inquiry'));
+	}
 
     public function sendChat(Request $request)
     {
