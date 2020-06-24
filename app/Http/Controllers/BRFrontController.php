@@ -405,11 +405,16 @@ class BRFrontController extends Controller
     }
 	
 	public function br_pw_bc_choose_eks(Request $request){
-		// dd($request->id);
-		$dataeksportir = $request->dataeksportir;
 		// dd($request->dataeksportir);
+        $date = date('Y-m-d H:i:s');
+		$dataeksportir = $request->dataeksportir;
 		$explodeksportir = explode(',',$dataeksportir);
-		
+		$databr = DB::select("select * from csc_buying_request where id='".$request->id."'");
+		if(isset($databr[0]->by_role) == 4){
+			$namapembuat = getPerwakilanName($databr[0]->id_pembuat );
+			$zzz = $databr[0]->id_pembuat;
+			
+		}
 		foreach($explodeksportir as $eksportir){
 			$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
 					('".$request->id."','".(int)$eksportir."','".Date('Y-m-d H:m:s')."')");
@@ -418,33 +423,39 @@ class BRFrontController extends Controller
 				$id_terkait = "";
 				$ket = "Buying Request created by ".$namapembuat;
 				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-					('2','".$namapembuat."','".$zzz."','Eksportir','".$napro."','".$ket."','br_list','".$id_terkait."','".$date."','0')
+					('2','".$namapembuat."','".$zzz."','Eksportir','".(int)$eksportir."','".$ket."','br_list','".$id_terkait."','".$date."','0')
 				");
 				//END NOTIF
 				//EMAIL
-			$caridataeks = DB::select("select * from itdp_company_users where id='".(int)$eksportir."'");
-			if(count($caridataeks) != 0){
-				foreach($caridataeks as $vm){
-					 $vc1 = $vm->email;
+				$caridataeks = DB::select("select * from itdp_company_users where id ='".$eksportir."'");
+				
+				if(count($caridataeks) != 0){
+					foreach($caridataeks as $vm){
+						$vc1 = $vm->email;
+					}
+					$datacomeks = DB::select("select * from itdp_profil_eks where id = '".$vm->id_profil."'");
+						$data = [
+							'username' => $namapembuat,
+							'id2' => '0',
+							'nama' => $namapembuat,
+							'password' => '',
+							'email' => $vc1,
+							'company' => $datacomeks[0]->company,
+							'bu' => $datacomeks[0]->badanusaha,
+						];
+						Mail::send('UM.user.emailbr', $data, function ($mail) use ($data) {
+							$mail->to($data['email'], $data['company']);
+							$mail->subject('Buying Was Created');
+						});
+					
 				}
-				
-				
-				$datacomeks = DB::select("select * from itdp_profil_eks where id = '".$vm->id_profil."'");
-					$data = [
-						'username' => $namapembuat,
-						'id2' => '0', 'nama' => $namapembuat,
-						'password' => '',
-						'email' => $vc1,
-						'company' => $datacomeks[0]->company,
-						'bu' => $datacomeks[0]->badanusaha,
-					];
-				Mail::send('UM.user.emailbr', $data, function ($mail) use ($data) {
-					$mail->to($data['email'], $data['company']);
-					$mail->subject('Buying Was Created');
-				});
-			}
-			//END EMAIL
+				//END EMAIL
 		}
+		// dd($no);
+		$update = DB::select("update csc_buying_request set status='1' where id='".$request->id."'");
+		// return redirect('br_list')->with('success','Success Broadcast Data');
+		$baliknya = 'sukses';
+        return json_encode($baliknya);
 		
 	}
 	
@@ -778,8 +789,8 @@ class BRFrontController extends Controller
 								->orwhere('csc_product_single.id_csc_product_level1',$category)	
 								->orwhere('csc_product_single.id_csc_product_level2',$category);
 						})
-						->select('itdp_profil_eks.id','itdp_profil_eks.company')
-						->groupby('itdp_profil_eks.id','itdp_profil_eks.company')
+						->select('itdp_company_users.id','itdp_profil_eks.company')
+						->groupby('itdp_company_users.id','itdp_profil_eks.company')
 						->get();
 						
 		return DataTables::of($pesan)

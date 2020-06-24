@@ -141,7 +141,7 @@ function broadcast(){
             processData: false,
         })
         .done(function(e){
-            // window.location = '{{ url('permohonansimsaurmat/savemessage') }}';
+            window.location = '{{ url('/br_list') }}';
         });
     }else{
         alert('make sure to checked at least one exporter');
@@ -159,6 +159,14 @@ function broadcast(){
 </script>
 <script type="text/javascript">
     $(function () {
+        $('.checkall').click(function() {
+            console.log('ke triger');
+            if ($(this).is(':checked')) {
+                $("input[name='eksportir']").attr('checked', true);
+            } else {
+                $("input[name='eksportir']").attr('checked', false);
+            }
+        });
         $(".alert").slideDown(300).delay(1000).slideUp(300);
         $('#users-table').DataTable({
             processing: true,

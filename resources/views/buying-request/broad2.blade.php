@@ -23,7 +23,7 @@
 			<thead>
 				<tr>
 					<th style="width: 70%;">Nama Perusahaan</th>
-					<th style="width: 30%;"> Pilih Semua</th>
+					<th style="width: 30%;"> <input type='checkbox' class='checkall' name='checkall' value=''> Pilih Semua</th>
 				</tr>
 			</thead>
 			<tbody>
