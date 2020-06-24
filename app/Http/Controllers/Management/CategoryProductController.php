@@ -107,8 +107,7 @@ class CategoryProductController extends Controller
           'nama_kategori_en' => $req->product_en,
           'nama_kategori_in' => $req->product_in,
           'nama_kategori_chn' => $req->product_chn,
-          'logo' => $nama_image,
-          'type' => $req->type
+          'logo' => $nama_image
         ]);
       } else {
         $pecah = explode('_', $param);
@@ -120,8 +119,7 @@ class CategoryProductController extends Controller
           'nama_kategori_en' => $req->product_en,
           'nama_kategori_in' => $req->product_in,
           'nama_kategori_chn' => $req->product_chn,
-          'logo' => $nama_image,
-          'type' => $req->type
+          'logo' => $nama_image
         ]);
       }
 

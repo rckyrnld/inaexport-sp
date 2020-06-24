@@ -1,5 +1,5 @@
 @include('header')
-<title>E-Reporting | Tambah User</title>
+<title>InaExport | Tambah User</title>
 <div class="padding">
     <div class="row">
         <div class="col-md-12">

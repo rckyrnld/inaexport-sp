@@ -421,11 +421,49 @@ class InquiryEksController extends Controller
                 ]);
             }
             
-            return view('inquiry.eksportir.chatting', compact('pageTitle','inquiry', 'product', 'messages', 'id_user', 'cekfile', 'broadcast'));
+            return view('inquiry.eksportir.chatting', compact('pageTitle','inquiry', 'product', 'messages', 'id_user', 'cekfile', 'broadcast','id'));
         }else{
             return redirect('/home');
         }
     }
+	
+	public function refreshchatinq3($id)
+    {
+			$id_user = Auth::guard('eksmp')->user()->id;
+            $inquiry = DB::table('csc_inquiry_br')->where('id', $id)->first();
+            $product = DB::table('csc_product_single')->where('id', $inquiry->to)->where('id_itdp_company_user', $id_user)->first();
+            if($inquiry->type == "importir"){
+                $broadcast = NULL;
+                $messages = DB::table('csc_chatting_inquiry')
+                    ->where('id_inquiry', $id)
+                    ->where('type', $inquiry->type)
+                    ->orderBy('created_at', 'asc')
+                    ->get();
+
+                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNotNull('file')->count();
+
+                //Read Chat
+                $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('type', $inquiry->type)->where('receive', $id_user)->update([
+                    'status' => 1,
+                ]);
+            }else if($inquiry->type == "perwakilan" || $inquiry->type == "admin"){
+                $broadcast = DB::table('csc_inquiry_broadcast')->where('id_itdp_company_users', $id_user)->where('id_inquiry', $id)->first();
+                $messages = DB::table('csc_chatting_inquiry')
+                    ->where('id_inquiry', $id)
+                    ->where('id_broadcast_inquiry', $broadcast->id)
+                    ->where('type', $inquiry->type)
+                    ->orderBy('created_at', 'asc')
+                    ->get();    
+
+                $cekfile = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('sender', $inquiry->id_pembuat)->where('receive', $id_user)->whereNotNull('file')->count();
+
+                //Read Chat
+                $chat = DB::table('csc_chatting_inquiry')->where('id_inquiry', $id)->where('id_broadcast_inquiry', $broadcast->id)->where('type', $inquiry->type)->where('receive', $id_user)->update([
+                    'status' => 1,
+                ]);
+            }
+		return view('buying-request.refresh6',compact('id','messages','id_user','inquiry'));
+	}
 
     public function sendChat(Request $request)
     {

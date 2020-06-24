@@ -132,6 +132,7 @@ Route::get('/br_pw_bcs/{id}', 'BRFrontController@br_pw_bcs');
 Route::get('/br_konfirm/{id}/{id2}', 'BRFrontController@br_konfirm');
 Route::get('/br_konfirm2/{id}/{id2}', 'BRFrontController@br_konfirm2');
 Route::get('/refreshchat/{id}/{id2}', 'BRFrontController@refreshchat');
+Route::get('/refreshchatnj/{id}', 'BRFrontController@refreshchatnj');
 Route::get('/refreshchat2/{id}/{id2}', 'BRFrontController@refreshchat2');
 Route::get('/refreshchat3/{id}/{id2}', 'BRFrontController@refreshchat3');
 Route::post('/br_importir_save', 'BRFrontController@br_importir_save');
@@ -175,6 +176,10 @@ Route::get('/verifyuser', 'VerifyuserController@index');
 Route::get('/listactv/{id}', 'VerifyuserController@listactv');
 Route::get('/geteksportir', 'VerifyuserController@geteksportir');
 Route::get('/verifyimportir', 'VerifyuserController@index2');
+Route::get('/addbuyer', 'VerifyuserController@addbuyer')->name('addbuyer');
+Route::post('/savebuyer', 'VerifyuserController@savebuyer')->name('savebuyer');
+Route::get('/addexpor', 'VerifyuserController@addexpor')->name('addexpor');
+Route::post('/saveexpor', 'VerifyuserController@saveexpor')->name('saveexpor');
 Route::get('/hapuseksportir/{id}', 'VerifyuserController@hapuseksportir');
 Route::get('/reseteksportir/{id}', 'VerifyuserController@reseteksportir');
 Route::get('/hapusimportir/{id}', 'VerifyuserController@hapusimportir');
@@ -729,6 +734,7 @@ Route::namespace('Inquiry')->group(function () {
     Route::get('/inquiry/sendChat', 'InquiryEksController@sendChat')->name('eksportir.inquiry.sendChat');
     Route::post('/inquiry/fileChat', 'InquiryEksController@fileChat')->name('eksportir.inquiry.fileChat');
     Route::get('/inquiry/dealing/{id}/{status}', 'InquiryEksController@dealing')->name('eksportir.inquiry.dealing');
+	Route::get('/refreshchatinq3/{id}', 'InquiryEksController@refreshchatinq3');
 
     //Perwakilan
     Route::get('/inquiry_perwakilan', 'InquiryWakilController@index')->name('perwakilan.inquiry.index');
@@ -747,6 +753,7 @@ Route::namespace('Inquiry')->group(function () {
     Route::post('/inquiry_perwakilan/fileChat', 'InquiryWakilController@fileChat')->name('perwakilan.inquiry.fileChat');
     Route::get('/inquiry_perwakilan/view_detail/{id}', 'InquiryWakilController@view_detail')->name('perwakilan.inquiry.view_detail');
     Route::get('/inquiry_perwakilan/delete_detail/{id}', 'InquiryWakilController@delete_detail')->name('perwakilan.inquiry.delete_detail');
+	Route::get('/refreshchatinq2/{id}', 'InquiryWakilController@refreshchatinq2');
 
     //Admin
     Route::get('/inquiry_admin', 'InquiryAdminController@index')->name('admin.inquiry.index');
@@ -765,6 +772,7 @@ Route::namespace('Inquiry')->group(function () {
     Route::post('/inquiry_admin/fileChat', 'InquiryAdminController@fileChat')->name('admin.inquiry.fileChat');
     Route::get('/inquiry_admin/view_detail/{id}', 'InquiryAdminController@view_detail')->name('admin.inquiry.view_detail');
     Route::get('/inquiry_admin/delete_detail/{id}', 'InquiryAdminController@delete_detail')->name('admin.inquiry.delete_detail');
+	Route::get('/refreshchatinq/{id}', 'InquiryAdminController@refreshchatinq');
     //Tab Perwakilan
     Route::get('/inquiry_admin/getPerwakilan', 'InquiryAdminController@getPerwakilan')->name('admin.inquiry.getPerwakilan');
     Route::get('/inquiry_admin/detail_perwakilan/{id}', 'InquiryAdminController@detail_perwakilan')->name('admin.inquiry.detail_perwakilan');

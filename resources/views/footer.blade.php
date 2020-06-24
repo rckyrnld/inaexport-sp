@@ -13,6 +13,9 @@
 <!-- ############ LAYOUT END-->
 </div>
 <script>
+Pace.on("done", function() {
+    $('#page_overlay').delay(300).fadeOut(600);
+ });
 function closenotif(x){
 	var token = $('meta[name="csrf-token"]').attr('content');
 		$.get('{{URL::to("bacanotif/")}}/'+x,{_token:token},function(data){
