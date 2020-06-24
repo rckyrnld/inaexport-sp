@@ -36,6 +36,9 @@
                                     </th>
                                     <th>
                                         <center>Created By</center>
+									</th>
+									<th>
+                                        <center>Creator Status</center>
                                     </th>
 									<th>
                                         <center>Address</center>
@@ -72,17 +75,34 @@
 									</center></td>
 									<td>
 									<?php 
-								if($ruu->by_role == 1){
-									echo "Admin";
-								}else if($ruu->by_role == 4){
-									echo "Perwakilan";
-								}else if($ruu->by_role == 3){
-									$usre = DB::select("select b.company from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
-									foreach($usre as $imp){ 
-									echo $imp->company; 
-									}
-								}
+										if($ruu->by_role == 1){
+											echo "Admin";
+										}else if($ruu->by_role == 4){
+											echo "Perwakilan";
+										}else if($ruu->by_role == 3){
+											$usre = DB::select("select b.company from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
+											foreach($usre as $imp){ 
+											echo $imp->company; 
+											}
+										}
 									?></td>
+									<td>
+										<?php
+											if($ruu->by_role == 1|| $ruu->by_role == 4){
+												echo "-";
+											}else if($ruu->by_role == 3){
+												$userstatus = DB::select("select b.status from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
+												foreach($userstatus as $imp){ 
+													if($imp->status == 1){
+														echo "Verified";
+													}else{
+														echo "Not Verified";
+													}
+													
+												}
+											}
+										?>
+									</td>
 									<td><?php 
 									if($ruu->by_role == 1){
 									$co = $ruu->id_mst_country;

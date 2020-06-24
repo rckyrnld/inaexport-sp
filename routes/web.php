@@ -851,6 +851,11 @@ Route::get('/getcountryall', 'FrontEnd\FrontController@getcountryall')->name('co
 Route::get('/getcountryindonesia', 'FrontEnd\FrontController@getcountryindonesia')->name('countryevent.getcountryindonesia');
 Route::get('/getcountryforeign', 'FrontEnd\FrontController@getcountryforeign')->name('countryevent.getcountryforeign');
 
+Route::get('/getcategoryallevent', 'FrontEnd\FrontController@getcategoryallevent')->name('categoryevent.getcategoryallevent');
+Route::get('/getcategoryindonesiaevent', 'FrontEnd\FrontController@getcategoryindonesiaevent')->name('categoryevent.getcategoryindonesiaevent');
+Route::get('/getcategoryforeignevent', 'FrontEnd\FrontController@getcategoryforeignevent')->name('categoryevent.getcategoryforeignevent');
+
+
 Route::get('buyingrequest/delete/{id}', 'BuyingRequestController@delete')->name('buyingrequest.delete');
 Route::get('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
 //end mindy
