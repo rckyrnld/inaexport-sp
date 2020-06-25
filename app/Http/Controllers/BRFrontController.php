@@ -405,7 +405,7 @@ class BRFrontController extends Controller
     }
 	
 	public function br_pw_bc_choose_eks(Request $request){
-		// dd($request->dataeksportir);
+		// dd($request);
         $date = date('Y-m-d H:i:s');
 		$dataeksportir = $request->dataeksportir;
 		$explodeksportir = explode(',',$dataeksportir);
@@ -416,6 +416,8 @@ class BRFrontController extends Controller
 			
 		}
 		foreach($explodeksportir as $eksportir){
+			$cekada=DB::select("select * from csc_buying_request_join where id_br='".$request->id."' and id_eks='".(int)$eksportir."'");
+			if(count($cekada) == 0){
 			$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
 					('".$request->id."','".(int)$eksportir."','".Date('Y-m-d H:m:s')."')");
 				
@@ -450,9 +452,10 @@ class BRFrontController extends Controller
 					
 				}
 				//END EMAIL
+			}
 		}
-		// dd($no);
 		$update = DB::select("update csc_buying_request set status='1' where id='".$request->id."'");
+		// $update = DB::select("update csc_buying_request set status='1', data_eksportir = '".$request->dataeksportir."' where id='".$request->id."'");
 		// return redirect('br_list')->with('success','Success Broadcast Data');
 		$baliknya = 'sukses';
         return json_encode($baliknya);
@@ -792,20 +795,46 @@ class BRFrontController extends Controller
 						->select('itdp_company_users.id','itdp_profil_eks.company')
 						->groupby('itdp_company_users.id','itdp_profil_eks.company')
 						->get();
+		// $no = 1;
+		// $data = [];
+		// dd($data);
+		// foreach ($pesan as $p) {
+		// 	$data['no'] = $no;
+		// 	$no++;
+		// }
+		// dd($data);
+		// array_merge($pesan,$tmp);
+
+		// dd($pesan);
+
+		// $company = [];
+		
+		// if(count($pesan) > 0){
+		// 	foreach($pesan as $p){
+		// 		$company['id'] = $p->id;
+		// 		$company['company'] = $p->company;
+		// 		$company['no'] = $no;
+		// 		$no++;
+		// 	}
+		// }
 						
-		return DataTables::of($pesan)
-            // ->addColumn('f1', function ($pesan) {
-            //     return '<div align="left">' . $pesan->id . '</div>';
-            // })
-            ->addColumn('f2', function ($pesan) {
-                    return$pesan->company;
-            })
-            ->addColumn('f3', function ($pesan) {
-                return "<input type='checkbox' class='eksportirterpilih' name='eksportir' value=$pesan->id>";
-            })
-            // ->rawColumns([ 'f1','f2','f3'])
-            ->rawColumns([ 'f2','f3'])
-            ->make(true);
+		return response()->json($pesan);
+		// return DataTables::of($pesan)
+        //     // ->addColumn('f1', function ($pesan) {
+        //     //     return '<div align="left">' . $pesan->id . '</div>';
+        //     // })
+        //     ->addColumn('f2', function ($pesan) {
+        //             return$pesan->company;
+        //     })
+        //     ->addColumn('f3', function ($pesan) {
+        //         return "<input type='checkbox' class='eksportirterpilih' name='eksportir' value=$pesan->id>";
+		// 	})
+		// 	// ->addColumn('f3', function ($pesan) {
+        //     //     return $pesan->id;
+        //     // })
+        //     // ->rawColumns([ 'f1','f2','f3'])
+        //     ->rawColumns([ 'f2','f3'])
+        //     ->make(true);
     }
 
 	public function br_importir_save(Request $request)

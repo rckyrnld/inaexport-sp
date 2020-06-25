@@ -296,15 +296,15 @@ if ($loc == "ch") {
                                    <!-- <button style="width:100%!important;" class="btn btn-md btn-success"><i
                                                 class="fa fa-save"></i> @lang("login.btn4")</button> -->
                                         <?php if(Auth::guard('eksmp')->check()) {?>
-                                            <?php if(Auth::guard('eksmp')->user()->status == 1){ ?>
+                                            <?php // if(Auth::guard('eksmp')->user()->status == 1){ ?>
                                                 <a onclick="simpanbr()"style="width:100%!important;" class="btn btn-md btn-success"><font color="white"><i
                                                         class="fa fa-save"></i> @lang("login.btn4")</i></a>
 
-                                            <?php }else{ ?>
-                                                <a disabled onclick="bak()" style="width:100%!important;"
+                                            <?php //}else{ ?>
+                                                <!-- <a disabled onclick="bak()" style="width:100%!important;"
                                                     class="btn btn-md btn-success"><font color="white"><i
-                                                        class="fa fa-save"></i> @lang("login.btn4")</font></a>
-                                            <?php } ?>
+                                                        class="fa fa-save"></i> @lang("login.btn4")</font></a> -->
+                                            <?php //} ?>
                                         <?php } else{ ?>
                                         <a disabled onclick="bak()" style="width:100%!important;"
                                            class="btn btn-md btn-success"><font color="white"><i

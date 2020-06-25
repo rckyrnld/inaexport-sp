@@ -882,5 +882,6 @@ Route::get('/getcategoryforeignevent', 'FrontEnd\FrontController@getcategoryfore
 
 
 Route::get('buyingrequest/delete/{id}', 'BuyingRequestController@delete')->name('buyingrequest.delete');
-Route::get('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
+Route::post('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
+// Route::get('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
 //end mindy

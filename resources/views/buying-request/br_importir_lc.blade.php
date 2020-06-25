@@ -49,8 +49,8 @@
 			<div class="form-row" style="font-size:12px;">
 <div class="col-md-12">
  <?php 
-	   if(!empty(Auth::guard('eksmp')->user()->status)){
-	   if (Auth::guard('eksmp')->user()->status == 1) {
+	   if(Auth::guard('eksmp')->check()){
+	   if (Auth::guard('eksmp')->user()->status == 1 ||Auth::guard('eksmp')->user()->status == 0 ) {
 	   ?>
 	   <h5><center><?php echo $pageTitle; ?></center></h5>
 	   <br><br>
