@@ -448,14 +448,23 @@ foreach($q2 as $p2){
 									</div>
 								</div>
 							</div>
-<?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
+<?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); 
+$compa = "-";
+$rg = DB::select("select b.company from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and a.id='".Auth::guard('eksmp')->user()->id."' ");
+						foreach($rg as $gr){
+							$compa = $gr->company;
+						}
+
+?>
+
+
 <script>
 function kirimchat(){
 	var a= $('#inputan').val();
 	var b= $('#id_br').val();
 	var c = 2;
 	var d = <?php echo Auth::guard('eksmp')->user()->id;?>;
-	var e = '<?php echo Auth::guard('eksmp')->user()->username;?>';
+	var e = '<?php echo $compa;?>';
 	var f = '<?php echo $id;?>';
 	var token = $('meta[name="csrf-token"]').attr('content');
 	if(a == null || a == ""){

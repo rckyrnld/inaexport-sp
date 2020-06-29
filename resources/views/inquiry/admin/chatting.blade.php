@@ -446,7 +446,7 @@ function kirimchat(){
                     success:function(response){
                         // console.log(response);
                         if(response == 1){
-                            location.reload();
+                          //  location.reload();
                         }else{
                             alert("This message is not delivered!");
                             location.reload();
