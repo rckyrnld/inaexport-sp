@@ -1646,7 +1646,8 @@ class FrontController extends Controller
     }
 
     public function join_event($id){
-        $detail = DB::table('event_detail')->where('status_en', 'Verified')->where('id', $id)->first();
+        // $detail = DB::table('event_detail')->where('status_en', 'Verified')->where('id', $id)->first();
+        $detail = DB::table('event_detail')->where('id', $id)->first();
         return view('frontend.event.detail_event', compact('detail'));
     }
 
