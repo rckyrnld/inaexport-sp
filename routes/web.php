@@ -129,6 +129,7 @@ Route::get('/br_importir_chat/{id}/{id2}', 'BRFrontController@br_importir_chat')
 Route::get('/br_importir_bc/{id}', 'BRFrontController@br_importir_bc');
 Route::get('/br_pw_bc/{id}', 'BRFrontController@br_pw_bc');
 Route::post('/broadcastbuyingrequest/pw', 'BRFrontController@br_pw_bc_choose_eks')->name('broadcastbuyingrequest.pw');
+Route::post('/broadcastbuyingrequest/imp', 'BRFrontController@br_importir_bc_choose_eks')->name('broadcastbuyingrequest.imp');
 Route::get('/br_pw_bcs/{id}', 'BRFrontController@br_pw_bcs');
 Route::get('/br_konfirm/{id}/{id2}', 'BRFrontController@br_konfirm');
 Route::get('/br_konfirm2/{id}/{id2}', 'BRFrontController@br_konfirm2');

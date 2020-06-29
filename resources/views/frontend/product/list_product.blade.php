@@ -163,7 +163,7 @@
                                 <div class="list-group list-group-flush" id="catlist">
                                     @foreach($categoryutama as $cu)
                                         <?php
-                                            $catprod1 = getCategoryLevel(1, $cu->id, "");
+                                            $catprod1 = getCategoryLevelNew(1, $cu->id, "");
                                             $nk = "nama_kategori_".$lct; 
                                             if($cu->$nk == NULL){
                                                 $nk = "nama_kategori_en";
@@ -173,12 +173,12 @@
                                             <a href="{{url('/front_end/list_product/category/'.$cu->id)}}" class="list-group-item">{{$cu->$nk}}</a>
                                         @else
                                             <div class="list-group-item">
-                                                <a class="cat-prod" href="{{url('/front_end/list_product/category/'.$cu->id)}}"> {{$cu->$nk}} </a><a onclick="openCollapse('{{$cu->id}}')" href="#menus{{$cu->id}}" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop{{$cu->id}}"></i></a>
+                                                <a class="cat-prod" href="{{url('/front_end/list_product/category/'.$cu->id)}}"> {{$cu->$nk}}</a><a onclick="openCollapse('{{$cu->id}}')" href="#menus{{$cu->id}}" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop{{$cu->id}}"></i></a>
                                             </div>
                                                 <div class="collapse" id="menus{{$cu->id}}">
                                                     @foreach($catprod1 as $cat1)
                                                      <?php
-                                                        $catprod2 = getCategoryLevel(2, $cu->id, $cat1->id);
+                                                        $catprod2 = getCategoryLevelNew(2, $cu->id, $cat1->id);
                                                         $nk = "nama_kategori_".$lct; 
                                                         if($cat1->$nk == NULL){
                                                             $nk = "nama_kategori_en";
@@ -194,7 +194,7 @@
                                                             <div class="collapse" id="menus{{$cat1->id}}">
                                                                 @foreach($catprod2 as $cat2)
                                                                 <?php
-                                                                    $catprod2 = getCategoryLevel(2, $cu->id, $cat1->id);
+                                                                    $catprod2 = getCategoryLevelNew(2, $cu->id, $cat1->id);
                                                                     $nk = "nama_kategori_".$lct; 
                                                                     if($cat2->$nk == NULL){
                                                                         $nk = "nama_kategori_en";
