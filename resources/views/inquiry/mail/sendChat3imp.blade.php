@@ -20,7 +20,7 @@
 </style>
 <div align="center" style="width: 100%">
     <div align="center" style="width: 580px;">
-        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail3.png" alt="." >
         <p style="color: #8bbbe8; font-size: 20px;text-align: left">Information</p>
         <hr>
         <p style="text-align: left">Dear {{($bur== '-')? '': $bur." "}}{{$receiver}}, </P>
@@ -36,7 +36,7 @@
 
 {{--        <hr>--}}
         <p style="text-align: left;">click <a href="{{url('inquiry/chatting', $id)}}">Here</a>.</p>
-        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail3.png" alt="." >
     </div>
 </div>
 

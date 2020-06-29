@@ -296,15 +296,15 @@ if ($loc == "ch") {
                                    <!-- <button style="width:100%!important;" class="btn btn-md btn-success"><i
                                                 class="fa fa-save"></i> @lang("login.btn4")</button> -->
                                         <?php if(Auth::guard('eksmp')->check()) {?>
-                                            <?php if(Auth::guard('eksmp')->user()->status == 1){ ?>
+                                            <?php // if(Auth::guard('eksmp')->user()->status == 1){ ?>
                                                 <a onclick="simpanbr()"style="width:100%!important;" class="btn btn-md btn-success"><font color="white"><i
                                                         class="fa fa-save"></i> @lang("login.btn4")</i></a>
 
-                                            <?php }else{ ?>
-                                                <a disabled onclick="bak()" style="width:100%!important;"
+                                            <?php //}else{ ?>
+                                                <!-- <a disabled onclick="bak()" style="width:100%!important;"
                                                     class="btn btn-md btn-success"><font color="white"><i
-                                                        class="fa fa-save"></i> @lang("login.btn4")</font></a>
-                                            <?php } ?>
+                                                        class="fa fa-save"></i> @lang("login.btn4")</font></a> -->
+                                            <?php //} ?>
                                         <?php } else{ ?>
                                         <a disabled onclick="bak()" style="width:100%!important;"
                                            class="btn btn-md btn-success"><font color="white"><i
@@ -340,6 +340,23 @@ if ($loc == "ch") {
                     </div>
                 </div>
 
+                <div class="modal fade" id="myModal2" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color:#2e899e; color:white;"> <h6>Broadcast Buying Request</h6>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        
+                        </div>
+                        <div id ="isibroadcast2"></div>
+                        <!--<div class="modal-body">
+                        1
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div> -->
+                    </div>
+                    </div>
+                </div>
             <!--<a href="{{ url('br_importir_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add Buying Request</a><br><br> -->
 
             </div>
@@ -430,11 +447,121 @@ function formatAmount( number ) {
 }
 
 
+var dataeksportir = [];
+function calldata(){
+    var id = $('#id_laporan').val();
+    $.ajax({
+		method: "POST",
+		url: "{!! url('getdatapiliheksportir') !!}",
+		data:{_token: '{{csrf_token()}}',id_laporan:id}
+	})
+	.done(function(data){
+		$.each(data, function(i, val){
+	    	$('#tabelpiliheksportir').DataTable().row.add(['<center>'+val.company+'</center>','<center><div class="checkbox"><input class="eksportir" name="eksportir" type="checkbox" value="'+val.id+'"></div></center>']).draw();
+            
+            // $('#tabelpiliheksportir').DataTable().row.add([val.company]).draw();
+		});
+	});
+     
+
+}
+
+
+function savecheckall(){
+    $.each($("input[name='eksportir']:checked"), function(){
+        val = $(this).val();
+        if(dataeksportir.includes(val)){
+        }else{
+            $('input:checkbox[value=' + val + ']').attr('disabled', true)
+            dataeksportir.push($(this).val());
+        }
+    });
+    $("input[name='checkall']").prop('checked', false);
+}
+
+function broadcast(){
+    var id = $('#id_buyingrequest').val();
+    // var dataeksportir = [];
+    // dataTable.rows().nodes().to$().find('input[name="eksportir"]').each(function(){
+    //     dataeksportir.push($(this).val());
+    // })
+    $.each($("input[name='eksportir']:checked"), function(){
+        var val = $(this).val();
+        if(dataeksportir.includes(val)){
+        }else{
+            dataeksportir.push($(this).val());
+        }
+    });
+    if (!isEmptyM(dataeksportir)) {
+        var form_data = new FormData();
+        form_data.append('id',id);
+        form_data.append('dataeksportir',dataeksportir);
+        $.ajaxSetup({
+                    headers:
+                        {
+                            'X-CSRF-Token': '{{csrf_token()}}'
+                        }
+        });
+        $.ajax({
+            method: "POST",
+            url: "{{ route('broadcastbuyingrequest.imp') }}",
+            data: form_data,
+            contentType: false,       // The content type used when sending data to the server.
+            cache: false,             // To unable request pages to be cached
+            processData: false,
+        })
+        .done(function(e){
+            window.location = '{{url('front_end/history')}}';
+            // window.location = '{{ url('/br_list') }}';
+        });
+    }else{
+        alert('make sure to checked at least one exporter');
+    }
+}
+    // var checkedValue = $('.eksportirterpilih:checked').val();
+        function isEmptyM(obj) {
+            for(var key in obj) {
+                if(obj.hasOwnProperty(key))
+                    return false;
+            }
+            return true;
+        }
+
+
 $(function() {
 
     $( '.amount' ).keyup( function() {
         $( this ).val( formatAmount( $( this ).val() ) );
     });
+
+        $("#tabelpiliheksportir").DataTable({
+			processing: true,
+            orderable: false,
+            language: {
+                processing: "Sedang memproses...",
+                lengthMenu: "Tampilkan MENU entri",
+                zeroRecords: "Tidak ditemukan data yang sesuai",
+                emptyTable: "Tidak ada data yang tersedia pada tabel ini",
+                info: "Menampilkan START sampai END dari TOTAL entri",
+                infoEmpty: "Menampilkan 0 sampai 0 dari 0 entri",
+                infoFiltered: "(disaring dari MAX entri keseluruhan)",
+                infoPostFix: "",
+                search: "Cari:",
+                url: "",
+                infoThousands: ".",
+                loadingRecords: "Sedang memproses...",
+                paginate: {
+                    first: "<<",
+                    last: ">>",
+                    next: "Selanjutnya",
+                    previous: "Sebelum"
+                },
+                aria: {
+                    sortAscending: ": Aktifkan untuk mengurutkan kolom naik",
+                    sortDescending: ": Aktifkan untuk mengurutkan kolom menurun"
+                }
+            }
+		});
 
 });
 
@@ -474,8 +601,20 @@ $(function() {
 
         })
         $('.cobas2').select2();
+    }
 
+    function yz(a){
 
+	    var token = $('meta[name="csrf-token"]').attr('content');
+		$.get('{{URL::to("ambilbroad2/")}}/'+a,{_token:token},function(data){
+            $("#isibroadcast2").html(data);
+            calldata();
+			
+         })
+         
+	$("#myModal").modal("hide");      
+	$("#myModal2").modal("show"); 
+	
     }
 
     function t1() {

@@ -334,6 +334,7 @@ class BRFrontController extends Controller
 	
 	public function br_pw_bc($id)
     {
+		// ini gak dipake, yang dipake yang ada choose exportirnya 
         date_default_timezone_set('Asia/Jakarta');
         $date = date('Y-m-d H:i:s');
 		/*
@@ -405,17 +406,21 @@ class BRFrontController extends Controller
     }
 	
 	public function br_pw_bc_choose_eks(Request $request){
-		// dd($request->dataeksportir);
-        $date = date('Y-m-d H:i:s');
+		$date = date('Y-m-d H:i:s');
+		// dd($date);
 		$dataeksportir = $request->dataeksportir;
 		$explodeksportir = explode(',',$dataeksportir);
 		$databr = DB::select("select * from csc_buying_request where id='".$request->id."'");
 		if(isset($databr[0]->by_role) == 4){
 			$namapembuat = getPerwakilanName($databr[0]->id_pembuat );
 			$zzz = $databr[0]->id_pembuat;
-			
+		}else{
+			$namapembuat = getPerwakilanName($databr[0]->id_pembuat );
+			$zzz = $databr[0]->id_pembuat;
 		}
 		foreach($explodeksportir as $eksportir){
+			$cekada=DB::select("select * from csc_buying_request_join where id_br='".$request->id."' and id_eks='".(int)$eksportir."'");
+			if(count($cekada) == 0){
 			$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
 					('".$request->id."','".(int)$eksportir."','".Date('Y-m-d H:m:s')."')");
 				
@@ -423,8 +428,9 @@ class BRFrontController extends Controller
 				$id_terkait = "";
 				$ket = "Buying Request created by ".$namapembuat;
 				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-					('2','".$namapembuat."','".$zzz."','Eksportir','".(int)$eksportir."','".$ket."','br_list','".$id_terkait."','".$date."','0')
+					('2','".$namapembuat."','".$zzz."','Eksportir','".(int)$eksportir."','".$ket."','br_list','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 				");
+			
 				//END NOTIF
 				//EMAIL
 				$caridataeks = DB::select("select * from itdp_company_users where id ='".$eksportir."'");
@@ -450,15 +456,83 @@ class BRFrontController extends Controller
 					
 				}
 				//END EMAIL
+			}
 		}
-		// dd($no);
 		$update = DB::select("update csc_buying_request set status='1' where id='".$request->id."'");
+		// $update = DB::select("update csc_buying_request set status='1', data_eksportir = '".$request->dataeksportir."' where id='".$request->id."'");
 		// return redirect('br_list')->with('success','Success Broadcast Data');
 		$baliknya = 'sukses';
         return json_encode($baliknya);
 		
 	}
 	
+	public function br_importir_bc_choose_eks(Request $request){
+		$date = date('Y-m-d H:i:s');
+		$dataeksportir = $request->dataeksportir;
+		$explodeksportir = explode(',',$dataeksportir);
+		$databr = DB::select("select * from csc_buying_request where id='".$request->id."'");
+		if(isset($databr[0]->by_role) == 3){
+			$bentukpt = getExBadanImportir($databr[0]->id_pembuat);
+			$namapembuat = getCompanyNameImportir($databr[0]->id_pembuat);
+			// $namapembuat = getPerwakilanName($databr[0]->id_pembuat );
+			$zzz = $databr[0]->id_pembuat;
+			
+		}
+		foreach($explodeksportir as $eksportir){
+			$cekada=DB::select("select * from csc_buying_request_join where id_br='".$request->id."' and id_eks='".(int)$eksportir."'");
+			if(count($cekada) == 0){
+				$insert = DB::select("insert into csc_buying_request_join (id_br,id_eks,date) values
+					('".$request->id."','".(int)$eksportir."','".Date('Y-m-d H:m:s')."')");
+				
+				//NOTIF
+				$id_terkait = "";
+				$ket = "Buying Request created by ".$bentukpt.$namapembuat;
+				$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
+					('2','".$namapembuat."','".$zzz."','".getCompanyName($eksportir)."','".(int)$eksportir."','".$ket."','br_list','".$id_terkait."','".$date."','0')
+				");
+				//END NOTIF
+				
+				//EMAIL
+				$caridataeks = DB::select("select * from itdp_company_users where id ='".$eksportir."'");
+				
+				if(count($caridataeks) != 0){
+					foreach($caridataeks as $vm){
+						$vc1 = $vm->email;
+					}
+					$datacomeks = DB::select("select * from itdp_profil_eks where id = '".$vm->id_profil."'");
+					$data = [
+						'username' => getCompanyName($zzz), 
+						'id2' => '0', 
+						'nama' => getCompanyNameImportir($zzz), 
+						'company' => $datacomeks[0]->company, 
+						'password' => '', 
+						'email' => $vc1,
+						'bu' => $datacomeks[0]->badanusaha, 
+						'bur' => getExBadanImportir($zzz)
+					];
+						Mail::send('UM.user.emailbr2', $data, function ($mail) use ($data) {
+							$mail->to($data['email'], $data['username']);
+							$mail->subject('Buying Request Was Created');
+						});
+					
+				}
+				//END EMAIL
+			}
+		}
+
+		$update = DB::select("update csc_buying_request set status='1' where id='".$request->id."'");
+		
+		//log
+		$insert = DB::select("
+			insert into log_user (email,waktu,date,ip_address,id_role,id_user,id_activity,keterangan) values
+			('".Auth::guard('eksmp')->user()->email."','".date('H:i:s')."','".date('Y-m-d')."','','".Auth::guard('eksmp')->user()->id_role."'
+			,'".Auth::guard('eksmp')->user()->id."','4','broadcast buying request')");
+		//end log
+
+		$baliknya = 'sukses';
+        return json_encode($baliknya);
+	}
+
 	public function ambilbroad($id)
     {
         return view('buying-request.broad', compact('id'));
@@ -792,20 +866,46 @@ class BRFrontController extends Controller
 						->select('itdp_company_users.id','itdp_profil_eks.company')
 						->groupby('itdp_company_users.id','itdp_profil_eks.company')
 						->get();
+		// $no = 1;
+		// $data = [];
+		// dd($data);
+		// foreach ($pesan as $p) {
+		// 	$data['no'] = $no;
+		// 	$no++;
+		// }
+		// dd($data);
+		// array_merge($pesan,$tmp);
+
+		// dd($pesan);
+
+		// $company = [];
+		
+		// if(count($pesan) > 0){
+		// 	foreach($pesan as $p){
+		// 		$company['id'] = $p->id;
+		// 		$company['company'] = $p->company;
+		// 		$company['no'] = $no;
+		// 		$no++;
+		// 	}
+		// }
 						
-		return DataTables::of($pesan)
-            // ->addColumn('f1', function ($pesan) {
-            //     return '<div align="left">' . $pesan->id . '</div>';
-            // })
-            ->addColumn('f2', function ($pesan) {
-                    return$pesan->company;
-            })
-            ->addColumn('f3', function ($pesan) {
-                return "<input type='checkbox' class='eksportirterpilih' name='eksportir' value=$pesan->id>";
-            })
-            // ->rawColumns([ 'f1','f2','f3'])
-            ->rawColumns([ 'f2','f3'])
-            ->make(true);
+		return response()->json($pesan);
+		// return DataTables::of($pesan)
+        //     // ->addColumn('f1', function ($pesan) {
+        //     //     return '<div align="left">' . $pesan->id . '</div>';
+        //     // })
+        //     ->addColumn('f2', function ($pesan) {
+        //             return$pesan->company;
+        //     })
+        //     ->addColumn('f3', function ($pesan) {
+        //         return "<input type='checkbox' class='eksportirterpilih' name='eksportir' value=$pesan->id>";
+		// 	})
+		// 	// ->addColumn('f3', function ($pesan) {
+        //     //     return $pesan->id;
+        //     // })
+        //     // ->rawColumns([ 'f1','f2','f3'])
+        //     ->rawColumns([ 'f2','f3'])
+        //     ->make(true);
     }
 
 	public function br_importir_save(Request $request)
@@ -853,8 +953,10 @@ class BRFrontController extends Controller
 			,'".Auth::guard('eksmp')->user()->id."','4','created buying request')");
 		
 		//end log
-//		dd('tes');
-		echo "<a href='".url('br_importir_bc/'.$maxid)."' class='btn btn-warning'><font color='white'>Broadcast</font></a>";
+		// masuknya awalnya kesini, tapi karna berubah nampilin data exportir dulu jadinya ini di komen dulu
+		// echo "<a href='".url('br_importir_bc/'.$maxid)."' class='btn btn-warning'><font color='white'>Broadcast</font></a>";
+		echo "<a onclick='yz($maxid)' class='btn btn-warning'><font color='white'>Broadcast</font></a>";
+		
 		//return redirect('br_importir');
 	}
 }

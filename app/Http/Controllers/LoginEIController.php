@@ -130,7 +130,8 @@ class LoginEIController extends Controller
                 $baliknya = "status0Exportir";
             }
             else if($getstatus[0]->status == 0){
-                $baliknya = "status0";
+                $baliknya = "statusoke";
+                // $baliknya = "status0";
             }else{
                 $baliknya = "statusoke";
             }

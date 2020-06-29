@@ -135,8 +135,10 @@
         <h4 class="modal-title">Modal Header</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <form class="form-horizontal" action="/action_page.php">
+      <form class="form-horizontal" action="{{ route('master.banner.store', 'update') }}">
       <div class="modal-body">
+      	<input type="hidden" name="id" id="id">
+      	<input type="hidden" name="semua" id="semua">
         <div class="form-group">
         	<label class="control-label col-md-3">Status</label>
         	<div class="col-md-9">
@@ -149,20 +151,26 @@
       			<span>Aktif</span>
         	</div>
         </div>
-        <div id="pilihcompany">
+        <div id="pilihcompany" style="display: none;">
+        	<div class="form-group">
+				<label class="control-label col-md-2" for="date">Active Until</label>
+				<div class="col-md-4">
+					<input type="Date" class="form-control" name="s_date" id="s_date" autocomplete="off" required>
+				</div>
+			</div>
         	<table id="company" class="table table-bordered table-striped table-hover">
         		<thead>
         			<tr>
         				<th>No</th>
         				<th>Company</th>
-        				<th>Aksi</th>
+        				<th>Aksi <span><input type="checkbox" id="all"></span></th>
         			</tr>
         		</thead>
         	</table>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
       </div>
   		</form>
     </div>
@@ -172,9 +180,13 @@
 @include('footer')
 <script type="text/javascript">
 	var idbanner = 0;
+	var counter = [];
 	$(document).ready(function () {
 		$("#company").DataTable({
 			processing: true,
+			columnDefs: [
+				{ "orderable": false, "targets": 2 }
+			],
             language: {
                 processing: "Sedang memproses...",
                 lengthMenu: "Tampilkan _MENU_ entri",
@@ -203,6 +215,7 @@
 		$('#check').change(function() {
 	      if($(this).is(':checked')) {
 	          $('#status').val(1);
+	          $('#company').DataTable().clear().draw();
 				$.ajax({
 					method: "POST",
 					url: "{{ route('master.banner.getCompany') }}",
@@ -210,11 +223,13 @@
 				})
 				.done(function(data){
 					$.each(data, function(i, val){
-						$('#company').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input type="checkbox" value="'+val.id+'" name="comp[]" onclick="tambahin('+val.id+')"></div>']).draw();
+						$('#company').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk" type="checkbox" value="'+val.id+'" name="comp[]" onclick="tambahin('+val.id+')"></div>']).draw();
 					});
+					$('#pilihcompany').show();
 				});
 	      } else {
 	        $('#status').val(0);
+	        $('#pilihcompany').hide();
 	      }
 	    });
         $('#satu').DataTable({
@@ -262,6 +277,17 @@
         $('#modalEdit').on('show.bs.modal', function(e) {
             $('#company').DataTable().clear().draw();
             idbanner = $(e.relatedTarget).data('edit-id');
+            $('#id').val(idbanner);
         });
+
+        $('#all').change(function() {
+	      if($(this).is(':checked')) {
+	          $('#semua').val(1);
+	          $('.masuk').prop('checked', true);
+	      } else {
+	        $('#semua').val(0);
+	        $('.masuk').prop('checked', false);
+	      }
+	    });
     });
 </script>
