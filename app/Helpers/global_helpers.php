@@ -589,6 +589,95 @@ if (! function_exists('getCategoryLevel')) {
     }
 }
 
+if (! function_exists('getCategoryLevelNew')) {
+  //beda sama yang sebelumnya itu, yang ini hanya untuk yang exist di table csc_product_single
+  function getCategoryLevelNew($level, $idutama, $idcat1){
+    if($level == 1){
+      // $category = DB::table('csc_product')
+      //               ->join('csc_product_single','csc_product.id','csc_product_single.id_csc_product')
+      //               ->select('csc_product.id', 'csc_product.level_1', 'csc_product.level_2', 'csc_product.nama_kategori_en', 'csc_product.nama_kategori_in', 'csc_product.nama_kategori_chn', 'csc_product.created_at', 'csc_product.updated_at', 
+      //               'csc_product.type', 'csc_product.logo')
+      //               ->groupby('csc_product.id', 'csc_product.level_1', 'csc_product.level_2', 'csc_product.nama_kategori_en', 'csc_product.nama_kategori_in', 'csc_product.nama_kategori_chn', 'csc_product.created_at', 'csc_product.updated_at', 
+      //               'csc_product.type', 'csc_product.logo')
+      //               ->where('level_1', $idutama)
+      //               ->where('level_2', 0)
+      //               ->orderby('nama_kategori_en', 'ASC')
+      //               ->get();
+      $category = DB::select('SELECT
+      "csc_product"."id",
+      "csc_product"."level_1",
+      "csc_product"."level_2",
+      "csc_product"."nama_kategori_en",
+      "csc_product"."nama_kategori_in",
+      "csc_product"."nama_kategori_chn",
+      "csc_product"."created_at",
+      "csc_product"."updated_at",
+      "csc_product"."type",
+      "csc_product"."logo"
+    FROM
+      "csc_product"
+      INNER JOIN "csc_product_single" ON "csc_product"."id" = "csc_product_single"."id_csc_product_level1"
+    WHERE
+      "level_1" ='.$idutama.'
+      AND "level_2" = 0 
+    GROUP BY
+      "csc_product"."id",
+      "csc_product"."level_1",
+      "csc_product"."level_2",
+      "csc_product"."nama_kategori_en",
+      "csc_product"."nama_kategori_in",
+      "csc_product"."nama_kategori_chn",
+      "csc_product"."created_at",
+      "csc_product"."updated_at",
+      "csc_product"."type",
+      "csc_product"."logo" 
+    ORDER BY
+      "nama_kategori_en" ASC
+      ');
+
+    }else{
+      // $category = DB::table('csc_product')
+      //           ->where('level_1', $idcat1)
+      //           ->where('level_2', $idutama)
+      //           ->orderby('nama_kategori_en', 'ASC')
+      //           ->get();
+      $category = DB::select('SELECT 
+      "csc_product"."id",
+      "csc_product"."level_1",
+      "csc_product"."level_2",
+      "csc_product"."nama_kategori_en",
+      "csc_product"."nama_kategori_in",
+      "csc_product"."nama_kategori_chn",
+      "csc_product"."created_at",
+      "csc_product"."updated_at",
+      "csc_product"."type",
+      "csc_product"."logo"
+    FROM
+      "csc_product"
+      INNER JOIN "csc_product_single" ON "csc_product"."id" = "csc_product_single"."id_csc_product_level2"
+    WHERE
+      "level_1" ='.$idcat1.'
+      AND "level_2" = '.$idutama.' 
+    GROUP BY
+      "csc_product"."id",
+      "csc_product"."level_1",
+      "csc_product"."level_2",
+      "csc_product"."nama_kategori_en",
+      "csc_product"."nama_kategori_in",
+      "csc_product"."nama_kategori_chn",
+      "csc_product"."created_at",
+      "csc_product"."updated_at",
+      "csc_product"."type",
+      "csc_product"."logo" 
+    ORDER BY
+      "nama_kategori_en" ASC
+      ');
+    }
+
+    return $category;
+  }
+}
+
 
 if (! function_exists('getCountProduct')) {
     function getCountProduct($jenis, $ideksportir){

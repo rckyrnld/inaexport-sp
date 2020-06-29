@@ -95,14 +95,15 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product-details-tab">
 
-                        <div id="img-1" class="zoomWrapper single-zoom">
+                        <div id="img-1" class="zoomWrapper single-zoom" align="center">
                             <a href="#">
-                                <img id="zoom1" src="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}" alt="big-1">
+                                <img id="zoom1" src="{{url('/')}}/{{$img1}}" data-zoom-image="{{url('/')}}/{{$img1}}" alt="big-1" style="width: 400px; height:400x;">
                             </a>
                         </div>
 
                         @if(count($arrimg) != 0)
-                        <div class="single-zoom-thumb">
+                        <?php echo "Ngapa yaa";?>
+                        <div class="single-zoom-thumb" align="center">
                             <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
                                 <?php
                                     for ($m=0; $m < count($arrimg); $m++) { 

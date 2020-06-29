@@ -27,11 +27,11 @@
 
 <div align="center" style="width: 100%">
     <div align="center" style="width: 580px;">
-        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail2.jpg" alt="." >
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/headeremail3.png" alt="." >
         <p style="text-align: left">Yth {{$company}},</p>
         <p style="text-align: left">Terima kasih telah melakukan pendaftaran akun perusahaan anda di inaexport.</p>
         <p style="text-align: left">Segera verifikasi akun tersebut dengan cara mengunggah dokumen perusahaan (SIUP, NIB dan NPWP perusahaan) pada aplikasi inaexport.</p>
-        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail2.jpg" alt="." >
+        <img height="100%" width="580px" src="{{url('assets')}}/assets/images/footeremail3.png" alt="." >
     </div>
 </div>
 

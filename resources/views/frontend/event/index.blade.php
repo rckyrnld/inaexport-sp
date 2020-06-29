@@ -81,14 +81,18 @@ if(Auth::guard('eksmp')->user()){
 
     .select2-selection__rendered {
         line-height: 32px !important;
+        float: left !important;
     }
     .select2-container .select2-selection--single {
-        height: 38px !important;
+        height: 37px !important;
         border-top : 2px solid #1a70bb;
         border-bottom : 2px solid #1a70bb;
     }
+    .select2-container {
+        float: left !important;
+    }
     .select2-selection__arrow {
-        height: 35px !important;
+        height: 34px !important;
     }
 
     /*@media only screen and (max-width: 767px) {
@@ -152,7 +156,7 @@ if(Auth::guard('eksmp')->user()){
                                     <option value="1" @if($searchEvent == 1) selected @endif>Name</option>
                                     <option value="2" @if($searchEvent == 2) selected @endif>Date</option>
                                     <option value="3" @if($searchEvent == 3) selected @endif>Country</option>
-                                    <option value="4" @if($searchEvent == 4) selected @endif>Category</option>
+                                    <option value="4" @if($searchEvent == 4) selected @endif>Product</option>
                                 </select>
                             </div>
                             <input type="text" id="search_name" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent == 1) value="{{$param}}" @endif>
@@ -288,7 +292,7 @@ if(Auth::guard('eksmp')->user()){
                                                                                                                     ?>
 
                 <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
+                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: 200px;width: 200px;">
                 </div>
                 <div style="height: 25%; padding-top: 5px;">
                    <span class="css-title" title="{{$title}}">{{$titleName}}<span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf; margin-left: 10px;">{{getDataInterest($ed->id)}}&nbsp;&nbsp;<i class="fa fa-eye"></i></span></span><br>
@@ -354,7 +358,7 @@ if(Auth::guard('eksmp')->user()){
                                     <option value="1" @if($searchEvent2 == 1) selected @endif>Name</option>
                                     <option value="2" @if($searchEvent2 == 2) selected @endif>Date</option>
                                     <option value="3" @if($searchEvent2 == 3) selected @endif>Country</option>
-                                    <option value="4" @if($searchEvent2 == 4) selected @endif>Category</option>                                                                                                                    
+                                    <option value="4" @if($searchEvent2 == 4) selected @endif>Product</option>                                                                                                                    
                                 </select>
                             </div>
                             <input type="text" id="search_name2" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent2 == 1) value="{{$param2}}" @endif>
@@ -488,7 +492,7 @@ if(Auth::guard('eksmp')->user()){
                                                                                                                     ?>
 
                 <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
+                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: 200px;width: 200px;">
                 </div>
                 <div style="height: 25%; padding-top: 5px;">
                    <span class="css-title" title="{{$title}}">{{$titleName}}<span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf; margin-left: 10px;">{{getDataInterest($ed2->id)}}&nbsp;&nbsp;<i class="fa fa-eye"></i></span></span><br>
@@ -556,7 +560,7 @@ if(Auth::guard('eksmp')->user()){
                                     <option value="1" @if($searchEvent3 == 1) selected @endif>Name</option>
                                     <option value="2" @if($searchEvent3 == 2) selected @endif>Date</option>
                                     <option value="3" @if($searchEvent3 == 3) selected @endif>Country</option>
-                                    <option value="4" @if($searchEvent3 == 4) selected @endif>Category</option>                                                                                                                    
+                                    <option value="4" @if($searchEvent3 == 4) selected @endif>Product</option>                                                                                                                    
                                 </select>
                             </div>
                             <input type="text" id="search_name3" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent3 == 1) value="{{$param3}}" @endif>
@@ -690,7 +694,7 @@ if(Auth::guard('eksmp')->user()){
                                                                                                                     ?>
 
                 <div style="width: 100%; height: 75%; margin: auto; text-align: center;">
-                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: {{$size}}px;">
+                    <img class="rc fix-image" src="{{url('/')}}/{{$image}}" style="height: 200px;width: 200px;">
                 </div>
                 <div style="height: 25%; padding-top: 5px;">
                    <span class="css-title" title="{{$title}}">{{$titleName}}<span class="badge badge-primary" style="font-size: 11px !important; vertical-align: middle; background-color: #387bbf; margin-left: 10px;">{{getDataInterest($ed3->id)}}&nbsp;&nbsp;<i class="fa fa-eye"></i></span></span><br>
@@ -803,8 +807,7 @@ if(Auth::guard('eksmp')->user()){
 
         $('#search_country').select2({
                 allowClear: true,
-                placeholder: 'Search Country',
-                ajax: {
+                placeholder: 'Search Country',                ajax: {
                     url: "{{route('countryevent.getcountryall')}}",
                     dataType: 'json',
                     delay: 250,

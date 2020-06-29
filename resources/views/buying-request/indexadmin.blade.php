@@ -263,13 +263,94 @@ function openCity(evt, cityName) {
 }
 </script>
  <script type="text/javascript">
+
 function xy(a){
 	var token = $('meta[name="csrf-token"]').attr('content');
 		$.get('{{URL::to("ambilbroad2/")}}/'+a,{_token:token},function(data){
 			$("#isibroadcast").html(data);
-			
+			calldata();
 		 })
 }
+
+    var dataeksportir = [];
+    function calldata(){
+        var id = $('#id_laporan').val();
+        $.ajax({
+        method: "POST",
+        url: "{!! url('getdatapiliheksportir') !!}",
+        data:{_token: '{{csrf_token()}}',id_laporan:id}
+      })
+      .done(function(data){
+        $.each(data, function(i, val){
+            $('#tabelpiliheksportir').DataTable().row.add(['<center>'+val.company+'</center>','<center><div class="checkbox"><input class="eksportir" name="eksportir" type="checkbox" value="'+val.id+'"></div></center>']).draw();
+                
+                // $('#tabelpiliheksportir').DataTable().row.add([val.company]).draw();
+        });
+      });
+        
+
+    }
+
+
+    function savecheckall(){
+        $.each($("input[name='eksportir']:checked"), function(){
+            val = $(this).val();
+            if(dataeksportir.includes(val)){
+            }else{
+                $('input:checkbox[value=' + val + ']').attr('disabled', true)
+                dataeksportir.push($(this).val());
+            }
+        });
+        $("input[name='checkall']").prop('checked', false);
+    }
+
+    function broadcast(){
+        var id = $('#id_buyingrequest').val();
+        // var dataeksportir = [];
+        // dataTable.rows().nodes().to$().find('input[name="eksportir"]').each(function(){
+        //     dataeksportir.push($(this).val());
+        // })
+        $.each($("input[name='eksportir']:checked"), function(){
+            var val = $(this).val();
+            if(dataeksportir.includes(val)){
+            }else{
+                dataeksportir.push($(this).val());
+            }
+        });
+        if (!isEmptyM(dataeksportir)) {
+            var form_data = new FormData();
+            form_data.append('id',id);
+            form_data.append('dataeksportir',dataeksportir);
+            $.ajaxSetup({
+                        headers:
+                            {
+                                'X-CSRF-Token': '{{csrf_token()}}'
+                            }
+            });
+            $.ajax({
+                method: "POST",
+                url: "{{ route('broadcastbuyingrequest.pw') }}",
+                data: form_data,
+                contentType: false,       // The content type used when sending data to the server.
+                cache: false,             // To unable request pages to be cached
+                processData: false,
+            })
+            .done(function(e){
+                window.location = '{{ url('/br_list') }}';
+            });
+        }else{
+            alert('make sure to checked at least one exporter');
+        }
+    }
+    // var checkedValue = $('.eksportirterpilih:checked').val();
+    function isEmptyM(obj) {
+        for(var key in obj) {
+            if(obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
+
 </script>
 <script type="text/javascript">
     $(function () {
@@ -339,6 +420,34 @@ function xy(a){
                 {
                     data: 'action', name: 'action', orderable: false, searchable: false
                 }]
+        });
+        $("#tabelpiliheksportir").DataTable({
+          processing: true,
+                orderable: false,
+                language: {
+                    processing: "Sedang memproses...",
+                    lengthMenu: "Tampilkan MENU entri",
+                    zeroRecords: "Tidak ditemukan data yang sesuai",
+                    emptyTable: "Tidak ada data yang tersedia pada tabel ini",
+                    info: "Menampilkan START sampai END dari TOTAL entri",
+                    infoEmpty: "Menampilkan 0 sampai 0 dari 0 entri",
+                    infoFiltered: "(disaring dari MAX entri keseluruhan)",
+                    infoPostFix: "",
+                    search: "Cari:",
+                    url: "",
+                    infoThousands: ".",
+                    loadingRecords: "Sedang memproses...",
+                    paginate: {
+                        first: "<<",
+                        last: ">>",
+                        next: "Selanjutnya",
+                        previous: "Sebelum"
+                    },
+                    aria: {
+                        sortAscending: ": Aktifkan untuk mengurutkan kolom naik",
+                        sortDescending: ": Aktifkan untuk mengurutkan kolom menurun"
+                    }
+                }
         });
     });
 </script>

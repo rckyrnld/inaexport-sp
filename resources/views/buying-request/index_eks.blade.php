@@ -91,7 +91,7 @@
 											if($ruu->by_role == 1|| $ruu->by_role == 4){
 												echo "-";
 											}else if($ruu->by_role == 3){
-												$userstatus = DB::select("select b.status from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
+												$userstatus = DB::select("select a.status from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and a.id='".$ruu->id_pembuat."'"); 
 												foreach($userstatus as $imp){ 
 													if($imp->status == 1){
 														echo "Verified";

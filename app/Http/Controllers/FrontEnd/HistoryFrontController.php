@@ -53,6 +53,7 @@ class HistoryFrontController extends Controller
             //->orderBy('csc_inquiry_br.created_at', 'DESC')
             ->orderby('abs_beda_tanggal')
             ->get();
+            // dd($user);
 
         return \Yajra\DataTables\DataTables::of($user)
             ->addIndexColumn()

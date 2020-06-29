@@ -375,7 +375,7 @@ body {font-family: Arial;}
                         <span class="input-group-btn">
 						<!--<a  class="btn btn-info" data-toggle="modal" data-target="#myModal2">
                               <font color="white">  <i class="fa fa-paperclip"></i></font></a> -->
-							  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalInvoice" style="border-color: rgba(120, 130, 140, 0.5);">
+							  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalFile" style="border-color: rgba(120, 130, 140, 0.5);">
                                     <img src="{{asset('image/paperclip.png')}}" width="20px">
                                 </button>
                             <a onclick="kirimchat()" class="btn btn-warning" id="btn-chat">
