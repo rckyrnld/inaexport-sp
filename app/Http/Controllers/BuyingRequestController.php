@@ -39,6 +39,10 @@ class BuyingRequestController extends Controller
 
     }
 
+    public function message(){ 
+      return redirect('\br_list')->with('success','Success Broadcast Data');
+    }
+
     public function show_all_notif()
     {
         if (!empty(Auth::guard('eksmp')->user()->id)) {

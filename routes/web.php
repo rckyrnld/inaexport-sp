@@ -254,6 +254,7 @@ Route::get('/permission_delete/{id}', 'UM\PermissionsController@destroy');
 
 //buy request 
 Route::resource('/br_list', 'BuyingRequestController');
+Route::get('/br_list_message', 'BuyingRequestController@message')->name('br_list.message');
 Route::get('/getcscperwakilan', 'BuyingRequestController@getcscperwakilan');
 Route::get('/getcsc0', 'BuyingRequestController@getcsc0');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
@@ -369,6 +370,7 @@ Route::namespace('Master')->group(function () {
             Route::post('/getData/', 'MasterBannerController@getData')->name('getData');
             Route::get('/create/', 'MasterBannerController@create')->name('create');
             Route::post('/store/{param}', 'MasterBannerController@store')->name('store');
+            Route::get('/message', 'MasterBannerController@message')->name('message');
             Route::post('/getCompany/', 'MasterBannerController@getCompany')->name('getCompany');
             Route::get('/check-kode/', 'MasterBannerController@check')->name('kode');
             Route::get('/edit/{id}', 'MasterBannerController@edit')->name('edit');
@@ -884,5 +886,7 @@ Route::get('/getcategoryforeignevent', 'FrontEnd\FrontController@getcategoryfore
 
 Route::get('buyingrequest/delete/{id}', 'BuyingRequestController@delete')->name('buyingrequest.delete');
 Route::post('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
+Route::get('bannercompanyfront/getData', 'MasterBannerController@getDataCompanyFront')->name('bannercompanyfront.getdata');
+
 // Route::get('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
 //end mindy

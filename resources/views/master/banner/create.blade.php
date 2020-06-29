@@ -77,7 +77,7 @@
                     @if($page != 'view')
                     <button class="btn btn-primary button_form" type="submit">Save</button>
                     @endif
-                    <a href="{{url('master-slide')}}" class="btn btn-danger button_form">@if($page != 'view') Cancel @else Back @endif</a>
+                    <a href="{{url('master-banner')}}" class="btn btn-danger button_form">@if($page != 'view') Cancel @else Back @endif</a>
                   </div>
                 </div>
              </div>

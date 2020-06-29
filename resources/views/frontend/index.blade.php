@@ -486,6 +486,65 @@
     </section>
 	*/ ?>
     <!--category product end-->
+
+    <!--Event Special start-->
+    <?php
+        $today = date("Y-m-d");
+        $checkevent = DB::table('banner')->where('deleted_at',null)->where('status',1)->where('end_at','>=',"'".$today."'")->first();
+        // echo $checkevent->tosql();
+        // echo $checkevent;
+        // if(isset($checkevent)){
+        //     echo "<div class='row'><div class='col-md-12'><img src='{{asset('asset('/uploads/banner/'.$checkevent->file)')}}'></div></div>";
+        // }
+    ?>   
+    @if(isset($checkevent))
+    <section class="special_event_area mb-50">
+        <div class="container" style="background-color:white!important;"><br>
+            <center><h4>Special Event</h4></center>
+            <br>
+			<div class="col-12"  align="center">
+                <img style="width:1583px ;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" data-show-id="{{$checkevent->id}}"  data-toggle="modal" data-target="#modal-special-event" alt="">
+            </div>
+            <br>
+        </div>
+    </section>
+    @endif
+    
+
+    
+    <div id="modal-special-event" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Contributed Company</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            <input type="hidden" id="idbannernya" name="idbannernya">
+            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+            {{ csrf_field() }}<br>
+                <div class="modal-body">
+                    <table id="companyspecialevent" class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Company</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                </table>
+                
+                </div>
+            <br>
+
+            <div class="modal-footer">
+                    <button class="btn btn-danger" title="cancel">Cancel</button>
+            </div>
+            </form>
+            </div>
+
+        </div>
+    </div>
+    <!--Event Special end-->
     <!--product category start-->
     <section class="product_area mb-50">
         <div class="container" style="background-color:white!important;"><br>
@@ -972,6 +1031,46 @@
             $(this).val( formatAmount( $( this ).val() ) );
         });
 
+        
+
+    });
+
+
+    $(function() {
+        $("#companyspecialevent").DataTable({
+			processing: true,
+            orderable: false,
+            language: {
+                processing: "Sedang memproses...",
+                lengthMenu: "Tampilkan MENU entri",
+                zeroRecords: "Tidak ditemukan data yang sesuai",
+                emptyTable: "Tidak ada data yang tersedia pada tabel ini",
+                info: "Menampilkan START sampai END dari TOTAL entri",
+                infoEmpty: "Menampilkan 0 sampai 0 dari 0 entri",
+                infoFiltered: "(disaring dari MAX entri keseluruhan)",
+                infoPostFix: "",
+                search: "Cari:",
+                url: "",
+                infoThousands: ".",
+                loadingRecords: "Sedang memproses...",
+                paginate: {
+                    first: "<<",
+                    last: ">>",
+                    next: "Selanjutnya",
+                    previous: "Sebelum"
+                },
+                aria: {
+                    sortAscending: ": Aktifkan untuk mengurutkan kolom naik",
+                    sortDescending: ": Aktifkan untuk mengurutkan kolom menurun"
+                }
+            }
+		});
+    });
+    $(function() {
+        $('#modal-special-event').on('show.bs.modal', function(e) {
+            idbanner = $(e.relatedTarget).data('show-id');
+            $('#idbannernya').val(idbanner);
+        });
     });
 
     $(document).ready(function () {

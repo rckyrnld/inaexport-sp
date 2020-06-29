@@ -96,7 +96,7 @@
     <script src="{{url('assets')}}/html/scripts/ajax.js"></script>
     <script src="{{url('assets')}}/html/scripts/app.js"></script>
 
-    <script src="{{url('assets')}}/libs/datatables/media/js/jquery.dataTables.min.js" ></script>
+    <!-- <script src="{{url('assets')}}/libs/datatables/media/js/jquery.dataTables.min.js" ></script> -->
     <script src="{{url('assets')}}/libs/datatables.net-bs4/js/dataTables.bootstrap4.js" ></script>
 
     <script src="{{url('assets')}}/html/scripts/plugins/datatable.js" ></script>
