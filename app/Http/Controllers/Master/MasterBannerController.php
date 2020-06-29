@@ -51,6 +51,8 @@ class MasterBannerController extends Controller
               ]);
 
       return redirect('master-banner')->with('success','Success Add Data');
+    } else if ($param == 'update') {
+      
     }
   }
 
