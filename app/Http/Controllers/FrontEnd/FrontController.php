@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Models\Banner;
 use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
 use Mail;
@@ -1939,5 +1940,111 @@ class FrontController extends Controller
         return response()->json($final_query->get());
     
     }
+
+    public function getDataCompanyFront(Request $request){
+        $columns = array(
+          0 => 'id',
+          1 => 'company',
+        );
+    
+        $banner = Banner::find($request->id);
+        // dd($banner->id_csc_product_level2);
+        // if (isset($banner->id_csc_product_level2)) {
+          $allData  = DB::table('banner_detail')
+                      ->join('banner', 'banner.id','banner_detail.id_banner')
+                      ->join('itdp_profil_eks', 'banner_detail.id_eks','itdp_profil_eks.id')
+                      ->where('banner.deleted_at', null)
+                      ->where('banner.id', $request->id)
+                      ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                      ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                      ->orderBy('itdp_profil_eks.id', 'ASC')
+                      ->get();
+            $totalData= count($allData);
+        // }
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+    
+        if (empty($request->input('search.value'))) {
+          $posts =  DB::table('banner')
+                    ->join('banner_detail', 'banner.id','banner_detail.id_banner')
+                    ->join('itdp_profil_eks', 'banner_detail.id_eks','itdp_profil_eks.id')
+                    ->where('banner.deleted_at', null)
+                    ->where('banner.id', $request->id)
+                    ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+    
+          $allFiltered = DB::table('banner')
+                            ->join('banner_detail', 'banner.id','banner_detail.id_banner')
+                            ->join('itdp_profil_eks', 'banner_detail.id_eks','itdp_profil_eks.id')
+                            ->where('banner.deleted_at', null)
+                            ->where('banner.id', $request->id)
+                            ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                            ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                            ->offset($start)
+                            ->orderBy($order, $dir)
+                            ->get();
+          $totalFiltered= count($allFiltered);
+        }else{
+            
+            $search = $request->input('search.value');
+            $posts =  DB::table('banner')
+                    ->join('banner_detail', 'banner.id','banner_detail.id_banner')
+                    ->join('itdp_profil_eks', 'banner_detail.id_eks','itdp_profil_eks.id')
+                    ->where('banner.deleted_at', null)
+                    ->where('banner.id', $request->id)
+                    ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->where(function ($query) use ($search) {
+                        $query->where('company', 'ilike', '%' . $search . '%');
+                    })
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+    
+          $allFiltered = DB::table('banner')
+                            ->join('banner_detail', 'banner.id','banner_detail.id_banner')
+                            ->join('itdp_profil_eks', 'banner_detail.id_eks','itdp_profil_eks.id')
+                            ->where('banner.deleted_at', null)
+                            ->where('banner.id', $request->id)
+                            ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                            ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                            ->where(function ($query) use ($search) {
+                                $query->where('company', 'ilike', '%' . $search . '%');
+                            })
+                            ->offset($start)
+                            ->orderBy($order, $dir)
+                            ->get();
+          $totalFiltered= count($allFiltered);
+        }
+    
+        $data = array();
+        if ($posts) {
+          $count = $start+1;
+          foreach ($posts as $d) {
+            $token = csrf_token();
+            $nestedData['no'] = '<center>'.$count.'</center>';
+            $nestedData['company'] = '<center>'.$d->company.'</center>';
+            $data[] = $nestedData;
+            $count++;
+          }
+        }
+        
+          $json_data = array(
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => intval($totalData),
+            'recordsFiltered' => intval($totalFiltered),
+            'data' => $data
+          );
+    
+          echo json_encode($json_data);
+        
+      }
     
 }

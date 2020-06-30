@@ -372,6 +372,7 @@ Route::namespace('Master')->group(function () {
             Route::post('/store/{param}', 'MasterBannerController@store')->name('store');
             Route::get('/message', 'MasterBannerController@message')->name('message');
             Route::post('/getCompany/', 'MasterBannerController@getCompany')->name('getCompany');
+            Route::post('/getCompany2/', 'MasterBannerController@getCompany2')->name('getCompany2');
             Route::get('/check-kode/', 'MasterBannerController@check')->name('kode');
             Route::get('/edit/{id}', 'MasterBannerController@edit')->name('edit');
             Route::get('/view/{id}', 'MasterBannerController@view')->name('view');
@@ -886,7 +887,7 @@ Route::get('/getcategoryforeignevent', 'FrontEnd\FrontController@getcategoryfore
 
 Route::get('buyingrequest/delete/{id}', 'BuyingRequestController@delete')->name('buyingrequest.delete');
 Route::post('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
-Route::get('bannercompanyfront/getData', 'MasterBannerController@getDataCompanyFront')->name('bannercompanyfront.getdata');
+Route::get('bannercompanyfront/getData', 'FrontEnd\FrontController@getDataCompanyFront')->name('bannercompanyfront.getdata');
 
 // Route::get('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
 //end mindy
