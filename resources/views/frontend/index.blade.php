@@ -352,7 +352,8 @@
     <section class="special_event_area mb-50" style=" margin-bottom: 0px;">
         <!-- <div class="container"><br> -->
             <div class="row">
-                <img style="width:100% ;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" data-show-id="{{$checkevent->id}}" data-toggle="modal"  data-target="#modal-special-event" alt="">
+                <a href="{{url('front_end/list_product/categoryeks/'.$checkevent->id)}}" ><img style="width:100% ;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" alt=""></a>
+                {{--<img style="width:100% ;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" data-show-id="{{$checkevent->id}}" data-toggle="modal"  data-target="#modal-special-event" alt="">--}}
             </div>
         <!-- </div> -->
     </section>
