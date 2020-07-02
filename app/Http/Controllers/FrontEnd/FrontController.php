@@ -8,6 +8,7 @@ use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\Banner;
+use App\Models\Banner_Detail;
 use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
 use Mail;
@@ -752,6 +753,127 @@ class FrontController extends Controller
             ->count();
 
         return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat', 'hot_product', 'countNew', 'countHot'));
+    }
+
+    public function product_categoryeks($id)
+    {
+        // masih ada error disini;
+        $hot_product = hotProduct();
+        $loc = app()->getLocale();
+        if($loc == "ch"){
+            $lct = "chn";
+        }else if($loc == "in"){
+            $lct = "in";
+        }else{
+            $lct = "en";
+        }
+
+        $arraycompany = [];
+        
+        $bannerdata = Banner::find($id);
+        // dd($bannerdata->id_csc_product);
+        $bannerdetail = Banner_Detail::where('id_banner', $id)->select('id_eks')->get();
+        foreach($bannerdetail as $company) {
+            array_push($arraycompany,$company->id_eks);
+        }
+        
+        
+
+        //List Category Product
+        $categoryutama = DB::table('csc_product')
+                        ->join('csc_product_single','csc_product.id','csc_product_single.id_csc_product')
+                        ->select('csc_product.id', 'csc_product.level_1', 'csc_product.level_2', 'csc_product.nama_kategori_en', 'csc_product.nama_kategori_in', 'csc_product.nama_kategori_chn', 'csc_product.created_at', 'csc_product.updated_at', 
+                        'csc_product.type', 'csc_product.logo')
+                        ->groupby('csc_product.id', 'csc_product.level_1', 'csc_product.level_2', 'csc_product.nama_kategori_en', 'csc_product.nama_kategori_in', 'csc_product.nama_kategori_chn', 'csc_product.created_at', 'csc_product.updated_at', 
+                        'csc_product.type', 'csc_product.logo')
+                        ->where('level_1', 0)
+                        ->where('level_2', 0)
+                        ->orderBy('nama_kategori_en', 'ASC')
+                        ->limit(10)
+                        ->get();
+
+
+        $catActive = '';
+        if($bannerdata->id_csc_product_level1 == 0 && $bannerdata->id_csc_product_level2 == 0){
+            $catActive .= '<li><a>'.getCategoryName($bannerdata->id_csc_product, $lct).' </a></li>';
+            $colnya = "id_csc_product";
+            $yangdicari = $bannerdata->id_csc_product;
+            $get_id_cat = $bannerdata->id_csc_product;
+        }else if($bannerdata->id_csc_product_level1 != 0 && $bannerdata->id_csc_product_level2 == 0){
+            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product, $lct).'</a></li>';
+            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product_level1, $lct).'</a></li>';
+            $colnya = "id_csc_product_level1";
+            $yangdicari = $bannerdata->id_csc_product_level1;
+            $get_id_cat = $bannerdata->id_csc_product_level1.'|'.$bannerdata->id_csc_product;
+        }else if($bannerdata->id_csc_product_level1 != 0 && $bannerdata->id_csc_product_level2 != 0){
+            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product, $lct).'</a></li>';
+            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product_level1, $lct).'</a></li>';
+            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product_level2, $lct).'</a></li>';
+            $colnya = "id_csc_product_level2";
+            $yangdicari = $bannerdata->id_csc_product_level2;
+            $get_id_cat = $bannerdata->id_csc_product_level2.'|'.$bannerdata->id_csc_product_level1.'|'.$bannerdata->id_csc_product;
+        }
+        
+        $cek_cat = DB::table('csc_product')->where('id', $yangdicari)->first();
+        $tampung_cat = [$cek_cat->id];
+        $query_manufacture = DB::table('itdp_company_users as a')->selectRaw('a.id, b.company, count(c.*) as jml_produk')
+            ->join('itdp_profil_eks as b', 'a.id_profil', 'b.id')
+            ->join('csc_product_single as c', 'a.id', 'c.id_itdp_company_user')
+            ->where('a.status', 1)
+            ->where('c.status', 2)
+            ->whereIn('b.id', $arraycompany)
+            ->orderby('jml_produk', 'desc')
+            ->groupby('a.id')->groupby('b.company')
+            ->limit(10);
+        if(count($tampung_cat) > 0){
+            $query_manufacture->where(function($query) use ($tampung_cat){
+                $query->whereIn('c.id_csc_product', $tampung_cat);
+                $query->orWhereIn('c.id_csc_product_level1', $tampung_cat);
+                $query->orWhereIn('c.id_csc_product_level2', $tampung_cat);
+            });
+        }
+        $manufacturer = $query_manufacture->get();
+
+        $productnya = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', '1')
+            ->where('csc_product_single.status', 2)
+            ->whereIn('csc_product_single.id_itdp_profil_eks', $arraycompany)
+            ->where('csc_product_single.'.$colnya, $yangdicari)
+            ->orderBy('csc_product_single.prodname_en', 'ASC');
+            
+        //count Hot dan New Product
+        $productcheck = $productnya->get();
+        $countNew = 0;
+        $countHot = 0;
+        foreach ($productcheck as $prod) {
+            if(date('Y', strtotime($prod->created_at)) == date('Y')){
+                if(date('m', strtotime($prod->created_at)) == date('m')){
+                    $countNew = $countNew + 1;
+                }
+            }
+            if(in_array($prod->id, $hot_product)){
+                $countHot = $countHot + 1;
+            }
+        }
+        
+        //Data Product
+        $product = $productnya->paginate(12);
+        $coproduct = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
+            ->whereIn('csc_product_single.id_itdp_profil_eks', $arraycompany)
+            ->where('csc_product_single.'.$colnya, $yangdicari)
+            ->orderBy('csc_product_single.prodname_en', 'ASC')
+            ->count();
+
+            
+        $page = 'hold';
+
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat', 'hot_product', 'countNew', 'countHot','page'));
     }
 
     public function view_product($id)

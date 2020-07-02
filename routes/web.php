@@ -48,6 +48,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/list_product', 'FrontController@list_product');
     Route::get('/front_end/getCategory', 'FrontController@getCategory')->name('front.product.getCategory');
     Route::get('/front_end/list_product/category/{id}', 'FrontController@product_category')->name('front.product.product_category');
+    Route::get('/front_end/list_product/categoryeks/{id}', 'FrontController@product_categoryeks')->name('front.product.product_categoryeks');
     Route::get('/front_end/getManufactur', 'FrontController@getManufactur')->name('front.product.getManufactur');
     Route::get('/front_end/product/{id}', 'FrontController@view_product');
     //Inquiry Pembeli

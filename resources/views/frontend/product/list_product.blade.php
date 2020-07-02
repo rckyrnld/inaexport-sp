@@ -113,7 +113,9 @@
                 </div>
                 <div class="col-3" style="text-align: right;">
                     <div class="breadcrumb_content">
-                        <b>@lang('frontend.liseksportir.sortby')</b> <select name="sortbyproduct" id="sortbyproduct" style="border: none;"class="sortproductnya">
+                        
+                    @if(isset($page))
+                        <b>@lang('frontend.liseksportir.sortby')</b> <select name="sortbyproduct" id="sortbyproduct" style="border: none;"class="sortproductnya" disabled>
                                 <option value="default" @if(isset($sortbyproduct)) @if($sortbyproduct == "default") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
                                 <option value="new" @if(isset($sortbyproduct)) @if($sortbyproduct == "new") selected @endif @endif>@lang('frontend.liseksportir.newest')</option>
                                 @if(!empty(Auth::guard('eksmp')->user()))
@@ -124,6 +126,19 @@
                                 @endif
                                 <option value="asc" @if(isset($sortbyproduct)) @if($sortbyproduct == "asc") selected @endif @endif>@lang('frontend.liseksportir.prodnm')</option>
                             </select>
+                    @else
+                        <b>@lang('frontend.liseksportir.sortby')</b> <select name="sortbyproduct" id="sortbyproduct" style="border: none;"class="sortproductnya" >
+                                    <option value="default" @if(isset($sortbyproduct)) @if($sortbyproduct == "default") selected @endif @endif>@lang('frontend.liseksportir.default')</option>
+                                    <option value="new" @if(isset($sortbyproduct)) @if($sortbyproduct == "new") selected @endif @endif>@lang('frontend.liseksportir.newest')</option>
+                                    @if(!empty(Auth::guard('eksmp')->user()))
+                                        @if(Auth::guard('eksmp')->user()->status == 1)
+                                        <option value="lowhigh" @if(isset($sortbyproduct)) @if($sortbyproduct == "lowhigh") selected @endif @endif>@lang('frontend.proddetail.pricelh')</option>
+                                        <option value="highlow" @if(isset($sortbyproduct)) @if($sortbyproduct == "highlow") selected @endif @endif>@lang('frontend.proddetail.pricehl')</option>
+                                        @endif
+                                    @endif
+                                    <option value="asc" @if(isset($sortbyproduct)) @if($sortbyproduct == "asc") selected @endif @endif>@lang('frontend.liseksportir.prodnm')</option>
+                                </select>
+                    @endif
                     </div>
                 </div>
                 <div class="col-1 grid_list_btn" style="text-align: right;">
@@ -158,7 +173,11 @@
                                         $srchcatlang = "Search Category";
                                     }
                                 ?>
-                                <input type="text" class="form-control" id="cari_kategori" name="cari_kategori" placeholder="{{$srchcatlang}}" style="font-size: 12px;">
+                                @if(isset($page))
+                                    <input type="text" class="form-control" id="cari_kategori" name="cari_kategori" disabled placeholder="{{$srchcatlang}}" style="font-size: 12px;">
+                                @else
+                                    <input type="text" class="form-control" id="cari_kategori" name="cari_kategori" placeholder="{{$srchcatlang}}" style="font-size: 12px;">
+                                @endif
                                 <br>
                                 <div class="list-group list-group-flush" id="catlist">
                                     @foreach($categoryutama as $cu)
@@ -170,10 +189,19 @@
                                             }
                                         ?>
                                         @if(count($catprod1) == 0)
+                                        
+                                            @if(isset($page))
+                                            <a class="list-group-item">{{$cu->$nk}}</a>
+                                            @else
                                             <a href="{{url('/front_end/list_product/category/'.$cu->id)}}" class="list-group-item">{{$cu->$nk}}</a>
+                                            @endif
                                         @else
                                             <div class="list-group-item">
-                                                <a class="cat-prod" href="{{url('/front_end/list_product/category/'.$cu->id)}}"> {{$cu->$nk}}</a><a onclick="openCollapse('{{$cu->id}}')" href="#menus{{$cu->id}}" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop{{$cu->id}}"></i></a>
+                                                @if(isset($page))
+                                                <a class="cat-prod">  {{$cu->$nk}}</a><a ><i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop{{$cu->id}}"></i></a>
+                                                @else
+                                                <a class="cat-prod" href="{{url('/front_end/list_product/category/'.$cu->id)}}"> {{$cu->$nk}}</a><a onclick="openCollapse(' {{$cu->id}}')"href="#menus{{$cu->id}}" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-chevron-down" aria-hidden="true" style="float: right; margin-right: -10px;" id="fontdrop{{$cu->id}}"></i></a>
+                                                @endif
                                             </div>
                                                 <div class="collapse" id="menus{{$cu->id}}">
                                                     @foreach($catprod1 as $cat1)
@@ -220,11 +248,23 @@
                                 <!-- <h2>Highlight</h2> -->
                                 <h2>@lang('frontend.listprod.advanced')</h2>
                                 <h2 style="margin-bottom: 0px; font-size: 14px;">@lang('frontend.home.product')</h2>
-                                <input type="text" class="form-control" id="cari_advance" name="cari_advance" placeholder="@lang('frontend.home.cariproduct')" style="font-size: 12px;margin-bottom: 20px;">
+                                
+                                @if(isset($page))
+                                    <input type="text" class="form-control" id="cari_advance" name="cari_advance" disabled placeholder="@lang('frontend.home.cariproduct')" style="font-size: 12px;margin-bottom: 20px;">
+                                @else
+                                    <input type="text" class="form-control" id="cari_advance" name="cari_advance" placeholder="@lang('frontend.home.cariproduct')" style="font-size: 12px;margin-bottom: 20px;">
+                                @endif
                                 <h2 style="margin-bottom: 0px; font-size: 14px;">@lang('research-corner.kategori')</h2>
-                                <select class="form-control" id="cari_cat_advance" name="cari_cat_advance">
-                                    <option></option>
-                                </select>
+                                
+                                @if(isset($page))
+                                    <select class="form-control" id="cari_cat_advance" name="cari_cat_advance" disabled>
+                                        <option></option>
+                                    </select>
+                                @else
+                                    <select class="form-control" id="cari_cat_advance" name="cari_cat_advance">
+                                        <option></option>
+                                    </select>
+                                @endif
                                 <!-- <input type="text" class="form-control"> -->
                                 <h2 style="margin-top: 20px; margin-bottom: 20px; font-size: 15px;">@lang('frontend.listprod.highlight')</h2>
                                 <?php
@@ -252,12 +292,20 @@
                                 ?>
                                 <ul id="highlightlist" style="margin-bottom: 0px;">
                                     <li>
+                                    @if(isset($page))
+                                        <input type="checkbox" name="checkhl" value="hot" id="checkhl" class="check_hl" onclick="getProduct(this.value, this.checked)" disabled {{$checkedhot}}>
+                                    @else
                                         <input type="checkbox" name="checkhl" value="hot" id="checkhl" class="check_hl" onclick="getProduct(this.value, this.checked)" {{$checkedhot}}>
+                                    @endif
                                         <a href="#" class="hover-none">@lang('frontend.listprod.hotprod') ({{$countHot}})</a>
                                         <span class="checkmark"></span>
                                     </li>
                                     <li>
+                                    @if(isset($page))
+                                        <input type="checkbox" name="checkhl" value="new" id="checkhl" class="check_hl" onclick="getProduct(this.value, this.checked)" disabled {{$checkedna}}>
+                                    @else
                                         <input type="checkbox" name="checkhl" value="new" id="checkhl" class="check_hl" onclick="getProduct(this.value, this.checked)" {{$checkedna}}>
+                                    @endif
                                         <a href="#" class="hover-none">@lang('frontend.listprod.newarrival') ({{$countNew}})</a>
                                         <span class="checkmark"></span>
                                     </li>
@@ -274,7 +322,11 @@
                                         $srchmanlang = "Search Manufacturer";
                                     }
                                 ?>
+                                @if(isset($page))
+                                <input type="text" class="form-control" id="cari_manufacture" placeholder="{{$srchmanlang}}" style="font-size: 12px;margin-bottom: 20px;" disabled>
+                                @else
                                 <input type="text" class="form-control" id="cari_manufacture" placeholder="{{$srchmanlang}}" style="font-size: 12px;margin-bottom: 20px;">
+                                @endif
                                 <ul id="manufacturlist">
                                     @foreach($manufacturer as $man)
                                         <?php
@@ -297,13 +349,21 @@
                                             }
                                         ?>
                                         <li>
+                                        @if(isset($page))
+                                            <input type="checkbox"  value="{{$man->id}}" onclick="getProductbyEksportir(this.value, this.checked)" disabled {{$checkednya}}>
+                                        @else
                                             <input type="checkbox"  value="{{$man->id}}" onclick="getProductbyEksportir(this.value, this.checked)" {{$checkednya}}>
+                                        @endif
                                             <a href="#" class="hover-none">{{$man->company}} ({{$man->jml_produk}})</a>
                                             <span class="checkmark"></span>
                                         </li>
                                     @endforeach
 									<li>
-                                        <a href="{{url('front_end/list_perusahaan')}}">@lang('frontend.proddetail.listcompany')</a>
+                                        @if(isset($page))
+                                            <a style="color: #007bff;">@lang('frontend.proddetail.listcompany')</a>
+                                        @else
+                                            <a href="{{url('front_end/list_perusahaan')}}">@lang('frontend.proddetail.listcompany')</a>
+                                        @endif
                                     </li>
                                 </ul>
                             </div>
