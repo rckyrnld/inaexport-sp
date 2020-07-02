@@ -34,8 +34,14 @@ class EventController extends Controller
                         ->get();
 			return view('Event.index_eksportir', compact('pageTitle','e_detail', 'id_user'));
 		}else{
+            if(Auth::user()->id_group == 4){
+                $id_user = Auth::user()->id;
+                $e_detail = DB::table('event_detail')->where('created_by', $id_user)->orderby('start_date', 'desc')->paginate(6);
+            }else{
+                $e_detail = DB::table('event_detail')->orderby('start_date', 'desc')->paginate(6);
+            }
 			//$e_detail = DB::table('event_detail')->orderby('id', 'desc')->paginate(6);
-			$e_detail = DB::table('event_detail')->orderby('start_date', 'desc')->paginate(6);
+			
 			return view('Event.index', compact('pageTitle','e_detail'))->with('success');
 		}
 	}
@@ -156,7 +162,8 @@ class EventController extends Controller
             'reg_date' => $req->registration_date,
 			// 'status_in'	=> $req->,
 			// 'status_chn'	=> $req->,
-        	'created_at' => $datenow
+        	'created_at' => $datenow,
+        	'created_by' => $id_user
         ]);
 
         $cp = DB::table('contact_person')->where('type', 'event')->where('id_type', $id)->first();
