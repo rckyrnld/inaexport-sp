@@ -372,18 +372,19 @@ class RegistrasiController extends Controller
 		$id_role = $request->id_role;
 		$email = $request->email;
 		if($id_role == 1){
-			$ei = DB::select("select * from itdp_company_users where email='".$email."'");
+			$ei = DB::select("select a.id, a.username, a.email, b.company from itdp_company_users a inner join itdp_profil_eks b on a.id_profil=b.id  where a.email='".$email."'");
 			if(count($ei) != 0){
 			foreach($ei as $ie){
 				$d1 = $ie->id;
 				$d2 = $ie->username;
 				$d3 = $ie->email;
+				$d4 = $ie->company
 			}
 			$data = ['username' => $d2, 'id2' => base64_encode($d1), 'nama' => $d2, 'email' => $d3];
 
                 Mail::send('UM.user.emailforget', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
-                    $mail->subject('Forget Password');
+                    $mail->subject('Reset Password');
 
                 });
 			}
@@ -399,7 +400,7 @@ class RegistrasiController extends Controller
 
                 Mail::send('UM.user.emailforget2', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
-                    $mail->subject('Forget Password');
+                    $mail->subject('Reset Password');
 
                 });
 			}
