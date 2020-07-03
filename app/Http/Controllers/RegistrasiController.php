@@ -42,7 +42,7 @@ class RegistrasiController extends Controller
 	
 	public function forget_a()
     {
-        $pageTitle = "Forgot Password";
+        $pageTitle = "Reset Password";
         return view('auth.forget',compact('pageTitle'));
 	} 
 	
@@ -378,7 +378,7 @@ class RegistrasiController extends Controller
 				$d1 = $ie->id;
 				$d2 = $ie->username;
 				$d3 = $ie->email;
-				$d4 = $ie->company
+				$d4 = $ie->company;
 			}
 			$data = ['username' => $d2, 'id2' => base64_encode($d1), 'nama' => $d2, 'email' => $d3];
 
