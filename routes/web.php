@@ -886,6 +886,9 @@ Route::get('/getcategoryindonesiaevent', 'FrontEnd\FrontController@getcategoryin
 Route::get('/getcategoryforeignevent', 'FrontEnd\FrontController@getcategoryforeignevent')->name('categoryevent.getcategoryforeignevent');
 
 
+Route::get('/getcountryrc', 'FrontEnd\FrontController@getcountryrc')->name('countryrc.getcountry');
+Route::get('/getcategoryrc', 'FrontEnd\FrontController@getcategoryrc')->name('categoryrc.getcategory');
+
 Route::get('buyingrequest/delete/{id}', 'BuyingRequestController@delete')->name('buyingrequest.delete');
 Route::post('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
 Route::get('bannercompanyfront/getData', 'FrontEnd\FrontController@getDataCompanyFront')->name('bannercompanyfront.getdata');
