@@ -100,7 +100,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-lg-6">
-        <span style="color: #1a70bb; text-align: center;"><h2>Research Corner</h2></span>
+        <span style="color: #1a70bb; text-align: left;"><h2>Research Corner</h2></span>
       </div>
       <div class="col-md-6 col-lg-6" align="right"><br>
                     <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/research-corner')}}">
