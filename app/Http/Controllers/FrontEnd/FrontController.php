@@ -945,26 +945,64 @@ class FrontController extends Controller
 //        return view('frontend.research-corner', compact('research', 'page'));
 //    }
 
-    public function research_corner(){
-        // Data Broadcast FrontEnd
-        $research = DB::table('csc_research_corner')
-//            ->orderby('id', 'desc')
-            ->orderby('publish_date', 'desc')
-            ->select('*','cover')
-            ->paginate(9, ['*']);
+    public function research_corner(Request $request){
 
-        $json = json_decode($research->toJson(), true);
-        $page = $json["current_page"];
-        if($page > 1){
-         $research = DB::table('csc_research_corner')
-            ->select('*','cover')
-//             ->orderby('id', 'desc')
-             ->orderby('publish_date', 'desc')
-            ->paginate(8, ['*']);
+        if($request->search){
+            // dd('sini');
+            $searchEvent = $request->search;
+            $query = DB::table('csc_research_corner')
+                    ->leftjoin('csc_broadcast_research_corner','csc_broadcast_research_corner.id_research_corner','csc_research_corner.id');
+            if($searchEvent == 1){
+                $param = $request->country;
+                $query->where('id_mst_country', $param);
+            } else if($searchEvent == 2){
+                $param = $request->product;
+                $query->where('csc_broadcast_research_corner.id_categori_product', $param);
+            }
+            if($param == null){
+                return redirect('/front_end/research-corner');
+            }            
+
+            $page = 99999999;
+
+            // Data Broadcast FrontEnd
+            $research = $query->orderby('publish_date', 'desc')
+                                ->select('*','cover')
+                                ->paginate(9, ['*']);
+                                 
+            $json = json_decode($research->toJson(), true);
+            $page = $json["current_page"];
+            if($page > 1){
+            $research =$query ->orderby('publish_date', 'desc')
+                                ->select('*','cover')
+                                ->paginate(8, ['*']);
+            }
+           
+            // return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page')),'e_detail2' => $e_detail2->appends(Input::except('page')),'e_detail3' => $e_detail3->appends(Input::except('page'))], compact('page','page2', 'page3', 'searchEvent','searchEvent2' ,'searchEvent3' ,'country', 'param', 'param2','param3','halaman'));
+        }else{
+            // dd('sono');
+            $searchEvent = null;
+            $param = null;
+
+            $research = DB::table('csc_research_corner')
+    //            ->orderby('id', 'desc')
+                ->orderby('publish_date', 'desc')
+                ->select('*','cover')
+                ->paginate(9, ['*']);
+
+            $json = json_decode($research->toJson(), true);
+            $page = $json["current_page"];
+            if($page > 1){
+            $research = DB::table('csc_research_corner')
+                ->select('*','cover')
+    //             ->orderby('id', 'desc')
+                ->orderby('publish_date', 'desc')
+                ->paginate(8, ['*']);
+            }
         }
-        // $item_page = $json["data"];
-
-        return view('frontend.research-corner', compact('research', 'page'));
+        return view('frontend.research-corner', ['research' => $research->appends(Input::except('page'))], compact('page', 'searchEvent', 'param'));
+        
+        // return view('frontend.research-corner', compact('research', 'page', 'searchEvent', 'param'));
     }
 
     public function tracking(){
@@ -2063,6 +2101,56 @@ class FrontController extends Controller
     
     }
 
+    public function getcountryrc(Request $request){
+        $countryall = DB::table('mst_country')
+            ->join('csc_research_corner','csc_research_corner.id_mst_country','mst_country.id')
+            ->select('mst_country.country','csc_research_corner.id_mst_country as id')
+            ->groupby('mst_country.country', 'csc_research_corner.id_mst_country')
+            ->orderby('mst_country.country', 'asc');
+
+        if (isset($request->q)) {
+            $search = $request->q;
+            $countryall->where(function ($query) use ($search) {
+                $query->where('mst_country.country', 'ilike', '%' . $search . '%')
+                    ->orderby('mst_country.country', 'asc');
+            });
+        } else if (isset($request->code)) {            
+            $countryall->where('mst_country.id', $request->code)
+                    ->orderby('mst_country.country', 'asc');
+        } else {
+            $countryall->limit(10);
+        }
+        return response()->json($countryall->get());
+    }
+
+    public function getcategoryrc(Request $request){
+        $categoryall = DB::table('csc_product')
+            ->join('csc_broadcast_research_corner','csc_broadcast_research_corner.id_categori_product','csc_product.id')
+            ->join('csc_research_corner','csc_broadcast_research_corner.id_research_corner','csc_research_corner.id')
+            ->select('csc_product.nama_kategori_en','csc_broadcast_research_corner.id_research_corner','csc_broadcast_research_corner.id_categori_product as id','csc_research_corner.title_en')
+            ->groupby('csc_product.nama_kategori_en','csc_broadcast_research_corner.id_research_corner','csc_broadcast_research_corner.id_categori_product','csc_research_corner.title_en');
+            
+        if (isset($request->q)) {
+            $search = $request->q;
+            $categoryall->where(function ($query) use ($search) {
+                $query->where('csc_product.nama_kategori_en', 'ilike', '%' . $search . '%');
+            });
+        } else if (isset($request->code)) {
+            $categoryall->where('csc_product.id', $request->code);
+        } else {
+            $categoryall->groupby('csc_product.nama_kategori_en')
+                        ->orderby('csc_product.nama_kategori_en', 'asc')
+                        ->limit(10);
+        }
+
+        $final_query = DB::table( DB::raw("({$categoryall->toSql()}) as sub") )->select('nama_kategori_en','id')
+        ->mergeBindings($categoryall) // you need to get underlying Query Builder
+        ->groupby('nama_kategori_en','id');
+        // echo $final_query->toSql();die();
+        return response()->json($final_query->get());
+    
+    }
+
     public function getDataCompanyFront(Request $request){
         $columns = array(
           0 => 'id',
@@ -2167,6 +2255,6 @@ class FrontController extends Controller
     
           echo json_encode($json_data);
         
-      }
+    }
     
 }
