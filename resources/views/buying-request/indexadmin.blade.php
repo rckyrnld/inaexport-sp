@@ -336,7 +336,8 @@ function xy(a){
                 processData: false,
             })
             .done(function(e){
-                window.location = '{{ url('/br_list') }}';
+                window.location = "{{ route('br_list.message') }}";
+                // window.location = '{{ url('/br_list/br_list') }}';
             });
         }else{
             alert('make sure to checked at least one exporter');

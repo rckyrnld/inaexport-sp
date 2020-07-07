@@ -135,6 +135,7 @@ function broadcast(){
     $.each($("input[name='eksportir']:checked"), function(){
         var val = $(this).val();
         if(dataeksportir.includes(val)){
+       
         }else{
             dataeksportir.push($(this).val());
         }
@@ -159,6 +160,8 @@ function broadcast(){
         })
         .done(function(e){
             console.log(e);
+            
+            window.location = "{{ route('br_list.message') }}";
             // window.location = '{{ url('/br_list') }}';
         });
     }else{

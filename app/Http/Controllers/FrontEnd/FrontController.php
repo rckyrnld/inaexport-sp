@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Models\Banner;
+use App\Models\Banner_Detail;
 use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
 use Mail;
@@ -753,6 +755,127 @@ class FrontController extends Controller
         return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat', 'hot_product', 'countNew', 'countHot'));
     }
 
+    public function product_categoryeks($id)
+    {
+        // masih ada error disini;
+        $hot_product = hotProduct();
+        $loc = app()->getLocale();
+        if($loc == "ch"){
+            $lct = "chn";
+        }else if($loc == "in"){
+            $lct = "in";
+        }else{
+            $lct = "en";
+        }
+
+        $arraycompany = [];
+        
+        $bannerdata = Banner::find($id);
+        // dd($bannerdata->id_csc_product);
+        $bannerdetail = Banner_Detail::where('id_banner', $id)->select('id_eks')->get();
+        foreach($bannerdetail as $company) {
+            array_push($arraycompany,$company->id_eks);
+        }
+        
+        
+
+        //List Category Product
+        $categoryutama = DB::table('csc_product')
+                        ->join('csc_product_single','csc_product.id','csc_product_single.id_csc_product')
+                        ->select('csc_product.id', 'csc_product.level_1', 'csc_product.level_2', 'csc_product.nama_kategori_en', 'csc_product.nama_kategori_in', 'csc_product.nama_kategori_chn', 'csc_product.created_at', 'csc_product.updated_at', 
+                        'csc_product.type', 'csc_product.logo')
+                        ->groupby('csc_product.id', 'csc_product.level_1', 'csc_product.level_2', 'csc_product.nama_kategori_en', 'csc_product.nama_kategori_in', 'csc_product.nama_kategori_chn', 'csc_product.created_at', 'csc_product.updated_at', 
+                        'csc_product.type', 'csc_product.logo')
+                        ->where('level_1', 0)
+                        ->where('level_2', 0)
+                        ->orderBy('nama_kategori_en', 'ASC')
+                        ->limit(10)
+                        ->get();
+
+
+        $catActive = '';
+        if($bannerdata->id_csc_product_level1 == 0 && $bannerdata->id_csc_product_level2 == 0){
+            $catActive .= '<li><a>'.getCategoryName($bannerdata->id_csc_product, $lct).' </a></li>';
+            $colnya = "id_csc_product";
+            $yangdicari = $bannerdata->id_csc_product;
+            $get_id_cat = $bannerdata->id_csc_product;
+        }else if($bannerdata->id_csc_product_level1 != 0 && $bannerdata->id_csc_product_level2 == 0){
+            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product, $lct).'</a></li>';
+            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product_level1, $lct).'</a></li>';
+            $colnya = "id_csc_product_level1";
+            $yangdicari = $bannerdata->id_csc_product_level1;
+            $get_id_cat = $bannerdata->id_csc_product_level1.'|'.$bannerdata->id_csc_product;
+        }else if($bannerdata->id_csc_product_level1 != 0 && $bannerdata->id_csc_product_level2 != 0){
+            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product, $lct).'</a></li>';
+            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product_level1, $lct).'</a></li>';
+            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product_level2, $lct).'</a></li>';
+            $colnya = "id_csc_product_level2";
+            $yangdicari = $bannerdata->id_csc_product_level2;
+            $get_id_cat = $bannerdata->id_csc_product_level2.'|'.$bannerdata->id_csc_product_level1.'|'.$bannerdata->id_csc_product;
+        }
+        
+        $cek_cat = DB::table('csc_product')->where('id', $yangdicari)->first();
+        $tampung_cat = [$cek_cat->id];
+        $query_manufacture = DB::table('itdp_company_users as a')->selectRaw('a.id, b.company, count(c.*) as jml_produk')
+            ->join('itdp_profil_eks as b', 'a.id_profil', 'b.id')
+            ->join('csc_product_single as c', 'a.id', 'c.id_itdp_company_user')
+            ->where('a.status', 1)
+            ->where('c.status', 2)
+            ->whereIn('b.id', $arraycompany)
+            ->orderby('jml_produk', 'desc')
+            ->groupby('a.id')->groupby('b.company')
+            ->limit(10);
+        if(count($tampung_cat) > 0){
+            $query_manufacture->where(function($query) use ($tampung_cat){
+                $query->whereIn('c.id_csc_product', $tampung_cat);
+                $query->orWhereIn('c.id_csc_product_level1', $tampung_cat);
+                $query->orWhereIn('c.id_csc_product_level2', $tampung_cat);
+            });
+        }
+        $manufacturer = $query_manufacture->get();
+
+        $productnya = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', '1')
+            ->where('csc_product_single.status', 2)
+            ->whereIn('csc_product_single.id_itdp_profil_eks', $arraycompany)
+            ->where('csc_product_single.'.$colnya, $yangdicari)
+            ->orderBy('csc_product_single.prodname_en', 'ASC');
+            
+        //count Hot dan New Product
+        $productcheck = $productnya->get();
+        $countNew = 0;
+        $countHot = 0;
+        foreach ($productcheck as $prod) {
+            if(date('Y', strtotime($prod->created_at)) == date('Y')){
+                if(date('m', strtotime($prod->created_at)) == date('m')){
+                    $countNew = $countNew + 1;
+                }
+            }
+            if(in_array($prod->id, $hot_product)){
+                $countHot = $countHot + 1;
+            }
+        }
+        
+        //Data Product
+        $product = $productnya->paginate(12);
+        $coproduct = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', 1)
+            ->where('csc_product_single.status', 2)
+            ->whereIn('csc_product_single.id_itdp_profil_eks', $arraycompany)
+            ->where('csc_product_single.'.$colnya, $yangdicari)
+            ->orderBy('csc_product_single.prodname_en', 'ASC')
+            ->count();
+
+            
+        $page = 'hold';
+
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat', 'hot_product', 'countNew', 'countHot','page'));
+    }
+
     public function view_product($id)
     {
         //Product Pilih
@@ -822,26 +945,64 @@ class FrontController extends Controller
 //        return view('frontend.research-corner', compact('research', 'page'));
 //    }
 
-    public function research_corner(){
-        // Data Broadcast FrontEnd
-        $research = DB::table('csc_research_corner')
-//            ->orderby('id', 'desc')
-            ->orderby('publish_date', 'desc')
-            ->select('*','cover')
-            ->paginate(9, ['*']);
+    public function research_corner(Request $request){
 
-        $json = json_decode($research->toJson(), true);
-        $page = $json["current_page"];
-        if($page > 1){
-         $research = DB::table('csc_research_corner')
-            ->select('*','cover')
-//             ->orderby('id', 'desc')
-             ->orderby('publish_date', 'desc')
-            ->paginate(8, ['*']);
+        if($request->search){
+            // dd('sini');
+            $searchEvent = $request->search;
+            $query = DB::table('csc_research_corner')
+                    ->leftjoin('csc_broadcast_research_corner','csc_broadcast_research_corner.id_research_corner','csc_research_corner.id');
+            if($searchEvent == 1){
+                $param = $request->country;
+                $query->where('id_mst_country', $param);
+            } else if($searchEvent == 2){
+                $param = $request->product;
+                $query->where('csc_broadcast_research_corner.id_categori_product', $param);
+            }
+            if($param == null){
+                return redirect('/front_end/research-corner');
+            }            
+
+            $page = 99999999;
+
+            // Data Broadcast FrontEnd
+            $research = $query->orderby('publish_date', 'desc')
+                                ->select('*','cover')
+                                ->paginate(9, ['*']);
+                                 
+            $json = json_decode($research->toJson(), true);
+            $page = $json["current_page"];
+            if($page > 1){
+            $research =$query ->orderby('publish_date', 'desc')
+                                ->select('*','cover')
+                                ->paginate(8, ['*']);
+            }
+           
+            // return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page')),'e_detail2' => $e_detail2->appends(Input::except('page')),'e_detail3' => $e_detail3->appends(Input::except('page'))], compact('page','page2', 'page3', 'searchEvent','searchEvent2' ,'searchEvent3' ,'country', 'param', 'param2','param3','halaman'));
+        }else{
+            // dd('sono');
+            $searchEvent = null;
+            $param = null;
+
+            $research = DB::table('csc_research_corner')
+    //            ->orderby('id', 'desc')
+                ->orderby('publish_date', 'desc')
+                ->select('*','cover')
+                ->paginate(9, ['*']);
+
+            $json = json_decode($research->toJson(), true);
+            $page = $json["current_page"];
+            if($page > 1){
+            $research = DB::table('csc_research_corner')
+                ->select('*','cover')
+    //             ->orderby('id', 'desc')
+                ->orderby('publish_date', 'desc')
+                ->paginate(8, ['*']);
+            }
         }
-        // $item_page = $json["data"];
-
-        return view('frontend.research-corner', compact('research', 'page'));
+        return view('frontend.research-corner', ['research' => $research->appends(Input::except('page'))], compact('page', 'searchEvent', 'param'));
+        
+        // return view('frontend.research-corner', compact('research', 'page', 'searchEvent', 'param'));
     }
 
     public function tracking(){
@@ -1938,6 +2099,162 @@ class FrontController extends Controller
         // echo $final_query->toSql();die();
         return response()->json($final_query->get());
     
+    }
+
+    public function getcountryrc(Request $request){
+        $countryall = DB::table('mst_country')
+            ->join('csc_research_corner','csc_research_corner.id_mst_country','mst_country.id')
+            ->select('mst_country.country','csc_research_corner.id_mst_country as id')
+            ->groupby('mst_country.country', 'csc_research_corner.id_mst_country')
+            ->orderby('mst_country.country', 'asc');
+
+        if (isset($request->q)) {
+            $search = $request->q;
+            $countryall->where(function ($query) use ($search) {
+                $query->where('mst_country.country', 'ilike', '%' . $search . '%')
+                    ->orderby('mst_country.country', 'asc');
+            });
+        } else if (isset($request->code)) {            
+            $countryall->where('mst_country.id', $request->code)
+                    ->orderby('mst_country.country', 'asc');
+        } else {
+            $countryall->limit(10);
+        }
+        return response()->json($countryall->get());
+    }
+
+    public function getcategoryrc(Request $request){
+        $categoryall = DB::table('csc_product')
+            ->join('csc_broadcast_research_corner','csc_broadcast_research_corner.id_categori_product','csc_product.id')
+            ->join('csc_research_corner','csc_broadcast_research_corner.id_research_corner','csc_research_corner.id')
+            ->select('csc_product.nama_kategori_en','csc_broadcast_research_corner.id_research_corner','csc_broadcast_research_corner.id_categori_product as id','csc_research_corner.title_en')
+            ->groupby('csc_product.nama_kategori_en','csc_broadcast_research_corner.id_research_corner','csc_broadcast_research_corner.id_categori_product','csc_research_corner.title_en');
+            
+        if (isset($request->q)) {
+            $search = $request->q;
+            $categoryall->where(function ($query) use ($search) {
+                $query->where('csc_product.nama_kategori_en', 'ilike', '%' . $search . '%');
+            });
+        } else if (isset($request->code)) {
+            $categoryall->where('csc_product.id', $request->code);
+        } else {
+            $categoryall->groupby('csc_product.nama_kategori_en')
+                        ->orderby('csc_product.nama_kategori_en', 'asc')
+                        ->limit(10);
+        }
+
+        $final_query = DB::table( DB::raw("({$categoryall->toSql()}) as sub") )->select('nama_kategori_en','id')
+        ->mergeBindings($categoryall) // you need to get underlying Query Builder
+        ->groupby('nama_kategori_en','id');
+        // echo $final_query->toSql();die();
+        return response()->json($final_query->get());
+    
+    }
+
+    public function getDataCompanyFront(Request $request){
+        $columns = array(
+          0 => 'id',
+          1 => 'company',
+        );
+    
+        $banner = Banner::find($request->id);
+        // dd($banner->id_csc_product_level2);
+        // if (isset($banner->id_csc_product_level2)) {
+          $allData  = DB::table('banner_detail')
+                      ->join('banner', 'banner.id','banner_detail.id_banner')
+                      ->join('itdp_profil_eks', 'banner_detail.id_eks','itdp_profil_eks.id')
+                      ->where('banner.deleted_at', null)
+                      ->where('banner.id', $request->id)
+                      ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                      ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                      ->orderBy('itdp_profil_eks.id', 'ASC')
+                      ->get();
+            $totalData= count($allData);
+        // }
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+    
+        if (empty($request->input('search.value'))) {
+          $posts =  DB::table('banner')
+                    ->join('banner_detail', 'banner.id','banner_detail.id_banner')
+                    ->join('itdp_profil_eks', 'banner_detail.id_eks','itdp_profil_eks.id')
+                    ->where('banner.deleted_at', null)
+                    ->where('banner.id', $request->id)
+                    ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+    
+          $allFiltered = DB::table('banner')
+                            ->join('banner_detail', 'banner.id','banner_detail.id_banner')
+                            ->join('itdp_profil_eks', 'banner_detail.id_eks','itdp_profil_eks.id')
+                            ->where('banner.deleted_at', null)
+                            ->where('banner.id', $request->id)
+                            ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                            ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                            ->offset($start)
+                            ->orderBy($order, $dir)
+                            ->get();
+          $totalFiltered= count($allFiltered);
+        }else{
+            
+            $search = $request->input('search.value');
+            $posts =  DB::table('banner')
+                    ->join('banner_detail', 'banner.id','banner_detail.id_banner')
+                    ->join('itdp_profil_eks', 'banner_detail.id_eks','itdp_profil_eks.id')
+                    ->where('banner.deleted_at', null)
+                    ->where('banner.id', $request->id)
+                    ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->where(function ($query) use ($search) {
+                        $query->where('company', 'ilike', '%' . $search . '%');
+                    })
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+    
+          $allFiltered = DB::table('banner')
+                            ->join('banner_detail', 'banner.id','banner_detail.id_banner')
+                            ->join('itdp_profil_eks', 'banner_detail.id_eks','itdp_profil_eks.id')
+                            ->where('banner.deleted_at', null)
+                            ->where('banner.id', $request->id)
+                            ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                            ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                            ->where(function ($query) use ($search) {
+                                $query->where('company', 'ilike', '%' . $search . '%');
+                            })
+                            ->offset($start)
+                            ->orderBy($order, $dir)
+                            ->get();
+          $totalFiltered= count($allFiltered);
+        }
+    
+        $data = array();
+        if ($posts) {
+          $count = $start+1;
+          foreach ($posts as $d) {
+            $token = csrf_token();
+            $nestedData['no'] = '<center>'.$count.'</center>';
+            $nestedData['company'] = '<center>'.$d->company.'</center>';
+            $data[] = $nestedData;
+            $count++;
+          }
+        }
+        
+          $json_data = array(
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => intval($totalData),
+            'recordsFiltered' => intval($totalFiltered),
+            'data' => $data
+          );
+    
+          echo json_encode($json_data);
+        
     }
     
 }

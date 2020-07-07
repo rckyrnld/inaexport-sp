@@ -40,6 +40,44 @@
     color: #1a70bb;
     font-family: 'Arial' !important; 
   }
+
+  
+  .search{
+        border-top: 2px solid #1a70bb;
+        border-bottom: 2px solid #1a70bb;
+    }
+
+    .search-event{
+        width: 100%;
+    }
+
+    .sel-event{
+        height: 100%;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        padding-left: 5px;
+        background-color: #f7f7f7;
+        border-left: 2px solid #1a70bb;
+        border-top: 2px solid #1a70bb;
+        border-bottom: 2px solid #1a70bb;
+    }
+
+    .select2-selection__rendered {
+        line-height: 32px !important;
+        float: left !important;
+    }
+    .select2-container .select2-selection--single {
+        height: 37px !important;
+        border-top : 2px solid #1a70bb;
+        border-bottom : 2px solid #1a70bb;
+    }
+    .select2-container {
+        float: left !important;
+    }
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+
 </style>
 <!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
@@ -61,9 +99,37 @@
 <div class="shop_area shop_reverse" style="background-color: white; padding-bottom: 3%;">
   <div class="container">
     <div class="row">
-      <div class="col-md-12 col-lg-12">
-        <span style="color: #1a70bb; text-align: center;"><h2>Research Corner</h2></span>
+      <div class="col-md-6 col-lg-6">
+        <span style="color: #1a70bb; text-align: left;"><h2>Research Corner</h2></span>
       </div>
+      <div class="col-md-6 col-lg-6" align="right"><br>
+                    <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/research-corner')}}">
+                        {{ csrf_field() }}
+                        <div class="input-group search-event">
+                            <div class="input-group-prepend">
+                                <select id="search" name="search" class="sel-event">
+                                    <option value="1" @if($searchEvent == 1) selected @endif>Country</option>
+                                    <option value="2" @if($searchEvent == 2) selected @endif>Product</option>
+                                </select>
+                            </div>
+                            <select class="form-control select2 search " name="country" id="search_country" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
+                                <option value=""></option>
+                            </select>
+                            <select class="form-control select2 search " name="product" id="search_product" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
+                                <option value=""></option>
+                            </select>
+                            @if(isset($param))
+                            @if($param != null)
+                                <a href="{{ url('/front_end/research-corner') }}"  class="btn btn-sm btn-default" style=" border-top: 2px solid #1a70bb; border-right: 2px solid #1a70bb;border-bottom: 2px solid #1a70bb;border-left: 2px solid #1a70bb;" title="Reset All Filter"><span class="fa fa-close"></span></a>
+                                @endif
+                            @endif                        
+                            <!-- </div> -->
+                            <div class="input-group-prepend">
+                                <button type="submit"  class="input-group-text submit" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px; background-color: #1a70bb; border-color: transparent; color: white;" title="Search">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
     </div><br>
     @if($page > 1)
       <div class="row justify-content-center">
@@ -208,4 +274,114 @@
       }
     }
   }
+</script>
+<script>
+  $(document).ready(function() { 
+
+      $('#search_country').select2({
+          allowClear: true,
+          placeholder: 'Search Country',                
+          ajax: {
+              url: "{{route('countryrc.getcountry')}}",
+              dataType: 'json',
+              delay: 250,
+              processResults: function (data) {
+                  return {
+                      results: $.map(data, function (item) {
+                          console.log(item.id);
+                          return {
+                                text: item.country,
+                                id: item.id
+                          }
+                      })
+                  };
+              },
+              cache: true
+          }
+      });
+
+      $('#search_product').select2({
+          allowClear: true,
+          placeholder: 'Search Category Product',
+          ajax: {
+              url: "{{route('categoryrc.getcategory')}}",
+              dataType: 'json',
+              delay: 250,
+              processResults: function (data) {
+                  return {
+                      results: $.map(data, function (item) {
+                      console.log(item.id);
+                          return {
+                              text: item.nama_kategori_en,
+                              id: item.id
+                          }
+                      })
+                  };
+              },
+              cache: true
+          }
+      });
+
+        
+  var search = "{{$searchEvent}}";
+  if(search == 2){
+      $('#search_country').next('.select2-container').hide();
+      $('#search_product').next('.select2-container').show();
+  }else{
+      $('#search_country').next('.select2-container').show();
+      $('#search_product').next('.select2-container').hide();
+  }
+  });
+
+
+  var searchEvent = "{{isset($searchEvent) ? $searchEvent : ''}}";
+  if(searchEvent == 1){
+      console.log(searchEvent);
+      var param = "{{isset($param) ? $param : '' }}";
+      if (param != "") {
+          $.ajax({
+              type: 'GET',
+              url: "{{route('countryrc.getcountry')}}",
+              data: { code: param }
+          }).then(function (data) {
+          var option = new Option(data[0].country, data[0].id, true, true);
+
+          $('#search_country').append(option).trigger('change');
+          });
+      }
+  }else if(searchEvent == 2){
+      console.log(searchEvent);
+      var param = "{{isset($param) ? $param : '' }}";
+      if (param != "") {
+          $.ajax({
+              type: 'GET',
+              url: "{{route('categoryrc.getcategory')}}",
+              data: { code: param }
+          }).then(function (data) {
+              var option = new Option(data[0].nama_kategori_en, data[0].id, true, true);
+
+              $('#search_product').append(option).trigger('change');
+          });
+      }
+  }
+
+
+
+  $('#search').on('change', function(){
+      var pilihan = this.value;
+      if(pilihan == 1){
+          $('#search_country').show();
+          $('#search_product').hide();
+
+          $('#search_country').next('.select2-container').show();
+          $('#search_product').next('.select2-container').hide();
+      } else if(pilihan == 2){
+          $('#search_country').hide();
+          $('#search_product').show();
+
+          $('#search_country').next('.select2-container').hide();
+          $('#search_product').next('.select2-container').show();
+      }
+  });
+
 </script>

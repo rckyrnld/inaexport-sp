@@ -110,6 +110,14 @@
 
 </style>
 <style>
+	#companyspecialevent_wrapper{
+		width: 100%!important;
+	}
+    #companyspecialevent{
+        width: 100%!important;
+    }
+</style>
+<style>
 .hoveraja {
   position: relative;
   width: 50%;
@@ -330,6 +338,60 @@
     </section>
     <!--regis end-->
 
+        <!--Event Special start-->
+        <?php
+        $today = date("Y-m-d");
+        $checkevent = DB::table('banner')->where('deleted_at',null)->where('status',1)->where('end_at','>=',"'".$today."'")->first();
+        // echo $checkevent->tosql();
+        // echo $checkevent;
+        // if(isset($checkevent)){
+        //     echo "<div class='row'><div class='col-md-12'><img src='{{asset('asset('/uploads/banner/'.$checkevent->file)')}}'></div></div>";
+        // }
+    ?>   
+    @if(isset($checkevent))
+    <section class="special_event_area mb-50" style=" margin-bottom: 0px;">
+        <!-- <div class="container"><br> -->
+            <div class="row">
+                <a href="{{url('front_end/list_product/categoryeks/'.$checkevent->id)}}" ><img style="width:100% ;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" alt=""></a>
+                {{--<img style="width:100% ;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" data-show-id="{{$checkevent->id}}" data-toggle="modal"  data-target="#modal-special-event" alt="">--}}
+            </div>
+        <!-- </div> -->
+    </section>
+    <div id="modal-special-event" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Contributed Company</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            <input type="hidden" id="idbannernya" name="idbannernya" value="{{$checkevent->id}}" >
+            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+            {{ csrf_field() }}<br>
+                <div class="modal-body">
+                    <table id="companyspecialevent" class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th><center>No</center></th>
+                                <th><center>Company</center></th>
+                            </tr>
+                        </thead>
+                </table>
+                
+                </div>
+            <br>
+
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-danger" title="cancel">Cancel</button>
+            </div>
+            </form>
+            </div>
+
+        </div>
+    </div>
+    @endif
+    
+    <!--Event Special end-->
+
 
 	<div class="breadcrumbs_area">
         <div class="container" style="
@@ -486,6 +548,8 @@
     </section>
 	*/ ?>
     <!--category product end-->
+
+
     <!--product category start-->
     <section class="product_area mb-50">
         <div class="container" style="background-color:white!important;"><br>
@@ -964,6 +1028,11 @@
 </div>
 <!-- Plugins JS -->
 <script src="{{asset('front/assets/js/plugins.js')}}"></script>
+<link rel="stylesheet" href="{{url('assets')}}/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" type="text/css" />
+<script src="{{url('assets')}}/libs/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="{{url('assets')}}/libs/datatables.net-bs4/js/dataTables.bootstrap4.js" ></script>
+    
+
 @include('frontend.layouts.footer')
 <script type="text/javascript">
     $(function() {
@@ -972,7 +1041,61 @@
             $(this).val( formatAmount( $( this ).val() ) );
         });
 
+        
+
     });
+
+
+    $(function() {
+        
+        $("#companyspecialevent").DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                "url": '{!! route('bannercompanyfront.getdata') !!}',
+                "dataType": "json",
+                "type": "GET",
+                "data": {_token: '{{csrf_token()}}',id : $('#idbannernya').val(),}
+            },
+            "columns": [
+                    // {data: 'no'},
+                    {data: 'no'},
+                    {data: 'company'},
+                    
+            ],
+            language: {
+                processing: "Sedang memproses...",
+                lengthMenu: "Tampilkan _MENU_ entri",
+                zeroRecords: "Tidak ditemukan data yang sesuai",
+                emptyTable: "Tidak ada data yang tersedia pada tabel ini",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                infoEmpty: "Menampilkan 0 sampai 0 dari 0 entri",
+                infoFiltered: "(disaring dari _MAX_ entri keseluruhan)",
+                infoPostFix: "",
+                search: "Cari:",
+                url: "",
+                infoThousands: ".",
+                loadingRecords: "Sedang memproses...",
+                paginate: {
+                    first: "<<",
+                    last: ">>",
+                    next: "Selanjutnya",
+                    previous: "Sebelum"
+                },
+                aria: {
+                    sortAscending: ": Aktifkan untuk mengurutkan kolom naik",
+                    sortDescending: ": Aktifkan untuk mengurutkan kolom menurun"
+                }
+            }
+        });
+    });
+
+    // $(function() {
+    //     $('#modal-special-event').on('show.bs.modal', function(e) {
+    //         idbanner = $(e.relatedTarget).data('show-id');
+    //         $('#idbannernya').val(idbanner);
+    //     });
+    // });
 
     $(document).ready(function () {
         if(window.innerWidth <= 900){
@@ -983,6 +1106,33 @@
             });
         } 
     });
+
+    // function modalspecialevent(a){
+    //     var token = $('meta[name="csrf-token"]').attr('content');
+	// 	$.get('{{URL::to("ambilbroad3/")}}/'+a,{_token:token},function(data){
+    //         $("#isibroadcast").html(data);
+    //         calldata();
+    //     })
+    // }
+
+    // function calldata(){
+    //     var id = $('#id_laporan').val();
+    //     $.ajax({
+    //         method: "POST",
+    //         url: "{!! url('getdatapiliheksportir') !!}",
+    //         data:{_token: '{{csrf_token()}}',id_laporan:id}
+    //     })
+    //     .done(function(data){
+    //         $.each(data, function(i, val){
+    //             $('#companyspecialevent').DataTable().row.add([val.company,'<div class="checkbox"><input class="eksportir" name="eksportir" type="checkbox" value="'+val.id+'"></div>']).draw();
+                
+    //             // $('#tabelpiliheksportir').DataTable().row.add([val.company]).draw();
+    //         });
+    //     });
+        
+
+    // }
+
     function openTab(tabname) {
         $('.tab-pane.product').removeClass('active');
         $('.tabnya').removeClass('active');

@@ -77,7 +77,7 @@
                     @if($page != 'view')
                     <button class="btn btn-primary button_form" type="submit">Save</button>
                     @endif
-                    <a href="{{url('master-slide')}}" class="btn btn-danger button_form">@if($page != 'view') Cancel @else Back @endif</a>
+                    <a href="{{url('master-banner')}}" class="btn btn-danger button_form">@if($page != 'view') Cancel @else Back @endif</a>
                   </div>
                 </div>
              </div>
@@ -94,6 +94,51 @@
   $(document).ready(function () {
     
   });
+  function searchsub(suba){
+        if(suba == 1){
+            var tes = document.getElementById("search1");
+            var s = tes.value;
+            var value = "kosong";
+            var value2 = "kosong";
+            $('#tmpsearch2').html('');
+            $('#tmpsearch3').html('');
+            $('#prod2').html('');
+            $('#prod3').html('');
+        }else if(suba==2){
+            var items = document.getElementsByClassName("list-group-item listbag1 active");
+            var value = $(items).attr('data-value');
+            var tes = document.getElementById("search2");
+            var s = tes.value;
+            var value2 = "kosong";
+            $('#tmpsearch3').html('');
+            $('#prod3').html('');
+        }else{
+            var items = document.getElementsByClassName("list-group-item listbag1 active");
+            var value = $(items).attr('data-value');
+            var items2 = document.getElementsByClassName("list-group-item listbag2 active");
+            var value2 = $(items2).attr('data-value');
+            var tes = document.getElementById("search3");
+            var s = tes.value;
+        }
+
+        $.ajax({
+            url: "{{route('eksproduct.searchsub')}}",
+            type: 'get',
+            data: {level:suba, text:s,parent:value,parent2:value2},
+            success:function(response){
+                // console.log(response);
+                if(suba == 1){
+                    $('#prod1').html(response);
+                }
+                else if(suba == 2){
+                    $('#prod2').html(response);
+                }else{
+                    $('#prod3').html(response);
+                }
+            }
+        });
+
+    }
   function getSub(sub, idp, ids, name, evt) {
         evt.preventDefault();
         if(sub == 3){

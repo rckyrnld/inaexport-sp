@@ -48,6 +48,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/list_product', 'FrontController@list_product');
     Route::get('/front_end/getCategory', 'FrontController@getCategory')->name('front.product.getCategory');
     Route::get('/front_end/list_product/category/{id}', 'FrontController@product_category')->name('front.product.product_category');
+    Route::get('/front_end/list_product/categoryeks/{id}', 'FrontController@product_categoryeks')->name('front.product.product_categoryeks');
     Route::get('/front_end/getManufactur', 'FrontController@getManufactur')->name('front.product.getManufactur');
     Route::get('/front_end/product/{id}', 'FrontController@view_product');
     //Inquiry Pembeli
@@ -254,6 +255,7 @@ Route::get('/permission_delete/{id}', 'UM\PermissionsController@destroy');
 
 //buy request 
 Route::resource('/br_list', 'BuyingRequestController');
+Route::get('/br_list_message', 'BuyingRequestController@message')->name('br_list.message');
 Route::get('/getcscperwakilan', 'BuyingRequestController@getcscperwakilan');
 Route::get('/getcsc0', 'BuyingRequestController@getcsc0');
 Route::get('/getcsc', 'BuyingRequestController@getcsc');
@@ -369,7 +371,9 @@ Route::namespace('Master')->group(function () {
             Route::post('/getData/', 'MasterBannerController@getData')->name('getData');
             Route::get('/create/', 'MasterBannerController@create')->name('create');
             Route::post('/store/{param}', 'MasterBannerController@store')->name('store');
+            Route::get('/message', 'MasterBannerController@message')->name('message');
             Route::post('/getCompany/', 'MasterBannerController@getCompany')->name('getCompany');
+            Route::post('/getCompany2/', 'MasterBannerController@getCompany2')->name('getCompany2');
             Route::get('/check-kode/', 'MasterBannerController@check')->name('kode');
             Route::get('/edit/{id}', 'MasterBannerController@edit')->name('edit');
             Route::get('/view/{id}', 'MasterBannerController@view')->name('view');
@@ -882,7 +886,12 @@ Route::get('/getcategoryindonesiaevent', 'FrontEnd\FrontController@getcategoryin
 Route::get('/getcategoryforeignevent', 'FrontEnd\FrontController@getcategoryforeignevent')->name('categoryevent.getcategoryforeignevent');
 
 
+Route::get('/getcountryrc', 'FrontEnd\FrontController@getcountryrc')->name('countryrc.getcountry');
+Route::get('/getcategoryrc', 'FrontEnd\FrontController@getcategoryrc')->name('categoryrc.getcategory');
+
 Route::get('buyingrequest/delete/{id}', 'BuyingRequestController@delete')->name('buyingrequest.delete');
 Route::post('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
+Route::get('bannercompanyfront/getData', 'FrontEnd\FrontController@getDataCompanyFront')->name('bannercompanyfront.getdata');
+
 // Route::get('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
 //end mindy
