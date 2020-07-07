@@ -1,4 +1,4 @@
-@include('headerlog')
+\@include('headerlog')
 <link href="{{asset('')}}/js/tagsinput.css" rel="stylesheet" type="text/css">
 <style>
     .badge {
@@ -331,6 +331,10 @@
 
     function cekmail() {
         var m = $('#email').val();
+		var carikoma = m.search(",");
+		if(carikoma != "-1"){
+			$('#email').val("");
+		}
         var token = $('meta[name="csrf-token"]').attr('content');
         $.get('{{URL::to("cekmail/")}}/' + m, {_token: token}, function (data) {
             if (data == 0) {
