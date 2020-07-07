@@ -13,14 +13,15 @@
            {{ csrf_field() }}
            <p style="font-size: 20px; text-align: left;">@lang("login.lbl4")</p>
            <p style="font-size: 14px; text-align: left;">@lang("login.lbl9")</p>
-             <div class="form-group">
+            <!-- <div class="form-group">
             <select class="form-control" id="id_role" name="id_role" style="color:black;" >
 				<option value="1">Exporter/Importer</option>
 				<option value="2">Atdag / ITPC</option>
 			</select>
-        </div>
+        </div> -->
 		
 		<div class="form-group">
+				<input type="hidden" name="id_role" id="id_role" value="1">
                <input id="email" type="email" placeholder="Email" class="form-control" name="email" style="color: #000000" value="" required="" autofocus="">
 
         </div>

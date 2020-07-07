@@ -195,6 +195,7 @@ Route::get('/tambahperwakilan', 'VerifyuserController@tambahperwakilan');
 Route::get('/detailverify/{id}', 'VerifyuserController@detailverify');
 Route::get('/hapusperwakilan/{id}', 'VerifyuserController@hapusperwakilan');
 Route::get('/editperwakilan/{id}', 'VerifyuserController@editperwakilan');
+Route::get('/editperwakilans/{id}', 'VerifyuserController@editperwakilans');
 Route::get('/saveverify/{id}', 'VerifyuserController@saveverify');
 Route::get('/profil/{id}/{id2}', 'VerifyuserController@profil');
 Route::get('/profil_front/{id}/{id2}', 'VerifyuserController@profil_front');
@@ -208,6 +209,7 @@ Route::post('/simpan_profil_docb', 'VerifyuserController@simpan_dokumenb');
 Route::post('/simpan_profil2', 'VerifyuserController@simpan_profil2');
 Route::post('/simpanperwakilan', 'VerifyuserController@simpanperwakilan');
 Route::post('/updateperwakilan', 'VerifyuserController@updateperwakilan');
+Route::post('/updateperwakilans', 'VerifyuserController@updateperwakilans');
 Route::post('/simpan_kontak', 'VerifyuserController@simpan_kontak');
 
 // Master Slide

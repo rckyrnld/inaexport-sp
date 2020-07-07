@@ -79,7 +79,7 @@
                                             $ca = DB::select("select * from itdp_company_users where id='$idb' limit 1");
                                             foreach($ca as $rhj){
                                             ?>
-                                            <div class="form-row">
+                                            <!--<div class="form-row">
                                                 <div class="form-group col-sm-4">
                                                     <label><b>Username</b></label>
 
@@ -92,7 +92,10 @@
                                                 </div>
 
 
-                                            </div>
+                                            </div> -->
+											<input type="hidden" value="<?php echo $rhj->username; ?>"
+                                                           name="username" id="username"
+                                                           class="form-control">
                                             <div class="form-row">
                                                 <div class="form-group col-sm-4">
                                                     <label><b>Email</b></label>

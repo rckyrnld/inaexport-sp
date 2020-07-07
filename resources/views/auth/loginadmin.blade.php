@@ -57,7 +57,7 @@
 			<table width="100%">
 				<tr>
 				<td width="50%"></td>
-				<td width="50%" align="right"><a href="{{url('forget_a')}}"><font color="blue"><b style="font-family: 'Lato', sans-serif !important;">@lang("login.forms.fp")</b></font></a></td>
+				<td width="50%" align="right"><!--<a href="{{url('forget_a')}}"><font color="blue"><b style="font-family: 'Lato', sans-serif !important;">@lang("login.forms.fp")</b></font></a> --></td>
 				</tr>
 			</table>
 				
