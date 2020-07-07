@@ -96,11 +96,11 @@ if ($loc == "ch") {
                             </div>
                             <div class="form-row">
                                 <div class="col-sm-12">
-                                    <label><b>@lang("login.forms.by2")</b></label>
+                                    <label><b>@lang("login.forms.by2") (<font color="red">*</font>)</b></label>
                                 </div>
                                 <div class="form-group col-sm-8">
                                     <input type="text" style="color:black;font-size:12px;" value="<?php echo $subyek; ?>" name="subyek" id="subyek"
-                                           class="form-control" required>
+                                           class="form-control">
                                 </div>
                                 <div class="form-group col-sm-4">
                                     <select style="color:black;font-size:12px;height: 31px;" class="form-control" name="valid" id="valid" required>
@@ -117,7 +117,7 @@ if ($loc == "ch") {
                             </div>
                             <div class="form-row">
                                 <div class="col-sm-12">
-                                    <label><b>@lang("login.forms.by3")</b></label>
+                                    <label><b>@lang("login.forms.by3") (<font color="red">*</font>)</b></label>
                                 </div>
                                 <div class="form-group col-sm-12" style="font-size: 12px !important;">
                                     <?php
@@ -141,7 +141,7 @@ if ($loc == "ch") {
                             </div>
                             <div class="form-row">
                                 <div class="col-sm-12">
-                                    <label><b>@lang("login.forms.by4")</b></label>
+                                    <label><b>@lang("login.forms.by4") (<font color="red">*</font>)</b></label>
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <textarea style="color:black;font-size:12px;" name="spec" id="spec"
@@ -245,7 +245,7 @@ if ($loc == "ch") {
                             </div>
                             <div class="form-row">
                                 <div class="col-sm-12">
-                                    <label><b>@lang("login.forms.by7")</b></label>
+                                    <label><b>@lang("login.forms.by7") (<font color="red">*</font>)</b></label>
                                 </div>
                                 <div class="form-group col-sm-6" style="font-size: 12px !important;">
                                     <?php
