@@ -953,12 +953,19 @@ class FrontController extends Controller
             $query = DB::table('csc_research_corner')
                     ->leftjoin('csc_broadcast_research_corner','csc_broadcast_research_corner.id_research_corner','csc_research_corner.id');
             if($searchEvent == 1){
+                $param = $request->nama;
+                $query->where(function($query) use ($param){
+                    $query->where('csc_research_corner.title_en', 'ILIKE', "%".$param."%")
+                        ->orWhere('csc_research_corner.title_in', 'ILIKE', "%".$param."%");
+                });
+            } else if($searchEvent == 2){
                 $param = $request->country;
                 $query->where('id_mst_country', $param);
-            } else if($searchEvent == 2){
-                $param = $request->product;
-                $query->where('csc_broadcast_research_corner.id_categori_product', $param);
             }
+            // else if($searchEvent == 2){
+            //     $param = $request->product;
+            //     $query->where('csc_broadcast_research_corner.id_categori_product', $param);
+            // }
             if($param == null){
                 return redirect('/front_end/research-corner');
             }            
@@ -968,14 +975,14 @@ class FrontController extends Controller
             // Data Broadcast FrontEnd
             $research = $query->orderby('publish_date', 'desc')
                                 ->select('*','cover')
-                                ->paginate(9, ['*']);
+                                ->paginate(12, ['*']);
                                  
             $json = json_decode($research->toJson(), true);
             $page = $json["current_page"];
             if($page > 1){
             $research =$query ->orderby('publish_date', 'desc')
                                 ->select('*','cover')
-                                ->paginate(8, ['*']);
+                                ->paginate(12, ['*']);
             }
            
             // return view('frontend.event.index', ['e_detail' => $e_detail->appends(Input::except('page')),'e_detail2' => $e_detail2->appends(Input::except('page')),'e_detail3' => $e_detail3->appends(Input::except('page'))], compact('page','page2', 'page3', 'searchEvent','searchEvent2' ,'searchEvent3' ,'country', 'param', 'param2','param3','halaman'));
@@ -988,7 +995,7 @@ class FrontController extends Controller
     //            ->orderby('id', 'desc')
                 ->orderby('publish_date', 'desc')
                 ->select('*','cover')
-                ->paginate(9, ['*']);
+                ->paginate(12, ['*']);
 
             $json = json_decode($research->toJson(), true);
             $page = $json["current_page"];
@@ -997,7 +1004,7 @@ class FrontController extends Controller
                 ->select('*','cover')
     //             ->orderby('id', 'desc')
                 ->orderby('publish_date', 'desc')
-                ->paginate(8, ['*']);
+                ->paginate(12, ['*']);
             }
         }
         return view('frontend.research-corner', ['research' => $research->appends(Input::except('page'))], compact('page', 'searchEvent', 'param'));

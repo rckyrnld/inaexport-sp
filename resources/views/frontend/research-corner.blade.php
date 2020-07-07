@@ -108,16 +108,18 @@
                         <div class="input-group search-event">
                             <div class="input-group-prepend">
                                 <select id="search" name="search" class="sel-event">
-                                    <option value="1" @if($searchEvent == 1) selected @endif>Country</option>
-                                    <option value="2" @if($searchEvent == 2) selected @endif>Product</option>
+                                    <option value="1" @if($searchEvent == 1) selected @endif>Name</option>
+                                    <option value="2" @if($searchEvent == 2) selected @endif>Country</option>
                                 </select>
                             </div>
                             <select class="form-control select2 search " name="country" id="search_country" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
                                 <option value=""></option>
                             </select>
+                            <input type="text" id="search_name" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent == 1) value="{{$param}}" @endif>
+<!--                             
                             <select class="form-control select2 search " name="product" id="search_product" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
                                 <option value=""></option>
-                            </select>
+                            </select> -->
                             @if(isset($param))
                             @if($param != null)
                                 <a href="{{ url('/front_end/research-corner') }}"  class="btn btn-sm btn-default" style=" border-top: 2px solid #1a70bb; border-right: 2px solid #1a70bb;border-bottom: 2px solid #1a70bb;border-left: 2px solid #1a70bb;" title="Reset All Filter"><span class="fa fa-close"></span></a>
@@ -131,41 +133,13 @@
                     </form>
                 </div>
     </div><br>
-    @if($page > 1)
       <div class="row justify-content-center">
         <div class="col-lg-12 col-md-12 col-12">
           <div class="row shop_wrapper">
-    @endif
-
-      @foreach($research as $key => $data)
-        @if($page == 1)
-          @if($key == 0 || $key == 5 )
-            <div class="form-group row" style="height: 100%">
-          @endif
-        @endif
-      
-        @if($page == 1)
-          @if( $key == 0 || $key == 1 )
-              <div class="col-lg-6 col-md-6 col-12" style="height: 100%;">
-                <?php $size = 412; $num_char = 60;?>
-          @elseif($key >= 5)
-              <div class="col-lg-3 col-md-3 col-12" style="height: 100%;">
-                <?php $size = 162; $num_char = 23;?>
-          @endif
-        @else
+          @foreach($research as $key => $data)
             <div class="col-lg-3 col-md-3 col-12" style="height: 100%; padding-top: 20px;">
             <?php $size = 162; $num_char = 23;?>
-        @endif
 
-        @if($page == 1)
-          @if( $key > 0 && $key < 5)
-            @if($key == 1)
-              <div class="form-group row" style="height: 100%;">
-            @endif
-              <?php $size = 162; $num_char = 23;?>
-              <div class="col-lg-6 col-md-6 col-12" style="height: 50%; padding-top: 5px;">
-          @endif
-        @endif
         <?php
           if($loc == "ch"){
             $title = $data->title_en;
@@ -222,19 +196,10 @@
               </span>
           </div>
       </div>
-        @if($page == 1)
-          @if( $key == 4 || $key == 9)
-            </div>
-            @if($key == 4)
-              </div></div>
-            @endif
-          @endif
-        @endif
+        
       @endforeach
 
-      @if($page > 1)
         </div></div></div>
-      @endif
   </div>
   <br><br>
     <div class="row">
@@ -325,11 +290,14 @@
         
   var search = "{{$searchEvent}}";
   if(search == 2){
-      $('#search_country').next('.select2-container').hide();
-      $('#search_product').next('.select2-container').show();
-  }else{
       $('#search_country').next('.select2-container').show();
-      $('#search_product').next('.select2-container').hide();
+      $('#search_name').hide();
+      // $('#search_product').next('.select2-container').show();
+  }else{
+    
+      $('#search_country').next('.select2-container').hide();
+      $('#search_name').show();
+      // $('#search_product').next('.select2-container').hide();
   }
   });
 
@@ -349,38 +317,42 @@
           $('#search_country').append(option).trigger('change');
           });
       }
-  }else if(searchEvent == 2){
-      console.log(searchEvent);
-      var param = "{{isset($param) ? $param : '' }}";
-      if (param != "") {
-          $.ajax({
-              type: 'GET',
-              url: "{{route('categoryrc.getcategory')}}",
-              data: { code: param }
-          }).then(function (data) {
-              var option = new Option(data[0].nama_kategori_en, data[0].id, true, true);
-
-              $('#search_product').append(option).trigger('change');
-          });
-      }
   }
+  // else if(searchEvent == 2){
+  //     console.log(searchEvent);
+  //     var param = "{{isset($param) ? $param : '' }}";
+  //     if (param != "") {
+  //         $.ajax({
+  //             type: 'GET',
+  //             url: "{{route('categoryrc.getcategory')}}",
+  //             data: { code: param }
+  //         }).then(function (data) {
+  //             var option = new Option(data[0].nama_kategori_en, data[0].id, true, true);
+
+  //             $('#search_product').append(option).trigger('change');
+  //         });
+  //     }
+  // }
 
 
 
   $('#search').on('change', function(){
       var pilihan = this.value;
       if(pilihan == 1){
-          $('#search_country').show();
-          $('#search_product').hide();
-
-          $('#search_country').next('.select2-container').show();
-          $('#search_product').next('.select2-container').hide();
-      } else if(pilihan == 2){
           $('#search_country').hide();
-          $('#search_product').show();
+          $('#search_name').show();
+          // $('#search_product').hide();
 
           $('#search_country').next('.select2-container').hide();
-          $('#search_product').next('.select2-container').show();
+          // $('#search_product').next('.select2-container').hide();
+      } else if(pilihan == 2){
+          $('#search_country').show();
+          $('#search_name').hide();
+          
+          // $('#search_product').show();
+
+          $('#search_country').next('.select2-container').show();
+          // $('#search_product').next('.select2-container').show();
       }
   });
 

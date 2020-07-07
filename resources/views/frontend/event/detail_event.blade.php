@@ -200,7 +200,7 @@
                                     <tr>
                                         <td>@lang("frontend.event.website")</td>
                                         <td style="padding-left: 5px;padding-right: 10px;">:</td>
-                                        <td><a href="{{$detail->website}}">{{$detail->website}}</a></td>
+                                        <td><a target="_blank" href="{{$detail->website}}">{{$detail->website}}</a></td>
                                     </tr>
                                     <tr>
                                         <td>Status</td>

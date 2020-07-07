@@ -1,6 +1,7 @@
 <?php // echo bcrypt('abc');die(); ?>
 @include('header')
-<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5e40ad0fac2cac001a00d45a&product=inline-share-buttons" async="async"></script>
+<!-- kalo ada yang gak bisa dipencet, coba liat sharethis ini, ada settingan gdpr di nonactive aja -->
+<script src="https://platform-api.sharethis.com/js/sharethis.js#property=5e40ad0fac2cac001a00d45a&product=inline-share-buttons" ></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style>
 	.st-custom-button[data-network] {
