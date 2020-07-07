@@ -4,6 +4,7 @@ return [
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
         "company" => "Perusahaan",
+        "bu" => "Badan Usaha",
         "username" => "Username",
         "email" => "Email",
         "phone" => "Nomor Telepon",
