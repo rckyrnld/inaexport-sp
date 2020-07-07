@@ -128,7 +128,7 @@
 
                        
                         <div class="form-group col-sm-8" align="left">
-                            <input type="text" name="company" id="company" class="form-control" style=" color: black; "
+                            <input style="text-transform:uppercase" type="text" name="company" id="company" class="form-control" style=" color: black; "
                                    required>
 
                         </div>
