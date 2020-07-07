@@ -126,18 +126,8 @@
 
                         </div>
 
-                        <div class="form-group col-sm-2" align="left">
-						<select name="badanusaha" class="form-control" required>
-															<option>-</option>
-															<?php
-															$bns = DB::select("select * from eks_business_entity");
-															foreach($bns as $val){
-															?>
-															<option value="<?php echo $val->nmbadanusaha; ?>"><?php echo $val->nmbadanusaha; ?></option>
-															<?php } ?>
-														</select>
-						</div>
-                        <div class="form-group col-sm-6" align="left">
+                       
+                        <div class="form-group col-sm-8" align="left">
                             <input type="text" name="company" id="company" class="form-control" style=" color: black; "
                                    required>
 
@@ -152,12 +142,11 @@
                         </div>
 
                         <div class="form-group col-sm-8" align="left">
-                           
+                            <input type="hidden" data-role="tagsinput" class="form-control" value="">
 
                         </div>
 
                     </div> -->
-					 <input type="hidden"  class="form-control" value="">
                     {{--<div class="form-row">
 
                         <div class="form-group col-sm-4" align="left">

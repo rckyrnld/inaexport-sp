@@ -95,8 +95,8 @@ class RegistrasiController extends Controller
         $date = date('Y-m-d H:i:s');
 //        dd($admin_all);
         $insert1 = DB::select("
-			insert into itdp_profil_imp (badanusaha,company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
-			('".$request->badanusaha."','".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
+			insert into itdp_profil_imp (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
+			('".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
 			,'".$request->email."','".$request->website."','".$date."','1','".$request->city."','".$request->country."')
 		");
 		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_imp");
@@ -181,8 +181,8 @@ class RegistrasiController extends Controller
         $qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'");
 //        dd($qr);
         $insert1 = DB::select("
-			insert into itdp_profil_eks (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_province) values
-			('".$request->company."','".$request->alamat."','".$request->postcode."','".'+62'.$request->phone."','".'+62'.$request->fax."'
+			insert into itdp_profil_eks (badanusaha,company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_province) values
+			('".$request->badanusaha."','".$request->company."','".$request->alamat."','".$request->postcode."','".'+62'.$request->phone."','".'+62'.$request->fax."'
 			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1','".$request->city."','".$request->prov."')
 		");
 		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_eks");
