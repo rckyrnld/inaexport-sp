@@ -284,7 +284,7 @@ class HistoryFrontController extends Controller
             $lct = "en";
         }
         $id_user = Auth::guard('eksmp')->user()->id;
-        $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request  where id_pembuat='".$id_user."' order by id desc ");
+        $buy = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request  where id_pembuat='".$id_user."' and deleted_at ISNULL order by id desc ");
       
 
         return DataTables::of($buy)
@@ -329,6 +329,7 @@ class HistoryFrontController extends Controller
 					return '<center>
 					<a title="Broadcast" onclick="xy('.$buy->id.')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-bullhorn"></i></font></a>
 					<a title="Detail" href="'.url('br_importir_detail/'.$buy->id).'" class="btn btn-info"><i class="fa fa-pencil"></i></a>
+					<a title="Delete" href="'.url('br_importir_dele/'.$buy->id).'" class="btn btn-danger"><i class="fa fa-trash"></i></a>
 					</center>';
 				
 				}else if($buy->status == 1 ){

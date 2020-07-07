@@ -223,7 +223,8 @@ class BuyingRequestController extends Controller
                     return '<a href="' . url('br_pw_lc/' . $pesan->id) . '" class="btn btn-sm btn-success" data-toggle="tooltip" title="List Chat"><i class="fa fa-list"></i></a>';
                 } else {
                     return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy(' . $pesan->id . ')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-bullhorn"></i></i></a>
-					<a href="' . url('br_pw_dt/' . $pesan->id) . '" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>';
+					<a href="' . url('br_pw_dt/' . $pesan->id) . '" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>
+					<a href="' . url('br_dele/' . $pesan->id) . '" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>';
                 }
                 // href="'.url('/').'/buyingrequest/delete/'.$pesan->id.'}}'."
 
@@ -235,7 +236,7 @@ class BuyingRequestController extends Controller
 
     public function getcsc0()
     {
-        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='1' order by id desc ");
+        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='1' and deleted_at ISNULL order by id desc ");
         return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
                 return '<div align="left">' . $pesan->subyek . '</div>';
@@ -296,7 +297,8 @@ class BuyingRequestController extends Controller
                     return '<a href="' . url('br_pw_lc/' . $pesan->id) . '" class="btn btn-sm btn-success" data-toggle="tooltip" title="List Chat"><i class="fa fa-list"></i></a>';
                 } else {
                     return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy(' . $pesan->id . ')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-bullhorn"></i></i></a>
-					<a href="' . url('br_pw_dt/' . $pesan->id) . '" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>';
+					<a href="' . url('br_pw_dt/' . $pesan->id) . '" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>
+					<a href="' . url('br_dele/' . $pesan->id) . '" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>';
                 }
 
 
@@ -307,7 +309,7 @@ class BuyingRequestController extends Controller
 
     public function getcsc3()
     {
-        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='3' order by id desc ");
+        $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY id DESC) AS Row, * from csc_buying_request where by_role='3' and deleted_at ISNULL order by id desc ");
         return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
                 return '<div align="left">' . $pesan->subyek . '</div>';
@@ -366,7 +368,8 @@ class BuyingRequestController extends Controller
                     return '<a href="' . url('br_pw_lc/' . $pesan->id) . '" class="btn btn-sm btn-success" data-toggle="tooltip" title="List Chat"><i class="fa fa-list"></i></a>';
                 } else {
                     return '<a title="Broadcast" style="background-color: #d5b824ed!Important;border:#d5b824ed!important;" onclick="xy(' . $pesan->id . ')" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white"><i class="fa fa-bullhorn"></i></i></a>
-					<a href="' . url('br_pw_dt/' . $pesan->id) . '" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>';
+					<a href="' . url('br_pw_dt/' . $pesan->id) . '" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>
+					<a href="' . url('br_dele/' . $pesan->id) . '" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>';
                 }
 
 
@@ -1107,6 +1110,20 @@ class BuyingRequestController extends Controller
         // echo json_encode($msg);
         
         return redirect('br_list')->with('error','Success Delete Data');
+        
+    }
+	
+	public function br_dele($id){
+		// echo "wkwk";die();
+        date_default_timezone_set('Asia/Jakarta');
+        $today = date("Y-m-d h:i:s");
+        //DB::table('csc_buying_request')->where('id', $id)->update(['deleted_at'=>$today]);
+		$data = DB::select("update csc_buying_request set deleted_at='".$today."' where id='".$id."'");
+                    
+        // $msg = ["status"=>"success"];
+        // echo json_encode($msg);
+        
+		return redirect('br_list')->with('error','Success Delete Data');;
         
     }
 }
