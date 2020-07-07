@@ -58,7 +58,7 @@
                           <input type="file" class="form-control upload1" name="cover" accept="image/*" {{$view}} @if($page == 'create') @endif/><br>
                           <a href="{{ url('/').'/uploads/Research Corner/Cover/'.$data->cover}}" target="_blank" class="btn btn-outline-secondary"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Previous Cover</a><br>
                       @else
-                          <input type="file" class="form-control upload1" name="cover" accept="image/*" {{$view}} @if($page == 'create') @endif/>
+                          <input type="file" class="form-control upload1" name="cover" accept="image/*" required {{$view}} @if($page == 'create') @endif/>
                       @endif
                       <input type="hidden" name="lastest_cover" @isset($data) value="{{ $data->cover }}" @endisset>
                     @else 
@@ -134,7 +134,7 @@
                           <input type="file" class="form-control upload1" name="file" {{$view}} @if($page == 'create') required @endif><br>
                           <a href="{{ url('/').'/uploads/Research Corner/File/'.$data->exum}}" target="_blank" class="btn btn-outline-secondary"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Previous Document</a><br>
                       @else
-                          <input type="file" class="form-control upload1" name="file" accept="image/*" {{$view}} @if($page == 'create') @endif/>
+                          <input type="file" class="form-control upload1" name="file" required accept="image/*" {{$view}} @if($page == 'create') @endif/>
                       @endif
                      <input type="hidden" name="lastest_file" @isset($data) value="{{ $data->exum }}" @endisset>
                     @else 

@@ -891,10 +891,9 @@ class VerifyuserController extends Controller
             ]);
         }
 
-
         //UPDATE TAB 1
         if($request->password == null ){
-            $updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', email='".$request->email."', status='".$request->staim."' where id='".$request->id_user."' ");
+            $updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', email='".$request->email."' where id='".$request->id_user."' ");
         }else{
             $updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->staim."', email='".$request->email."' where id='".$request->id_user."' ");
 

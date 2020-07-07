@@ -164,7 +164,7 @@ class AdminResearchController extends Controller
           'publish_date' => $req->date,
           'exum' => $nama_file,
           'cover' => $nama_image,
-          'created_by' => $id_user
+          // 'created_by' => $id_user
         ]);
       }
 
