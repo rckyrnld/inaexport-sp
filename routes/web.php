@@ -892,6 +892,7 @@ Route::get('/getcategoryforeignevent', 'FrontEnd\FrontController@getcategoryfore
 
 Route::get('/getcountryrc', 'FrontEnd\FrontController@getcountryrc')->name('countryrc.getcountry');
 Route::get('/getcategoryrc', 'FrontEnd\FrontController@getcategoryrc')->name('categoryrc.getcategory');
+Route::get('/getproductrc', 'FrontEnd\FrontController@getproductrc')->name('productrc.getproductrc');
 
 Route::get('buyingrequest/delete/{id}', 'BuyingRequestController@delete')->name('buyingrequest.delete');
 Route::post('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
