@@ -1,4 +1,4 @@
-\@include('headerlog')
+@include('headerlog')
 <link href="{{asset('')}}/js/tagsinput.css" rel="stylesheet" type="text/css">
 <style>
     .badge {
