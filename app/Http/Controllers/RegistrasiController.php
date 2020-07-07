@@ -64,8 +64,8 @@ class RegistrasiController extends Controller
 	public function gantipass1($id)
     {
 		//echo "wkwkwk";die();
-		//$ri = base64_decode($id);
-		$ri = $id;
+		$ri = base64_decode($id);
+		// $ri = $id;
         $pageTitle = "Forget Password";
         return view('auth.forget_form',compact('pageTitle','ri','id'));
     } 
