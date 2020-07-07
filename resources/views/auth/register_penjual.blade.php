@@ -119,14 +119,25 @@
 
 
                         </div>
-                        <div class="form-group col-sm-8" align="left">
-                            <input type="text" name="company" id="company" class="form-control" style=" color: black; "
+						 <div class="form-group col-sm-2" align="left">
+						<select name="badanusaha" class="form-control" required>
+															<option>-</option>
+															<?php
+															$bns = DB::select("select * from eks_business_entity");
+															foreach($bns as $val){
+															?>
+															<option value="<?php echo $val->nmbadanusaha; ?>"><?php echo $val->nmbadanusaha; ?></option>
+															<?php } ?>
+														</select>
+						</div>
+                        <div class="form-group col-sm-6" align="left">
+                            <input style="text-transform:uppercase" type="text" name="company" id="company" class="form-control" style=" color: black; "
                                    required>
                         </div>
 
 
                     </div>
-                    <div class="form-row">
+                    <!-- <div class="form-row">
 
                         <div class="form-group col-sm-4" align="left">
                             <label> &nbsp;Product Interest </label>
@@ -136,7 +147,7 @@
                         <div class="form-group col-sm-8" align="left">
                             <input type="text" data-role="tagsinput" class="form-control" value="">
                         </div>
-                    </div>
+                    </div> -->
 {{--                    <div class="form-row">--}}
 {{--                        <div class="form-group col-sm-4" align="left">--}}
 {{--                            <label><font color="red">*</font> @lang("register2.forms.username")</label>--}}
@@ -331,6 +342,10 @@
 
     function cekmail() {
         var m = $('#email').val();
+		var carikoma = m.search(",");
+		if(carikoma != "-1"){
+			$('#email').val("");
+		}
         var token = $('meta[name="csrf-token"]').attr('content');
         $.get('{{URL::to("cekmail/")}}/' + m, {_token: token}, function (data) {
             if (data == 0) {

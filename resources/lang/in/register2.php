@@ -6,7 +6,7 @@ return [
         "company" => "Perusahaan",
         "username" => "Username",
         "email" => "Email",
-        "phone" => "Nomor Telepon",
+        "phone" => "Nomor Telepon / Mobile",
         "fax" => "Fax",
         "website" => "Website",
         "password" => "Kata Sandi",

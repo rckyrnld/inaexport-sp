@@ -119,21 +119,22 @@
                     <p><h6>Business Information</h6></p>
                     <hr>
 
-                    <div class="form-row">
+					<div class="form-row">
 
                         <div class="form-group col-sm-4" align="left">
                             <label><font color="red">*</font> @lang("register.forms.company") </label>
 
                         </div>
 
+                       
                         <div class="form-group col-sm-8" align="left">
-                            <input type="text" name="company" id="company" class="form-control" style=" color: black; "
+                            <input style="text-transform:uppercase" type="text" name="company" id="company" class="form-control" style=" color: black; "
                                    required>
 
                         </div>
 
                     </div>
-                    <div class="form-row">
+                    <!--<div class="form-row">
 
                         <div class="form-group col-sm-4" align="left">
                             <label> &nbsp;Product Interest </label>
@@ -141,11 +142,11 @@
                         </div>
 
                         <div class="form-group col-sm-8" align="left">
-                            <input type="text" data-role="tagsinput" class="form-control" value="">
+                            <input type="hidden" data-role="tagsinput" class="form-control" value="">
 
                         </div>
 
-                    </div>
+                    </div> -->
                     {{--<div class="form-row">
 
                         <div class="form-group col-sm-4" align="left">
@@ -315,6 +316,10 @@
 
     function cekmail() {
         var m = $('#email').val();
+		var carikoma = m.search(",");
+		if(carikoma != "-1"){
+			$('#email').val("");
+		}
         var token = $('meta[name="csrf-token"]').attr('content');
         $.get('{{URL::to("cekmail/")}}/' + m, {_token: token}, function (data) {
             if (data == 0) {

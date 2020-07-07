@@ -112,6 +112,14 @@ class BRFrontController extends Controller
         return view('buying-request.br_importir_detail',compact('pageTitle','id'));
     }
 	
+	public function br_importir_dele($id)
+    {
+		date_default_timezone_set('Asia/Jakarta');
+        $today = date("Y-m-d h:i:s");
+		$data = DB::select("update csc_buying_request set deleted_at='".$today."' where id='".$id."'");
+        return redirect('front_end/history');
+    }
+	
 	public function br_importir_chat($id,$idb)
     {
         //if(!empty(auth::guard('eksmp')->user)){

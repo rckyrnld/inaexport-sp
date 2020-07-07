@@ -118,8 +118,24 @@
 					  </span>
                     </span>
                   </a>
+					
                     <div class="dropdown-menu dropdown-menu-right w pt-0 mt-2 animate fadeIn">
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <?php
+			if(empty(Auth::user()->name)){
+			}else{
+				if(Auth::user()->id_group == 1){
+				
+				}else{
+			?>	
+			<a class="dropdown-item" href="{{ url('editperwakilans/'.Auth::user()->id) }}">
+                            <b >Profil & Password </b>
+                        </a>
+			<?php	
+				}
+			  }
+			?>
+						
+						<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <b >Log Out </b>
                         </a>
                     </div>

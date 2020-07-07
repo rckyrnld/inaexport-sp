@@ -390,6 +390,13 @@ class VerifyuserController extends Controller
 
 		return view('verifyuser.editperwakilan', compact('pageTitle','id'));
 	}
+	
+	public function editperwakilans($id)
+    {
+		$pageTitle = "Representative";
+
+		return view('verifyuser.editperwakilans', compact('pageTitle','id'));
+	}
 
     public function detailverify($id)
     {
@@ -642,6 +649,74 @@ class VerifyuserController extends Controller
 		}
 		
 		return redirect('profilperwakilan')->with('success','Success Update Data!');
+	}
+	
+	public function updateperwakilans(Request $request)
+	{
+		if($request->types == "DINAS PERDAGANGAN"){
+			if(empty($request->password) || $request->password == null){
+			$update1 = DB::select("
+			update itdp_admin_dn set nama='".$request->pejabat."', id_country ='".$request->country."', email ='".$request->email."', web='".$request->web."'
+			, telp='".$request->phone."', kepala='".$request->username."', username='".$request->username."', status='".$request->status."'
+			where id='".$request->idb."'
+			");
+			
+			$update2 = DB::select("
+			update itdp_admin_users set name='".$request->username."', email ='".$request->email."', website='".$request->web."'
+			where id='".$request->ida."'
+			");
+			}else{
+			$update1 = DB::select("
+			update itdp_admin_dn set nama='".$request->pejabat."', id_country ='".$request->country."', email ='".$request->email."', web='".$request->web."'
+			, telp='".$request->phone."', kepala='".$request->username."', username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->status."'
+			where id='".$request->idb."'
+			");
+			
+			$update2 = DB::select("
+			update itdp_admin_users set name='".$request->username."', email ='".$request->email."', password ='".bcrypt($request->password)."', website='".$request->web."'
+			where id='".$request->ida."'
+			");
+			}
+			
+		}else{
+			// echo "b";die();
+			if(empty($request->password) || $request->password == null){
+				
+			$carigroup = DB::select("select mst_country_group_id from mst_country where id='".$request->country."'");
+			if(count($carigroup) == 0){
+				$ic = 0;
+			}else{
+				foreach($carigroup as $cg){
+					$ic = $cg->mst_country_group_id;
+				}
+			}
+			$update1 = DB::select("
+			update itdp_admin_ln set nama='".$request->pejabat."', id_country ='".$ic."', email ='".$request->email."', web='".$request->web."'
+			, telp='".$request->phone."', kepala='".$request->username."', username='".$request->username."', status='".$request->status."', country='".$request->country."'
+			where id='".$request->idb."'
+			");
+			
+			$update2 = DB::select("
+			update itdp_admin_users set name='".$request->username."', email ='".$request->email."', website='".$request->web."'
+			where id='".$request->ida."'
+			");
+			
+			}else{
+			$update1 = DB::select("
+			update itdp_admin_ln set nama='".$request->pejabat."', id_country ='".$request->country."', email ='".$request->email."', web='".$request->web."'
+			, telp='".$request->phone."', kepala='".$request->username."', username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->status."'
+			where id='".$request->idb."'
+			");
+			
+			$update2 = DB::select("
+			update itdp_admin_users set name='".$request->username."', email ='".$request->email."', password ='".bcrypt($request->password)."', website='".$request->web."'
+			where id='".$request->ida."'
+			");
+			}
+
+		}
+		
+		return redirect('editperwakilans/'.$request->ida)->with('success','Success Update Data!');
 	}
 	public function simpan_profil(Request $request)
     {

@@ -105,7 +105,10 @@
 		</div>
 		<div class="form-group col-sm-12">
 			<?php 
-			$ms1 = DB::select("select id,nama_kategori_en from csc_product order by nama_kategori_en asc");
+			$ms1 = DB::select("select a.id, a.nama_kategori_en from csc_product a, csc_product_single b 
+where a.id = b.id_csc_product or a.id = b.id_csc_product_level1 or a.id = b.id_csc_product_level2
+group by a.id,a.nama_kategori_en 
+order by a.nama_kategori_en asc");
 			?>
 			<select style="color:black;" class="form-control select2" name="category" id="category" >
 			<option value="">-- Select Category --</option>

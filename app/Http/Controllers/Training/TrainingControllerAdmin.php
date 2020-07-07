@@ -135,9 +135,14 @@ class TrainingControllerAdmin extends Controller
 
                 return '<div align="left">' . $data->training_en . '</div>';
             })
+			->addColumn('topic_en', function ($data) {
+
+                return '<div align="left">' . $data->topic_en . '</div>';
+            })
             ->addColumn('start_date', function ($data) {
-                $date = date("Y/m/d", strtotime($data->start_date));
-                $date2 = date("Y/m/d", strtotime($data->end_date));
+                $date = date("d-m-Y", strtotime($data->start_date));
+				
+                $date2 = date("d-m-Y", strtotime($data->end_date));
                 return '' . $date . ' - ' . $date2 . '';
             })
             ->addColumn('duration', function ($data) {
@@ -172,7 +177,7 @@ class TrainingControllerAdmin extends Controller
               ';
                 }
             })
-            ->rawColumns(['action', 'training_en'])
+            ->rawColumns(['action', 'training_en','topic_en'])
             ->make(true);
     }
 

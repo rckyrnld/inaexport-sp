@@ -38,7 +38,7 @@
                     <th>Training</th>
 					<th>Topic</th>
 					<th>Location</th>
-                    <th>Date</th>
+                    <th width="10%">Date</th>
                     <th>Duration</th>
                     
                     

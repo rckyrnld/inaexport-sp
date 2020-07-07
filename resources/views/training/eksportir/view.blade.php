@@ -29,7 +29,7 @@
                   <tr>
                     <th>No</th>
                     <th>Training</th>
-                    <th>Date</th>
+                    <th width="10%">Date</th>
                     <th>Duration</th>
                     <th>Topic</th>
                     <th>Location</th>

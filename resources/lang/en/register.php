@@ -3,10 +3,11 @@ return [
     "title" => "Form Register Buyer",
     "intro" => "Selamat datang di halaman registrasi, silahkan isi form di bawah ini!",
     "forms" => [
+        "bu" => "Business Entity",
         "company" => "Company",
         "username" => "Username",
         "email" => "Email",
-        "phone" => "Phone",
+        "phone" => "Phone / Mobile",
         "fax" => "Fax",
         "website" => "Website",
         "password" => "Password",
