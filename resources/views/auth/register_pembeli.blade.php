@@ -144,7 +144,7 @@
                         </div>
 
                     </div>
-                    <div class="form-row">
+                    <!--<div class="form-row">
 
                         <div class="form-group col-sm-4" align="left">
                             <label> &nbsp;Product Interest </label>
@@ -152,11 +152,12 @@
                         </div>
 
                         <div class="form-group col-sm-8" align="left">
-                            <input type="text" data-role="tagsinput" class="form-control" value="">
+                           
 
                         </div>
 
-                    </div>
+                    </div> -->
+					 <input type="hidden"  class="form-control" value="">
                     {{--<div class="form-row">
 
                         <div class="form-group col-sm-4" align="left">

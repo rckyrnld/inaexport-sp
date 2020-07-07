@@ -95,8 +95,8 @@ class RegistrasiController extends Controller
         $date = date('Y-m-d H:i:s');
 //        dd($admin_all);
         $insert1 = DB::select("
-			insert into itdp_profil_imp (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
-			('".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
+			insert into itdp_profil_imp (badanusaha,company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
+			('".$request->badanusaha."','".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
 			,'".$request->email."','".$request->website."','".$date."','1','".$request->city."','".$request->country."')
 		");
 		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_imp");

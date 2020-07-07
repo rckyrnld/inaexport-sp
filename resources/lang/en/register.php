@@ -7,7 +7,7 @@ return [
         "company" => "Company",
         "username" => "Username",
         "email" => "Email",
-        "phone" => "Phone",
+        "phone" => "Phone / Mobile",
         "fax" => "Fax",
         "website" => "Website",
         "password" => "Password",
