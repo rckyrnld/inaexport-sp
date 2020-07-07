@@ -89,10 +89,10 @@ body {font-family: Arial;}
 		<label><b>What are you looking for</b></label>
 		</div>
 		<div class="col-sm-4">
-		<label><b>Duration</b></label>
+		<label><b>Duration (<font color="red">*</font>)</b></label>
 		</div>
 		<div class="form-group col-sm-8">
-			<input type="text" value="" name="cmp" id="cmp" class="form-control" required>
+			<input type="text" value="" name="cmp" id="cmp" class="form-control">
 		</div>
 		<div class="form-group col-sm-4">
 			<select class="form-control" name="valid" id="valid" required>
@@ -108,7 +108,7 @@ body {font-family: Arial;}
 	</div>
 	<div class="form-row">
 		<div class="col-sm-12">
-		<label><b>Category</b></label>
+		<label><b>Category (<font color="red">*</font>)</b></label>
 		</div>
 		<div class="form-group col-sm-12">
 			<?php 
@@ -140,7 +140,7 @@ body {font-family: Arial;}
 	</div> -->
 	<div class="form-row">
 		<div class="col-sm-12">
-		<label><b>Specification</b></label>
+		<label><b>Specification (<font color="red">*</font>)</b></label>
 		</div>
 		<div class="form-group col-sm-12">
 			<textarea value="" name="spec" id="spec" class="form-control" required></textarea>
@@ -157,9 +157,9 @@ body {font-family: Arial;}
 		</div>
 		<div class="form-group col-sm-6">
 			<div class="form-row">
-		<div class="col-sm-7"><input type="number" name="eo" id="eo" class="form-control" required> </div>
+		<div class="col-sm-7"><input type="number" name="eo" id="eo" class="form-control"> </div>
 		<div class="col-sm-5"> 
-		<select class="form-control select2" name="neo" id="neo" required>
+		<select class="form-control select2" name="neo" id="neo">
 		 
                   											                    											  <option value="Each">Each</option>
                   											                    											  <option value="Foot">Foot</option>
@@ -204,9 +204,9 @@ body {font-family: Arial;}
 		<div class="form-group col-sm-6">
 				
 			<div class="form-row">
-		<div class="col-sm-7"><input type="text" value="" name="tp" id="tp" class="amount form-control" required></div>
+		<div class="col-sm-7"><input type="text" value="" name="tp" id="tp" class="amount form-control"></div>
 		<div class="col-sm-5">
-			<select class="form-control" name="ntp" id="ntp" required>
+			<select class="form-control" name="ntp" id="ntp" >
 				<option value="SAR">Arab Saudi Riyal(SAR)</option>
 				<option value="BND">Brunei Dollar(BND)</option>
 				<option value="CNY">China Yuan(CNY)</option>
@@ -242,10 +242,10 @@ body {font-family: Arial;}
 <br><br>
 <div class="form-row">
 		<div class="col-sm-6">
-		<label><b>Location of delivery</b></label>
+		<label><b>Location of delivery (<font color="red">*</font>)</b></label>
 		</div>
 		<div class="col-sm-6">
-		<label><b>City</b></label>
+		<label><b>City (<font color="red">*</font>)</b></label>
 		</div>
 		<div class="form-group col-sm-6">
 			<?php 
@@ -269,7 +269,7 @@ body {font-family: Arial;}
 		<label><b>Shipping & Payment conditions</b></label>
 		</div>
 		<div class="form-group col-sm-12">
-			<textarea value="" name="ship" id="ship" class="form-control" required></textarea>
+			<textarea value="" name="ship" id="ship" class="form-control"></textarea>
 		</div>
 		
 	</div>

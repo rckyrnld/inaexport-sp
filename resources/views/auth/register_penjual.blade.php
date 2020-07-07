@@ -120,7 +120,7 @@
 
                         </div>
 						 <div class="form-group col-sm-2" align="left">
-						<select name="badanusaha" class="form-control" required>
+						<select id="badanusaha" name="badanusaha" class="form-control" required>
 															<option>-</option>
 															<?php
 															$bns = DB::select("select * from eks_business_entity");
@@ -364,6 +364,7 @@
     }
 
     function simpanpenjual() {
+        var badanusaha = $('#badanusaha').val();
         var company = $('#company').val();
         // var username = $('#username').val();
         var email = $('#email').val();
@@ -401,6 +402,7 @@
     }
 
     function simpanpenjual2() {
+        var badanusaha = $('#badanusaha').val();
         var company = $('#company').val();
         // var username = $('#username').val();
         var email = $('#email').val();
@@ -463,6 +465,7 @@
                     type: "POST",
                     url: '{{url('/simpan_rpenjual')}}',
                     data: {
+                        badanusaha: badanusaha,
                         company: company,
                         // username: username,
                         email: email,
@@ -485,6 +488,7 @@
                     },
                 });
 
+                $('#badanusaha').val('');
                 $('#company').val('');
                 // $('#username').val('');
                 $('#website').val('');
