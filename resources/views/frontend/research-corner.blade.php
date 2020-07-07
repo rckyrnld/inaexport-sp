@@ -140,9 +140,10 @@
         <div class="col-lg-12 col-md-12 col-12">
           <div class="row shop_wrapper">
           @foreach($research as $key => $data)
-            <div class="col-lg-3 col-md-3 col-12 a-modif small" style="height: 100%; padding-top: 20px;background-color: #f8f8f8;border-radius: 10px;" >
+            <div class="col-lg-3 col-md-3 col-12 a-modif small" style="height: 100%; padding-top: 20px;" >
             <?php $size = 162; $num_char = 23;?>
-
+            
+            <div class="kontennya" style="width: 100%;padding: 12px; background-color: #f8f8f8; border-radius: 10px">
         <?php
           if($loc == "ch"){
             $title = $data->title_en;
@@ -198,6 +199,7 @@
               <a href="{{$url}}" class="detail_rc" onclick="__download('{{$data->id}}', event, this)" style="text-decoration: none;"><i class="fa fa-download"></i>&nbsp;&nbsp;&nbsp;@lang("button-name.donlod")</a>
               </span>
           </div>
+            </div>
       </div>
         
       @endforeach
