@@ -954,11 +954,11 @@ class FrontController extends Controller
                     ->leftjoin('csc_broadcast_research_corner','csc_broadcast_research_corner.id_research_corner','csc_research_corner.id');
             if($searchEvent == 1){
                 $param = $request->nama;
-                $query->where('csc_research_corner.id', $param);
-                // $query->where(function($query) use ($param){
-                //     $query->where('csc_research_corner.title_en', 'ILIKE', "%".$param."%")
-                //         ->orWhere('csc_research_corner.title_in', 'ILIKE', "%".$param."%");
-                // });
+                // $query->where('csc_research_corner.id', $param);
+                $query->where(function($query) use ($param){
+                    $query->where('csc_research_corner.title_en', 'ILIKE', "%".$param."%")
+                        ->orWhere('csc_research_corner.title_in', 'ILIKE', "%".$param."%");
+                });
             } else if($searchEvent == 2){
                 $param = $request->country;
                 $query->where('id_mst_country', $param);

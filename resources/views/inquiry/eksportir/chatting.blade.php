@@ -121,7 +121,7 @@ body {font-family: Arial;}
                             <h5><b>Details Inquiry</b></h5>
                         </div>
                         <div class="col-md-2">
-                            @if($cekfile != 0)
+                            {{-- @if($cekfile != 0) --}}
                                 @if($inquiry->type == "importir")
                                     @if($inquiry->status != 3 && $inquiry->status != 4)
                                         <button type="button" class="btn btn-warning" data-toggle="modal"
@@ -137,7 +137,7 @@ body {font-family: Arial;}
                                         </button>
                                     @endif
                                 @endif
-                            @endif
+                            {{-- @endif --}}
                         </div>
                     </div>
                     <br><br>

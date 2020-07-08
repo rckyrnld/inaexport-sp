@@ -377,7 +377,8 @@
                                     <b>Email</b>
                                   </div>
                                   <div class="col-md-6">
-                                    <input type="email" autocomplete="off" class="form-control" name="cp_email" @if($page != 'add') @if($cp) value="{{$cp->email}}" @endif @endif required>
+                                    <input type="text" autocomplete="off" class="form-control" name="cp_email" @if($page != 'add') @if($cp) value="{{$cp->email}}" @endif @endif required>
+                                    <!-- <input type="email" autocomplete="off" class="form-control" name="cp_email" @if($page != 'add') @if($cp) value="{{$cp->email}}" @endif @endif required> -->
                                   </div>
                                 </div><br>
                               </div>
@@ -388,7 +389,8 @@
                                     <b>Phone</b>
                                   </div>
                                   <div class="col-md-6">
-                                    <input type="text" onkeypress="this.value=removeSpaces(this.value);" autocomplete="off" class="form-control" name="cp_phone" maxlength="15" @if($page != 'add') @if($cp) value="{{$cp->phone}}" @endif @endif >
+                                    <input type="text" onkeypress="this.value=removeSpaces(this.value);" autocomplete="off" class="form-control" name="cp_phone" @if($page != 'add') @if($cp) value="{{$cp->phone}}" @endif @endif >
+                                    <!-- <input type="text" onkeypress="this.value=removeSpaces(this.value);" maxlength="15" autocomplete="off" class="form-control" name="cp_phone" @if($page != 'add') @if($cp) value="{{$cp->phone}}" @endif @endif > -->
                                   </div>
                                 </div><br>
                               </div>

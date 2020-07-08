@@ -41,6 +41,10 @@
     font-family: 'Arial' !important; 
   }
 
+  .kontennya:hover{
+        box-shadow: 0 0 15px rgba(194, 216, 255, 1)
+    }
+
   
   .search{
         border-top: 2px solid #1a70bb;
@@ -108,17 +112,17 @@
                         <div class="input-group search-event">
                             <div class="input-group-prepend">
                                 <select id="search" name="search" class="sel-event">
-                                    <option value="1" @if($searchEvent == 1) selected @endif>Title</option>
+                                    <option value="1" @if($searchEvent == 1) selected @endif>Product</option>
                                     <option value="2" @if($searchEvent == 2) selected @endif>Country</option>
                                 </select>
                             </div>
                             <select class="form-control select2 search " name="country" id="search_country" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
                                 <option value=""></option>
                             </select>
-                            <select class="form-control select2 search " name="nama" id="search_name" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
+                            <!-- <select class="form-control select2 search " name="nama" id="search_name" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
                                 <option value=""></option>
-                            </select>
-                            <!-- <input type="text" id="search_name" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent == 1) value="{{$param}}" @endif> -->
+                            </select> -->
+                            <input type="text" id="search_name" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent == 1) value="{{$param}}" @endif>
 <!--                             
                             <select class="form-control select2 search " name="product" id="search_product" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
                                 <option value=""></option>
@@ -270,27 +274,27 @@
           }
       });
 
-      $('#search_name').select2({
-          allowClear: true,
-          placeholder: 'Search Title',
-          ajax: {
-              url: "{{route('productrc.getproductrc')}}",
-              dataType: 'json',
-              delay: 250,
-              processResults: function (data) {
-                  return {
-                      results: $.map(data, function (item) {
-                      console.log(item.id);
-                          return {
-                              text: item.title,
-                              id: item.id
-                          }
-                      })
-                  };
-              },
-              cache: true
-          }
-      });
+      // $('#search_name').select2({
+      //     allowClear: true,
+      //     placeholder: 'Search Product',
+      //     ajax: {
+      //         url: "{{route('productrc.getproductrc')}}",
+      //         dataType: 'json',
+      //         delay: 250,
+      //         processResults: function (data) {
+      //             return {
+      //                 results: $.map(data, function (item) {
+      //                 console.log(item.id);
+      //                     return {
+      //                         text: item.title,
+      //                         id: item.id
+      //                     }
+      //                 })
+      //             };
+      //         },
+      //         cache: true
+      //     }
+      // });
 
       $('#search_product').select2({
           allowClear: true,
@@ -318,35 +322,36 @@
   var search = "{{$searchEvent}}";
   if(search == 2){
       $('#search_country').next('.select2-container').show();
-      // $('#search_name').hide();
-      $('#search_name').next('.select2-container').hide();
+      $('#search_name').hide();
+      // $('#search_name').next('.select2-container').hide();
       // $('#search_product').next('.select2-container').show();
   }else{
     
       $('#search_country').next('.select2-container').hide();
-      // $('#search_name').show();
-      $('#search_name').next('.select2-container').show();
+      $('#search_name').show();
+      // $('#search_name').next('.select2-container').show();
       // $('#search_product').next('.select2-container').hide();
   }
   });
 
 
   var searchEvent = "{{isset($searchEvent) ? $searchEvent : ''}}";
-  if(searchEvent == 1){
-      console.log(searchEvent);
-      var param = "{{isset($param) ? $param : '' }}";
-      if (param != "") {
-          $.ajax({
-              type: 'GET',
-              url: "{{route('productrc.getproductrc')}}",
-              data: { code: param }
-          }).then(function (data) {
-          var option = new Option(data[0].title, data[0].id, true, true);
+  // if(searchEvent == 1){
+      // console.log(searchEvent);
+      // var param = "{{isset($param) ? $param : '' }}";
+      // if (param != "") {
+      //     $.ajax({
+      //         type: 'GET',
+      //         url: "{{route('productrc.getproductrc')}}",
+      //         data: { code: param }
+      //     }).then(function (data) {
+      //     var option = new Option(data[0].title, data[0].id, true, true);
 
-          $('#search_name').append(option).trigger('change');
-          });
-      }
-  }else if(searchEvent == 2){
+      //     $('#search_name').append(option).trigger('change');
+      //     });
+      // }
+  // }else
+   if(searchEvent == 2){
     console.log(searchEvent);
       var param = "{{isset($param) ? $param : '' }}";
       if (param != "") {
@@ -388,7 +393,7 @@
           // $('#search_product').hide();
 
           $('#search_country').next('.select2-container').hide();
-          $('#search_name').next('.select2-container').show();
+          // $('#search_name').next('.select2-container').show();
           // $('#search_product').next('.select2-container').hide();
       } else if(pilihan == 2){
           $('#search_country').show();
@@ -397,7 +402,7 @@
           // $('#search_product').show();
 
           $('#search_country').next('.select2-container').show();
-          $('#search_name').next('.select2-container').hide();
+          // $('#search_name').next('.select2-container').hide();
           // $('#search_product').next('.select2-container').show();
       }
   });

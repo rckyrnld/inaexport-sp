@@ -67,6 +67,39 @@
                                         <center>Action</center>
                                     </th>
                                 </tr>
+                                <!-- <tr>
+                                    <th>No</th>
+                                    <th>
+                                        <center>Company</center>
+                                    </th>
+                                    <th>
+                                        <center>Email</center>
+                                    </th>
+                                    <th>
+                                        <center>PIC Name</center>
+                                    </th>
+									<th>
+                                        <center>PIC Telephone</center>
+                                    </th>
+									<th>
+                                        <center>Register Date</center>
+                                    </th>
+									<th>
+                                        <center>Last Activity</center>
+                                    </th>
+                                    <th>
+                                        <center>NPWP</center>
+                                    </th>
+									<th>
+                                        <center>Verify By Admin</center>
+                                    </th>
+                                    <th width="10%">
+                                        <center>Verify Date</center>
+                                    </th>
+                                    <th width="10%">
+                                        <center>Action</center>
+                                    </th>
+                                </tr> -->
                                 </thead>
 								<tbody>
 								

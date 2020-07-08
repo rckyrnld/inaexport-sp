@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class AnnualController extends Controller
 {
@@ -152,30 +153,181 @@ class AnnualController extends Controller
 
     public function getreporteksportir()
     {
-        $pesan = DB::select("SELECT ID, company,addres,postcode,phone,fax FROM itdp_profil_eks ORDER BY ID DESC ");
-//        dd($pesan);
+        $pesan = DB::table('itdp_profil_eks')->select('itdp_profil_eks.id','itdp_profil_eks.company', 'itdp_profil_eks.addres', 'mst_province.province_en',
+        'itdp_profil_eks.fax', 'itdp_company_users.status', 'itdp_company_users.verified_at','itdp_company_users.email')
+        ->join('itdp_company_users','itdp_company_users.id_profil','itdp_profil_eks.id')
+        ->join('mst_province','mst_province.id','itdp_profil_eks.id_mst_province')->where('itdp_company_users.status' , '1');
+        // ->orderby('itdp_profil_eks.id','desc');
+        // $pesan = DB::select("SELECT itdp_profil_eks.ID,itdp_profil_eks.company, itdp_profil_eks.addres, mst_province.province_en,
+        //  itdp_profil_eks.fax, itdp_company_users.status, itdp_company_users.verified_at,itdp_company_users.email
+        // FROM itdp_profil_eks JOIN itdp_company_users ON itdp_company_users.id_profil = itdp_profil_eks.id  
+        // JOIN mst_province ON mst_province.id = itdp_profil_eks.id_mst_province 
+        // WHERE itdp_company_users.status = '1' ORDER BY itdp_profil_eks.ID DESC ");
+        // $pesan = DB::select("SELECT ID, company,addres,postcode,phone,fax FROM itdp_profil_eks ORDER BY ID DESC ");
+    //    dd($pesan);
+    
         return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
                 return '<div align="left">'.$pesan->company.'</div>';
             })
             ->addColumn('f2', function ($pesan) {
-                return $pesan->addres;
+                return '<div align="left">'. $pesan->addres.'</div>';
+
             })
-            ->addColumn('f3', function ($pesan) {
-                return $pesan->postcode;
+            ->addColumn('province', function ($pesan) {
+                return '<div align="left">'. $pesan->province_en.'</div>';
             })
-            ->addColumn('f4', function ($pesan) {
-                return $pesan->phone;
+            ->addColumn('email', function ($pesan) {
+                return '<div align="left">'.$pesan->email.'</div>';
             })
-            ->addColumn('f5', function ($pesan) {
-                return $pesan->fax;
+            ->addColumn('pic_name', function ($pesan) {
+                $namapicnya = '';
+                $no = 0;
+                $datapic = DB::table('itdp_contact_eks')->where('id_itdp_profil_eks' , $pesan->id)->get();
+                if(count($datapic) > 0  ){
+                    foreach($datapic as $namapic){
+                        if($no == 0){
+                            $namapicnya .=  $namapic->name;
+                            }else{
+                            $namapicnya .= ',' . $namapic->name;
+                        }
+                        $no++;
+                    }
+                }
+                return'<div align="left">'. $namapicnya .'</div>';
             })
+            ->addColumn('pic_telp', function ($pesan) {
+                $telppicnya = '';
+                $no2 = 0;
+
+                $datapic2 = DB::table('itdp_contact_eks')->where('id_itdp_profil_eks' , $pesan->id)->get();
+                if(count($datapic2) > 0  ){
+                    foreach($datapic2 as $telppic){
+                        if($no2 == 0){
+                            $telppicnya .=  $telppic->phone;
+                        }else{
+                            $telppicnya .= ',' . $telppic->phone;
+                        }
+                        $no2++;
+                    }
+                }
+                return'<div align="left">'. $telppicnya .'</div>';
+            })
+            
+            // ->addColumn('f3', function ($pesan) {
+            //     return $pesan->postcode;
+            // })
+            // ->addColumn('f4', function ($pesan) {
+            //     return $pesan->phone;
+            // }) 
+            // ->addColumn('f5', function ($pesan) {
+            //     return $pesan->fax;
+            // })
+            ->addColumn('verify_date', function ($pesan) {
+                return date('d-m-Y',strtotime($pesan->verified_at));
+            })
+            ->addIndexColumn()
             ->addColumn('action', function ($pesan) {
                 return '<a href="' . url('eksportir/listeksportir/' . $pesan->id) . '" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-list text-white"></i></a>';
             })
-            ->addIndexColumn()
-            ->rawColumns(['action','f1'])
+            ->rawColumns(['action','f1','f2','province','email', 'pic_name','pic_telp'])
             ->make(true);
+    }
+
+    public function printexportirreport(){
+        $datapic = DB::table('itdp_profil_eks')->select('itdp_profil_eks.id','itdp_profil_eks.company', 'itdp_profil_eks.addres', 'mst_province.province_en',
+        'itdp_profil_eks.fax', 'itdp_company_users.status', 'itdp_company_users.verified_at','itdp_company_users.email')
+        ->join('itdp_company_users','itdp_company_users.id_profil','itdp_profil_eks.id')
+        ->join('mst_province','mst_province.id','itdp_profil_eks.id_mst_province')->where('itdp_company_users.status' , '1')
+        ->orderby('itdp_profil_eks.id','desc')->get();
+
+        $start = 0;
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ];
+        $sheet->getStyle('A1:I4')->getAlignment()->setHorizontal('center');
+
+        $sheet->getColumnDimension('A')->setWidth(8);
+        $sheet->getColumnDimension('B')->setWidth(40);
+        $sheet->getColumnDimension('C')->setWidth(40);
+        $sheet->getColumnDimension('D')->setWidth(30);
+        $sheet->getColumnDimension('E')->setWidth(30);
+        $sheet->getColumnDimension('F')->setWidth(30);
+        $sheet->getColumnDimension('G')->setWidth(30);
+        $sheet->getColumnDimension('H')->setWidth(30);
+        $sheet->getColumnDimension('I')->setWidth(30);
+
+        $sheet->setCellValue('A1', 'Data Exporter Report');
+
+
+        $sheet->setCellValue('A3', 'NO');
+        $sheet->setCellValue('B3', 'COMPANY');
+        $sheet->setCellValue('C3', 'ADDRESS');
+        $sheet->setCellValue('D3', 'PROVINCE');
+        $sheet->setCellValue('E3', 'EMAIL');
+        $sheet->setCellValue('F3', 'PIC NAME');
+        $sheet->setCellValue('G3', 'PIC TELEPHONE');
+        $sheet->setCellValue('H3', 'VERIFY DATE');
+
+        $spreadsheet->getActiveSheet()->mergeCells('A1:H1');
+        
+        $rows = 4;
+        $no = $start +1;
+        foreach($datapic as $detail){
+            $hitung= 0;
+            $namapicnya = '';
+            $telppicnya = '';
+            $datapic = DB::table('itdp_contact_eks')->where('id_itdp_profil_eks' , $detail->id)->get();
+            if(count($datapic) > 0  ){
+                foreach($datapic as $pic){
+                    if($hitung == 0){
+                        $namapicnya .=  $pic->name;
+                        $telppicnya .= $pic->phone;
+                    }else{
+                        $namapicnya .= ',' . $pic->name;
+                        $telppicnya .= ',' . $pic->phone;
+                    }
+                    $hitung++;
+                }
+            }
+
+            $sheet->setCellValue('A' . $rows, $no);
+            $sheet->setCellValue('B' . $rows, $detail->company);
+            $sheet->setCellValue('C' . $rows, $detail->addres);
+            $sheet->setCellValue('D' . $rows, $detail->province_en);
+            $sheet->setCellValue('E' . $rows, $detail->email);
+            $sheet->setCellValue('F' . $rows, $namapicnya);
+            $sheet->setCellValue('G' . $rows, $telppicnya);
+            $sheet->setCellValue('H' . $rows, date('d-m-Y',strtotime($detail->verified_at)));
+            $rows++;
+            $no++;
+        }
+
+        $length = $rows-1;
+        $sheet->getStyle('A3:H'.$length)->applyFromArray($styleArray);
+        $sheet->getStyle('A4:H'.$length)->getAlignment()->setHorizontal('left');
+        $sheet->getStyle('A3:H'.$length)->getAlignment()->setVertical('center');
+
+        
+        $sheet->getStyle('A3:A'.$length)->getAlignment()->setHorizontal('center');
+
+        $sheet->getStyle('H3:H'.$length)->getAlignment()->setHorizontal('center');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
+        $file_name = public_path()."/excel/ExporterReport.xlsx";
+        $writer->save( $file_name);
+
+        return response()->download($file_name);
+
     }
 
     public function listeksportir($id)

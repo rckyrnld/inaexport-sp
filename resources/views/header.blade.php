@@ -113,7 +113,7 @@
 
 
 </head>
-<body style="background-color: #fff !important;">
+<body style="background-color: #fff !important; ">
 <?php date_default_timezone_set('Asia/Jakarta'); ?>
 
 <div class="app" id="app">
