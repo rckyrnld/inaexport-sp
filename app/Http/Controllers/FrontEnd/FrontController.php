@@ -954,10 +954,11 @@ class FrontController extends Controller
                     ->leftjoin('csc_broadcast_research_corner','csc_broadcast_research_corner.id_research_corner','csc_research_corner.id');
             if($searchEvent == 1){
                 $param = $request->nama;
-                $query->where(function($query) use ($param){
-                    $query->where('csc_research_corner.title_en', 'ILIKE', "%".$param."%")
-                        ->orWhere('csc_research_corner.title_in', 'ILIKE', "%".$param."%");
-                });
+                $query->where('csc_research_corner.id', $param);
+                // $query->where(function($query) use ($param){
+                //     $query->where('csc_research_corner.title_en', 'ILIKE', "%".$param."%")
+                //         ->orWhere('csc_research_corner.title_in', 'ILIKE', "%".$param."%");
+                // });
             } else if($searchEvent == 2){
                 $param = $request->country;
                 $query->where('id_mst_country', $param);
@@ -1949,15 +1950,15 @@ class FrontController extends Controller
             $search = $request->q;
             $countryall->where(function ($query) use ($search) {
                 $query->where('mst_country.country', 'ilike', '%' . $search . '%')
-                    ->orderby('event_detail.country', 'asc');
+                    ->orderby('mst_country.country', 'asc');
             });
             //          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
 //            $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');
         } else if (isset($request->code)) {
             $countryall->where('mst_country.id', $request->code)
-                        ->orderby('event_detail.country', 'asc');
+                        ->orderby('mst_country.country', 'asc');
         } else {
-            $countryall->limit(10);
+            $countryall->orderby('mst_country.country', 'asc')->limit(10);
         }
 
         return response()->json($countryall->get());
@@ -1975,15 +1976,15 @@ class FrontController extends Controller
             $search = $request->q;
             $countryall->where(function ($query) use ($search) {
                 $query->where('mst_country.country', 'ilike', '%' . $search . '%')
-                    ->orderby('event_detail.country', 'asc');
+                    ->orderby('mst_country.country', 'asc');
             });
             //          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
 //            $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');
         } else if (isset($request->code)) {
             $countryall->where('mst_country.id', $request->code)
-                    ->orderby('event_detail.country', 'asc');
+                    ->orderby('mst_country.country', 'asc');
         } else {
-            $countryall->limit(10);
+            $countryall->orderby('mst_country.country', 'asc')->limit(10);
         }
 
         return response()->json($countryall->get());
@@ -2001,15 +2002,15 @@ class FrontController extends Controller
             $search = $request->q;
             $countryall->where(function ($query) use ($search) {
                 $query->where('mst_country.country', 'ilike', '%' . $search . '%')
-                        ->orderby('event_detail.country', 'asc');
+                        ->orderby('mst_country.country', 'asc');
             });
             //          $hscode->where('fullhs', 'ILIKE', '%'.$request->q.'%');//ini untuk carinya pake full hs
 //            $hscode->where('desc_eng', 'ILIKE', '%'.$request->q.'%');
         } else if (isset($request->code)) {
             $countryall->where('mst_country.id', $request->code)
-                        ->orderby('event_detail.country', 'asc');
+                        ->orderby('mst_country.country', 'asc');
         } else {
-            $countryall->limit(10);
+            $countryall->orderby('mst_country.country', 'asc')->limit(10);
         }
 
         return response()->json($countryall->get());
@@ -2155,6 +2156,32 @@ class FrontController extends Controller
         ->groupby('nama_kategori_en','id');
         // echo $final_query->toSql();die();
         return response()->json($final_query->get());
+    
+    }
+
+    public function getproductrc(Request $request){
+        $lang = app()->getLocale();
+        if($lang == 'ch'){ $lang = 'en';}
+        $productall = DB::table('csc_research_corner')
+            ->select('csc_research_corner.id','csc_research_corner.title_'.$lang.' As title' )
+            ->groupby('csc_research_corner.id','title');
+
+        if (isset($request->q)) {
+            $search = $request->q;
+            $productall->where(function ($query) use ($search, $lang) {
+                $query->where('csc_research_corner.title_'.$lang, 'ilike', '%' . $search . '%');
+            });
+        } else if (isset($request->code)) {
+            $productall->where('csc_research_corner.id', $request->code);
+        } else {
+            $productall->groupby('csc_research_corner.title_'.$lang)
+                        ->orderby('csc_research_corner.title_'.$lang, 'asc')
+                        ->limit(10);
+        }
+        // dd($productall->get());
+
+        // echo $final_query->toSql();die();
+        return response()->json($productall->get());
     
     }
 

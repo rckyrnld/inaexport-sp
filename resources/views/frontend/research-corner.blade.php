@@ -108,14 +108,17 @@
                         <div class="input-group search-event">
                             <div class="input-group-prepend">
                                 <select id="search" name="search" class="sel-event">
-                                    <option value="1" @if($searchEvent == 1) selected @endif>Name</option>
+                                    <option value="1" @if($searchEvent == 1) selected @endif>Title</option>
                                     <option value="2" @if($searchEvent == 2) selected @endif>Country</option>
                                 </select>
                             </div>
                             <select class="form-control select2 search " name="country" id="search_country" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
                                 <option value=""></option>
                             </select>
-                            <input type="text" id="search_name" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent == 1) value="{{$param}}" @endif>
+                            <select class="form-control select2 search " name="nama" id="search_name" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
+                                <option value=""></option>
+                            </select>
+                            <!-- <input type="text" id="search_name" name="nama" class="form-control search" placeholder="Search" autocomplete="off" @if($searchEvent == 1) value="{{$param}}" @endif> -->
 <!--                             
                             <select class="form-control select2 search " name="product" id="search_product" style="height:40px;width:70%; border-top: 2px solid #1a70bb; border-bottom: 2px solid #1a70bb;" >
                                 <option value=""></option>
@@ -137,9 +140,10 @@
         <div class="col-lg-12 col-md-12 col-12">
           <div class="row shop_wrapper">
           @foreach($research as $key => $data)
-            <div class="col-lg-3 col-md-3 col-12" style="height: 100%; padding-top: 20px;">
+            <div class="col-lg-3 col-md-3 col-12 a-modif small" style="height: 100%; padding-top: 20px;" >
             <?php $size = 162; $num_char = 23;?>
-
+            
+            <div class="kontennya" style="width: 100%;padding: 12px; background-color: #f8f8f8; border-radius: 10px">
         <?php
           if($loc == "ch"){
             $title = $data->title_en;
@@ -195,6 +199,7 @@
               <a href="{{$url}}" class="detail_rc" onclick="__download('{{$data->id}}', event, this)" style="text-decoration: none;"><i class="fa fa-download"></i>&nbsp;&nbsp;&nbsp;@lang("button-name.donlod")</a>
               </span>
           </div>
+            </div>
       </div>
         
       @endforeach
@@ -265,6 +270,28 @@
           }
       });
 
+      $('#search_name').select2({
+          allowClear: true,
+          placeholder: 'Search Title',
+          ajax: {
+              url: "{{route('productrc.getproductrc')}}",
+              dataType: 'json',
+              delay: 250,
+              processResults: function (data) {
+                  return {
+                      results: $.map(data, function (item) {
+                      console.log(item.id);
+                          return {
+                              text: item.title,
+                              id: item.id
+                          }
+                      })
+                  };
+              },
+              cache: true
+          }
+      });
+
       $('#search_product').select2({
           allowClear: true,
           placeholder: 'Search Category Product',
@@ -291,12 +318,14 @@
   var search = "{{$searchEvent}}";
   if(search == 2){
       $('#search_country').next('.select2-container').show();
-      $('#search_name').hide();
+      // $('#search_name').hide();
+      $('#search_name').next('.select2-container').hide();
       // $('#search_product').next('.select2-container').show();
   }else{
     
       $('#search_country').next('.select2-container').hide();
-      $('#search_name').show();
+      // $('#search_name').show();
+      $('#search_name').next('.select2-container').show();
       // $('#search_product').next('.select2-container').hide();
   }
   });
@@ -309,6 +338,20 @@
       if (param != "") {
           $.ajax({
               type: 'GET',
+              url: "{{route('productrc.getproductrc')}}",
+              data: { code: param }
+          }).then(function (data) {
+          var option = new Option(data[0].title, data[0].id, true, true);
+
+          $('#search_name').append(option).trigger('change');
+          });
+      }
+  }else if(searchEvent == 2){
+    console.log(searchEvent);
+      var param = "{{isset($param) ? $param : '' }}";
+      if (param != "") {
+          $.ajax({
+              type: 'GET',
               url: "{{route('countryrc.getcountry')}}",
               data: { code: param }
           }).then(function (data) {
@@ -317,6 +360,7 @@
           $('#search_country').append(option).trigger('change');
           });
       }
+
   }
   // else if(searchEvent == 2){
   //     console.log(searchEvent);
@@ -344,6 +388,7 @@
           // $('#search_product').hide();
 
           $('#search_country').next('.select2-container').hide();
+          $('#search_name').next('.select2-container').show();
           // $('#search_product').next('.select2-container').hide();
       } else if(pilihan == 2){
           $('#search_country').show();
@@ -352,6 +397,7 @@
           // $('#search_product').show();
 
           $('#search_country').next('.select2-container').show();
+          $('#search_name').next('.select2-container').hide();
           // $('#search_product').next('.select2-container').show();
       }
   });
