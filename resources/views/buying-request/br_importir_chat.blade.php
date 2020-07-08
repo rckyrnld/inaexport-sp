@@ -72,9 +72,10 @@
   .chat-header{
     width: 100%;
     height: 5%;
-    background-color: #DDEFFD;
+    background-color: #1a7688;
     border-radius: 30px 30px 0px 0px;
     padding: 2% 2% 2% 3%;
+	
   }
 
   .chat-user{
@@ -89,6 +90,7 @@
     overflow-x: hidden;
     padding: 2%;
     font-size: 15px;
+	background-color: #c9d3de;
   }
 
   .chat-footer{
@@ -97,6 +99,7 @@
     border-top: 2px solid #87c4ee;
     border-radius: 0px 0px 30px 30px;
     padding: 1% 1% 1% 1%;
+	background-color: #c9d3de;
   }
 
   .chat-message{
@@ -206,7 +209,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section_title">
-                        <br>
+                      
                     </div>
 
                 </div>
@@ -233,7 +236,6 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
 	
 	
       <div class="" style="color:black;padding-left:10px; padding-right:10px; border-radius: 3px;">
-	  <br>
 	 
 
 <?php 
@@ -241,9 +243,9 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
 								foreach($pesan as $ryu){
 									?>
 <div class="form-row">
-<div class="col-md-6">
+<div class="col-md-6" style="padding-right: 20px;">
    <div class="box-body">
-   <br><br>
+   
   
 	<div class="form-row">
 		<div class="col-sm-12">
@@ -357,13 +359,8 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
 		</div>
 		
 	</div>
-  
-	</div>
-
-</div>
-<div class="col-md-6">
-<div class="box-body">
-<br><br>
+	
+	
 <div class="form-row">
 		<div class="col-sm-12">
 		<label><b>Address Eksportir</b></label>
@@ -414,9 +411,185 @@ foreach($nyariek2 as $ek2){ $idu = $ek2->id; $company = $ek2->company; $addres =
 		
 	</div>
 	
-	
+  
+	</div>
 
 </div>
+<div class="col-md-6">
+  <div class="row">
+                <div class="col-lg-12 col-md-12">
+                  <div class="chat-container">
+                    <div class="chat-header">
+                      <div class="row">
+                        <div class="col-md-1">
+                          <br>
+                          <a href="{{url('/front_end/history')}}" style="width: 100%; height: 100%;" class="chat-back">
+                            <i class="fa fa-arrow-left" aria-hidden="true" style="color: #1A70BB; font-size: 40px;"></i>
+                          </a>
+                        </div>
+                        <div class="col-md-1" style="padding-left: 0px;">
+                          <img src="{{asset('front/assets/icon/user.png')}}" alt="" width="100%" />
+                        </div>
+                        <div class="col-md-8" style="padding-left: 0px;">
+                          <span class="chat-user" style=""><b><font color="white">Chat</font></b></span>
+                          <br>
+                          <span class="chat-user" style="text-transform: capitalize;"><b><font color="white">{{$company}}</b>&nbsp;&nbsp;</font><img src="{{asset('front/assets/icon/icon-exportir.png')}}" alt="" /></span>
+						<br>
+						<?php 
+						$messages = DB::select("select * from csc_buying_request_chat where id_br='".$id."' and id_join='".$idb."'");
+						$ry = 40055; ?>
+						@if(Cache::has('user-is-eksmp-' . $idu))
+    <span class="text-success"><font color="white">Online</font></span>
+@else
+    <span class="text-secondary"><font color="white">Offline</font></span>
+@endif
+						</div>
+                      </div>
+                    </div>
+                    <div class="chat-body" id="fg1">
+                      <div class="row" id="rchat" >
+                        <?php
+                          $datenya = NULL;
+                        ?>
+                        @foreach($messages as $msg)
+                          @if($msg->id_pengirim == Auth::guard('eksmp')->user()->id)
+                          <div class="col-md-12">
+                            @if($datenya == NULL)
+                                <?php
+                                   $datenya = date('d-m-Y', strtotime($msg->tanggal));
+										$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
+                                ?>
+                                <center>
+                                    <i>
+										{{$fix}}
+                                    </i>
+                                </center><br>
+                            @else
+                                @if($datenya != date('d-m-Y', strtotime($msg->tanggal)))
+                                    <?php
+                                        $datenya = date('d-m-Y', strtotime($msg->tanggal));
+										$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
+                                    ?>
+                                    <center>
+                                        <i>
+                                           {{$fix}}
+                                        </i>
+                                    </center><br>
+                                @endif
+                            @endif
+                            <div class="row pull-right">
+                              <div class="col-md-10">
+                                <label class="label chat-me">
+                                    @if($msg->files == NULL)
+                                        {{$msg->pesan}}<br>
+                                    @else
+                                        <a href="{{asset('uploads/pop/')}}" target="_blank" class="atag" style="color: white;">{{$msg->files}}</a><br><br>
+                                        {{$msg->pesan}}<br>
+                                    @endif
+                                    <span style="float: right;">{{date('H:i',strtotime($msg->tanggal))}}</span>
+                                </label>
+                              </div>
+                            </div>
+                          </div><br>
+                          @else
+                          <!-- <div class="col-md-1"></div> -->
+                          <div class="col-md-12">
+                            @if($datenya == NULL)
+                                <?php
+                                    $datenya = date('d-m-Y', strtotime($msg->tanggal));
+									$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
+									
+                                ?>
+                                <center>
+                                    <i>
+                                        {{$fix}}
+                                    </i>
+                                </center><br>
+                            @else
+                                @if($datenya != date('d-m-Y', strtotime($msg->tanggal)))
+                                    <?php
+                                        $datenya = date('d-m-Y', strtotime($msg->tanggal));
+										$pecah = (explode("-",$datenya));
+									$hari = $pecah[0];
+									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
+									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
+									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
+									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
+									else { $bulan=""; }
+									$thnn = $pecah[2];
+									 $fix = $bulan." ".$hari.",".$thnn;
+                                    ?>
+                                    <center>
+                                        <i>
+                                            {{$fix}}
+                                        </i>
+                                    </center><br>
+                                @endif
+                            @endif
+                            <div class="row">
+                              <div class="col-md-10">
+                                <label class="label chat-other">
+                                    @if($msg->files == NULL)
+                                        {{$msg->pesan}}<br>
+                                    @else
+                                        <a href="{{asset('uploads/pop/')}}" target="_blank" class="atag" style="color: white;">{{$msg->files}}</a><br><br>
+                                        {{$msg->pesan}}<br>
+                                    @endif
+                                    <span style="color: #555; float: right;">{{date('H:i',strtotime($msg->tanggal))}}</span>
+                                </label>
+                              </div>
+                            </div>
+                          </div><br>
+                          <!-- <div class="col-md-1"></div> -->
+                          @endif
+                        @endforeach
+                      </div>
+                    </div>
+                    <div class="chat-footer">
+                      <div class="row">
+                        <div class="col-md-1">
+                            <a  class="" data-toggle="modal" data-target="#myModal">
+                                <img src="{{asset('front/assets/icon/plus-circle.png')}}" alt="" width="100%" id="" />
+								</a>
+                            
+                          </form>
+                        </div>
+                        <div class="col-md-10" style="padding-left: 0px;">
+                          <textarea id="inputan" rows="2" class="chat-message"></textarea>
+                        </div>
+						
+                        <div class="col-md-1" style="padding-left: 0px;">
+                          <a onclick="kirimchat()" class="" id="btn-chat"><img src="{{asset('front/assets/icon/send-message.png')}}" alt="" width="70%" id="sendmessage" /></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
 
 </div>
 </div>
@@ -860,188 +1033,15 @@ function openCity(evt, cityName) {
             </div>
         </div>
     </section>
-	
+	<!--
 	<div class="product_details mt-20" style="background-color: #1A70BB; margin-bottom: 0px !important; margin-top: 0px; font-size: 14px;">
           <div class="container">
             <br><br>
-            <div class="row">
-                <div class="col-lg-12 col-md-12">
-                  <div class="chat-container">
-                    <div class="chat-header">
-                      <div class="row">
-                        <div class="col-md-1">
-                          <br>
-                          <a href="{{url('/front_end/history')}}" style="width: 100%; height: 100%;" class="chat-back">
-                            <i class="fa fa-arrow-left" aria-hidden="true" style="color: #1A70BB; font-size: 40px;"></i>
-                          </a>
-                        </div>
-                        <div class="col-md-1" style="padding-left: 0px;">
-                          <img src="{{asset('front/assets/icon/user.png')}}" alt="" width="100%" />
-                        </div>
-                        <div class="col-md-4" style="padding-left: 0px;">
-                          <span class="chat-user" style=""><b>Chat</b></span>
-                          <br>
-                          <span class="chat-user" style="text-transform: capitalize;"><b>{{$company}}</b>&nbsp;&nbsp;<img src="{{asset('front/assets/icon/icon-exportir.png')}}" alt="" /></span>
-						<br>
-						<?php 
-						$messages = DB::select("select * from csc_buying_request_chat where id_br='".$id."' and id_join='".$idb."'");
-						$ry = 40055; ?>
-						@if(Cache::has('user-is-eksmp-' . $idu))
-    <span class="text-success">Online</span>
-@else
-    <span class="text-secondary">Offline</span>
-@endif
-						</div>
-                      </div>
-                    </div>
-                    <div class="chat-body" id="fg1">
-                      <div class="row" id="rchat" >
-                        <?php
-                          $datenya = NULL;
-                        ?>
-                        @foreach($messages as $msg)
-                          @if($msg->id_pengirim == Auth::guard('eksmp')->user()->id)
-                          <div class="col-md-12">
-                            @if($datenya == NULL)
-                                <?php
-                                   $datenya = date('d-m-Y', strtotime($msg->tanggal));
-										$pecah = (explode("-",$datenya));
-									$hari = $pecah[0];
-									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
-									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
-									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
-									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
-									else { $bulan=""; }
-									$thnn = $pecah[2];
-									 $fix = $bulan." ".$hari.",".$thnn;
-                                ?>
-                                <center>
-                                    <i>
-										{{$fix}}
-                                    </i>
-                                </center><br>
-                            @else
-                                @if($datenya != date('d-m-Y', strtotime($msg->tanggal)))
-                                    <?php
-                                        $datenya = date('d-m-Y', strtotime($msg->tanggal));
-										$pecah = (explode("-",$datenya));
-									$hari = $pecah[0];
-									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
-									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
-									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
-									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
-									else { $bulan=""; }
-									$thnn = $pecah[2];
-									 $fix = $bulan." ".$hari.",".$thnn;
-                                    ?>
-                                    <center>
-                                        <i>
-                                           {{$fix}}
-                                        </i>
-                                    </center><br>
-                                @endif
-                            @endif
-                            <div class="row pull-right">
-                              <div class="col-md-10">
-                                <label class="label chat-me">
-                                    @if($msg->files == NULL)
-                                        {{$msg->pesan}}<br>
-                                    @else
-                                        <a href="{{asset('uploads/pop/')}}" target="_blank" class="atag" style="color: white;">{{$msg->files}}</a><br><br>
-                                        {{$msg->pesan}}<br>
-                                    @endif
-                                    <span style="float: right;">{{date('H:i',strtotime($msg->tanggal))}}</span>
-                                </label>
-                              </div>
-                            </div>
-                          </div><br>
-                          @else
-                          <!-- <div class="col-md-1"></div> -->
-                          <div class="col-md-12">
-                            @if($datenya == NULL)
-                                <?php
-                                    $datenya = date('d-m-Y', strtotime($msg->tanggal));
-									$pecah = (explode("-",$datenya));
-									$hari = $pecah[0];
-									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
-									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
-									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
-									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
-									else { $bulan=""; }
-									$thnn = $pecah[2];
-									 $fix = $bulan." ".$hari.",".$thnn;
-									
-                                ?>
-                                <center>
-                                    <i>
-                                        {{$fix}}
-                                    </i>
-                                </center><br>
-                            @else
-                                @if($datenya != date('d-m-Y', strtotime($msg->tanggal)))
-                                    <?php
-                                        $datenya = date('d-m-Y', strtotime($msg->tanggal));
-										$pecah = (explode("-",$datenya));
-									$hari = $pecah[0];
-									if($pecah[1] == 1){ $bulan = "Januari";}else if($pecah[1] == 2){ $bulan = "Februari";}else if($pecah[1] == 3){ $bulan = "Maret";}
-									else if($pecah[1] == 4){ $bulan = "April";}else if($pecah[1] == 5){ $bulan = "Mei";}else if($pecah[1] == 6){ $bulan = "Juni";}
-									else if($pecah[1] == 7){ $bulan = "Juli";}else if($pecah[1] == 8){ $bulan = "Agustus";}else if($pecah[1] == 9){ $bulan = "September";}
-									else if($pecah[1] == 10){ $bulan = "Oktober";}else if($pecah[1] == 11){ $bulan = "November";}else if($pecah[1] == 12){ $bulan = "Desember";}
-									else { $bulan=""; }
-									$thnn = $pecah[2];
-									 $fix = $bulan." ".$hari.",".$thnn;
-                                    ?>
-                                    <center>
-                                        <i>
-                                            {{$fix}}
-                                        </i>
-                                    </center><br>
-                                @endif
-                            @endif
-                            <div class="row">
-                              <div class="col-md-10">
-                                <label class="label chat-other">
-                                    @if($msg->files == NULL)
-                                        {{$msg->pesan}}<br>
-                                    @else
-                                        <a href="{{asset('uploads/pop/')}}" target="_blank" class="atag" style="color: white;">{{$msg->files}}</a><br><br>
-                                        {{$msg->pesan}}<br>
-                                    @endif
-                                    <span style="color: #555; float: right;">{{date('H:i',strtotime($msg->tanggal))}}</span>
-                                </label>
-                              </div>
-                            </div>
-                          </div><br>
-                          <!-- <div class="col-md-1"></div> -->
-                          @endif
-                        @endforeach
-                      </div>
-                    </div>
-                    <div class="chat-footer">
-                      <div class="row">
-                        <div class="col-md-1">
-                            <a  class="" data-toggle="modal" data-target="#myModal">
-                                <img src="{{asset('front/assets/icon/plus-circle.png')}}" alt="" width="100%" id="" />
-								</a>
-                            
-                          </form>
-                        </div>
-                        <div class="col-md-10" style="padding-left: 0px;">
-                          <textarea id="inputan" rows="2" class="chat-message"></textarea>
-                        </div>
-						
-                        <div class="col-md-1" style="padding-left: 0px;">
-                          <a onclick="kirimchat()" class="" id="btn-chat"><img src="{{asset('front/assets/icon/send-message.png')}}" alt="" width="70%" id="sendmessage" /></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
+          
             <br><br>
           </div>
       </div>
-   <br><br><br>
+   <br><br><br> -->
     <!--product area end-->
 
 @include('frontend.layouts.footer')

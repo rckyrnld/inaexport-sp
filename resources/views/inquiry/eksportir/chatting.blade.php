@@ -116,6 +116,10 @@ body {font-family: Arial;}
             <div class="box">
                 <div class="box-divider m-0"></div>
                 <div class="box-body bg-light">
+					<table width="100%">
+<tr>
+<td width="50%" valign="top">
+                    <div align="left">
                     <div class="row">
                         <div class="col-md-10">
                             <h5><b>Details Inquiry</b></h5>
@@ -258,7 +262,7 @@ body {font-family: Arial;}
                     <br><br>
                     <div class="row">
                         <div class="col-md-12">
-                            <h5><b>Detail Chat</b></h5>
+                          <!--  <h5><b>Detail Chat</b></h5> -->
                         </div>
                     </div>
                     <br>
@@ -267,6 +271,15 @@ body {font-family: Arial;}
 <div class="col-sm-12">
 <div align="center"><br>
 <center>
+                    <div class="row">
+                        
+                    </div>
+                </div>
+            </div>
+			</div>
+			</td>
+			<td width="50%">
+			
 <div class="">
     <div class="row"><div class="col-sm-12">
         <div class="col-md-12" style="background-color: #1a7688;color:white;">
@@ -278,7 +291,7 @@ body {font-family: Arial;}
 		</div>
 		<div class="col-sm-1">
 		<br>
-		<a class="btn btn-info" onclick="rfr()">Refresh</a>
+		<!-- <a class="btn btn-info" onclick="rfr()">Refresh</a> -->
 		</div>
 		</div>
 		</div>
@@ -375,11 +388,16 @@ body {font-family: Arial;}
                         <span class="input-group-btn">
 						<!--<a  class="btn btn-info" data-toggle="modal" data-target="#myModal2">
                               <font color="white">  <i class="fa fa-paperclip"></i></font></a> -->
-							  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalFile" style="border-color: rgba(120, 130, 140, 0.5);">
-                                    <img src="{{asset('image/paperclip.png')}}" width="20px">
+							 
+                            <a onclick="kirimchat()" class="btn btn-success" id="btn-chat">
+                               <font color="white"> <i class="fa fa-paper-plane"></i> Send</a>
+							   
+							   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalFile" style="border-color: rgba(120, 130, 140, 0.5);">
+                                    <i class="fa fa-paperclip"></i>
                                 </button>
-                            <a onclick="kirimchat()" class="btn btn-warning" id="btn-chat">
-                               <font color="white"> <i class="fa fa-paper-plane"></i> Send</a></font>
+								  <a class="btn btn-warning" onclick="rfr()"><i class="fa fa-refresh"></i></a>
+							   </font>
+
                         </span>
                     </div>
 					
@@ -423,14 +441,14 @@ body {font-family: Arial;}
                         @endif
                     @endif
                     <br>
-                    <div class="row">
-                        <div class="col-md-12">
+			<br>
+			<div align="right">
                             <a href="{{url('/inquiry')}}" class="btn btn-danger" style="float: right;"><i
                                         class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
                         </div>
-                    </div>
-                </div>
-            </div>
+			</td>
+			</tr>
+			</table>
         </div>
     </div>
 </div>

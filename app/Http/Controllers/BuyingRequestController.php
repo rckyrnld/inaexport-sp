@@ -879,6 +879,7 @@ class BuyingRequestController extends Controller
 
     public function br_chat($id)
     {
+		// echo "wkwk";die();
 //        dd(auth::guard('eksmp'));
         if (Auth::guard('eksmp')->user() || Auth::user()) {
             $pageTitle = "Chat Buying Request Indonesian Exporter";

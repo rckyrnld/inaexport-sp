@@ -346,6 +346,10 @@
 		if(carikoma != "-1"){
 			$('#email').val("");
 		}
+		var carispa = m.search(" ");
+		if(carispa != "-1"){
+			$('#email').val("");
+		}
         var token = $('meta[name="csrf-token"]').attr('content');
         $.get('{{URL::to("cekmail/")}}/' + m, {_token: token}, function (data) {
             if (data == 0) {

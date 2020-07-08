@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
+
+<!-- google analytics tag -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-172016689-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-172016689-1');
+</script>
+
   <meta charset="utf-8" />
 {{--  <title>@lang("frontend.title")</title>--}}
 {{--  <meta name="description" content="Responsive, Bootstrap, BS4" />--}}

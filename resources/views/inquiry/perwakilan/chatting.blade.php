@@ -114,18 +114,22 @@ body {font-family: Arial;}
     <div class="row">
         <div class="col-md-12">
             <div class="box">
-                <div class="box-divider m-0"></div>
+                <div class="box-divider"></div>
                 <div class="box-body bg-light">
+				<table width="100%">
+<tr>
+<td width="50%" valign="top">
+                    <div align="left">
                     <div class="row">
                         <div class="col-md-10">
                             <h5><b>Details Inquiry</b></h5>  
                         </div>
                         <div class="col-md-2">
                         </div>
-                    </div><br><br>
+					</div>
                     <div class="row">
-                        <label class="col-md-3"><b>Company Name</b></label>
-                        <div class="col-md-7">
+                        <label class="col-md-4"><b>Company Name</b></label>
+                        <div class="col-md-8">
                             {{getCompanyName($data->id_itdp_company_users)}}
                         </div>
                     </div><br>
@@ -137,46 +141,46 @@ body {font-family: Arial;}
                         }
                     ?>
                     <div class="row">
-                        <label class="col-md-3"><b>Product Name</b></label>
-                        <div class="col-md-7">
+                        <label class="col-md-4"><b>Product Name</b></label>
+                        <div class="col-md-8">
                             {{$inquiry->prodname}}
                         </div>
                     </div><br>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label><b>Product Category</b></label>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <span style="text-transform: capitalize;">@if($category =='') - @else <?php echo $category?> @endif</span>
                         </div>
                     </div><br>
                     <div class="row">
-                        <label class="col-md-3"><b>Kind Of Subject</b></label>
-                        <div class="col-md-7">
+                        <label class="col-md-4"><b>Kind Of Subject</b></label>
+                        <div class="col-md-8">
                             {{$inquiry->jenis_perihal_en}}
                         </div>
                     </div><br>
                     <div class="row">
-                        <label class="col-md-3"><b>Date</b></label>
-                        <div class="col-md-7">
+                        <label class="col-md-4"><b>Date</b></label>
+                        <div class="col-md-8">
                             {{date('d F Y',strtotime($inquiry->date))}}
                         </div>
                     </div><br>
                     <div class="row">
-                        <label class="col-md-3"><b>Subject</b></label>
-                        <div class="col-md-7">
+                        <label class="col-md-4"><b>Subject</b></label>
+                        <div class="col-md-8">
                             {{$inquiry->subyek_en}}
                         </div>
                     </div><br>
                     <div class="row">
-                        <label class="col-md-3"><b>Messages</b></label>
-                        <div class="col-md-7">
+                        <label class="col-md-4"><b>Messages</b></label>
+                        <div class="col-md-8">
                             <?php echo $inquiry->messages_en; ?>
                         </div>
                     </div><br>
                     <div class="row">
-                        <label class="col-md-3"><b>File</b></label>
-                        <div class="col-md-7">
+                        <label class="col-md-4"><b>File</b></label>
+                        <div class="col-md-8">
                             @if($inquiry->file == "")
                                 <input type="text" class="btn btn-default" value="Dokumen Kosong" autocomplete="off" readonly style="color: orange; text-align: center;">
                             @else
@@ -185,24 +189,23 @@ body {font-family: Arial;}
                         </div>
                     </div><br>
                     <div class="row">
-                        <label class="col-md-3"><b>Status</b></label>
-                        <div class="col-md-7">
+                        <label class="col-md-4"><b>Status</b></label>
+                        <div class="col-md-8">
                             <?php if($data->status == 0){ $stat = 1; }else{$stat = $data->status;}?>
                             @lang('inquiry.stat'.$stat)
                         </div>
                     </div><br><br>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h5><b>Detail Chat</b></h5>  
-                        </div>
-                    </div><br>
+                   
                     
-					  <div class="row">
-					
-<div class="col-sm-12">
-<div align="center"><br>
-<center>
-<div class="">
+					 
+                </div>
+            </div>
+      
+		</div>
+		</td>
+		
+		<td width="50%">
+		<div class="">
     <div class="row"><div class="col-sm-12">
         <div class="col-md-12" style="background-color: #1a7688;color:white;">
 		<div class="row">
@@ -213,7 +216,7 @@ body {font-family: Arial;}
 		</div>
 		<div class="col-sm-1">
 		<br>
-		<a class="btn btn-info" onclick="rfr()">Refresh</a>
+		<!-- <a class="btn btn-info" onclick="rfr()">Refresh</a> -->
 		</div>
 		</div>
 		</div>
@@ -304,11 +307,16 @@ body {font-family: Arial;}
                         <span class="input-group-btn">
 						<!--<a  class="btn btn-info" data-toggle="modal" data-target="#myModal2">
                               <font color="white">  <i class="fa fa-paperclip"></i></font></a> -->
-							  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalInvoice" style="border-color: rgba(120, 130, 140, 0.5);">
-                                    <img src="{{asset('image/paperclip.png')}}" width="20px">
-                                </button>
+							  
                             <a onclick="kirimchat()" class="btn btn-warning" id="btn-chat">
-                               <font color="white"> <i class="fa fa-paper-plane"></i> Send</a></font>
+                               <font color="white"> <i class="fa fa-paper-plane"></i> Send</a>
+							 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalInvoice" style="border-color: rgba(120, 130, 140, 0.5);">
+                                     
+								 <i class="fa fa-paperclip"></i>
+                                </button>
+								  <a class="btn btn-warning" onclick="rfr()"><i class="fa fa-refresh"></i></a>
+							   
+							   </font>
                         </span>
                     </div>
 					
@@ -328,19 +336,14 @@ body {font-family: Arial;}
 -->
 
 </div>
-</div>
-</div>
-					
-					</div>
-                   
-                    <div class="row">
-                        <div class="col-md-12">
+		<br>
+		 <div align="right">
                             <a href="{{url('/inquiry_perwakilan/view/'.$inquiry->id)}}" class="btn btn-danger" style="float: right;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+		</td>
+		</tr>
+		
+		</table>
     </div>
 </div>
 

@@ -135,17 +135,19 @@ $q2 = DB::select("select * from csc_buying_request where id='".$id_br."'");
 foreach($q2 as $p2){
 	
 ?>
-
-<div class="form-row">
+<table width="100%">
+<tr>
+<td width="50%" valign="top">
+<div class="form-row" align="left">
 <div class="col-md-12">
-   <div class="box-body">
-   <br><br>
+   <!-- <div class="box-body">-->
+   <div><br>
 	<div class="form-row">
-		<div class="form-group col-sm-2">
+		<div class="form-group col-sm-4" style="font-size: 14px!important;">
 			<b>Created By</b>
 		</div>
-		<div class="form-group col-sm-4">
-			<?php 
+		<div class="form-group col-sm-8">
+			: <?php 
 			if($p2->by_role == 1){
 				echo "Admin";
 			}else if($p2->by_role == 4){
@@ -161,11 +163,11 @@ foreach($q2 as $p2){
 	</div>
 	
 	<div class="form-row">
-		<div class="form-group col-sm-2">
+		<div class="form-group col-sm-4" style="font-size: 14px!important;">
 			<b>Address</b>
 		</div>
-		<div class="form-group col-sm-4">
-			<?php 
+		<div class="form-group col-sm-8">
+			: <?php 
 			if($p2->by_role == 1){
 				echo "";
 			}else if($p2->by_role == 4){
@@ -181,11 +183,11 @@ foreach($q2 as $p2){
 	</div>
 	
 	<div class="form-row">
-		<div class="form-group col-sm-2">
+		<div class="form-group col-sm-4" style="font-size: 14px!important;">
 			<b>Category Product</b>
 		</div>
-		<div class="form-group col-sm-4">
-			<?php 
+		<div class="form-group col-sm-8">
+			: <?php 
 			/*$ms1 = DB::select("select id,nama_kategori_en from csc_product where id='".$p2->id_csc_prod_cat."'");
 			foreach($ms1 as $kc1){ echo $kc1->nama_kategori_en; }
 			*/
@@ -205,55 +207,60 @@ foreach($q2 as $p2){
 	
 	
 	<div class="form-row">
-		<div class="form-group col-sm-2">
+		<div class="form-group col-sm-4" style="font-size: 14px!important;">
 			<b>Kind of Subject</b>
 		</div>
-		<div class="form-group col-sm-4">
-			Offer to buy
+		<div class="form-group col-sm-8">
+			: Offer to buy
 		</div>
 	</div>
 	
 	<div class="form-row">
-		<div class="form-group col-sm-2">
+		<div class="form-group col-sm-4" style="font-size: 14px!important;">
 			<b>Date</b>
 		</div>
-		<div class="form-group col-sm-4">
-			<?php echo $p2->date; ?>
+		<div class="form-group col-sm-8">
+			: <?php echo $p2->date; ?>
 		</div>
 	</div>
 	
 	<div class="form-row">
-		<div class="form-group col-sm-2">
+		<div class="form-group col-sm-4" style="font-size: 14px!important;">
 			<b>Subject</b>
 		</div>
-		<div class="form-group col-sm-4">
-			<?php echo $p2->subyek; ?>
+		<div class="form-group col-sm-8">
+			: <?php echo $p2->subyek; ?>
 		</div>
 	</div>
 	
 	<div class="form-row">
-		<div class="form-group col-sm-2">
+		<div class="form-group col-sm-4" style="font-size: 14px!important;">
 			<b>Messages</b>
 		</div>
-		<div class="form-group col-sm-4">
-			<?php echo $p2->spec; ?>
+		<div class="form-group col-sm-8">
+			: <?php echo $p2->spec; ?>
 			<input type="hidden" id="id_br" value="<?php echo $id_br; ?>">
 		</div>
 	</div>
 	
 	<div class="form-row">
-		<div class="form-group col-sm-2">
+		<div class="form-group col-sm-4" style="font-size: 14px!important;">
 			<b>File</b>
 		</div>
-		<div class="form-group col-sm-4">
+		<div class="form-group col-sm-8">
+		: <?php if($p2->files == ""){ ?>
+			No File Uploaded !
+		<?php }else{ ?>
 			<a download href="{{asset('uploads/buy_request/'.$p2->files)}}"><?php echo $p2->files; ?></a>
+		<?php } ?>
 		</div>
 	</div>
 	</div>
 
 </div>
-
-
+</div>
+</td>
+<td width="50%" valign="top">
 <div class="col-sm-12">
 <div align="center"><br>
 <center>
@@ -268,7 +275,7 @@ foreach($q2 as $p2){
 		</div>
 		<div class="col-sm-1">
 		<br>
-		<a class="btn btn-info" onclick="rfr()">Refresh</a>
+		
 		</div>
 		</div>
 		</div>
@@ -354,10 +361,13 @@ foreach($q2 as $p2){
                     <div class="input-group">
                         <input id="inputan" type="text" class="form-control input-sm" placeholder="Type your message here..." />
                         <span class="input-group-btn">
-						<a  class="btn btn-info" data-toggle="modal" data-target="#myModal2">
+						
+                            <a onclick="kirimchat()" class="btn btn-success" id="btn-chat">
+                               <font color="white"> <i class="fa fa-paper-plane"></i> Send</a>
+							   <a  class="btn btn-info" data-toggle="modal" data-target="#myModal2">
                               <font color="white">  <i class="fa fa-paperclip"></i></font></a>
-                            <a onclick="kirimchat()" class="btn btn-warning" id="btn-chat">
-                               <font color="white"> <i class="fa fa-paper-plane"></i> Send</a></font>
+							   <a class="btn btn-warning" onclick="rfr()"><i class="fa fa-refresh"></i></a>
+							   </font>
                         </span>
                     </div>
 					
@@ -379,6 +389,12 @@ foreach($q2 as $p2){
 </div>
 </div>
 </div>
+
+
+</td>
+</tr>
+</table>
+
 <?php } ?>
 
 <div class="modal fade" id="myModal" role="dialog">
