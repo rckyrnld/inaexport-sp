@@ -9,9 +9,10 @@
   .chat-header{
     width: 100%;
     height: 5%;
-    background-color: #DDEFFD;
+    background-color: #1a7688;
     border-radius: 30px 30px 0px 0px;
     padding: 2% 2% 2% 3%;
+	
   }
 
   .chat-user{
@@ -26,6 +27,7 @@
     overflow-x: hidden;
     padding: 2%;
     font-size: 15px;
+	background-color: #c9d3de;
   }
 
   .chat-footer{
@@ -34,6 +36,7 @@
     border-top: 2px solid #87c4ee;
     border-radius: 0px 0px 30px 30px;
     padding: 1% 1% 1% 1%;
+	background-color: #c9d3de;
   }
 
   .chat-message{
@@ -51,7 +54,7 @@
     border-radius: 10px 0px 10px 10px;
     width: 400px;
     padding: 10px;
-    color: white;
+    color: black;
   }
 
   .chat-other{
@@ -59,6 +62,7 @@
     border-radius: 0px 10px 10px 10px;
     width: 400px;
     padding: 10px;
+	color: black;
   }
 
   #uploading2{
@@ -111,8 +115,8 @@
 <?php
   $loc = app()->getLocale();
 ?>
-    <!--product details start-->
-      <div class="product_details mt-20" style="background-color: #1A70BB; margin-bottom: 0px !important; margin-top: 0px; font-size: 14px;">
+    <!--product details start  background-color: #1A70BB;  -->
+      <div class="product_details mt-20" style="margin-bottom: 0px !important; margin-top: 0px; font-size: 14px;">
           <div class="container">
             <br><br>
             <div class="row">
@@ -126,24 +130,25 @@
                             <i class="fa fa-arrow-left" aria-hidden="true" style="color: #1A70BB; font-size: 40px;"></i>
                           </a>
                         </div>
-                        <div class="col-md-1" style="padding-left: 0px;">
+                       <!-- <div class="col-md-1" style="padding-left: 0px;">
                           <img src="{{asset('front/assets/icon/user.png')}}" alt="" width="100%" />
-                        </div>
+                        </div> -->
                         <div class="col-md-4" style="padding-left: 0px;">
-                          <span class="chat-user" style=""><b>Chat</b></span>
+                          <span class="chat-user" style=""><b><font color="white">Chat</font></b></span>
                           <br>
-                          <span class="chat-user" style="text-transform: capitalize;"><b>{{getCompanyName($data->id_itdp_company_user)}}</b>&nbsp;&nbsp;<img src="{{asset('front/assets/icon/icon-exportir.png')}}" alt="" /></span>
+                          <span class="chat-user" style="text-transform: capitalize;"><b><font color="white">{{getCompanyName($data->id_itdp_company_user)}}</font></b>&nbsp;&nbsp;<img src="{{asset('front/assets/icon/icon-exportir.png')}}" alt="" /></span>
 						<br>
+						
 						<?php $ry = $data->id_itdp_company_user; ?>
 						@if(Cache::has('user-is-eksmp-' . $ry))
-    <span class="text-success">Online</span>
+    <span class="text-success"><font color="white">Online</font></span>
 @else
-    <span class="text-secondary">Offline</span>
+    <span class="text-secondary"><font color="white">Offline</font></span>
 @endif
 						</div>
                       </div>
                     </div>
-                    <div class="chat-body" id="fg1">
+                    <div class="chat-body" id="fg1" style="color:black!important;">
                       <div class="row" id="rchat">
                         <?php
                           $datenya = NULL;

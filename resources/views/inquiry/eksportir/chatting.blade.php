@@ -120,28 +120,37 @@ body {font-family: Arial;}
 <tr>
 <td width="50%" valign="top">
                     <div align="left">
+
+                    <div class="row">
+                        
+                        <div class="col-md-12">
+						
+                            {{-- @if($cekfile != 0) --}}
+                                @if($inquiry->type == "importir")
+                                    @if($inquiry->status != 3 && $inquiry->status != 4)
+                                        <button type="button" class="btn btn-info" data-toggle="modal"
+                                                data-target="#modalDeal"
+                                                style="width: 100%; color: white;">Deal Inquiry
+                                        </button>
+                                    @endif
+                                @elseif($inquiry->type == "perwakilan" || $inquiry->type == "admin")
+                                    @if($broadcast->status != 3 && $broadcast->status != 4)
+                                        <button type="button" class="btn btn-info" data-toggle="modal"
+                                                data-target="#modalDeal"
+                                                style="width: 100%; color: white;">Deal Inquiry
+                                        </button>
+                                    @endif
+                                @endif
+                            {{-- @endif --}}
+                        </div>
+                    </div>
+					<br>
                     <div class="row">
                         <div class="col-md-10">
                             <h5><b>Details Inquiry</b></h5>
                         </div>
                         <div class="col-md-2">
-                            {{-- @if($cekfile != 0) --}}
-                                @if($inquiry->type == "importir")
-                                    @if($inquiry->status != 3 && $inquiry->status != 4)
-                                        <button type="button" class="btn btn-warning" data-toggle="modal"
-                                                data-target="#modalDeal"
-                                                style="width: 100%; color: white; font-size: 14px;">Deal
-                                        </button>
-                                    @endif
-                                @elseif($inquiry->type == "perwakilan" || $inquiry->type == "admin")
-                                    @if($broadcast->status != 3 && $broadcast->status != 4)
-                                        <button type="button" class="btn btn-warning" data-toggle="modal"
-                                                data-target="#modalDeal"
-                                                style="width: 100%; color: white; font-size: 14px;">Deal
-                                        </button>
-                                    @endif
-                                @endif
-                            {{-- @endif --}}
+                           
                         </div>
                     </div>
                     <br><br>
@@ -278,7 +287,7 @@ body {font-family: Arial;}
             </div>
 			</div>
 			</td>
-			<td width="50%">
+			<td width="50%" valign="top">
 			
 <div class="">
     <div class="row"><div class="col-sm-12">
