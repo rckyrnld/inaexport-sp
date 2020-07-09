@@ -894,6 +894,11 @@ Route::get('/getcountryrc', 'FrontEnd\FrontController@getcountryrc')->name('coun
 Route::get('/getcategoryrc', 'FrontEnd\FrontController@getcategoryrc')->name('categoryrc.getcategory');
 Route::get('/getproductrc', 'FrontEnd\FrontController@getproductrc')->name('productrc.getproductrc');
 
+Route::get('eksportir/annual_sales/cetak', 'Eksportir\AnnualController@printexportirreport')->name('annual.cetak');
+
+Route::get('annual_sales/cetak', 'Eksportir\AnnualController@printexportirreport')->name('annual.cetak');
+
+
 Route::get('buyingrequest/delete/{id}', 'BuyingRequestController@delete')->name('buyingrequest.delete');
 Route::post('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
 Route::get('bannercompanyfront/getData', 'FrontEnd\FrontController@getDataCompanyFront')->name('bannercompanyfront.getdata');
