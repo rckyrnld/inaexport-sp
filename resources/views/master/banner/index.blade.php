@@ -175,13 +175,13 @@
         			</tr>
         		</thead>
           </table>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-md-9">
             </div>
             <div class="col-md-3">
               <button onclick="savecheckall()" type="button" class="btn btn-primary" title="save selected company in this page">Save</button>
             </div>
-          </div>
+          </div> -->
         </div>
         
       </div>
@@ -209,6 +209,7 @@
       <div class="modal-body">
       	<input type="hidden" name="id2" id="id2">
       	<input type="hidden" name="semua2" id="semua2">
+      	<input type="hidden" name="tidaksemua2" id="tidaksemua2">
         <div class="form-group">
         	<label class="control-label col-md-3">Status</label>
         	<div class="col-md-9">
@@ -233,6 +234,7 @@
               </div>	
               <div class="col-md-6" style="color: black !important;">
                 <input  type='checkbox' class='checkall2' name='checkall2' id='checkall2' value=''> Check All
+                <input  type='checkbox' class='uncheckall2' name='uncheckall2' id='uncheckall2' value=''> UnCheck All
               </div>
           </div>
         	<table id="company2" class="table table-bordered table-striped table-hover">
@@ -244,13 +246,13 @@
         			</tr>
         		</thead>
           </table>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-md-9">
             </div>
             <div class="col-md-3">
               <button onclick="savecheckall2()" type="button" class="btn btn-primary" title="save selected company in this page">Save</button>
             </div>
-          </div>
+          </div> -->
           <div class="form-group">
               <label class="control-label col-md-3">File Image</label>
               <div class="col-md-9">
@@ -342,6 +344,7 @@
                 }
             }
 		});
+    // untuk di modal tambah yang geser aktif dan tidak aktif
 		$('#check').change(function() {
 	      if($(this).is(':checked')) {
 	          $('#status').val(1);
@@ -353,7 +356,8 @@
 				})
 				.done(function(data){
 					$.each(data, function(i, val){
-						$('#company').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk" type="checkbox" value="'+val.id+'" name="comp" ></div>']).draw();
+            // get company
+						$('#company').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp" ></div>']).draw();
 					});
 					$('#pilihcompany').show();
 				});
@@ -362,6 +366,7 @@
 	        $('#pilihcompany').hide();
 	      }
 	  });
+    // untuk di modal edit yang geser aktif dan tidak aktif
     $('#check2').change(function() {
 	      if($(this).is(':checked')) {
           check2active();
@@ -457,21 +462,69 @@
           }else{
               $('#semua').val(0);
               $("input[name='comp']").prop('checked', false);
-              dataeksportir = [];
+              // dataeksportir = [];
           }     
         });
         $('#checkall2').change(function() {
           if(this.checked) {
               $('#semua2').val(1);
           }else{
+              console.log('masuk sini');
               $('#semua2').val(0);
               $("input[name='comp2']").prop('checked', false);
-              dataeksportir2 = [];
+              // dataeksportir2 = [];
+          }     
+        });
+        $('#uncheckall2').change(function() {
+          if(this.checked) {
+              $('#tidaksemua2').val(1);
+          }else{
+              console.log('masuk sini');
+              $('#tidaksemua2').val(0);
+              // $("input[name='comp2']").prop('checked', false);
+              // dataeksportir2 = [];
           }     
         });
 
 });
 
+        //untuk yang check uncheck dataeksportir
+        $('body').on('click', '.masuk', function () {
+            var id = $(this).data('id');
+            if($(this).prop("checked") == true){
+              console.log('tambahin dataeksportir');
+              dataeksportir.push(id);
+            }
+            else if($(this).prop("checked") == false){
+              console.log(id);
+              var index = dataeksportir.indexOf(id);
+              console.log(index);
+                if (index > -1) {
+                  console.log('hapusin dataeksportir');
+                  dataeksportir.splice(index, 1);
+                }
+            }
+            console.log(dataeksportir);
+        });
+
+        //untuk yang check uncheck dataeksportir2
+        $('body').on('click', '.masuk2done', function () {
+            var id = $(this).data('id');
+            if($(this).prop("checked") == true){
+              console.log('tambahin dataeksportir2');
+              dataeksportir2.push(id);
+            }
+            else if($(this).prop("checked") == false){
+              var index2 = dataeksportir2.indexOf(id);
+                if (index2 > -1) {
+                  console.log('hapusin dataeksportir2');
+                  dataeksportir2.splice(index2, 1);
+                }
+            }
+            console.log(dataeksportir2);
+        });
+
+        //ini untuk yang button save, sementara gak dipake
         function savecheckall(){
               $.each($(".semua:checked"), function(){
                   val = $(this).val();
@@ -485,6 +538,7 @@
               // $("input[name='checkall']").prop('checked', false);
         }
 
+        //ini untuk yang button save, sementara gak dipake
         function savecheckall2(){
               $.each($(".semua2:checked"), function(){
                   val = $(this).val();
@@ -501,18 +555,26 @@
 
     function simpanupdate(){
         var id = $('#id').val();
+        // Get today's date
+        var todaysDate = new Date();
         var s_date = $('#s_date').val();
         var semua = $('#semua').val();
         var status = $('#status').val();
-        $.each($("input[name='comp']:checked"), function(){
-                  var val = $(this).val();
-                  if(dataeksportir.includes(val)){
+        // $.each($("input[name='comp']:checked"), function(){
+        //           var val = $(this).val();
+        //           if(dataeksportir.includes(val)){
                 
-                  }else{
-                      dataeksportir.push($(this).val());
-                  }
-        });
-        if ((!isEmptyM(dataeksportir) || semua == 1) && s_date != null) {
+        //           }else{
+        //               dataeksportir.push($(this).val());
+        //           }
+        // });
+        // (s_date != null || s_date != '' || !isEmptyM(s_date) ||
+        if(s_date && (!isEmptyM(dataeksportir) || semua == 1) ) {
+        // if ((!isEmptyM(dataeksportir) || semua == 1) && !s_date) {
+          // Create date from input value
+          var inputdate = new Date(s_date);
+          if(inputdate.setHours(0,0,0,0) >= todaysDate.setHours(0,0,0,0)){
+            console.log('lebih dari today');
             var form_data = new FormData();
             form_data.append('id',id);
             form_data.append('dataeksportir',dataeksportir);
@@ -540,11 +602,18 @@
                   window.location = "{{ route('master.banner.message') }}";
               }
             });
+          }else{
+            alert("make sure to choose today's date or after today");
+            // console.log('before today');
+          }
+            
         }else{
+          // console.log('masuk gak');
             alert('make sure to checked at least one exporter');
         }
     }
 
+    // untuk di modal edit yang geser aktif dan tidak aktif
     function check2active(){
         $('#status2').val(1);
               $('#company2').DataTable().clear().draw();
@@ -556,9 +625,14 @@
               .done(function(data){
                 $.each(data, function(i, val){
                   if(val.status == 1){
-                    $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" checked disabled name="comp2done" ></div>']).draw();
+                    // untuk data company yang sudah dipilih ( jadi di check)
+                    // $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" checked disabled name="comp2done" ></div>']).draw();
+                    $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" checked name="comp2done" ></div>']).draw();
+                    dataeksportir2.push(val.id);
                   } else{
-                    $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2" type="checkbox" value="'+val.id+'" name="comp2" ></div>']).draw();
+                    // untuk data company yang belum dipilih ( jadi di uncheck)
+                    // $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp2" ></div>']).draw();
+                    $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp2done" ></div>']).draw();
                   
                   }
                   });
@@ -572,23 +646,25 @@
         var id = $('#id2').val();
         var s_date = $('#s_date2').val();
         var semua = $('#semua2').val();
+        var tidaksemua = $('#tidaksemua2').val();
         var status = $('#status2').val();
         var file = $('#file').val();
         var lastest_file = $('#lastest_file').val();
-        $.each($("input[name='comp2']:checked"), function(){
-                  var val = $(this).val();
-                  if(dataeksportir2.includes(val)){
+        // $.each($("input[name='comp2']:checked"), function(){
+        //           var val = $(this).val();
+        //           if(dataeksportir2.includes(val)){
                 
-                  }else{
-                      dataeksportir2.push($(this).val());
-                  }
-        });
+        //           }else{
+        //               dataeksportir2.push($(this).val());
+        //           }
+        // });
         // (!isEmptyM(dataeksportir2) || semua == 1 ) &&
-        if ( s_date != null && (lastest_file != 'fileimagenya' || $file != null)) {
+        if (s_date && (lastest_file != 'fileimagenya' || $file != null)) {
             var form_data = new FormData();
             form_data.append('id',id);
             form_data.append('dataeksportir',dataeksportir2);
             form_data.append('s_date',s_date);
+            form_data.append('hapussemua',tidaksemua);
             form_data.append('semua',semua);
             form_data.append('status',status);
             form_data.append('file',$('#file').prop('files')[0]);

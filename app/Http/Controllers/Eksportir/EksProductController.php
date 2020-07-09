@@ -703,17 +703,7 @@ class EksProductController extends Controller
                 $mail->subject("Your product got verified");
             });
 			// echo $data->prodname_en;die();
-            }else{
-                $keterangan = $request->keterangan;
-                // var_dump($keterangan);
-                $status = 3;
-                $ket = "The product that you added cannot be displayed on the front page because ".$keterangan;
-                $notifnya = "has been declined";
-            }
-
-            // var_dump($status);
-            // var_dump($ket);
-            // die();
+            // harus dipisah jangan disatu dengan yang bawah, product yang di decline bisa error kalo digabung dengan atas
             $update = DB::table('csc_product_single')->where('id', $id)->update([
                 'id_csc_product' => $request->id_csc_product,
                 'id_csc_product_level1' => $request->id_csc_product_level1,
@@ -723,6 +713,25 @@ class EksProductController extends Controller
                 'updated_at' => $datenow,
             ]);
 
+            }else{
+                $keterangan = $request->keterangan;
+                // var_dump($keterangan);
+                $status = 3;
+                $ket = "The product that you added cannot be displayed on the front page because ".$keterangan;
+                $notifnya = "has been declined";
+                // harus dipisah jangan disatu dengan yang atas, product yang di decline bisa error kalo digabung dengan atas
+                $update = DB::table('csc_product_single')->where('id', $id)->update([
+                    'status' => $status,
+                    'keterangan' => $ket,
+                    'updated_at' => $datenow,
+                ]);
+    
+            }
+
+            // var_dump($status);
+            // var_dump($ket);
+            // die();
+            
             if($update){
                 $pengirim = DB::table('itdp_admin_users')->where('id', $id_user)->first();
                 $notif = DB::table('notif')->insert([

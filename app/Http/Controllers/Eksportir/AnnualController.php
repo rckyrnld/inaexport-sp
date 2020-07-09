@@ -151,8 +151,11 @@ class AnnualController extends Controller
             ->make(true);
     }
 
-    public function getreporteksportir()
+    public function getreporteksportir(Request $request)
     {
+        // dd('tes');
+        // dd($request->'search'));
+        // dd($request);
         $pesan = DB::table('itdp_profil_eks')->select('itdp_profil_eks.id','itdp_profil_eks.company', 'itdp_profil_eks.addres', 'mst_province.province_en',
         'itdp_profil_eks.fax', 'itdp_company_users.status', 'itdp_company_users.verified_at','itdp_company_users.email')
         ->join('itdp_company_users','itdp_company_users.id_profil','itdp_profil_eks.id')
@@ -165,7 +168,24 @@ class AnnualController extends Controller
         // WHERE itdp_company_users.status = '1' ORDER BY itdp_profil_eks.ID DESC ");
         // $pesan = DB::select("SELECT ID, company,addres,postcode,phone,fax FROM itdp_profil_eks ORDER BY ID DESC ");
     //    dd($pesan);
-    
+
+    // if ($request->filled('search')) {
+        // dd($request->search);
+        // $pesan->where('itdp_profil_eks.company', 'LIKE', "%{$request->get('search')}%")
+        //         ->or;
+    // }else{
+    //     dd($request->search);
+
+    // }
+	// return Datatables::of($pesan)->filter(function ($query) use ($request) {
+
+    //     if ($request->filled('search')) {
+    //         $query->where('itdp_profil_eks.company', 'LIKE', "%{$request->get('search')}%")
+    //             ->or;
+    //     }
+
+    // })->make(true);
+
         return DataTables::of($pesan)
             ->addColumn('f1', function ($pesan) {
                 return '<div align="left">'.$pesan->company.'</div>';
@@ -177,6 +197,11 @@ class AnnualController extends Controller
             ->addColumn('province', function ($pesan) {
                 return '<div align="left">'. $pesan->province_en.'</div>';
             })
+            // ->addColumn('province', function ($pesan) {
+            //     $provinsi = DB::table('mst_province')->where('mst_province.id', $pesan->id)->select ('province_en')->get();
+            //     return '<div align="left">'. $provinsi->province_en.'</div>';
+            // })
+            
             ->addColumn('email', function ($pesan) {
                 return '<div align="left">'.$pesan->email.'</div>';
             })
@@ -189,7 +214,7 @@ class AnnualController extends Controller
                         if($no == 0){
                             $namapicnya .=  $namapic->name;
                             }else{
-                            $namapicnya .= ',' . $namapic->name;
+                            $namapicnya .= ', ' . $namapic->name;
                         }
                         $no++;
                     }
@@ -206,7 +231,7 @@ class AnnualController extends Controller
                         if($no2 == 0){
                             $telppicnya .=  $telppic->phone;
                         }else{
-                            $telppicnya .= ',' . $telppic->phone;
+                            $telppicnya .= ', ' . $telppic->phone;
                         }
                         $no2++;
                     }

@@ -137,113 +137,238 @@ class VerifyuserController extends Controller
             ->make(true);
     }
 	
-	public function geteksportir()
-    {
-	if(Auth::user()->id_group == 1) {
-      $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
-	}else if(Auth::user()->id_group == 4){
-		$a = Auth::user()->id;
-		
-		if(Auth::user()->id_admin_dn == 0){
-		// luar
-		$b = Auth::user()->id_admin_ln;
+	// public function geteksportir()
+    // {
+	// 	if(Auth::user()->id_group == 1) {
+	// 	$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
+	// 	}
+	// 	else if(Auth::user()->id_group == 4){
+	// 		$a = Auth::user()->id;
+			
+	// 		if(Auth::user()->id_admin_dn == 0){
+	// 			// luar
+	// 			$b = Auth::user()->id_admin_ln;
 
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' and a.status = '1'  order by a.id desc ");
+	// 			$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' and a.status = '1'  order by a.id desc ");
 
-		}else{
-		//dalam
-		$b = Auth::user()->id_admin_dn;
-		$quer = DB::select("select * from  itdp_admin_dn where id='".$b."'");
-		foreach($quer as $t1){ $ic = $t1->id_country; }
-		// echo $ic;die();
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '".$ic."' and a.id_profil = b.id and id_role='2' order by a.id desc ");
-	
-		
-		}
-		
-		}
-	 return DataTables::of($pesan)
-            ->addColumn('f1', function ($pesan) {
-				 return '<div align="left">'.$pesan->company.'</div>';
-            })
-			->addColumn('f2', function ($pesan) {
-				 return $pesan->email;
-            })
-			->addColumn('f3', function ($pesan) {
-				 return $pesan->postcode;
-            })
-			->addColumn('f4', function ($pesan) {
-				 return $pesan->phone;
-            })
-			->addColumn('f5', function ($pesan) {
-				 $cariac = DB::select("select * from log_user where id_user='".$pesan->ida."' and id_role='".$pesan->id_role."' order by id_log desc limit 1");
-				 if(count($cariac) == 0){
-					return "<font color='red'>No Action</font>";
-				 }else{
-					 foreach($cariac as $cc){
-						 if($cc->keterangan == null){
-							 $kt ="Login";
-						 }else{
+	// 		}else{
+	// 			//dalam
+	// 			$b = Auth::user()->id_admin_dn;
+	// 			$quer = DB::select("select * from  itdp_admin_dn where id='".$b."'");
+	// 			foreach($quer as $t1){ $ic = $t1->id_country; }
+	// 			// echo $ic;die();
+	// 			$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.company, b.postcode, b.phone, a.verified_at as verified_at from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '".$ic."' and a.id_profil = b.id and id_role='2' order by a.id desc ");
+			
+			
+	// 		}
+			
+	// 	}
+	//  	return DataTables::of($pesan)
+    //         ->addColumn('f1', function ($pesan) {
+	// 			 return '<div align="left">'.$pesan->company.'</div>';
+    //         })
+	// 		->addColumn('f2', function ($pesan) {
+	// 			 return $pesan->email;
+    //         })
+	// 		->addColumn('f3', function ($pesan) {
+	// 			 return $pesan->postcode;
+    //         })
+	// 		->addColumn('f4', function ($pesan) {
+	// 			 return $pesan->phone;
+    //         })
+	// 		->addColumn('f5', function ($pesan) {
+	// 			 $cariac = DB::select("select * from log_user where id_user='".$pesan->ida."' and id_role='".$pesan->id_role."' order by id_log desc limit 1");
+	// 			 if(count($cariac) == 0){
+	// 				return "<font color='red'>No Action</font>";
+	// 			 }else{
+	// 				 foreach($cariac as $cc){
+	// 					 if($cc->keterangan == null){
+	// 						 $kt ="Login";
+	// 					 }else{
 							 
-							$kt = $cc->keterangan;
-						 }
+	// 						$kt = $cc->keterangan;
+	// 					 }
 						 
-						 return '<a target="_BLANK" href="'.url('listactv/'.$pesan->ida).'">'.$cc->date."(".$cc->waktu.") ".$kt.'</a>';
-					 }
-				 }
-            })
-			->addColumn('f6', function ($pesan) {
-				 if($pesan->agree == 1){ 
-				 return "<center><font color='green'>Yes</font></center>";
-				 }else{ 
-				 return "<center><font color='red'>No</font></center>";
-				 }
-            })
-			->addColumn('f7', function ($pesan) {
-				if($pesan->status_a == 1){ 
-				return "<center><font color='green'>Verified</font></center>";
-				} else if($pesan->status_a == 2){ 
-				return "<center><font color='red'>Not Verified</font></center>";
-				}else{ 
-				return "<center><font color='orange'>Wait Administrator</font></center>";
-				}
+	// 					 return '<a target="_BLANK" href="'.url('listactv/'.$pesan->ida).'">'.$cc->date."(".$cc->waktu.") ".$kt.'</a>';
+	// 				 }
+	// 			 }
+    //         })
+	// 		->addColumn('f6', function ($pesan) {
+	// 			 if($pesan->agree == 1){ 
+	// 			 return "<center><font color='green'>Yes</font></center>";
+	// 			 }else{ 
+	// 			 return "<center><font color='red'>No</font></center>";
+	// 			 }
+    //         })
+	// 		->addColumn('f7', function ($pesan) {
+	// 			if($pesan->status_a == 1){ 
+	// 			return "<center><font color='green'>Verified</font></center>";
+	// 			} else if($pesan->status_a == 2){ 
+	// 			return "<center><font color='red'>Not Verified</font></center>";
+	// 			}else{ 
+	// 			return "<center><font color='orange'>Wait Administrator</font></center>";
+	// 			}
 				 
-            })
-            ->addColumn('f8', function ($pesan) {
-            	if (isset($pesan->verified_at)) {
-            		$time = strtotime($pesan->verified_at);
-	                $newformat = date('d-m-Y',$time);
-	                return $newformat;
-            	} else {
-	                return '-';
-            	}
-         })
-            ->addColumn('action', function ($pesan) {
+    //         })
+    //         ->addColumn('f8', function ($pesan) {
+    //         	if (isset($pesan->verified_at)) {
+    //         		$time = strtotime($pesan->verified_at);
+	//                 $newformat = date('d-m-Y',$time);
+	//                 return $newformat;
+    //         	} else {
+	//                 return '-';
+    //         	}
+    //      	})
+    //         ->addColumn('action', function ($pesan) {
 				
-				if(Auth::user()->id_group == 4){
-				return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>';
+	// 			if(Auth::user()->id_group == 4){
+	// 			return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>';
 					
-				}else{
+	// 			}else{
            
-                if($pesan->status_a == 1 || $pesan->status_a == 2){ 
-				return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>
-				<a Onclick="return ConfirmDelete();" href="'.url('hapuseksportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="hapus"><i class="fa fa-trash text-white"></i></a>
-				<a href="'.url('reseteksportir/'.$pesan->ida).'" class="btn btn-sm btn-warning" title="Reset Password"><i class="fa fa-key text-white"></i></a>
-				';
-				}else{
-				return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-success" title="Verify"><i class="fa fa-check text-white"></i></a>
-				<a Onclick="return ConfirmDelete();" href="'.url('hapuseksportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="hapus"><i class="fa fa-trash text-white"></i></a>
-				<a href="'.url('reseteksportir/'.$pesan->ida).'" class="btn btn-sm btn-warning" title="Reset Password"><i class="fa fa-key text-white"></i></a>
-				';
-				}
+    //             if($pesan->status_a == 1 || $pesan->status_a == 2){ 
+	// 			return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>
+	// 			<a Onclick="return ConfirmDelete();" href="'.url('hapuseksportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="hapus"><i class="fa fa-trash text-white"></i></a>
+	// 			<a href="'.url('reseteksportir/'.$pesan->ida).'" class="btn btn-sm btn-warning" title="Reset Password"><i class="fa fa-key text-white"></i></a>
+	// 			';
+	// 			}else{
+	// 			return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-success" title="Verify"><i class="fa fa-check text-white"></i></a>
+	// 			<a Onclick="return ConfirmDelete();" href="'.url('hapuseksportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="hapus"><i class="fa fa-trash text-white"></i></a>
+	// 			<a href="'.url('reseteksportir/'.$pesan->ida).'" class="btn btn-sm btn-warning" title="Reset Password"><i class="fa fa-key text-white"></i></a>
+	// 			';
+	// 			}
                
-                }
+    //             }
            
                 
-            })
-			->rawColumns(['action','f6','f7','f1','f5'])
-            ->make(true);
-    }
+    //         })
+	// 		->rawColumns(['action','f6','f7','f1','f5'])
+    //         ->make(true);
+	// }
+	
+	public function geteksportir(Request $request){
+		if(Auth::user()->id_group == 1) {
+			$pesan = DB::table('itdp_company_users as a')->join('itdp_profil_eks as b','b.id','a.id_profil')->selectraw('ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at')->where('a.id_role','2');
+			// ->get();
+			// dd($pesan);
+			// $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
+			}
+			else if(Auth::user()->id_group == 4){
+				$a = Auth::user()->id;
+				
+				if(Auth::user()->id_admin_dn == 0){
+					// luar
+					$b = Auth::user()->id_admin_ln;
+					$pesan = DB::table('itdp_company_users as a')->join('itdp_profil_eks as b','b.id','a.id_profil')->selectraw('ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at')->where('a.id_role','2')->where('a.status','1');
+					// ->get();
+			
+					// $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a, b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' and a.status = '1'  order by a.id desc ");
+	
+				}else{
+					//dalam
+					$b = Auth::user()->id_admin_dn;
+					$quer = DB::select("select * from  itdp_admin_dn where id='".$b."'");
+					foreach($quer as $t1){ $ic = $t1->id_country; }
+					// echo $ic;die();
+					$pesan = DB::table('itdp_company_users as a')->join('itdp_profil_eks as b','b.id','a.id_profil')->selectraw('ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at')->where('b.id_mst_province', $ic) ->where('a.id_role','2')->where('a.status','1');
+					// ->get();
+					// $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a, b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '".$ic."' and a.id_profil = b.id and id_role='2' order by a.id desc ");
+				
+				
+				}
+				
+			}
+			// dd($pesan);
+			 return DataTables::of($pesan)
+				->addColumn('f1', function ($pesan) {
+					 return '<div align="left">'.$pesan->company.'</div>';
+				})
+				->addColumn('f2', function ($pesan) {
+					 return '<div align="left">'.$pesan->email.'</div>';
+				})
+				->addColumn('f3', function ($pesan) {
+					$namapicnya = '';
+					$no = 0;
+					$datapic = DB::table('itdp_contact_eks')->where('id_itdp_profil_eks' , $pesan->idb)->get();
+					if(count($datapic) > 0  ){
+						foreach($datapic as $namapic){
+							if($no == 0){
+								$namapicnya .=  $namapic->name;
+								}else{
+								$namapicnya .= ', ' . $namapic->name;
+							}
+							$no++;
+						}
+					}
+					return'<div align="left">'. $namapicnya .'</div>';
+	
+				})
+				->addColumn('f4', function ($pesan) {
+					$telppicnya = '';
+					$no2 = 0;
+
+					$datapic2 = DB::table('itdp_contact_eks')->where('id_itdp_profil_eks' , $pesan->idb)->get();
+					if(count($datapic2) > 0  ){
+						foreach($datapic2 as $telppic){
+							if($no2 == 0){
+								$telppicnya .=  $telppic->phone;
+							}else{
+								$telppicnya .= ', ' . $telppic->phone;
+							}
+							$no2++;
+						}
+					}
+					return'<div align="left">'. $telppicnya .'</div>';
+				})
+				->addColumn('f5', function ($pesan) {
+					return date('d-m-Y',strtotime($pesan->created_at));
+			   })
+			   ->addColumn('f6', function ($pesan) {
+					 $cariac = DB::select("select * from log_user where id_user='".$pesan->ida."' and id_role='".$pesan->id_role."' order by id_log desc limit 1");
+					 if(count($cariac) == 0){
+						return "<font color='red'>No Action</font>";
+					 }else{
+						 foreach($cariac as $cc){
+							 if($cc->keterangan == null){
+								 $kt ="Login";
+							 }else{
+								 
+								$kt = $cc->keterangan;
+							 }
+							 
+							 return '<div<a target="_BLANK" href="'.url('listactv/'.$pesan->ida).'">'.$cc->date."(".$cc->waktu.") ".$kt.'</a>';
+						 }
+					 }
+				})
+				->addColumn('f7', function ($pesan) {
+					return '<div align="left">'. $pesan->npwp. '</div>';
+				})
+				->addColumn('action', function ($pesan) {
+					
+					if(Auth::user()->id_group == 4){
+					return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>';
+						
+					}else{
+			   
+					if($pesan->status_a == 1 || $pesan->status_a == 2){ 
+					return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>
+					<a Onclick="return ConfirmDelete();" href="'.url('hapuseksportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="hapus"><i class="fa fa-trash text-white"></i></a>
+					<a href="'.url('reseteksportir/'.$pesan->ida).'" class="btn btn-sm btn-warning" title="Reset Password"><i class="fa fa-key text-white"></i></a>
+					';
+					}else{
+					return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-success" title="Verify"><i class="fa fa-check text-white"></i></a>
+					<a Onclick="return ConfirmDelete();" href="'.url('hapuseksportir/'.$pesan->ida).'" class="btn btn-sm btn-danger" title="hapus"><i class="fa fa-trash text-white"></i></a>
+					<a href="'.url('reseteksportir/'.$pesan->ida).'" class="btn btn-sm btn-warning" title="Reset Password"><i class="fa fa-key text-white"></i></a>
+					';
+					}
+				   
+					}
+			   
+					
+				})
+				->rawColumns(['action','f1','f2','f3','f4','f6','f7'])
+				->make(true);
+	}
 	
 	public function getpw()
     {
@@ -720,6 +845,7 @@ class VerifyuserController extends Controller
 	}
 	public function simpan_profil(Request $request)
     {
+		// dd($request->id_role);
         date_default_timezone_set('Asia/Jakarta');
 		$id_role = $request->id_role;
 		$id_user = $request->id_user;

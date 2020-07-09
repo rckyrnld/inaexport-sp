@@ -40,6 +40,7 @@ class SuppliersFrontController extends Controller
     {
         // dd($request->all());
         //List Category Product
+        $arrayexporter = [];
         $categoryutama = DB::table('csc_product')
             ->where('level_1', 0)
             ->where('level_2', 0)
@@ -47,6 +48,13 @@ class SuppliersFrontController extends Controller
             ->limit(10)
             ->get();
 
+        $exhasprod = DB::table('csc_product_single')->select('id_itdp_profil_eks')->groupby('id_itdp_profil_eks')->get();
+        // dd($exhasprod);
+        if (count($exhasprod) > 0 ){
+            foreach($exhasprod as $dexhasprod){
+                array_push($arrayexporter,$dexhasprod->id_itdp_profil_eks);
+            }
+        }
         // Data eksporter
         if($request->sorteks){
             if($request->sorteks == "new"){
@@ -59,9 +67,8 @@ class SuppliersFrontController extends Controller
                     $search_eks = $request->cari_eksportir;
                     $eksporter = DB::table('itdp_company_users')
                                 ->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
-                                // ->join('csc_product_single','csc_product_single.id_itdp_company_user','itdp_company_users.id')
+                                ->whereIn('itdp_profil_eks.id', $arrayexporter)
                                 ->select('itdp_profil_eks.*', 'itdp_company_users.email', 'itdp_company_users.status as status_company', 'itdp_company_users.type', 'itdp_company_users.id_role', 'itdp_company_users.id as id_user', 'itdp_company_users.foto_profil')
-                                // ->groupby('itdp_profil_eks.*','itdp_company_users.email','itdp_company_users.status as status_company','itdp_company_users.type', 'itdp_company_users.id_role', 'id_user', 'itdp_company_users.foto_profil')
                                 ->where('itdp_company_users.id_role', 2)
                                 ->where('itdp_company_users.status', 1)
                                 ->where('itdp_profil_eks.company', 'ILIKE', '%'.$search_eks.'%')
@@ -70,9 +77,8 @@ class SuppliersFrontController extends Controller
 
                     $coeksporter = DB::table('itdp_company_users')
                                 ->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
-                                // ->join('csc_product_single','csc_product_single.id_itdp_company_user','itdp_company_users.id')
+                                ->whereIn('itdp_profil_eks.id', $arrayexporter)
                                 ->select('itdp_profil_eks.*', 'itdp_company_users.email', 'itdp_company_users.status as status_company', 'itdp_company_users.type', 'itdp_company_users.id_role', 'itdp_company_users.id as id_user', 'itdp_company_users.foto_profil')
-                                // ->groupby('itdp_profil_eks.*','itdp_company_users.email','status_company','itdp_company_users.type', 'itdp_company_users.id_role', 'id_user', 'itdp_company_users.foto_profil')
                                 ->where('itdp_company_users.id_role', 2)
                                 ->where('itdp_company_users.status', 1)
                                 ->where('itdp_profil_eks.company', 'ILIKE', '%'.$search_eks.'%')
@@ -82,9 +88,8 @@ class SuppliersFrontController extends Controller
                     $search_eks = NULL;
                     $eksporter = DB::table('itdp_company_users')
                                 ->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
-                                // ->join('csc_product_single','csc_product_single.id_itdp_company_user','itdp_company_users.id')
+                                ->whereIn('itdp_profil_eks.id', $arrayexporter)
                                 ->select('itdp_profil_eks.*', 'itdp_company_users.email', 'itdp_company_users.status as status_company', 'itdp_company_users.type', 'itdp_company_users.id_role', 'itdp_company_users.id as id_user', 'itdp_company_users.foto_profil')
-                                // ->groupby('itdp_profil_eks.*','itdp_company_users.email','status_company','itdp_company_users.type', 'itdp_company_users.id_role', 'id_user', 'itdp_company_users.foto_profil')
                                 ->where('itdp_company_users.id_role', 2)
                                 ->where('itdp_company_users.status', 1)
                                 ->orderByRaw($col)
@@ -92,9 +97,8 @@ class SuppliersFrontController extends Controller
 
                     $coeksporter = DB::table('itdp_company_users')
                                 ->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
-                                // ->join('csc_product_single','csc_product_single.id_itdp_company_user','itdp_company_users.id')
+                                ->whereIn('itdp_profil_eks.id', $arrayexporter)
                                 ->select('itdp_profil_eks.*', 'itdp_company_users.email', 'itdp_company_users.status as status_company', 'itdp_company_users.type', 'itdp_company_users.id_role', 'itdp_company_users.id as id_user', 'itdp_company_users.foto_profil')
-                                // ->groupby('itdp_profil_eks.*','itdp_company_users.email','status_company','itdp_company_users.type', 'itdp_company_users.id_role', 'id_user', 'itdp_company_users.foto_profil')
                                 ->where('itdp_company_users.id_role', 2)
                                 ->where('itdp_company_users.status', 1)
                                 ->orderByRaw($col)
@@ -132,9 +136,8 @@ class SuppliersFrontController extends Controller
                     $search_eks = $request->cari_eksportir;
                     $eksporter = DB::table('itdp_company_users')
                                 ->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
-                                // ->join('csc_product_single','csc_product_single.id_itdp_company_user','itdp_company_users.id')
+                                ->whereIn('itdp_profil_eks.id', $arrayexporter)
                                 ->select('itdp_profil_eks.*', 'itdp_company_users.email', 'itdp_company_users.status as status_company', 'itdp_company_users.type', 'itdp_company_users.id_role', 'itdp_company_users.id as id_user', 'itdp_company_users.foto_profil')
-                                // ->groupby('itdp_profil_eks.*','itdp_company_users.email','status_company','itdp_company_users.type', 'itdp_company_users.id_role', 'id_user', 'itdp_company_users.foto_profil')
                                 ->where('itdp_company_users.id_role', 2)
                                 ->where('itdp_company_users.status', 1)
                                 ->where('itdp_profil_eks.company', 'ILIKE', '%'.$search_eks.'%')
@@ -143,9 +146,8 @@ class SuppliersFrontController extends Controller
 
                     $coeksporter = DB::table('itdp_company_users')
                                 ->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
-                                // ->join('csc_product_single','csc_product_single.id_itdp_company_user','itdp_company_users.id')
+                                ->whereIn('itdp_profil_eks.id', $arrayexporter)
                                 ->select('itdp_profil_eks.*', 'itdp_company_users.email', 'itdp_company_users.status as status_company', 'itdp_company_users.type', 'itdp_company_users.id_role', 'itdp_company_users.id as id_user', 'itdp_company_users.foto_profil')
-                                // ->groupby('itdp_profil_eks.*','itdp_company_users.email','status_company','itdp_company_users.type', 'itdp_company_users.id_role', 'id_user', 'itdp_company_users.foto_profil')
                                 ->where('itdp_company_users.id_role', 2)
                                 ->where('itdp_company_users.status', 1)
                                 ->where('itdp_profil_eks.company', 'ILIKE', '%'.$search_eks.'%')
@@ -156,20 +158,16 @@ class SuppliersFrontController extends Controller
                     // dd('ini');
                     $eksporter = DB::table('itdp_company_users')
                                 ->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
-                                // ->join('csc_product_single','csc_product_single.id_itdp_company_user','itdp_company_users.id')
+                                ->whereIn('itdp_profil_eks.id', $arrayexporter)
                                 ->select('itdp_profil_eks.*', 'itdp_company_users.email', 'itdp_company_users.status as status_company', 'itdp_company_users.type', 'itdp_company_users.id_role', 'itdp_company_users.id as id_user', 'itdp_company_users.foto_profil')
-                                // ->groupby('itdp_profil_eks.*', 'itdp_company_users.email', 'itdp_company_users.status as status_company', 'itdp_company_users.type', 'itdp_company_users.id_role', 'itdp_company_users.id as id_user', 'itdp_company_users.foto_profil')
-                                
-                                // ->groupby('itdp_profil_eks.*','itdp_company_users.email','status_company','itdp_company_users.type', 'itdp_company_users.id_role', 'id_user', 'itdp_company_users.foto_profil')
                                 ->where('itdp_company_users.id_role', 2)
                                 ->where('itdp_company_users.status', 1)
                                 ->inRandomOrder()
                                 ->paginate(12);
                     $coeksporter = DB::table('itdp_company_users')
                                 ->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
-                                // ->join('csc_product_single','csc_product_single.id_itdp_company_user','itdp_company_users.id')
+                                ->whereIn('itdp_profil_eks.id', $arrayexporter)
                                 ->select('itdp_profil_eks.*', 'itdp_company_users.email', 'itdp_company_users.status as status_company', 'itdp_company_users.type', 'itdp_company_users.id_role', 'itdp_company_users.id as id_user', 'itdp_company_users.foto_profil')
-                                // ->groupby('itdp_profil_eks.*','itdp_company_users.email','status_company','itdp_company_users.type', 'itdp_company_users.id_role', 'id_user', 'itdp_company_users.foto_profil')
                                 ->where('itdp_company_users.id_role', 2)
                                 ->where('itdp_company_users.status', 1)
                                 ->inRandomOrder()

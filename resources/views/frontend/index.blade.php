@@ -341,14 +341,19 @@
         <!--Event Special start-->
         <?php
         $today = date("Y-m-d");
-        $checkevent = DB::table('banner')->where('deleted_at',null)->where('status',1)->where('end_at','>=',"'".$today."'")->first();
+        // (date('d-m-Y',strtotime($d->end_at))
+        $checkevent = DB::table('banner')->where('deleted_at',null)->select('*')->where('status',1)->whereDate('end_at', '>=',"'".$today."'")->first();
+        if(isset($checkevent)){
+            $checkeksportirnya = DB::table('banner_detail')->where('id_banner',$checkevent->id)->first();
+        }
+        
         // echo $checkevent->tosql();
         // echo $checkevent;
         // if(isset($checkevent)){
         //     echo "<div class='row'><div class='col-md-12'><img src='{{asset('asset('/uploads/banner/'.$checkevent->file)')}}'></div></div>";
         // }
     ?>   
-    @if(isset($checkevent))
+    @if(isset($checkeksportirnya))
     <section class="special_event_area mb-50" style=" margin-bottom: 0px;">
         <!-- <div class="container"><br> -->
             <div class="row">

@@ -38,6 +38,7 @@ class MasterBannerController extends Controller
     date_default_timezone_set('Asia/Jakarta');
     $datenow = date("Y-m-d H:i:s");
     if ($param == 'create') {
+      // untuk nambahin image dan category
       if(empty($request->file('file_img'))){
         $file = "";
       }else{
@@ -57,6 +58,7 @@ class MasterBannerController extends Controller
 
       return redirect('master-banner')->with('success','Success Add Data');
     } else if ($param == 'update') {
+      // untuk aktifin banner
       if($request->semua == 1){ 
         $banner = Banner::where('id', $request->id)->get();
         if (isset($banner[0]->id_csc_product_level2)) {
@@ -95,7 +97,8 @@ class MasterBannerController extends Controller
                     ]);
            }
         }
-      }else{
+      }
+      else{
         $dataeksportir = $request->dataeksportir;
         $explodeksportir = explode(',',$dataeksportir);
         foreach($explodeksportir as $eksportir){
@@ -108,6 +111,7 @@ class MasterBannerController extends Controller
                       ]);
           }
         }
+        DB::table('banner_detail')->where('id_banner',$request->id)->wherenotin('id_eks',$explodeksportir)->delete();
       }
       $update = Banner::where('id', $request->id)
               ->update(['end_at' => $request->s_date,'updated_at' => $datenow, 'status' => $request->status]);
@@ -116,7 +120,11 @@ class MasterBannerController extends Controller
       $baliknya = 'sukses';
       return json_encode($baliknya);
     }else if($param == 'update2'){
-      if($request->semua == 1){ 
+      // untuk edit yang sudah pernah diaktifin
+      // untuk kalo mau bikin checklist hapus semua
+      if($request->hapussemua == 1){
+        DB::table('banner_detail')->where('id_banner',$request->id)->delete();
+      }else if($request->semua == 1){ 
         $banner = Banner::where('id', $request->id)->get();
         if (isset($banner[0]->id_csc_product_level2)) {
           $company = DB::table('csc_product_single')
@@ -166,6 +174,8 @@ class MasterBannerController extends Controller
                       'created_at' => $datenow
                       ]);
           }
+          
+          DB::table('banner_detail')->where('id_banner',$request->id)->wherenotin('id_eks',$explodeksportir)->delete();
         }
       }
       $data1 = [
@@ -208,21 +218,21 @@ class MasterBannerController extends Controller
     $dir = $request->input('order.0.dir');
 
     if (empty($request->input('search.value'))) {
-      $posts = DB::table('banner')
+      $datanya = DB::table('banner')
               ->where('deleted_at', null)
               ->offset($start)
               ->limit($limit)
               ->orderBy($order, $dir)
               ->get();
 
-      $totalFiltered = count($posts);
+      $totalFiltered = count($datanya);
     }
 
     $data = array();
 // dd($posts);
-    if ($posts) {
+    if ($datanya) {
       $count = $start+1;
-      foreach ($posts as $d) {
+      foreach ($datanya as $d) {
         $token = csrf_token();
         $nestedData['no'] = $count;
         $nestedData['file'] = '<div class="thumbnail"><img src="'.asset('/uploads/banner/'.$d->file).'" alt="Lights" style="width:100%"></div>';
@@ -232,13 +242,14 @@ class MasterBannerController extends Controller
         //   $nestedData['until'] = '-';
         // }
         $nestedData['until'] = isset($d->end_at) ? date('d-m-Y',strtotime($d->end_at)) : '-';
-        if($d->status == 1 && $d->end_at >= $today ){
+        if($d->status == 1 && (date('d-m-Y',strtotime($d->end_at)) == date('d-m-Y',strtotime($today)) || date('d-m-Y',strtotime($d->end_at)) > date('d-m-Y',strtotime($today)) ) ){
           $nestedData['status'] = 'Aktif';
           $nestedData['aksi'] = '<div class="btn-group">
                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-image-id = "'.$d->file.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'" data-check-id="'.$d->status.'" data-edit-id="'.$d->id.'"><i class="fa fa-pencil"></i></button>
                                <a onclick="return confirm(\'Are You Sure ?\')"  href="'.url("/").'/master-banner/destroy/'.$d->id.'" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a></div>';
 
         } else if($d->status == 2){
+          // untuk yang pernah aktif, tapi di nonaktifkan
           $nestedData['status'] = 'Tidak Aktif';
           $nestedData['aksi'] = '<div class="btn-group">
                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-image-id = "'.$d->file.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'" data-check-id="'.$d->status.'" data-edit-id="'.$d->id.'"><i class="fa fa-pencil"></i></button>
@@ -249,6 +260,11 @@ class MasterBannerController extends Controller
           $nestedData['status'] = 'Tidak Aktif';
           $nestedData['aksi'] = '<div class="btn-group">
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit" data-edit-id="'.$d->id.'"><i class="fa fa-pencil"></i></button>
+                                <a onclick="return confirm(\'Are You Sure ?\')"  href="'.url("/").'/master-banner/destroy/'.$d->id.'" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a></div>';
+        }else{
+          $nestedData['status'] = 'Tidak Aktif';
+          $nestedData['aksi'] = '<div class="btn-group">
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-edit-id="'.$d->id.'"><i class="fa fa-pencil"></i></button>
                                 <a onclick="return confirm(\'Are You Sure ?\')"  href="'.url("/").'/master-banner/destroy/'.$d->id.'" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a></div>';
         }
         

@@ -99,17 +99,18 @@
         $('#tableeksportir').DataTable({
             processing: true,
             serverSide: true,
+            // stateSave: true,
             // bAutoWidth: false, 
             ajax: "{{ route('datatables.reporteksportir') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex',width: '10%',orderable: false, searchable: false},
-                {data: 'f1', name: 'f1',width: '10%'},
-                {data: 'f2', name: 'f2',width: '10%'},
-                {data: 'province', name: 'province',width: '10%'},
-                {data: 'email', name: 'email',width: '10%'},
-                {data: 'pic_name', name: 'pic_name',width: '10%'},
-                {data: 'pic_telp', name: 'pic_telp',width: '10%'},
-                {data: 'verify_date', name: 'verify_date',width: '10%'},
+                {data: 'f1', name: 'f1',width: '10%',orderable: true, searchable: true},
+                {data: 'f2', name: 'f2',width: '10%',orderable: true, searchable: true},
+                {data: 'province', name: 'province',width: '10%',orderable: true, searchable: true},
+                {data: 'email', name: 'email',width: '10%',orderable: true, searchable: true},
+                {data: 'pic_name', name: 'pic_name',width: '10%',orderable: false, searchable: false},
+                {data: 'pic_telp', name: 'pic_telp',width: '10%',orderable: false, searchable: false},
+                {data: 'verify_date', name: 'verify_date',width: '10%',orderable: true, searchable: true},
                 
                 {
                     data: 'action', name: 'action', orderable: false, searchable: false
