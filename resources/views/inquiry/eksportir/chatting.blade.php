@@ -120,37 +120,31 @@ body {font-family: Arial;}
 <tr>
 <td width="50%" valign="top">
                     <div align="left">
-<<<<<<< HEAD
-					<div class="row">
-                       
-                        <div class="col-md-12">
-                            @if($cekfile != 0)
-=======
+
                     <div class="row">
-                        <div class="col-md-10">
-                            <h5><b>Details Inquiry</b></h5>
-                        </div>
-                        <div class="col-md-2">
+                        
+                        <div class="col-md-12">
+						
                             {{-- @if($cekfile != 0) --}}
->>>>>>> 3b3474e4169bc6e9e3db0ed4071b8b94154137b0
                                 @if($inquiry->type == "importir")
                                     @if($inquiry->status != 3 && $inquiry->status != 4)
                                         <button type="button" class="btn btn-info" data-toggle="modal"
                                                 data-target="#modalDeal"
-                                                style="width: 100%; color: white;">Deal
+                                                style="width: 100%; color: white;">Deal Inquiry
                                         </button>
                                     @endif
                                 @elseif($inquiry->type == "perwakilan" || $inquiry->type == "admin")
                                     @if($broadcast->status != 3 && $broadcast->status != 4)
                                         <button type="button" class="btn btn-info" data-toggle="modal"
                                                 data-target="#modalDeal"
-                                                style="width: 100%; color: white;">Deal
+                                                style="width: 100%; color: white;">Deal Inquiry
                                         </button>
                                     @endif
                                 @endif
                             {{-- @endif --}}
                         </div>
                     </div>
+					<br>
                     <div class="row">
                         <div class="col-md-10">
                             <h5><b>Details Inquiry</b></h5>
@@ -293,7 +287,7 @@ body {font-family: Arial;}
             </div>
 			</div>
 			</td>
-			<td width="50%">
+			<td width="50%" valign="top">
 			
 <div class="">
     <div class="row"><div class="col-sm-12">
