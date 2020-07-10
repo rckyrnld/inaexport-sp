@@ -356,7 +356,7 @@
                 $('#cekmail').html("<font color='green'>( Available )</font>");
 
             } else {
-                $('#cekmail').html("<font color='red'>( Has Been Used ! )</font>");
+                $('#cekmail').html("<font color='red'>( Not Available ! )</font>");
                 alert("Sorry The Mail Has Been Used");
                 $('#email').val("");
             }
