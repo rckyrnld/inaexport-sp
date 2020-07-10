@@ -96,7 +96,7 @@ class RegistrasiController extends Controller
 //        dd($admin_all);
         $insert1 = DB::select("
 			insert into itdp_profil_imp (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
-			('".$request->company."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
+			('".strtoupper($request->company)."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
 			,'".$request->email."','".$request->website."','".$date."','1','".$request->city."','".$request->country."')
 		");
 		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_imp");
@@ -113,9 +113,9 @@ class RegistrasiController extends Controller
 		}
 		// notif 
 		$id_terkait = "3/".$id2;
-		$ket = "New user Buyer with name ".$request->company;
+		$ket = "New user Buyer with name ".strtoupper($request->company);
 		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil2','".$id_terkait."','".$date."','0')
+			('1','".strtoupper($request->company)."','".$id1."','Super Admin','1','".$ket."','profil2','".$id_terkait."','".$date."','0')
 		");
 		
 		//notif untuk perwakilan
@@ -124,9 +124,9 @@ class RegistrasiController extends Controller
 		$qr = DB::select("select a.* from itdp_admin_users a, itdp_admin_ln b  where a.id_admin_ln = b.id and b.id_country='".$groupcountry."'");
 		foreach($qr as $rq){
 			$insertpw = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('4','".$request->company."','".$id1."','".getAdminName($rq->id)."','".$rq->id."','".$ket."','profil2','".$id_terkait."','".$date."','0')
+			('4','".strtoupper($request->company)."','".$id1."','".getAdminName($rq->id)."','".$rq->id."','".$ket."','profil2','".$id_terkait."','".$date."','0')
 			");
-			$data3 = ['username' => getAdminName($rq->id), 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email, 'type' => 'Buyer'];
+			$data3 = ['username' => getAdminName($rq->id), 'id2' => $id2, 'company' => strtoupper($request->company), 'password' => $request->password, 'email' => $rq->email, 'type' => 'Buyer'];
 
                 Mail::send('UM.user.emailsperwakilan', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);
@@ -141,7 +141,7 @@ class RegistrasiController extends Controller
                 'email' => $aa->email,
                 'email1' => $aa->email,
                 'username' => $aa->name,
-                'company' =>$request->company,
+                'company' =>strtoupper($request->company),
                 'type' => "Buyer",
                 'bu' => "",
             ];
@@ -151,7 +151,7 @@ class RegistrasiController extends Controller
             });
         }
 
-			$data = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email];
+			$data = ['username' => $request->username, 'id2' => $id2, 'company' => strtoupper($request->company), 'password' => $request->password, 'email' => $request->email];
 
                 Mail::send('UM.user.emailsuser2', $data, function ($mail) use ($data) {
                     $mail->to($data['email'], $data['username']);
@@ -182,7 +182,7 @@ class RegistrasiController extends Controller
 //        dd($qr);
         $insert1 = DB::select("
 			insert into itdp_profil_eks (badanusaha,company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_province) values
-			('".$request->badanusaha."','".$request->company."','".$request->alamat."','".$request->postcode."','".'+62'.$request->phone."','".'+62'.$request->fax."'
+			('".$request->badanusaha."','".strtoupper($request->company)."','".$request->alamat."','".$request->postcode."','".'+62'.$request->phone."','".'+62'.$request->fax."'
 			,'".$request->email."','".$request->website."','".Date('Y-m-d H:m:s')."','1','".$request->city."','".$request->prov."')
 		");
 		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_eks");
@@ -205,12 +205,12 @@ class RegistrasiController extends Controller
 		
 		// notif 
 		$id_terkait = "2/".$id2;
-		$ket = "User baru Eksportir dengan nama ".$request->company;
+		$ket = "User baru Eksportir dengan nama ".strtoupper($request->company);
 //		$insert3 = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
 //			('1','".$request->company."','".$id1."','Super Admin','1','".$ket."','profil','".$id_terkait."','".Date('Y-m-d H:m:s')."','0')
 //		");
 
-        $data = ['username' => $request->username, 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email, 'user' => 'exporter', 'type'=> 'Indonesian Exporter'];
+        $data = ['username' => $request->username, 'id2' => $id2, 'company' => strtoupper($request->company), 'password' => $request->password, 'email' => $request->email, 'user' => 'exporter', 'type'=> 'Indonesian Exporter'];
 
         Mail::send('UM.user.emailsuser', $data, function ($mail) use ($data) {
             $mail->to($data['email'], $data['username']);
@@ -224,9 +224,9 @@ class RegistrasiController extends Controller
 		// echo "select a.* from itdp_admin_users a, itdp_admin_dn b where a.id_admin_dn = b.id and b.id_country='".$request->prov."'";die();
 		foreach($qr as $rq){
 			$insertpw = DB::select("insert into notif (to_role,dari_nama,dari_id,untuk_nama,untuk_id,keterangan,url_terkait,id_terkait,waktu,status_baca) values
-			('4','".$request->company."','".$id1."','".getAdminName($rq->id)."','".$rq->id."','".$ket."','profil','".$id_terkait."','".$date."','0')
+			('4','".strtoupper($request->company)."','".$id1."','".getAdminName($rq->id)."','".$rq->id."','".$ket."','profil','".$id_terkait."','".$date."','0')
 			");
-			$data3 = ['username' => getAdminName($rq->id), 'id2' => $id2, 'company' => $request->company, 'password' => $request->password, 'email' => $rq->email, 'type' => 'Exporter'];
+			$data3 = ['username' => getAdminName($rq->id), 'id2' => $id2, 'company' => strtoupper($request->company), 'password' => $request->password, 'email' => $rq->email, 'type' => 'Exporter'];
 
                 Mail::send('UM.user.emailsperwakilan', $data3, function ($mail) use ($data3) {
                     $mail->to($data3['email'], $data3['username']);
