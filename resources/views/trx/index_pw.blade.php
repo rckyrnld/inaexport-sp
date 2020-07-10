@@ -63,23 +63,26 @@ body {font-family: Arial;}
                                 <tr>
                                     <th>No</th>
 									
-									<th>
+									                  <th>
                                         <center>Origin</center>
                                     </th>
-									<th>
+									                  <th>
                                         <center>Buyer</center>
                                     </th>
-									<th>
+									                  <th>
                                         <center>Indonesian Exporter</center>
                                     </th>
 									
-									 <th>
+									                  <th>
                                         <center>Type Tracking</center>
                                     </th>
-									<th>
+									                  <th>
                                         <center>No Tracking</center>
                                     </th>
-									<th>
+									                  <th>
+                                        <center>Link Tracking</center>
+                                    </th>
+									                  <th>
                                         <center>Status</center>
                                     </th>
                                     <th>
@@ -113,6 +116,7 @@ body {font-family: Arial;}
 									
 									<td><center><?php echo $ruu->type_tracking; ?></center></td>
 									<td><center><?php echo $ruu->no_tracking; ?></center></td>
+									<td><center><?php echo '<a target="_blank" href="'.$ruu->link_tracking.'">'.$ruu->link_tracking.'</a>'; ?></center></td>
 									<td><center><?php if($ruu->status_transaksi == 1){ echo "<font color='green'>Already Sent</font>"; }else{ echo "<font color='red'>On Process</font>"; } ?></center></td>
                                     <td><center><?php if($ruu->status_transaksi == 1){ echo "<font >".$ruu->created_at."</font>"; }else{ echo " "; } ?></center></td>
                                     <td><center>

@@ -512,6 +512,8 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                         </table>
                                     </div>
                                 </a>
+                                
+                                @if(Auth::guard('eksmp')->check())
                                 <a href="{{url('front_end/tracking')}}" class="a-custom">
                                 <div class="mini_cart_wrapper" style="padding-right: 15px">
                                     <table style="width: 150px;">
@@ -533,7 +535,6 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                     </table>
                                 </div>
                                 </a>
-                                @if(Auth::guard('eksmp')->check())
                                 <div class="header_wishlist">
                                     <table style="width: 150px;">
                                         <tr>

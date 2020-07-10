@@ -30,7 +30,17 @@
                     @if(Auth::user()->id_admin_dn != 0)
                     <a id="tambah" href="{{route('addexpor')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
                     @endif
-                    <div class="col-md-14">
+                    <div class="row">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-2">
+                            <select id="filter" name="filter" class="form-control" onchange="filtering()">
+                                <option value="0" >Choose Filter</option>
+                                <option value="1" >Verified</option>
+                                <option value="2" >Unverified</option>
+                            </select> 
+                        </div>
+                    </div>
+                    <div class="col-md-12">
                         <br>
                         <div class="table-responsive">
 
@@ -120,22 +130,32 @@ function ConfirmDelete()
     }
     $(function () {
         $(".alert").slideDown(300).delay(1000).slideUp(300);
-        $('#users-table').DataTable({
+        var table = $('#users-table').DataTable({
             processing: true,
             serverSide: true,
+            // ajax: {
+            //         url: "{{ url('geteksportir') }}",
+            //         type:'POST',
+
+            //         // data: function (d) {
+            //         //     d.filternya = yangdiselect;
+            //         //     // d.language = $("#language option:selected").val();
+            //         // },
+                    
+            //     },
             ajax: "{{ url('geteksportir') }}",
             columns: [
-                {data: 'row', name: 'row'},
-                {data: 'f1', name: 'f1'},
-                {data: 'f2', name: 'f2'},
-                {data: 'f3', name: 'f3'},
-                {data: 'f4', name: 'f4'},
-                {data: 'f5', name: 'f5'},
+                {data: 'row', name: 'row', orderable: false, searchable: false},
+                {data: 'company', name: 'itdp_profil_eks.company', orderable: true, searchable: true},
+                {data: 'email', name: 'itdp_company_users.email', orderable: true, searchable: true},
+                {data: 'name', name: 'name', orderable: true, searchable: true},
+                {data: 'phone', name: 'phone', orderable: true, searchable: true},
+                {data: 'created_at', name: 'itdp_company_users.created_at', orderable: true, searchable: true},
                 {
-					data: 'f6', name: 'f6', orderable: false, searchable: false
+					data: 'keterangan', name: 'keterangan', orderable: false, searchable: false
 				},
 				{
-					data: 'f7', name: 'f7', orderable: false, searchable: false
+					data: 'npwp', name: 'itdp_profil_eks.npwp', orderable: true, searchable: true
 				},
                 // {
                 //     data: 'f8', name: 'f8', orderable: false, searchable: false
@@ -144,7 +164,50 @@ function ConfirmDelete()
                     data: 'action', name: 'action', orderable: false, searchable: false
                 }]
         });
+
+        
     });
+    
+            // ajax: "{{ url('geteksportir') }}",  
+            // data: {filternya : yangdiselect},
+            // "data": {_token: '{{csrf_token()}}'}
+
+    function filtering(){
+        var yangdiselect = $('#filter').val();
+        $('#users-table').DataTable().destroy();
+        var table = $('#users-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                    url: "{{ url('geteksportir') }}",
+                    data: function (d) {
+                        d.filternya = yangdiselect;
+                        d._token =  '{{csrf_token()}}';
+                    },
+                }, 
+            columns: [
+                {data: 'row', name: 'row', orderable: false, searchable: false},
+                {data: 'company', name: 'itdp_profil_eks.company', orderable: true, searchable: true},
+                {data: 'email', name: 'itdp_company_users.email', orderable: true, searchable: true},
+                {data: 'name', name: 'name', orderable: true, searchable: true},
+                {data: 'phone', name: 'phone', orderable: true, searchable: true},
+                {data: 'created_at', name: 'itdp_company_users.created_at', orderable: true, searchable: true},
+                {
+					data: 'keterangan', name: 'keterangan', orderable: false, searchable: false
+				},
+				{
+					data: 'npwp', name: 'itdp_profil_eks.npwp', orderable: true, searchable: true
+				},
+                // {
+                //     data: 'f8', name: 'f8', orderable: false, searchable: false
+                // },
+                {
+                    data: 'action', name: 'action', orderable: false, searchable: false
+                }]
+        });
+        
+        // table.column( $(this).data('status').search( $(this).val() ).draw();
+    }
 </script>
 
 @include('footer')
