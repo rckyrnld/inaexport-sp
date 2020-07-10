@@ -288,7 +288,7 @@
                     </center>
                 </h5>
 				<br>
-				<h5>Jika Anda tidak mendapat email dari Inaexport dalam beberapa menit, cek folder spam/junk Anda.</h5>
+				<h5>If you didn't receive email from Inaexport, please check your spam/junk folder.</h5>
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
