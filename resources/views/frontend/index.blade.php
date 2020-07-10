@@ -92,6 +92,10 @@
     option {
         color: black !important;
     }
+    .container-fluid{
+        padding-left: 0px!important;
+        padding-right: 0px!important;
+    }
 
     @media only screen and (max-width: 767px) {
         .categories_menu_toggle > ul > li > a {
@@ -355,12 +359,16 @@
     ?>   
     @if(isset($checkeksportirnya))
     <section class="special_event_area mb-50" style=" margin-bottom: 0px;">
-        <!-- <div class="container"><br> -->
-            <div class="row">
-                <a href="{{url('front_end/list_product/categoryeks/'.$checkevent->id)}}" ><img style="width:100% ;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" alt=""></a>
-                {{--<img style="width:100% ;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" data-show-id="{{$checkevent->id}}" data-toggle="modal"  data-target="#modal-special-event" alt="">--}}
-            </div>
-        <!-- </div> -->
+        <div class="container-fluid">
+        <p>
+            <a href="{{url('front_end/list_product/categoryeks/'.$checkevent->id)}}" >
+                <img class="img-fluid" style="width:100%; max-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" alt="">
+            </a>
+        </p>
+
+                {{--<img style="max-width: 100%;min-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" data-show-id="{{$checkevent->id}}" data-toggle="modal"  data-target="#modal-special-event" alt="">--}}
+
+        </div>
     </section>
     <div id="modal-special-event" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">

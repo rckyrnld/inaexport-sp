@@ -31,7 +31,6 @@
                     <a id="tambah" href="{{route('addexpor')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
                     @endif
                     <div class="row">
-                        <div class="col-md-10"></div>
                         <div class="col-md-2">
                             <select id="filter" name="filter" class="form-control" onchange="filtering()">
                                 <option value="0" >Choose Filter</option>

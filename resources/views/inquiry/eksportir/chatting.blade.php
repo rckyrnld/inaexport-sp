@@ -122,20 +122,20 @@ body {font-family: Arial;}
                     <div align="left">
 
                     <div class="row">
-                        
-                        <div class="col-md-12">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
 						
                             {{-- @if($cekfile != 0) --}}
                                 @if($inquiry->type == "importir")
                                     @if($inquiry->status != 3 && $inquiry->status != 4)
-                                        <button type="button" class="btn btn-info" data-toggle="modal"
+                                        <button type="button" class="btn btn-warning" data-toggle="modal"
                                                 data-target="#modalDeal"
                                                 style="width: 100%; color: white;">Deal Inquiry
                                         </button>
                                     @endif
                                 @elseif($inquiry->type == "perwakilan" || $inquiry->type == "admin")
                                     @if($broadcast->status != 3 && $broadcast->status != 4)
-                                        <button type="button" class="btn btn-info" data-toggle="modal"
+                                        <button type="button" class="btn btn-warning" data-toggle="modal"
                                                 data-target="#modalDeal"
                                                 style="width: 100%; color: white;">Deal Inquiry
                                         </button>
@@ -143,6 +143,7 @@ body {font-family: Arial;}
                                 @endif
                             {{-- @endif --}}
                         </div>
+                        <div class="col-md-3"></div>
                     </div>
 					<br>
                     <div class="row">

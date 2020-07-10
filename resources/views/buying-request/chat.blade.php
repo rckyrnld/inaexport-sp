@@ -140,13 +140,17 @@ foreach($q2 as $p2){
    <div>
    <br>
 	<div class="form-row">
-	<div class="form-group col-sm-12">
-		<?php if($ij == 4){ ?>
-		
-		<?php }else{ ?>
-		<a style="width: 100%!important;" width="100%" data-toggle="modal" data-target="#myModal" class="btn btn-info"><font color="white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-hand-o-right "></i> Deal Buying Request</font></a>
-		<?php } ?>
+			
+		<div class=" form-group col-md-3"></div>
+		<div class="form-group col-md-6">
+			<?php if($ij == 4){ ?>
+			
+			<?php }else{ ?>
+			<a style="width: 100%!important;" width="100%" data-toggle="modal" data-target="#myModal" class="btn btn-warning"><font color="white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-hand-o-right "></i> Deal Buying Request</font></a>
+			<?php } ?>
 		</div>
+		<div class="form-group col-md-3"></div>
+			
 	</div>
 	<div class="form-row">
 		<div class="form-group col-sm-4">
