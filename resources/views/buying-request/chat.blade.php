@@ -144,7 +144,7 @@ foreach($q2 as $p2){
 		<?php if($ij == 4){ ?>
 		
 		<?php }else{ ?>
-		<a style="width: 100%!important;" width="100%" data-toggle="modal" data-target="#myModal" class="btn btn-info"><font color="white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-hand-o-right "></i> Deal Buying Reuest</font></a>
+		<a style="width: 100%!important;" width="100%" data-toggle="modal" data-target="#myModal" class="btn btn-info"><font color="white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-hand-o-right "></i> Deal Buying Request</font></a>
 		<?php } ?>
 		</div>
 	</div>

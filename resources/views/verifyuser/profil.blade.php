@@ -284,6 +284,67 @@ body {font-family: Arial;}
 					<input type="text" value="<?php echo $ryu->phone; ?>" name="phone" id="phone" class="form-control" >
 				</div>
 			</div>
+			<div class="form-row">
+				<div class="form-group col-sm-4">
+					<label><b>Scoope of Business</b></label>
+				</div>
+				<div class="form-group col-sm-8">
+					<select name="scoope" id="scoope" class="form-control">
+						<option>-</option>
+					<?php
+						$sob = DB::select("select * from eks_business_size");
+						foreach($sob as $val){
+					?>
+						<option <?php if($ryu->id_eks_business_size == $val->id){ echo "selected"; } ?> value="<?php echo $val->id; ?>"><?php echo $val->nmsize; ?></option>
+						<?php } ?>
+					</select>
+					<?php
+						if( $ryu->id_eks_business_size != null){
+							$datasize = DB::table('eks_business_size')->where('id',$ryu->id_eks_business_size )->get();
+						}else{
+							$datasize = '';
+						}
+					?>
+					<!-- <input type="text" value=" <?php //echo $datasize; ?> " name="scoope" id="scoope" class="form-control" > -->
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-sm-4">
+					<label><b>Type of Business</b></label>
+				</div>
+				<div class="form-group col-sm-8">
+					<select name="tob" id="tob" class="form-control">
+							<option>-</option>
+						<?php
+							$tob = DB::select("select * from eks_business_role");
+							foreach($tob as $val){
+						?>
+						<option <?php if($ryu->id_business_role_id == $val->id){ echo "selected"; } ?> value="<?php echo $val->id; ?>"><?php echo $val->nmtype; ?></option>
+						<?php } ?>
+					</select>
+					<?php
+						if( $ryu->id_business_role_id != null){
+							$datatob = DB::table('eks_business_role')->where('id',$ryu->id_business_role_id )->get();
+						}else{
+							$datatob = '';
+						}
+					?>
+					
+					<!-- <input type="text" value=" <?php //echo $datatob; ?>" name="tob" id="tob" class="form-control" >  -->
+				</div>
+				
+				
+			</div>
+			<div class="form-row">
+				<div class="form-group col-sm-4">
+					<label><b>Employee</b></label>
+				</div>
+				<div class="form-group col-sm-8">
+					<input type="text" value="<?php echo $ryu->employe; ?>" name="employee" id="employee" class="form-control" >
+				</div>
+				
+				
+			</div>
   		</div>
   		<div class="col-md-6">
   			<center>
@@ -431,36 +492,7 @@ body {font-family: Arial;}
 		
 		
 	</div>
-	<div class="form-row">
-		<div class="form-group col-sm-3">
-			<label><b>Scoope of Business</b></label>
-		</div>
-		<div class="form-group col-sm-4">
-			<input type="text" value="<?php echo $ryu->id_eks_business_size; ?>" name="scoope" id="scoope" class="form-control" >
-		</div>
-		
-		
-	</div>
-	<div class="form-row">
-		<div class="form-group col-sm-3">
-			<label><b>Type of Business</b></label>
-		</div>
-		<div class="form-group col-sm-4">
-			<input type="text" value="<?php echo $ryu->id_business_role_id; ?>" name="tob" id="tob" class="form-control" >
-		</div>
-		
-		
-	</div>
-	<div class="form-row">
-		<div class="form-group col-sm-3">
-			<label><b>Employee</b></label>
-		</div>
-		<div class="form-group col-sm-4">
-			<input type="text" value="<?php echo $ryu->employe; ?>" name="employee" id="employee" class="form-control" >
-		</div>
-		
-		
-	</div>
+	
 	<div class="form-row">
 		<div class="form-group col-sm-3">
 			<label><b>

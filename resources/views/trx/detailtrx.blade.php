@@ -266,6 +266,7 @@ foreach($q2 as $p2){
 		$cd2 = $cdt->id_csc_prod_cat;
 		$cd3 = $cdt->id_csc_prod_cat_level1;
 		$cd4 = $cdt->id_csc_prod_cat_level2;
+		$cd6 = $cdt->to;
 	}
 	//echo $cd1."aaaa";
 	?>
@@ -274,7 +275,13 @@ foreach($q2 as $p2){
 			<b>Category</b>
 		</div>
 		<div class="form-group col-sm-6">
-
+			<!-- ditambah mindy karna sebelumnya kosong -->
+		<?php 
+				$caripr = DB::select("select * from  csc_product_single where id='".$cd6."'");
+				foreach($caripr as $xd){
+					echo  '<input readonly type="text" name="category" class="form-control" value="'.$xd->prodname_en.'">';				
+				}
+		?>
 		</div>
 	</div>
 	<div class="form-row">
@@ -353,6 +360,15 @@ foreach($q2 as $p2){
 			<input class="form-control" type="hidden" id="id_transaksi" name="id_transaksi" value="<?php echo $p3->id_transaksi;?>">
 		</div>
 	</div>
+	<div class="form-row">
+		<div class="form-group col-sm-6">
+			<b>Link Tracking</b>
+		</div>
+		<div class="form-group col-sm-6">
+			<input class="form-control" type="text" id="link_tracking" name="link_tracking" value="<?php echo $p3->link_tracking; ?>" <?php if($p3->status_transaksi == 1){ echo "readonly"; }?>>
+		</div>
+	</div>
+
 	<div class="form-row">
 		
 		<div class="form-group col-sm-5">

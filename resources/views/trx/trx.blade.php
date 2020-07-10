@@ -500,6 +500,15 @@ $cr = explode(',',$p3->id_csc_prod);
 			<input class="form-control" type="hidden" id="id_transaksi" name="id_transaksi" value="<?php echo $p2->id_transaksi;?>">
 		</div>
 	</div>
+
+	<div class="form-row">
+		<div class="form-group col-sm-2">
+			<b>Link Tracking</b>
+		</div>
+		<div class="form-group col-sm-3">
+			<input class="form-control" type="text" id="link_tracking" name="link_tracking" value="<?php echo $p2->link_tracking; ?>" <?php if($p2->status_transaksi == 1){ echo "readonly"; }?>>
+		</div>
+	</div>
 	
 	<div class="form-row">
 		

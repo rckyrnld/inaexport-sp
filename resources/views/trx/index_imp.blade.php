@@ -42,6 +42,7 @@
 								<th>Exporter</th>
 								<th>Type Tracking</th>
 								<th>No Tracking</th>
+								<th>Link Tracking</th>
 								<th>Status</th>
 								<th>Created At</th>
 								<th>Action</th>
@@ -63,6 +64,7 @@
 									
 									<td><center><?php echo $ruu->type_tracking; ?></center></td>
 									<td><center><?php echo $ruu->no_tracking; ?></center></td>
+									<td><center><?php echo '<a target="_blank" href="'.$ruu->link_tracking.'">'.$ruu->link_tracking.'</a>'; ?></center></td>
 									<td><center><?php if($ruu->status_transaksi == 1){ echo "<font color='green'>Already Sent</font>"; }else{ echo "<font color='red'>On Process</font>"; } ?></center></td>
 									<td><center><?php if($ruu->status_transaksi == 1){ echo "<font >".$ruu->created_at."</font>"; }else{ echo " "; } ?></center></td>
 									<td><center>

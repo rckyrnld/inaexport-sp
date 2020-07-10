@@ -104,7 +104,7 @@ class TrxController extends Controller
 
     public function save_trx(Request $request)
     {
-//        dd($request);
+    //    dd($request);
 //        dd(Auth::guard('eksmp')->user()->id);
         date_default_timezone_set('Asia/Jakarta');
         $date = date('Y-m-d H:i:s');
@@ -271,8 +271,9 @@ class TrxController extends Controller
 //			$mail->to($data33['email1'], $data33['username']);
 //			$mail->subject('Transaction Created By '.Auth::guard('eksmp')->user()->username);
 //			});
-		}
-		$update = DB::select("update csc_transaksi set total='".($request->eo * $ch2)."' , eo='".$request->eo."', neo='".$request->neo."',tp='".$ch2."',ntp='".$request->ntp."', status_transaksi='".$request->tipekirim."', type_tracking='".$request->type_tracking."',no_tracking='".$request->no_track."' where id_transaksi='".$request->id_transaksi."' ");
+        }
+        // dd($request);
+		$update = DB::select("update csc_transaksi set total='".($request->eo * $ch2)."' , eo='".$request->eo."', neo='".$request->neo."',tp='".$ch2."',ntp='".$request->ntp."', status_transaksi='".$request->tipekirim."', type_tracking='".$request->type_tracking."',no_tracking='".$request->no_track."',link_tracking='".$request->link_tracking."' where id_transaksi='".$request->id_transaksi."' ");
 		return redirect('trx_list');
 		
 	}

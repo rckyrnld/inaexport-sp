@@ -247,8 +247,38 @@ class VerifyuserController extends Controller
 	// }
 	
 	public function geteksportir(Request $request){
+	// public function geteksportir(){
+		// dd($request);
+		// dd($request->filternya);
 		if(Auth::user()->id_group == 1) {
-			$pesan = DB::table('itdp_company_users as a')->join('itdp_profil_eks as b','b.id','a.id_profil')->selectraw('ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at')->where('a.id_role','2');
+			// if()
+			// $pesan = DB::table('itdp_company_users as a')->join('itdp_profil_eks as b','b.id','a.id_profil')->selectraw('ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at')->where('a.id_role','2');
+			if(isset($request->filternya)){
+				if($request->filternya == '1'){
+					$pesan = DB::table("itdp_profil_eks")
+					->join("itdp_company_users","itdp_profil_eks.id","itdp_company_users.id_profil")
+					->selectraw("ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at")
+					->where('itdp_company_users.status',1)
+					->where("itdp_company_users.id_role","2");
+				}else if($request->filternya == '2'){
+					$pesan = DB::table("itdp_profil_eks")
+					->join("itdp_company_users","itdp_profil_eks.id","itdp_company_users.id_profil")
+					->selectraw("ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at")
+					->where('itdp_company_users.status',0)
+					->where("itdp_company_users.id_role","2");
+				}else{
+					$pesan = DB::table("itdp_profil_eks")
+					->join("itdp_company_users","itdp_profil_eks.id","itdp_company_users.id_profil")
+					->selectraw("ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at")
+					->where("itdp_company_users.id_role","2");
+				}
+			}else{
+				$pesan = DB::table("itdp_profil_eks")
+				->join("itdp_company_users","itdp_profil_eks.id","itdp_company_users.id_profil")
+				->selectraw("ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at")
+				->where("itdp_company_users.id_role","2");
+			}
+			
 			// ->get();
 			// dd($pesan);
 			// $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' order by a.id desc ");
@@ -259,7 +289,8 @@ class VerifyuserController extends Controller
 				if(Auth::user()->id_admin_dn == 0){
 					// luar
 					$b = Auth::user()->id_admin_ln;
-					$pesan = DB::table('itdp_company_users as a')->join('itdp_profil_eks as b','b.id','a.id_profil')->selectraw('ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at')->where('a.id_role','2')->where('a.status','1');
+					$pesan = DB::table('itdp_company_users')
+							->join('itdp_profil_eks','itdp_profil_eks.id','itdp_company_users.id_profil')->selectraw('ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at')->where('itdp_company_users.id_role','2')->where('itdp_company_users.status','1');
 					// ->get();
 			
 					// $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a, b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' and a.status = '1'  order by a.id desc ");
@@ -270,7 +301,7 @@ class VerifyuserController extends Controller
 					$quer = DB::select("select * from  itdp_admin_dn where id='".$b."'");
 					foreach($quer as $t1){ $ic = $t1->id_country; }
 					// echo $ic;die();
-					$pesan = DB::table('itdp_company_users as a')->join('itdp_profil_eks as b','b.id','a.id_profil')->selectraw('ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at')->where('b.id_mst_province', $ic) ->where('a.id_role','2')->where('a.status','1');
+					$pesan = DB::table('itdp_company_users')->join('itdp_profil_eks','itdp_profil_eks.id','itdp_company_users.id_profil')->selectraw('ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at')->where('itdp_profil_eks.id_mst_province', $ic) ->where('itdp_company_users.id_role','2')->where('itdp_company_users.status','1');
 					// ->get();
 					// $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a, b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '".$ic."' and a.id_profil = b.id and id_role='2' order by a.id desc ");
 				
@@ -279,15 +310,21 @@ class VerifyuserController extends Controller
 				
 			}
 			// dd($pesan);
+			// return Datatables::of($posts)
+            // ->editColumn('title', '{!! str_limit($title, 60) !!}')
+            // ->editColumn('name', function ($model) {
+            //     return \HTML::mailto($model->email, $model->name);
+            // })
+            // ->make(true);
 			 return DataTables::of($pesan)
-				->addColumn('f1', function ($pesan) {
+				->editColumn('company', function ($pesan) {
 					 return '<div align="left">'.$pesan->company.'</div>';
 				})
-				->addColumn('f2', function ($pesan) {
+				->editColumn('email', function ($pesan) {
 					 return '<div align="left">'.$pesan->email.'</div>';
 				})
-				->addColumn('f3', function ($pesan) {
-					$namapicnya = '';
+				->addColumn('name', function ($pesan) {
+				$namapicnya = '';
 					$no = 0;
 					$datapic = DB::table('itdp_contact_eks')->where('id_itdp_profil_eks' , $pesan->idb)->get();
 					if(count($datapic) > 0  ){
@@ -303,7 +340,7 @@ class VerifyuserController extends Controller
 					return'<div align="left">'. $namapicnya .'</div>';
 	
 				})
-				->addColumn('f4', function ($pesan) {
+				->addColumn('phone', function ($pesan) {
 					$telppicnya = '';
 					$no2 = 0;
 
@@ -320,10 +357,15 @@ class VerifyuserController extends Controller
 					}
 					return'<div align="left">'. $telppicnya .'</div>';
 				})
-				->addColumn('f5', function ($pesan) {
-					return date('d-m-Y',strtotime($pesan->created_at));
+				->editColumn('created_at', function ($pesan) {
+					if($pesan->created_at != null){
+						return date('d-m-Y',strtotime($pesan->created_at));
+					}else{
+						return $pesan->created_at;
+					}
+					
 			   })
-			   ->addColumn('f6', function ($pesan) {
+			   ->addColumn('keterangan', function ($pesan) {
 					 $cariac = DB::select("select * from log_user where id_user='".$pesan->ida."' and id_role='".$pesan->id_role."' order by id_log desc limit 1");
 					 if(count($cariac) == 0){
 						return "<font color='red'>No Action</font>";
@@ -340,7 +382,7 @@ class VerifyuserController extends Controller
 						 }
 					 }
 				})
-				->addColumn('f7', function ($pesan) {
+				->addColumn('npwp', function ($pesan) {
 					return '<div align="left">'. $pesan->npwp. '</div>';
 				})
 				->addColumn('action', function ($pesan) {
@@ -366,7 +408,7 @@ class VerifyuserController extends Controller
 			   
 					
 				})
-				->rawColumns(['action','f1','f2','f3','f4','f6','f7'])
+				->rawColumns(['action','company','email','name','phone','keterangan','npwp'])
 				->make(true);
 	}
 	
@@ -933,8 +975,9 @@ class VerifyuserController extends Controller
             //UPDATE TAB 3
             if($id_role == 2){
                 if($request->npwp == "null"){
-
+					
                 }else{
+					
                     $updatetab2 = DB::select("update itdp_profil_eks set npwp='".$request->npwp."', tdp='".$request->tanda_daftar."', siup='".$request->siup."' 
 				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$request->staim."' 
 				where id='".$id_user_b."'");
@@ -982,13 +1025,15 @@ class VerifyuserController extends Controller
 		}
 		//UPDATE TAB 2
 		if($id_role == 2){
-		$updatetab2 = DB::select("update itdp_profil_eks set badanusaha='".$request->badanusaha."', company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
-		, id_mst_province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."', email='".$request->email."' 
-		where id='".$id_user_b."'");
+			// kalo yang tiga data yang awalnya ada di tab 3, dimasukin ke tab 2 yang ada di admin dan perubahan oleh admin di 3 file ini, bisa di save
+			$updatetab2 = DB::select("update itdp_profil_eks set badanusaha='".$request->badanusaha."', company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
+			, id_mst_province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."', email='".$request->email."' 
+			, id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."'
+			where id='".$id_user_b."'");
 		}else{
-		$updatetab2 = DB::select("update itdp_profil_imp set badanusaha='".$request->badanusaha."', company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
-		, province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."' 
-		where id='".$id_user_b."'");
+			$updatetab2 = DB::select("update itdp_profil_imp set badanusaha='".$request->badanusaha."', company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
+			, province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."' 
+			where id='".$id_user_b."'");
 		}
 
         if(Auth::guard('eksmp')->user()){

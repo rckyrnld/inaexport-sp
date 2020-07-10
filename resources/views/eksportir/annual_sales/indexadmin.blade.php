@@ -104,14 +104,13 @@
             ajax: "{{ route('datatables.reporteksportir') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex',width: '10%',orderable: false, searchable: false},
-                {data: 'f1', name: 'f1',width: '10%',orderable: true, searchable: true},
-                {data: 'f2', name: 'f2',width: '10%',orderable: true, searchable: true},
-                {data: 'province', name: 'province',width: '10%',orderable: true, searchable: true},
-                {data: 'email', name: 'email',width: '10%',orderable: true, searchable: true},
+                {data: 'company', name: 'itdp_profil_eks.company',width: '10%',orderable: true, searchable: true},
+                {data: 'addres', name: 'itdp_profil_eks.addres',width: '10%',orderable: true, searchable: true},
+                {data: 'province', name: 'mst_province.province_en',width: '10%',orderable: true, searchable: true},
+                {data: 'email', name: 'itdp_company_users.email',width: '10%',orderable: true, searchable: true},
                 {data: 'pic_name', name: 'pic_name',width: '10%',orderable: false, searchable: false},
                 {data: 'pic_telp', name: 'pic_telp',width: '10%',orderable: false, searchable: false},
-                {data: 'verify_date', name: 'verify_date',width: '10%',orderable: true, searchable: true},
-                
+                {data: 'verify_date', name: 'itdp_company_users.verified_at',width: '10%',orderable: true, searchable: true},  
                 {
                     data: 'action', name: 'action', orderable: false, searchable: false
                 }
