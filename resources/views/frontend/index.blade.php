@@ -1030,6 +1030,16 @@
                                    </div>
 							</form>
                             </div>
+                                <!-- <div class="row">
+                                    <div class="col-md-5" style="padding:15px" >
+                                        <img src = "{{asset('front/assets/icon/Logo_Exim.png')}}" > 
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-5" style="padding:15px">
+                                        <img src = "{{asset('front/assets/icon/Logo_Inatrims.png')}}" > 
+                                    </div>
+                                   
+                                </div> -->
                         </div>
                     </div>
                 </div>

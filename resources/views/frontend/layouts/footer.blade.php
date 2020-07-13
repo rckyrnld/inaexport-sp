@@ -230,19 +230,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="widgets_container contact_us">
-                            <div class="footer_logo" align="center">
+                    <div class="col-lg-3 col-md-6" >
+                        <div class="footer_logo" align="center" style="/*position: absolute; bottom: 0; right: 0;  left: 0; */">
+                            <div class="widgets_container contact_us"  style="/*position: absolute; height: 10px; bottom: 0; right: 0;  left: 0; */">
 							<!--
                                 <a href="http://inatrade.kemendag.go.id" target="_BLANK"><img src="{{asset('front/assets/img/logo/inatrade_.png')}}" alt="" width="100%"></a>
                                 <a href="http://exim.kemendag.go.id" target="_BLANK"><img src="{{asset('front/assets/img/logo/logo-alt-01x.png')}}" alt="" style="width:95%!important;height:55px!important;"></a>
 								<br><br>
 							-->
 								<table width="100%">
-								<tr>
-									<td width="50%" align="right"><a href="https://play.google.com/store/apps/details?id=com.maxxima.kemendagmobile" target="_BLANK"><img src="{{asset('front/assets/icon/android.svg')}}" alt="" width="100%"></a></td>
-									<td width="50%" align="left"><a href="https://apps.apple.com/us/app/inaexport/id1497480318" target="_BLANK"><img src="{{asset('front/assets/icon/ios.svg')}}" alt="" width="100%"></a></td>
-								</tr>
+                                    <tr>
+                                        <td width="50%" style="padding: 10px;">    
+                                            <img src = "{{asset('front/assets/icon/Logo_Exim.png')}}" > 
+                                        </td>
+                                        <td width="50%" style="padding: 10px;">
+                                            <img src = "{{asset('front/assets/icon/Logo_Inatrims.png')}}" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="50%" align="right"><a href="https://play.google.com/store/apps/details?id=com.maxxima.kemendagmobile" target="_BLANK"><img src="{{asset('front/assets/icon/android.svg')}}" alt="" width="100%"></a></td>
+                                        <td width="50%" align="left"><a href="https://apps.apple.com/us/app/inaexport/id1497480318" target="_BLANK"><img src="{{asset('front/assets/icon/ios.svg')}}" alt="" width="100%"></a></td>
+                                    </tr>
 								</table>
 								<br>
 								<p>@lang("footer.cc") &copy; <?php echo date("Y"); ?> </p>
@@ -256,6 +264,22 @@
                         </div>
                     </div>
                 </div>
+                <!-- <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="widgets_container contact_us">
+                            <div class="footer_logo" align="center">
+                                <table width="100%">
+                                    <tr>
+                                        <td width="50%" align="right"><a href="https://play.google.com/store/apps/details?id=com.maxxima.kemendagmobile" target="_BLANK"><img src="{{asset('front/assets/icon/android.svg')}}" alt="" width="100%"></a></td>
+                                        <td width="50%" align="left"><a href="https://apps.apple.com/us/app/inaexport/id1497480318" target="_BLANK"><img src="{{asset('front/assets/icon/ios.svg')}}" alt="" width="100%"></a></td>
+                                    </tr>
+								</table>
+								<br>
+                                <p>@lang("footer.cc") &copy; <?php echo date("Y"); ?> </p> 
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
             </div>
             <div class="footer_bottom">
                 <div class="row">
