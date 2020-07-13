@@ -67,14 +67,20 @@ return [
     "contact-person"    => "Contact Person",
     "about"    => "Tentang",
     "about-det" => [
-        "1" => "INAEXPORT adalah jendela Indonesia menuju dunia untuk pengembangan ekspor dan telah berkembang dengan sangat baik dalam mengidentifikasi pasar dan peluang baru di luar negeri bagi produsen yang mampu memenuhi persyaratan pasar. ",
-        "2" => "DGNED sendiri mempunyai tanggung jawab berikut :",
-        "2-1" => "Merumuskan kebijakan dan pedoman untuk mendorong dan mendukung ekspansi ekspor produk nonmigas.",
-        "2-2" => "Untuk memberikan layanan informasi di pasar luar negeri.",
-        "2-3" => "Untuk mengatur kegiatan promosi ekspor.",
-        "2-4" => "Untuk memperluas jangkauan produk dan pasar ekspor.",
-        "3" => "DGNED menyediakan riset pasar, saran tentang prosedur ekspor, persyaratan lisensi, dan pembiayaan. Ini juga membantu eksportir untuk berpartisipasi dalam pameran dagang reguler baik di dalam maupun luar negeri.",
-        "4" => "INAEXPORT disediakan untuk membantu mereka yang ingin mengekspor dan yang ingin membeli dari Indonesia, dengan layanan satu atap.",
+        // "1" => "INAEXPORT adalah jendela Indonesia menuju dunia untuk pengembangan ekspor dan telah berkembang dengan sangat baik dalam mengidentifikasi pasar dan peluang baru di luar negeri bagi produsen yang mampu memenuhi persyaratan pasar. ",
+        // "2" => "DGNED sendiri mempunyai tanggung jawab berikut :",
+        // "2-1" => "Merumuskan kebijakan dan pedoman untuk mendorong dan mendukung ekspansi ekspor produk nonmigas.",
+        // "2-2" => "Untuk memberikan layanan informasi di pasar luar negeri.",
+        // "2-3" => "Untuk mengatur kegiatan promosi ekspor.",
+        // "2-4" => "Untuk memperluas jangkauan produk dan pasar ekspor.",
+        // "3" => "DGNED menyediakan riset pasar, saran tentang prosedur ekspor, persyaratan lisensi, dan pembiayaan. Ini juga membantu eksportir untuk berpartisipasi dalam pameran dagang reguler baik di dalam maupun luar negeri.",
+        // "4" => "INAEXPORT disediakan untuk membantu mereka yang ingin mengekspor dan yang ingin membeli dari Indonesia, dengan layanan satu atap.",
+        "1" => "INAEXPORT adalah platform B2B resmi yang didirikan pada tahun 2019 oleh Direktorat Jenderal Pengembangan Ekspor Nasional, Kementerian Perdagangan, Republik Indonesia. Itu merupakan peningkatan dari versi sebelumnya: Layanan Keanggotaan. INAEXPORT bertindak sebagai layanan satu pintu Indonesia ke dunia untuk pengembangan ekspor dengan menghubungkan eksportir Indonesia dan pembeli luar negeri. INAEXPORT telah berkembang dengan sangat baik dalam mengidentifikasi pasar baru dan menampilkan berbagai produk unggulan yang memenuhi persyaratan pasar.
+        INAEXPORT menyoroti produk-produk unggulan dengan cara termudah untuk mitra dagang kami untuk menemukan produk-produk yang diperlukan dari Indonesia.",
+        "2" => "Ada tiga anggota utama InaExport: eksportir Indonesia, pembeli asing, dan Perwakilan Dagang Indonesia di luar negeri.",
+        "3"=> "Sebagai eksportir Indonesia, Anda akan mendapat manfaat dari memiliki informasi terbaru di ujung jari Anda serta memiliki platform untuk memperkenalkan produk Anda kepada khalayak / pembeli di seluruh dunia. Anda akan menerima pertanyaan untuk pembeli atau Perwakilan Dagang Indonesia. ",
+        "4" => "Sebagai pembeli asing, Anda dapat memposting pertanyaan yang akan menjangkau eksportir Indonesia sebagai pemasok dari berbagai daerah dan berkomunikasi langsung dengan pemasok. Anda juga dapat melihat profil eksportir untuk memberi Anda rasa aman dalam melakukan bisnis dengan eksportir kami.",
+        "5" => "Perwakilan Dagang Indonesia di seluruh dunia juga menjadi anggota aplikasi ini. Selain memposting pertanyaan kepada eksportir, Perwakilan Dagang Indonesia juga dapat memberikan informasi yang diperlukan seperti informasi pasar, jadwal pameran dagang kepada eksportir. Untuk pembeli asing dapat menghubungi Perwakilan Dagang Indonesia di negara Anda untuk mendapatkan informasi lebih detail tentang pemasok dan produk Indonesia."
     ],
     "home" => [
         "product" => "Produk",

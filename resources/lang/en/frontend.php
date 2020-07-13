@@ -67,14 +67,20 @@ return [
     "contact-person"    => "Contact Person",
     "about"    => "About Us",
     "about-det" => [
-        "1" => "INAEXPORT is Indonesia's window to the world for export development and has developed excellently in identifying new markets and opportunities overseas for producers which are capable of meeting the requirements of the markets.",
-        "2" => "DGNED itself is tasked with the following responsibilities :",
-        "2-1" => "To formulate policies and guidelines to encourage and to support the expansion of non-oil and gas products export.",
-        "2-2" => "To provide information services on overseas markets.",
-        "2-3" => "To organize export promotion activities.",
-        "2-4" => "To expand the range of export products and markets.",
-        "3" => "DGNED provides market research, advice on export procedures, licensing requirements, and financing. It also assists exporters to participate in its regular trade exhibitions both domestic and overseas.",
-        "4" => "Here Membership Services is provided to help those who want to export and who want to buy from Indonesia, with a single windows services.",
+        // "1" => "INAEXPORT is Indonesia's window to the world for export development and has developed excellently in identifying new markets and opportunities overseas for producers which are capable of meeting the requirements of the markets.",
+        // "2" => "DGNED itself is tasked with the following responsibilities :",
+        // "2-1" => "To formulate policies and guidelines to encourage and to support the expansion of non-oil and gas products export.",
+        // "2-2" => "To provide information services on overseas markets.",
+        // "2-3" => "To organize export promotion activities.",
+        // "2-4" => "To expand the range of export products and markets.",
+        // "3" => "DGNED provides market research, advice on export procedures, licensing requirements, and financing. It also assists exporters to participate in its regular trade exhibitions both domestic and overseas.",
+        // "4" => "Here Membership Services is provided to help those who want to export and who want to buy from Indonesia, with a single windows services.",
+        "1" => "INAEXPORT is an official B2B platform established in 2019 by the Directorate General of National Export Development, Ministry of Trade, Republic of Indonesia. It was an enhancement from a previous version: Membership Services. INAEXPORT acts as Indonesia's single window services to the world for export development by connecting Indonesian exporters and overseas buyers. INAEXPORT has excellently developed in identifying new markets and featured excellent various products that meet market requirements.
+        INAEXPORT highlights the outstanding products in the easiest way possible for our trade partner to find the required products from Indonesia.",
+        "2" => "There are three main members of InaExport: Indonesian exporters, foreign buyers, and Indonesian Trade Representatives in overseas. ",
+        "3"=> "As an Indonesian exporter, you would benefit from having latest information on your fingertips as well as having a platform to introduce your products to worldwide audiences/ buyers. You would receive inquiry for buyer or Indonesian Trade Representatives. ",
+        "4" => "As a foreign buyer, you could post inquiries that will reach Indonesian exporters as a supplier from various regions and communicate directly with the suppliers. You could also look at the exporters’ profile to give you sense of security in doing business with our exporters.",
+        "5" => "Indonesia Trade Representatives in over the world also become member of this application. Beside posting inquiries to the exporter, Indonesia Trade Representatives also could provide necessary information such as market information, trade fair schedule to the exporters. For the foreign buyer could contact Indonesia Trade Representatives in your country to get more detail information about Indonesian supplier and product."
     ],
     "home" => [
         "product" => "Products",
