@@ -229,59 +229,6 @@
 
 
 										</div>
-										<!-- <div class="form-row">
-											<div class="form-group col-sm-4">
-												<label><b>Scoope of Business</b></label>
-											</div>
-											<div class="form-group col-sm-4">
-												<select name="scoope" id="scoope" class="form-control" onchange="Scoope(this)">
-													<option>-</option>
-												<?php
-													// $sob = DB::select("select * from eks_business_size");
-													// foreach($sob as $val){
-												?>
-													<option <?php //if($ryu->id_eks_business_size == $val->id){ echo "selected"; } ?> value="<?php// echo $val->id; ?>"><?php //echo $val->nmsize; ?></option>
-													<?php //} ?>
-												</select>
-
-											</div>
-											<div class="form-group col-sm-4">
-													<input type="text" id="scoope_in" class="form-control" readonly value="{{$ryu->id_eks_business_size == null ? "" : SOB($ryu->id_eks_business_size)}}">
-											</div>
-
-
-										</div>
-										<div class="form-row">
-											<div class="form-group col-sm-4">
-												<label><b>Type of Business</b></label>
-											</div>
-											<div class="form-group col-sm-4">
-												<select name="tob" id="tob" class="form-control" onchange="TOB(this)">
-													<option>-</option>
-													<?php
-													// $tob = DB::select("select * from eks_business_role");
-													// foreach($tob as $val){
-													?>
-													<option <?php// if($ryu->id_business_role_id == $val->id){ echo "selected"; } ?> value="<?//php echo $val->id; ?>"><?php //echo $val->nmtype; ?></option>
-													<?php //} ?>
-												</select>
-											</div>
-											<div class="form-group col-sm-4">
-												<input type="text" id="tob_in" class="form-control" readonly value="{{$ryu->id_business_role_id == null ? "" : TOB($ryu->id_business_role_id)}}">
-											</div>
-
-
-										</div>
-										<div class="form-row">
-											<div class="form-group col-sm-4">
-												<label><b>Employee</b></label>
-											</div>
-											<div class="form-group col-sm-4">
-												<input type="text" value="<?php //echo $ryu->employe; ?>" name="employee" id="employee" class="form-control" >
-											</div>
-
-
-										</div> -->
 										<div class="form-row">
 											<div class="form-group col-sm-4">
 												<label><b>
@@ -478,25 +425,25 @@
 		}
 	})
 
-	function Scoope(obj){
-		csrf_token = '{{ csrf_token() }}';
-		val = $(obj).val();
-		$('#scoope_in').val('');
-			$.post("{{ route('getscoope') }}", {'_token':csrf_token, 'id':val}, function(response){
-				res = JSON.parse(response);
-				$('#scoope_in').val(res.nmsize_ind);
-			});
-	}
+	// function Scoope(obj){
+	// 	csrf_token = '{{ csrf_token() }}';
+	// 	val = $(obj).val();
+	// 	$('#scoope_in').val('');
+	// 		$.post("{{ route('getscoope') }}", {'_token':csrf_token, 'id':val}, function(response){
+	// 			res = JSON.parse(response);
+	// 			$('#scoope_in').val(res.nmsize_ind);
+	// 		});
+	// }
 
-	function TOB(obj){
-		csrf_token = '{{ csrf_token() }}';
-		val = $(obj).val();
-		$('#tob_in').val('');
-		$.post("{{ route('gettob') }}", {'_token':csrf_token, 'id':val}, function(response){
-			res = JSON.parse(response);
-			$('#tob_in').val(res.nmtype_ind);
-		});
-	}
+	// function TOB(obj){
+	// 	csrf_token = '{{ csrf_token() }}';
+	// 	val = $(obj).val();
+	// 	$('#tob_in').val('');
+	// 	$.post("{{ route('gettob') }}", {'_token':csrf_token, 'id':val}, function(response){
+	// 		res = JSON.parse(response);
+	// 		$('#tob_in').val(res.nmtype_ind);
+	// 	});
+	// }
 </script>
 
 @include('footer')
