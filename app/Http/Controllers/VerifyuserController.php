@@ -1073,12 +1073,12 @@ class VerifyuserController extends Controller
         //UPDATE TAB 2
         if($id_role == 2){
             $updatetab2 = DB::select("update itdp_profil_eks set badanusaha='".$request->badanusaha."', company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
-		, id_mst_province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."', email='".$request->email."' 
-		where id='".$id_user_b."'");
+		, id_mst_province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."', email='".$request->email."', id_eks_business_size='".$request->scoope."',
+		 id_business_role_id='".$request->tob."', employe='".$request->employee."' where id='".$id_user_b."'");
         }else{
             $updatetab2 = DB::select("update itdp_profil_imp set badanusaha='".$request->badanusaha."', company='".$request->company."', addres='".$request->addres."', city='".$request->city."' 
-		, province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."' 
-		where id='".$id_user_b."'");
+		, province='".$request->province."' , postcode='".$request->postcode."', fax='".$request->fax."', website='".$request->website."', phone='".$request->phone."' , id_eks_business_size='".$request->scoope."',
+		 id_business_role_id='".$request->tob."', employe='".$request->employee."' where id='".$id_user_b."'");
         }
 
 //
@@ -1181,15 +1181,13 @@ class VerifyuserController extends Controller
 //				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$staim."'
 //				where id='".$id_user_b."'");
                     $updatetab2 = DB::select("update itdp_profil_eks set tdp='".$request->tanda_daftar."', siup='".$request->siup."' 
-				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."'
-				where id='".$id_user_b."'");
+				, upduserid='".$request->situ."' where id='".$id_user_b."'");
                 }else{
 //                    $updatetab2 = DB::select("update itdp_profil_eks set npwp='".$request->npwp."', tdp='".$request->tanda_daftar."', siup='".$request->siup."'
 //				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."', status='".$staim."'
 //				where id='".$id_user_b."'");
                     $updatetab2 = DB::select("update itdp_profil_eks set npwp='".$request->npwp."', tdp='".$request->tanda_daftar."', siup='".$request->siup."' 
-				, upduserid='".$request->situ."' , id_eks_business_size='".$request->scoope."', id_business_role_id='".$request->tob."', employe='".$request->employee."' 
-				where id='".$id_user_b."'");
+				, upduserid='".$request->situ."' where id='".$id_user_b."'");
 //                    $updatecompus = DB::select("update itdp_company_users set status='".$staim."', verified_by ='".Auth::guard('eksmp')->user()->id."', verified_at = '".$date."' where id='".$id_user."'") ;
                     $updatecompus = DB::select("update itdp_company_users set verified_by ='".Auth::guard('eksmp')->user()->id."', verified_at = '".$date."' where id='".$id_user."'") ;
 

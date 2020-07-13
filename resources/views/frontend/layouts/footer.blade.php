@@ -232,7 +232,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6" >
                         <div class="footer_logo" align="center" style="/*position: absolute; bottom: 0; right: 0;  left: 0; */">
-                            <div class="widgets_container contact_us"  style="/*position: absolute; height: 10px; bottom: 0; right: 0;  left: 0; */">
+                            <div class="widgets_container contact_us" >
 							<!--
                                 <a href="http://inatrade.kemendag.go.id" target="_BLANK"><img src="{{asset('front/assets/img/logo/inatrade_.png')}}" alt="" width="100%"></a>
                                 <a href="http://exim.kemendag.go.id" target="_BLANK"><img src="{{asset('front/assets/img/logo/logo-alt-01x.png')}}" alt="" style="width:95%!important;height:55px!important;"></a>

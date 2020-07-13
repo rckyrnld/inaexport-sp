@@ -229,7 +229,7 @@
 
 
 										</div>
-										<div class="form-row">
+										<!-- <div class="form-row">
 											<div class="form-group col-sm-4">
 												<label><b>Scoope of Business</b></label>
 											</div>
@@ -237,11 +237,11 @@
 												<select name="scoope" id="scoope" class="form-control" onchange="Scoope(this)">
 													<option>-</option>
 												<?php
-													$sob = DB::select("select * from eks_business_size");
-													foreach($sob as $val){
+													// $sob = DB::select("select * from eks_business_size");
+													// foreach($sob as $val){
 												?>
-													<option <?php if($ryu->id_eks_business_size == $val->id){ echo "selected"; } ?> value="<?php echo $val->id; ?>"><?php echo $val->nmsize; ?></option>
-													<?php } ?>
+													<option <?php //if($ryu->id_eks_business_size == $val->id){ echo "selected"; } ?> value="<?php// echo $val->id; ?>"><?php //echo $val->nmsize; ?></option>
+													<?php //} ?>
 												</select>
 
 											</div>
@@ -259,11 +259,11 @@
 												<select name="tob" id="tob" class="form-control" onchange="TOB(this)">
 													<option>-</option>
 													<?php
-													$tob = DB::select("select * from eks_business_role");
-													foreach($tob as $val){
+													// $tob = DB::select("select * from eks_business_role");
+													// foreach($tob as $val){
 													?>
-													<option <?php if($ryu->id_business_role_id == $val->id){ echo "selected"; } ?> value="<?php echo $val->id; ?>"><?php echo $val->nmtype; ?></option>
-													<?php } ?>
+													<option <?php// if($ryu->id_business_role_id == $val->id){ echo "selected"; } ?> value="<?//php echo $val->id; ?>"><?php //echo $val->nmtype; ?></option>
+													<?php //} ?>
 												</select>
 											</div>
 											<div class="form-group col-sm-4">
@@ -277,11 +277,11 @@
 												<label><b>Employee</b></label>
 											</div>
 											<div class="form-group col-sm-4">
-												<input type="text" value="<?php echo $ryu->employe; ?>" name="employee" id="employee" class="form-control" >
+												<input type="text" value="<?php //echo $ryu->employe; ?>" name="employee" id="employee" class="form-control" >
 											</div>
 
 
-										</div>
+										</div> -->
 										<div class="form-row">
 											<div class="form-group col-sm-4">
 												<label><b>
