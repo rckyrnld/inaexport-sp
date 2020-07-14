@@ -3,6 +3,7 @@
 <style>
 	ul.a {
 		list-style-type: disc;
+		/* list-style-position: inside; */
 		}
 </style>
 <div class="container" style="padding-bottom: 30px;">
@@ -11,7 +12,7 @@
 			<p><span style="font-size: 18px;"><b>@lang("frontend.about")</b></span></p>
 			<p style="text-align : justify">@lang("frontend.about-det.1")</p>
 			<p style="text-align : justify">@lang("frontend.about-det.2")</p>
-			<table>
+			<!-- <table>
 				<tr>
 					<td style="vertical-align: text-top;"><p> 1. &nbsp;&nbsp;&nbsp;&nbsp;</p></td>
 					<td><p style="text-align : justify">@lang("frontend.about-det.3")</p></td>
@@ -24,12 +25,24 @@
 					<td style="vertical-align: text-top;"><p> 3. &nbsp;&nbsp;&nbsp;&nbsp;</p></td>
 					<td><p style="text-align : justify">@lang("frontend.about-det.5")</p></td>
 				</tr>
-			</table>
-			{{-- <ul class="a" style="list-style-position: inside;">
-				<li>	<p style="text-align : justify">@lang("frontend.about-det.3")</p></li>
-				<li>	<p style="text-align : justify">@lang("frontend.about-det.4")</p></li>
-				<li>	<p style="text-align : justify">@lang("frontend.about-det.5")</p></li>
-			</ul> --}}
+			</table> -->
+			 <ul class="a" >
+				<li>
+					<p style="text-align : justify">
+						@lang("frontend.about-det.4")
+					</p>
+				</li> 
+				<li >
+					<p style="text-align : justify">
+					@lang("frontend.about-det.4")
+					</p>
+				</li>
+				<li>
+					<p style="text-align : justify">
+				@lang("frontend.about-det.5")
+					</p>
+				</li>
+			</ul> 
 		</div>
 	</div>
 </div>
