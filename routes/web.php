@@ -903,5 +903,53 @@ Route::get('buyingrequest/delete/{id}', 'BuyingRequestController@delete')->name(
 Route::post('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
 Route::get('bannercompanyfront/getData', 'FrontEnd\FrontController@getDataCompanyFront')->name('bannercompanyfront.getdata');
 
+
+Route::get('/getcompanynamebanner', 'Master\MasterBannerController@getcompanyname')->name('banner.companyname');
+
+
+Route::namespace('CurrentIssue')->group(function () {
+   
+        Route::prefix('admin/curris')->group(function () {
+            Route::name('admin.curris.')->group(function () {
+                Route::get('/', 'AdminCurrentIssueController@index')->name('index');
+                Route::get('/getData/', 'AdminCurrentIssueController@getData')->name('getData');
+                Route::get('/getDataDownload/{id}', 'AdminCurrentIssueController@getDataDownload')->name('getDataDownload');
+                Route::get('/create/', 'AdminCurrentIssueController@create')->name('create');
+                Route::post('/store/{param}', 'AdminCurrentIssueController@store')->name('store');
+                Route::get('/edit/{id}', 'AdminCurrentIssueController@edit')->name('edit');
+                Route::get('/view/{id}', 'AdminCurrentIssueController@view')->name('view');
+                Route::get('/destroy/{id}', 'AdminCurrentIssueController@destroy')->name('destroy');
+                // Route::post('/broadcast/', 'AdminCurrentIssueController@broadcast')->name('broadcast');
+                // Route::get('/hscode', 'AdminCurrentIssueController@hscode')->name('hscode');
+            });
+        });
+        Route::prefix('perwakilan/curris')->group(function () {
+            Route::name('perwakilan.curris.')->group(function () {
+                Route::get('/', 'PerwakilanCurrentIssueController@index')->name('index');
+                Route::get('/getData/', 'PerwakilanCurrentIssueController@getData')->name('getData');
+                Route::get('/getDataDownload/{id}', 'PerwakilanCurrentIssueController@getDataDownload')->name('getDataDownload');
+                Route::get('/create/', 'PerwakilanCurrentIssueController@create')->name('create');
+                Route::post('/store/{param}', 'PerwakilanCurrentIssueController@store')->name('store');
+                Route::get('/edit/{id}', 'PerwakilanCurrentIssueController@edit')->name('edit');
+                Route::get('/view/{id}', 'PerwakilanCurrentIssueController@view')->name('view');
+                Route::get('/destroy/{id}', 'PerwakilanCurrentIssueController@destroy')->name('destroy');
+                // Route::post('/broadcast/', 'PerwakilanCurrentIssueController@broadcast')->name('broadcast');
+            });
+        });
+        // Route::prefix('curris')->group(function () {
+        //     Route::name('curris.')->group(function () {
+        //         Route::get('/list/', 'CurrentIssueController@index')->name('index');
+        //         Route::get('/getData/', 'CurrentIssueController@getData')->name('getData');
+        //         Route::get('/read/{id}', 'CurrentIssueController@read')->name('view');
+        //         // Route::get('/download/', 'CurrentIssueController@download')->name('download');
+        //     });
+        // });
+    });
+
+    
+    Route::get('/front_end/curris', 'FrontEnd\FrontController@current_issue');
+    Route::get('/front_end/curris/getData/', 'FrontEnd\FrontController@curris_data')->name('getData');
+    Route::get('/front_end/curris/detail/', 'FrontEnd\FrontController@curris_detail')->name('frontend.detail-curris');
+
 // Route::get('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
 //end mindy

@@ -122,27 +122,15 @@
                                 <h6 style="text-transform: uppercase;"><b>{{$data->company}}</b></h6>
                                 <br>
                                 <table border="0" style="width: 100%; font-size: 13px;">
-{{--                                    <tr>--}}
-{{--                                        <td>--}}
-{{--                                            <b>@lang('frontend.liseksportir.fax')</b>--}}
-{{--                                        </td>--}}
-{{--                                        <td>:</td>--}}
-{{--                                        <td>{{$data->fax}}</td>--}}
-{{--                                    </tr>--}}
+
                                     <tr>
                                         <td>
                                             <b>@lang('frontend.liseksportir.website')</b>
                                         </td>
                                         <td>:</td>
-                                        <td>{{$data->website}}</td>
+                                        <td><a target="_blank" href="http://{{$data->website}}">{{$data->website}}</a></td>
                                     </tr>
-{{--                                    <tr>--}}
-{{--                                        <td>--}}
-{{--                                            <b>@lang('frontend.liseksportir.phone')</b>--}}
-{{--                                        </td>--}}
-{{--                                        <td>:</td>--}}
-{{--                                        <td>{{$data->phone}}</td>--}}
-{{--                                    </tr>--}}
+
                                 </table>
                                 <hr>
                                 <h6 style="text-transform: uppercase;"><b>@lang('frontend.liseksportir.address')</b></h6>
