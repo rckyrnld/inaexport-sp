@@ -185,7 +185,7 @@ if($profile->foto_profil != NULL){
                                     </tr>
                                     <tr>
                                         <td width="30%">Website</td>
-                                        <td><input type="text" class="form-control" name="website" value="{{$profile->website}}"></td>
+                                        <td><input type="text" class="form-control" onkeyup="cekwebsite()" id="website" name="website" value="{{$profile->website}}"></td>
                                     </tr>
                                     <tr>
                                         <td width="30%">Phone</td>
@@ -378,4 +378,16 @@ if($profile->foto_profil != NULL){
 
         }
     })
+
+    function cekwebsite(){
+        var m = $('#website').val();
+        var carikoma = m.search(",");
+        if(carikoma != "-1"){
+            $('#website').val("");
+        }
+        var carispa = m.search(" ");
+        if(carispa != "-1"){
+            $('#email').val("");
+        }
+    }
 </script>

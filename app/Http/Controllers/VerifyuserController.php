@@ -1022,6 +1022,28 @@ class VerifyuserController extends Controller
                     'to_role' => $id_role,
                 ]);
             }
+		}else if($request->staim == 3){
+			$date = date('Y-m-d H:i:s');
+
+			$data3 = ['username' => $request->username, 'id2' => 0, 'company' => $request->company, 'password' => $request->password, 'email' => $request->email, 'by' => auth::user()->name];
+                Mail::send('UM.user.emailverifditolak', $data3, function ($mail) use ($data3) {
+                    $mail->to($data3['email'], $data3['username']);
+                    $mail->subject('Your Account Was Rejected');
+                });
+
+                $notif = DB::table('notif')->insert([
+                    'dari_nama' =>auth::user()->name,
+                    'dari_id' => auth::id(),
+                    'untuk_nama' => $request->company,
+                    'untuk_id' => $id_user,
+                    'keterangan' => 'Your account is rejected by "'.auth::user()->name.'"',
+                    'url_terkait' => 'profil/2',
+                    'status_baca' => 0,
+                    'waktu' => $date,
+                    'id_terkait' => $id_user,
+                    'to_role' => $id_role,
+                ]);
+
 		}
 		//UPDATE TAB 2
 		if($id_role == 2){

@@ -227,7 +227,7 @@
                                                 </div>
                                                 <div class="form-group col-sm-8">
                                                     <input type="text" value="<?php echo $ryu->website; ?>"
-                                                           name="website" id="website" class="form-control">
+                                                           name="website" id="website" onkeyup="cekwebsite()" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-row">
@@ -304,10 +304,6 @@
                                                         <option <?php if ($rhj->status == 1) {
                                                             echo "selected";
                                                         } ?> value="1">Verified
-                                                        </option>
-                                                        <option <?php if ($rhj->status == 2) {
-                                                            echo "selected";
-                                                        } ?> value="2">Not Verified
                                                         </option>
                                                     </select>
                                                     <?php } ?>
@@ -461,6 +457,18 @@
                                     }
                                     document.getElementById(cityName).style.display = "block";
                                     evt.currentTarget.className += " active";
+                                }
+
+                                function cekwebsite(){
+                                    var m = $('#website').val();
+                                    var carikoma = m.search(",");
+                                    if(carikoma != "-1"){
+                                        $('#website').val("");
+                                    }
+                                    var carispa = m.search(" ");
+                                    if(carispa != "-1"){
+                                        $('#email').val("");
+                                    }
                                 }
 
                             </script>

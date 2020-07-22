@@ -947,6 +947,7 @@ Route::namespace('CurrentIssue')->group(function () {
     });
 
     
+    Route::get('/getcountryci', 'FrontEnd\FrontController@getcountryci')->name('countryci.getcountry');
     Route::get('/front_end/curris', 'FrontEnd\FrontController@current_issue');
     Route::get('/front_end/curris/getData/', 'FrontEnd\FrontController@curris_data')->name('getData');
     Route::get('/front_end/curris/detail/', 'FrontEnd\FrontController@curris_detail')->name('frontend.detail-curris');

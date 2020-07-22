@@ -283,7 +283,7 @@
 														<label><b>Website</b></label>
 													</div>
 													<div class="form-group col-sm-8">
-														<input type="text" value="<?php echo $ryu->website; ?>" name="website" id="website" class="form-control" >
+														<input type="text" value="<?php echo $ryu->website; ?>" onkeyup="cekwebsite()" name="website" id="website" class="form-control" >
 													</div>
 												</div>
 												<div class="form-row">
@@ -516,6 +516,18 @@
 			$('#tob_in').val(res.nmtype_ind);
 		});
 	}
+
+	function cekwebsite(){
+        var m = $('#website').val();
+        var carikoma = m.search(",");
+		if(carikoma != "-1"){
+			$('#website').val("");
+		}
+        var carispa = m.search(" ");
+		if(carispa != "-1"){
+			$('#email').val("");
+		}
+    }
 </script>
 
 @include('footer')

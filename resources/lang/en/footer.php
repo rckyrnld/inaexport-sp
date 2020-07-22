@@ -3,6 +3,7 @@ return [
     "tentangkami" => "About Us",
     "karir" => "Career",
     "hubungikami" => "Contact Us",
+    "bantuan" => "Customer Support",
     "informasilayanan"=> "SERVICE INFORMATION",
     "pengembalianbarang" => "Return of Goods",
 	"syaratkondisi" => "Terms & Condition",

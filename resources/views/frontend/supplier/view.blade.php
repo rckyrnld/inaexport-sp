@@ -104,7 +104,8 @@
             }  
         }
         $param = $data->id_user.'-'.getCompanyName($data->id_user);
-    ?>
+        $param2 = getExBadan($data->id_user);
+        ?>
 
     <!--shop  area start-->
     <div class="shop_area shop_reverse">
@@ -119,7 +120,7 @@
                                     <img src="{{url('/')}}{{$isimg1}}" alt="" class="eksporter_img">
                                 </center>
                                 <br>
-                                <h6 style="text-transform: uppercase;"><b>{{$data->company}}</b></h6>
+                                <h6 style="text-transform: uppercase;"><b>{{$data->company}}{{($param2) ? ', '.$param2 : ''}}</b></h6>
                                 <br>
                                 <table border="0" style="width: 100%; font-size: 13px;">
 

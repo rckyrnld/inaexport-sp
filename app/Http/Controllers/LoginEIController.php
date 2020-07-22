@@ -126,7 +126,7 @@ class LoginEIController extends Controller
             if($getstatus[0]->status == 2){
                 $baliknya = "status2";
             }
-            else if($getstatus[0]->status == 0 && $getstatus[0]->type == "Luar Negeri"){
+            else if(($getstatus[0]->status == 0 || $getstatus[0]->status == 3 )&& $getstatus[0]->type == "Luar Negeri"  ){
                 $baliknya = "status0Exportir";
             }
             else if($getstatus[0]->status == 0){

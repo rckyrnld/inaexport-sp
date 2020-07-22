@@ -189,7 +189,7 @@
                             <label>&nbsp;@lang("register.forms.website")</label>
                         </div>
                         <div class="form-group col-sm-8" align="left">
-                            <input type="text" name="website" id="website" class="form-control" style=" color: black; ">
+                            <input type="text" name="website" id="website" onkeyup="cekwebsite()" class="form-control" style=" color: black; ">
                         </div>
                     </div>
 
@@ -463,6 +463,18 @@
             $('#captchainput').val('');
 
         }
+    }
+
+    function cekwebsite(){
+        var m = $('#website').val();
+        var carikoma = m.search(",");
+		if(carikoma != "-1"){
+			$('#website').val("");
+		}
+        var carispa = m.search(" ");
+		if(carispa != "-1"){
+			$('#email').val("");
+		}
     }
 </script>
 

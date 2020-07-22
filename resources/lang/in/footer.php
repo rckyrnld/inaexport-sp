@@ -3,6 +3,7 @@ return [
     "tentangkami" => "Tentang Kami",
     "karir" => "Karir",
     "hubungikami" => "Hubungi Kami",
+    "bantuan" => "Layanan Bantuan",
     "informasilayanan"=> "INFORMASI LAYANAN",
     "pengembalianbarang" => "Pengembalian Barang",
 	"syaratkondisi" => "Syarat & Kondisi",

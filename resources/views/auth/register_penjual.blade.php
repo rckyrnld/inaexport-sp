@@ -199,7 +199,7 @@
                             <label>@lang("register2.forms.website")</label>
                         </div>
                         <div class="form-group col-sm-8" align="left">
-                            <input type="text" name="website" id="website" class="form-control" style=" color: black; ">
+                            <input type="text" name="website" id="website" onkeyup="cekwebsite()" class="form-control" style=" color: black; ">
                         </div>
                     </div>
                     <div class="form-row">
@@ -366,6 +366,18 @@
         })
         //alert(m);
         //$('#cekmail').html("<font color='red'>( Has Been Used ! )</font>");
+    }
+
+    function cekwebsite(){
+        var m = $('#website').val();
+        var carikoma = m.search(",");
+		if(carikoma != "-1"){
+			$('#website').val("");
+		}
+        var carispa = m.search(" ");
+		if(carispa != "-1"){
+			$('#email').val("");
+		}
     }
 
     function simpanpenjual() {

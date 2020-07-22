@@ -59,7 +59,7 @@
 
                   @endforeach
                   @else
-                  @if(Auth::guard('eksmp')->user()->type == 'Luar Negeri' && Auth::guard('eksmp')->user()->status == 0)
+                  @if(Auth::guard('eksmp')->user()->type == 'Luar Negeri' && (Auth::guard('eksmp')->user()->status == 0 || Auth::guard('eksmp')->user()->status == 3))
                       {{--untuk eksportir yang belum aktif, tapi udah bisa login--}}
                       <?php
                       $menu = DB::table('menu')->where('show','1')->get();
@@ -164,7 +164,7 @@
 
 		 <?php if(empty(Auth::user()->id_group)){ ?>
           </li>
-           @if(Auth::guard('eksmp')->user()->type == 'Luar Negeri' && Auth::guard('eksmp')->user()->status == 0)
+           @if(Auth::guard('eksmp')->user()->type == 'Luar Negeri' && (Auth::guard('eksmp')->user()->status == 0 || Auth::guard('eksmp')->user()->status == 3))
             @else
             <li>
             {{userGuide('backend', Auth::guard('eksmp')->user()->id_role)}}

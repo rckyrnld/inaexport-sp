@@ -273,7 +273,7 @@ body {font-family: Arial;}
 					<label><b>Website</b></label>
 				</div>
 				<div class="form-group col-sm-8">
-					<input type="text" value="<?php echo $ryu->website; ?>" name="website" id="website" class="form-control" >
+					<input type="text" value="<?php echo $ryu->website; ?>" onkeyup="cekwebsite()" name="website" id="website" class="form-control" >
 				</div>
 			</div>
 			<div class="form-row">
@@ -535,7 +535,7 @@ body {font-family: Arial;}
 			<select class="form-control" name="staim">
 			<option <?php if($rhj->status == 0){ echo "selected"; } ?> value="0">-- Choose Status --</option>
 			<option <?php if($rhj->status == 1){ echo "selected"; } ?> value="1">Verified</option>
-			<option <?php if($rhj->status == 2){ echo "selected"; } ?> value="2">Not Verified</option>
+			<option <?php if($rhj->status == 3){ echo "selected"; } ?> value="3">Not Verified</option>
 			</select>
 		<?php } ?>
 		<!--
@@ -647,6 +647,18 @@ function handleFileSelect(evt){
         fr.readAsDataURL(files[0]);
     }
  }
+
+ function cekwebsite(){
+        var m = $('#website').val();
+        var carikoma = m.search(",");
+		if(carikoma != "-1"){
+			$('#website').val("");
+		}
+        var carispa = m.search(" ");
+		if(carispa != "-1"){
+			$('#email').val("");
+		}
+    }
 </script>
                             
                         </div>

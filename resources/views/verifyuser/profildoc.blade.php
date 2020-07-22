@@ -271,7 +271,7 @@
 												<select class="form-control" name="staim">
 													<option <?php if($rhj->status == 0){ echo "selected"; } ?> value="0">-- Choose Status --</option>
 													<option <?php if($rhj->status == 1){ echo "selected"; } ?> value="1">Verified</option>
-													<option <?php if($rhj->status == 2){ echo "selected"; } ?> value="2">Not Verified</option>
+													<option <?php if($rhj->status == 3){ echo "selected"; } ?> value="3">Not Verified</option>
 												</select>
 											<?php } ?>
 											<!--
