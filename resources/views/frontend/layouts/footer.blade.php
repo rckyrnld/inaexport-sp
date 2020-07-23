@@ -242,10 +242,10 @@
 								<table width="100%">
                                     <tr>
                                         <td width="50%" style="padding: 10px;">    
-                                            <img src = "{{asset('front/assets/icon/Logo_Exim.png')}}" > 
+                                            <a target="_blank" href="http://exim.kemendag.go.id"><img src = "{{asset('front/assets/icon/Logo_Exim.png')}}" ></a>
                                         </td>
                                         <td width="50%" style="padding: 10px;">
-                                            <img src = "{{asset('front/assets/icon/Logo_Inatrims.png')}}" >
+                                            <a target="_blank" href="http://inatrims.kemendag.go.id/"><img src = "{{asset('front/assets/icon/Logo_Inatrims.png')}}" ></a>
                                         </td>
                                     </tr>
                                     <tr>

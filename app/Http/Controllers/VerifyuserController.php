@@ -1188,6 +1188,12 @@ class VerifyuserController extends Controller
                 });
             }
 
+			$datanya = DB::table('itdp_company_users')->where('id',auth::guard('eksmp')->user()->id)->first();
+			if($datanya->status == 3){
+				$id = auth::guard('eksmp')->user()->id;
+				$update = DB::select("update itdp_company_users set status='0' where id='".$id."'");
+			}
+
             //untuk aktifin otomatis kalo udah masukin NPWP. Tapi karna gak cek NPWP, Jadinya belum di aktifin dulu
             //if($request->staim == null){
             //    $staim = 0;

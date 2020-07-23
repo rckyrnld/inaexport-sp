@@ -950,7 +950,9 @@ Route::namespace('CurrentIssue')->group(function () {
     Route::get('/getcountryci', 'FrontEnd\FrontController@getcountryci')->name('countryci.getcountry');
     Route::get('/front_end/curris', 'FrontEnd\FrontController@current_issue');
     Route::get('/front_end/curris/getData/', 'FrontEnd\FrontController@curris_data')->name('getData');
-    Route::get('/front_end/curris/detail/', 'FrontEnd\FrontController@curris_detail')->name('frontend.detail-curris');
+    Route::get('/front_end/curris/detail/{id}', 'FrontEnd\FrontController@curris_detail')->name('frontend.detail-curris');
+    Route::get('/front_end/curris/download', 'CurrentIssue\CurrentIssueController@download')->name('curris.download');
+    Route::get('/front_end/pdf-document/{id}', 'FrontEnd\FrontController@getDocument');
 
 // Route::get('/getdatapiliheksportir', 'BRFrontController@getdatapiliheksportir');
 //end mindy
