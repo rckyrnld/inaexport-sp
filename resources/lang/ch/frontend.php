@@ -162,4 +162,12 @@ return [
         "hotprod" => "热销产品",
         "newarrival" => "新品到货",
     ],
+    "currentissue" => [
+        "currentissue" => "当前的问题",
+        "no" => "数",
+        "title" => "标题",
+        "country" => "国家",
+        "publishdate" => "发布日期",
+        "action" => "行动",
+    ],
 ];

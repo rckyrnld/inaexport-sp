@@ -84,6 +84,11 @@
     .slider.round:before {
       border-radius: 50%;
     }
+
+    .select2-container {
+        float: left !important;
+        width: 75%;
+    }
 </style>
 <div class="padding">
     <div class="row">
@@ -105,24 +110,29 @@
                             <strong>{{ $message }}</strong>
                         </div>
                     @endif
-                	<a id="tambah" href="{{route('master.banner.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>
-
-                    <div class="col-md-14"><br>
-		          	 <div class="table-responsive">
-					    <table id="satu" class="table  table-bordered table-striped">
-					      <thead class="text-white" style="background-color: #1089ff;">
-					          <tr>
-					              <th width="5%">No</th>
-					              <th>File</th>
-					              <th>Until</th>
-					              <th width="10%">Status</th>
-					              <th width="5%">Action</th>
-					          </tr>
-					      </thead>
-						  <tbody>
-					    </table>
-					  </div>
-      	  			</div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <a id="tambah" href="{{route('master.banner.create')}}" class="btn">   <i class="fa fa-plus-circle"></i>  Add   </a>  
+                        </div>                        
+                    </div>
+                	
+                    <div class="col-md-12"><br>
+                      <div class="table-responsive">
+                            <table id="satu" class="table  table-bordered table-striped">
+                                <thead class="text-white" style="background-color: #1089ff;">
+                                    <tr>
+                                        <th width="5%">No</th>
+                                        <th>Name</th>
+                                        <th>File</th>
+                                        <th>Until</th>
+                                        <th>Order</th>
+                                        <th width="10%">Status</th>
+                                        <th width="5%">Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -139,7 +149,8 @@
       {{ csrf_field() }}<br>
       <div class="modal-body">
       	<input type="hidden" name="id" id="id">
-      	<input type="hidden" name="semua" id="semua">
+        <input type="hidden" name="semua" id="semua">
+      	<input type="hidden" name="nocomlain" id="nocomlain">
         <div class="form-group">
         	<label class="control-label col-md-3">Status</label>
         	<div class="col-md-9">
@@ -153,11 +164,56 @@
         	</div>
         </div>
         <div id="pilihcompany" style="display: none;">
+          <div class="form-group">
+            <label class="control-label col-md-2" for="date">Name</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" name="nama" id="nama" autocomplete="off" required>
+            </div>
+          </div>
         	<div class="form-group">
             <label class="control-label col-md-2" for="date">Active Until</label>
             <div class="col-md-4">
               <input type="Date" class="form-control" name="s_date" id="s_date" autocomplete="off" required>
             </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-2" for="order">Order</label>
+            <div class="col-md-4">
+              <input type="number" class="form-control" name="order"  min="1"  onkeyup="checkorder()" id="order" autocomplete="off" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-2" for="date">Company Name</label>
+            <div class="col-md-4">
+                <select class="form-control search " name="company_name" id="company_name" style="width:75%;float: left !important;" >
+                  <option value=""></option>
+                </select>
+              <!-- <input type="re" class="form-control" name="s_date" id="s_date" autocomplete="off" required> -->
+                <button type="button" class="btn btn-primary" onclick="addcompanyname()">Add</button>
+            </div>
+          </div>
+          
+          <div class=" form-group row">
+              <div class="col-md-11">
+                  Company List that are not from selected Category
+              </div>
+          </div>
+          <table id="companylain" class="table table-bordered table-striped table-hover">
+        		<thead>
+        			<tr>
+        				<th>No</th>
+        				<th>Company</th>
+        				<th>Aksi</th>
+        			</tr>
+            </thead>
+            <!-- <tbody id="companylain">
+
+            </tbody> -->
+          </table>
+          <div class="row">
+              <div class="col-md-11">
+                  Company List from selected Category
+              </div>
           </div>
           <div class="row" align="right">
               <div class="col-md-6">
@@ -191,6 +247,8 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" onclick="simpanupdate()">Simpan</button>
       </div>
+
+      
   		</form>
     </div>
 
@@ -223,11 +281,52 @@
         	</div>
         </div>
         <div id="pilihcompany2" style="display: none;">
+          <div class="form-group">
+            <label class="control-label col-md-2" for="date">Name</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" name="nama2" id="nama2" autocomplete="off" required>
+            </div>
+          </div>
         	<div class="form-group">
             <label class="control-label col-md-2" for="date">Active Until</label>
             <div class="col-md-4">
               <input type="Date" class="form-control" name="s_date2" id="s_date2" autocomplete="off" required>
             </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-2" for="order2">Order</label>
+            <div class="col-md-4">
+              <input type="number" class="form-control" name="order2"  min="1" onkeyup="checkorder2()" id="order2" autocomplete="off" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-2" for="date">Company Name</label>
+            <div class="col-md-4">
+                <select class="form-control search " name="company_name2" id="company_name2" style="width:75%;float: left !important;" >
+                  <option value=""></option>
+                </select>
+              <!-- <input type="re" class="form-control" name="s_date" id="s_date" autocomplete="off" required> -->
+                <button type="button" class="btn btn-primary" onclick="addcompanyname2()">Add</button>
+            </div>
+          </div>
+          <div class=" form-group row">
+              <div class="col-md-11">
+                  Company List that are not from selected Category
+              </div>
+          </div>
+          <table id="companylain2"  class="table table-bordered table-striped table-hover">
+        		<thead>
+        			<tr>
+        				<th>No</th>
+        				<th>Company</th>
+        				<th>Aksi</th>
+        			</tr>
+            </thead>
+          </table>
+          <div class="row">
+              <div class="col-md-11">
+                  Company List from selected Category
+              </div>
           </div>
           <div class="row" align="right">
               <div class="col-md-6">
@@ -276,13 +375,110 @@
   </div>
 </div>
 
+
 @include('footer')
 <script type="text/javascript">
 	var idbanner = 0;
 	var idbanner2 = 0;
+  var totalcomlain1 = 0;
+  var totalcomlain2 = 0;
 	var counter = [];
   var dataeksportir = [];
+  var dataeksportirlain = [];
   var dataeksportir2 = [];
+  var dataeksportir2lain = [];
+
+  $(document).ready(function () {
+        $('#company_name').select2({
+          allowClear: true,
+          placeholder: 'Select Company Name',
+          ajax: {
+            url: "{{route('banner.companyname')}}",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              // var query = {
+              //     search: params.term,
+              //     idbanner: $('#id').val()
+              // }
+              var query = {
+                search: params.term,
+                idbanner: $('#id').val()
+              }
+              return query;
+            },
+            processResults: function (data) {
+              return {
+                results: $.map(data, function (item) {
+                  return {
+                    text: item.company,
+                    id: item.id
+                  }
+                })
+              };
+            },
+            cache: true
+          }
+        });
+
+        $('#company_name2').select2({
+          allowClear: true,
+          placeholder: 'Select Company Name',
+          ajax: {
+            url: "{{route('banner.companyname')}}",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              // var query = {
+              //     search: params.term,
+              //     idbanner: $('#id').val()
+              // }
+              var query = {
+                search: params.term,
+                idbanner: $('#id2').val()
+              }
+              return query;
+            },
+            processResults: function (data) {
+              return {
+                results: $.map(data, function (item) {
+                  return {
+                    text: item.company,
+                    id: item.id
+                  }
+                })
+              };
+            },
+            cache: true
+          }
+        });
+
+            
+
+    
+  });
+    $(document).on("click", ".btnDelete", function() {  
+        $(this).closest("tr").remove();
+        var id = $(this).closest("tr").attr('id');
+              var index = dataeksportirlain.indexOf(id);
+              console.log(index);
+                if (index > -1) {
+                  dataeksportirlain.splice(index, 1);
+                }
+                console.log(dataeksportirlain);
+    });
+
+    $(document).on("click", ".btnDelete2", function() {  
+        $(this).closest("tr").remove();
+        var id = $(this).closest("tr").attr('id');
+        var index = dataeksportirlain2.indexOf(id);
+        console.log(index);
+          if (index > -1) {
+            dataeksportirlain2.splice(index, 1);
+          }
+          console.log(dataeksportirlain2);
+    });
+          
 	$(document).ready(function () {
 		$("#company").DataTable({
 			processing: true,
@@ -344,6 +540,36 @@
                 }
             }
 		});
+    $("#companylain").DataTable({
+			processing: true,
+			columnDefs: [
+				{ "orderable": false, "targets": 2 }
+			],
+            language: {
+                processing: "Sedang memproses...",
+                lengthMenu: "Tampilkan _MENU_ entri",
+                zeroRecords: "Tidak ditemukan data yang sesuai",
+                emptyTable: "Tidak ada data yang tersedia pada tabel ini",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                infoEmpty: "Menampilkan 0 sampai 0 dari 0 entri",
+                infoFiltered: "(disaring dari _MAX_ entri keseluruhan)",
+                infoPostFix: "",
+                search: "Cari:",
+                url: "",
+                infoThousands: ".",
+                loadingRecords: "Sedang memproses...",
+                paginate: {
+                    first: "<<",
+                    last: ">>",
+                    next: "Selanjutnya",
+                    previous: "Sebelum"
+                },
+                aria: {
+                    sortAscending: ": Aktifkan untuk mengurutkan kolom naik",
+                    sortDescending: ": Aktifkan untuk mengurutkan kolom menurun"
+                }
+            }
+		});
     // untuk di modal tambah yang geser aktif dan tidak aktif
 		$('#check').change(function() {
 	      if($(this).is(':checked')) {
@@ -351,16 +577,29 @@
 	          $('#company').DataTable().clear().draw();
 				$.ajax({
 					method: "POST",
-					url: "{{ route('master.banner.getCompany') }}",
-					data:{_token: '{{csrf_token()}}',id:idbanner}
+					url: "{{ route('master.banner.getCompany')}}",
+					data:{_token: '{{csrf_token()}}',id:idbanner, tipe : 'kategori'}
 				})
 				.done(function(data){
 					$.each(data, function(i, val){
             // get company
-						$('#company').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp" ></div>']).draw();
-					});
-					$('#pilihcompany').show();
+						$('#company').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div class="checkbox"><input class="masuk" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp" ></div>']).draw();
+					
+          });
 				});
+        $.ajax({
+					method: "POST",
+					url: "{{ route('master.banner.getCompany') }}",
+					data:{_token: '{{csrf_token()}}',id:idbanner, tipe : 'lain'}
+				})
+				.done(function(data){
+					$.each(data, function(i, val){
+            // get company
+						$('#companylain').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div><button type="button" class="btn btn-danger"  onclick="destroycompanylain('+val.id+')">Delete</button></div>']).draw();
+					
+          });
+				});
+        $('#pilihcompany').show();
 	      } else {
 	        $('#status').val(2);
 	        $('#pilihcompany').hide();
@@ -372,7 +611,7 @@
           check2active();
           
 	      } else {
-	        $('#status2').val(2);
+	        $('#status2').val(2);total
 	        $('#pilihcompany2').hide();
 	      }
 	  });
@@ -388,8 +627,10 @@
             },
             "columns": [
                 {data: 'no'},
+                {data: 'nama'},
                 {data: 'file'},
                 {data: 'until'},
+                {data: 'order'},
                 {data: 'status'},
                 {data: 'aksi'},
             ],
@@ -420,15 +661,36 @@
     });
 
         $('#modalEdit').on('show.bs.modal', function(e) {
+            $('#id').val('');
+            $('#nama').val('');
+            $('#nocomlain').val('');
             $('#company').DataTable().clear().draw();
+            $('#companylain').DataTable().clear().draw();
             idbanner = $(e.relatedTarget).data('edit-id');
+            namebanner = $(e.relatedTarget).data('edit-name');
+            order = $(e.relatedTarget).data('edit-order');
+            var totalcompanylain = $(e.relatedTarget).data('edit-comlain');
+            if (totalcompanylain == null){
+              totalcomlain1 = 1;
+            }else{
+              totalcomlain1 = totalcompanylain + 1;
+            }
+            console.log(totalcompanylain);
+            $('#nocomlain').val(totalcompanylain);
             $('#id').val(idbanner);
+            $('#nama').val(namebanner);
+            $('#order').val(order);
+
         });
 
         $('#modalEdit2').on('show.bs.modal', function(e) {
             $('#company2').DataTable().clear().draw();
             idbanner2 = $(e.relatedTarget).data('edit-id');
+            namebanner2 = $(e.relatedTarget).data('edit-name');
+            order2 = $(e.relatedTarget).data('edit-order');
             $('#id2').val(idbanner2);
+            $('#nama2').val(namebanner2);
+            $('#order2').val(order2);
             checkbanner2 = $(e.relatedTarget).data('check-id');
             endatbanner2 = $(e.relatedTarget).data('endat-id');
             filebanner2 = $(e.relatedTarget).data('image-id');
@@ -441,6 +703,7 @@
             //untuk set beberapa data bawaan
               endatbanner2 = $(e.relatedTarget).data('endat-id');
               filebanner2 = $(e.relatedTarget).data('image-id');
+              console.log(endatbanner2);
               var from = endatbanner2.split("-");
               var f = new Date(from[2], from[1] - 1, from[0]);
               var day = ("0" + f.getDate()).slice(-2);
@@ -456,6 +719,8 @@
               var hrefnya = "{{ url('/').'/uploads/banner/'}}" + filebanner2;
               $("#modalEdit2 a").attr("href", hrefnya);
         });
+
+
         $('#checkall').change(function() {
           if(this.checked) {
               $('#semua').val(1);
@@ -492,9 +757,13 @@
         $('body').on('click', '.masuk', function () {
             var id = $(this).data('id');
             if($(this).prop("checked") == true){
-              console.log('tambahin dataeksportir');
               dataeksportir.push(id);
+              
+              if($("input[name='checkall']").prop("checked") == true){
+                $("input[name='checkall']").prop('checked', false);
+              }
             }
+
             else if($(this).prop("checked") == false){
               console.log(id);
               var index = dataeksportir.indexOf(id);
@@ -513,6 +782,10 @@
             if($(this).prop("checked") == true){
               console.log('tambahin dataeksportir2');
               dataeksportir2.push(id);
+              if($("input[name='checkall2']").prop("checked") == true){
+                $("input[name='checkall2']").prop('checked', false);
+              }
+              
             }
             else if($(this).prop("checked") == false){
               var index2 = dataeksportir2.indexOf(id);
@@ -523,6 +796,49 @@
             }
             console.log(dataeksportir2);
         });
+
+        function addcompanyname(){
+            var data = $('#company_name').select2('data');
+            var no =  totalcomlain1;
+            dataeksportirlain.push(data[0].id);
+              $.ajax({
+                type: 'POST',
+                url: "{{route('master.banner.savecompanylain')}}",
+                data: {
+                  '_token':'{{csrf_token()}}',
+                  'id_banner': $('#id').val(), 
+                  'id_perusahaan': data[0].id, 
+                },
+                success: function(data) {  
+                  refreshtablecompanylain();
+                  // $('#totaldistance').val(data.distance); 
+                }
+              });
+            // totalcomlain1++;
+            $('#company_name').empty();
+        }
+
+        function addcompanyname2(){
+            var data = $('#company_name2').select2('data');
+            // var no =  totalcomlain1;
+            // dataeksportirlain.push(data[0].id);
+              $.ajax({
+                type: 'POST',
+                url: "{{route('master.banner.savecompanylain')}}",
+                data: {
+                  '_token':'{{csrf_token()}}',
+                  'id_banner': $('#id2').val(), 
+                  'id_perusahaan': data[0].id, 
+                },
+                success: function(data) {  
+                  refreshtablecompanylain2();
+                  // $('#totaldistance').val(data.distance); 
+                }
+              });
+            // totalcomlain1++;
+            $('#company_name2').empty();
+        }
+
 
         //ini untuk yang button save, sementara gak dipake
         function savecheckall(){
@@ -559,7 +875,10 @@
         var todaysDate = new Date();
         var s_date = $('#s_date').val();
         var semua = $('#semua').val();
+        var nama = $('#nama').val();
+        var order = $('#order').val();
         var status = $('#status').val();
+
         // $.each($("input[name='comp']:checked"), function(){
         //           var val = $(this).val();
         //           if(dataeksportir.includes(val)){
@@ -569,7 +888,7 @@
         //           }
         // });
         // (s_date != null || s_date != '' || !isEmptyM(s_date) ||
-        if(s_date && (!isEmptyM(dataeksportir) || semua == 1) ) {
+        if(s_date && (!isEmptyM(dataeksportir) || semua == 1) && nama != null ) {
         // if ((!isEmptyM(dataeksportir) || semua == 1) && !s_date) {
           // Create date from input value
           var inputdate = new Date(s_date);
@@ -578,8 +897,11 @@
             var form_data = new FormData();
             form_data.append('id',id);
             form_data.append('dataeksportir',dataeksportir);
+            form_data.append('dataeksportirlain',dataeksportirlain);
             form_data.append('s_date',s_date);
+            form_data.append('nama',nama);
             form_data.append('semua',semua);
+            form_data.append('order',order);
             form_data.append('status',status);
             $.ajaxSetup({
                 headers:
@@ -609,9 +931,59 @@
             
         }else{
           // console.log('masuk gak');
-            alert('make sure to checked at least one exporter');
+            alert('make sure you already fill all input in the form correctly');
         }
     }
+
+    function refreshtablecompanylain(){
+      $('#companylain').DataTable().clear().draw();
+      $.ajax({
+					method: "POST",
+					url: "{{ route('master.banner.getCompany') }}",
+					data:{_token: '{{csrf_token()}}',id:idbanner, tipe : 'lain'}
+				})
+				.done(function(data){
+					$.each(data, function(i, val){
+            // get company
+						$('#companylain').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div><button type="button" class="btn btn-danger"  onclick="destroycompanylain('+val.id+')">Delete</button></div>']).draw();
+					
+          });
+				});
+    }
+
+    function refreshtablecompanylain2(){
+      $('#companylain2').DataTable().clear().draw();
+      $.ajax({
+					method: "POST",
+					url: "{{ route('master.banner.getCompany') }}",
+					data:{_token: '{{csrf_token()}}',id:idbanner2, tipe : 'lain'}
+				})
+				.done(function(data){
+					$.each(data, function(i, val){
+            // get company
+						$('#companylain2').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div><button type="button" class="btn btn-danger"  onclick="destroycompanylain2('+val.id+')">Delete</button></div>']).draw();
+					
+          });
+				});
+    }
+
+    function checkorder2(){
+      var inputan = $('#order2').val();
+      var cariminus = inputan.search("-");
+      if(cariminus != "-1"){
+        $('#order2').val("");
+      }
+    }
+
+    function checkorder(){
+      var inputan = $('#order').val();
+      var cariminus = inputan.search("-");
+      if(cariminus != "-1"){
+        $('#order').val("");
+      }
+    }
+
+    
 
     // untuk di modal edit yang geser aktif dan tidak aktif
     function check2active(){
@@ -627,17 +999,30 @@
                   if(val.status == 1){
                     // untuk data company yang sudah dipilih ( jadi di check)
                     // $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" checked disabled name="comp2done" ></div>']).draw();
-                    $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" checked name="comp2done" ></div>']).draw();
+                    $('#company2').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" checked name="comp2done" ></div>']).draw();
                     dataeksportir2.push(val.id);
                   } else{
                     // untuk data company yang belum dipilih ( jadi di uncheck)
                     // $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp2" ></div>']).draw();
-                    $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp2done" ></div>']).draw();
+                    $('#company2').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp2done" ></div>']).draw();
                   
                   }
                   });
-                $('#pilihcompany2').show();
+                
               });
+              $.ajax({
+                method: "POST",
+                url: "{{ route('master.banner.getCompany') }}",
+                data:{_token: '{{csrf_token()}}',id:idbanner2, tipe : 'lain'}
+              })
+              .done(function(data){
+                $.each(data, function(i, val){
+                  // get company
+                  $('#companylain2').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div><button type="button" class="btn btn-danger"  onclick="destroycompanylain2('+val.id+')">Delete</button></div>']).draw();
+                
+                });
+              });
+        $('#pilihcompany2').show();
     }
 
 
@@ -646,10 +1031,14 @@
         var id = $('#id2').val();
         var s_date = $('#s_date2').val();
         var semua = $('#semua2').val();
+        var nama = $('#nama2').val();
         var tidaksemua = $('#tidaksemua2').val();
         var status = $('#status2').val();
+        var order = $('#order2').val();
         var file = $('#file').val();
         var lastest_file = $('#lastest_file').val();
+        console.log(dataeksportir2);
+        console.log(nama);
         // $.each($("input[name='comp2']:checked"), function(){
         //           var val = $(this).val();
         //           if(dataeksportir2.includes(val)){
@@ -659,12 +1048,14 @@
         //           }
         // });
         // (!isEmptyM(dataeksportir2) || semua == 1 ) &&
-        if (s_date && (lastest_file != 'fileimagenya' || $file != null)) {
+        if (s_date && (lastest_file != 'fileimagenya' || $file != null) && nama != null) {
             var form_data = new FormData();
             form_data.append('id',id);
             form_data.append('dataeksportir',dataeksportir2);
             form_data.append('s_date',s_date);
+            form_data.append('nama',nama);
             form_data.append('hapussemua',tidaksemua);
+            form_data.append('order',order);
             form_data.append('semua',semua);
             form_data.append('status',status);
             form_data.append('file',$('#file').prop('files')[0]);
@@ -690,8 +1081,50 @@
               }
             });
         }else{
-            alert('make sure to checked at least one exporter');
+            alert('make sure you already fill all input in the form correctly');
         }
+    }
+
+    
+
+    function destroycompanylain(id){
+      var jawab = confirm('Are You Sure ?');
+      console.log(jawab);
+      if(jawab == true){
+        $.ajax({
+                type: 'POST',
+                url: "{{route('master.banner.deletecompanylain')}}",
+                data: {
+                  '_token':'{{csrf_token()}}',
+                  'id_banner': $('#id').val(), 
+                  'id_perusahaan': id, 
+                },
+                success: function(data) {  
+                  refreshtablecompanylain();
+                  // $('#totaldistance').val(data.distance); 
+                }
+              });
+      }
+    }
+
+    function destroycompanylain2(id){
+      var jawab = confirm('Are You Sure ?');
+      console.log(jawab);
+      if(jawab == true){
+        $.ajax({
+                type: 'POST',
+                url: "{{route('master.banner.deletecompanylain')}}",
+                data: {
+                  '_token':'{{csrf_token()}}',
+                  'id_banner': $('#id2').val(), 
+                  'id_perusahaan': id, 
+                },
+                success: function(data) {  
+                  refreshtablecompanylain2();
+                  // $('#totaldistance').val(data.distance); 
+                }
+              });
+      }
     }
 
     function isEmptyM(obj) {

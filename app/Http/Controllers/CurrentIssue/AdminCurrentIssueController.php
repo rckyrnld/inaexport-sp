@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ResearchCorner;
+namespace App\Http\Controllers\CurrentIssue;
 
 use App\Http\Controllers\Controller;
 use http\Env\Response;
@@ -11,7 +11,7 @@ use Session;
 use Auth;
 use Mail;
 
-class AdminResearchController extends Controller
+class AdminCurrentIssueController extends Controller
 {
 
 	public function __construct(){
@@ -19,161 +19,148 @@ class AdminResearchController extends Controller
     }
 
 	  public function index(){
-      $pageTitle = 'Research Corner';
+      $pageTitle = 'Current Issue';
       if(Auth::user()->id_group == 1){
-        return view('research-corner.admin.index',compact('pageTitle'));
+        return view('current-issue.admin.index',compact('pageTitle'));
       } else {
-        return redirect('/perwakilan/research-corner');
+        return redirect('/perwakilan/curris');
       }
     }
 
     public function getData()
     {
-      $research = DB::table('csc_research_corner')->orderby('publish_date', 'desc')->get();
+      $currentissue = DB::table('tbl_curris')
+                    ->join('mst_country', 'tbl_curris.id_mst_country', 'mst_country.id')
+                    ->select('tbl_curris.id','tbl_curris.title_en','tbl_curris.publish_date','mst_country.country')
+                    ->orderby('publish_date', 'desc');
 
-      return \Yajra\DataTables\DataTables::of($research)
+      return \Yajra\DataTables\DataTables::of($currentissue)
           ->addIndexColumn()
           ->addColumn('title_en', function ($value) {
             
               return '<div align="left">'.$value->title_en.'</div>';
             
           })
-		  ->addColumn('country', function ($value) {
-            $data =  DB::table('mst_country')->where('id', $value->id_mst_country)->first();
-            if($data){
-              return $data->country;
+		      ->addColumn('country', function ($value) {
+            if($value->country){
+              return '<div align="left">'.$value->country.'</div>';
             } else {
-              return 'Country Not Found';
+              return '<div align="left">Country Not Found</div>';
             }
           })
-          ->addColumn('type', function ($value) {
-            $data =  DB::table('csc_research_type')->where('id', $value->id_csc_research_type)->first();
-            if($data){
-              return $data->nama_en;
-            } else {
-              return 'Type Not Found';
-            }
-          })
-          ->addColumn('download', function ($value) {
-            return getDataDownload($value->id);
-          })
+          // ->addColumn('download', function ($value) {
+          //   return getDataDownload($value->id);
+          // })
           ->addColumn('date', function ($data) {
             return date('d F Y', strtotime($data->publish_date)).' ( '.date('H:i', strtotime($data->publish_date)).' )';
           })
           ->addColumn('action', function ($data) {
-            $research = DB::table('csc_broadcast_research_corner')
-              ->where('id_research_corner', $data->id)
-              ->first();
-              if($research){
+            // $research = DB::table('csc_broadcast_research_corner')
+            //   ->where('id_research_corner', $data->id)
+            //   ->first();
+            //   if($research){
                 return '<center>
-                  <a href="'.route("admin.research-corner.view", $data->id).'" id="button" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye text-white" ></i></a>&nbsp;&nbsp;
-                  <a onclick="return confirm(\'Are You Sure ?\')" href="'.route("admin.research-corner.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger" title="Delete">&nbsp<i class="fa fa-trash text-white"></i></a>
+                  <a href="'.route("admin.curris.edit", $data->id).'" id="button" class="btn btn-sm btn-success" title="Edit"><i class="fa fa-pencil text-white" ></i></a>&nbsp;&nbsp;
+                  <a href="'.route("admin.curris.view", $data->id).'" id="button" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye text-white" ></i></a>&nbsp;&nbsp;
+                  <a onclick="return confirm(\'Are You Sure ?\')" href="'.route("admin.curris.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger" title="Delete">&nbsp<i class="fa fa-trash text-white"></i></a>
                   </center>';
-              } else {
-                return '<center>
-                  <button onclick="broadcast(\''.$data->title_en.'||'.$data->id.'\')" id="button" class="btn btn-sm btn-warning text-white" title="Broadcast"><i class="fa fa-bullhorn text-white"></i></button> 
-                  <a href="'.route("admin.research-corner.edit", $data->id).'" id="button" class="btn btn-sm btn-success" title="Edit"><i class="fa fa-edit text-white"></i></a>
-                  <a onclick="return confirm(\'Are You Sure ?\')" href="'.route("admin.research-corner.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger" title="Delete">&nbsp<i class="fa fa-trash text-white"></i></a>
-                  </center>';
-              }
+              // } else {
+              //   return '<center>
+              //     <button onclick="broadcast(\''.$data->title_en.'||'.$data->id.'\')" id="button" class="btn btn-sm btn-warning text-white" title="Broadcast"><i class="fa fa-bullhorn text-white"></i></button> 
+              //     <a href="'.route("admin.curris.edit", $data->id).'" id="button" class="btn btn-sm btn-success" title="Edit"><i class="fa fa-edit text-white"></i></a>
+              //     <a onclick="return confirm(\'Are You Sure ?\')" href="'.route("admin.curris.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger" title="Delete">&nbsp<i class="fa fa-trash text-white"></i></a>
+              //     </center>';
+              // }
           })
-          ->rawColumns(['action','title_en'])
+          ->rawColumns(['action','title_en','country'])
           ->make(true);
     }
 
     public function getDataDownload($id)
     {
-      $download = DB::table('csc_download_research_corner')
-      ->orderby('waktu', 'asc')->where('id_research_corner', $id)->get();
+      $download = DB::table('tbl_download_curris')
+      ->join('itdp_profil_eks','itdp_profil_eks.id','tbl_download_curris.id_itdp_profil_eks')
+      ->orderby('tbl_download_curris.waktu', 'asc')
+      ->select('tbl_download_curris.id','itdp_profil_eks.company','tbl_download_curris.waktu','tbl_download_curris.id_itdp_profil_eks')
+      ->where('tbl_download_curris.id_curris', $id)
+      ->get();
 
       return \Yajra\DataTables\DataTables::of($download)
           ->addIndexColumn()
-          ->addColumn('company', function ($var) {
-            $data = DB::table('itdp_profil_eks')->where('id', $var->id_itdp_profil_eks)->first();
-            if($data){
+          ->addColumn('company', function ($data) {
+            // $data = DB::table('itdp_profil_eks')->where('id', $var->id_itdp_profil_eks)->first();
+            if($data->company){
               return '<div align="left">'.$data->company.'</div>';
             } else {
-              return '<div align="left">Profile '.$var->id_itdp_profil_eks.' Not Found</div>';
+              return '<div align="left">Profile '.$data->id_itdp_profil_eks.' Not Found</div>';
             }
           })
           ->addColumn('download_date', function ($data) {
             return date('d F Y', strtotime($data->waktu)).' ( '.date('H:i', strtotime($data->waktu)).' )';
           })
-		  ->rawColumns(['company'])
+		      ->rawColumns(['company'])
           ->make(true);
     }
 
     public function create()
     {
-      $pageTitle = 'Research Corner';
+      $pageTitle = 'Current Issue';
       $page = 'create';
-      $url = "/admin/research-corner/store/Create";
-      $type = DB::table('csc_research_type')->orderby('nama_en', 'asc')->get();
+      $url = "/admin/curris/store/Create";
       $country = DB::table('mst_country')->orderby('country', 'asc')->get();
       if(Auth::user()->id_group == 1){
-        return view('research-corner.admin.create',compact('url','pageTitle','page','country','type'));
+        return view('current-issue.admin.create',compact('url','pageTitle','page','country'));
       } else {
-        return redirect('/perwakilan/research-corner');
+        return redirect('/perwakilan/curris');
       }
     }
 
     public function store(Request $req, $param)
     {
+      // dd(Auth::user());
       $id_user = Auth::user()->id;
-      $id = DB::table('csc_research_corner')->orderby('id','desc')->first();
+      $id_group = Auth::user()->id_group;
+      $id = DB::table('tbl_curris')->orderby('id','desc')->first();
       if($id){ $id = $id->id+1; } else { $id = 1; }
             
-      $destination= 'uploads\Research Corner\File\\';
+      $destination= 'uploads\Current Issue\File\\';
       if($req->hasFile('file')){ 
         $file = $req->file('file');
-        $nama_file = time().'_Research '.$req->title_en.'_'.$req->file('file')->getClientOriginalName();
+        $nama_file = time().'_CurrentIssue '.$req->title_en.'_'.$req->file('file')->getClientOriginalName();
         Storage::disk('uploads')->putFileAs($destination, $file, $nama_file);
       } else { $nama_file = $req->lastest_file; }
-
-      $destination= 'uploads\Research Corner\Cover\\';
-      if($req->hasFile('cover')){ 
-        $cover = $req->file('cover');
-        $nama_image = time().'_Cover '.$req->title_en.'_'.$req->file('cover')->getClientOriginalName();
-        Storage::disk('uploads')->putFileAs($destination, $cover, $nama_image);
-      } else { $nama_image = $req->lastest_cover; }
-
+      
       if($param == 'Create'){
-        $data = DB::table('csc_research_corner')->insert([
+        $data = DB::table('tbl_curris')->insert([
           'id' => $id,
           'title_en' => $req->title_en,
           'title_in' => $req->title_in,
-          'id_csc_research_type' => $req->type,
           'id_mst_country' => $req->country,
-          'id_mst_hscodes' => $req->code,
           'publish_date' => $req->date,
           'exum' => $nama_file,
-          'cover' => $nama_image,
           'download' => 0,
-          'created_by' => $id_user
+          'created_by_role' => $id_group,
+          'created_by_id' => $id_user
         ]);
       } else {
         $pecah = explode('_', $param);
         $param = $pecah[0];
 
-        $data = DB::table('csc_research_corner')->where('id', $pecah[1])->update([
+        $data = DB::table('tbl_curris')->where('id', $pecah[1])->update([
           'title_en' => $req->title_en,
           'title_in' => $req->title_in,
-          'id_csc_research_type' => $req->type,
           'id_mst_country' => $req->country,
-          'id_mst_hscodes' => $req->code,
           'publish_date' => $req->date,
           'exum' => $nama_file,
-          'cover' => $nama_image,
-          // 'created_by' => $id_user
         ]);
       }
 
       if($data){
          Session::flash('success','Success '.$param.' Data');
-         return redirect('admin/research-corner/')->with('success', 'Success '.$param.' Data!');
+         return redirect('admin/curris/')->with('success', 'Success '.$param.' Data!');
        }else{
          Session::flash('failed','Failed '.$param.' Data');
-         return redirect('admin/research-corner/')->with('error', 'Failed '.$param .' Data!');
+         return redirect('admin/curris/')->with('error', 'Failed '.$param .' Data!');
        }
     }
 
@@ -255,42 +242,40 @@ class AdminResearchController extends Controller
 
     public function view($id)
     {
-      $pageTitle = "Research Corner";
+      $pageTitle = "Current Issue";
       $page = "view";
-      $data = DB::table('csc_research_corner')->where('id', $id)->first();
-      $type = DB::table('csc_research_type')->orderby('nama_en', 'asc')->get();
+      $data = DB::table('tbl_curris')->where('id', $id)->first();
       $country = DB::table('mst_country')->orderby('country', 'asc')->get();
       if(Auth::user()->id_group == 1){
-        return view('research-corner.admin.create',compact('page','data','pageTitle','country','type'));
+        return view('current-issue.admin.create',compact('page','data','pageTitle','country','type'));
       } else {
-        return redirect('/perwakilan/research-corner');
+        return redirect('/perwakilan/curris');
       }
     }
 
     public function edit($id)
     {
       $page = "edit";
-      $pageTitle = "Research Corner";
-      $url = "/admin/research-corner/store/Update_".$id;
-      $data = DB::table('csc_research_corner')->where('id', $id)->first();
-      $type = DB::table('csc_research_type')->orderby('nama_en', 'asc')->get();
+      $pageTitle = "Current Issue";
+      $url = "/admin/curris/store/Update_".$id;
+      $data = DB::table('tbl_curris')->where('id', $id)->first();
       $country = DB::table('mst_country')->orderby('country', 'asc')->get();
       if(Auth::user()->id_group == 1){
-        return view('research-corner.admin.create',compact('url','data','pageTitle','page','type','country'));
+        return view('current-issue.admin.create',compact('url','data','pageTitle','page','country'));
       } else {
-        return redirect('/perwakilan/research-corner');
+        return redirect('/perwakilan/curris');
       }
     }
 
     public function destroy($id)
     {
-      $data = DB::table('csc_research_corner')->where('id', $id)->delete();
+      $data = DB::table('tbl_curris')->where('id', $id)->delete();
       if($data){
          Session::flash('error','Success Delete Data');
-         return redirect('admin/research-corner/');
+         return redirect('admin/curris/');
        }else{
          Session::flash('error','Failed Delete Data');
-         return redirect('admin/research-corner/');
+         return redirect('admin/curris/');
        }
     }
 
@@ -298,7 +283,7 @@ class AdminResearchController extends Controller
     {
             $hscode = DB::table('mst_hscodes')
                 ->select('id', 'desc_eng','fullhs')
-                ->orderby('id', 'asc');
+                ->orderby('desc_eng', 'asc');
             if (isset($request->q)) {
                 $search = $request->q;
                 $hscode->where(function ($query) use ($search) {

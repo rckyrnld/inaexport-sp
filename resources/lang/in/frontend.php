@@ -160,4 +160,12 @@ return [
         "hotprod" => "Hot Products",
         "newarrival" => "New Arrival",
     ],
+    "currentissue" => [
+        "currentissue" => "Isu Terkini ",
+        "no" => "No",
+        "title" => "Judul",
+        "country" => "Negara",
+        "publishdate" => "Tanggal Publikasi",
+        "action" => "Aksi",
+    ],
 ];

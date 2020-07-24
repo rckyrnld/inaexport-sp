@@ -14,6 +14,7 @@ use GuzzleHttp\Client;
 use Mail;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Response;
 
 class FrontController extends Controller
 {
@@ -757,7 +758,7 @@ class FrontController extends Controller
 
     public function product_categoryeks($id)
     {
-        // masih ada error disini;
+        // untuk yang klik dari banner;
         $hot_product = hotProduct();
         $loc = app()->getLocale();
         if($loc == "ch"){
@@ -772,7 +773,7 @@ class FrontController extends Controller
         
         $bannerdata = Banner::find($id);
         // dd($bannerdata->id_csc_product);
-        $bannerdetail = Banner_Detail::where('id_banner', $id)->select('id_eks')->get();
+        $bannerdetail = Banner_Detail::where('id_banner', $id)->where('jenis_detail',1)->select('id_eks')->get();
         foreach($bannerdetail as $company) {
             array_push($arraycompany,$company->id_eks);
         }
@@ -834,17 +835,44 @@ class FrontController extends Controller
         }
         $manufacturer = $query_manufacture->get();
 
-        $productnya = DB::table('csc_product_single')
+        $dataproduct = [];
+        $productnya1 = DB::table('csc_product_single')
             ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
             ->where('itdp_company_users.status', '1')
             ->where('csc_product_single.status', 2)
             ->whereIn('csc_product_single.id_itdp_profil_eks', $arraycompany)
-            ->where('csc_product_single.'.$colnya, $yangdicari)
-            ->orderBy('csc_product_single.prodname_en', 'ASC');
+            ->where('csc_product_single.'.$colnya, $yangdicari);
+            // dd($productnya1);
+            // ->orderBy('csc_product_single.prodname_en', 'ASC');
+            
+            // dd($productnya1);
+
+        $arraycompany2 = [];
+        $bannerdetail2 = Banner_Detail::where('id_banner', $id)->where('jenis_detail',2)->select('id_eks')->get();
+        foreach($bannerdetail2 as $company) {
+            array_push($arraycompany2,$company->id_eks);
+        }
+
+        $productnya2 = DB::table('csc_product_single')
+        ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+        ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+        ->where('itdp_company_users.status', '1')
+        ->where('csc_product_single.status', 2)
+        ->whereIn('csc_product_single.id_itdp_profil_eks', $arraycompany2)
+        ->union($productnya1);
+        // dd($productnya2);
+        // dd($productnya2);
+        // ->orderBy('csc_product_single.prodname_en', 'ASC');
+        
+       
+        // dd($productnya2);
+        // $productnya->push($productnya2);
+        // $productnya = $productnya1->merge($productnya2);
+    
             
         //count Hot dan New Product
-        $productcheck = $productnya->get();
+        $productcheck = $productnya2->get();
         $countNew = 0;
         $countHot = 0;
         foreach ($productcheck as $prod) {
@@ -857,23 +885,30 @@ class FrontController extends Controller
                 $countHot = $countHot + 1;
             }
         }
-        
+        $page = Input::get('page', 1);
+		$paginate = 12;
+        $offSet = ($page * $paginate) - $paginate;
         //Data Product
-        $product = $productnya->paginate(12);
-        $coproduct = DB::table('csc_product_single')
-            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-            ->where('itdp_company_users.status', 1)
-            ->where('csc_product_single.status', 2)
-            ->whereIn('csc_product_single.id_itdp_profil_eks', $arraycompany)
-            ->where('csc_product_single.'.$colnya, $yangdicari)
-            ->orderBy('csc_product_single.prodname_en', 'ASC')
-            ->count();
+        
+        // $productnya = $productnya2->paginate('12');
+        $productnya = $productnya2->get()->toArray();
+        // dd($productnya);
+        // dd($productnya);
+		
+        // $productnya = $productnya2->get();
+        // dd($productnya);
 
-            
-        $page = 'hold';
+        $itemsForCurrentPage = array_slice($productnya, $offSet, $paginate, true);
+        $product = new \Illuminate\Pagination\LengthAwarePaginator($itemsForCurrentPage, count($productnya), $paginate, $page);
+        $coproductnya = $productnya2->get();
+        $coproduct = count($coproductnya);
 
-        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat', 'hot_product', 'countNew', 'countHot','page'));
+        $pagenya = 'hold';
+        $today = date("Y-m-d");
+        $banner = DB::table('banner')->where('deleted_at',null)->select('*')->where('status',1)->whereDate('end_at', '>=',"'".$today."'")->first();
+        
+
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat', 'hot_product', 'countNew', 'countHot','page','banner'));
     }
 
     public function view_product($id)
@@ -1011,6 +1046,64 @@ class FrontController extends Controller
         return view('frontend.research-corner', ['research' => $research->appends(Input::except('page'))], compact('page', 'searchEvent', 'param'));
         
         // return view('frontend.research-corner', compact('research', 'page', 'searchEvent', 'param'));
+    }
+
+    public function current_issue(Request $request){
+        return view('frontend.current-issue');
+    }
+
+    public function curris_detail($id){
+        // dd($id);
+        $data = DB::table('tbl_curris')->where('id',$id)->first();
+        return view('frontend.current-issue_detail', compact('data'));
+    }
+
+    public function curris_data(Request $request){
+        $lang = app()->getLocale();
+        if($lang == 'ch'){ $lang = 'en';}
+
+        $currentissue = DB::table('tbl_curris')
+        ->join('mst_country', 'tbl_curris.id_mst_country', 'mst_country.id')
+        ->select('tbl_curris.id','tbl_curris.title_'.$lang,'tbl_curris.publish_date','mst_country.country')
+        ->orderby('publish_date', 'desc');
+
+        if(!empty($request->get('searchnama'))){
+            $currentissue->where('tbl_curris.title_'.$lang , 'ILIKE', "%".$request->searchnama."%" ); 
+        }else if(!empty($request->get('searchcountry'))){
+            $currentissue->where('tbl_curris.id_mst_country' ,  $request->searchcountry ); 
+        }
+
+        return \Yajra\DataTables\DataTables::of($currentissue)
+        ->addIndexColumn()
+        ->addColumn('title_en', function ($value) use ($lang){
+            if($lang == 'in'){
+                $titlenya = $value->title_in;
+            }else{
+                $titlenya = $value->title_en;
+            }
+            // $title = $value->title;
+            return '<div align="left">'.$titlenya.'</div>';
+        })
+        ->addColumn('country', function ($value) {
+        if($value->country){
+            return '<div align="left">'.$value->country.'</div>';
+        } else {
+            return '<div align="left">Country Not Found</div>';
+        }
+        })
+        // ->addColumn('download', function ($value) {
+        //   return getDataDownload($value->id);
+        // })
+        ->addColumn('date', function ($data) {
+            return date('d F Y', strtotime($data->publish_date)).' ( '.date('H:i', strtotime($data->publish_date)).' )';
+        })
+        ->addColumn('action', function ($data) {
+            return '<center>
+                <a href="'.url('/front_end/curris/detail/'.$data->id).'" id="button" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye text-white" ></i></a>&nbsp;&nbsp;
+                </center>';
+        })
+        ->rawColumns(['action','title_en','country'])
+        ->make(true);
     }
 
     public function tracking(){
@@ -2290,5 +2383,59 @@ class FrontController extends Controller
           echo json_encode($json_data);
         
     }
+
+    public function getcountryci(Request $request){
+        $country = DB::table('mst_country')
+            ->join('tbl_curris','tbl_curris.id_mst_country','mst_country.id')
+            ->select('mst_country.country','tbl_curris.id_mst_country as id')
+            ->groupby('mst_country.country', 'tbl_curris.id_mst_country')
+            ->orderby('mst_country.country', 'asc');
+
+        if (isset($request->q)) {
+            $search = $request->q;
+            $country->where(function ($query) use ($search) {
+                $query->where('mst_country.country', 'ilike', '%' . $search . '%')
+                    ->orderby('mst_country.country', 'asc');
+            });
+        } else if (isset($request->code)) {            
+            $country->where('mst_country.id', $request->code)
+                    ->orderby('mst_country.country', 'asc');
+        } else {
+            $country->limit(10);
+        }
+        return response()->json($country->get());
+    }
     
+    public function getDocument($id)
+    {
+        $document = DB::table('tbl_curris')->where('id',$id)->first();
+
+        // $string = str_replace(' ', '%20', $document->exum);
+        // $string = urlencode($document->exum);
+        
+        $filePath = 'a.pdf';
+        // $filePath = url('uploads/Current Issue/File/'.$document->exum);
+        // $filePath = url('uploads/Current%20Issue/File/'.$string);
+        // $filePath = url('uploads/CurrentIssue/File/'.);
+        // $string = urlencode( $filePath);
+        // dd($filePath);
+        // dd($filePath);
+        // file not found
+        // if( ! Storage::exists($filePath) ) {
+        // abort(404);
+        // }
+
+        $pdfContent = Storage::disk('uploads')->get($filePath);
+        // print_r($pdfContent);die();
+
+        // for pdf, it will be 'application/pdf'
+        $type       = Storage::mimeType($filePath);
+        $fileName   = "test.pdf";
+
+        return Response::make($pdfContent, 200, [
+        'Content-Type'        => $type,
+        'Content-Disposition' => 'inline; filename="'.$fileName.'"'
+        ]);
+    }
+
 }

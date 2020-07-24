@@ -28,6 +28,20 @@
               <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
               </button>
             </div>
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+                 <label class="control-label col-md-3">Nama Banner</label>
+                 <div class="col-md-7">
+                     <input type="text" class="form-control" id="nama" name="nama" required>
+                 </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+                 <label class="control-label col-md-3">File Image</label>
+                 <div class="col-md-7">
+                     <input type="file" class="form-control" id="file_img" name="file_img" required>
+                 </div>
+            </div>
             <div class="row" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 10px;">
               <div class="col-md-12"><label><b>Product Category</b></label></div><br>
               <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px; max-height: 450px;">
@@ -63,14 +77,9 @@
                   <span id="select_3"></span>
                   <input type="hidden" name="id_csc_product_level2" id="id_csc_product_level2">
               </div>
-          </div>
-             <div class="form-group row">
-              <div class="col-md-1"></div>
-                 <label class="control-label col-md-3">File Image</label>
-                 <div class="col-md-7">
-                     <input type="file" class="form-control" id="file_img" name="file_img" required>
-                 </div>
-             </div>
+            </div>
+            
+             
              <div class="form-group row">
                 <div class="col-md-11">
                   <div align="right">

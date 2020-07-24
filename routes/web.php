@@ -383,6 +383,9 @@ Route::namespace('Master')->group(function () {
             Route::get('/view/{id}', 'MasterBannerController@view')->name('view');
             Route::get('/destroy/{id}', 'MasterBannerController@destroy')->name('destroy');
             Route::get('/export/', 'MasterBannerController@export')->name('export');
+            Route::post('/savecompanylain/', 'MasterBannerController@addcompanylain')->name('savecompanylain');
+            Route::post('/deletecompanylain/', 'MasterBannerController@destroycompanylain')->name('deletecompanylain');
+            // Route::post('/deletecompanylain2/', 'MasterBannerController@destroycompanylain')->name('deletecompanylain2');
         });
     });
 // Angga End

@@ -160,4 +160,12 @@ return [
         "hotprod" => "Hot Products",
         "newarrival" => "New Arrival",
     ],
+    "currentissue" => [
+        "currentissue" => "Current Issue",
+        "no" => "No",
+        "title" => "Title",
+        "country" => "Country",
+        "publishdate" => "Publish Date",
+        "action" => "Action",
+    ],
 ];

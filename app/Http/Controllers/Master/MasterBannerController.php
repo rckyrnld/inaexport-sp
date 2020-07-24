@@ -22,7 +22,8 @@ class MasterBannerController extends Controller
 
   public function index(){
     $pageTitle = 'Master Banner';
-    return view('master.banner.index',compact('pageTitle'));
+    $sampledata = Banner::where('deleted_at', null)->get();
+    return view('master.banner.index',compact('pageTitle','sampledata'));
   }
 
   public function create()
@@ -52,7 +53,9 @@ class MasterBannerController extends Controller
               'id_csc_product' => $request->id_csc_product,
               'id_csc_product_level1' => $request->id_csc_product_level1,
               'id_csc_product_level2' => $request->id_csc_product_level2,
+              'nama' => $request->nama,
               'status' => 0,
+              'ordering' =>$request->order,
               'created_at' => $datenow
               ]);
 
@@ -61,6 +64,7 @@ class MasterBannerController extends Controller
       // untuk aktifin banner
       if($request->semua == 1){ 
         $banner = Banner::where('id', $request->id)->get();
+        // untuk perusahaan yang sesuai kategori start
         if (isset($banner[0]->id_csc_product_level2)) {
           $company = DB::table('csc_product_single')
                       ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
@@ -93,28 +97,44 @@ class MasterBannerController extends Controller
             $storedetail = Banner_Detail::insert([
                     'id_banner' => $request->id,
                     'id_eks' => $eksportir->id,
-                    'created_at' => $datenow
+                    'created_at' => $datenow,
+                    'jenis_detail' => 1
                     ]);
            }
         }
+        // untuk perusahaan yang sesuai kategori end
       }
       else{
+        // untuk perusahaan yang sesuai kategori start
         $dataeksportir = $request->dataeksportir;
         $explodeksportir = explode(',',$dataeksportir);
+        // untuk perusahaan yang sesuai kategori end
+
+        // untuk perusahaan diluar kategori start
+        // $dataeksportirlain = $request->dataeksportirlain;
+        // $explodeksportirlain = explode(',',$dataeksportirlain);
+        // untuk perusahaan diluar kategori end
+        // merge udah otomatis gak ada yang sama
+        // $allexportir = array_merge($explodeksportir, $explodeksportirlain);
+        // dd($allexportir);
         foreach($explodeksportir as $eksportir){
-          $cekada=DB::select("select * from banner_detail where id_banner='".$request->id."' and id_eks='".(int)$eksportir."'");
+          $cekada = DB::select("select * from banner_detail where id_banner='".$request->id."' and id_eks='".(int)$eksportir."'");
           if(count($cekada) == 0){
               $storedetail = Banner_Detail::insert([
                       'id_banner' => $request->id,
                       'id_eks' => $eksportir,
-                      'created_at' => $datenow
+                      'created_at' => $datenow,
+                      'jenis_detail' => 1
                       ]);
           }
         }
-        DB::table('banner_detail')->where('id_banner',$request->id)->wherenotin('id_eks',$explodeksportir)->delete();
+        DB::table('banner_detail')->where('id_banner',$request->id)->where('jenis_detail', 1)->wherenotin('id_eks',$explodeksportir)->delete();
+        
+
       }
       $update = Banner::where('id', $request->id)
-              ->update(['end_at' => $request->s_date,'updated_at' => $datenow, 'status' => $request->status]);
+              ->update(['end_at' => $request->s_date,'updated_at' => $datenow, 'status' => $request->status, 'nama' => $request->nama, 
+              'ordering' =>$request->order]);
 
       
       $baliknya = 'sukses';
@@ -158,7 +178,8 @@ class MasterBannerController extends Controller
             $storedetail = Banner_Detail::insert([
                     'id_banner' => $request->id,
                     'id_eks' => $eksportir->id,
-                    'created_at' => $datenow
+                    'created_at' => $datenow,
+                    'jenis_detail' => 1
                     ]);
            }
         }
@@ -171,17 +192,20 @@ class MasterBannerController extends Controller
               $storedetail = Banner_Detail::insert([
                       'id_banner' => $request->id,
                       'id_eks' => $eksportir,
-                      'created_at' => $datenow
+                      'created_at' => $datenow,
+                      'jenis_detail' => 1
                       ]);
           }
           
-          DB::table('banner_detail')->where('id_banner',$request->id)->wherenotin('id_eks',$explodeksportir)->delete();
+          DB::table('banner_detail')->where('id_banner',$request->id)->where('jenis_detail', 1)->wherenotin('id_eks',$explodeksportir)->delete();
         }
       }
       $data1 = [
                 'end_at' => $request->s_date,
                 'updated_at' => $datenow, 
-                'status' => $request->status
+                'status' => $request->status, 
+                'nama' => $request->nama,
+                'ordering' =>$request->order,
               ];
       
       $cek1 = $request->file('file');
@@ -208,24 +232,36 @@ class MasterBannerController extends Controller
     $today = date("Y-m-d h:i:s");
     $columns = array(
       0 => 'id',
-      1 => 'status',
+      1 => 'nama',
     );
 
-    $totalData = DB::table('banner')->count();
+    $totalData = DB::table('banner')->where('deleted_at', null)->count();
     $limit = $request->input('length');
     $start = $request->input('start');
     $order = $columns[$request->input('order.0.column')];
     $dir = $request->input('order.0.dir');
 
     if (empty($request->input('search.value'))) {
-      $datanya = DB::table('banner')
+      $datanyaawal = DB::table('banner')
               ->where('deleted_at', null)
               ->offset($start)
-              ->limit($limit)
-              ->orderBy($order, $dir)
-              ->get();
+              ->orderBy($order, $dir);
 
-      $totalFiltered = count($datanya);
+        $datanya = $datanyaawal->limit($limit)->get();
+
+      $totalFiltered = $datanyaawal->count();
+    }else{
+      $search = $request->input('search.value');
+            $datanyaawal =DB::table('banner')
+                    ->where('deleted_at', null)
+                ->where(function ($query) use ($search) {
+                    $query->where('nama', 'ilike', '%' . $search . '%');
+                })
+                ->offset($start)
+                ->orderBy($order, $dir);
+            $datanya= $datanyaawal->limit($limit)->get();
+
+            $totalFiltered = $datanyaawal->count();
     }
 
     $data = array();
@@ -235,36 +271,38 @@ class MasterBannerController extends Controller
       foreach ($datanya as $d) {
         $token = csrf_token();
         $nestedData['no'] = $count;
+        $nestedData['nama'] = $d->nama;
         $nestedData['file'] = '<div class="thumbnail"><img src="'.asset('/uploads/banner/'.$d->file).'" alt="Lights" style="width:100%"></div>';
         // if($d->end_at != null){
         //   $nestedData['until'] = date('d-m-Y',strtotime($d->end_at));
         // }else{
         //   $nestedData['until'] = '-';
         // }
+        $nestedData['order'] = '<div style="text-align:left">'.$d->ordering.'</div>';
         $nestedData['until'] = isset($d->end_at) ? date('d-m-Y',strtotime($d->end_at)) : '-';
         if($d->status == 1 && (date('d-m-Y',strtotime($d->end_at)) == date('d-m-Y',strtotime($today)) || date('d-m-Y',strtotime($d->end_at)) > date('d-m-Y',strtotime($today)) ) ){
           $nestedData['status'] = 'Aktif';
           $nestedData['aksi'] = '<div class="btn-group">
-                               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-image-id = "'.$d->file.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'" data-check-id="'.$d->status.'" data-edit-id="'.$d->id.'"><i class="fa fa-pencil"></i></button>
+                               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-image-id = "'.$d->file.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'" data-check-id="'.$d->status.'" data-edit-id="'.$d->id.'" data-edit-order="'.$d->ordering.'" data-edit-name="'.$d->nama.'"><i class="fa fa-pencil"></i></button>
                                <a onclick="return confirm(\'Are You Sure ?\')"  href="'.url("/").'/master-banner/destroy/'.$d->id.'" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a></div>';
 
         } else if($d->status == 2){
           // untuk yang pernah aktif, tapi di nonaktifkan
           $nestedData['status'] = 'Tidak Aktif';
           $nestedData['aksi'] = '<div class="btn-group">
-                               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-image-id = "'.$d->file.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'" data-check-id="'.$d->status.'" data-edit-id="'.$d->id.'"><i class="fa fa-pencil"></i></button>
+                               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-image-id = "'.$d->file.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'" data-check-id="'.$d->status.'" data-edit-id="'.$d->id.'" data-edit-order="'.$d->ordering.'" data-edit-name="'.$d->nama.'"><i class="fa fa-pencil"></i></button>
                                <a onclick="return confirm(\'Are You Sure ?\')"  href="'.url("/").'/master-banner/destroy/'.$d->id.'" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a></div>';
 
         }
         else if($d->status == 0 ) {
           $nestedData['status'] = 'Tidak Aktif';
           $nestedData['aksi'] = '<div class="btn-group">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit" data-edit-id="'.$d->id.'"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit" data-edit-id="'.$d->id.'" data-edit-name="'.$d->nama.'" data-edit-order="'.$d->ordering.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'"><i class="fa fa-pencil"></i></button>
                                 <a onclick="return confirm(\'Are You Sure ?\')"  href="'.url("/").'/master-banner/destroy/'.$d->id.'" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a></div>';
         }else{
           $nestedData['status'] = 'Tidak Aktif';
           $nestedData['aksi'] = '<div class="btn-group">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-edit-id="'.$d->id.'"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-edit-id="'.$d->id.'" data-edit-name="'.$d->nama.'" data-edit-order="'.$d->ordering.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'"><i class="fa fa-pencil"></i></button>
                                 <a onclick="return confirm(\'Are You Sure ?\')"  href="'.url("/").'/master-banner/destroy/'.$d->id.'" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a></div>';
         }
         
@@ -273,13 +311,13 @@ class MasterBannerController extends Controller
         $count++;
       }
     }
-    
       $json_data = array(
         'draw' => intval($request->input('draw')),
         'recordsTotal' => intval($totalData),
         'recordsFiltered' => intval($totalFiltered),
         'data' => $data
       );
+      // dd($json_data);
 
       echo json_encode($json_data);
   }
@@ -288,34 +326,46 @@ class MasterBannerController extends Controller
 
   public function getCompany(Request $request)
   {
+    //disini masih error pas cari perusahaan yang sudah di verifikasi productnya
     $banner = Banner::find($request->id);
     // dd($banner->id_csc_product_level2);
-    if (isset($banner->id_csc_product_level2)) {
-      $company = DB::table('csc_product_single')
-                  ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
-                  ->where('csc_product_single.id_csc_product_level2', $banner->id_csc_product_level2)
-                  ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
-                  ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
-                  ->orderBy('itdp_profil_eks.id', 'ASC')
-                  ->get();
-    }else if(isset($banner->id_csc_product_level1)){
-      $company = DB::table('csc_product_single')
-                  ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
-                  ->where('csc_product_single.id_csc_product_level1', $banner->id_csc_product_level1)
-                  ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
-                  ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
-                  ->orderBy('itdp_profil_eks.id', 'ASC')
-                  ->get();
+    if($request->tipe == 'kategori'){
+      if (isset($banner->id_csc_product_level2)) {
+        $company = DB::table('csc_product_single')  
+                    ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                    ->where('csc_product_single.status',2)
+                    ->where('csc_product_single.id_csc_product_level2', $banner->id_csc_product_level2)
+                    ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->orderBy('itdp_profil_eks.id', 'ASC')
+                    ->get();
+      }else if(isset($banner->id_csc_product_level1)){
+        $company = DB::table('csc_product_single')
+                    ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                    ->where('csc_product_single.status',2)
+                    ->where('csc_product_single.id_csc_product_level1', $banner->id_csc_product_level1)
+                    ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->orderBy('itdp_profil_eks.id', 'ASC')
+                    ->get();
+      }else{
+        $company = DB::table('csc_product_single')
+                    ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                    ->where('csc_product_single.status',2)
+                    ->where('csc_product_single.id_csc_product', $banner->id_csc_product)
+                    ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                    ->orderBy('itdp_profil_eks.id', 'ASC')
+                    ->get();
+      }
     }else{
-      $company = DB::table('csc_product_single')
-                  ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
-                  ->where('csc_product_single.id_csc_product', $banner->id_csc_product)
+      $company = DB::table('banner_detail')
+                  ->join('itdp_profil_eks', 'banner_detail.id_eks','itdp_profil_eks.id')
                   ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
-                  ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
-                  ->orderBy('itdp_profil_eks.id', 'ASC')
+                  ->where('id_banner',$request->id)
+                  ->where('jenis_detail', 2)
                   ->get();
     }
-
 
     $no = 0;
     foreach ($company as $val) {
@@ -334,6 +384,7 @@ class MasterBannerController extends Controller
       $company = DB::table('csc_product_single')
                   ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
                   ->where('csc_product_single.id_csc_product_level2', $banner->id_csc_product_level2)
+                  ->where('csc_product_single.status',2)
                   ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
                   ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
                   ->orderBy('itdp_profil_eks.id', 'ASC')
@@ -342,6 +393,7 @@ class MasterBannerController extends Controller
       $company = DB::table('csc_product_single')
                   ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
                   ->where('csc_product_single.id_csc_product_level1', $banner->id_csc_product_level1)
+                  ->where('csc_product_single.status',2)
                   ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
                   ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
                   ->orderBy('itdp_profil_eks.id', 'ASC')
@@ -350,6 +402,7 @@ class MasterBannerController extends Controller
       $company = DB::table('csc_product_single')
                   ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
                   ->where('csc_product_single.id_csc_product', $banner->id_csc_product)
+                  ->where('csc_product_single.status',2)
                   ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
                   ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
                   ->orderBy('itdp_profil_eks.id', 'ASC')
@@ -370,6 +423,74 @@ class MasterBannerController extends Controller
     return response()->json($company);
   }
 
+  public function getCompanyName(Request $request){
+    
+    // dd(isset($request->id));
+    // dd($request);
+    $exceptcompanies = [];
+    $banner = Banner::find($request->idbanner);
+    // untuk yang nama companynya udah ada di sebelumnya start
+    if (isset($banner->id_csc_product_level2)) {
+      $company = DB::table('csc_product_single')
+                  ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                  ->where('csc_product_single.id_csc_product_level2', $banner->id_csc_product_level2)
+                  ->where('csc_product_single.status',2)
+                  ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                  ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                  ->orderBy('itdp_profil_eks.id', 'ASC')
+                  ->get();
+    }else if(isset($banner->id_csc_product_level1)){
+      $company = DB::table('csc_product_single')
+                  ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                  ->where('csc_product_single.id_csc_product_level1', $banner->id_csc_product_level1)
+                  ->where('csc_product_single.status',2)
+                  ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                  ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                  ->orderBy('itdp_profil_eks.id', 'ASC')
+                  ->get();
+    }else{
+      $company = DB::table('csc_product_single')
+                  ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                  ->where('csc_product_single.id_csc_product', $banner->id_csc_product)
+                  ->where('csc_product_single.status',2)
+                  ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                  ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                  ->orderBy('itdp_profil_eks.id', 'ASC')
+                  ->get();
+    }
+    // untuk yang nama companynya belum ada di sebelumnya end    
+    foreach($company as $comp){
+      array_push($exceptcompanies,$comp->id);
+    }
+
+    // untuk yang udah ada di table meskipun bukan dari category start
+    $another = DB::Table('banner_detail')->where('id_banner', $request->idbanner)->where('jenis_detail',2)->get();
+    // dd($another);
+    // untuk yang udah ada di table meskipun bukan dari category end
+    foreach($another as $comp){
+      array_push($exceptcompanies,$comp->id_eks);
+    }
+    // dd($exceptcompanies);
+    // dd($request);
+      $companyall = DB::table('itdp_profil_eks')
+          ->select('itdp_profil_eks.id','itdp_profil_eks.company')
+          ->wherenotin( 'itdp_profil_eks.id',$exceptcompanies);
+
+      if (isset($request->search)) {
+          $search = $request->search;
+          $companyall->where(function ($query) use ($search) {
+              $query->where('itdp_profil_eks.company', 'ilike', '%' . $search . '%');
+          });
+      } else if (isset($request->code)) {
+          $companyall->where('itdp_profil_eks.id', $request->code);
+      } else {
+          $companyall->orderby('itdp_profil_eks.company', 'asc')
+                      ->limit(10);
+      }
+      // echo $final_query->toSql();die();
+      return response()->json($companyall->get());
+  }
+
   public function destroy(Request $request){
     date_default_timezone_set('Asia/Jakarta');
     $today = date("Y-m-d h:i:s");
@@ -380,4 +501,43 @@ class MasterBannerController extends Controller
     return redirect('master-banner')->with('error','Success Delete Data');
     
   }
+
+  public function addcompanylain(Request $request){
+    $datenow = date("Y-m-d H:i:s");
+      $cekada = DB::select("select * from banner_detail where id_banner='".(int)$request->id."' and id_eks='".(int)$request->id_perusahaan."'");
+      if(count($cekada) == 0){
+          $storedetail = Banner_Detail::insert([
+                  'id_banner' => (int)$request->id_banner,
+                  'id_eks' => (int)$request->id_perusahaan,
+                  'created_at' => $datenow,
+                  'jenis_detail' => 2
+                  ]);
+      }
+  }
+
+  public function destroycompanylain(Request $request){
+    // dd($request);
+    date_default_timezone_set('Asia/Jakarta');
+    $today = date("Y-m-d h:i:s");
+    DB::table('banner_detail')->where('id_banner', $request->id_banner)->where('id_eks', $request->id_perusahaan)->delete();
+    // $msg = ["status"=>"success"];
+    // echo json_encode($msg);
+    
+    // return redirect('master-banner')->with('error','Success Delete Data');
+    
+  }
+
+  public function destroycompanylain2(Request $request){
+    // dd($request);
+    date_default_timezone_set('Asia/Jakarta');
+    $today = date("Y-m-d h:i:s");
+    DB::table('banner_detail')->where('id_banner', $request->id_banner)->where('id_eks', $request->id_perusahaan)->delete();
+    // $msg = ["status"=>"success"];
+    // echo json_encode($msg);
+    
+    // return redirect('master-banner')->with('error','Success Delete Data');
+    
+  }
+
+
 }

@@ -346,10 +346,10 @@
         <?php
         $today = date("Y-m-d");
         // (date('d-m-Y',strtotime($d->end_at))
-        $checkevent = DB::table('banner')->where('deleted_at',null)->select('*')->where('status',1)->whereDate('end_at', '>=',"'".$today."'")->first();
-        if(isset($checkevent)){
-            $checkeksportirnya = DB::table('banner_detail')->where('id_banner',$checkevent->id)->first();
-        }
+        $checkevent = DB::table('banner')->where('deleted_at',null)->select('*')->where('ordering','!=', null)->where('status',1)->whereDate('end_at', '>=',"'".$today."'")->orderby('ordering','asc')->get();
+        // if(isset($checkevent)){
+        //     $checkeksportirnya = DB::table('banner_detail')->where('id_banner',$checkevent->id)->first();
+        // }
         
         // echo $checkevent->tosql();
         // echo $checkevent;
@@ -357,27 +357,31 @@
         //     echo "<div class='row'><div class='col-md-12'><img src='{{asset('asset('/uploads/banner/'.$checkevent->file)')}}'></div></div>";
         // }
     ?>   
-    @if(isset($checkeksportirnya))
+    @if(isset($checkevent))
     <section class="special_event_area mb-50" style=" margin-bottom: 0px;">
         <div class="container-fluid">
         <p>
-            <a href="{{url('front_end/list_product/categoryeks/'.$checkevent->id)}}" >
-                <img class="img-fluid" style="width:100%; max-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" alt="">
-            </a>
+            @if(count($checkevent)>0)
+                @foreach($checkevent as $event)
+                    <a href="{{url('front_end/list_product/categoryeks/'.$event->id)}}" >
+                        <img class="img-fluid" style="width:100%; max-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$event->file}}" alt="">
+                    </a>
+                @endforeach
+            @endif
         </p>
 
                 {{--<img style="max-width: 100%;min-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" data-show-id="{{$checkevent->id}}" data-toggle="modal"  data-target="#modal-special-event" alt="">--}}
 
         </div>
     </section>
-    <div id="modal-special-event" class="modal fade" role="dialog">
+    <!-- <div id="modal-special-event" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Contributed Company</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-            <input type="hidden" id="idbannernya" name="idbannernya" value="{{$checkevent->id}}" >
+            <input type="hidden" id="idbannernya" name="idbannernya" value="{{--{{$checkevent[0]->id}}--}}" >
             <form class="form-horizontal" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}<br>
                 <div class="modal-body">
@@ -400,7 +404,7 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
     @endif
     
     <!--Event Special end-->
@@ -434,10 +438,11 @@
 								<br>
 							</div>
                             <div class="col-md-4 col-sm-12 col-12 hoveraja">
-                                <a href="{{url('/front_end/ticketing_support')}}"><img src="{{asset('front/assets/icon/03 customer support-04.png')}}" alt="" class="image img-menu"></a>
+                                <a onclick="checkfirst()"><img src="{{asset('front/assets/icon/03 current issue-04.png')}}" alt="" class="image img-menu"></a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
 								<center><p><font color="black"><b></b></font></p></center>
-								<div class="text"><a href="{{url('/front_end/ticketing_support')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
+                                <div class="text"><button onclick="checkfirst()" class="btn btn-primary" style="width:100px!important;">View</button></div>
+                                <a href="{{url('/front_end/curris')}}" id="buttoncurris" style="display: none;"></a>
 								</div>
 								<br>
 							</div>
@@ -1184,6 +1189,60 @@
                 }
             }
         });
+    }
+
+    <?php
+    $tipe = '';
+    $message = '';
+    $login = 'non user';
+    ?>
+    function checkfirst(){
+        <?php
+        if(Auth::guard('eksmp')->user()){
+            if(Auth::guard('eksmp')->user()->id_role == 2){
+              $tipe = 'eksportir';
+              $login = 'eksportir';
+              $message = '';
+            } else { 
+                $login = 'importir';
+              $for = 'importir';
+                if($loc == "ch"){
+                  $message = "仅适用于印尼公司";
+                }elseif($loc == "in"){
+                  $message = "Hanya untuk perusahaan Indonesia";
+                }else{
+                  $message = "Only for Indonesian companies";
+                }
+            }
+        }else{
+            $login = 'non user';
+            $for = 'non user';
+                if($loc == "ch"){
+                  $message = "请先登录";
+                }elseif($loc == "in"){
+                  $message = "Silahkan Login Terlebih Dahulu!";
+                }else{
+                  $message = "\Please Login to Continue!";
+                }
+        }
+        ?>
+
+        var tipe = '{{$tipe}}';
+        var message = '{{$message}}';
+        var login = '{{$login}}';
+        console.log(tipe);
+        console.log(message);
+        console.log(login);
+        if(login != 'eksportir' && tipe != 'eksportir' ){
+            alert("{{$message}}");
+            if(login == 'non user'){
+                window.location.href = "{{url('/login')}}";
+            }
+        }else{
+            $('#buttoncurris')[0].click();
+        }
+        
+        // if()
     }
 
     function formatAmount( number ) {

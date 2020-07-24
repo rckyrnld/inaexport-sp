@@ -78,10 +78,23 @@
         -ms-transition: none !important;
         -o-transition: none !important;
         transition: none !important;
+        
+    }
+    .breadcrumbs_area > li + li:before {
+    content: "\3E"
     }
 </style>
 <!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
+            @if(isset($page))   
+                @if(isset($banner))
+                <div class="container-fluid" style="padding-left: 0px;padding-right: 0px;">
+                <p>
+                    <img class="img-fluid" style="width:100%; max-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$banner->file}}" alt="">
+                </p>
+                </div>
+                @endif
+            @endif
         <div class="container">
             <div class="row">
                 <div class="col-5">
@@ -618,6 +631,7 @@
                     @endif
                     <br>
                     @if($coproduct > 12)
+                    
                     <!-- <div class="shop_toolbar t_bottom"> -->
                         <div class="pagination" style="float: right;">
                            <!--  <ul>
@@ -627,7 +641,8 @@
                                 <li class="next"><a href="#">next</a></li>
                                 <li><a href="#">>></a></li>
                             </ul> -->
-                            {{ $product->links() }}
+                            <!-- {{ $product->links() }} -->
+                            {!! str_replace('/?', '?', $product->links()) !!}
 
                         </div>
                     <!-- </div> -->
