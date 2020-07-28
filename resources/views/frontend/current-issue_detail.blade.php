@@ -7,8 +7,19 @@
     $message = '';
   } else if(Auth::guard('eksmp')->user()){
     if(Auth::guard('eksmp')->user()->id_role == 2){
-      $for = 'eksportir';
-      $message = '';
+      if(Auth::guard('eksmp')->user()->status == 1){
+        $for = 'eksportir';
+        $message = '';
+      }else{
+        $for = 'notverified';
+        if($loc == "ch"){
+          $message = "您的公司必须先由管理员验证";
+        }elseif($loc == "in"){
+          $message = "Perusahaan Anda Harus di Verifikasi oleh Admin Terlebih Dahulu!";
+        }else{
+          $message = "Your Company Have to be Verified by Admin first!";
+        }
+      }
     } else {
       $for = 'importir';
         if($loc == "ch"){
