@@ -1099,8 +1099,9 @@ class FrontController extends Controller
         })
         ->addColumn('action', function ($data) {
             return '<center>
-                <a href="'.url('/front_end/curris/detail/'.$data->id).'" id="button" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye text-white" ></i></a>&nbsp;&nbsp;
+                <button onclick="seedetail('.$data->id.')" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye text-white" ></i></button>
                 </center>';
+                // <a href="'.url('/front_end/curris/detail/'.$data->id).'" id="button" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye text-white" ></i></a>&nbsp;&nbsp;
         })
         ->rawColumns(['action','title_en','country'])
         ->make(true);
