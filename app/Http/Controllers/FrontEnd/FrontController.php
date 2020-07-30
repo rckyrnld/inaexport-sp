@@ -2052,7 +2052,7 @@ class FrontController extends Controller
             $countryall->where('mst_country.id', $request->code)
                         ->orderby('mst_country.country', 'asc');
         } else {
-            $countryall->orderby('mst_country.country', 'asc')->limit(10);
+            $countryall->orderby('mst_country.country', 'asc');
         }
 
         return response()->json($countryall->get());
@@ -2078,7 +2078,7 @@ class FrontController extends Controller
             $countryall->where('mst_country.id', $request->code)
                     ->orderby('mst_country.country', 'asc');
         } else {
-            $countryall->orderby('mst_country.country', 'asc')->limit(10);
+            $countryall->orderby('mst_country.country', 'asc');
         }
 
         return response()->json($countryall->get());
@@ -2104,7 +2104,7 @@ class FrontController extends Controller
             $countryall->where('mst_country.id', $request->code)
                         ->orderby('mst_country.country', 'asc');
         } else {
-            $countryall->orderby('mst_country.country', 'asc')->limit(10);
+            $countryall->orderby('mst_country.country', 'asc');
         }
 
         return response()->json($countryall->get());
@@ -2219,9 +2219,10 @@ class FrontController extends Controller
         } else if (isset($request->code)) {            
             $countryall->where('mst_country.id', $request->code)
                     ->orderby('mst_country.country', 'asc');
-        } else {
-            $countryall->limit(10);
-        }
+        } 
+        // else {
+        //     $countryall->limit(10);
+        // }
         return response()->json($countryall->get());
     }
 
