@@ -4,6 +4,74 @@
   input[type="text"], input[type="text"]:focus{
     border-color: #d6d9daad;
   }
+
+  .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+
+  .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    #apakek{
+      display: none;
+      /* position: absolute !important;
+      top: -9999px !important;
+      left: -9999px !important; */
+    }
 </style>
 <?php 
   if($page == 'view'){
@@ -24,6 +92,19 @@
           <div class="col-md-12">
           <form class="form-horizontal" method="POST" action="{{ route('master.banner.store', $page) }}" enctype="multipart/form-data">
            {{ csrf_field() }}<br>
+           <div class="form-group">
+            <label class="control-label col-md-3">Type</label>
+            <div class="col-md-9">
+              <span>Not Have Category</span>
+              <label class="switch">
+              <input type="checkbox" id="check">
+                <span class="slider round"></span>
+              </label>
+              <input type="hidden" id="type" name="type" value="2">
+              <span> Have Category</span>
+            </div>
+          </div>
+          <div id="pilihcompany">
             <div class="alert alert-info">File image harus beresolusi 1583x231.
               <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
               </button>
@@ -42,44 +123,52 @@
                      <input type="file" class="form-control" id="file_img" name="file_img" required>
                  </div>
             </div>
-            <div class="row" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 10px;">
+            <div id="apakek" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 10px;">
+            <div class="row">
               <div class="col-md-12"><label><b>Product Category</b></label></div><br>
-              <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px; max-height: 450px;">
-                  <input type="text" id="search1" name="search1" class="form-control" onInput="searchsub(1)">
-                  <div id="prod1" class="list-group" style="height: 430px; overflow-y: auto;">
-                      @foreach($catprod as $cp)
-                          <a href="#" class="list-group-item list-group-item-action listbag1" onclick="getSub(1,'{{$cp->id}}', '', '{{$cp->nama_kategori_en}}', event)" id="kat1_{{$cp->id}}" data-value="{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
-                      @endforeach
-                  </div>
-              </div>
-              <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
-                  <div id="tmpsearch2">
-
-                  </div>
-                  <div id="prod2" class="list-group" style="height: 430px; overflow-y: auto;">
-                      
-                  </div>
-              </div>
-              <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
-                  <div id="tmpsearch3">
-
-                  </div>
-                  <div id="prod3" class="list-group" style="height: 430px; overflow-y: auto;">
-                      
-                  </div>
-              </div>
-              <div class="col-md-2" style="margin-top: 20px;"><label><b>Select</b></label></div>
-              <div class="col-md-8" style="margin-top: 20px;">
-                  <span id="select_1"></span>
-                  <input type="hidden" name="id_csc_product" id="id_csc_product">
-                  <span id="select_2"></span>
-                  <input type="hidden" name="id_csc_product_level1" id="id_csc_product_level1">
-                  <span id="select_3"></span>
-                  <input type="hidden" name="id_csc_product_level2" id="id_csc_product_level2">
-              </div>
             </div>
-            
-             
+              
+            <div class="row">
+              <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px; max-height: 450px;">
+                    <input type="text" id="search1" name="search1" class="form-control" onInput="searchsub(1)">
+                    <div id="prod1" class="list-group" style="height: 430px; overflow-y: auto;">
+                        @foreach($catprod as $cp)
+                            <a href="#" class="list-group-item list-group-item-action listbag1" onclick="getSub(1,'{{$cp->id}}', '', '{{$cp->nama_kategori_en}}', event)" id="kat1_{{$cp->id}}" data-value="{{$cp->id}}">{{$cp->nama_kategori_en}}</a>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                    <div id="tmpsearch2">
+
+                    </div>
+                    <div id="prod2" class="list-group" style="height: 430px; overflow-y: auto;">
+                        
+                    </div>
+                </div>
+                <div class="col-md-4" style="border: 1px solid rgba(120, 130, 140, 0.13); padding: 5px;">
+                    <div id="tmpsearch3">
+
+                    </div>
+                    <div id="prod3" class="list-group" style="height: 430px; overflow-y: auto;">
+                        
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2" style="margin-top: 20px;"><label><b>Select</b></label></div>
+                <div class="col-md-8" style="margin-top: 20px;">
+                    <span id="select_1"></span>
+                    <input type="hidden" name="id_csc_product" id="id_csc_product">
+                    <span id="select_2"></span>
+                    <input type="hidden" name="id_csc_product_level1" id="id_csc_product_level1">
+                    <span id="select_3"></span>
+                    <input type="hidden" name="id_csc_product_level2" id="id_csc_product_level2">
+                </div>
+              </div>
+              
+              
+            </div>
+        
              <div class="form-group row">
                 <div class="col-md-11">
                   <div align="right">
@@ -90,6 +179,7 @@
                   </div>
                 </div>
              </div>
+          </div>
           </form>
           </div>
       	 </div>
@@ -101,9 +191,27 @@
 @include('footer')
 <script type="text/javascript">
   $(document).ready(function () {
-    
+    $('#check').change(function() {
+      
+	      if($(this).is(':checked')) {
+          //  $('#pilihcompany').show();
+          $('#apakek').show();
+          $('#type').val(1);
+          // $text.addClass('apakek');
+	      } else {
+          $('#type').val(2);
+	        // $('#pilihcompany').hide();
+          $('#apakek').hide();
+          $('#id_csc_product').val('');
+          $('#id_csc_product_level1').val('');
+          $('#id_csc_product_level2').val('');
+          // $text.removeClass('apakek');
+	      }
+
+    });
   });
   function searchsub(suba){
+    console.log('ke searchsub kok')
         if(suba == 1){
             var tes = document.getElementById("search1");
             var s = tes.value;
@@ -171,6 +279,7 @@
                 $('#tmpsearch2').html('');
                 $('#tmpsearch3').html('');
             }else{
+              
                 $('#select_2').text(' >'+name);
                 $('#id_csc_product_level1').val(ids);
                 $('#select_3').text('');

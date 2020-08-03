@@ -55,15 +55,17 @@ class MasterBannerController extends Controller
               'id_csc_product_level2' => $request->id_csc_product_level2,
               'nama' => $request->nama,
               'status' => 0,
+              'type' => $request->type,
               'ordering' =>$request->order,
               'created_at' => $datenow
               ]);
 
       return redirect('master-banner')->with('success','Success Add Data');
     } else if ($param == 'update') {
+      
+      $banner = Banner::where('id', $request->id)->get();
       // untuk aktifin banner
       if($request->semua == 1){ 
-        $banner = Banner::where('id', $request->id)->get();
         // untuk perusahaan yang sesuai kategori start
         if (isset($banner[0]->id_csc_product_level2)) {
           $company = DB::table('csc_product_single')
@@ -105,8 +107,9 @@ class MasterBannerController extends Controller
         // untuk perusahaan yang sesuai kategori end
       }
       else{
-        // untuk perusahaan yang sesuai kategori start
-        $dataeksportir = $request->dataeksportir;
+        if($banner[0]->type == 2){
+        }else{
+          $dataeksportir = $request->dataeksportir;
         $explodeksportir = explode(',',$dataeksportir);
         // untuk perusahaan yang sesuai kategori end
 
@@ -131,6 +134,9 @@ class MasterBannerController extends Controller
         DB::table('banner_detail')->where('id_banner',$request->id)->where('jenis_detail', 1)->wherenotin('id_eks',$explodeksportir)->delete();
         
 
+        }
+        // untuk perusahaan yang sesuai kategori start
+        
       }
       $update = Banner::where('id', $request->id)
               ->update(['end_at' => $request->s_date,'updated_at' => $datenow, 'status' => $request->status, 'nama' => $request->nama, 
@@ -143,7 +149,7 @@ class MasterBannerController extends Controller
       // untuk edit yang sudah pernah diaktifin
       // untuk kalo mau bikin checklist hapus semua
       if($request->hapussemua == 1){
-        DB::table('banner_detail')->where('id_banner',$request->id)->delete();
+        DB::table('banner_detail')->where('id_banner',$request->id)->where('jenis_detail', 1)->delete();
       }else if($request->semua == 1){ 
         $banner = Banner::where('id', $request->id)->get();
         if (isset($banner[0]->id_csc_product_level2)) {
@@ -283,26 +289,26 @@ class MasterBannerController extends Controller
         if($d->status == 1 && (date('d-m-Y',strtotime($d->end_at)) == date('d-m-Y',strtotime($today)) || date('d-m-Y',strtotime($d->end_at)) > date('d-m-Y',strtotime($today)) ) ){
           $nestedData['status'] = 'Aktif';
           $nestedData['aksi'] = '<div class="btn-group">
-                               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-image-id = "'.$d->file.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'" data-check-id="'.$d->status.'" data-edit-id="'.$d->id.'" data-edit-order="'.$d->ordering.'" data-edit-name="'.$d->nama.'"><i class="fa fa-pencil"></i></button>
+                               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-image-id = "'.$d->file.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'" data-check-id="'.$d->status.'" data-edit-id="'.$d->id.'" data-edit-order="'.$d->ordering.'" data-edit-type="'.$d->type.'" data-edit-name="'.$d->nama.'"><i class="fa fa-pencil"></i></button>
                                <a onclick="return confirm(\'Are You Sure ?\')"  href="'.url("/").'/master-banner/destroy/'.$d->id.'" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a></div>';
 
         } else if($d->status == 2){
           // untuk yang pernah aktif, tapi di nonaktifkan
           $nestedData['status'] = 'Tidak Aktif';
           $nestedData['aksi'] = '<div class="btn-group">
-                               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-image-id = "'.$d->file.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'" data-check-id="'.$d->status.'" data-edit-id="'.$d->id.'" data-edit-order="'.$d->ordering.'" data-edit-name="'.$d->nama.'"><i class="fa fa-pencil"></i></button>
+                               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-image-id = "'.$d->file.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'" data-check-id="'.$d->status.'" data-edit-id="'.$d->id.'" data-edit-order="'.$d->ordering.'" data-edit-type="'.$d->type.'" data-edit-name="'.$d->nama.'"><i class="fa fa-pencil"></i></button>
                                <a onclick="return confirm(\'Are You Sure ?\')"  href="'.url("/").'/master-banner/destroy/'.$d->id.'" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a></div>';
 
         }
         else if($d->status == 0 ) {
           $nestedData['status'] = 'Tidak Aktif';
           $nestedData['aksi'] = '<div class="btn-group">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit" data-edit-id="'.$d->id.'" data-edit-name="'.$d->nama.'" data-edit-order="'.$d->ordering.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit" data-edit-id="'.$d->id.'" data-edit-name="'.$d->nama.'" data-edit-order="'.$d->ordering.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'" data-edit-type="'.$d->type.'"><i class="fa fa-pencil"></i></button>
                                 <a onclick="return confirm(\'Are You Sure ?\')"  href="'.url("/").'/master-banner/destroy/'.$d->id.'" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a></div>';
         }else{
           $nestedData['status'] = 'Tidak Aktif';
           $nestedData['aksi'] = '<div class="btn-group">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-edit-id="'.$d->id.'" data-edit-name="'.$d->nama.'" data-edit-order="'.$d->ordering.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit2" data-edit-id="'.$d->id.'" data-edit-name="'.$d->nama.'" data-edit-order="'.$d->ordering.'" data-endat-id="'.date('d-m-Y',strtotime($d->end_at)).'" data-edit-type="'.$d->type.'"><i class="fa fa-pencil"></i></button>
                                 <a onclick="return confirm(\'Are You Sure ?\')"  href="'.url("/").'/master-banner/destroy/'.$d->id.'" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a></div>';
         }
         
@@ -428,6 +434,7 @@ class MasterBannerController extends Controller
     // dd(isset($request->id));
     // dd($request);
     $exceptcompanies = [];
+    $incompanies = [];
     $banner = Banner::find($request->idbanner);
     // untuk yang nama companynya udah ada di sebelumnya start
     if (isset($banner->id_csc_product_level2)) {
@@ -470,11 +477,28 @@ class MasterBannerController extends Controller
     foreach($another as $comp){
       array_push($exceptcompanies,$comp->id_eks);
     }
+
+    $companyhasproduct = DB::table('csc_product_single')
+                        ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                        ->where('csc_product_single.status',2)
+                        ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                        ->groupBy('itdp_profil_eks.id', 'itdp_profil_eks.company')
+                        ->orderBy('itdp_profil_eks.id', 'ASC')
+                        ->wherenotin( 'itdp_profil_eks.id',$exceptcompanies)
+                        ->get();
+    foreach($companyhasproduct as $comp){
+      array_push($incompanies,$comp->id);
+    }
+            
+
     // dd($exceptcompanies);
     // dd($request);
       $companyall = DB::table('itdp_profil_eks')
+          ->leftjoin('itdp_company_users','itdp_company_users.id_profil','itdp_profil_eks.id')
           ->select('itdp_profil_eks.id','itdp_profil_eks.company')
-          ->wherenotin( 'itdp_profil_eks.id',$exceptcompanies);
+          ->where('itdp_company_users.status', 1)
+          ->wherein('itdp_profil_eks.id',$incompanies);
+          // ->wherenotin( 'itdp_profil_eks.id',$exceptcompanies);
 
       if (isset($request->search)) {
           $search = $request->search;

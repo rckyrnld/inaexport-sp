@@ -151,6 +151,7 @@
       	<input type="hidden" name="id" id="id">
         <input type="hidden" name="semua" id="semua">
       	<input type="hidden" name="nocomlain" id="nocomlain">
+      	<input type="hidden" name="type" id="type">
         <div class="form-group">
         	<label class="control-label col-md-3">Status</label>
         	<div class="col-md-9">
@@ -210,12 +211,12 @@
 
             </tbody> -->
           </table>
-          <div class="row">
+          <div class="row judulcompany">
               <div class="col-md-11">
                   Company List from selected Category
               </div>
           </div>
-          <div class="row" align="right">
+          <div class="row judulcompany" align="right">
               <div class="col-md-6">
               </div>	
               <div class="col-md-6" style="color: black !important;">
@@ -268,6 +269,7 @@
       	<input type="hidden" name="id2" id="id2">
       	<input type="hidden" name="semua2" id="semua2">
       	<input type="hidden" name="tidaksemua2" id="tidaksemua2">
+      	<input type="hidden" name="type2" id="type2">
         <div class="form-group">
         	<label class="control-label col-md-3">Status</label>
         	<div class="col-md-9">
@@ -323,12 +325,12 @@
         			</tr>
             </thead>
           </table>
-          <div class="row">
+          <div class="row judulcompany2">
               <div class="col-md-11">
                   Company List from selected Category
               </div>
           </div>
-          <div class="row" align="right">
+          <div class="row judulcompany2" align="right">
               <div class="col-md-6">
               </div>	
               <div class="col-md-6" style="color: black !important;">
@@ -574,32 +576,41 @@
 		$('#check').change(function() {
 	      if($(this).is(':checked')) {
 	          $('#status').val(1);
-	          $('#company').DataTable().clear().draw();
-				$.ajax({
-					method: "POST",
-					url: "{{ route('master.banner.getCompany')}}",
-					data:{_token: '{{csrf_token()}}',id:idbanner, tipe : 'kategori'}
-				})
-				.done(function(data){
-					$.each(data, function(i, val){
-            // get company
-						$('#company').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div class="checkbox"><input class="masuk" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp" ></div>']).draw();
-					
-          });
-				});
-        $.ajax({
-					method: "POST",
-					url: "{{ route('master.banner.getCompany') }}",
-					data:{_token: '{{csrf_token()}}',id:idbanner, tipe : 'lain'}
-				})
-				.done(function(data){
-					$.each(data, function(i, val){
-            // get company
-						$('#companylain').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div><button type="button" class="btn btn-danger"  onclick="destroycompanylain('+val.id+')">Delete</button></div>']).draw();
-					
-          });
-				});
-        $('#pilihcompany').show();
+            var type = $('#type').val();
+            if(type == 2){
+              $('#company').hide();
+              $('#company_wrapper').hide();
+              $('.judulcompany').hide();
+            }else{
+              $('#company').DataTable().clear().draw();
+              $.ajax({
+                method: "POST",
+                url: "{{ route('master.banner.getCompany')}}",
+                data:{_token: '{{csrf_token()}}',id:idbanner, tipe : 'kategori'}
+              })
+              .done(function(data){
+                $.each(data, function(i, val){
+                  // get company
+                  $('#company').DataTable().row.add([val.no,'<a target="_blank" href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div class="checkbox"><input class="masuk" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp" ></div>']).draw();
+                
+                });
+              });
+              
+            }
+	          $('#companylain').DataTable().clear().draw();
+            $.ajax({
+              method: "POST",
+              url: "{{ route('master.banner.getCompany') }}",
+              data:{_token: '{{csrf_token()}}',id:idbanner, tipe : 'lain'}
+            })
+            .done(function(data){
+              $.each(data, function(i, val){
+                // get company
+                $('#companylain').DataTable().row.add([val.no,'<a target="_blank" href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div><button type="button" class="btn btn-danger"  onclick="destroycompanylain('+val.id+')">Delete</button></div>']).draw();
+              
+              });
+            });
+            $('#pilihcompany').show();
 	      } else {
 	        $('#status').val(2);
 	        $('#pilihcompany').hide();
@@ -608,10 +619,14 @@
     // untuk di modal edit yang geser aktif dan tidak aktif
     $('#check2').change(function() {
 	      if($(this).is(':checked')) {
-          check2active();
-          
+          var type = $('#type2').val();
+          if(type == 2){
+              check2active('takadacat');
+          }else{
+              check2active('adacat');
+          }
 	      } else {
-	        $('#status2').val(2);total
+	        $('#status2').val(2);
 	        $('#pilihcompany2').hide();
 	      }
 	  });
@@ -664,11 +679,13 @@
             $('#id').val('');
             $('#nama').val('');
             $('#nocomlain').val('');
+            $('#type').val('');
             $('#company').DataTable().clear().draw();
             $('#companylain').DataTable().clear().draw();
             idbanner = $(e.relatedTarget).data('edit-id');
             namebanner = $(e.relatedTarget).data('edit-name');
             order = $(e.relatedTarget).data('edit-order');
+            type = $(e.relatedTarget).data('edit-type');
             var totalcompanylain = $(e.relatedTarget).data('edit-comlain');
             if (totalcompanylain == null){
               totalcomlain1 = 1;
@@ -680,6 +697,7 @@
             $('#id').val(idbanner);
             $('#nama').val(namebanner);
             $('#order').val(order);
+            $('#type').val(type);
 
         });
 
@@ -688,15 +706,21 @@
             idbanner2 = $(e.relatedTarget).data('edit-id');
             namebanner2 = $(e.relatedTarget).data('edit-name');
             order2 = $(e.relatedTarget).data('edit-order');
+            type2 = $(e.relatedTarget).data('edit-type');
             $('#id2').val(idbanner2);
             $('#nama2').val(namebanner2);
             $('#order2').val(order2);
+            $('#type2').val(type2);
             checkbanner2 = $(e.relatedTarget).data('check-id');
             endatbanner2 = $(e.relatedTarget).data('endat-id');
             filebanner2 = $(e.relatedTarget).data('image-id');
             if(checkbanner2 == 1){
               $('#check2').prop("checked", true);
-              check2active();
+              if(type2 == 2){
+                  check2active('takadacat');
+              }else{
+                  check2active('adacat');
+              }
             }else{
               $('#check2').prop("checked", false);
             }
@@ -878,6 +902,7 @@
         var nama = $('#nama').val();
         var order = $('#order').val();
         var status = $('#status').val();
+        var type = $('#type').val();
 
         // $.each($("input[name='comp']:checked"), function(){
         //           var val = $(this).val();
@@ -888,51 +913,96 @@
         //           }
         // });
         // (s_date != null || s_date != '' || !isEmptyM(s_date) ||
-        if(s_date && (!isEmptyM(dataeksportir) || semua == 1) && nama != null ) {
+        if(type == 2){
+          if(s_date && nama != null && order != null){
+            var inputdate = new Date(s_date);
+              if(inputdate.setHours(0,0,0,0) >= todaysDate.setHours(0,0,0,0)){
+                console.log('lebih dari today');
+                var form_data = new FormData();
+                form_data.append('id',id);
+                form_data.append('dataeksportir',dataeksportir);
+                form_data.append('dataeksportirlain',dataeksportirlain);
+                form_data.append('s_date',s_date);
+                form_data.append('nama',nama);
+                form_data.append('semua',semua);
+                form_data.append('order',order);
+                form_data.append('status',status);
+                $.ajaxSetup({
+                    headers:
+                    {
+                        'X-CSRF-Token': '{{csrf_token()}}'
+                    }
+                });
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('master.banner.store', 'update') }}",
+                    data: form_data,
+                    contentType: false,       // The content type used when sending data to the server.
+                    cache: false,             // To unable request pages to be cached
+                    processData: false,
+                })
+                .done(function(e){
+                  if(e == 'sukses'){
+                      window.location = "{{ route('master.banner.message') }}";
+                  }else{
+                      window.location = "{{ route('master.banner.message') }}";
+                  }
+                });
+              }else{
+                alert("make sure to choose today's date or after today");
+                // console.log('before today');
+              }
+          }else{
+              alert('make sure you already fill all input in the form correctly');
+          }
+        }else{
+          if(s_date && (!isEmptyM(dataeksportir) || semua == 1) && nama != null && order != null) {
         // if ((!isEmptyM(dataeksportir) || semua == 1) && !s_date) {
           // Create date from input value
-          var inputdate = new Date(s_date);
-          if(inputdate.setHours(0,0,0,0) >= todaysDate.setHours(0,0,0,0)){
-            console.log('lebih dari today');
-            var form_data = new FormData();
-            form_data.append('id',id);
-            form_data.append('dataeksportir',dataeksportir);
-            form_data.append('dataeksportirlain',dataeksportirlain);
-            form_data.append('s_date',s_date);
-            form_data.append('nama',nama);
-            form_data.append('semua',semua);
-            form_data.append('order',order);
-            form_data.append('status',status);
-            $.ajaxSetup({
-                headers:
-                {
-                    'X-CSRF-Token': '{{csrf_token()}}'
-                }
-            });
-            $.ajax({
-                method: "POST",
-                url: "{{ route('master.banner.store', 'update') }}",
-                data: form_data,
-                contentType: false,       // The content type used when sending data to the server.
-                cache: false,             // To unable request pages to be cached
-                processData: false,
-            })
-            .done(function(e){
-              if(e == 'sukses'){
-                  window.location = "{{ route('master.banner.message') }}";
+              var inputdate = new Date(s_date);
+              if(inputdate.setHours(0,0,0,0) >= todaysDate.setHours(0,0,0,0)){
+                console.log('lebih dari today');
+                var form_data = new FormData();
+                form_data.append('id',id);
+                form_data.append('dataeksportir',dataeksportir);
+                form_data.append('dataeksportirlain',dataeksportirlain);
+                form_data.append('s_date',s_date);
+                form_data.append('nama',nama);
+                form_data.append('semua',semua);
+                form_data.append('order',order);
+                form_data.append('status',status);
+                $.ajaxSetup({
+                    headers:
+                    {
+                        'X-CSRF-Token': '{{csrf_token()}}'
+                    }
+                });
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('master.banner.store', 'update') }}",
+                    data: form_data,
+                    contentType: false,       // The content type used when sending data to the server.
+                    cache: false,             // To unable request pages to be cached
+                    processData: false,
+                })
+                .done(function(e){
+                  if(e == 'sukses'){
+                      window.location = "{{ route('master.banner.message') }}";
+                  }else{
+                      window.location = "{{ route('master.banner.message') }}";
+                  }
+                });
               }else{
-                  window.location = "{{ route('master.banner.message') }}";
+                alert("make sure to choose today's date or after today");
+                // console.log('before today');
               }
-            });
-          }else{
-            alert("make sure to choose today's date or after today");
-            // console.log('before today');
-          }
             
-        }else{
-          // console.log('masuk gak');
-            alert('make sure you already fill all input in the form correctly');
+          }else{
+            // console.log('masuk gak');
+              alert('make sure you already fill all input in the form correctly');
+          }
         }
+        
     }
 
     function refreshtablecompanylain(){
@@ -945,7 +1015,7 @@
 				.done(function(data){
 					$.each(data, function(i, val){
             // get company
-						$('#companylain').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div><button type="button" class="btn btn-danger"  onclick="destroycompanylain('+val.id+')">Delete</button></div>']).draw();
+						$('#companylain').DataTable().row.add([val.no,'<a target="_blank" href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div><button type="button" class="btn btn-danger"  onclick="destroycompanylain('+val.id+')">Delete</button></div>']).draw();
 					
           });
 				});
@@ -961,7 +1031,7 @@
 				.done(function(data){
 					$.each(data, function(i, val){
             // get company
-						$('#companylain2').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div><button type="button" class="btn btn-danger"  onclick="destroycompanylain2('+val.id+')">Delete</button></div>']).draw();
+						$('#companylain2').DataTable().row.add([val.no,'<a target="_blank" href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div><button type="button" class="btn btn-danger"  onclick="destroycompanylain2('+val.id+')">Delete</button></div>']).draw();
 					
           });
 				});
@@ -986,30 +1056,37 @@
     
 
     // untuk di modal edit yang geser aktif dan tidak aktif
-    function check2active(){
+    function check2active(param){
         $('#status2').val(1);
-              $('#company2').DataTable().clear().draw();
-              $.ajax({
-                method: "POST",
-                url: "{{ route('master.banner.getCompany2') }}",
-                data:{_token: '{{csrf_token()}}',id:idbanner2}
-              })
-              .done(function(data){
-                $.each(data, function(i, val){
-                  if(val.status == 1){
-                    // untuk data company yang sudah dipilih ( jadi di check)
-                    // $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" checked disabled name="comp2done" ></div>']).draw();
-                    $('#company2').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" checked name="comp2done" ></div>']).draw();
-                    dataeksportir2.push(val.id);
-                  } else{
-                    // untuk data company yang belum dipilih ( jadi di uncheck)
-                    // $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp2" ></div>']).draw();
-                    $('#company2').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp2done" ></div>']).draw();
-                  
-                  }
-                  });
-                
-              });
+              if(param == 'adacat'){
+                $('#company2').DataTable().clear().draw();
+                $.ajax({
+                  method: "POST",
+                  url: "{{ route('master.banner.getCompany2') }}",
+                  data:{_token: '{{csrf_token()}}',id:idbanner2}
+                })
+                .done(function(data){
+                  $.each(data, function(i, val){
+                    if(val.status == 1){
+                      // untuk data company yang sudah dipilih ( jadi di check)
+                      // $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" checked disabled name="comp2done" ></div>']).draw();
+                      $('#company2').DataTable().row.add([val.no,'<a target="_blank" href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" checked name="comp2done" ></div>']).draw();
+                      dataeksportir2.push(val.id);
+                    } else{
+                      // untuk data company yang belum dipilih ( jadi di uncheck)
+                      // $('#company2').DataTable().row.add([val.no,val.company,'<div class="checkbox"><input class="masuk2" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp2" ></div>']).draw();
+                      $('#company2').DataTable().row.add([val.no,'<a target="_blank" href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div class="checkbox"><input class="masuk2done" type="checkbox" value="'+val.id+'" data-id="'+val.id+'" name="comp2done" ></div>']).draw();
+                    
+                    }
+                    });
+                });
+              }
+              else{
+                $('#company2').hide();
+                $('#company2_wrapper').hide();
+                $('.judulcompany2').hide();
+              }       
+              $('#companylain2').DataTable().clear().draw();      
               $.ajax({
                 method: "POST",
                 url: "{{ route('master.banner.getCompany') }}",
@@ -1018,7 +1095,7 @@
               .done(function(data){
                 $.each(data, function(i, val){
                   // get company
-                  $('#companylain2').DataTable().row.add([val.no,'<a href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div><button type="button" class="btn btn-danger"  onclick="destroycompanylain2('+val.id+')">Delete</button></div>']).draw();
+                  $('#companylain2').DataTable().row.add([val.no,'<a target="_blank" href="{{url("eksportir/listeksportir")}}/'+val.id+'">'+val.company+'</a>','<div><button type="button" class="btn btn-danger"  onclick="destroycompanylain2('+val.id+')">Delete</button></div>']).draw();
                 
                 });
               });
@@ -1089,7 +1166,6 @@
 
     function destroycompanylain(id){
       var jawab = confirm('Are You Sure ?');
-      console.log(jawab);
       if(jawab == true){
         $.ajax({
                 type: 'POST',
@@ -1109,7 +1185,6 @@
 
     function destroycompanylain2(id){
       var jawab = confirm('Are You Sure ?');
-      console.log(jawab);
       if(jawab == true){
         $.ajax({
                 type: 'POST',

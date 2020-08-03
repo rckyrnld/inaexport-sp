@@ -778,8 +778,6 @@ class FrontController extends Controller
             array_push($arraycompany,$company->id_eks);
         }
         
-        
-
         //List Category Product
         $categoryutama = DB::table('csc_product')
                         ->join('csc_product_single','csc_product.id','csc_product_single.id_csc_product')
@@ -792,77 +790,101 @@ class FrontController extends Controller
                         ->orderBy('nama_kategori_en', 'ASC')
                         ->limit(10)
                         ->get();
-
-
-        $catActive = '';
-        if($bannerdata->id_csc_product_level1 == 0 && $bannerdata->id_csc_product_level2 == 0){
-            $catActive .= '<li><a>'.getCategoryName($bannerdata->id_csc_product, $lct).' </a></li>';
-            $colnya = "id_csc_product";
-            $yangdicari = $bannerdata->id_csc_product;
-            $get_id_cat = $bannerdata->id_csc_product;
-        }else if($bannerdata->id_csc_product_level1 != 0 && $bannerdata->id_csc_product_level2 == 0){
-            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product, $lct).'</a></li>';
-            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product_level1, $lct).'</a></li>';
-            $colnya = "id_csc_product_level1";
-            $yangdicari = $bannerdata->id_csc_product_level1;
-            $get_id_cat = $bannerdata->id_csc_product_level1.'|'.$bannerdata->id_csc_product;
-        }else if($bannerdata->id_csc_product_level1 != 0 && $bannerdata->id_csc_product_level2 != 0){
-            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product, $lct).'</a></li>';
-            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product_level1, $lct).'</a></li>';
-            $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product_level2, $lct).'</a></li>';
-            $colnya = "id_csc_product_level2";
-            $yangdicari = $bannerdata->id_csc_product_level2;
-            $get_id_cat = $bannerdata->id_csc_product_level2.'|'.$bannerdata->id_csc_product_level1.'|'.$bannerdata->id_csc_product;
-        }
         
-        $cek_cat = DB::table('csc_product')->where('id', $yangdicari)->first();
-        $tampung_cat = [$cek_cat->id];
-        $query_manufacture = DB::table('itdp_company_users as a')->selectRaw('a.id, b.company, count(c.*) as jml_produk')
-            ->join('itdp_profil_eks as b', 'a.id_profil', 'b.id')
-            ->join('csc_product_single as c', 'a.id', 'c.id_itdp_company_user')
-            ->where('a.status', 1)
-            ->where('c.status', 2)
-            ->whereIn('b.id', $arraycompany)
-            ->orderby('jml_produk', 'desc')
-            ->groupby('a.id')->groupby('b.company')
-            ->limit(10);
-        if(count($tampung_cat) > 0){
-            $query_manufacture->where(function($query) use ($tampung_cat){
-                $query->whereIn('c.id_csc_product', $tampung_cat);
-                $query->orWhereIn('c.id_csc_product_level1', $tampung_cat);
-                $query->orWhereIn('c.id_csc_product_level2', $tampung_cat);
-            });
-        }
-        $manufacturer = $query_manufacture->get();
+        if($bannerdata->type != 2){
+            $catActive = '';
+            if($bannerdata->id_csc_product_level1 == 0 && $bannerdata->id_csc_product_level2 == 0){
+                $catActive .= '<li><a>'.getCategoryName($bannerdata->id_csc_product, $lct).' </a></li>';
+                $colnya = "id_csc_product";
+                $yangdicari = $bannerdata->id_csc_product;
+                $get_id_cat = $bannerdata->id_csc_product;
+            }else if($bannerdata->id_csc_product_level1 != 0 && $bannerdata->id_csc_product_level2 == 0){
+                $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product, $lct).'</a></li>';
+                $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product_level1, $lct).'</a></li>';
+                $colnya = "id_csc_product_level1";
+                $yangdicari = $bannerdata->id_csc_product_level1;
+                $get_id_cat = $bannerdata->id_csc_product_level1.'|'.$bannerdata->id_csc_product;
+            }else if($bannerdata->id_csc_product_level1 != 0 && $bannerdata->id_csc_product_level2 != 0){
+                $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product, $lct).'</a></li>';
+                $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product_level1, $lct).'</a></li>';
+                $catActive .= '<li><a style="color:#999">'.getCategoryName($bannerdata->id_csc_product_level2, $lct).'</a></li>';
+                $colnya = "id_csc_product_level2";
+                $yangdicari = $bannerdata->id_csc_product_level2;
+                $get_id_cat = $bannerdata->id_csc_product_level2.'|'.$bannerdata->id_csc_product_level1.'|'.$bannerdata->id_csc_product;
+            }
 
-        $dataproduct = [];
-        $productnya1 = DB::table('csc_product_single')
+            $cek_cat = DB::table('csc_product')->where('id', $yangdicari)->first();
+            $tampung_cat = [$cek_cat->id];
+            $query_manufacture = DB::table('itdp_company_users as a')->selectRaw('a.id, b.company, count(c.*) as jml_produk')
+                ->join('itdp_profil_eks as b', 'a.id_profil', 'b.id')
+                ->join('csc_product_single as c', 'a.id', 'c.id_itdp_company_user')
+                ->where('a.status', 1)
+                ->where('c.status', 2)
+                ->whereIn('b.id', $arraycompany)
+                ->orderby('jml_produk', 'desc')
+                ->groupby('a.id')->groupby('b.company')
+                ->limit(10);
+            if(count($tampung_cat) > 0){
+                $query_manufacture->where(function($query) use ($tampung_cat){
+                    $query->whereIn('c.id_csc_product', $tampung_cat);
+                    $query->orWhereIn('c.id_csc_product_level1', $tampung_cat);
+                    $query->orWhereIn('c.id_csc_product_level2', $tampung_cat);
+                });
+            }
+            $manufacturer = $query_manufacture->get();
+            $dataproduct = [];
+            $productnya1 = DB::table('csc_product_single')
+                ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+                ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+                ->where('itdp_company_users.status', '1')
+                ->where('csc_product_single.status', 2)
+                ->whereIn('csc_product_single.id_itdp_profil_eks', $arraycompany)
+                ->where('csc_product_single.'.$colnya, $yangdicari);
+                // dd($productnya1);
+                // ->orderBy('csc_product_single.prodname_en', 'ASC');
+                
+                // dd($productnya1);
+
+            $arraycompany2 = [];
+            $bannerdetail2 = Banner_Detail::where('id_banner', $id)->where('jenis_detail',2)->select('id_eks')->get();
+            foreach($bannerdetail2 as $company) {
+                array_push($arraycompany2,$company->id_eks);
+            }
+
+            $productnya2 = DB::table('csc_product_single')
             ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
             ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
             ->where('itdp_company_users.status', '1')
             ->where('csc_product_single.status', 2)
-            ->whereIn('csc_product_single.id_itdp_profil_eks', $arraycompany)
-            ->where('csc_product_single.'.$colnya, $yangdicari);
-            // dd($productnya1);
-            // ->orderBy('csc_product_single.prodname_en', 'ASC');
-            
-            // dd($productnya1);
+            ->whereIn('csc_product_single.id_itdp_profil_eks', $arraycompany2)
+            ->union($productnya1);
+        }else{
+             $query_manufacture = DB::table('itdp_company_users as a')->selectRaw('a.id, b.company, count(c.*) as jml_produk')
+                ->join('itdp_profil_eks as b', 'a.id_profil', 'b.id')
+                ->join('csc_product_single as c', 'a.id', 'c.id_itdp_company_user')
+                ->where('a.status', 1)
+                ->where('c.status', 2)
+                ->whereIn('b.id', $arraycompany)
+                ->orderby('jml_produk', 'desc')
+                ->groupby('a.id')->groupby('b.company')
+                ->limit(10);
+            $manufacturer = $query_manufacture->get();
+            $catActive = '';
 
-        $arraycompany2 = [];
-        $bannerdetail2 = Banner_Detail::where('id_banner', $id)->where('jenis_detail',2)->select('id_eks')->get();
-        foreach($bannerdetail2 as $company) {
-            array_push($arraycompany2,$company->id_eks);
+            $arraycompany2 = [];
+            $bannerdetail2 = Banner_Detail::where('id_banner', $id)->where('jenis_detail',2)->select('id_eks')->get();
+            foreach($bannerdetail2 as $company) {
+                array_push($arraycompany2,$company->id_eks);
+            }
+
+            $productnya2 = DB::table('csc_product_single')
+            ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->where('itdp_company_users.status', '1')
+            ->where('csc_product_single.status', 2)
+            ->whereIn('csc_product_single.id_itdp_profil_eks', $arraycompany2);
         }
-
-        $productnya2 = DB::table('csc_product_single')
-        ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-        ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
-        ->where('itdp_company_users.status', '1')
-        ->where('csc_product_single.status', 2)
-        ->whereIn('csc_product_single.id_itdp_profil_eks', $arraycompany2)
-        ->union($productnya1);
-        // dd($productnya2);
-        // dd($productnya2);
+        
         // ->orderBy('csc_product_single.prodname_en', 'ASC');
         
        
