@@ -339,6 +339,8 @@ class MasterBannerController extends Controller
       if (isset($banner->id_csc_product_level2)) {
         $company = DB::table('csc_product_single')  
                     ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                    ->leftjoin('itdp_company_users','itdp_company_users.id_profil','itdp_profil_eks.id')
+                    ->where('itdp_company_users.status',1)
                     ->where('csc_product_single.status',2)
                     ->where('csc_product_single.id_csc_product_level2', $banner->id_csc_product_level2)
                     ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
@@ -348,6 +350,8 @@ class MasterBannerController extends Controller
       }else if(isset($banner->id_csc_product_level1)){
         $company = DB::table('csc_product_single')
                     ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                    ->leftjoin('itdp_company_users','itdp_company_users.id_profil','itdp_profil_eks.id')
+                    ->where('itdp_company_users.status',1)
                     ->where('csc_product_single.status',2)
                     ->where('csc_product_single.id_csc_product_level1', $banner->id_csc_product_level1)
                     ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
@@ -357,6 +361,8 @@ class MasterBannerController extends Controller
       }else{
         $company = DB::table('csc_product_single')
                     ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                    ->leftjoin('itdp_company_users','itdp_company_users.id_profil','itdp_profil_eks.id')
+                    ->where('itdp_company_users.status',1)
                     ->where('csc_product_single.status',2)
                     ->where('csc_product_single.id_csc_product', $banner->id_csc_product)
                     ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
@@ -389,6 +395,8 @@ class MasterBannerController extends Controller
     if (isset($banner->id_csc_product_level2)) {
       $company = DB::table('csc_product_single')
                   ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                  ->leftjoin('itdp_company_users','itdp_company_users.id_profil','itdp_profil_eks.id')
+                  ->where('itdp_company_users.status',1)
                   ->where('csc_product_single.id_csc_product_level2', $banner->id_csc_product_level2)
                   ->where('csc_product_single.status',2)
                   ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
@@ -398,6 +406,8 @@ class MasterBannerController extends Controller
     }else if(isset($banner->id_csc_product_level1)){
       $company = DB::table('csc_product_single')
                   ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                  ->leftjoin('itdp_company_users','itdp_company_users.id_profil','itdp_profil_eks.id')
+                  ->where('itdp_company_users.status',1)
                   ->where('csc_product_single.id_csc_product_level1', $banner->id_csc_product_level1)
                   ->where('csc_product_single.status',2)
                   ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')
@@ -407,6 +417,8 @@ class MasterBannerController extends Controller
     }else{
       $company = DB::table('csc_product_single')
                   ->join('itdp_profil_eks', 'csc_product_single.id_itdp_profil_eks','itdp_profil_eks.id')
+                  ->leftjoin('itdp_company_users','itdp_company_users.id_profil','itdp_profil_eks.id')
+                  ->where('itdp_company_users.status',1)
                   ->where('csc_product_single.id_csc_product', $banner->id_csc_product)
                   ->where('csc_product_single.status',2)
                   ->select('itdp_profil_eks.id', 'itdp_profil_eks.company')

@@ -157,7 +157,7 @@
                 <table id="table-curris-front" class="table  table-bordered table-striped" data-plugin="dataTable" style="min-width: 100%;">
                   <thead class="text-white" style="background-color: #1089ff;">
                       <tr>
-                          <th width="10%">@lang("frontend.currentissue.no")</th>
+                          <th width="5%">@lang("frontend.currentissue.no")</th>
                           <th width="35%">@lang("frontend.currentissue.title")</th>
                           <th width="20%">@lang("frontend.currentissue.country")</th>
                           <th width="20%">@lang("frontend.currentissue.publishdate")</th>
