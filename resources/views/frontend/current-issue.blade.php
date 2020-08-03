@@ -180,6 +180,8 @@
       window.location.href = "{{url('/front_end/curris/detail')}}/"+ id;
     }else{
       alert("{{$message}}");
+      window.location.href = "{{url('/login')}}";
+        
     }
   }
 
@@ -204,8 +206,10 @@
       alert("{{$message}}");
       if(login == 'non user'){
         window.location.href = "{{url('/login')}}";
+        // window.location.href = "{{url('/login')}}";
       }
     }
+        
   }
 </script>
 

@@ -438,10 +438,14 @@
 								<br>
 							</div>
                             <div class="col-md-4 col-sm-12 col-12 hoveraja">
-                                <a onclick="checkfirst()"><img src="{{asset('front/assets/icon/03 current issue-04.png')}}" alt="" class="image img-menu"></a>
+                                <!-- <a onclick="checkfirst()"> -->
+                                <a href="{{url('/front_end/curris')}}">
+                                <img src="{{asset('front/assets/icon/03 current issue-04.png')}}" alt="" class="image img-menu">
+                                </a>
 								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b></b></font></p></center>
-                                <div class="text"><button onclick="checkfirst()" class="btn btn-primary" style="width:100px!important;">View</button></div>
+                                <center><p><font color="black"><b></b></font></p></center>
+                                <!-- <button onclick="checkfirst()"  class="btn btn-primary" style="width:100px!important;">View</button> -->
+                                <div class="text"><a href="{{url('/front_end/curris')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
                                 <a href="{{url('/front_end/curris')}}" id="buttoncurris" style="display: none;"></a>
 								</div>
 								<br>

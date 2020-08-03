@@ -712,6 +712,14 @@ if (! function_exists('getCountData')) {
           ->where('itdp_company_users.id_role', 2)
           ->count();
       }
+      else if($tbl == 'itdp_admin_users'){
+        $data = DB::table($tbl)
+                ->join('itdp_admin_ln','itdp_admin_ln.id','itdp_admin_users.id_admin_ln')
+                ->where('itdp_admin_users.id_group', 4)
+                ->whereNotNull('itdp_admin_users.id_admin_ln')
+                ->where('itdp_admin_ln.status', 1)
+                ->count();
+      }
 
       return $data;
     }
