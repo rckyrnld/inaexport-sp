@@ -47,16 +47,16 @@
     $loc = app()->getLocale(); 
     if(empty($loc)){ $loc = 'en'; } 
 ?>
-    <section class="call_to_action">
+    <section class="call_to_action" style="padding-top:40px;padding-bottom:40px;">
         <div class="container">
             <div class="row counters">
 
-                <div class="col-lg-4 col-sm-12 col-12">
+                <div class="col-lg-3 col-sm-12 col-12">
                     <ul class="list-group list-group-horizontal-sm">
                         <li>
-                            <img src="{{asset('front/assets/img/exporters.png')}}" alt="" style="width: 20%;margin-left: 20%; float:left">
+                            <img src="{{asset('front/assets/img/exporters.png')}}" alt="" style="width: 20%;margin-left: 10%; float:left">
                             <span class="counters_number" style="margin-right: 20%; text-align:left">{{getCountData('itdp_company_users')}}</span><br>
-                            <span class="counters_text" style="margin-left: 20px; font-size: 18px; text-align: left;">
+                            <span class="counters_text" style="margin-left: 20px; text-align: left;">
                             @if($loc == 'ch')
                             出口商
                             @elseif($loc == 'in')
@@ -88,12 +88,12 @@
                     <br>
                 </div>
 
-                <div class="col-lg-4 col-sm-12 col-12">
+                <div class="col-lg-3 col-sm-12 col-12">
                     <ul class="list-group list-group-horizontal-sm ">
                         <li>
-                            <img src="{{asset('front/assets/img/products.png')}}" alt="" style="width: 20%; margin-left: 20%; float: left;">
+                            <img src="{{asset('front/assets/img/products.png')}}" alt="" style="width:21%; margin-left: 10%; float: left;">
                             <span class="counters_number" style="margin-right:20%; text-align: left">{{getCountData('csc_product_single')}}</span><br>
-                            <span class="counters_text" style="margin-left:20px; font-size: 18px;text-align: left">
+                            <span class="counters_text" style="margin-left:20px; text-align: left">
                             @lang('frontend.home.product')
                             </span>
                         </li>
@@ -109,18 +109,55 @@
                     </ul>-->
                 </div>
 
-                <div class="col-lg-4 col-sm-12 col-12 ">
+                <div class="col-lg-3 col-sm-12 col-12 ">
                     <ul class="list-group list-group-horizontal-sm">
                         <li>
-                            <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 20%;margin-left: 20%; float:left">
+                            <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 20%;margin-left: 10%; float:left">
                             <span class="counters_number" style="margin-right: 20%;text-align:left">{{getCountData('event_detail')}}</span><br>
-                            <span class="counters_text" style="margin-left: 20px; font-size: 18px; text-align: left;">
+                            <span class="counters_text" style="margin-left: 20px;text-align: left;">
                             @if($loc == 'ch')
-                            事件
+                            国际活动
                             @elseif($loc == 'in')
-                            Acara
+                            Acara Internasional
                             @else
-                            Events
+                            International Events
+                            @endif
+                            </span>
+                        </li>
+                    </ul>   
+                    <!--<ul class="list-group list-group-horizontal-sm">
+                        <li>
+                            <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 20%;margin-left: 20%;">
+                            <span class="counters_number" style="margin-right: 20%;float:right">{{getCountData('event_detail')}}</span>
+                        </li>
+                        <li >
+                            <p class="counters_text" style="font-size: 18px;text-align: center;">
+                                @if($loc == 'ch')
+                                事件
+                                @elseif($loc == 'in')
+                                Acara
+                                @else
+                                Events
+                                @endif
+                            </p>
+                        </li>
+                    </ul>-->
+                    <br>
+                </div>
+
+                <div class="col-lg-3 col-sm-12 col-12 ">
+                    <ul class="list-group list-group-horizontal-sm">
+                        <li>
+                            <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 20%;margin-left: 10%; float:left">
+                            <span class="counters_number" style="margin-right: 20%;text-align:left">{{getCountData('itdp_admin_users')}}</span><br>
+                            <!-- <span class="counters_text" style="margin-right: 23%; font-size: 18px; float: right;"> -->
+                            <span class="counters_text" style="margin-left: 20px; text-align: left;">
+                            @if($loc == 'ch')
+                            海外贸易代表
+                            @elseif($loc == 'in')
+                            Perwakilan Dagang Luar Negeri
+                            @else
+                            Overseas Trade Representative 
                             @endif
                             </span>
                         </li>

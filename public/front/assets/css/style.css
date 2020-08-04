@@ -10165,14 +10165,14 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .counters_number {
   color: #fff;
-  font-size: 36px;
+  font-size: 20px;
   font-weight: bold;
   padding-left: 20px;
 }
 
 .counters_text {
   color: #fff;
-  font-size: 16px;
+  font-size: 13px;
   /*padding-left: 20px;*/
 }
 
