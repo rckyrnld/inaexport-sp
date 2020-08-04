@@ -148,7 +148,7 @@
                 <div class="col-lg-3 col-sm-12 col-12 ">
                     <ul class="list-group list-group-horizontal-sm">
                         <li>
-                            <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 20%;margin-left: 10%; float:left">
+                            <img src="{{asset('front/assets/img/representative.png')}}" alt="" style="width: 20%;margin-left: 10%; float:left">
                             <span class="counters_number" style="margin-right: 20%;text-align:left">{{getCountData('itdp_admin_users')}}</span><br>
                             <!-- <span class="counters_text" style="margin-right: 23%; font-size: 18px; float: right;"> -->
                             <span class="counters_text" style="margin-left: 20px; text-align: left;">
