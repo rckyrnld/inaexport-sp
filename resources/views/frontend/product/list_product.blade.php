@@ -85,7 +85,7 @@
     }
 </style>
 <!--breadcrumbs area start-->
-<div class="breadcrumbs_area" style="background-color:#ddeffd">
+<div class="breadcrumbs_area" style="background-color:#FFFFFF">
     @if(isset($page))   
         @if(isset($banner))
         <!-- <div class="container-fluid" style="padding-left: 0px;padding-right: 0px;"> -->

@@ -180,7 +180,7 @@
                             @elseif($loc == 'in')
                             Riset Pasar
                             @else
-                            Market INA
+                            Market Research
                             @endif
                             </span>
                         </li>
