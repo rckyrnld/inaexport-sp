@@ -359,20 +359,24 @@
     ?>   
     @if(isset($checkevent))
     <section class="special_event_area mb-50" style=" margin-bottom: 0px;">
-        <div class="container-fluid">
-        <p>
+    <div class="breadcrumbs_area">
+        <div class="container" style="padding-left:0px;padding-right:0px;">
+        <!-- <div class="container-fluid"> -->
+        <!-- <p> -->
             @if(count($checkevent)>0)
                 @foreach($checkevent as $event)
                     <a href="{{url('front_end/list_product/categoryeks/'.$event->id)}}" >
-                        <img class="img-fluid" style="width:100%; max-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$event->file}}" alt="">
+                        <img style="width:100%; max-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$event->file}}" alt="">
+                        <!-- <img class="img-fluid" style="width:100%; max-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$event->file}}" alt=""> -->
                     </a>
                 @endforeach
             @endif
-        </p>
+        <!-- </p> -->
 
                 {{--<img style="max-width: 100%;min-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$checkevent->file}}" data-show-id="{{$checkevent->id}}" data-toggle="modal"  data-target="#modal-special-event" alt="">--}}
 
         </div>
+    </div>
     </section>
     <!-- <div id="modal-special-event" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">

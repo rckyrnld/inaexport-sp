@@ -720,6 +720,10 @@ if (! function_exists('getCountData')) {
                 ->where('itdp_admin_ln.status', 1)
                 ->count();
       }
+      else if($tbl == 'csc_research_corner'){
+        $data = DB::table($tbl)
+               ->count();
+      }
 
       return $data;
     }

@@ -85,16 +85,23 @@
     }
 </style>
 <!--breadcrumbs area start-->
-<div class="breadcrumbs_area">
-            @if(isset($page))   
-                @if(isset($banner))
-                <div class="container-fluid" style="padding-left: 0px;padding-right: 0px;">
-                <p>
-                    <img class="img-fluid" style="width:100%; max-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$banner->file}}" alt="">
-                </p>
-                </div>
-                @endif
-            @endif
+<div class="breadcrumbs_area" style="background-color:#ddeffd">
+    @if(isset($page))   
+        @if(isset($banner))
+        <!-- <div class="container-fluid" style="padding-left: 0px;padding-right: 0px;"> -->
+        <div class="container" style="padding-left: 0px;padding-right: 0px;">
+        
+        <p>
+            <img style="width:100%; max-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$banner->file}}" alt="">
+            <!-- <img class="img-fluid" style="width:100%; max-width: 100%;heigth:231px" src="{{asset('uploads/banner/')}}/{{$banner->file}}" alt=""> -->
+        </p>
+        </div>
+        @endif
+    @endif
+    
+</div>
+<div class="breadcrumbs_area" >
+            
         <div class="container">
             <div class="row">
                 <div class="col-5">
