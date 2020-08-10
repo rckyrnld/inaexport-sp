@@ -159,9 +159,11 @@
                 alert("Date is empty, Please fill in!");
             }else if(subject == ""){
                 alert("Subject is empty, Please fill in!");
-            }else if(messages == ""){
-                alert("Messages is empty, Please fill in!");
-            }else{
+            }
+            // else if(messages == ""){
+            //     alert("Messages is empty, Please fill in!");
+            // }
+            else{
                 $('#formnya').submit();
             }
         })

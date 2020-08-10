@@ -920,8 +920,12 @@ class BRFrontController extends Controller
     {
 //        dd($request);
 		date_default_timezone_set('Asia/Jakarta');
-		$ch1 = str_replace(".","",$request->tp);
-		$ch2 = str_replace(",",".",$ch1);
+		if($request->tp == null){
+			$ch2 = 0;
+		}else{
+			$ch1 = str_replace(".","",$request->tp);
+			$ch2 = str_replace(",",".",$ch1);
+		}
 		/*
 		$kumpulcat = $request->category;
 		$kumpulcat2 = $request->category.",";
