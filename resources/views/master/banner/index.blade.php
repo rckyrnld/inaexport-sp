@@ -89,6 +89,8 @@
         float: left !important;
         width: 75%;
     }
+
+    
 </style>
 <div class="padding">
     <div class="row">
@@ -390,15 +392,6 @@
   var dataeksportir2 = [];
   var dataeksportir2lain = [];
 
-  // document.getElementById("company_name2").style.position = "relative";
-    // if ($(this).parents('.modal.in:first').length !== 0)
-    //   dropdownParent = $(this).parents('.modal.in:first');
-    // $(this).select2({
-    //   dropdownParent: dropdownParent
-    //   // ...
-    // });
-  // document.body.style.position
-  // $(document.body).offset();
   $(document).ready(function () {
     
     $('select.select2:not(.normal)').each(function () {
@@ -406,7 +399,6 @@
             dropdownParent: $(this).parent().parent()
         });
     });
-    // $.fn.modal.Constructor.prototype.enforceFocus = $.noop;
     $.fn.modal.Constructor.prototype._enforceFocus = function() {};
         $('#company_name').select2({
           // dropdownParent: $('#modalEdit'),
@@ -442,7 +434,6 @@
         });
 
         $('#company_name2').select2({
-          // dropdownParent : $(document.body).offset(),
           // dropdownParent: $('#modalEdit2'),
           allowClear: true,
           placeholder: 'Select Company Name',
@@ -721,47 +712,10 @@
             $('#order').val(order);
             $('#type').val(type);
             
-  // document.getElementById(".select2-results").style.position = "inherit";
-            // $('.select2').each(function() { 
-            //     $(this).select2({ dropdownParent: $(this).parent()});
-            // })
-            
-            // $('#company_name').select2({
-            //     allowClear: true,
-            //     placeholder: 'Select Company Name',
-            //     ajax: {
-            //       url: "{{route('banner.companyname')}}",
-            //       dataType: 'json',
-            //       delay: 250,
-            //       data: function (params) {
-            //         // var query = {
-            //         //     search: params.term,
-            //         //     idbanner: $('#id').val()
-            //         // }
-            //         var query = {
-            //           search: params.term,
-            //           idbanner: $('#id').val()
-            //         }
-            //         return query;
-            //       },
-            //       processResults: function (data) {
-            //         return {
-            //           results: $.map(data, function (item) {
-            //             return {
-            //               text: item.company,
-            //               id: item.id
-            //             }
-            //           })
-            //         };
-            //       },
-            //       cache: true
-            //     }
-            //   });
 
         });
 
-        
-    // $.fn.modal.Constructor.prototype.enforceFocus = $.noop;
+    // ini yang bikin select2 bisa jalan di modal bootstrap yang di firefox dan chrome
     $.fn.modal.Constructor.prototype.enforceFocus = $.noop;
     
         $('#modalEdit2').on('show.bs.modal', function(e) {
@@ -804,22 +758,7 @@
               });
               //untuk file previous
               var hrefnya = "{{ url('/').'/uploads/banner/'}}" + filebanner2;
-              $("#modalEdit2 a").attr("href", hrefnya);
-              
-              // var offset = $("#canvas").offset();
-              // $('body').append("<br>offset:" + offset.top + ", " + offset.left);
-
-              var offset = $('#company_name2').offset();
-              $('#modalEdit2').append("<br>offset:" + offset.top + ", " + offset.left);
-              $('#company_name2').append("<br>offset:" + offset.top + ", " + offset.left);
-              $('#select2-results').append("<br>offset:" + offset.top + ", " + offset.left);
-              
-              // var offset = $("#company_name2").offset();
-              // $('body').append("<br>offset:" + offset.top + ", " + offset.left);
-              
-              // $('.select2').each(function() { 
-              //     $(this).select2({ dropdownParent: $(this).parent()});
-              // })
+              $("#modalEdit2 a").attr("href", hrefnya);            
         });
 
 

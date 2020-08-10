@@ -40,6 +40,10 @@ if ($loc == "ch") {
     font-size: 11px!important;
 }
 
+.modal {
+    overflow-y: auto !important;
+}
+
 </style>
 <!--product area start-->
 <section class="product_area mb-50">
@@ -369,6 +373,7 @@ if ($loc == "ch") {
 @include('frontend.layouts.footer')
 <?php $quertreject = DB::select("select * from mst_template_reject order by id asc"); ?>
 <script>
+var checkbuttonbroadcast = 0;
 function simpanbr(){
 	var formData = new FormData();
 	
@@ -398,8 +403,12 @@ function simpanbr(){
 			contentType : false,
 			processData : false,
 			success: function (data) {
-			   console.log(data);
-			   $('#mf').append(data);
+                if(checkbuttonbroadcast < 1){
+                    $('#mf').append(data);
+                    checkbuttonbroadcast = 1;
+                }else{
+                    console.log('gak ditambah lagi');
+                }
 			},
 			error: function (data, textStatus, errorThrown) {
 				console.log(data);
