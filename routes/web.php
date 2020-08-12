@@ -88,6 +88,7 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/research-corner', 'FrontController@research_corner');
     Route::get('/front_end/tracking', 'FrontController@tracking');
     Route::get('/about/', 'FrontController@about');
+    Route::get('/faq/', 'FrontController@faq');
     Route::get('/contact-us', 'FrontController@contact_us');
     Route::post('/contact-us/send', 'FrontController@contact_us_send');
     Route::get('/front_end/service-detail/{id}', 'FrontController@service');

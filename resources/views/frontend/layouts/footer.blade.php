@@ -141,7 +141,7 @@
                             @if($loc == 'ch')
                             国际活动
                             @elseif($loc == 'in')
-                            Acara Internasional
+                            Pameran Internasional
                             @else
                             International Events
                             @endif
@@ -254,7 +254,7 @@
                                     <li><a href="{{url('/about/')}}" class="third-child">@lang("footer.tentangkami")</a></li>
                                     <li><a href="{{url('/contact-us/')}}" class="third-child">@lang("footer.hubungikami")</a></li>
                                     <li><a href="{{url('/front_end/ticketing_support')}}" class="third-child">@lang("footer.bantuan")</a></li>
-                                    <li><a href="#" class="third-child">InaExport</a></li>
+                                    <li><a href="{{url('/faq/')}}" class="third-child">FAQ</a></li>
                                     <li><a href="http://tradexpoindonesia.com" class="third-child">@lang("footer.foot.trade-expo")</a></li>
                                     @if(Auth::guard('eksmp')->user()) {{userGuide($loc,  Auth::guard('eksmp')->user()->id_role)}} @endif
                                 </ul>

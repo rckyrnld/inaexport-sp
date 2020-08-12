@@ -2038,9 +2038,15 @@ class FrontController extends Controller
 			return view('training.frontend.index',compact('data','pageTitle'));
 		}
     //End Training Front End
+    
     public function about()
     {
         return view('frontend.about');
+    }
+
+    public function faq()
+    {
+        return view('frontend.faq');
     }
 
     public function hot(Request $req){
