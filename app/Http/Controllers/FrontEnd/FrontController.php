@@ -1310,6 +1310,7 @@ class FrontController extends Controller
                             ->mergeBindings($query) // you need to get underlying Query Builder
                             ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                             ->orderby('abs_beda_tanggal')
+                            ->where('end_date', '>=', "'".$today."'")
                             ->paginate(12,['*'],'page_a');
                 // $e_detail = $query->paginate(12,['*'],'page_a');
                 
@@ -1331,6 +1332,7 @@ class FrontController extends Controller
                     ->mergeBindings($query) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_a');
 
                 $json = json_decode($e_detail->toJson(), true);
@@ -1350,6 +1352,7 @@ class FrontController extends Controller
                     ->mergeBindings($query) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_a');
                 }
             }
@@ -1371,6 +1374,7 @@ class FrontController extends Controller
                     ->mergeBindings($query2) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_b');
 
             $json = json_decode($e_detail2->toJson(), true);
@@ -1390,6 +1394,7 @@ class FrontController extends Controller
                     ->mergeBindings($query2) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_b');
             }
 
@@ -1410,6 +1415,7 @@ class FrontController extends Controller
                 ->mergeBindings($query) // you need to get underlying Query Builder
                 ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                 ->orderby('abs_beda_tanggal')
+                ->where('end_date', '>=', "'".$today."'")
                 ->paginate(12,['*'],'page_c');
 
             $json = json_decode($e_detail3->toJson(), true);
@@ -1429,6 +1435,7 @@ class FrontController extends Controller
                     ->mergeBindings($query) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_c');
             }
 
@@ -1495,6 +1502,7 @@ class FrontController extends Controller
                             ->mergeBindings($query) // you need to get underlying Query Builder
                             ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                             ->orderby('abs_beda_tanggal')
+                            ->where('end_date', '>=', "'".$today."'")
                             ->paginate(12,['*'],'page_b');
 
                 $page2 = 99999999;
@@ -1515,6 +1523,7 @@ class FrontController extends Controller
                     ->mergeBindings($query2) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_b');
 
                 $json = json_decode($e_detail2->toJson(), true);
@@ -1534,6 +1543,7 @@ class FrontController extends Controller
                         ->mergeBindings($query2) // you need to get underlying Query Builder
                         ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                         ->orderby('abs_beda_tanggal')
+                        ->where('end_date', '>=', "'".$today."'")
                         ->paginate(12,['*'],'page_b');
                     }
             }
@@ -1555,6 +1565,7 @@ class FrontController extends Controller
                 ->mergeBindings($query) // you need to get underlying Query Builder
                 ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                 ->orderby('abs_beda_tanggal')
+                ->where('end_date', '>=', "'".$today."'")
                 ->paginate(12,['*'],'page_a');
 
             $json = json_decode($e_detail->toJson(), true);
@@ -1574,6 +1585,7 @@ class FrontController extends Controller
                     ->mergeBindings($query) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_a');
             }
 
@@ -1594,6 +1606,7 @@ class FrontController extends Controller
                     ->mergeBindings($query) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_c');
 
             $json = json_decode($e_detail3->toJson(), true);
@@ -1613,6 +1626,7 @@ class FrontController extends Controller
                     ->mergeBindings($query) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_c');
             }
         }
@@ -1683,6 +1697,7 @@ class FrontController extends Controller
                             ->mergeBindings($query) // you need to get underlying Query Builder
                             ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                             ->orderby('abs_beda_tanggal')
+                            ->where('end_date', '>=', "'".$today."'")
                             ->paginate(12,['*'],'page_c');
                 // echo $e_detail3->toSql();die();
                 $page3 = 99999999;
@@ -1703,6 +1718,7 @@ class FrontController extends Controller
                     ->mergeBindings($query) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_c');
 
 
@@ -1723,6 +1739,7 @@ class FrontController extends Controller
                         ->mergeBindings($query) // you need to get underlying Query Builder
                         ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                         ->orderby('abs_beda_tanggal')
+                        ->where('end_date', '>=', "'".$today."'")
                         ->paginate(12,['*'],'page_c');
                 }
             }
@@ -1743,6 +1760,7 @@ class FrontController extends Controller
                 ->mergeBindings($query) // you need to get underlying Query Builder
                 ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                 ->orderby('abs_beda_tanggal')
+                ->where('end_date', '>=', "'".$today."'")
                 ->paginate(12,['*'],'page_a');
 
             $json = json_decode($e_detail->toJson(), true);
@@ -1761,6 +1779,7 @@ class FrontController extends Controller
                     ->mergeBindings($query) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_a');
 
             }
@@ -1782,6 +1801,7 @@ class FrontController extends Controller
                     ->mergeBindings($query2) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_b');
 
             $json = json_decode($e_detail2->toJson(), true);
@@ -1801,6 +1821,7 @@ class FrontController extends Controller
                     ->mergeBindings($query2) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_b');
             }
         }
@@ -1822,6 +1843,7 @@ class FrontController extends Controller
                 ->mergeBindings($query) // you need to get underlying Query Builder
                 ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                 ->orderby('abs_beda_tanggal')
+                ->where('end_date', '>=', "'".$today."'")
                 ->paginate(12,['*'],'page_a');
 
 
@@ -1841,6 +1863,7 @@ class FrontController extends Controller
                     ->mergeBindings($query) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_a');
 
             }
@@ -1862,6 +1885,7 @@ class FrontController extends Controller
                 ->mergeBindings($query2) // you need to get underlying Query Builder
                 ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                 ->orderby('abs_beda_tanggal')
+                ->where('end_date', '>=', "'".$today."'")
                 ->paginate(12,['*'],'page_b');
 
             $json = json_decode($e_detail2->toJson(), true);
@@ -1881,6 +1905,7 @@ class FrontController extends Controller
                     ->mergeBindings($query2) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_b');
             }
 
@@ -1901,6 +1926,7 @@ class FrontController extends Controller
                 ->mergeBindings($query) // you need to get underlying Query Builder
                 ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                 ->orderby('abs_beda_tanggal')
+                ->where('end_date', '>=', "'".$today."'")
                 ->paginate(12,['*'],'page_c');
 
             $json = json_decode($e_detail3->toJson(), true);
@@ -1920,6 +1946,7 @@ class FrontController extends Controller
                     ->mergeBindings($query) // you need to get underlying Query Builder
                     ->groupby('event_name_chn','event_name_en','event_name_in','start_date','end_date','id_event_place','id','image_1','abs_beda_tanggal')
                     ->orderby('abs_beda_tanggal')
+                    ->where('end_date', '>=', "'".$today."'")
                     ->paginate(12,['*'],'page_c');
             }
 

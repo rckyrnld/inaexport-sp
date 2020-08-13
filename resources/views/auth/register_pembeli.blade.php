@@ -414,46 +414,54 @@
                 refresh();
                 $('#captchainput').val('');
             } else {
-                $.ajax({
-                    type: "POST",
-                    url: '{{url('/simpan_rpembeli')}}',
-                    data: {
-                        company: company,
-                        email: email,
-                        website: website,
-                        phone: phone,
-                        fax: fax,
-                        password: password,
-                        city: city,
-                        country: country,
-                        postcode: postcode,
-                        alamat: alamat,
-                        _token: '{{csrf_token()}}',
-                        ckk2send : ckk2send
-                    },
-                    success: function (data) {
-                        console.log(data);
-                    },
-                    error: function (data, textStatus, errorThrown) {
-                        console.log(data);
+                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: '{{url('/simpan_rpembeli')}}',
+                        data: {
+                            company: company,
+                            email: email,
+                            website: website,
+                            phone: phone,
+                            fax: fax,
+                            password: password,
+                            city: city,
+                            country: country,
+                            postcode: postcode,
+                            alamat: alamat,
+                            _token: '{{csrf_token()}}',
+                            ckk2send : ckk2send
+                        },
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (data, textStatus, errorThrown) {
+                            console.log(data);
 
-                    },
-                });
-                $('#company').val('');
-                // $('#username').val('');
-                $('#website').val('');
-                $('#email').val('');
-                $('#phone').val('');
-                $('#fax').val('');
-                $('#password').val('');
-                $('#kpassword').val('');
-                $('#city').val('');
-                $('#country').val('');
-                $('#postcode').val('');
-                $('#alamat').val('');
-                $('#chp').val('');
-                // $('#captchainput').val('');
-                $("#myModal").modal("show");
+                        },
+                    });
+                    $('#company').val('');
+                    // $('#username').val('');
+                    $('#website').val('');
+                    $('#email').val('');
+                    $('#phone').val('');
+                    $('#fax').val('');
+                    $('#password').val('');
+                    $('#kpassword').val('');
+                    $('#city').val('');
+                    $('#country').val('');
+                    $('#postcode').val('');
+                    $('#alamat').val('');
+                    $('#chp').val('');
+                    // $('#captchainput').val('');
+                    $("#myModal").modal("show");
+                }else{
+                    alert("You have entered an invalid email address!");
+                    $('#email').val('');
+                    refresh();
+                    $('#captchainput').val('');
+                }
             }
         } else {
             alert("Incorrect password");

@@ -478,48 +478,57 @@
 		 	
 		 });
 		*/
-                $.ajax({
-                    type: "POST",
-                    url: '{{url('/simpan_rpenjual')}}',
-                    data: {
-                        badanusaha: badanusaha,
-                        company: company,
-                        // username: username,
-                        email: email,
-                        website: website,
-                        phone: phone,
-                        fax: fax,
-                        password: password,
-                        city: city,
-                        prov: prov,
-                        postcode: postcode,
-                        alamat: alamat,
-                        _token: '{{csrf_token()}}',
-                        ckk2send: ckk2send
-                    },
-                    success: function (data) {
-                        console.log(data);
-                    },
-                    error: function (data, textStatus, errorThrown) {
-                        console.log(data);
-                    },
-                });
+                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: '{{url('/simpan_rpenjual')}}',
+                        data: {
+                            badanusaha: badanusaha,
+                            company: company,
+                            // username: username,
+                            email: email,
+                            website: website,
+                            phone: phone,
+                            fax: fax,
+                            password: password,
+                            city: city,
+                            prov: prov,
+                            postcode: postcode,
+                            alamat: alamat,
+                            _token: '{{csrf_token()}}',
+                            ckk2send: ckk2send
+                        },
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (data, textStatus, errorThrown) {
+                            console.log(data);
+                        },
+                    });
 
-                $('#badanusaha').val('');
-                $('#company').val('');
-                // $('#username').val('');
-                $('#website').val('');
-                $('#email').val('');
-                $('#phone').val('');
-                $('#fax').val('');
-                $('#password').val('');
-                $('#kpassword').val('');
-                $('#city').val('');
-                $('#prov').val('');
-                $('#postcode').val('');
-                $('#alamat').val('');
-                $('#captchainput').val('');
-                $("#myModal").modal("show");
+                    $('#badanusaha').val('');
+                    $('#company').val('');
+                    // $('#username').val('');
+                    $('#website').val('');
+                    $('#email').val('');
+                    $('#phone').val('');
+                    $('#fax').val('');
+                    $('#password').val('');
+                    $('#kpassword').val('');
+                    $('#city').val('');
+                    $('#prov').val('');
+                    $('#postcode').val('');
+                    $('#alamat').val('');
+                    $('#captchainput').val('');
+                    $("#myModal").modal("show");
+                }else{
+                    alert("You have entered an invalid email address!");
+                    $('#email').val('');
+                    refresh();
+                    $('#captchainput').val('');
+                }
+                
             }
         } else {
             alert("Incorrect password");
