@@ -114,14 +114,14 @@ class ImporterController extends Controller
                     'phone' => $req->phone,
                 ]);  
             }else{
-                dd($users);
+                // dd($users);
             }
 
             if($profilenya){
                 return redirect('/profile');
             }else{
                 // return redirect('/front_end');
-                dd($profilenya);
+                // dd($profilenya);
             }
         } else {
             return redirect('/');

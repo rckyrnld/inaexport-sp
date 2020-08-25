@@ -233,7 +233,8 @@ class EksProductController extends Controller
            //  $id_user = Auth::user()->id;
             $user = DB::table('csc_product_single')
             ->join('itdp_company_users', 'itdp_company_users.id', '=', 'csc_product_single.id_itdp_company_user')
-            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company')
+            ->leftjoin('itdp_profil_eks','itdp_profil_eks.id','itdp_company_users.id_profil')
+            ->select('csc_product_single.*', 'itdp_company_users.id as id_company', 'itdp_company_users.status as status_company','itdp_profil_eks.company')
             ->where('csc_product_single.status', 1)
             // ->where('itdp_company_users.id_profil', $id)
             ->orderBy('csc_product_single.created_at', 'DESC')
@@ -276,17 +277,22 @@ class EksProductController extends Controller
             })
             ->addColumn('company_name', function ($mjl) {
                 $name = "";
-                if($mjl->id_itdp_company_user != NULL){
-                    $companynya = DB::table('itdp_company_users')
-                        ->where('id', $mjl->id_itdp_company_user)
-                        ->first();
-                    if($companynya){
-                        $profiles = DB::table('itdp_profil_eks')->where('id', $companynya->id_profil)->first();
-                        if($profiles){
-                            $name = $profiles->company;
-                        }
-                    }
+                if($mjl->company != NULL){
+                    $name = $mjl->company;
+                }else{
+                    $name = "";
                 }
+                // if($mjl->id_itdp_company_user != NULL){
+                //     $companynya = DB::table('itdp_company_users')
+                //         ->where('id', $mjl->id_itdp_company_user)
+                //         ->first();
+                //     if($companynya){
+                //         $profiles = DB::table('itdp_profil_eks')->where('id', $companynya->id_profil)->first();
+                //         if($profiles){
+                //             $name = $profiles->company;
+                //         }
+                //     }
+                // }
                 return $name;
             })
             ->addColumn('status', function ($mjl) {

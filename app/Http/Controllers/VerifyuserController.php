@@ -255,18 +255,28 @@ class VerifyuserController extends Controller
 			// $pesan = DB::table('itdp_company_users as a')->join('itdp_profil_eks as b','b.id','a.id_profil')->selectraw('ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a,b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at')->where('a.id_role','2');
 			if(isset($request->filternya)){
 				if($request->filternya == '1'){
-					$pesan = DB::table("itdp_profil_eks")
-					->join("itdp_company_users","itdp_profil_eks.id","itdp_company_users.id_profil")
-					->selectraw("ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at")
-					->where('itdp_company_users.status',1)
-					->where("itdp_company_users.id_role","2");
-				}else if($request->filternya == '2'){
+					// yang belum di verifikasi
 					$pesan = DB::table("itdp_profil_eks")
 					->join("itdp_company_users","itdp_profil_eks.id","itdp_company_users.id_profil")
 					->selectraw("ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at")
 					->where('itdp_company_users.status',0)
 					->where("itdp_company_users.id_role","2");
-				}else{
+				}else if($request->filternya == '2'){
+					// yang sudah di verifikasi
+					$pesan = DB::table("itdp_profil_eks")
+					->join("itdp_company_users","itdp_profil_eks.id","itdp_company_users.id_profil")
+					->selectraw("ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at")
+					->where('itdp_company_users.status',1)
+					->where("itdp_company_users.id_role","2");
+				}else if($request->filternya == '3'){
+					// yang tidak di verifikasi
+					$pesan = DB::table("itdp_profil_eks")
+					->join("itdp_company_users","itdp_profil_eks.id","itdp_company_users.id_profil")
+					->selectraw("ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at")
+					->where('itdp_company_users.status',3)
+					->where("itdp_company_users.id_role","2");
+				}
+				else{
 					$pesan = DB::table("itdp_profil_eks")
 					->join("itdp_company_users","itdp_profil_eks.id","itdp_company_users.id_profil")
 					->selectraw("ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at")
@@ -887,6 +897,7 @@ class VerifyuserController extends Controller
 	}
 	public function simpan_profil(Request $request)
     {
+		// untuk simpan profil dari admin
 		// dd($request->id_role);
         date_default_timezone_set('Asia/Jakarta');
 		$id_role = $request->id_role;
@@ -1069,10 +1080,11 @@ class VerifyuserController extends Controller
 	}
 
 	public function simpan_profilb(Request $request){
+		// untuk simpan profil di eksportir
         date_default_timezone_set('Asia/Jakarta');
         $id_role = $request->id_role;
         $id_user = $request->id_user;
-        $id_user_b = $request->idu;
+		$id_user_b = $request->idu;
 
         $destination= 'uploads\Profile\Eksportir\\'.$id_user;
         if($request->hasFile('image_1')){
@@ -1088,8 +1100,8 @@ class VerifyuserController extends Controller
         if($request->password == null ){
             $updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', email='".$request->email."' where id='".$request->id_user."' ");
         }else{
-            $updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', password='".bcrypt($request->password)."', status='".$request->staim."', email='".$request->email."' where id='".$request->id_user."' ");
-
+			// , status='".$request->staim."'
+            $updatetab1 = DB::select("update itdp_company_users set username='".$request->username."', password='".bcrypt($request->password)."', email='".$request->email."' where id='".$request->id_user."' ");
         }
 
         //UPDATE TAB 2

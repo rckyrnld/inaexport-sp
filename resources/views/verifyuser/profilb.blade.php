@@ -78,7 +78,7 @@
 								<button class="tablinks active" onclick="openCity(event, 'London')"><font size="3px">Account Information <?php echo $tx; ?></font></button>
 								<button class="tablinks" onclick="openCity(event, 'Paris')"><font size="3px">Company Profile</font></button>
 							</div>
-							<form class="form-horizontal" method="POST" action="{{ url('simpan_profilb') }}" enctype="multipart/form-data">
+							<form class="form-horizontal" method="POST" id="profil" action="{{ url('simpan_profilb') }}" enctype="multipart/form-data">
 								{{ csrf_field() }}
 
 								<input type="hidden" name="id_role" value="<?php echo $ida; ?>">
@@ -125,7 +125,7 @@
 														</div>
 														<div class="form-group col-sm-8">
 															<input type="password" value="" name="repass" id="repass"
-																   class="form-control" placeholder="##########">
+																   class="form-control" placeholder="##########" >
 
 														</div>
 													</div>
@@ -366,7 +366,8 @@
 									<?php if(empty(Auth::user()->name)){ }else{ ?>
 									<a href="{{ url('verifyuser') }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Back</a>
 									<?php } ?>
-									<button class="btn btn-md btn-primary"><i class="fa fa-save"></i> Save</button>
+									<!--  -->
+									<button type="button" class="btn btn-md btn-primary" onclick="send('#profil')"><i class="fa fa-save"></i> Save</button>
 								</div>
 							</form>
 							<script>
@@ -528,6 +529,18 @@
 			$('#email').val("");
 		}
     }
+
+	function send(form){
+		console.log('kesini');
+		if ($('#password').val() != $('#repass').val()){
+			alert('Make sure the value re-password and password is same');
+			$('#repass').focus();
+			
+		}else {
+			// console.log('kesini 3');
+			$(form).submit();
+		}
+	}
 </script>
 
 @include('footer')

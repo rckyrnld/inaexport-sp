@@ -34,8 +34,9 @@
                         <div class="col-md-2">
                             <select id="filter" name="filter" class="form-control" onchange="filtering()">
                                 <option value="0" >Choose Filter</option>
-                                <option value="1" >Verified</option>
-                                <option value="2" >Unverified</option>
+                                <option value="1" >Unverified</option>
+                                <option value="2" >Verified</option>
+                                <option value="3" >Notverified</option>
                             </select> 
                         </div>
                     </div>

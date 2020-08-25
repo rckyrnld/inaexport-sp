@@ -20,37 +20,40 @@
                                 <tr>
                                     <th>No</th>
                                     <th>
-                                        <center>Code</center>
+                                        Code
                                     </th>
                                     <th>
-                                        <center>Product Name</center>
+                                        Product Name
                                     </th>
                                     <th>
-                                        <center>Color</center>
+                                        Company Name
                                     </th>
                                     <th>
-                                        <center>Size</center>
+                                        Color
                                     </th>
                                     <th>
-                                        <center>Raw Material</center>
+                                        Size
                                     </th>
                                     <th>
-                                        <center>Capacity</center>
+                                        Raw Material
                                     </th>
                                     <th>
-                                        <center>Price (USD)</center>
+                                        Capacity
                                     </th>
                                     <th>
-                                        <center>Description Product</center>
+                                        Price (USD)
                                     </th>
                                     <th>
-                                        <center>Status</center>
+                                        Description Product
                                     </th>
                                     <th>
-                                        <center>Information</center>
+                                        Status
                                     </th>
                                     <th>
-                                        <center>Action</center>
+                                        Information
+                                    </th>
+                                    <th>
+                                        Action
                                     </th>
                                 </tr>
                                 </thead>
@@ -78,6 +81,7 @@
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'code_en', name: 'code_en'},
                 {data: 'prodname_en', name: 'prodname_en'},
+                {data: 'company_name', name: 'company_name'},
                 {data: 'color_en', name: 'color_en'},
                 {data: 'size_en', name: 'size_en'},
                 {data: 'raw_material_en', name: 'raw_material_en'},
