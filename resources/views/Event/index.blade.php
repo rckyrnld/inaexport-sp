@@ -129,20 +129,20 @@
 {{--                                                    <tr><td title="{{$comodity}}">{{$comodityName}}</td></tr>--}}
                                                     <tr>
                                                         <td style="padding-top: 10px;">
-														<?php if($ed->status_bc == 1){ ?>
+														<?php //if($ed->status_bc == 1){ ?>
 														
-                                                            <a href="{{url('/')}}/event/show_detail/{{$ed->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a> 
+                                                            <!-- <a href="{{url('/')}}/event/show_detail/{{$ed->id}}" class="btn btn-info"><i class="fa fa-eye"></i></a> 
 
-                                                            <a onclick="return confirm('Are You Sure ?')" href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a>
+                                                            <a onclick="return confirm('Are You Sure ?')" href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a> -->
                                                             <!--<a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>-->
-                                                        <?php }else{ ?>
-								</a>
+                                                        <?php // }else{ ?>
+								                        
 														 <a onclick="ihid(<?php echo $ed->id; ?>)" data-toggle="modal" data-target="#myModal" class="btn btn-info" title="Broadcast"><font color="white"><i class="fa fa-bullhorn"></i></font></a>
 														    
 														<a href="{{url('/')}}/event/edit/{{$ed->id}}" class="btn btn-warning"><font color="white"><i class="fa fa-edit"></i></font></a>
 														<a onclick="return confirm('Are You Sure ?')" href="{{url('/')}}/event/delete/{{$ed->id}}" class="btn btn-danger" title="Delete">&nbsp;<i class="fa fa-trash"></i></a>
                                                         
-														<?php } ?>
+														<?php // } ?>
 														</td>
                                                     </tr>
                                                 </table>

@@ -59,20 +59,20 @@ class PerwakilanResearchController extends Controller
             return date('d F Y', strtotime($data->publish_date)).' ( '.date('H:i', strtotime($data->publish_date)).' )';
           })
           ->addColumn('action', function ($data) {
-            $research = DB::table('csc_broadcast_research_corner')
-              ->where('id_research_corner', $data->id)
-              ->first();
-              if($research){
-                return '<center>
-                  <a href="'.route("perwakilan.research-corner.view", $data->id).'" id="button" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-eye text-white"></i></a>&nbsp;&nbsp;
-                  <a onclick="return confirm(\'Are You Sure ?\')" href="'.route("perwakilan.research-corner.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger" title="Delete">&nbsp;<i class="fa fa-trash text-white"></i></a>
-                  </center>';
-              } else {
+            // $research = DB::table('csc_broadcast_research_corner')
+            //   ->where('id_research_corner', $data->id)
+            //   ->first();
+            //   if($research){
+            //     return '<center>
+            //       <a href="'.route("perwakilan.research-corner.view", $data->id).'" id="button" class="btn btn-sm btn-info" title="View">&nbsp;<i class="fa fa-eye text-white"></i></a>&nbsp;&nbsp;
+            //       <a onclick="return confirm(\'Are You Sure ?\')" href="'.route("perwakilan.research-corner.destroy", $data->id).'" id="button" class="btn btn-sm btn-danger" title="Delete">&nbsp;<i class="fa fa-trash text-white"></i></a>
+            //       </center>';
+            //   } else {
                 return '<center>
                   <button onclick="broadcast(\''.$data->title_en.'||'.$data->id.'\')" id="button" class="btn btn-sm btn-warning text-white" title="Broadcast">&nbsp;<i class="fa fa-bullhorn text-white"></i></button>&nbsp;&nbsp;
                   <a href="'.route("perwakilan.research-corner.edit", $data->id).'" id="button" class="btn btn-sm btn-success" title="Edit">&nbsp;<i class="fa fa-edit text-white"></i></a>
                   </center>';
-              }
+              // }
           })
           ->rawColumns(['action','title_en'])
           ->make(true);
