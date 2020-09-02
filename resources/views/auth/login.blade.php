@@ -78,9 +78,9 @@ h4 h6 h3{
                   @endif
             </div>      
              <div class="form-group">
-			 <div class="form-group col-sm-3 captcha" align="left" id="captcha">
+			 <!--<div class="form-group col-sm-3 captcha" align="left" id="captcha">
                             <span>{!!captcha_img()!!}</span>
-                        </div>
+                        </div> -->
 			<table width="100%">
 				<tr>
 				<td width="50%"></td>
