@@ -90,6 +90,7 @@ class LoginController extends Controller
         $datas[0]->id_template_reject = ($company[0]->id_template_reject == null ? "" : $company[0]->id_template_reject);
         $datas[0]->keterangan_reject = $company[0]->keterangan_reject;
         $datas[0]->status_verif = $company[0]->status;
+		$datas[0]->badanusaha = $company[0]->badanusaha;
 //    $data = [
 //        'access_token' => $token,
 //        'token_type' => 'Bearer',
