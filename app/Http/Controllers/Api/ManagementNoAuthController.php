@@ -69,6 +69,33 @@ class ManagementNoAuthController extends Controller
             return response($res);
         }
     }
+	
+	public function getBadanusaha()
+    {
+        $dataTraining = DB::table('eks_business_entity')
+            ->get();
+        if (count($dataTraining) > 0) {
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
 
     public function getProvince()
     {

@@ -227,6 +227,7 @@ Route::namespace('Api')->group(function () {
 
     //country province
     Route::get('getCountry', 'ManagementNoAuthController@getCountry');
+    Route::get('getBadanusaha', 'ManagementNoAuthController@getBadanusaha');
     Route::get('getProvince', 'ManagementNoAuthController@getProvince');
     Route::get('getCategory', 'ManagementNoAuthController@getKategori');
     Route::post('getSub', 'ManagementNoAuthController@getSub');
