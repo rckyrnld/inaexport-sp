@@ -197,6 +197,7 @@ class ManagementNoAuthController extends Controller
         $phone = $request->phone;
         $fax = $request->fax;
         $website = $request->website;
+        $badanusaha = $request->badanUsaha;
         $password = $request->password;
         $postcode = $request->postcode;
         $address = $request->address;
@@ -216,6 +217,7 @@ class ManagementNoAuthController extends Controller
             ->insertGetId([
                 "company" => $company,
                 "addres" => $address,
+                "badanusaha" => $badanusaha,
                 "postcode" => $postcode,
                 "phone" => $phone,
                 "fax" => $fax,
