@@ -206,6 +206,7 @@ class ManagementNoAuthController extends Controller
                 "username" => $username,
                 "password" => bcrypt($password),
                 "email" => $email,
+                "created_at" => $dateNow,
                 "status" => '0',
                 "id_role" => '2',
             ]);
@@ -318,6 +319,7 @@ class ManagementNoAuthController extends Controller
                 "username" => $username,
                 "password" => bcrypt($password),
                 "email" => $email,
+				"created_at" => $dateNow,
                 "status" => '0',
                 "id_role" => '3',
             ]);
