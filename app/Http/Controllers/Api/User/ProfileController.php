@@ -181,6 +181,22 @@ class ProfileController extends Controller
                     ]);
             }
 			
+			if (empty($request->file('doc'))) {
+//                $file = "";
+                $cobaajadulu ="haha";
+            } else {
+                $file = $request->file('doc')->getClientOriginalName();
+                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
+//                $destination = 'uploads\Profile\Importir\\' . $id_user;
+                $request->file('doc')->move($destinationPath, $file);
+               DB::table('itdp_profil_eks')
+                    ->where('id', $id_user)
+                    ->update([
+                        'doc' => $file
+
+                    ]);
+            }
+			
 			
             //UPDATE TAB 1
             if ($request->password == null) {
