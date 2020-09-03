@@ -132,6 +132,56 @@ class ProfileController extends Controller
                     ]);
 //                $updatetab22 = DB::select("update itdp_profil_eks set logo='" . $file . "' where id='" . $id_profile . "'");
             }
+			
+			if (empty($request->file('uploadnpwp'))) {
+//                $file = "";
+                $cobaajadulu ="haha";
+            } else {
+                $file = $request->file('uploadnpwp')->getClientOriginalName();
+                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
+//                $destination = 'uploads\Profile\Importir\\' . $id_user;
+                $request->file('uploadnpwp')->move($destinationPath, $file);
+               DB::table('itdp_profil_eks')
+                    ->where('id', $id_user)
+                    ->update([
+                        'uploadnpwp' => $file
+
+                    ]);
+            }
+			
+			if (empty($request->file('uploadtdp'))) {
+//                $file = "";
+                $cobaajadulu ="haha";
+            } else {
+                $file = $request->file('uploadtdp')->getClientOriginalName();
+                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
+//                $destination = 'uploads\Profile\Importir\\' . $id_user;
+                $request->file('uploadtdp')->move($destinationPath, $file);
+               DB::table('itdp_profil_eks')
+                    ->where('id', $id_user)
+                    ->update([
+                        'uploadtdp' => $file
+
+                    ]);
+            }
+			
+			if (empty($request->file('uploadsiup'))) {
+//                $file = "";
+                $cobaajadulu ="haha";
+            } else {
+                $file = $request->file('uploadsiup')->getClientOriginalName();
+                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
+//                $destination = 'uploads\Profile\Importir\\' . $id_user;
+                $request->file('uploadsiup')->move($destinationPath, $file);
+               DB::table('itdp_profil_eks')
+                    ->where('id', $id_user)
+                    ->update([
+                        'uploadsiup' => $file
+
+                    ]);
+            }
+			
+			
             //UPDATE TAB 1
             if ($request->password == null) {
 //                dd($request->username);
