@@ -263,7 +263,7 @@ class ProfileController extends Controller
             'message' => 'Success',
             'status' => 'Success'
 			];
-			$data = $datas;
+			$data = $datas[0];
 			$res['meta'] = $meta;
 			$res['data'] = $data;
 			return $res;
@@ -383,7 +383,7 @@ class ProfileController extends Controller
             'message' => 'Success',
             'status' => 'Success'
 			];
-			$data = $datas;
+			$data = $datas[0];
 			$res['meta'] = $meta;
 			$res['data'] = $data;
 			return $res;
