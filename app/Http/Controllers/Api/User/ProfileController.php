@@ -204,7 +204,7 @@ class ProfileController extends Controller
                 DB::table('itdp_company_users')
                     ->where('id', $id_user)
                     ->update([
-                        'username' => $request->username,
+                        //'username' => $request->username,
                         'email' => $request->email,
                     ]);
 //                $updatetab1 = DB::select("update itdp_company_users set username= $request->username , email= $request->email , where id = $id_user  ");
@@ -213,7 +213,7 @@ class ProfileController extends Controller
                 DB::table('itdp_company_users')
                     ->where('id', $id_user)
                     ->update([
-                        'username' => $request->username,
+                        //'username' => $request->username,
                         'email' => $request->email,
                         'password' => bcrypt($request->password)
                     ]);
@@ -308,7 +308,7 @@ class ProfileController extends Controller
                 DB::table('itdp_company_users')
                     ->where('id', $id_user)
                     ->update([
-                        'username' => $request->username,
+                        //'username' => $request->username,
                         'email' => $request->email,
                     ]);
 //                $updatetab1 = DB::select("update itdp_company_users set username='" . $request->username . "', email='" . $request->email . "',  where id='" . $id_user . "' ");
@@ -316,7 +316,7 @@ class ProfileController extends Controller
                 DB::table('itdp_company_users')
                     ->where('id', $id_user)
                     ->update([
-                        'username' => $request->username,
+                        //'username' => $request->username,
                         'email' => $request->email,
                         'password' => bcrypt($request->password)
                     ]);
