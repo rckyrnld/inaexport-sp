@@ -109,96 +109,7 @@ class ProfileController extends Controller
         } else {
             $id_profile = $request->id_profile;
             $id_user = $request->id_user;
-
-            if (empty($request->file('foto_profil'))) {
-//                $file = "";
-                $cobaajadulu ="haha";
-            } else {
-                $file = $request->file('foto_profil')->getClientOriginalName();
-                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
-//                $destination = 'uploads\Profile\Importir\\' . $id_user;
-                $request->file('foto_profil')->move($destinationPath, $file);
-                DB::table('itdp_company_users')
-                    ->where('id', $id_user)
-                    ->update([
-                        'foto_profil' => $file
-                    ]);
-//                $updatetab12 = DB::select("update itdp_company_users set foto_profil='" . $file . "'  where id='" . $id_user . "' ");
-                DB::table('itdp_profil_eks')
-                    ->where('id', $id_user)
-                    ->update([
-                        'logo' => $file
-
-                    ]);
-//                $updatetab22 = DB::select("update itdp_profil_eks set logo='" . $file . "' where id='" . $id_profile . "'");
-            }
-			
-			if (empty($request->file('uploadnpwp'))) {
-//                $file = "";
-                $cobaajadulu ="haha";
-            } else {
-                $file = $request->file('uploadnpwp')->getClientOriginalName();
-                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
-//                $destination = 'uploads\Profile\Importir\\' . $id_user;
-                $request->file('uploadnpwp')->move($destinationPath, $file);
-               DB::table('itdp_profil_eks')
-                    ->where('id', $id_user)
-                    ->update([
-                        'uploadnpwp' => $file
-
-                    ]);
-            }
-			
-			if (empty($request->file('uploadtdp'))) {
-//                $file = "";
-                $cobaajadulu ="haha";
-            } else {
-                $file = $request->file('uploadtdp')->getClientOriginalName();
-                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
-//                $destination = 'uploads\Profile\Importir\\' . $id_user;
-                $request->file('uploadtdp')->move($destinationPath, $file);
-               DB::table('itdp_profil_eks')
-                    ->where('id', $id_user)
-                    ->update([
-                        'uploadtdp' => $file
-
-                    ]);
-            }
-			
-			if (empty($request->file('uploadsiup'))) {
-//                $file = "";
-                $cobaajadulu ="haha";
-            } else {
-                $file = $request->file('uploadsiup')->getClientOriginalName();
-                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
-//                $destination = 'uploads\Profile\Importir\\' . $id_user;
-                $request->file('uploadsiup')->move($destinationPath, $file);
-               DB::table('itdp_profil_eks')
-                    ->where('id', $id_user)
-                    ->update([
-                        'uploadsiup' => $file
-
-                    ]);
-            }
-			
-			if (empty($request->file('doc'))) {
-//                $file = "";
-                $cobaajadulu ="haha";
-            } else {
-                $file = $request->file('doc')->getClientOriginalName();
-                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
-//                $destination = 'uploads\Profile\Importir\\' . $id_user;
-                $request->file('doc')->move($destinationPath, $file);
-               DB::table('itdp_profil_eks')
-                    ->where('id', $id_user)
-                    ->update([
-                        'doc' => $file
-
-                    ]);
-            }
-			
-			
-            //UPDATE TAB 1
+			//UPDATE TAB 1
             if ($request->password == null) {
 //                dd($request->username);
                 DB::table('itdp_company_users')
@@ -231,6 +142,7 @@ class ProfileController extends Controller
                     'postcode' => $request->postcode,
                     'fax' => $request->fax,
                     'website' => $request->website,
+                    'badanusaha' => $request->badanUsaha,
                     'phone' => $request->phone
                 ]);
 //            $updatetab2 = DB::select("update itdp_profil_eks set company='" . $request->company . "', addres='" . $request->addres . "', city='" . $request->city . "' , id_mst_province='" . $request->province . "' , postcode='" . $request->postcode . "', fax='" . $request->fax . "', website='" . $request->website . "', phone='" . $request->phone . "'
@@ -255,6 +167,107 @@ class ProfileController extends Controller
 //				, upduserid='" . $request->situ . "' , id_eks_business_size='" . $request->id_eks_business_size . "', id_business_role_id='" . $request->id_business_role_id . "', employe='" . $request->employe . "', status='" . $request->staim . "'
 //				where id='" . $id_profile . "'");
             }
+            if (empty($request->file('foto_profil'))) {
+//                $file = "";
+                $cobaajadulu ="haha";
+            } else {
+                $file = $request->file('foto_profil')->getClientOriginalName();
+                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
+//                $destination = 'uploads\Profile\Importir\\' . $id_user;
+                $request->file('foto_profil')->move($destinationPath, $file);
+                DB::table('itdp_company_users')
+                    ->where('id', $id_user)
+                    ->update([
+                        'foto_profil' => $file
+                    ]);
+//                $updatetab12 = DB::select("update itdp_company_users set foto_profil='" . $file . "'  where id='" . $id_user . "' ");
+                DB::table('itdp_profil_eks')
+                    ->where('id', $id_user)
+                    ->update([
+                        'logo' => $file
+
+                    ]);
+//                $updatetab22 = DB::select("update itdp_profil_eks set logo='" . $file . "' where id='" . $id_profile . "'");
+            }
+			
+			if (empty($request->file('uploadnpwp'))) {
+				echo "njir";die();
+//                $file = "";
+            } else {
+                $filex = $request->file('uploadnpwp')->getClientOriginalName();
+                $destinationPathx = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
+//                $destination = 'uploads\Profile\Importir\\' . $id_user;
+                $request->file('uploadnpwp')->move($destinationPathx, $filex);
+               DB::table('itdp_profil_eks')
+                    ->where('id', $id_profile)
+                    ->update([
+                        'uploadnpwp' => $filex
+
+                    ]);
+            }
+			
+			if (empty($request->file('uploadtdp'))) {
+//                $file = "";
+                $cobaajadulu ="haha";
+            } else {
+                $file = $request->file('uploadtdp')->getClientOriginalName();
+                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
+//                $destination = 'uploads\Profile\Importir\\' . $id_user;
+                $request->file('uploadtdp')->move($destinationPath, $file);
+               DB::table('itdp_profil_eks')
+                    ->where('id', $id_profile)
+                    ->update([
+                        'uploadtdp' => $file
+
+                    ]);
+            }
+			
+			if (empty($request->file('uploadsiup'))) {
+//                $file = "";
+                $cobaajadulu ="haha";
+            } else {
+                $file = $request->file('uploadsiup')->getClientOriginalName();
+                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
+//                $destination = 'uploads\Profile\Importir\\' . $id_user;
+                $request->file('uploadsiup')->move($destinationPath, $file);
+               DB::table('itdp_profil_eks')
+                    ->where('id', $id_profile)
+                    ->update([
+                        'uploadsiup' => $file
+
+                    ]);
+            }
+			
+			if (empty($request->file('doc'))) {
+//                $file = "";
+                $cobaajadulu ="haha";
+            } else {
+                $file = $request->file('doc')->getClientOriginalName();
+                $destinationPath = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
+//                $destination = 'uploads\Profile\Importir\\' . $id_user;
+                $request->file('doc')->move($destinationPath, $file);
+               DB::table('itdp_profil_eks')
+                    ->where('id', $id_profile)
+                    ->update([
+                        'doc' => $file
+
+                    ]);
+            }
+			
+			$datas = DB::table('itdp_profil_eks')
+                        ->where('id', '=', $id_profile)
+                        ->get();
+			
+			$meta = [
+            'code' => 200,
+            'message' => 'Success',
+            'status' => 'Success'
+			];
+			$data = $datas;
+			$res['meta'] = $meta;
+			$res['data'] = $data;
+			return $res;
+            
 			/*
             $meta = [
                 'code' => 200,
@@ -362,7 +375,20 @@ class ProfileController extends Controller
 //
 //                }
 //            }
-            $meta = [
+			$datas = DB::Table('itdp_profil_imp')
+                        ->where('id', '=', $id_profile)
+                        ->get();
+			$meta = [
+            'code' => 200,
+            'message' => 'Success',
+            'status' => 'Success'
+			];
+			$data = $datas;
+			$res['meta'] = $meta;
+			$res['data'] = $data;
+			return $res;
+			
+            /* $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
@@ -370,7 +396,7 @@ class ProfileController extends Controller
             $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
-            return response($res);
+            return response($res); */
         }
     }
 
