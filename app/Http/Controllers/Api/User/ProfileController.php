@@ -255,6 +255,7 @@ class ProfileController extends Controller
 //				, upduserid='" . $request->situ . "' , id_eks_business_size='" . $request->id_eks_business_size . "', id_business_role_id='" . $request->id_business_role_id . "', employe='" . $request->employe . "', status='" . $request->staim . "'
 //				where id='" . $id_profile . "'");
             }
+			/*
             $meta = [
                 'code' => 200,
                 'message' => 'Success',
@@ -264,6 +265,7 @@ class ProfileController extends Controller
             $res['meta'] = $meta;
             $res['data'] = $data;
             return response($res);
+			*/
         }
     }
 
