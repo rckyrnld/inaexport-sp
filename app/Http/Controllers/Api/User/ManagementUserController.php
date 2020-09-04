@@ -1288,4 +1288,58 @@ class ManagementUserController extends Controller
         }
 		
     }
+	
+	public function ceknpwp(Request $request)
+	{
+		$npwpz =	str_replace(".","",$request->npwp);
+		$npwpx =	str_replace("-","",$npwpz);
+		$curl = curl_init();
+        // dd($npwpx);die();
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "http://perizinan.kemendag.go.id/index.php/website_api/kswp/153/".$npwpx,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		  CURLOPT_HTTPHEADER => array(
+		    "cache-control: no-cache",
+		    "content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+		    "postman-token: f3e1235e-d688-a840-efd7-c7eb19691494",
+		    "x-api-key: kpzgMbTYlv2VmXSeOf03KxirsyBIGt48LcRPd7nN"
+		  ),
+		));
+
+	    $server_output = curl_exec ($curl);
+
+		curl_close ($curl);
+
+        $r = json_decode($server_output);
+        // dd($r);
+		// echo json_encode(array('status'=> $r->status,'nama'=> $r->nama));
+        if ($r != null) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $r;
+            return response($res);
+
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
+	}
 }

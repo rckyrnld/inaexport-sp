@@ -101,6 +101,7 @@ Route::group(['middleware' => ['api', 'manage_token:api_user,2|3']], function ()
 	Route::post('count_notif_all', 'Api\User\ManagementUserController@count_notif_all');
 	Route::post('aktifasiulang', 'Api\User\ManagementUserController@aktifasiulang');
 	Route::get('detail_dokumen_eksporter', 'Api\User\ManagementUserController@detail_dokumen');
+	Route::post('cek_npwp_user', 'Api\User\ManagementUserController@ceknpwp');
 
 //End Greed
 
