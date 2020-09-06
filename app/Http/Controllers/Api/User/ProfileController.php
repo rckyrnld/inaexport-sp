@@ -256,7 +256,8 @@ class ProfileController extends Controller
 			
 			$datas = DB::table('itdp_profil_eks')
 						->select('itdp_profil_eks.*','itdp_company_users.agree','itdp_company_users.type','itdp_company_users.remember_token as access_token',
-						'itdp_company_users.id as id_user','itdp_company_users.id_role','itdp_company_users.password','itdp_company_users.username','itdp_company_users.id_template_reject'
+						'itdp_company_users.id as id_user','itdp_company_users.id_role','itdp_company_users.password','itdp_company_users.username',
+						'itdp_company_users.id_template_reject'
 						,'itdp_company_users.keterangan_reject','itdp_company_users.status as status_verif')
 						->join('itdp_company_users', 'itdp_company_users.id_profil', '=', 'itdp_profil_eks.id')
                         ->where('itdp_profil_eks.id', '=', $id_profile)
@@ -466,20 +467,64 @@ class ProfileController extends Controller
 //
 //                }
 //            }
-			$datas = DB::Table('itdp_profil_imp')
-                        ->where('id', '=', $id_profile)
+			$datas = DB::table('itdp_profil_imp')
+						->select('itdp_profil_imp.*','itdp_company_users.agree','itdp_company_users.type','itdp_company_users.remember_token as access_token',
+						'itdp_company_users.id as id_user','itdp_company_users.id_role','itdp_company_users.password','itdp_company_users.username',
+						'itdp_company_users.id_template_reject'
+						,'itdp_company_users.keterangan_reject','itdp_company_users.status as status_verif')
+						->join('itdp_company_users', 'itdp_company_users.id_profil', '=', 'itdp_profil_imp.id')
+                        ->where('itdp_profil_imp.id', '=', $id_profile)
                         ->get();
+			
 			$meta = [
             'code' => 200,
             'message' => 'Success',
             'status' => 'Success'
 			];
-			$data = $datas[0];
+			
+			$role_name = $datas[0]->id_role == 2 ? "Eksportir" : "Importir";
+		
+			
+			
+			$data = array("id"=>$datas[0]->id,
+			"company"=>$datas[0]->company,
+			"addres"=>$datas[0]->addres,
+			"city"=>$datas[0]->city,
+			"id_mst_country"=>$datas[0]->id_mst_country,
+			"postcode"=>$datas[0]->postcode,
+			"phone"=>$datas[0]->phone,
+			"fax"=>$datas[0]->fax,
+			"email"=>$datas[0]->email,
+			"website"=>$datas[0]->website,
+			"upduserid"=>$datas[0]->upduserid,
+			"created"=>$datas[0]->created,
+			"modified"=>$datas[0]->modified,
+			"id_mst_data_source"=>$datas[0]->id_mst_data_source,
+			"status"=>$datas[0]->status,
+			"logo"=>$datas[0]->logo,
+			"id_mst_province"=>$datas[0]->id_mst_province,
+			"badanusaha"=>$datas[0]->badanusaha,
+			"agree"=>$datas[0]->agree,
+			"type"=>$datas[0]->type,
+			"access_token"=>$datas[0]->access_token,
+			"id_user"=>$datas[0]->id_user,
+			"id_role"=>$datas[0]->id_role,
+			"password"=>$datas[0]->password,
+			"username"=>$datas[0]->username,
+			"id_template_reject"=>$datas[0]->id_template_reject,
+			"keterangan_reject"=>$datas[0]->keterangan_reject,
+			"status_verif"=>$datas[0]->status_verif,
+			"role_name"=>$role_name);
+			
 			$res['meta'] = $meta;
+			//$res = Array('data' =>$data);
+			//$res['data'] = $data;
+			//$res['data'][0]['role_name'] = $role_name;
 			$res['data'] = $data;
 			return $res;
-			
-            /* $meta = [
+            
+			/*
+            $meta = [
                 'code' => 200,
                 'message' => 'Success',
                 'status' => 'OK'
@@ -487,7 +532,8 @@ class ProfileController extends Controller
             $data = '';
             $res['meta'] = $meta;
             $res['data'] = $data;
-            return response($res); */
+            return response($res);
+			*/
         }
     }
 
