@@ -191,8 +191,8 @@ class ProfileController extends Controller
             }
 			
 			if (empty($request->file('uploadnpwp'))) {
-				echo "njir";die();
-//                $file = "";
+				//echo "njir";die();
+                $file = "";
             } else {
                 $filex = $request->file('uploadnpwp')->getClientOriginalName();
                 $destinationPathx = public_path() . "/uploads/Profile/Eksportir/" . $id_user;
@@ -255,7 +255,11 @@ class ProfileController extends Controller
             }
 			
 			$datas = DB::table('itdp_profil_eks')
-                        ->where('id', '=', $id_profile)
+						->select('itdp_profil_eks.*','itdp_company_users.agree','itdp_company_users.type','itdp_company_users.remember_token as access_token',
+						'itdp_company_users.id as id_user','itdp_company_users.id_role','itdp_company_users.password','itdp_company_users.username','itdp_company_users.id_template_reject'
+						,'itdp_company_users.keterangan_reject','itdp_company_users.status as status_verif')
+						->join('itdp_company_users', 'itdp_company_users.id_profil', '=', 'itdp_profil_eks.id')
+                        ->where('itdp_profil_eks.id', '=', $id_profile)
                         ->get();
 			
 			$meta = [
@@ -263,8 +267,95 @@ class ProfileController extends Controller
             'message' => 'Success',
             'status' => 'Success'
 			];
-			$data = $datas[0];
+			
+			$role_name = $datas[0]->id_role == 2 ? "Eksportir" : "Importir";
+		
+			
+			
+			$data = array("id"=>$datas[0]->id,
+			"company"=>$datas[0]->company,
+			"addres"=>$datas[0]->addres,
+			"city"=>$datas[0]->city,
+			"postcode"=>$datas[0]->postcode,
+			"phone"=>$datas[0]->phone,
+			"fax"=>$datas[0]->fax,
+			"email"=>$datas[0]->email,
+			"website"=>$datas[0]->website,
+			"upduserid"=>$datas[0]->upduserid,
+			"created"=>$datas[0]->id,
+			"modified"=>$datas[0]->modified,
+			"id_mst_data_source"=>$datas[0]->id_mst_data_source,
+			"status"=>$datas[0]->status,
+			"logo"=>$datas[0]->logo,
+			"npwp"=>$datas[0]->npwp,
+			"kapasitas"=>$datas[0]->kapasitas,
+			"id_prod_kat"=>$datas[0]->id_prod_kat,
+			"id_prod_sub1_kat"=>$datas[0]->id_prod_sub1_kat,
+			"id_prod_sub2_kat"=>$datas[0]->id_prod_sub2_kat,
+			"kapasitas_tidak"=>$datas[0]->kapasitas_tidak,
+			"id_port"=>$datas[0]->id_port,
+			"bulan_ekspor1"=>$datas[0]->bulan_ekspor1,
+			"tahun_ekspor1"=>$datas[0]->tahun_ekspor1,
+			"tahun"=>$datas[0]->tahun,
+			"bank"=>$datas[0]->bank,
+			"id_mst_province"=>$datas[0]->id_mst_province,
+			"tdp"=>$datas[0]->tdp,
+			"siup"=>$datas[0]->siup,
+			"id_eks_business_size"=>$datas[0]->id_eks_business_size,
+			"id_business_role_id"=>$datas[0]->id_business_role_id,
+			"employe"=>$datas[0]->employe,
+			"doc"=>$datas[0]->doc,
+			"id_itdp_eks_business_entity"=>$datas[0]->id_itdp_eks_business_entity,
+			"id_type_capital_eks"=>$datas[0]->id_type_capital_eks,
+			"situ"=>$datas[0]->situ,
+			"addresspabrik"=>$datas[0]->addresspabrik,
+			"kota_pabrik"=>$datas[0]->kota_pabrik,
+			"phone_pabrik"=>$datas[0]->phone_pabrik,
+			"fax_pabrik"=>$datas[0]->fax_pabrik,
+			"metodeekspor"=>$datas[0]->metodeekspor,
+			"frekwensi_pengirim"=>$datas[0]->frekwensi_pengirim,
+			"upaya_pameran_ln"=>$datas[0]->upaya_pameran_ln,
+			"upaya_pameran_dn"=>$datas[0]->upaya_pameran_dn,
+			"upaya_misi_dagang"=>$datas[0]->upaya_misi_dagang,
+			"upaya_pedagang_antara"=>$datas[0]->upaya_pedagang_antara,
+			"upaya_langsung"=>$datas[0]->upaya_langsung,
+			"upaya_brosur"=>$datas[0]->upaya_brosur,
+			"upaya_web"=>$datas[0]->upaya_web,
+			"upaya_email"=>$datas[0]->upaya_email,
+			"upaya_lainnya"=>$datas[0]->upaya_lainnya,
+			"ada_merek"=>$datas[0]->ada_merek,
+			"paten_merek"=>$datas[0]->paten_merek,
+			"paten_ind"=>$datas[0]->paten_ind,
+			"paten_ln"=>$datas[0]->paten_ln,
+			"pakai_merek_pelanggan"=>$datas[0]->pakai_merek_pelanggan,
+			"mutu_reject"=>$datas[0]->mutu_reject,
+			"mutu_qs"=>$datas[0]->mutu_qs,
+			"mutu_rd"=>$datas[0]->mutu_rd,
+			"mutu_limbah"=>$datas[0]->mutu_limbah,
+			"mutu_iso9001"=>$datas[0]->mutu_iso9001,
+			"mutu_iso14001"=>$datas[0]->mutu_iso14001,
+			"mutu_ecolabelling"=>$datas[0]->mutu_ecolabelling,
+			"masalah_ekspor"=>$datas[0]->masalah_ekspor,
+			"badanusaha"=>$datas[0]->badanusaha,
+			"uploadnpwp"=>$datas[0]->uploadnpwp,
+			"uploadtdp"=>$datas[0]->uploadtdp,
+			"uploadsiup"=>$datas[0]->uploadsiup,
+			"agree"=>$datas[0]->agree,
+			"type"=>$datas[0]->type,
+			"access_token"=>$datas[0]->access_token,
+			"id_user"=>$datas[0]->id_user,
+			"id_role"=>$datas[0]->id_role,
+			"password"=>$datas[0]->password,
+			"username"=>$datas[0]->username,
+			"id_template_reject"=>$datas[0]->id_template_reject,
+			"keterangan_reject"=>$datas[0]->keterangan_reject,
+			"status_verif"=>$datas[0]->status_verif,
+			"role_name"=>$role_name);
+			
 			$res['meta'] = $meta;
+			//$res = Array('data' =>$data);
+			//$res['data'] = $data;
+			//$res['data'][0]['role_name'] = $role_name;
 			$res['data'] = $data;
 			return $res;
             
