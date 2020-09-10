@@ -1352,3 +1352,19 @@ if (! function_exists('TOB')) {
         }
     }
 }
+if (! function_exists('checkticketingcreator')) {
+  function checkticketingcreator($id){
+      $cari1 = DB::select("select * from ticketing_support where id='" . $id . "'");
+      foreach ($cari1 as $v1) {
+          $id_company = $v1->id_pembuat;
+      }
+      $cari2 = DB::select("select * from itdp_company_users where id='" . $id_company . "'");
+      if(count($cari2) != 0 ){
+          
+          return true;
+      }
+      else{
+          return false;
+      }
+  }
+}

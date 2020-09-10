@@ -54,7 +54,14 @@
 	            </div>
 	            <div class="col-md-4">
 								: {{$users->name}}
-	            </div>
+              </div>
+              @if(!checkticketingcreator($users->id))
+                  <div class="col-md-2 offset-md-2">
+                      <a onclick="return confirm('Are You Sure ?')" href="{{route('ticket_support.delete.admin', $users->id)}}" id="button" class="btn btn-sm btn-danger" title="Delete">Delete</a>
+                            
+                      <!-- <a href="{{url('admin/ticketing')}}" style="width: 80px;" class="btn btn-danger"> Delete</a> -->
+                  </div>
+            @endif
 	          </div><br>
 	          <div class="row">
 	            <div class="col-md-2">
@@ -91,10 +98,10 @@
 				  $cari1 = DB::select("select * from itdp_company_users where id='".$ip."' limit 1");
 				  foreach($cari1 as $cr1){ echo $cr1->username; ?> 
 				  @if(Cache::has('user-is-eksmp-' . $cr1->id))
-    (<span class="text-success">Online</span>)
-@else
-    (<span class="text-secondary">Offline</span>)
-@endif
+              (<span class="text-success">Online</span>)
+          @else
+              (<span class="text-secondary">Offline</span>)
+          @endif
 				  <?php }
 				  ?>
 	            </div>
