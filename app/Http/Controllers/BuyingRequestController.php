@@ -188,13 +188,15 @@ class BuyingRequestController extends Controller
                 $cr = explode(',', $pesan->id_csc_prod);
                 $hitung = count($cr);
                 $semuacat = "";
-                for ($a = 0; $a < ($hitung - 1); $a++) {
-                    $namaprod = DB::select("select * from csc_product where id='" . $cr[$a] . "' ");
-                    foreach ($namaprod as $prod) {
-                        $napro = $prod->nama_kategori_en;
-                    }
-                    $semuacat = $semuacat . "- " . $napro . "<br>";
-                }
+                for($a = 0; $a < ($hitung - 1); $a++){
+					if($cr[$a] != ''){
+						$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+						if(count($namaprod) != 0){
+							foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+							$semuacat = $semuacat."- ".$napro."<br>";
+						}
+					}
+				}
                 return $semuacat;
             })
             ->addColumn('f7', function ($pesan) {
@@ -255,13 +257,15 @@ class BuyingRequestController extends Controller
                 $cr = explode(',', $pesan->id_csc_prod);
                 $hitung = count($cr);
                 $semuacat = "";
-                for ($a = 0; $a < ($hitung - 1); $a++) {
-                    $namaprod = DB::select("select * from csc_product where id='" . $cr[$a] . "' ");
-                    foreach ($namaprod as $prod) {
-                        $napro = $prod->nama_kategori_en;
-                    }
-                    $semuacat = $semuacat . "- " . $napro . "<br>";
-                }
+                for($a = 0; $a < ($hitung - 1); $a++){
+					if($cr[$a] != ''){
+						$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+						if(count($namaprod) != 0){
+							foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+							$semuacat = $semuacat."- ".$napro."<br>";
+						}
+					}
+				}
                 return $semuacat;
             })
             ->addColumn('f6', function ($pesan) {
@@ -324,15 +328,15 @@ class BuyingRequestController extends Controller
                 $cr = explode(',', $pesan->id_csc_prod);
                 $hitung = count($cr);
                 $semuacat = "";
-                for ($a = 0; $a < ($hitung - 1); $a++) {
-                    $namaprod = DB::select("select * from csc_product where id='" . $cr[$a] . "' ");
-                    if (count($namaprod) != 0) {
-                        foreach ($namaprod as $prod) {
-                            $napro = $prod->nama_kategori_en;
-                        }
-                        $semuacat = $semuacat . "- " . $napro . "<br>";
-                    }
-                }
+                for($a = 0; $a < ($hitung - 1); $a++){
+					if($cr[$a] != ''){
+						$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+						if(count($namaprod) != 0){
+							foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+							$semuacat = $semuacat."- ".$napro."<br>";
+						}
+					}
+				}
                 return $semuacat;
             })
             ->addColumn('f6', function ($pesan) {

@@ -266,10 +266,12 @@ class RegistrasiController extends Controller
 				$hitung = count($cr);
 				$semuacat = "";
 				for($a = 0; $a < ($hitung - 1); $a++){
-					$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
-					if(count($namaprod) != 0){
-					foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
-					$semuacat = $semuacat."- ".$napro."<br>";
+					if($cr[$a] != ''){
+						$namaprod = DB::select("select * from csc_product where id='".$cr[$a]."' ");
+						if(count($namaprod) != 0){
+							foreach($namaprod as $prod){ $napro = $prod->nama_kategori_en; }
+							$semuacat = $semuacat."- ".$napro."<br>";
+						}
 					}
 				}
 				return $semuacat;

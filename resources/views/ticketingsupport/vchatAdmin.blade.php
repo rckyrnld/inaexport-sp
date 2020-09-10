@@ -106,6 +106,13 @@
                 <div class="col-md-12">
                   <div class="box">
                     <br>
+                    
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger alert-block" style="text-align: center">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
                     <div class="row overflow-auto">
                       <?php $datenya = null; ?>
                       @foreach($messages as $msg)
