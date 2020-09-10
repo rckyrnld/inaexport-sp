@@ -69,6 +69,33 @@ class ManagementNoAuthController extends Controller
             return response($res);
         }
     }
+	
+	public function getBadanusaha()
+    {
+        $dataTraining = DB::table('eks_business_entity')
+            ->get();
+        if (count($dataTraining) > 0) {
+            $meta = [
+                'code' => '200',
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+            $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => '204',
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+            $data = $dataTraining;
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return response($res);
+        }
+    }
 
     public function getProvince()
     {
@@ -170,6 +197,7 @@ class ManagementNoAuthController extends Controller
         $phone = $request->phone;
         $fax = $request->fax;
         $website = $request->website;
+        $badanusaha = $request->badanUsaha;
         $password = $request->password;
         $postcode = $request->postcode;
         $address = $request->address;
@@ -189,6 +217,7 @@ class ManagementNoAuthController extends Controller
             ->insertGetId([
                 "company" => $company,
                 "addres" => $address,
+                "badanusaha" => $badanusaha,
                 "postcode" => $postcode,
                 "phone" => $phone,
                 "fax" => $fax,
@@ -206,6 +235,7 @@ class ManagementNoAuthController extends Controller
                 "username" => $username,
                 "password" => bcrypt($password),
                 "email" => $email,
+                "created_at" => $dateNow,
                 "status" => '0',
                 "id_role" => '2',
             ]);
@@ -318,6 +348,7 @@ class ManagementNoAuthController extends Controller
                 "username" => $username,
                 "password" => bcrypt($password),
                 "email" => $email,
+				"created_at" => $dateNow,
                 "status" => '0',
                 "id_role" => '3',
             ]);

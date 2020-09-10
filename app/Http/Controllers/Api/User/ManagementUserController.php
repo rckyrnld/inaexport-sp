@@ -1155,4 +1155,191 @@ class ManagementUserController extends Controller
         }
 		
 	}
+	
+	public function detail_dokumen(Request $request)
+    {
+		$id_user = $request->id_user;
+		$cek = DB::table('itdp_company_users')
+		->where('id', $id_user)
+		->get();
+		foreach($cek as $jyp){
+			$rolenya = $jyp->id_role;
+		}
+		//2 eksportir & 3 importir
+		if($rolenya == 3){ 
+		
+		}else{
+		$data = DB::table('itdp_company_users')
+		->join('itdp_profil_eks', 'itdp_profil_eks.id', '=', 'itdp_company_users.id_profil')
+		->leftjoin('mst_province', 'mst_province.id', '=', 'itdp_profil_eks.id_mst_province')
+		->where('itdp_company_users.id', $id_user)
+		->get();
+		
+		
+		$jsonResult = array();
+        for ($i = 0; $i < count($data); $i++) {
+            $jsonResult[$i]["id_profil"] = $data[$i]->id_profil;
+			$jsonResult[$i]["email"] = $data[$i]->email;
+			if($data[$i]->badanusaha == null | empty($data[$i]->badanusaha)){
+			$jsonResult[$i]["badanusaha"] = "";	
+			}else{
+			$jsonResult[$i]["badanusaha"] = $data[$i]->badanusaha;
+			}
+            $jsonResult[$i]["company"] = $data[$i]->company;
+            $jsonResult[$i]["id_role"] = "2";
+            $jsonResult[$i]["role_desc"] = "Seller/Eksportir";
+            $jsonResult[$i]["addres"] = $data[$i]->addres;
+            $jsonResult[$i]["city"] = $data[$i]->city;
+            $jsonResult[$i]["postcode"] = $data[$i]->postcode;
+            $jsonResult[$i]["phone"] = $data[$i]->phone;
+            $jsonResult[$i]["fax"] = $data[$i]->fax;
+            $jsonResult[$i]["website"] = $data[$i]->website;
+			$jsonResult[$i]["province"] = $data[$i]->id_mst_province;
+			$jsonResult[$i]["province_desc"] = $data[$i]->province_in;
+            if($data[$i]->doc == null | empty($data[$i]->doc)){
+			$jsonResult[$i]["dokumen"] = "";	
+			}else{
+			$jsonResult[$i]["dokumen"] = url('eksportir/' . $data[$i]->doc);
+			}
+            if($data[$i]->employe == null | empty($data[$i]->employe)){
+			$jsonResult[$i]["employe"] = "";	
+			}else{
+			$jsonResult[$i]["employe"] = $data[$i]->employe;
+			}
+			if($data[$i]->npwp == null | empty($data[$i]->npwp)){
+			$jsonResult[$i]["npwp"] = "-";	
+			}else{
+			$jsonResult[$i]["npwp"] = $data[$i]->npwp;
+			}
+			if($data[$i]->uploadnpwp == null | empty($data[$i]->uploadnpwp)){
+			$jsonResult[$i]["uploadnpwp"] = "";	
+			}else{
+			$jsonResult[$i]["uploadnpwp"] = url('eksportir/' . $data[$i]->uploadnpwp);
+			}
+			if($data[$i]->tdp == null | empty($data[$i]->tdp)){
+			$jsonResult[$i]["tdp"] = "-";	
+			}else{
+			$jsonResult[$i]["tdp"] = $data[$i]->tdp;
+			}
+			if($data[$i]->uploadtdp == null | empty($data[$i]->uploadtdp)){
+			$jsonResult[$i]["uploadtdp"] = "";	
+			}else{
+			$jsonResult[$i]["uploadtdp"] = url('eksportir/' . $data[$i]->uploadtdp);
+			}
+			if($data[$i]->siup == null | empty($data[$i]->siup)){
+			$jsonResult[$i]["siup"] = "-";	
+			}else{
+			$jsonResult[$i]["siup"] = $data[$i]->siup;
+			}
+			if($data[$i]->uploadsiup == null | empty($data[$i]->uploadsiup)){
+			$jsonResult[$i]["uploadsiup"] = "";	
+			}else{
+			$jsonResult[$i]["uploadsiup"] = url('eksportir/' . $data[$i]->uploadsiup);
+			}
+			$jsonResult[$i]["situ"] = $data[$i]->situ;
+			$jsonResult[$i]["scoope"] = $data[$i]->id_eks_business_size;
+			$jsonResult[$i]["tob"] = $data[$i]->id_business_role_id;
+			$jsonResult[$i]["status"] = $data[$i]->status;
+			if($data[$i]->status == 1){
+			$jsonResult[$i]["status_desc"] = "Verified";	
+			}else if($data[$i]->status == 2){
+			$jsonResult[$i]["status_desc"] = "Not Verified";	
+			}else{
+			$jsonResult[$i]["status_desc"] = "-";
+			}
+            
+            //$jsonResult[$i]["foto_profil"] = $path = ($data[$i]->foto_profil) ? url('uploads/Profile/Importir/' . $data[$i]->id . '/' . $data[$i]->foto_profil) : url('image/nia-01-01.jpg');            
+			
+        }
+		
+		}
+		
+		if ($data) {
+			// $countall = count($data2);
+			// $bagi = $countall / $request->limit;
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+			
+			/*
+			$data = [
+                'page' => $request->page,
+                'total_results' => $countall,
+                'total_pages' => ceil($bagi),
+                'results' => $jsonResult
+            ];
+			*/
+			
+            $res['meta'] = $meta;
+            $res['data'] = $jsonResult;
+            return response($res);
+        } else {
+            $meta = [
+                'code' => 100,
+                'message' => 'Unauthorized',
+                'status' => 'Failed'
+            ];
+            $data = "";
+            $res['meta'] = $meta;
+            $res['data'] = $data;
+            return $res;
+        }
+		
+    }
+	
+	public function ceknpwp(Request $request)
+	{
+		$npwpz =	str_replace(".","",$request->npwp);
+		$npwpx =	str_replace("-","",$npwpz);
+		$curl = curl_init();
+        // dd($npwpx);die();
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "http://perizinan.kemendag.go.id/index.php/website_api/kswp/153/".$npwpx,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		  CURLOPT_HTTPHEADER => array(
+		    "cache-control: no-cache",
+		    "content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+		    "postman-token: f3e1235e-d688-a840-efd7-c7eb19691494",
+		    "x-api-key: kpzgMbTYlv2VmXSeOf03KxirsyBIGt48LcRPd7nN"
+		  ),
+		));
+
+	    $server_output = curl_exec ($curl);
+
+		curl_close ($curl);
+
+        $r = json_decode($server_output);
+        // dd($r);
+		// echo json_encode(array('status'=> $r->status,'nama'=> $r->nama));
+        if ($r != null) {
+            $meta = [
+                'code' => 200,
+                'message' => 'Success',
+                'status' => 'OK'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = $r;
+            return response($res);
+
+        } else {
+            $meta = [
+                'code' => 204,
+                'message' => 'Data Not Found',
+                'status' => 'No Content'
+            ];
+//            $data = '';
+            $res['meta'] = $meta;
+            $res['data'] = '';
+            return response($res);
+        }
+	}
 }
