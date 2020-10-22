@@ -113,10 +113,6 @@ class VerifyuserController extends Controller
 				return $pesan->country;
 				 
 			})
-			->addColumn('country1', function ($pesan) {
-				return $pesan->country;
-				 
-            })
 
             ->addColumn('f8', function ($pesan) {
             	if (isset($pesan->verified_at)) {
