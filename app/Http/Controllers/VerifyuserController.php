@@ -40,7 +40,7 @@ class VerifyuserController extends Controller
 	 public function getimportir()
     {
 		if(Auth::user()->id_group == 1) {
-      $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' order by a.id desc ");
+      $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at, c.country from itdp_company_users a, itdp_profil_imp b, mst_country c  where a.id_profil = b.id and id_role='3' order by a.id desc ");
       }else if(Auth::user()->id_group == 4){
 		$a = Auth::user()->id;
 		if(Auth::user()->id_admin_dn == 0){
@@ -50,11 +50,11 @@ class VerifyuserController extends Controller
 		foreach($quer as $t1){ $ic = $t1->country; }
 		// echo $ic;die();
 
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b, mst_country c where  c.id='".$ic."' and b.id_mst_country = c.id and  a.id_profil = b.id and id_role='3' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at, c.country from itdp_company_users a, itdp_profil_imp b, mst_country c where  c.id='".$ic."' and b.id_mst_country = c.id and  a.id_profil = b.id and id_role='3' order by a.id desc ");
 
 		}else{
 		//dalam
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at from itdp_company_users a, itdp_profil_imp b where a.id_profil = b.id and id_role='3' and a.status = '1' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.*,a.id as ida,a.status as status_a,b.*, a.verified_at as verified_at, c.country from itdp_company_users a, itdp_profil_imp b, mst_country c where a.id_profil = b.id and id_role='3' and a.status = '1' order by a.id desc ");
       
 		
 		}
@@ -106,6 +106,15 @@ class VerifyuserController extends Controller
 				}else{ 
 				return "<center><font color='orange'>Wait Administrator</font></center>";
 				}
+				 
+			})
+
+			->addColumn('country', function ($pesan) {
+				return $pesan->country;
+				 
+			})
+			->addColumn('country1', function ($pesan) {
+				return $pesan->country;
 				 
             })
 

@@ -57,6 +57,9 @@
                                     <th>
                                         <center>Email Confirmation</center>
                                     </th>
+                                    <th>
+                                        <center>Country</center>
+                                    </th>
 									<th>
                                         <center>Verify By Admin</center>
                                     </th>
@@ -107,6 +110,9 @@
                 {
 					data: 'f6', name: 'f6', orderable: false, searchable: false
 				},
+                {
+                    data: 'country', name: 'country', orderable: false
+                },
 				{
 					data: 'f7', name: 'f7', orderable: false, searchable: false
 				},
