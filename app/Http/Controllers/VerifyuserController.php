@@ -57,30 +57,30 @@ class VerifyuserController extends Controller
 		$quer = DB::select("select * from  itdp_admin_ln where id='".$b."'");
 		foreach($quer as $t1){ $ic = $t1->country; }
 		// echo $ic;die();
-		$pesan = DB::table('itdp_company_users')
-					->join('itdp_profil_imp', 'itdp_company_users.id_profil','itdp_profil_imp.id')
-					->join('mst_country','mst_country.id','itdp_profil_imp.id_mst_country')
-					->selectraw('ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_profil_imp.company, itdp_profil_imp.postcode, itdp_profil_imp.phone, itdp_company_users.id_role, itdp_company_users.agree ,itdp_company_users.id as ida,itdp_company_users.status as status_a, itdp_company_users.verified_at as verified_at, mst_country.country')
-					->where('id_role','3')
-					->where('mst_country.id', $ic)
-					->where('itdp_profil_imp.id_mst_country', 'mst_country.id')
-					->where('itdp_company_users.id_profil','itdp_profil_imp.id');
+		// $pesan = DB::table('itdp_company_users')
+		// 			->join('itdp_profil_imp', 'itdp_company_users.id_profil','itdp_profil_imp.id')
+		// 			->join('mst_country','mst_country.id','itdp_profil_imp.id_mst_country')
+		// 			->selectraw('ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_profil_imp.company, itdp_profil_imp.postcode, itdp_profil_imp.phone, itdp_company_users.id_role, itdp_company_users.agree ,itdp_company_users.id as ida,itdp_company_users.status as status_a, itdp_company_users.verified_at as verified_at')
+		// 			->where('id_role','3')
+		// 			->where('mst_country.id', $ic)
+		// 			->where('itdp_profil_imp.id_mst_country', 'mst_country.id')
+		// 			->where('itdp_company_users.id_profil','itdp_profil_imp.id');
 
-		// $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, b.company, b.postcode, b.phone, a.id_role, a.agree ,a.id as ida,a.status as status_a, a.verified_at as verified_at, c.country from itdp_company_users a, itdp_profil_imp b, mst_country c where  c.id='".$ic."' and b.id_mst_country = c.id and  a.id_profil = b.id and id_role='3' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, b.company, b.postcode, b.phone, a.id_role, a.agree ,a.id as ida,a.status as status_a, a.verified_at as verified_at, c.country from itdp_company_users a, itdp_profil_imp b, mst_country c where  c.id='".$ic."' and b.id_mst_country = c.id and  a.id_profil = b.id and id_role='3' order by a.id desc ");
 
 		}else{
 		//dalam
-
-		$pesan = DB::table('itdp_company_users')
-					->join('itdp_profil_imp', 'itdp_company_users.id_profil','itdp_profil_imp.id')
-					->join('mst_country','mst_country.id','itdp_profil_imp.id_mst_country')
-					->selectraw('ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_profil_imp.company, itdp_profil_imp.postcode, itdp_profil_imp.phone, itdp_company_users.id_role, itdp_company_users.agree ,itdp_company_users.id as ida,itdp_company_users.status as status_a, itdp_company_users.verified_at as verified_at, mst_country.country')
-					->where('id_role','3')
-					->where('itdp_company_users.id_profil','itdp_profil_imp.id')
-					->where('itdp_company_users.status','1');
+		
+		// $pesan = DB::table('itdp_company_users')
+		// 			->join('itdp_profil_imp', 'itdp_company_users.id_profil','itdp_profil_imp.id')
+		// 			->join('mst_country','mst_country.id','itdp_profil_imp.id_mst_country')
+		// 			->selectraw('ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_profil_imp.company, itdp_profil_imp.postcode, itdp_profil_imp.phone, itdp_company_users.id_role, itdp_company_users.agree ,itdp_company_users.id as ida,itdp_company_users.status as status_a, itdp_company_users.verified_at as verified_at')
+		// 			->where('id_role','3')
+		// 			->where('itdp_company_users.id_profil','itdp_profil_imp.id')
+		// 			->where('itdp_company_users.status','1');
 					
 
-		// $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, b.company, b.postcode, b.phone, a.id_role, a.agree, a.id as ida,a.status as status_a, a.verified_at as verified_at, c.country from itdp_company_users a, itdp_profil_imp b, mst_country c where a.id_profil = b.id and id_role='3' and a.status = '1' order by a.id desc ");
+		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, b.company, b.postcode, b.phone, a.id_role, a.agree, a.id as ida,a.status as status_a, a.verified_at as verified_at, c.country from itdp_company_users a, itdp_profil_imp b, mst_country c where a.id_profil = b.id and id_role='3' and a.status = '1' order by a.id desc ");
       
 		
 		}
