@@ -41,7 +41,7 @@
                             <select class="form-control" name="country" id="country">
                                 <option value="">- Choose Country -</option>
                                 <?php
-                                $qc = DB::select("select id,country from mst_country order by country asc");
+                                $qc = DB::select("select id,country from mst_country where Upper(country) != 'INDONESIA' order by country asc");
                                 foreach($qc as $cq){
                                 ?>
                                 <option value="<?php echo $cq->id; ?>"><?php echo $cq->country; ?></option>
