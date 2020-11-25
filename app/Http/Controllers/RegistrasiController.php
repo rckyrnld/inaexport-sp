@@ -34,10 +34,10 @@ class RegistrasiController extends Controller
         return view('auth.cr',compact('pageTitle'));
     }
 	
-	public function registrasi_pembeli()
+	public function register_buyer()
     {
-        $pageTitle = "Registrasi Pembeli";
-        return view('auth.register_pembeli',compact('pageTitle'));
+        $pageTitle = "Register for Buyers";
+        return view('auth.register_buyer',compact('pageTitle'));
     } 
 	
 	public function forget_a()

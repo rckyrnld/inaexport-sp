@@ -21,7 +21,7 @@ Route::get('locale/{locale}', function ($locale) {
 Route::get('switch/{locale}', function ($locale) {
     App::setLocale($locale);
 });
-Route::get('/registrasi_pembeli', 'RegistrasiController@registrasi_pembeli');
+Route::get('/register_buyer', 'RegistrasiController@register_buyer');
 Route::get('/forget_a', 'RegistrasiController@forget_a');
 Route::get('/resetpass_send', 'RegistrasiController@resetpass_send');
 Route::get('/gantipass1/{id}', 'RegistrasiController@gantipass1');

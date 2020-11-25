@@ -20,7 +20,7 @@
 			<div class="col-lg-6">
 				<div class="row justify-content-start">
 					<div class="col-lg-8">
-					<a href="{{url('registrasi_pembeli')}}" style="text-decoration: none;"><img src="{{url('assets')}}/assets/images/cr_imp2.png" alt="." ><p style="font-size:22px; background-color: #fff; color: red;">@lang("login.a5")</p></a>
+					<a href="{{url('register_buyer')}}" style="text-decoration: none;"><img src="{{url('assets')}}/assets/images/cr_imp2.png" alt="." ><p style="font-size:22px; background-color: #fff; color: red;">@lang("login.a5")</p></a>
 					</div>
 				</div>
 			</div>

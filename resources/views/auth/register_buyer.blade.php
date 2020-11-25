@@ -275,24 +275,17 @@
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header" style="background-color:#2e899e; color:white;"><h6>Attention</h6>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">&times;</button>
-            </div>
-
             <div class="modal-body">
-                <h5>
-                    <center><br>
-                        <img style="height:80px!important;" src="{{url('assets')}}/assets/images/mail.png"
-                             alt="."><br><br>
-                        @lang("register.modal")
-                    </center>
-                </h5>
-				<br>
-				<h5>If you didn't receive email from Inaexport, please check your spam/junk folder.</h5>
+
+                    <p>A confirmation email has been sent to your mailbox.<br>
+                        Please check your spam folder if you are having trouble receiving email.
+                    </p>
+                    <p>To make inquiries and buying requests please wait for the verification process from our representatives abroad</p>
+
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
-                <a href="{{url('login')}}" type="button" class="btn btn-danger">Close</a>
+                <a href="http://inaexport.id" type="button" class="btn btn-danger">Close</a>
             </div>
         </div>
     </div>
@@ -329,12 +322,12 @@
         var token = $('meta[name="csrf-token"]').attr('content');
         $.get('{{URL::to("cekmail/")}}/' + m, {_token: token}, function (data) {
             if (data == 0) {
-                $('#cekmail').html("<font color='green'>( Available )</font>");
+                $('#cekmail').html("<font color='green'>(Available)</font>");
 
             } else {
-                $('#cekmail').html("<font color='red'>( Not Available ! )</font>");
+                $('#cekmail').html("<font color='red'>(Already used)</font>");
                 $('#email').val("");
-                alert("Sorry The Mail Has Been Used");
+                alert("The email has been used. Try another one");
             }
 
 
@@ -410,7 +403,7 @@
         var token = $('meta[name="csrf-token"]').attr('content');
         if (password == kpassword) {
             if (company == "" || email == "" || phone == "" || password == "" || country == "" || city == "" || alamat == "" || chp == "") {
-                alert("Please complete the field !")
+                alert("Please complete the field")
                 refresh();
                 $('#captchainput').val('');
             } else {
@@ -457,7 +450,7 @@
                     // $('#captchainput').val('');
                     $("#myModal").modal("show");
                 }else{
-                    alert("You have entered an invalid email address!");
+                    alert("Invalid email address");
                     $('#email').val('');
                     refresh();
                     $('#captchainput').val('');
