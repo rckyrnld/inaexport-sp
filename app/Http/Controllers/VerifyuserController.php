@@ -43,11 +43,33 @@ class VerifyuserController extends Controller
 			
 					
       	// $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, b.company, b.postcode, b.phone, a.id_role, a.agree ,a.id as ida,a.status as status_a, a.verified_at as verified_at, c.country from itdp_company_users a, itdp_profil_imp b, mst_country c  where a.id_profil = b.id and id_role='3' order by a.id desc ");
-		  $pesan = DB::table('itdp_company_users')
-					->join('itdp_profil_imp', 'itdp_company_users.id_profil','itdp_profil_imp.id')
-					->join('mst_country','mst_country.id','itdp_profil_imp.id_mst_country')
-					->selectraw('ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_profil_imp.company, itdp_profil_imp.postcode, itdp_profil_imp.phone, itdp_company_users.id_role, itdp_company_users.agree ,itdp_company_users.id as ida,itdp_company_users.status as status_a, itdp_company_users.verified_at as verified_at, mst_country.country')
-					->where('id_role','3');
+		//   $pesan = DB::table('itdp_company_users')
+		// 			->join('itdp_profil_imp', 'itdp_company_users.id_profil','itdp_profil_imp.id')
+		// 			->join('mst_country','mst_country.id','itdp_profil_imp.id_mst_country')
+		// 			->selectraw('ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_profil_imp.company, itdp_profil_imp.postcode, itdp_profil_imp.phone, itdp_company_users.id_role, itdp_company_users.agree ,itdp_company_users.id as ida,itdp_company_users.status as status_a, itdp_company_users.verified_at as verified_at, mst_country.country')
+		// 			->where('id_role','3');
+		$pesan = DB::select("SELECT ROW_NUMBER
+						() OVER ( ORDER BY A.ID DESC ) AS ROW,
+						A.email,
+						b.company,
+						b.postcode,
+						b.phone,
+						A.id_role,
+						A.agree,
+						A.ID AS ida,
+						A.status AS status_a,
+						A.verified_at AS verified_at,
+						C.country 
+					FROM
+						itdp_company_users A 
+					JOIN 
+						itdp_profil_imp b ON A.id_profil = b.id
+					LEFT JOIN
+						mst_country C ON b.id_mst_country = c.id
+					WHERE
+					id_role = '3' 
+					ORDER BY
+						A.ID DESC");
 
 		}else if(Auth::user()->id_group == 4){
 		$a = Auth::user()->id;
@@ -66,7 +88,31 @@ class VerifyuserController extends Controller
 		// 			->where('itdp_profil_imp.id_mst_country', 'mst_country.id')
 		// 			->where('itdp_company_users.id_profil','itdp_profil_imp.id');
 
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, b.company, b.postcode, b.phone, a.id_role, a.agree ,a.id as ida,a.status as status_a, a.verified_at as verified_at, c.country from itdp_company_users a, itdp_profil_imp b, mst_country c where  c.id='".$ic."' and b.id_mst_country = c.id and  a.id_profil = b.id and id_role='3' order by a.id desc ");
+		$pesan = DB::select("SELECT ROW_NUMBER
+					() OVER ( ORDER BY A.ID DESC ) AS ROW,
+					A.email,
+					b.company,
+					b.postcode,
+					b.phone,
+					A.id_role,
+					A.agree,
+					A.ID AS ida,
+					A.status AS status_a,
+					A.verified_at AS verified_at,
+					C.country 
+				FROM
+					itdp_company_users A 
+				JOIN 
+					itdp_profil_imp b ON A.id_profil = b.id
+				LEFT JOIN
+					mst_country C ON b.id_mst_country = c.id
+				WHERE
+					C.ID = '".$ic."' 
+					AND b.id_mst_country = C.ID 
+					AND A.id_profil = b.ID 
+					AND id_role = '3' 
+				ORDER BY
+					A.ID DESC");
 
 		}else{
 		//dalam
@@ -80,7 +126,30 @@ class VerifyuserController extends Controller
 		// 			->where('itdp_company_users.status','1');
 					
 
-		$pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, b.company, b.postcode, b.phone, a.id_role, a.agree, a.id as ida,a.status as status_a, a.verified_at as verified_at, c.country from itdp_company_users a, itdp_profil_imp b, mst_country c where a.id_profil = b.id and id_role='3' and a.status = '1' order by a.id desc ");
+		$pesan = DB::select("SELECT ROW_NUMBER
+								() OVER ( ORDER BY A.ID DESC ) AS ROW,
+								A.email,
+								b.company,
+								b.postcode,
+								b.phone,
+								A.id_role,
+								A.agree,
+								A.ID AS ida,
+								A.status AS status_a,
+								A.verified_at AS verified_at,
+								C.country 
+							FROM
+								itdp_company_users A 
+							JOIN 
+								itdp_profil_imp b ON A.id_profil = b.id
+							LEFT JOIN
+								mst_country C ON b.id_mst_country = c.id
+							WHERE
+								A.id_profil = b.ID 
+								AND id_role = '3' 
+								AND A.status = '1' 
+							ORDER BY
+								A.ID DESC");
       
 		
 		}
