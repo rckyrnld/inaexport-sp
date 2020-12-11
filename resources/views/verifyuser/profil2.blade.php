@@ -328,10 +328,13 @@
                                 <div align="right">
                                     <?php if(empty(Auth::user()->name)){
                                     }else{ ?>
-                                    <a href="{{ url('verifyimportir') }}" class="btn btn-md btn-danger"><i
+                                        <a href="{{ url('verifyimportir') }}" class="btn btn-md btn-danger"><i
                                                 class="fa fa-arrow-left"></i> Back</a>
+                                    <?php  if(Auth::user()->id_group == 1 || (Auth::user()->id_group == 4 && (Auth::user()->id_admin_dn == null || Auth::user()->id_admin_dn == 0 ))){ ?>
+                                        <button class="btn btn-md btn-primary"><i class="fa fa-save"></i> Save</button>
                                     <?php } ?>
-                                    <button class="btn btn-md btn-primary"><i class="fa fa-save"></i> Save</button>
+                                    <?php } ?>
+                                    
                                 </div>
 				</form>
 							<hr>	
