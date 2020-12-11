@@ -400,7 +400,10 @@ class VerifyuserController extends Controller
 					// luar
 					$b = Auth::user()->id_admin_ln;
 					$pesan = DB::table('itdp_company_users')
-							->join('itdp_profil_eks','itdp_profil_eks.id','itdp_company_users.id_profil')->selectraw('ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at')->where('itdp_company_users.id_role','2')->where('itdp_company_users.status','1');
+							->join('itdp_profil_eks','itdp_profil_eks.id','itdp_company_users.id_profil')
+							->selectraw('ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at')
+							->where('itdp_company_users.id_role','2')
+							->where('itdp_company_users.status','1');
 					// ->get();
 			
 					// $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a, b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at from itdp_company_users a, itdp_profil_eks b where a.id_profil = b.id and id_role='2' and a.status = '1'  order by a.id desc ");
@@ -411,7 +414,12 @@ class VerifyuserController extends Controller
 					$quer = DB::select("select * from  itdp_admin_dn where id='".$b."'");
 					foreach($quer as $t1){ $ic = $t1->id_country; }
 					// echo $ic;die();
-					$pesan = DB::table('itdp_company_users')->join('itdp_profil_eks','itdp_profil_eks.id','itdp_company_users.id_profil')->selectraw('ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at')->where('itdp_profil_eks.id_mst_province', $ic) ->where('itdp_company_users.id_role','2')->where('itdp_company_users.status','1');
+					$pesan = DB::table('itdp_company_users')
+							->join('itdp_profil_eks','itdp_profil_eks.id','itdp_company_users.id_profil')
+							->selectraw('ROW_NUMBER() OVER (ORDER BY itdp_company_users.id DESC) AS Row, itdp_company_users.email, itdp_company_users.id_role, itdp_company_users.agree, itdp_company_users.id as ida,itdp_company_users.status as status_a,itdp_profil_eks.id as idb,itdp_profil_eks.company, itdp_profil_eks.postcode, itdp_profil_eks.phone, itdp_profil_eks.npwp, itdp_company_users.created_at as created_at')
+							->where('itdp_profil_eks.id_mst_province', $ic)
+							->where('itdp_company_users.id_role','2');
+							// ->where('itdp_company_users.status','1');
 					// ->get();
 					// $pesan = DB::select("select ROW_NUMBER() OVER (ORDER BY a.id DESC) AS Row, a.email, a.id_role, a.agree, a.id as ida,a.status as status_a, b.id as idb,b.company, b.postcode, b.phone, b.npwp, a.created_at as created_at from itdp_company_users a, itdp_profil_eks b where b.id_mst_province = '".$ic."' and a.id_profil = b.id and id_role='2' order by a.id desc ");
 				
@@ -497,8 +505,8 @@ class VerifyuserController extends Controller
 				})
 				->addColumn('action', function ($pesan) {
 					
-					if(Auth::user()->id_group == 4){
-					return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>';
+					if(Auth::user()->id_group == 4 && (Auth::user()->id_admin_dn == null || Auth::user()->id_admin_dn == 0)){						 
+						return '<a href="'.url('profil/'.$pesan->id_role.'/'.$pesan->ida).'" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-edit text-white"></i></a>';
 						
 					}else{
 			   

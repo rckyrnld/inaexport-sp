@@ -555,7 +555,7 @@ body {font-family: Arial;}
 <div align="right">
 <?php if(empty(Auth::user()->name)){ }else{ ?>
 <a href="{{ url('verifyuser') }}" class="btn btn-md btn-danger"><i class="fa fa-arrow-left"></i> Back</a>
-<?php if(Auth::user()->id_group == 1){ ?>
+<?php  if(Auth::user()->id_group == 1 || (Auth::user()->id_group == 4 && (Auth::user()->id_admin_ln == null || Auth::user()->id_admin_ln == 0 ))){ ?>
 <button class="btn btn-md btn-primary"><i class="fa fa-save"></i> Save</button>
 <?php } ?>
 <?php } ?>
