@@ -107,7 +107,7 @@ class LoginEIController extends Controller
                 }
         }
 		else{
-            return back()->withErrors(['email' => 'Email or password are wrong.']);
+            return back()->withErrors(['email' => 'Email or password is incorrect']);
         }
 
     }

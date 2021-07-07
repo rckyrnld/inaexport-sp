@@ -41,7 +41,7 @@ return [
         "fax" => "Fax",
         "website" => "Website",
         "password" => "Kata sandi",
-        "fp" => "Lupa Password ?",
+        "fp" => "Lupa Password",
         "r1" => "Masih belum punya akun ?",
         "r2" => "Daftar",
         "re-password" => "Re-Password",

@@ -820,8 +820,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 .top_right > ul > li {
   display: inline-block;
   position: relative;
-  padding-right: 20px;
-  margin-right: 20px;
+  padding-right: 5px;
+  margin-right: 5px;
 }
 .top_right > ul > li:hover ul.dropdown_currency, .top_right > ul > li:hover ul.dropdown_language, .top_right > ul > li:hover ul.dropdown_links {
   top: 100%;
@@ -859,7 +859,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   content: "";
   width: 1px;
   height: 12px;
-  background: #1b1b1b;
+  /*background: #1b1b1b;*/
   top: 50%;
   right: 0px;
   transform: translatey(-50%);
@@ -872,7 +872,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color: #fff;
   text-transform: capitalize;
   line-height: 45px;
-  font-size: 13px;
+  font-size: 14px;
   cursor: pointer;
   display: inline-block;
   font-weight: 400;
@@ -989,25 +989,25 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 .header_middle {
   /* background: #79b5cd; */
   background: #ddeffd;
-  padding: 15px 0;
+  padding: 5px 0;
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .header_middle {
-    padding: 21px 0;
+    padding: 10px 0;
   }
 }
 @media only screen and (max-width: 767px) {
   .header_middle {
-    padding: 22px 0 20px;
+    padding: 10px 0 10px;
   }
 }
 
 .middel_right {
-  display: flex;
+  /* display: flex;
   -webkit-box-pack: end;
   -ms-flex-pack: end;
-  justify-content: flex-end;
-  align-items: center;
+  justify-content: flex-end; */
+  text-align: right;
 }
 @media only screen and (max-width: 767px) {
   .middel_right {
@@ -5289,7 +5289,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .breadcrumb_content {
-  padding: 22px 0;
+  padding-top: 20px;
 }
 .breadcrumb_content ul li {
   display: inline-block;
@@ -10148,7 +10148,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 /* ------ Custom CSS ------- */
 .slider_section {
-  background-color: #1a70bb;
+  /*background-color: #1a70bb;*/
+  background-color: #fff;
 }
 
 .button-join {
@@ -10165,14 +10166,14 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .counters_number {
   color: #fff;
-  font-size: 21px;
+  font-size: 32px;
   font-weight: bold;
-  padding-left: 20px;
+  /*padding-left: 20px;*/
 }
 
 .counters_text {
   color: #fff;
-  font-size: 13px;
+  font-size: 20px;
   /*padding-left: 20px;*/
 }
 
@@ -10252,3 +10253,16 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     bottom: 23px;
   }
 }
+
+.navbar-top {
+  font-size: 16px;
+}
+
+.card {
+  border-radius: 0px;
+}
+
+.btn {
+  border-radius: 0px;;
+}
+

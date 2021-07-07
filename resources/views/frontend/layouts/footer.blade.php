@@ -47,150 +47,9 @@
     $loc = app()->getLocale(); 
     if(empty($loc)){ $loc = 'en'; } 
 ?>
-    <section class="call_to_action" style="padding-top:40px;padding-bottom:40px;">
-        <div class="container">
-            <div class="row counters">
-
-                <div class="col-lg-2 col-sm-12 col-12">
-                    <ul class="list-group list-group-horizontal-sm">
-                        <li>
-                            <img src="{{asset('front/assets/img/exporters.png')}}" alt="" style="width: 33px;margin-left: 10%; float:left">
-                            <span class="counters_number" style="margin-right: 20%; text-align:left">{{getCountData('itdp_company_users')}}</span><br>
-                            <span class="counters_text" style="margin-left: 20px; text-align: left;">
-                            @if($loc == 'ch')
-                            出口商
-                            @elseif($loc == 'in')
-                            Eksportir
-                            @else
-                            Indonesian Exporters
-                            @endif
-                            </span>
-                        </li>
-                    </ul>
-                   <!-- <ul class="list-group list-group-horizontal-sm">
-                        <li>
-                            <img src="{{asset('front/assets/img/exporters.png')}}" alt="" style="width: 20%;margin-left: 20%;">
-                            <span class="counters_number" style="margin-right: 20%;float:right">{{getCountData('itdp_company_users')}}</span>
-                        </li>
-                         <li>
-                            <p class="counters_text"  style="font-size: 18px; text-align: center">
-							
-                                @if($loc == 'ch')
-                                出口商
-                                @elseif($loc == 'in')
-                                Eksportir
-                                @else
-                                Indonesian Exporters
-                                @endif 
-                            </p>
-                        </li>
-                    </ul>-->
-                    <br>
-                </div>
-
-                <div class="col-lg-2 col-sm-12 col-12">
-                    <ul class="list-group list-group-horizontal-sm ">
-                        <li>
-                            <img src="{{asset('front/assets/img/products.png')}}" alt="" style="width:35px; margin-left: 10%; float: left;">
-                            <span class="counters_number" style="margin-right:20%; text-align: left">{{getCountData('csc_product_single')}}</span><br>
-                            <span class="counters_text" style="margin-left:20px; text-align: left">
-                            @lang('frontend.home.product')
-                            </span>
-                        </li>
-                    </ul>
-                    <!--<ul class="list-group list-group-horizontal-sm ">
-                        <li>
-                            <img src="{{asset('front/assets/img/products.png')}}" alt="" style="width: 20%; margin-left: 20%;">
-                            <span class="counters_number" style="margin-right:20%;float: right">{{getCountData('csc_product_single')}}</span>
-                        </li>
-                        <li>
-                            <p class="counters_text" style="font-size: 18px;text-align: center">@lang('frontend.home.product')</p>
-                        </li>
-                    </ul>-->
-                </div>
-
-                
-
-                <div class="col-lg-4 col-sm-12 col-12 ">
-                    <ul class="list-group list-group-horizontal-sm" >
-                        <!-- style="margin-left:18%;margin-right:18%;" -->
-                        <li style="margin-left:18%;margin-right:18%;">
-                            <img src="{{asset('front/assets/img/representative.png')}}" alt="" style="width: 30px;margin-left: 10%; float:left">
-                            <span class="counters_number" style="margin-right: 20%;text-align:left">{{getCountData('itdp_admin_users')}}</span><br>
-                            <!-- <span class="counters_text" style="margin-right: 23%; font-size: 18px; float: right;"> -->
-                            <span class="counters_text" style="margin-left: 20px; text-align: left;">
-                            @if($loc == 'ch')
-                            海外贸易代表
-                            @elseif($loc == 'in')
-                            Perwakilan Dagang Luar Negeri
-                            @else
-                            Overseas Trade Representative 
-                            @endif
-                            </span>
-                        </li>
-                    </ul>   
-                    <br>
-                </div>
-
-                <div class="col-lg-2 col-sm-12 col-12 ">
-                    <ul class="list-group list-group-horizontal-sm" >
-                        <li>
-                            <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 35px;;margin-left: 10%; float:left">
-                            <span class="counters_number" style="margin-right: 20%;text-align:left">{{getCountData('event_detail')}}</span><br>
-                            <span class="counters_text" style="margin-left: 20px;text-align: left;">
-                            @if($loc == 'ch')
-                            国际活动
-                            @elseif($loc == 'in')
-                            Pameran Internasional
-                            @else
-                            International Events
-                            @endif
-                            </span>
-                        </li>
-                    </ul>   
-                    <!--<ul class="list-group list-group-horizontal-sm">
-                        <li>
-                            <img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 20%;margin-left: 20%;">
-                            <span class="counters_number" style="margin-right: 20%;float:right">{{getCountData('event_detail')}}</span>
-                        </li>
-                        <li >
-                            <p class="counters_text" style="font-size: 18px;text-align: center;">
-                                @if($loc == 'ch')
-                                事件
-                                @elseif($loc == 'in')
-                                Acara
-                                @else
-                                Events
-                                @endif
-                            </p>
-                        </li>
-                    </ul>-->
-                    <br>
-                </div>
-
-                <div class="col-lg-2 col-sm-12 col-12 ">
-                    <ul class="list-group list-group-horizontal-sm">
-                        <li>
-                            <img src="{{asset('front/assets/img/researchcorner.png')}}" alt="" style="width: 35px;margin-left: 10%; float:left">
-                            <span class="counters_number" style="margin-right: 20%;text-align:left">{{getCountData('csc_research_corner')}}</span><br>
-                            <!-- <span class="counters_text" style="margin-right: 23%; font-size: 18px; float: right;"> -->
-                            <span class="counters_text" style="margin-left: 20px; text-align: left;">
-                            @if($loc == 'ch')
-                            市场调查
-                            @elseif($loc == 'in')
-                            Riset Pasar
-                            @else
-                            Market Research
-                            @endif
-                            </span>
-                        </li>
-                    </ul>   
-                    <br>
-                </div>
     
-            </div>
-        </div>
-    </section>
+            
+        
 
 <!--footer area start-->
 <footer class="footer_widgets" style="background-color:white">
@@ -210,14 +69,14 @@
                                                 <td width="7%"><img src="{{asset('front/assets/icon/icon_lokasi_3.png')}}"></td>
                                                 <td class="footer-child" style="padding-left: 5px;">Jl. M.I. Ridwan Rais No.5, RT.7/RW.1, Gambir, Kecamatan Gambir, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10110, Indonesia</td>
                                             </tr>
-                                            <tr>
+                                            <!--<tr>
                                                 <td><img src="{{asset('front/assets/icon/icon_phone_3.png')}}"></td>
                                                 <td class="footer-child" style="padding-left: 5px;">+62 21 385 8171</td>
                                             </tr>
                                             <tr>
                                                 <td><img src="{{asset('front/assets/icon/icon_idk_3.png')}}"></td>
                                                 <td class="footer-child" style="padding-left: 5px;">+62 21 385 8171</td>
-                                            </tr>
+                                            </tr>-->
                                             <tr>
                                                 <td><img src="{{asset('front/assets/icon/icon_email_3.png')}}"></td>
                                                 <td class="footer-child" style="padding-left: 5px;">mail@inaexport.id</td>
@@ -283,7 +142,7 @@
 								<br><br>
 							-->
 								<table width="100%">
-                                    <tr>
+                                    <!--<tr>
                                         <td width="50%" style="padding: 10px;">    
                                             <a target="_blank" href="http://exim.kemendag.go.id"><img src = "{{asset('front/assets/icon/Logo_Exim.png')}}" ></a>
                                         </td>
@@ -295,14 +154,14 @@
                                         <td width="100%" colspan="2"  align="center">
                                             <a target="_blank" href="http://tr.apec.org/"><img width="50%" src = "{{asset('front/assets/icon/Logo_Apec.png')}}" ></a>
                                         </td>
-                                    </tr>
+                                    </tr>-->
                                     <tr>
-                                        <td width="50%" align="right"><a href="https://play.google.com/store/apps/details?id=com.maxxima.kemendagmobile" target="_BLANK"><img src="{{asset('front/assets/icon/android.svg')}}" alt="" width="100%"></a></td>
-                                        <td width="50%" align="left"><a href="https://apps.apple.com/us/app/inaexport/id1497480318" target="_BLANK"><img src="{{asset('front/assets/icon/ios.svg')}}" alt="" width="100%"></a></td>
+                                        <td width="100%" align="center"><a href="https://play.google.com/store/apps/details?id=com.maxxima.kemendagmobile" target="_BLANK"><img src="{{asset('front/assets/icon/android.svg')}}" alt="" width="100%"></a></td>
+                                        <!--<td width="50%" align="left"><a href="https://apps.apple.com/us/app/inaexport/id1497480318" target="_BLANK"><img src="{{asset('front/assets/icon/ios.svg')}}" alt="" width="100%"></a></td>-->
                                     </tr>
 								</table>
 								<br>
-								<p>@lang("footer.cc") &copy; <?php echo date("Y"); ?> </p>
+								<p>@lang("footer.cc") &copy; 2020 - <?php echo date("Y"); ?> </p>
 								
                                 
                                 

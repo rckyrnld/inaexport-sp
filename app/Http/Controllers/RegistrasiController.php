@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Mail;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Auth;
+use Validator;
 
 class RegistrasiController extends Controller
 {
@@ -30,7 +31,7 @@ class RegistrasiController extends Controller
 	
 	public function pilihregister()
     {
-        $pageTitle = "Choose Register";
+        $pageTitle = "Create Account";
         return view('auth.cr',compact('pageTitle'));
     }
 	
@@ -94,23 +95,59 @@ class RegistrasiController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         $date = date('Y-m-d H:i:s');
 //        dd($admin_all);
-        $insert1 = DB::select("
-			insert into itdp_profil_imp (company,addres,postcode,phone,fax,email,website,created,status,city,id_mst_country) values
+
+		// validasi
+		$rules = [
+            'regfullname'   => 'required',
+            'regpassword'   => 'required|min:6',
+            'regemail'      => 'required|email|unique:itdp_company_users,email',
+			'regcountry'	=> 'required'
+        ];
+ 
+        $messages = [
+            'regfullname.required'      => 'Please enter your full name.',
+            'regpassword.required'      => 'Please enter a password.',
+            'regpassword.min'           => 'Password at least 6 characters.',
+            'regemail.required'         => 'Please enter your email address.',
+            'regemail.email'            => 'Email address is invalid. Please enter a valid email address.',
+            'regemail.unique'           => 'Email already registered.',
+			'regcountry.required'		=> 'Please select country.',
+        ];
+ 
+        $validator = Validator::make($request->all(), $rules, $messages);
+         
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+		//return back()->with('success', 'User created successfully.');
+ 
+        /*$insert1 = DB::select("
+			insert into itdp_profil_imp (company, addres, postcode, phone, fax, email, website, created, status, city, id_mst_country) values
 			('".strtoupper($request->company)."','".$request->alamat."','".$request->postcode."','".$request->phone."','".$request->fax."'
 			,'".$request->email."','".$request->website."','".$date."','1','".$request->city."','".$request->country."')
-		");
+		");*/
+		$insert1 = DB::select("
+			insert into itdp_profil_imp (email, created, status, id_mst_country) values
+			('".$request->regemail."','".$date."','1','".$request->regcountry."')");
 		$ambilmaxid = DB::select("select max(id) as maxid from itdp_profil_imp");
 		foreach($ambilmaxid as $rt){
 			$id1 = $rt->maxid;
 		}
-		$insert2 = DB::select("
+		/*$insert2 = DB::select("
 			insert into itdp_company_users (id_profil,password,email,status,id_role,type,created_at,newsletter) values
 			('".$id1."','".bcrypt($request->password)."','".$request->email."','0','3','Dalam Negeri','".$date."',$request->ckk2send)
+		");*/
+		$insert2 = DB::select("
+			insert into itdp_company_users (id_profil, password, email, status, id_role, type, created_at) values
+			('".$id1."','".bcrypt($request->regpassword)."','".$request->regemail."','0','3','Luar Negeri','".$date."')
 		");
 		$ambilmaxid2 = DB::select("select max(id) as maxid2 from itdp_company_users");
 		foreach($ambilmaxid2 as $rt2){
 			$id2 = $rt2->maxid2;
 		}
+
+		/*
 		// notif 
 		$id_terkait = "3/".$id2;
 		$ket = "New user Buyer with name ".strtoupper($request->company);
@@ -134,6 +171,7 @@ class RegistrasiController extends Controller
 
                 });
 		    }
+		
 
         $admin_all = DB::select("select name,email from itdp_admin_users where id_group='1'");
         foreach($admin_all as $aa){
@@ -157,7 +195,7 @@ class RegistrasiController extends Controller
                     $mail->to($data['email'], $data['username']);
                     $mail->subject('Account Activation Notification');
 
-                });
+                });*/
 
 
 
@@ -171,7 +209,10 @@ class RegistrasiController extends Controller
 //
 //                });
 
-        return view('auth.waitmail',compact('pageTitle'));
+
+			$pageTitle = "Create Account Inaexport";
+        	//return view('auth.waitmail',compact('pageTitle'));
+			return view('auth.regaccount', compact('pageTitle'));
     }
 	
 	public function simpan_rpenjual(Request $request)

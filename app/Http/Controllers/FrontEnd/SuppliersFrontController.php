@@ -33,10 +33,13 @@ class SuppliersFrontController extends Controller
             ->orderBy('id', 'ASC')
             ->limit(8)
             ->get();
-        return view('frontend.index', compact('categoryutama', 'categoryutama2'));
+
+        $pageTitle = "Inaexport | Start doing business with indonesian exporters";
+        $topMenu = "home";
+        return view('frontend.index', compact('categoryutama', 'categoryutama2', 'pageTitle', 'topMenu'));
     }
 
-    public function list_perusahaan(Request $request)
+    public function suppliers(Request $request)
     {
         // dd($request->all());
         //List Category Product
@@ -202,8 +205,10 @@ class SuppliersFrontController extends Controller
 
         $jenisnya = "eksportir";
         $bgn = "list";
+        $pageTitle = "Inaexport Suppliers";
+        $topMenu = "supplier";
         // dd($jenisnya);
-        return view('frontend.supplier.list_eksporter',['eksporter' => $eksporter->appends(Input::except('page'))], compact('categoryutama', 'catActive', 'coeksporter', 'search_eks', 'get_cat_eks', 'jenisnya', 'sortingby', 'bgn'));
+        return view('frontend.supplier.list_eksporter',['eksporter' => $eksporter->appends(Input::except('page'))], compact('categoryutama', 'catActive', 'coeksporter', 'search_eks', 'get_cat_eks', 'jenisnya', 'sortingby', 'bgn', 'pageTitle', 'topMenu'));
 
 
     }

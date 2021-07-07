@@ -160,6 +160,17 @@
   font-size: 12px;
   padding: 10px 22px;
 }
+
+.numberbg {
+  background: url({{ URL::asset('image/export-containers.jpg') }}) no-repeat center center fixed;
+  background-size: cover;
+}
+
+.txtbg {
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+}
+
 </style>
 <?php 
     $loc = app()->getLocale(); 
@@ -179,184 +190,15 @@
 
     $imgarray = ['agriculture','apparel','automotive','jewelry','health_beauty','electrics','furniture','industrial_parts','gift_card','food'];
 ?>
-<!-- buat background aja -->
-<div style="background-color: #dddee5;!important">
-    <!--menu & category start-->
-    <section class="slider_section mb-50" style="margin-bottom: 0px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-12">
-                    <div class="categories_menu">
-                        <div class="categories_title">
-                            <h2 class="categori_toggle">@lang('frontend.home.popcategory')</h2>
-                        </div>
-                        <div class="categories_menu_toggle" style="padding: 0px 0 0px!important;">
-                            <ul>
-                                @foreach($categoryutama2 as $key => $cu)
-                                    <?php
-                                        $catprod1 = getCategoryLevel(1, $cu->id, "");
-                                        $nk = "nama_kategori_".$lct; 
-                                        if($cu->$nk == NULL){
-                                            $nk = "nama_kategori_en";
-                                        }
+<!-- main image start -->
+<div class="container">
+    <div class="row">
+        <img src="{{asset('front/assets/img/main/products-diverse.png')}}" class="img-fluid">
+    </div>
+</div>
+<!-- main image end -->
 
-                                        $textkat = $cu->$nk;
-                                        if(strlen($textkat) > 31){
-                                            $cut_text = substr($textkat, 0, 31);
-                                            if ($textkat{31 - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                                                $cut_text = substr($textkat, 0, $new_pos);
-                                            }
-                                            $kategorinya = $cut_text . '...';
-                                        }else{
-                                            $kategorinya = $textkat;
-                                        }
-                                        if($cu->logo != null){
-                                            $imagenya = asset('uploads/Product/Icon').'/'.$cu->logo;
-                                        } else {
-                                            $imagenya = asset('front/assets/img/kategori/').'/'.$imgarray[$key].'.png';
-                                        }
-                                    ?>
-                                    @if(count($catprod1) == 0)
-                                        <li><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" style="font-size: 13.5px;"><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}}</a></li>
-                                    @else
-                                        <li class="menu_item_children categorie_list"><a href="{{url('/front_end/list_product/category/'.$cu->id)}}" title="{{$textkat}}" ><img src="{{$imagenya}}" style="width: 25px; vertical-align: middle;">&nbsp;{{$kategorinya}} <i class="fa fa-angle-right"></i></a>
-                                            <ul class="categories_mega_menu" style="width: 160%; margin: 0px; padding: 15px  0px 0px 15px ">
-                                                @foreach($catprod1 as $key => $c1)
-                                                  @if($key < 19)
-                                                    <?php
-                                                        $catprod2 = getCategoryLevel(2, $cu->id, $c1->id);
-                                                        $nk = "nama_kategori_".$lct;
-                                                        if($c1->$nk == NULL){
-                                                            $nk = "nama_kategori_en";
-                                                        }
-                                                    ?>
-                                                    <li class="menu_item_children next" style="margin-bottom: 0px; width: 50%;"><a href="{{url('/front_end/list_product/category/'.$c1->id)}}" style="text-transform: capitalize !important; font-weight: lighter;font-size: 13.5px;line-height: 1.5; padding-right: 10px!important;">{{$c1->$nk}}</a></li>
-                                                  @endif
-                                                @endforeach
-                                                @if(count($catprod1) > 19)
-                                                <li class="menu_item_children"><a href="{{url('/front_end/list_product')}}" style="text-transform: capitalize !important;font-weight: lighter;font-size: 13.5px!important;line-height: 0.5;padding-top: 5px;"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;@lang('frontend.home.morecategory')</a></li>
-                                                @endif
-                                            </ul>
-                                        </li>
-                                    @endif
-                                @endforeach
-                                <li id="cat_toggle"><a href="{{url('/front_end/list_product')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;@lang('frontend.home.morecategory')</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-9 col-md-12">
-                    <div id="myCarousel" style="margin-left:-3.5%!important; width:104%!important;" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators -->
-                        <ol class="carousel-indicators">
-							<?php
-						$dasa = DB::select("select file_img from mst_slide where publish='1' order by id desc");
-						$ndy = 0;
-						foreach($dasa as $ds){
-						
-						?>
-						<li data-target="#myCarousel" data-slide-to="<?php echo $ndy ?>" <?php if($ndy == 0){?>class="active" <?php }?>></li>
-						<?php $ndy++; } ?>
-						
-						<?php /*
-                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
-						*/ ?>
-                        </ol>
-
-                    <!-- Wrapper for slides -->
-                        <div class="carousel-inner" style="height: 372px!Important;">
-						<?php
-						$dasa = DB::select("select file_img from mst_slide where publish='1' order by id desc");
-						$nds = 1;
-						foreach($dasa as $ds){
-						
-						?>
-							<div class="carousel-item <?php if($nds == 1){ echo "active";} ?>" style="height: 372px!Important;">
-                                <img src="{{asset('uploads/slider')}}<?php echo "/".$ds->file_img; ?>"  style="width:100%;height:100%;">
-                            </div>
-						<?php $nds++; } ?>
-						<?php /*
-                            <div class="carousel-item active" style="height: 372px!Important;">
-                                <img src="{{asset('front/assets/img/slider/home/slide_01a.png')}}"  style="width:100%;height:100%;">
-                            </div>
-
-                            <div class="carousel-item" style="height: 372px!Important;">
-                                <img src="{{asset('front/assets/img/slider/home/slide_02a.png')}}"  style="width:100%;height:100%;">
-                            </div>
-
-                            <div class="carousel-item" style="height: 372px!Important;">
-                                <img src="{{asset('front/assets/img/slider/home/slide_03a.png')}}"  style="width:100%;height:100%;">
-                            </div>
-						*/ ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--menu & category end-->
-{{--    <br>--}}
-    <!--regis start-->
-    <section class="product_area mb-50" style="background-color: #ddeffd; padding: 4%; margin-bottom: 0px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-5">
-                            @if($loc == "in")
-                                <span style="font-size: 20px;">
-                                    Buat akun Anda dan mulailah <br>berbisnis <span style="color: #007bff;">skala internasional</span>
-                                </span><br>
-                            @elseif($loc == "ch")
-                                <span style="font-size: 20px;">
-                                    创建您的帐户并开始从事业务<span style="color: #007bff;">国际规模</span>
-                                </span><br>
-                            @else
-                                <span style="font-size: 20px;">
-                                    Create your account and start doing<br> business on <span style="color: #007bff;">an international scale</span>
-                                </span><br>
-                            @endif
-                            <span style="font-size: 18px; color: #007bff;">{{getCountData('itdp_company_users')}}+ </span>
-                            @if($loc == "in")
-                                <span style="font-size: 18px; color: #666;">pengusaha telah bergabung</span>
-                            @elseif($loc == "ch")
-                                <span style="font-size: 18px; color: #666;">位企业家加入</span>
-                            @else
-                                <span style="font-size: 18px; color: #666;">entrepreneurs have joined</span>
-                            @endif
-                        </div>
-                        <div class="col-md-2"></div>
-                        <div class="col-md-4">
-                            <center>
-                                <a href="{{url('/pilihregister')}}" class="btn btn-primary" style="width: 200px; font-size: 18px; border-radius: 30px;">@if($loc == 'ch') 寄存器 @elseif($loc == "in") Daftar @else Register @endif</a>
-                            </center>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--regis end-->
-
-        <!--Event Special start-->
-        <?php
-        $today = date("Y-m-d");
-        // (date('d-m-Y',strtotime($d->end_at))
-        $checkevent = DB::table('banner')->where('deleted_at',null)->select('*')->where('ordering','!=', null)->where('status',1)->whereDate('end_at', '>=',"'".$today."'")->orderby('ordering','asc')->get();
-        // if(isset($checkevent)){
-        //     $checkeksportirnya = DB::table('banner_detail')->where('id_banner',$checkevent->id)->first();
-        // }
-        
-        // echo $checkevent->tosql();
-        // echo $checkevent;
-        // if(isset($checkevent)){
-        //     echo "<div class='row'><div class='col-md-12'><img src='{{asset('asset('/uploads/banner/'.$checkevent->file)')}}'></div></div>";
-        // }
-    ?>   
+    <!--Event Special start-->
     @if(isset($checkevent))
     <section class="special_event_area mb-50" style=" margin-bottom: 0px;">
     <div class="breadcrumbs_area">
@@ -378,530 +220,262 @@
         </div>
     </div>
     </section>
-    <!-- <div id="modal-special-event" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Contributed Company</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-            <input type="hidden" id="idbannernya" name="idbannernya" value="{{--{{$checkevent[0]->id}}--}}" >
-            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
-            {{ csrf_field() }}<br>
-                <div class="modal-body">
-                    <table id="companyspecialevent" class="table table-bordered table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th><center>No</center></th>
-                                <th><center>Company</center></th>
-                            </tr>
-                        </thead>
-                </table>
-                
-                </div>
-            <br>
-
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-danger" title="cancel">Cancel</button>
-            </div>
-            </form>
-            </div>
-
-        </div>
-    </div> -->
     @endif
     
     <!--Event Special end-->
-
-
-	<div class="breadcrumbs_area">
-        <div class="container" style="
-    background-color: white;
-    /* padding-left: 200px; */
-">
+	
 <br>
-		<center><h4>Service Highlight</h4></center>
+
+    <!-- mengapa inaexport start -->
+    <section class="mb-50" style="padding-top: 30px;">
+        <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumb_content">
-                        <div class="row">
-                            <div class="col-md-4 col-sm-12 col-12 hoveraja">
-                                <a href="{{url('/br_importir_all')}}"><img src="{{asset('front/assets/icon/01 inquiry-02.png')}}" alt="" class="image img-menu"></a>
-								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b></b></font></p></center>
-								<div class="text"><a href="{{url('/br_importir_all')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
-								</div>
-								<br>
-							</div>
-                            <div class="col-md-4 col-sm-12 col-12 hoveraja">
-                                 <a href="{{url('/br_importir')}}"><img src="{{asset('front/assets/icon/02 buying request-03.png')}}" alt="" class="image img-menu"></a>
-								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b></b></font></p></center>
-								<div class="text"><a href="{{url('/br_importir')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
-								</div>
-								<br>
-							</div>
-                            <div class="col-md-4 col-sm-12 col-12 hoveraja">
-                                <!-- <a onclick="checkfirst()"> -->
-                                <a href="{{url('/front_end/curris')}}">
-                                <img src="{{asset('front/assets/icon/03 current issue-04.png')}}" alt="" class="image img-menu">
-                                </a>
-								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-                                <center><p><font color="black"><b></b></font></p></center>
-                                <!-- <button onclick="checkfirst()"  class="btn btn-primary" style="width:100px!important;">View</button> -->
-                                <div class="text"><a href="{{url('/front_end/curris')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
-                                <a href="{{url('/front_end/curris')}}" id="buttoncurris" style="display: none;"></a>
-								</div>
-								<br>
-							</div>
-                           
+                <div class="col-lg-12" style="padding-bottom: 50px;">
+                    <p style="font-size: 24px; font-weight: bold; text-align:center; border-top: 1px solid #e3e3e3; border-bottom: 1px solid #e3e3e3;" class="py-2">WHY DO BUSINESS WITH INDONESIA EXPORTERS?</p>
+                </div>
+                <div class="col-lg-6" style="padding-bottom: 15px;">
+                    <div class="row">
+                        <div class="col-12">
+                            <p><b><span style="font-size: 16px;">Verified Supplier</span></b> <br>
+                            The registered supplier has been verified based on legal documents valid in Indonesia </p>
+                            <p><b><span style="font-size: 16px;">Sustainable Trade</span></b> <br>
+                            Indonesia continues to encourage the implementation of the sustainable aspects proclaimed by the UN to be applied to all suppliers</p>
+                            <p><b><span style="font-size: 16px;">Diverse Products</span></b> <br>
+                            Indonesia's rich geographical and cultural conditions create a wide variety of products ranging from agriculture to high-tech products </p>
+                            <p>
+                            <a class="btn btn-primary" href="{{url('/about')}}">About Inaexport</a>
+                            </p>
                         </div>
-                        <div class="row">
-							 <div class="col-md-4 col-sm-12 col-12 hoveraja">
-                                <a href="{{url('/front_end/event')}}"><img src="{{asset('front/assets/icon/04 event-05.png')}}" alt="" class="image img-menu"></a>
-								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b></b></font></p></center>
-								<div class="text"><a href="{{url('/front_end/event')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
-								</div>
-								<br>
-							</div>
-                            <div class="col-md-4 col-sm-12 col-12 hoveraja">
-                                <a href="{{url('/front_end/training')}}"><img src="{{asset('front/assets/icon/05 training-06.png')}}" alt="" class="image img-menu"></a>
-								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b></b></font></p></center>
-								<div class="text"><a href="{{url('/front_end/training')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
-								</div>
-								<br>
-							</div>
-                            <div class="col-md-4 col-sm-12 col-12 hoveraja">
-                                <a href="{{url('/front_end/research-corner')}}"><img src="{{asset('front/assets/icon/06 research corner-07.png')}}" alt="" class="image img-menu"></a>
-								<div class="middle" style="margin-top: -10px; font-size:14px!Important;">
-								<center><p><font color="black"><b></b></font></p></center>
-								<div class="text"><a href="{{url('/front_end/research-corner')}}" class="btn btn-primary" style="width:100px!important;">View</a></div>
-								</div>
-								<br>
-							</div>
-							
-							</div>
-                           
-                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-12" style="align: right;"><img class="img-fluid float-right" src="{{ URL::asset('image/business-deal.jpg') }}" style="height: 300px;"></div>
                     </div>
                 </div>
             </div>
         </div>
-	
-	
-<br>
+    </section>
+    <!-- mengapa inaexport end -->
 
-
-
-	<!--buyer & seller start-->
-	<?php 
-	/*
-    <div class="breadcrumbs_area" style="">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumb_content">
-                        <div class="row">
-                          <div class="col-md-6 col-lg-6 col-12">
-                            <center>
-                            <?php
-                                $url = '/login';
-                                if(Auth::guard('eksmp')->user()){
-                                    if(Auth::guard('eksmp')->user()->id_role == 2){
-                                        $url = '/home';
-                                    }else if(Auth::guard('eksmp')->user()->id_role == 3){
-                                        $url = '/';
-                                    }
-                                }
-                            ?>
-                                @if(Auth::guard('eksmp')->user())
-                                @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                <a href="{{url($url)}}" class="for-act">
-                                @endif
-                                @else
-                                <a href="{{url($url)}}" class="for-act">
-                                @endif
-                                  <img src="{{asset('front/assets/icon/fb.png')}}" alt="">
-                                @if(Auth::guard('eksmp')->user())
-                                @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                </a>
-                                @endif
-                                @else
-                                </a>
-                                @endif
-                            </center>
-                          </div>
-                          <div class="col-md-6 col-lg-6 col-12">
-                            <center>
-                                @if(Auth::guard('eksmp')->user())
-                                @if(Auth::guard('eksmp')->user()->id_role == 2)
-                                <a href="{{url($url)}}" class="for-act">
-                                @endif
-                                @else
-                                <a href="{{url($url)}}" class="for-act">
-                                @endif
-                                  <img src="{{asset('front/assets/icon/02-for indonesian exporter.png')}}" alt="" >
-                                @if(Auth::guard('eksmp')->user())
-                                @if(Auth::guard('eksmp')->user()->id_role == 2)
-                                </a>
-                                @endif
-                                @else
-                                </a>
-                                @endif
-                            </center>
-                          </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Inaexport Fact -->
+    <section style="padding-top:0px; padding-bottom:30px; background-color: #fff;">
+      <div class="container">
+        <div class="row numberbg" style="margin:0px auto; padding: 0px auto;">
+          <div class="col-12 txtbg" style="padding-bottom: 50px;">
+            <div class="col-12" style="padding-top: 50px; padding-bottom: 50px;">
+              <p style="text-align:center; font-size: 24px;"><b>INAEXPORT IN NUMBERS</b></p>    
             </div>
+            <div class="col-lg-12 row">
+            <div class="col" style="text-align: center; padding-bottom: 15px;">
+                <!--<img src="{{asset('front/assets/img/exporters.png')}}" alt="" style="width: 33px;margin-left: 10%; float:left">-->
+                <span class="counters_number">
+                <?php echo number_format(getCountData('itdp_company_users'),'0'); ?>
+                <!--{{getCountData('itdp_company_users')}}-->
+                </span><br>
+                <span class="counters_text">
+                    @if($loc == 'ch')
+                    出口商
+                    @elseif($loc == 'in')
+                    Eksportir
+                    @else
+                    Indonesian Exporters
+                    @endif
+                </span>
+            </div>
+            <div class="col" style="text-align: center; padding-bottom: 15px;">
+                <!--<img src="{{asset('front/assets/img/products.png')}}" alt="" style="width:35px; margin-left: 10%; float: left;">-->
+                <span class="counters_number">
+                <?php echo number_format(getCountData('csc_product_single'),'0'); ?>
+                <!--{{getCountData('csc_product_single')}}-->
+                </span><br>
+                <span class="counters_text">
+                    @lang('frontend.home.product')
+                </span>
+            </div>
+            <div class="col" style="text-align: center; padding-bottom: 15px;">
+                <!--<img src="{{asset('front/assets/img/representative.png')}}" alt="" style="width: 30px;margin-left: 10%; float:left">-->
+                    <span class="counters_number">
+                    <?php echo number_format(getCountData('itdp_admin_users'),'0'); ?>
+                    <!--{{getCountData('itdp_admin_users')}}-->
+                    </span><br>
+                    <!-- <span class="counters_text" style="margin-right: 23%; font-size: 18px; float: right;"> -->
+                    <span class="counters_text">
+                    @if($loc == 'ch')
+                    海外贸易代表
+                    @elseif($loc == 'in')
+                    Perwakilan Dagang
+                    @else
+                    Trade Representative 
+                    @endif
+                    </span>
+            </div>
+            <div class="col" style="text-align: center; padding-bottom: 15px;">
+              <!--<img src="{{asset('front/assets/img/events.png')}}" alt="" style="width: 35px;;margin-left: 10%; float:left">-->
+                <span class="counters_number">
+                <?php echo number_format(getCountData('event_detail'),'0'); ?>
+                <!--{{getCountData('event_detail')}}-->
+                </span><br>
+                <span class="counters_text">
+                @if($loc == 'ch')
+                国际活动
+                @elseif($loc == 'in')
+                Pameran Internasional
+                @else
+                International Events
+                @endif
+                </span>
+            </div>
+            <div class="col" style="text-align: center; padding-bottom: 15px;">
+                <!--<img src="{{asset('front/assets/img/researchcorner.png')}}" alt="" style="width: 35px;margin-left: 10%; float:left">-->
+                <span class="counters_number">
+                <?php echo number_format(getCountData('csc_research_corner'),'0'); ?>
+                <!--{{getCountData('csc_research_corner')}}-->
+                </span><br>
+                <!-- <span class="counters_text" style="margin-right: 23%; font-size: 18px; float: right;"> -->
+                <span class="counters_text">
+                @if($loc == 'ch')
+                市场调查
+                @elseif($loc == 'in')
+                Riset Pasar
+                @else
+                Market Research
+                @endif
+                </span>
+            </div>
+          </div>
+          </div>
         </div>
     </div>
-	
-	*/ ?>
-	
-    <!--buyer & seller start-->
-	<?php /*
-	<br>
-	 <!--category product start-->
-    <section class="product_area mb-50" style="background-color: #ddeffd;">
+    </section>
+
+    <!-- our products start --> 
+    <section class="mb-50" style="padding-top: 20px;">
         <div class="container">
             <div class="row">
-                
-            </div>
-        </div>
-    </section>
-	*/ ?>
-    <!--category product end-->
-
-
-    <!--product category start-->
-    <section class="product_area mb-50">
-        <div class="container" style="background-color:white!important;"><br>
-		<center><h4>Popular Product</h4></center>
-			<div class="col-12">
-                    <div class="section_title" style="margin-bottom: 0px;">
-                        <!-- <div class="row product_tab_button nav" role="tablist" style="background-color: inherit; width: 100%">
-                            <div class="col-md-2">
-                                
-                            </div>
-                        </div> -->
-                        <div class="row product_tab_button nav justify-content-center" role="tablist" style="background-color: inherit; width: 100%">
-                            <?php
-                                $numb = 1;
-                                $warna = ['red','DarkKhaki','orange','SeaGreen','Cyan','blue']
-                            ?>
-                            @foreach($categoryutama2 as $cut)
-                            <?php
-                                $cls = "";
-                                if($numb == 1){
-                                    $cls = "active";
-                                }
-                            ?>
-                            <div class="col-md-2 col-lg-2 col-4" align="center">
+                <div class="col-lg-12" style="padding-bottom: 30px;">
+                    <p style="font-size: 24px; font-weight: bold; text-align:center; border-top: 1px solid #e3e3e3; border-bottom: 1px solid #e3e3e3;" class="py-2">OUR PRODUCTS</p>
+                </div>
+                <div class="col-lg-12" style="padding-bottom: 50px;">
+                    <div class="row justify-content-md-center">
+                        <div class="col-lg-8 justify-content-md-center">
+                        <form method="GET" action="{{url('/products')}}" id="formsprod">
+                            <div class="input-group flex-nowrap">
                                 <?php
-                                    $nkat = "nama_kategori_".$lct; 
-                                    if($cut->$nkat == NULL){
-                                        $nkat = "nama_kategori_en";
+                                    if(isset($search)){
+                                        $cariprod = $search;
+                                    }else{
+                                        $cariprod = "";
                                     }
 
-                                    $num_char = 30;
-                                    $textkat = $cut->$nkat;
-                                    if(strlen($textkat) > 30){
-                                        $cut_text = substr($textkat, 0, $num_char);
-                                        if ($textkat{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                            $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                                            $cut_text = substr($textkat, 0, $new_pos);
-                                        }
-                                        $kategorinya = $cut_text . '...';
+                                    if(isset($get_id_cat)){
+                                        $caricat = $get_id_cat;
                                     }else{
-                                        $kategorinya = $textkat;
+                                        $caricat = "";
+                                    }
+
+                                    if(isset($getEks)){
+                                        $eksprod = $getEks;
+                                    }else{
+                                        $eksprod = "";
+                                    }
+
+                                    if(isset($hl_sort)){
+                                        $hlprod = $hl_sort;
+                                    }else{
+                                        $hlprod = "";
                                     }
                                 ?>
-
-
-                                <a class="tabnya {{$cls}}" data-toggle="tab" href="#tabke{{$cut->id}}" aria-controls="tabke{{$cut->id}}" aria-selected="true" title="{{$textkat}}" onclick="openTab('tabke{{$cut->id}}')">
-{{--                                    <img src="{{asset('front/assets/img/kategori/')}}/{{$imgarray[$numb-1]}}.png" alt="" style="height: 40px">--}}
-                                    <div style="border-radius: 50%; display: table-cell; background-color: {{$warna[$numb-1]}}; vertical-align: middle; width: 85px;height: 85px;">
-                                        <img src="{{asset('uploads/Product/Icon')}}/{{$cut->logo}}" alt="" style="height: 75px">
-                                    </div>
-                                        <p>{{$kategorinya}}</p>
-                                </a>
+                                <input type="text" class="form-control" placeholder="Search product" style="border-radius: 0px;" name="cari_product" value="{{$cariprod}}" id="cari_product">
+                                <input type="hidden" name="locnya" value="{{$lct}}" id="locnya">
+                                <input type="hidden" name="cari_catnya" value="{{$caricat}}" id="cari_catnya">
+                                <input type="hidden" name="eks_prod" value="{{$eksprod}}" id="eks_prod">
+                                <input type="hidden" name="hl_prod" value="{{$hlprod}}" id="hl_prod">
+                                <input type="hidden" name="sort_prod" value="default" id="sort_prod">
+                                <button class="btn btn-primary" type="submit" id="button-addon2">Search</button>
                             </div>
-                            <?php $numb++; ?>
-                            @endforeach
+                        </form>
                         </div>
                     </div>
-
                 </div>
-            <div class="tab-content" id="tabing-product">
-                <?php
-                    $numbe = 1;
-                ?>
-                @foreach($categoryutama2 as $cuta)
-                    <?php
-                        if($numbe == 1){
-                            $clsnya = "active";
-                        }else{
-                            $clsnya = "";
-                        }
-                    ?>
-                    <div class="tab-pane fade show {{$clsnya}} product" id="tabke{{$cuta->id}}" role="tabpanel">
-                        <?php
-                            $product = getProductByCategory2($cuta->id);
-                        ?>
-                        @if(count($product) == 0)
-                        <center>
-                            <span style="font-size: 15px;">
-                                @if($loc == "ch")
-                                - 此类别的产品为空 -
-                                @elseif($loc == "in")
-                                - Produk dalam kategori ini kosong - 
-                                @else
-                                - Products in this category are empty -
-                                @endif
-                            </span>
-                        </center>
-                        @else
-                        <div class="product_carousel product_column5 owl-carousel" style="padding-top: 25px;padding-bottom: 25px;">
-                                @foreach($product as $key => $p)
-                                    <?php
-                                        $dis2 = "display: none;";
-                                        if(in_array($p->id, $hot_product)){
-                                            $dis2 = "";
-                                        }
-                                        $cat1 = getCategoryName($p->id_csc_product, $lct);
-                                        $cat2 = getCategoryName($p->id_csc_product_level1, $lct);
-                                        $cat3 = getCategoryName($p->id_csc_product_level2, $lct);
-
-                                        if($cat3 == "-"){
-                                            if($cat2 == "-"){
-                                                $categorynya = $cat1;
-                                                $idcategory = $p->id_csc_product;
-                                            }else{
-                                                $categorynya = $cat2;
-                                                $idcategory = $p->id_csc_product_level1;
-                                            }
-                                        }else{
-                                            $categorynya = $cat3;
-                                            $idcategory = $p->id_csc_product_level2;
-                                        }
-
-                                        $img1 = $p->image_1;
-
-                                        if($img1 == NULL){
-                                            $isimg1 = '/image/notAvailable.png';
-                                        }else{
-                                            $image1 = 'uploads/Eksportir_Product/Image/'.$p->id.'/'.$img1; 
-                                            if(file_exists($image1)) {
-                                              $isimg1 = '/uploads/Eksportir_Product/Image/'.$p->id.'/'.$img1;
-                                            }else {
-                                              $isimg1 = '/image/notAvailable.png';
-                                            }  
-                                        }
-                                        $cekImage = explode('.', $img1);
-                                        $sizeImg = 210;
-                                        $padImg = '0px';
-                                        if($cekImage[(count($cekImage)-1)] == 'png'){
-                                            $sizeImg = 190;
-                                            $padImg = '10px 5px 0px 5px';
-                                        }
-                                        $minorder = '-';
-                                        $minordernya = '-';
-                                        if($p->minimum_order != null){
-                                            $minorder = $p->minimum_order;
-                                            if(strlen($minorder) > 18){
-                                                $cut_desc = substr($minorder, 0, 18);
-                                                if ($minorder{18 - 1} != ' ') { 
-                                                    $new_pos = strrpos($cut_desc, ' '); 
-                                                    $cut_desc = substr($minorder, 0, $new_pos);
-                                                }
-                                                $minordernya = $cut_desc . '...';
-                                            }else{
-                                                $minordernya = $minorder;
-                                            }
-                                        }
-                                        $ukuran = '340px';
-                                        if(!empty(Auth::guard('eksmp')->user())){
-                                            if(Auth::guard('eksmp')->user()->status == 1){
-                                                $ukuran = '375px';
-                                            }
-                                        }
-                                    ?>
-                                    <div class="single_product" style="border-radius:0px!important; height: {{$ukuran}}; background-color: #fdfdfc; padding: 0px !important;">
-                                        <div class="hot-type" style="{{$dis2}}">
-                                        <span class="hot-type-content">
-                                             @if($loc == "ch")
-                                                热
-                                            @elseif($loc == "in")
-                                                HOT
-                                            @else
-                                                HOT
-                                            @endif
-                                        </span>
-                                        </div>
-                                        <?php
-                                            //cut prod name
-                                            $num_char = 19;
-                                            $prodn = getProductAttr($p->id, 'prodname', $lct);
-                                            if(strlen($prodn) > 19){
-                                                $cut_text = substr($prodn, 0, $num_char);
-                                                if ($prodn{$num_char - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                    $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                                                    $cut_text = substr($prodn, 0, $new_pos);
-                                                }
-                                                $prodnama = $cut_text . '...';
-                                            }else{
-                                                $prodnama = $prodn;
-                                            }
-
-                                            //cut company
-                                            $num_charp = 25;
-                                            $compname = getCompanyName($p->id_itdp_company_user);
-                                            if(strlen($compname) > 25){
-                                                $cut_text = substr($compname, 0, $num_charp);
-                                                if ($compname{$num_charp - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                    $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                                                    $cut_text = substr($compname, 0, $new_pos);
-                                                }
-                                                $companame = $cut_text . '...';
-                                            }else{
-                                                $companame = $compname;
-                                            }
-
-                                            $num_chark = 25;
-                                            if(strlen($categorynya) > 25){
-                                                $cut_text = substr($categorynya, 0, $num_chark);
-                                                if ($categorynya{$num_chark - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                    $new_pos = strrpos($cut_text, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                                                    $cut_text = substr($categorynya, 0, $new_pos);
-                                                }
-                                                $category = $cut_text . '...';
-                                            }else{
-                                                $category = $categorynya;
-                                            }
-                                            $param = $p->id_itdp_company_user.'-'.getCompanyName($p->id_itdp_company_user);
-                                        ?>
-                                        <div class="product_thumb" align="center" style="background-color: #e8e8e4; height: 210px; border-radius: 0px 0px 0px 0px;">
-                                                <a class="primary_img" href="{{url('front_end/product/'.$p->id)}}" onclick="GoToProduct('{{$p->id}}', event, this)"><img src="{{url('/')}}{{$isimg1}}" alt="" style="vertical-align: middle; height: {{$sizeImg}}px; border-radius: 10px 10px 0px 0px; padding: {{$padImg}}"></a>
-                                        </div>
-                                        <div class="product_name grid_name" style="padding: 0px 13px 0px 13px;">
-                                            <p class="manufacture_product">
-                                                <a href="{{url('front_end/list_product/category/'.$idcategory)}}" title="{{$categorynya}}" class="href-category">{{$category}}</a>
-                                            </p>
-                                            <h3>
-                                                <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name" onclick="GoToProduct('{{$p->id}}', event, this)"><b>{{$prodnama}}</b></a>
-                                            </h3>
-                                            <span style="font-size: 12px; font-family: 'Open Sans', sans-serif; ">
-                                                @if(!empty(Auth::guard('eksmp')->user()))
-                                                    @if(Auth::guard('eksmp')->user()->status == 1)
-                                                    
-                                                        @if(is_numeric($p->price_usd))
-                                                            <?php 
-                                                                $pricenya = "$ ".number_format($p->price_usd,0,",",".");
-                                                                $price = $pricenya;
-                                                            ?>
-                                                        @else
-                                                            <?php 
-                                                                $price = $p->price_usd;
-                                                                if(strlen($price) > 18){
-                                                                    $cut_text = substr($price, 0, 18);
-                                                                    if ($price{18 - 1} != ' ') { 
-                                                                        $new_pos = strrpos($cut_text, ' ');
-                                                                        $cut_text = substr($price, 0, $new_pos);
-                                                                    }
-                                                                    $pricenya = $cut_text . '...';
-                                                                }else{
-                                                                    $pricenya = $price;
-                                                                }
-                                                            ?>
-                                                        @endif
-                                                    <span style="color: #fd5018;" title="{{$price}}">
-                                                      <b>  {{$pricenya}} </b>
-                                                    </span>
-                                                    <br>
-                                                    @endif
-                                                @endif
-
-                                                {{$order}}<span title="{{$minorder}}"></span>{{$minordernya}}<br>
-                                                <a href="{{url('front_end/list_perusahaan/view/'.$param)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$companame}}</a>
-                                            </span>
-                                        </div>
-                                        
-                                        <div class="product_content list_content">
-                                            <div class="left_caption">
-                                                <div class="product_name">
-                                                    <h3>
-                                                        <a href="{{url('front_end/product/'.$p->id)}}" title="{{$prodn}}" class="href-name" style="font-size: 15px !important;"><b>{{$prodn}}</b></a>
-                                                    </h3>
-                                                    <h3>
-                                                        <a href="{{url('front_end/list_perusahaan/view/'.$param)}}" title="{{$compname}}" class="href-company"><span style="color: black;">{{$by}}</span>&nbsp;&nbsp;{{$compname}}</a>
-                                                    </h3>
-                                                </div>
-                                                <div class="product_desc">
-                                                    <?php
-                                                        $proddesc = getProductAttr($p->id, 'product_description', $lct);
-                                                        $num_desc = 350;
-                                                        if(strlen($proddesc) > $num_desc){
-                                                            $cut_desc = substr($proddesc, 0, $num_desc);
-                                                            if ($proddesc{$num_desc - 1} != ' ') { // jika huruf ke 50 (50 - 1 karena index dimulai dari 0) buka  spasi
-                                                                $new_pos = strrpos($cut_desc, ' '); // cari posisi spasi, pencarian dari huruf terakhir
-                                                                $cut_desc = substr($proddesc, 0, $new_pos);
-                                                            }
-                                                            $product_desc = $cut_desc . '...';
-                                                        }else{
-                                                            $product_desc = $proddesc;
-                                                        }
-                                                        $product_desc = strip_tags($product_desc, "<a><br><i><b><u><hr>");
-                                                    ?>
-                                                    <?php echo $product_desc; ?>
-                                                </div>
-                                            </div>
-                                            <div class="right_caption">
-                                                <div class="text_available">
-                                                    <p>
-                                                        @lang('frontend.available'): 
-                                                        @if($loc == "ch")
-                                                            <span>库存{{$p->capacity}}件</span>
-                                                        @elseif($loc == "in")
-                                                            <span>{{$p->capacity}} dalam persediaan</span>
-                                                        @else
-                                                            <span>{{$p->capacity}} in stock</span>
-                                                        @endif
-                                                    </p>
-                                                </div>
-                                                <div class="price_box">
-                                                    @if(!empty(Auth::guard('eksmp')->user()))
-                                                        @if(Auth::guard('eksmp')->user()->status == 1)
-                                                        <span class="current_price">
-                                                            @if(is_numeric($p->price_usd))
-                                                                $ {{number_format($p->price_usd,0,",",".")}}
-                                                            @else
-                                                                <span style="font-size: 13px;">
-                                                                    {{$p->price_usd}}
-                                                                </span>
-                                                            @endif
-                                                        </span>
-                                                        @endif
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
+                <div class="col-lg-4" style="padding-bottom: 20px;">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ URL::asset('image/products/prod-agriculture.jpeg') }}" alt="Agriculture">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>AGRICULTURE</b></h5>
+                            <p class="card-text" style="text-align: justify; height: 270px;">
+                            Indonesia possesses vast and abundant arable fertile soils. As one of the world's major agricultural nation, the country offers wide diversity of sustainable tropical products and important agricultural commodities; which include palm oil, natural rubber, cocoa, coffee, tea, cassava, rice and tropical spices. As the largest archipelagic country in the world, Indonesia produces superior sustainable agricultural products since the last few decades.
+                            </p>
+                            <a href="{{url('/products/category/11')}}" class="btn btn-primary">See Products</a>
+                        </div>
                     </div>
-                    <?php $numbe++; ?>
-                @endforeach
+                </div>
+                <div class="col-lg-4" style="padding-bottom: 20px;">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ URL::asset('image/products/prod-apparel.jpeg') }}" alt="Apparel">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>TEXTILE & APPAREL</b></h5>
+                            <p class="card-text" style="text-align: justify; height: 270px;">
+                            With textile production capacity of 3.31 million tons per year, Indonesia have exported textile and apparel products to more than 200 countries in the world. Besides the convential clothing, Indonesia is fame for the traditional fabrics such as Batik, which rewarded by UNESCO as Masterpiece of The Oral and Intangible Heritage of Humanity, alongwith other traditional fabric such as tenun ikat (ikat weaving), and songket that have long been on the world export market. 
+                            </p>
+                            <a href="{{url('/products/category/12')}}" class="btn btn-primary">See Products</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" style="padding-bottom: 20px;">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ URL::asset('image/products/prod-otomotif.jpeg') }}" alt="Automobiles & Motorcycles">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>AUTOMOBILES & PARTS</b></h5>
+                            <p class="card-text" style="text-align: justify; height: 270px;">
+                            The automotive industry is one of the major contributors to Indonesia's export activities, providing not only automotive components, now also exporting whole automotive or CBU (completely build-up). The types of CBU vehicles that are exported abroad are varied, including sport (sport utility vehicle/SUV), multipurpose (MPV) to pick-up cars and has been exported to more than 80 countries.
+                            </p>
+                            <a href="{{url('/products/category/13')}}" class="btn btn-primary">See Products</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" style="padding-bottom: 20px;">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ URL::asset('image/products/prod-beauty.jpeg') }}" alt="Beauty & Personal Care">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>BEAUTY & PERSONAL CARE</b></h5>
+                            <p class="card-text" style="text-align: justify; height: 270px;">
+                            Indonesia boast of 30,000 species medicinal plants out of the 40,000 species in the world, which makes a huge advantage to produce safe, natural, and sustainable beauty products. Indonesian beauty and cosmetic product manufacturing companies have carried out various innovations of beauty and cosmetic products both modern and traditional, herbal-based cosmetics.  
+                            </p>
+                            <a href="{{url('/products/category/14')}}" class="btn btn-primary">See Products</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" style="padding-bottom: 20px;">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ URL::asset('image/products/prod-chemical.jpeg') }}" alt="Chemicals">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>CHEMICALS</b></h5>
+                            <p class="card-text" style="text-align: justify; height: 270px;">
+                            Indonesia’s chemical industry has shifted to the more environment friendly chemical industry and oriented towards nature’s ecosystem sustainability. One of the environment friendly chemical products that has been produced by Indonesia is lubricants made from palm oil (CPO). All Indonesian Chemical products are complying the international standards and are ready to enter worldwide export market.
+                            </p>
+                            <a href="{{url('/products/category/15')}}" class="btn btn-primary">See Products</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" style="padding-bottom: 20px;">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ URL::asset('image/products/prod-craft.jpeg') }}" alt="Gift & Crafts">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>GIFT & CRAFTS</b></h5>
+                            <p class="card-text" style="text-align: justify; height: 270px;">
+                            Indonesia is fame for its rich tradition and culture. The diversity evident in Indonesia's 300 plus ethnic groups is reflected in the diversity of its art forms. Just as every ethnic group throughout the archipelago has its own language/dialect, cuisine, traditional dress and traditional homes and they have also developed their own textiles, ornaments, carvings and items for daily use and special celebrations.  
+                            </p>
+                            <a href="{{url('/products/category/115')}}" class="btn btn-primary">See Products</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-    <!--product category end-->
-	
+    <!-- our products end -->
 
-    <!--regis start-->
+    <!--rfq start-->
     <section class="breadcrumbs_area" style="padding-top: 4%;padding-bottom: 4%; margin-bottom: 0px;" data-bgimg="{{asset('front/assets/icon/homepage2.png')}}">
         <div class="container">
             <div class="row">
@@ -1032,11 +606,10 @@
                                                     @if($loc == 'ch')
                                                     立即发布购买请求
                                                     @elseif($loc == 'in')
-                                                    Kirim Permintaan Pembelian Sekarang
+                                                    Kirim Permintaan Pembelian
                                                     @else
-                                                    Post Buying Request Now
+                                                    Request For Quotation
                                                     @endif 
-											<i class="fa fa-arrow-right"></i>
                                             </button>
                                         </div>
                                       </div>
@@ -1059,7 +632,70 @@
             </div>
         </div>
     </section>
-    <!--regis end-->
+    <!--rfq end-->
+
+    <!-- official partner start -->
+    <section class="mb-50" style="background-color: #ddeffd; padding-top: 30px; padding-bottom: 30px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12" style="padding-bottom: 30px;">
+                    <p style="font-size: 24px; font-weight:bold; text-align: center">OUR PARTNERS</p>
+                </div>
+                <div class="col-lg-4">
+                    <a href="https://exim.kemendag.go.id/"><img src="{{ URL::asset('front/assets/icon/Logo_Exim.png') }}" class="img-fluid mx-auto d-block" style="height: 80px;"></a>
+                </div>
+                <div class="col-lg-4">
+                    <?php
+                        if(Auth::guard('eksmp')->user()) {
+                            if(Auth::guard('eksmp')->user()->id_role == 2) {
+                                ?>
+                                <a href="http://inatrims.kemendag.go.id/index.php/main/negara_djpen"><img src="{{ URL::asset('front/assets/icon/Logo_Inatrims.png') }}" class="img-fluid mx-auto d-block" style="height: 80px;"></a>
+                                <?php
+                            }
+                            else {
+                                ?>
+                                <a href="http://inatrims.kemendag.go.id/"><img src="{{ URL::asset('front/assets/icon/Logo_Inatrims.png') }}" class="img-fluid mx-auto d-block" style="height: 80px;"></a>
+                                <?php
+                            }
+                        }
+                        else {
+                            ?>
+                            <a href="http://inatrims.kemendag.go.id/"><img src="{{ URL::asset('front/assets/icon/Logo_Inatrims.png') }}" class="img-fluid mx-auto d-block" style="height: 80px;"></a>
+                            <?php
+                        }
+                    ?>
+                </div>
+                <div class="col-lg-4">
+                    <a href="http://tr.apec.org/"><img src="{{ URL::asset('front/assets/icon/Logo_Apec.png') }}" class="img-fluid mx-auto d-block" style="height: 80px;"></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- official partner end -->
+
+    <!-- news start -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12" style="padding-bottom: 30px;">
+                    <p style="font-size: 24px; font-weight: bold; text-align:center; border-top: 1px solid #e3e3e3; border-bottom: 1px solid #e3e3e3;" class="py-2"><a href="{{url('/news')}}">NEWS</a></p>
+                </div>
+                @foreach($news as $key => $ns)
+                <div class="col-lg-4 col-md-4 card">
+                    <div class="card-body">
+                        <h5 class="card-title"><b><?php echo $ns->title; ?></b></h5>
+                        <div class="card-text">
+                        <?php echo $ns->short; ?>
+                        </div>
+                        <a href="{{ url('getnews/'.$ns->id.'/'.$ns->slug) }}" style="color:#ff0000;">Read More <i class="fas fa-chevron-circle-right"></i></a>
+                    </div>
+                </div>
+                @endforeach
+                
+            </div>
+        </div>
+    </section>
+    <!-- news end -->
 
 </div>
 <!-- Plugins JS -->

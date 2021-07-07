@@ -52,7 +52,13 @@ class FrontController extends Controller
             ->orderBy('a.number', 'ASC')
             ->limit(6)
             ->get();
-        return view('frontend.index', compact('categoryutama', 'categoryutama2','hot_product'));
+
+        // get news
+        $news = DB::table('itdp_news')->orderby('publish_date','desc')->get();
+
+        $pageTitle = "Inaexport | Start doing business with indonesian exporters";
+        $topMenu = "home";
+        return view('frontend.index', compact('categoryutama', 'categoryutama2','hot_product', 'news', 'pageTitle', 'topMenu'));
         // return view('frontend.index');
     }
 
@@ -400,8 +406,11 @@ class FrontController extends Controller
             }
         }
 
+        $pageTitle = "Inaexport Products";
+        $topMenu = "product";
+
         // return view('frontend.product.all_product', compact('product', 'catprod'));
-        return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow','hot_product', 'hl_sort', 'countNew', 'countHot'));
+        return view('frontend.product.list_product', ['product' => $product->appends(Input::except('page'))], compact('categoryutama', 'manufacturer', 'catActive', 'coproduct', 'search', 'get_id_cat', 'sortbyproduct', 'getEks', 'pagenow','hot_product', 'hl_sort', 'countNew', 'countHot', 'pageTitle', 'topMenu'));
 
     }
 
@@ -753,7 +762,10 @@ class FrontController extends Controller
             ->orderBy('csc_product_single.prodname_en', 'ASC')
             ->count();
 
-        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat', 'hot_product', 'countNew', 'countHot'));
+        $pageTitle = "Inaexport Products";
+        $topMenu = "product";
+
+        return view('frontend.product.list_product', compact('categoryutama', 'product', 'manufacturer', 'catActive', 'coproduct', 'get_id_cat', 'hot_product', 'countNew', 'countHot', 'pageTitle', 'topMenu'));
     }
 
     public function product_categoryeks($id)
@@ -961,22 +973,35 @@ class FrontController extends Controller
         //     ],
         //     'query' => ['base' =>  'USD']
         // ]);
-        $res = $client->request('GET', 'https://api.ratesapi.io/api/'.$datenow, [
+        /*$res = $client->request('GET', 'https://api.ratesapi.io/api/'.$datenow, [
             'headers' => [
                 'Content-Type'          => 'application/json',
                 'Accept'                => 'application/json'
             ],
             'query' => ['base' =>  'USD']
         ]);
+        $res = $client->request('GET', 'http://api.exchangeratesapi.io/v1/latest', [
+            'headers' => [
+                'Content-Type'          => 'application/json',
+                'Accept'                => 'application/json'
+            ],
+            'query' => ['access_key' => 'b57b7c010a518d0635572f53a8ba8b2a']
+        ]);
 
         $bdy = $res->getBody();
         $content = json_decode($bdy->getContents());
-        $rates = $content->rates;
+        $rates = $content->rates;*/
+        $rates = "";
 
         $imgarr = ['en.png', 'us.png', 'ch.png', 'in.png', 'jp.png', 'ks.png', 'sg.png', 'aus.png', 'mly.jpg', 'ue.png', 'thai.png', 'hk.png'];
         $smtarr = ['GBP', 'USD', 'CNY', 'IDR', 'JPY', 'KRW', 'SGD', 'AUD', 'MYR', 'EUR', 'THB', 'HKD'];
         $nmtarr = ['British Pound', 'US Dollar', 'Chinese Yuan', 'Indonesian Rupiah', 'Japanese Yen', 'South Korean Won', 'Singapore Dollar', 'Australian Dollar', 'Malaysian Ringgit', 'Euro', 'Thai Baht', 'Hong Kong Dollar'];
-        return view('frontend.product.detail_products', compact('data', 'product', 'imgarr', 'smtarr', 'nmtarr', 'rates'));
+
+        $pageTitle = $product->prodname;
+        $topMenu = "product";
+
+        return view('frontend.product.detail_products', compact('data', 'product', 'imgarr', 'smtarr', 'nmtarr', 'rates', 'pageTitle', 'topMenu'));
+        
     }
 
 //    public function research_corner(){
@@ -1137,7 +1162,9 @@ class FrontController extends Controller
     public function contact_us(){
         $page = 'create';
         $url = "/contact-us/send/";
-        return view('frontend.contact-us', compact('page', 'url'));
+        $pageTitle = "Contact Us | Inaexport";
+        $topMenu = "contact";
+        return view('frontend.contact-us', compact('page', 'url', 'pageTitle', 'topMenu'));
     }
 
     public function service($id){
@@ -2068,7 +2095,9 @@ class FrontController extends Controller
     
     public function about()
     {
-        return view('frontend.about');
+        $pageTitle = "About Inaexport";
+        $topMenu = "about";
+        return view('frontend.about', compact('pageTitle', 'topMenu'));
     }
 
     public function faq()

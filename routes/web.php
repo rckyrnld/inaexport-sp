@@ -37,6 +37,9 @@ Route::get('/exportpendapatanall', 'RekapPendapatanController@exportpendapatanal
 Route::get('/cetakrc', 'RekapPendapatanController@cetakrc');
 Route::get('/exportpendapatandetail/{id}', 'RekapPendapatanController@exportpendapatandetail');
 Route::get('/detailpendapatan/{id}', 'RekapPendapatanController@detailpendapatan');
+//News
+    Route::get('/news', 'NewsController@news');
+    Route::get('/getnews/{id}/{id2}', 'NewsController@getnews');
 
 Route::namespace('FrontEnd')->group(function () {
     /* Created by Meidiyanah */
@@ -45,9 +48,9 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/transaction_getdata', 'TransactionFrontController@datanya')->name('front.datatables.transaction');
     //Product
     Route::get('/', 'FrontController@index');
-    Route::get('/front_end/list_product', 'FrontController@list_product');
+    Route::get('/products', 'FrontController@list_product');
     Route::get('/front_end/getCategory', 'FrontController@getCategory')->name('front.product.getCategory');
-    Route::get('/front_end/list_product/category/{id}', 'FrontController@product_category')->name('front.product.product_category');
+    Route::get('/products/category/{id}', 'FrontController@product_category')->name('front.product.product_category');
     Route::get('/front_end/list_product/categoryeks/{id}', 'FrontController@product_categoryeks')->name('front.product.product_categoryeks');
     Route::get('/front_end/getManufactur', 'FrontController@getManufactur')->name('front.product.getManufactur');
     Route::get('/front_end/product/{id}', 'FrontController@view_product');
@@ -78,10 +81,10 @@ Route::namespace('FrontEnd')->group(function () {
     Route::get('/front_end/history/br_getdata', 'HistoryFrontController@data_br')->name('front.datatables.br');
 
     //List Perusahaan (Eksportir)
-    Route::get('/front_end/list_perusahaan', 'SuppliersFrontController@list_perusahaan')->name('front.eksportir.index');
-    Route::get('/front_end/list_perusahaan/getCategory', 'SuppliersFrontController@getCategory')->name('front.eksportir.getCategory');
-    Route::get('/front_end/list_perusahaan/category/{id}', 'SuppliersFrontController@eksportir_category')->name('front.eksportir.category');
-    Route::get('/front_end/list_perusahaan/view/{id}', 'SuppliersFrontController@view_eksportir')->name('front.eksportir.view');
+    Route::get('/suppliers', 'SuppliersFrontController@suppliers')->name('front.eksportir.index');
+    Route::get('/suppliers/getCategory', 'SuppliersFrontController@getCategory')->name('front.eksportir.getCategory');
+    Route::get('/suppliers/category/{id}', 'SuppliersFrontController@eksportir_category')->name('front.eksportir.category');
+    Route::get('/suppliers/view/{id}', 'SuppliersFrontController@view_eksportir')->name('front.eksportir.view');
 
 
     ////////////////////////////////  AeNGeGeA  ///////////////////////////////////////////
@@ -164,7 +167,7 @@ Route::post('/loginei', 'LoginEIController@loginei')->name('loginei.login');
 Route::post('check_status','LoginEIController@checkstatus')->name('login.check_status');
 Route::post('change_status','LoginEIController@changestatus')->name('login.change_status');
 Route::get('/admin', 'RegistrasiController@loginadmin');
-Route::get('/pilihregister', 'RegistrasiController@pilihregister');
+Route::get('/createaccount', 'RegistrasiController@pilihregister');
 Route::get('/cekmail/{id}', 'RegistrasiController@cekmail');
 
 

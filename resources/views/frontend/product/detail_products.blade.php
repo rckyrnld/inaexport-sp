@@ -191,7 +191,7 @@
                                     </span>
                                     @endif
                                 @endif
-                                @if(!empty(Auth::guard('eksmp')->user()))
+                                <!--@if(!empty(Auth::guard('eksmp')->user()))
                                     @if(Auth::guard('eksmp')->user()->status == 1)
                                     <div class="list-group" id="kurslist">
                                         <a onclick="openKurs('kurs')" href="#kurs" class="list-group-item" data-toggle="collapse" data-parent="#MainMenus" style="color: black; border: none; text-align: right"><span class="badge badge-secondary">$</span>&nbsp;&nbsp;USD&nbsp;&nbsp;<i class="fa fa-chevron-down" aria-hidden="true" id="icon-kurs"></i></a>
@@ -200,7 +200,7 @@
                                             <div class="row" style="border: 1px solid silver; border-radius: 3px; background-color: #efefef;">
                                                 @if($usd != NULL)
                                                     <?php
-                                                        for ($n=0; $n < count($imgarr); $n++) { 
+                                                        //for ($n=0; $n < count($imgarr); $n++) { 
                                                     ?>
                                                     @if($n == 0 || $n == 6)
                                                     <div class="col-md-6" style="padding-left: 0px; padding-right: 0px;">
@@ -212,10 +212,10 @@
                                                                     <td width="55%">{{$smtarr[$n]}} {{$nmtarr[$n]}}</td>
                                                                     <td width="30%" style="text-align: right;">
                                                                         <?php
-                                                                            $mtuang = $smtarr[$n];
+                                                                            /*$mtuang = $smtarr[$n];
                                                                             $konver = $rates->$mtuang;
                                                                             $convert = round($usd * $konver, 2);
-                                                                            echo number_format($convert,2,",",".");
+                                                                            echo number_format($convert,2,",",".");*/
                                                                         ?>
                                                                     </td>
                                                                 </tr>
@@ -225,7 +225,7 @@
                                                     </div>
                                                     @endif
                                                     <?php
-                                                        }
+                                                        //}
                                                     ?>
                                                 @else
                                                     <div class="col-md-12" style="padding-left: 0px; padding-right: 0px;">
@@ -250,7 +250,7 @@
                                         </div>
                                     </div>
                                     @endif
-                                @endif
+                                @endif-->
                             </div>
                             <div class="product_desc">
                                 <?php echo nl2br(getProductAttr($data->id, 'product_description', $lct)); ?>
@@ -261,7 +261,6 @@
 
                             </div><br>
                             <div class="">
-                                <center>
                                 <?php
                                     if(Auth::guard('eksmp')->user()){
                                         if(Auth::guard('eksmp')->user()->id_role == 2){
@@ -275,7 +274,6 @@
                                 ?>
                                     <!-- <a href="{{url('/front_end/inquiry_product')}}/{{$data->id}}" class="btn btn-primary" style="width: 50%;"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('product.inquiry')</a> -->
                                     <button class="btn btn-primary" style="width: 50%;" onclick="openInquiry('{{$jns}}')"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('product.inquiry')</button>
-                                </center>
                             </div>
                         <!-- </form> -->
                     </div>

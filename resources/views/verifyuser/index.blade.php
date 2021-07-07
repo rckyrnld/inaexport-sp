@@ -36,7 +36,7 @@
                                 <option value="0" >Choose Filter</option>
                                 <option value="1" >Unverified</option>
                                 <option value="2" >Verified</option>
-                                <option value="3" >Notverified</option>
+                                <option value="3" >Not Verified</option>
                             </select> 
                         </div>
                     </div>

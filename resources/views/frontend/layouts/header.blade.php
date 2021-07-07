@@ -18,7 +18,7 @@
 
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-{{--    <title>@lang("frontend.title")</title>--}}
+    <title>{{ $pageTitle }}</title>
 {{--    <meta name="description" content="">--}}
     <meta name="title" content="InaExport">
     <meta name="description" content="InaExport as a media product digital promotion superior export products from Indonesian business people, so they can more easily reach out to foreign buyers.">
@@ -31,17 +31,18 @@
     <!-- CSS 
     ========================= -->
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{url('assets')}}/libs/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <!--<link rel="stylesheet" href="{{url('assets')}}/libs/font-awesome/css/font-awesome.min.css" type="text/css" />-->
+    <script src="https://kit.fontawesome.com/928bae4c26.js" crossorigin="anonymous"></script>
 
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="{{asset('front/assets/css/plugins.css')}}">
 
-    <!-- Main Style CSS -->
-    <link rel="stylesheet" href="{{asset('front/assets/css/style.css')}}">
     <!-- build:css ../assets/css/app.min.css -->
     <link rel="stylesheet" href="{{url('assets')}}/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
     <!-- endbuild -->
     <link rel="stylesheet" href="{{url('assets')}}/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" type="text/css" />
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="{{asset('front/assets/css/style.css')}}">
     <?php $font1 = url('/')."/front/assets/fonts/MYRIADPRO-REGULAR.woff";?>
     <style type="text/css">
         html, body{
@@ -79,6 +80,12 @@
                 src: url('{{$font1}}') format("truetype");
                 font-weight: normal;
                 font-style: normal;
+            }
+
+            .nav-link.active {
+                color: #000;
+                font-weight: bold;
+                border-bottom: 1px solid #000;
             }
     </style>
 
@@ -191,6 +198,19 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
     color: black!important;
 }
 
+.btn-usermenu {
+  color: #000;
+  background-color: #fff;
+  border-color: #fff;
+  font-size: 14px;
+}
+
+.btn-usermenu:hover {
+  color: #000;
+  background-color: #fff;
+  border-color: #6f6f6f;
+}
+
 </style> 
 </head>
 
@@ -209,145 +229,49 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
     <!--header area start-->
     <header class="header_area">
         <!--header top start-->
-        <div style="background-color: #2492eb; color: white;">
+        <div style="background-color: #fff;">
             <div class="container">
-                <div class="top_inner">
-                    <div class="row align-items-center">
-                        <div class="col-lg-12 col-md-12 col-12" align="right">
-                            <div class="top_right settocenter">
-                                <ul style="padding-top: 5px; margin-bottom: 5px;">
-                                    @if(Auth::guard('eksmp')->user())
-                                        <li class="top_links"><a href="#"><i class="ion-android-person"></i>
-                                        @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                            {{getCompanyNameImportir(Auth::guard('eksmp')->user()->id)}}
-                                        @elseif(Auth::guard('eksmp')->user()->id_role == 2)
-                                            {{getCompanyName(Auth::guard('eksmp')->user()->id)}}
-                                        @endif
-                                            <i class="ion-ios-arrow-down"></i></a>
-                                        <ul class="dropdown_links" style="width: 170px">
-                                            @if(Auth::guard('eksmp')->user()->id_role == 3)
-                                            <li><a href="{{route('profile')}}" style="text-decoration: none">@lang('frontend.lbl5')</a></li>
-											@endif
-                                            @if(Auth::guard('eksmp')->user()->id_role == 2)
-                                                <li><a href="{{route('login')}}" style="text-decoration: none">@lang('frontend.lbl14')</a></li>
-                                            @endif
-											<li><a href="{{url('front_end/history')}}" style="text-decoration: none">@lang('frontend.lbl7')</a></li>
-											<li><a href="{{url('trx_list')}}" style="text-decoration: none">@lang('frontend.lbl11')</a></li>
-                                            <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('frontend.lbl4')</a></li>
-                                        </ul>
-                                    </li>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                    </form>
-                                    @else
-                                    <li class="top_links"><a href="{{url('login')}}"><i class="fa fa-sign-in"></i> @lang("frontend.lbl3")</a></li>
-                                    @endif
-                                    <li>
-                                        <?php 
-                            			  if(empty(Auth::user()->name) && empty(Auth::guard('eksmp')->user()->id)){
-                            				$sao = 0;
-                            			  }else{
-                            				$sao = 1;
-                            			  if(empty(Auth::user()->name)){ 
-                            			  $querynotifa = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc"); 
-                            			  $querynotif = DB::select("select * from notif where status_baca='0' and untuk_id='".Auth::guard('eksmp')->user()->id."' and to_role='".Auth::guard('eksmp')->user()->id_role."' order by id_notif desc limit 4"); 
-                            			  }else{
-                            				if(Auth::user()->id_group == 1){
-                            				$querynotifa = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc"); 
-                            				$querynotif = DB::select("select * from notif where status_baca='0' and to_role='1' order by id_notif desc limit 4"); 
-                            			  }else{
-                            				$querynotifa = DB::select("select * from notif where untuk_id='".Auth::user()->id."' and status_baca='0' and to_role='4' order by id_notif desc"); 
-                            				$querynotif = DB::select("select * from notif where untuk_id='".Auth::user()->id."' and status_baca='0' and to_role='4' order by id_notif desc limit 4");
-                            			  }
-                            			  }
-                            			  }
-                            			 
-                            			  if($sao == 0) {
-                            			  ?>
-                            			   <!--<font color="white"> <i class="fa fa-bell-o"></i></font> -->
-										   <img src="{{asset('front/assets/icon/in.png')}}" alt="" style="width: 27px;">
-                            			<?php 
-                                            }else{ 
-                                        ?>
-                            			<ul class="nav flex-row order-lg-2">
-                                            <li class="dropdown notifications-menu d-flex align-items-center">
-                                                <a href="#" class="dropdown-toggles" data-toggle="dropdown">
-                                                    <!--<font color="white"> <i class="fa fa-bell-o">  
-														
-													</i></font> -->
-													<img src="{{asset('front/assets/icon/in.png')}}" alt="" style="width: 27px;">
-                                                    <span class="label label-warning" style="position: absolute!important;
-                                                        color : white!important;
-                                                        right: 7px!important;
-                                                        text-align: center!important;
-                                                        font-size: 9px!important;
-                                                        padding: 2px 3px!important;
-                                                        line-height: .9!important;">
-                                                        <?php 
-                                                            if(count($querynotifa) == 0){ 
-                                                                echo "0"; 
-                                                            }else{ 
-                                                                echo count($querynotifa); 
-                                                            } 
-                                                        ?>
-                                                    </span>
-                                                    <i class="ion-ios-arrow-down"></i>
-                                                </a>
-                                                <ul class="dropdown_links" style="min-width: 250px!important;">
-                            						<?php 
-                            			                 foreach($querynotif as $ar){
-                                                    ?>
-                                                    @if($ar->id_terkait == NULL)
-                                                        <a onclick="closenotif(<?php echo $ar->id_notif; ?>)" href="{{url($ar->url_terkait)}}">
-                                                    		<p style="width:100%; font-size:12px!important;">
-                                                                <?php echo $ar->keterangan; ?><br>
-                                                                <b><?php echo $ar->waktu; ?></b>
-                                                            </p>
-                                                		</a>
-                                                        <hr>
-                                                    @else
-                                                        <a onclick="closenotif(<?php echo $ar->id_notif; ?>)" href="{{url($ar->url_terkait.'/'.$ar->id_terkait)}}">
-                                                            <p style="width:100%; font-size:12px!important;">
-                                                                <?php echo $ar->keterangan; ?><br>
-                                                                <b><?php echo $ar->waktu; ?></b>
-                                                			</p>
-                                        			    </a>
-                                        			    <hr>
-                                                    @endif
-                                                    <?php } ?>
-                                                    <li><center>
-                                                        <?php 
-                                                            if(count($querynotifa) == 0){ 
-                                                                echo "<b>Tidak Ada Notifikasi Tersedia Untuk Anda !</b><br><br>"; 
-                                                            }else{ ?> 
-                                                                <div class="col-md-12">
-																<div class="row">
-																<div class="col-md-6">
-																<a href="{{ url('show_all_notif') }}">View all</a> 
-																</div>
-                                                                <div class="col-md-6">
-																<a href="{{ url('unread_all_notif') }}">Read all</a> 
-																</div> 
-																</div>
-																</div>
-                                                        <?php } ?>
-                                                    </center></li>
-                                                   <!-- Navarbar toggle btn -->
-                                                    <li class="d-lg-none d-flex align-items-center">
-                                                      <a href="#" class="mx-2" data-toggle="collapse" data-target="#navbarToggler">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 512 512"><path d="M64 144h384v32H64zM64 240h384v32H64zM64 336h384v32H64z"/></svg>
-                                                      </a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                            			  <?php } ?>
-                                    </li>
-                                    <li class="language" style="position: relative; display: inline-block;">
-                                        <div class="lang-select" style="height: 100%;">
-                                            <button class="btn-select-lang" style="border-radius: 5px; background-color: #fff; border: 1px solid #ccc; height: 60%; width: 160px;">
-                                                <!-- <img src="{{asset('front/assets/img/Google.png')}}" style="height: 18px; margin:3px;" align="left"> -->
-                                                <span class="title-lang">
+                <div class="top_inner" style="padding: 5px 0px; border-bottom: 1px solid #ececec;">
+                    <div class="row">
+                        <?php
+                        if(Auth::guard('eksmp')->user()) {
+                            if(Auth::guard('eksmp')->user()->id_role == 3){
+                                $user = getCompanyNameImportir(Auth::guard('eksmp')->user()->id);
+                            }else if(Auth::guard('eksmp')->user()->id_role == 2){
+                                $user = getCompanyName(Auth::guard('eksmp')->user()->id);
+                            }
+                            ?>
+                            <!--<div class="col" style="text-align: left;"><?php //echo $user; ?> | <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></div>-->
+                            
+                            <div class="col" class="dropdown">
+                                <button class="btn btn-usermenu dropdown-toggle" type="button" id="dropdownMenuUser" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?php echo $user; ?>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuUser" style="font-size: 14px;">
+                                    <li><a class="dropdown-item" href="{{url('/profile')}}">Profile</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/front_end/history')}}">History</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/trx_list')}}">Transaction</a></li>
+                                    <li><a class="dropdown-item" href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                                </ul>
+                            </div>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                            </form>
+                            <?php
+                        }
+                        else {
+                            ?>
+                            <div class="col" style="text-align: left;"><a href="{{url('/login')}}">Sign in</a> or <a href="{{url('/createaccount')}}">Register</a></div>
+                            <?php
+                        }
+                        ?>
+                        <div class="col" style="text-align: right;">
+                            <ul>
+                                <li class="language" style="position: relative; display: inline-block;">
+                                    <div class="lang-select" style="height: 100%;">
+                                        <button class="btn-select-lang" style="background-color: #fff; border: 1px solid #ccc; height: 50%; width: 140px;">
+                                            <!-- <img src="{{asset('front/assets/img/Google.png')}}" style="height: 18px; margin:3px;" align="left"> -->
+                                            <span class="title-lang">
                                                     @if($loc == 'en') Select Language @elseif($loc == 'in') Pilih Bahasa @else 选择语言 @endif
                                                 <i class="fa fa-angle-down" aria-hidden="true" style="padding-left: 8px;"></i></span>
                                             </button>
@@ -373,8 +297,7 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
                                             </ul >
                                         </div>
                                     </li>
-                                </ul>
-                            </div>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -382,335 +305,63 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
         </div>
         <!--header top start-->
         <!--header middel start-->
-        <div class="header_middle">
+        <div class="header_middle" style="background-color: #fff;">
             <div class="container" style="max-width: 98% !important;">
-                <div class="row align-items-center">
-                    <div class="col-lg-2 col-md-3 col-12">
-                        <div class="logo">
-{{--                            <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logo.png')}}" alt="" width="111"></a>--}}
-                            <a href="{{url('/')}}"><img src="{{asset('front/assets/img/logo/logonew.png')}}" alt="" width="111"></a>
-                        </div>
-                    </div>
-{{--					<div class="col-lg-1 col-md-1 col-12">--}}
-{{--                       &nbsp;--}}
-{{--                    </div>--}}
-                    <div class="col-lg-10 col-md-9 col-12">
-                        <div class="middel_right d-flex justify-content-between row" >
-                            <div class="search-container col-md-12 col-lg-5" style="margin-bottom: 10px;">
-                                <!-- Nav pills -->
-                                <ul class="nav nav-pills" role="tablist" id="tab-me" style="font-size: 14px;">
-                                    <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="pill" href="#products" id="set_products"  style="font-family: 'Myriad-pro';">@lang('frontend.home.product')</a>
-                                    </li>
-                                    <li class="nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#eksportir" id="set_eksportir" style="font-family: 'Myriad-pro';">@lang('frontend.home.eksporter')</a>
-                                    </li>
-                                    <!-- <li class="nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#request">@lang('frontend.home.sourcer')</a>
-                                    </li> -->
-                                </ul>
-
-                                <!-- Tab panes -->
-                                <div class="tab-content">
-                                    <div id="products" class="container tab-pane active">
-                                        <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_product')}}" id="formsprod">
-                                            <div class="search_box" style="width: 100%;">
-                                                <?php
-                                                    if(isset($search)){
-                                                        $cariprod = $search;
-                                                    }else{
-                                                        $cariprod = "";
-                                                    }
-
-                                                    if(isset($get_id_cat)){
-                                                        $caricat = $get_id_cat;
-                                                    }else{
-                                                        $caricat = "";
-                                                    }
-
-                                                    if(isset($getEks)){
-                                                        $eksprod = $getEks;
-                                                    }else{
-                                                        $eksprod = "";
-                                                    }
-
-                                                    if(isset($hl_sort)){
-                                                        $hlprod = $hl_sort;
-                                                    }else{
-                                                        $hlprod = "";
-                                                    }
-                                                ?>
-                                                <input placeholder="@lang('frontend.home.cariproduct') ..." type="text" name="cari_product" autocomplete="off" value="{{$cariprod}}" id="cari_product" style="height: 35px;">
-                                                <input type="hidden" name="locnya" value="{{$lct}}" id="locnya">
-                                                <input type="hidden" name="cari_catnya" value="{{$caricat}}" id="cari_catnya">
-                                                <input type="hidden" name="eks_prod" value="{{$eksprod}}" id="eks_prod">
-                                                <input type="hidden" name="hl_prod" value="{{$hlprod}}" id="hl_prod">
-                                                <input type="hidden" name="sort_prod" value="default" id="sort_prod">
-                                                <button type="submit"><i class="ion-ios-search-strong" style="font-size: 22px;"></i></button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div id="eksportir" class="container tab-pane">
-                                        <form class="form-horizontal" enctype="multipart/form-data" method="GET" action="{{url('/front_end/list_perusahaan')}}" id="formseksportir">
-                                            <div class="search_box" style="width: 100%">
-                                                <?php
-                                                    if(isset($search_eks)){
-                                                        $carieks = $search_eks;
-                                                    }else{
-                                                        $carieks = "";
-                                                    }
-
-                                                    if(isset($get_cat_eks)){
-                                                        $caricateks = $get_cat_eks;
-                                                    }else{
-                                                        $caricateks = "";
-                                                    }
-                                                ?>
-                                                <input placeholder="@lang('frontend.home.carieksporter') ..." type="text" name="cari_eksportir" autocomplete="off" value="{{$carieks}}" id="cari_eksportir" style="height: 35px;">
-                                                <input type="hidden" name="lctnya" value="{{$lct}}" id="lctnya">
-                                                <input type="hidden" name="cat_eks" value="{{$caricateks}}" id="cat_eks">
-                                                <input type="hidden" name="sorteks" id="sorteks" value="">
-                                                <button type="submit"><i class="ion-ios-search-strong" style="font-size: 22px;"></i></button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <!-- <div id="request" class="container tab-pane fade">
-                                        <form action="#">
-                                            <div class="search_box">
-                                                <input placeholder="Enter a keyword to search sourcing request ..." type="text">
-                                                <button type="submit"><i class="ion-ios-search-strong"></i></button>
-                                            </div>
-                                        </form>
-                                    </div> -->
-                                </div>
-                                <!-- <form action="#">
-                                    <div class="search_box">
-                                        <input placeholder="Search entire store here ..." type="text">
-                                        <button type="submit"><i class="ion-ios-search-strong"></i></button>
-                                    </div>
-                                </form> -->
-                            </div>
-                            <div class="middel_right_info">
-                                <a href="{{url('/front_end/list_product')}}" class="a-custom">
-                                    <div class="mini_cart_wrapper" style="padding-right: 15px">
-                                        <table style="width: 150px;">
-                                            <tr>
-                                                <td rowspan="2" style="width: 50px">
-                                                    <img src="{{asset('front/assets/icon/product2.png')}}" alt="" style="width: 70px;">
-                                                </td>
-                                                <td style="">
-                                                    <span class="header-span" style="font-family: 'Myriad-pro';">
-                                                        @lang("frontend.lbl8")
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </a>
-                                
-                                @if(Auth::guard('eksmp')->check())
-                                <a href="{{url('front_end/tracking')}}" class="a-custom">
-                                <div class="mini_cart_wrapper" style="padding-right: 15px">
-                                    <table style="width: 150px;">
-                                        <tr>
-                                            <td rowspan="2" style="width: 50px">
-                                                <img src="{{asset('front/assets/icon/tracking2.png')}}" alt="" style="width: 70px;">
-                                            </td>
-                                            <td style="">
-                                                <span class="header-span" style="font-family: 'Myriad-pro';">
-                                                    @lang("frontend.lbl9")
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                </a>
-                                <div class="header_wishlist">
-                                    <table style="width: 150px;">
-                                        <tr>
-                                            <td rowspan="2" style="width: 50px">
-                                                @if(Auth::guard('eksmp')->user())
-
-                                                    @if(Auth::guard('eksmp')->user()->id_role == 3)
-
-                                                <?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
-
-                                                <img src="{{asset('front/assets/icon/profile2a.png')}}" alt="" class="img-profil-header">
-                                                <?php }else{ ?>
-
-                                                <img src="{{asset('uploads/Profile/Importir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
-                                                <?php } ?>
-                                                    @elseif(Auth::guard('eksmp')->user()->id_role == 2)
-
-                                                 <?php if(empty(Auth::guard('eksmp')->user()->foto_profil)){ ?>
-
-												<img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
-												<?php }else{ ?>
-
-                                                <img src="{{asset('uploads/Profile/Eksportir/'.Auth::guard('eksmp')->user()->id.'/'.Auth::guard('eksmp')->user()->foto_profil)}}" alt="" class="img-profil-header">
-												<?php } ?>
-
-                                                    @endif
-                                            @else
-                                                <img src="{{asset('front/assets/icon/PROFIL.png')}}" alt="" class="img-profil-header">
-                                            @endif
-                                            </td>
-                                            <td style="">
-                                                <span class="header-span" style="font-family: 'Myriad-pro';">
-                                                    @lang("frontend.lbl10")
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding-left: 10px;">
-                                                @if(Auth::guard('eksmp')->user())
-                                                    <?php
-                                                    if(Auth::guard('eksmp')->user()->id_role == 3){
-                                                        $user = getCompanyNameImportir(Auth::guard('eksmp')->user()->id);
-                                                    }else if(Auth::guard('eksmp')->user()->id_role == 2){
-                                                        $user = getCompanyName(Auth::guard('eksmp')->user()->id);
-                                                    }
-                                                    if(strlen($user) > 12){
-                                                      $cut_text = substr($user, 0, 12);
-                                                      if ($user{12 - 1} != ' ') {
-                                                          $new_pos = strrpos($cut_text, ' ');
-                                                          $cut_text = substr($user, 0, $new_pos);
-                                                      }
-                                                      $userName = $cut_text;
-                                                    }else{
-                                                      $userName = $user;
-                                                    }
-                                                    ?>
-                                                <span style="color:#ff8d00; font-weight: 600; font-size: 12px; font-family: Myriad-pro; padding-left: 1px;" title="{{$user}}">
-												<?php
-                                                // $userName
-												if(Auth::guard('eksmp')->user()->id_role == 3){
-                                                        echo "Buyer";
-                                                    }else if(Auth::guard('eksmp')->user()->id_role == 2){
-                                                        echo "Exporter";
-                                                    }
-
-												?>
-                                                </span>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <!-- <span class="wishlist_quantity">0</span> -->
-                                </div>
-                                @endif
-                            </div>
-
-                        </div>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-top">
+                <div class="container">
+                    <a class="navbar-brand" href="{{url('/')}}">
+                    <img src="{{asset('front/assets/img/logo/logonew.png')}}" alt="" width="180">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: 14px;">
+                        <?php
+                        $a1 = ""; $a2 = ""; $a3 = ""; $a4 = ""; $a5 = ""; $a6 = ""; $a7 = "";
+                        if($topMenu=="home") { $a1 = "active"; }
+                        if($topMenu=="product") { $a2 = "active"; }
+                        if($topMenu=="supplier") { $a3 = "active"; }
+                        if($topMenu=="about") { $a4 = "active"; }
+                        if($topMenu=="service") { $a5 = "active"; }
+                        if($topMenu=="news") { $a6 = "active"; }
+                        if($topMenu=="contact") { $a7 = "active"; }
+                        ?>
+                        <li class="nav-item">
+                        <a class="nav-link <?php echo $a1; ?>" aria-current="page" href="{{url('/')}}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link <?php echo $a2; ?>" href="{{url('/products')}}">Our Products</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link <?php echo $a3; ?>" href="{{url('/suppliers')}}">Our Suppliers</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link <?php echo $a4; ?>" href="{{url('/about')}}">About Inaexport</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link <?php echo $a5; ?> dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Our Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 14px;">
+                            <li><a class="dropdown-item" href="{{url('/front_end/curris')}}">Trade Update</a></li>
+                            <li><a class="dropdown-item" href="{{url('/front_end/research-corner')}}">Market Research</a></li>
+                            <li><a class="dropdown-item" href="{{url('/front_end/event')}}">Event</a></li>
+                            <li><a class="dropdown-item" href="{{url('/front_end/training')}}">Training</a></li>
+                        </ul>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link <?php echo $a6; ?>" href="{{url('/news')}}">News</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link <?php echo $a7; ?>" href="{{url('/contact-us')}}">Contact Us</a>
+                        </li>
+                    </ul>
                     </div>
                 </div>
+                </nav>
             </div>
         </div>
-        <!--header middel end-->
-        <!--header bottom satrt-->
-        <!-- <div class="header_bottom sticky-header">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-12">
-                        <div class="main_menu header_position">
-                            <nav>
-                                <ul>
-                                    <li><a href="index.html">home<i class="fa fa-angle-down"></i></a>
-                                        <ul class="sub_menu">
-                                            <li><a href="index.html">Home 1</a></li>
-                                            <li><a href="index-2.html">Home 2</a></li>
-                                            <li><a href="index-3.html">Home 3</a></li>
-                                            <li><a href="index-4.html">Home 4</a></li>
-                                            <li><a href="index-5.html">Home 5</a></li>
-                                            <li><a href="index-6.html">Home 6</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="mega_items"><a href="shop.html">shop<i class="fa fa-angle-down"></i></a>
-                                        <div class="mega_menu">
-                                            <ul class="mega_menu_inner">
-                                                <li><a href="#">Shop Layouts</a>
-                                                    <ul>
-                                                        <li><a href="shop-fullwidth.html">Full Width</a></li>
-                                                        <li><a href="shop-fullwidth-list.html">Full Width list</a></li>
-                                                        <li><a href="shop-right-sidebar.html">Right Sidebar </a></li>
-                                                        <li><a href="shop-right-sidebar-list.html"> Right Sidebar list</a></li>
-                                                        <li><a href="shop-list.html">List View</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">other Pages</a>
-                                                    <ul>
-                                                        <li><a href="cart.html">cart</a></li>
-                                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                                        <li><a href="checkout.html">Checkout</a></li>
-                                                        <li><a href="my-account.html">my account</a></li>
-                                                        <li><a href="404.html">Error 404</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Product Types</a>
-                                                    <ul>
-                                                        <li><a href="product-details.html">product details</a></li>
-                                                        <li><a href="product-sidebar.html">product sidebar</a></li>
-                                                        <li><a href="product-grouped.html">product grouped</a></li>
-                                                        <li><a href="variable-product.html">product variable</a></li>
-
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Concrete Tools</a>
-                                                    <ul>
-                                                        <li><a href="shop.html">Cables & Connectors</a></li>
-                                                        <li><a href="shop-list.html">Graphics Tablets</a></li>
-                                                        <li><a href="shop-fullwidth.html">Printers, Ink & Toner</a></li>
-                                                        <li><a href="shop-fullwidth-list.html">Refurbished Tablets</a></li>
-                                                        <li><a href="shop-right-sidebar.html">Optical Drives</a></li>
-
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                            <div class="banner_static_menu">
-                                                <a href="shop.html"><img src="assets/img/bg/banner1.jpg" alt=""></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li><a href="blog.html">blog<i class="fa fa-angle-down"></i></a>
-                                        <ul class="sub_menu pages">
-                                            <li><a href="blog-details.html">blog details</a></li>
-                                            <li><a href="blog-fullwidth.html">blog fullwidth</a></li>
-                                            <li><a href="blog-sidebar.html">blog sidebar</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">pages <i class="fa fa-angle-down"></i></a>
-                                        <ul class="sub_menu pages">
-                                            <li><a href="about.html">About Us</a></li>
-                                            <li><a href="services.html">services</a></li>
-                                            <li><a href="faq.html">Frequently Questions</a></li>
-                                            <li><a href="login.html">login</a></li>
-                                            <li><a href="compare.html">compare</a></li>
-                                            <li><a href="privacy-policy.html">privacy policy</a></li>
-                                            <li><a href="coming-soon.html">Coming Soon</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="about.html">about Us</a></li>
-                                    <li><a href="contact.html"> Contact Us</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div> -->
-        <!--header bottom end-->
-
     </header>
     <!--header area end-->
     <script type="text/javascript">
@@ -730,4 +381,6 @@ a.visit-lang:hover, a.visit-lang:hover > .lang-option{
             });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
     

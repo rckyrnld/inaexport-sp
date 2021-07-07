@@ -41,7 +41,7 @@ return [
         "fax" => "Fax",
         "website" => "Website",
         "password" => "密码 *",
-		"fp" => "忘记密码 ?",
+		"fp" => "忘记密码",
 		"r1" => "仍然没有帐户 ?",
 		"r2" => "注册",
         "re-password" => "Re-Password",
